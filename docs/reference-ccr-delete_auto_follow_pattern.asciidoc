@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ccr.deleteAutoFollowPattern]]
 === client.ccr.deleteAutoFollowPattern
 
 Deletes auto-follow patterns.

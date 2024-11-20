@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.searchableSnapshots.stats]]
 === client.searchableSnapshots.stats
 
 Retrieve shard-level statistics about searchable snapshots.

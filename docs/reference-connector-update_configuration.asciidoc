@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.updateConfiguration]]
 === client.connector.updateConfiguration
 
 Update the connector configuration. Update the configuration field in the connector document.

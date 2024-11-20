@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cluster.putSettings]]
 === client.cluster.putSettings
 
 Updates the cluster settings.

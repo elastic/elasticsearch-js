@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.license.post]]
 === client.license.post
 
 Updates the license for the cluster.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.esql.query]]
 === client.esql.query
 
 Executes an ES|QL request
@@ -52,7 +53,7 @@ interface EsqlQueryRequest extends <<RequestBase>> {
   delimiter?: string
   drop_null_columns?: boolean
   columnar?: boolean
-  filter?: QueryDslQueryContainer
+  filter?: <<QueryDslQueryContainer>>
   locale?: string
   params?: <<FieldValue>>[]
   profile?: boolean

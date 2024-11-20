@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.deleteDataFrameAnalytics]]
 === client.ml.deleteDataFrameAnalytics
 
 Delete a data frame analytics job.

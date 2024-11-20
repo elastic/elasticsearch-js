@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.updatePipeline]]
 === client.connector.updatePipeline
 
 Update the connector pipeline. When you create a new connector, the configuration of an ingest pipeline is populated with default settings.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.inference.put]]
 === client.inference.put
 
 Create an inference endpoint

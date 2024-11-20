@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.deleteRole]]
 === client.security.deleteRole
 
 Delete roles. Delete roles in the native realm.

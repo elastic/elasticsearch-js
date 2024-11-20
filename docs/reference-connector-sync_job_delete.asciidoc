@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.syncJobDelete]]
 === client.connector.syncJobDelete
 
 Delete a connector sync job. Remove a connector sync job and its associated data. This is a destructive action that is not recoverable.

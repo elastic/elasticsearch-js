@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.putDataLifecycle]]
 === client.indices.putDataLifecycle
 
 Update data stream lifecycles. Update the data stream lifecycle of the specified data streams.

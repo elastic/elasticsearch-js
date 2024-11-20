@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ingest.simulate]]
 === client.ingest.simulate
 
 Executes an ingest pipeline against a set of provided documents.

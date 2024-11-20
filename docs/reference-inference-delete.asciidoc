@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.inference.delete]]
 === client.inference.delete
 
 Delete an inference endpoint

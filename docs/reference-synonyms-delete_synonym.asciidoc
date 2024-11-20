@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.synonyms.deleteSynonym]]
 === client.synonyms.deleteSynonym
 
 Deletes a synonym set

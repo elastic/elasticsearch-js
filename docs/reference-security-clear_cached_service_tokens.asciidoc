@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.clearCachedServiceTokens]]
 === client.security.clearCachedServiceTokens
 
 Clear service account token caches. Evict a subset of all entries from the service account token caches.

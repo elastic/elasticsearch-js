@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.updateAliases]]
 === client.indices.updateAliases
 
 Create or update an alias. Adds a data stream or index to an alias.

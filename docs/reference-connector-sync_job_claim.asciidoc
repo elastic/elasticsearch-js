@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.syncJobClaim]]
 === client.connector.syncJobClaim
 
 Claims a connector sync job.

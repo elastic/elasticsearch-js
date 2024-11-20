@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.downsample]]
 === client.indices.downsample
 
 Aggregates a time series (TSDS) index and stores pre-computed statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`) for each metric field grouped by a configured time interval.

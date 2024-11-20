@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.rollup.startJob]]
 === client.rollup.startJob
 
 Starts an existing, stopped rollup job.

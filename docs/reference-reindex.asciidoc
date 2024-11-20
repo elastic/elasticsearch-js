@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.reindex]]
 === client.reindex
 
 Reindex documents. Copies documents from a source to a destination. The source can be any existing index, alias, or data stream. The destination must differ from the source. For example, you cannot reindex a data stream into itself.

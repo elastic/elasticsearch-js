@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.fieldCaps]]
 === client.fieldCaps
 
 Get the field capabilities. Get information about the capabilities of fields among multiple indices. For data streams, the API returns field capabilities among the stream’s backing indices. It returns runtime fields like any other field. For example, a runtime field with a type of keyword is returned the same as any other field that belongs to the `keyword` family.
@@ -57,8 +58,8 @@ interface FieldCapsRequest extends <<RequestBase>> {
   types?: string[]
   include_empty_fields?: boolean
   fields?: <<Fields>>
-  index_filter?: QueryDslQueryContainer
-  runtime_mappings?: MappingRuntimeFields
+  index_filter?: <<QueryDslQueryContainer>>
+  runtime_mappings?: <<MappingRuntimeFields>>
 }
 
 [pass]

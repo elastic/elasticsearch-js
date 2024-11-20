@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.stats]]
 === client.indices.stats
 
 Returns statistics for one or more indices. For data streams, the API retrieves statistics for the stream’s backing indices.

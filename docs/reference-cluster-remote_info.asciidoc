@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cluster.remoteInfo]]
 === client.cluster.remoteInfo
 
 The cluster remote info API allows you to retrieve all of the configured remote cluster information. It returns connection and endpoint information keyed by the configured remote cluster alias.

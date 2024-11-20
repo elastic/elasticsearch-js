@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.nodes.stats]]
 === client.nodes.stats
 
 Returns cluster nodes statistics.

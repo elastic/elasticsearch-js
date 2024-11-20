@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.getMemoryStats]]
 === client.ml.getMemoryStats
 
 Get machine learning memory usage info. Get information about how machine learning jobs and trained models are using memory, on each node, both within the JVM heap, and natively, outside of the JVM.

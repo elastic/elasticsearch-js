@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.updateFilteringValidation]]
 === client.connector.updateFilteringValidation
 
 Update the connector draft filtering validation. Update the draft filtering validation info for a connector.

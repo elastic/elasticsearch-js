@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.watcher.start]]
 === client.watcher.start
 
 Starts Watcher if it is not already running.

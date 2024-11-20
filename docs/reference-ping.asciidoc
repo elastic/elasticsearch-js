@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ping]]
 === client.ping
 
 Ping the cluster. Returns whether the cluster is running.

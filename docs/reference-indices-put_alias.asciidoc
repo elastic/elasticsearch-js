@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.putAlias]]
 === client.indices.putAlias
 
 Create or update an alias. Adds a data stream or index to an alias.
@@ -52,7 +53,7 @@ interface IndicesPutAliasRequest extends <<RequestBase>> {
   name: <<Name>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
-  filter?: QueryDslQueryContainer
+  filter?: <<QueryDslQueryContainer>>
   index_routing?: <<Routing>>
   is_write_index?: boolean
   routing?: <<Routing>>

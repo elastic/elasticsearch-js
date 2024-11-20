@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cluster.getComponentTemplate]]
 === client.cluster.getComponentTemplate
 
 Get component templates. Retrieves information about component templates.

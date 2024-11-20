@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.updateScheduling]]
 === client.connector.updateScheduling
 
 Update the connector scheduling.

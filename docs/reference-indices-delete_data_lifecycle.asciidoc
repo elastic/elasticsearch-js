@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.deleteDataLifecycle]]
 === client.indices.deleteDataLifecycle
 
 Delete data stream lifecycles. Removes the data stream lifecycle from a data stream, rendering it not managed by the data stream lifecycle.

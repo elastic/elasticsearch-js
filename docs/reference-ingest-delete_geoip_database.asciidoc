@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ingest.deleteGeoipDatabase]]
 === client.ingest.deleteGeoipDatabase
 
 Deletes a geoip database configuration.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.open]]
 === client.indices.open
 
 Opens a closed index. For data streams, the API opens any closed backing indices.

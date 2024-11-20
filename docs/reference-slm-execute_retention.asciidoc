@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.slm.executeRetention]]
 === client.slm.executeRetention
 
 Deletes any snapshots that are expired according to the policy's retention rules.

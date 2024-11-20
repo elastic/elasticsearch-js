@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cluster.existsComponentTemplate]]
 === client.cluster.existsComponentTemplate
 
 Check component templates. Returns information about whether a particular component template exists.

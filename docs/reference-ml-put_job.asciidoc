@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.putJob]]
 === client.ml.putJob
 
 Create an anomaly detection job. If you include a `datafeed_config`, you must have read index privileges on the source index.

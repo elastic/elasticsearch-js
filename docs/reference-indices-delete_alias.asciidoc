@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.deleteAlias]]
 === client.indices.deleteAlias
 
 Delete an alias. Removes a data stream or index from an alias.

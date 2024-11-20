@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.searchApplication.deleteBehavioralAnalytics]]
 === client.searchApplication.deleteBehavioralAnalytics
 
 Delete a behavioral analytics collection. The associated data stream is also deleted.

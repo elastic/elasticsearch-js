@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.slm.putLifecycle]]
 === client.slm.putLifecycle
 
 Creates or updates a snapshot lifecycle policy.

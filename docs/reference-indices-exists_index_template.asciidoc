@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.existsIndexTemplate]]
 === client.indices.existsIndexTemplate
 
 Returns information about whether a particular index template exists.

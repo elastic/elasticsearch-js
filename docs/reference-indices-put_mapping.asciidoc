@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.putMapping]]
 === client.indices.putMapping
 
 Update field mappings. Adds new fields to an existing data stream or index. You can also use this API to change the search settings of existing fields. For data streams, these changes are applied to all backing indices by default.
@@ -56,16 +57,16 @@ interface IndicesPutMappingRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
   write_index_only?: boolean
   date_detection?: boolean
-  dynamic?: MappingDynamicMapping
+  dynamic?: <<MappingDynamicMapping>>
   dynamic_date_formats?: string[]
-  dynamic_templates?: Record<string, MappingDynamicTemplate> | Record<string, MappingDynamicTemplate>[]
-  _field_names?: MappingFieldNamesField
+  dynamic_templates?: Record<string, <<MappingDynamicTemplate>>> | Record<string, <<MappingDynamicTemplate>>>[]
+  _field_names?: <<MappingFieldNamesField>>
   _meta?: <<Metadata>>
   numeric_detection?: boolean
-  properties?: Record<<<PropertyName>>, MappingProperty>
-  _routing?: MappingRoutingField
-  _source?: MappingSourceField
-  runtime?: MappingRuntimeFields
+  properties?: Record<<<PropertyName>>, <<MappingProperty>>>
+  _routing?: <<MappingRoutingField>>
+  _source?: <<MappingSourceField>>
+  runtime?: <<MappingRuntimeFields>>
 }
 
 [pass]

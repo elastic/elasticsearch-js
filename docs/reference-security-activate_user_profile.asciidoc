@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.activateUserProfile]]
 === client.security.activateUserProfile
 
 Activate a user profile. Create or update a user profile on behalf of another user.

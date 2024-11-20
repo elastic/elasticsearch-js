@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.xpack.info]]
 === client.xpack.info
 
 Provides general information about the installed X-Pack features.

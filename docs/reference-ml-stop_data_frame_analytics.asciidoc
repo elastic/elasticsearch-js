@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.stopDataFrameAnalytics]]
 === client.ml.stopDataFrameAnalytics
 
 Stop data frame analytics jobs. A data frame analytics job can be started and stopped multiple times throughout its lifecycle.

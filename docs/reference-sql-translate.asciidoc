@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.sql.translate]]
 === client.sql.translate
 
 Translates SQL into Elasticsearch queries
@@ -49,7 +50,7 @@ Translates SQL into Elasticsearch queries
 ++++
 interface SqlTranslateRequest extends <<RequestBase>> {
   fetch_size?: <<_integer, integer>>
-  filter?: QueryDslQueryContainer
+  filter?: <<QueryDslQueryContainer>>
   query: string
   time_zone?: <<TimeZone>>
 }
@@ -66,11 +67,11 @@ interface SqlTranslateRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SqlTranslateResponse {
-  aggregations?: Record<string, AggregationsAggregationContainer>
+  aggregations?: Record<string, <<AggregationsAggregationContainer>>>
   size?: <<_long, long>>
   _source?: SearchSourceConfig
-  fields?: (QueryDslFieldAndFormat | <<Field>>)[]
-  query?: QueryDslQueryContainer
+  fields?: (<<QueryDslFieldAndFormat>> | <<Field>>)[]
+  query?: <<QueryDslQueryContainer>>
   sort?: <<Sort>>
 }
 

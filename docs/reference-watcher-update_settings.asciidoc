@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.watcher.updateSettings]]
 === client.watcher.updateSettings
 
 Update settings for the watcher system index

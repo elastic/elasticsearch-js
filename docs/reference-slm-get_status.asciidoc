@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.slm.getStatus]]
 === client.slm.getStatus
 
 Retrieves the status of snapshot lifecycle management (SLM).

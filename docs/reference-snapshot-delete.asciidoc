@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.snapshot.delete]]
 === client.snapshot.delete
 
 Deletes one or more snapshots.

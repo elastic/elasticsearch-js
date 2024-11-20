@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.getScriptLanguages]]
 === client.getScriptLanguages
 
 Get script languages. Get a list of available script types, languages, and contexts.

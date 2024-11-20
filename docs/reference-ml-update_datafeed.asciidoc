@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.updateDatafeed]]
 === client.ml.updateDatafeed
 
 Update a datafeed. You must stop and start the datafeed for the changes to be applied. When Elasticsearch security features are enabled, your datafeed remembers which roles the user who updated it had at the time of the update and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead.
@@ -53,7 +54,7 @@ interface MlUpdateDatafeedRequest extends <<RequestBase>> {
   expand_wildcards?: <<ExpandWildcards>>
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
-  aggregations?: Record<string, AggregationsAggregationContainer>
+  aggregations?: Record<string, <<AggregationsAggregationContainer>>>
   chunking_config?: MlChunkingConfig
   delayed_data_check_config?: MlDelayedDataCheckConfig
   frequency?: <<Duration>>
@@ -63,9 +64,9 @@ interface MlUpdateDatafeedRequest extends <<RequestBase>> {
   indices_options?: <<IndicesOptions>>
   job_id?: <<Id>>
   max_empty_searches?: <<_integer, integer>>
-  query?: QueryDslQueryContainer
+  query?: <<QueryDslQueryContainer>>
   query_delay?: <<Duration>>
-  runtime_mappings?: MappingRuntimeFields
+  runtime_mappings?: <<MappingRuntimeFields>>
   script_fields?: Record<string, <<ScriptField>>>
   scroll_size?: <<_integer, integer>>
 }
@@ -83,7 +84,7 @@ interface MlUpdateDatafeedRequest extends <<RequestBase>> {
 ++++
 interface MlUpdateDatafeedResponse {
   authorization?: MlDatafeedAuthorization
-  aggregations?: Record<string, AggregationsAggregationContainer>
+  aggregations?: Record<string, <<AggregationsAggregationContainer>>>
   chunking_config: MlChunkingConfig
   delayed_data_check_config?: MlDelayedDataCheckConfig
   datafeed_id: <<Id>>
@@ -92,9 +93,9 @@ interface MlUpdateDatafeedResponse {
   indices_options?: <<IndicesOptions>>
   job_id: <<Id>>
   max_empty_searches?: <<_integer, integer>>
-  query: QueryDslQueryContainer
+  query: <<QueryDslQueryContainer>>
   query_delay: <<Duration>>
-  runtime_mappings?: MappingRuntimeFields
+  runtime_mappings?: <<MappingRuntimeFields>>
   script_fields?: Record<string, <<ScriptField>>>
   scroll_size: <<_integer, integer>>
 }

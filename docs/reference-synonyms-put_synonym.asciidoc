@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.synonyms.putSynonym]]
 === client.synonyms.putSynonym
 
 Creates or updates a synonym set.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cluster.getSettings]]
 === client.cluster.getSettings
 
 Returns cluster-wide settings. By default, it returns only settings that have been explicitly defined.

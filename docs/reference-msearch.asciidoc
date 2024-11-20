@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.msearch]]
 === client.msearch
 
 Run multiple searches. The format of the request is similar to the bulk API format and makes use of the newline delimited JSON (NDJSON) format. The structure is as follows: ``` header\n body\n header\n body\n ``` This structure is specifically optimized to reduce parsing if a specific search ends up redirected to another node. IMPORTANT: The final line of data must end with a newline character `\n`. Each newline character may be preceded by a carriage return `\r`. When sending requests to this endpoint the `Content-Type` header should be set to `application/x-ndjson`.
@@ -76,7 +77,7 @@ interface MsearchRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type MsearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
+type MsearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = MsearchMultiSearchResult<TDocument, TAggregations>
 
 [pass]
 ++++

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ccr.getAutoFollowPattern]]
 === client.ccr.getAutoFollowPattern
 
 Gets configured auto-follow patterns. Returns the specified auto-follow pattern collection.

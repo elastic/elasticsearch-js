@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.migration.getFeatureUpgradeStatus]]
 === client.migration.getFeatureUpgradeStatus
 
 Find out whether system features need to be upgraded or not

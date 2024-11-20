@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.watcher.getWatch]]
 === client.watcher.getWatch
 
 Retrieves a watch by its ID.

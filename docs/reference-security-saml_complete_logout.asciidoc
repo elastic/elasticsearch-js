@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.samlCompleteLogout]]
 === client.security.samlCompleteLogout
 
 Logout of SAML completely. Verifies the logout response sent from the SAML IdP.

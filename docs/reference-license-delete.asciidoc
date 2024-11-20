@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.license.delete]]
 === client.license.delete
 
 Deletes licensing information for the cluster

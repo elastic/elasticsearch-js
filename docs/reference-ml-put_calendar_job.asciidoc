@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.putCalendarJob]]
 === client.ml.putCalendarJob
 
 Add anomaly detection job to calendar.

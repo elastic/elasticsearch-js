@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.deleteTrainedModel]]
 === client.ml.deleteTrainedModel
 
 Delete an unreferenced trained model. The request deletes a trained inference model that is not referenced by an ingest pipeline.

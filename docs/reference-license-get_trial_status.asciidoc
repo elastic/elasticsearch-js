@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.license.getTrialStatus]]
 === client.license.getTrialStatus
 
 Retrieves information about the status of the trial license.

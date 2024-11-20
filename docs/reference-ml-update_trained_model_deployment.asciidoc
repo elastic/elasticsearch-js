@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.updateTrainedModelDeployment]]
 === client.ml.updateTrainedModelDeployment
 
 Update a trained model deployment.

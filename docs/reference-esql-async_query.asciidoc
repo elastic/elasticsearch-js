@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.esql.asyncQuery]]
 === client.esql.asyncQuery
 
 Executes an ESQL request asynchronously

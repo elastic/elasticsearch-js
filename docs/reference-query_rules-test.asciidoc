@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.queryRules.test]]
 === client.queryRules.test
 
 Creates or updates a query ruleset.

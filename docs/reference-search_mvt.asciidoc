@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.searchMvt]]
 === client.searchMvt
 
 Search a vector tile. Search a vector tile for geospatial values.
@@ -53,7 +54,7 @@ interface SearchMvtRequest extends <<RequestBase>> {
   zoom: SearchMvtZoomLevel
   x: SearchMvtCoordinate
   y: SearchMvtCoordinate
-  aggs?: Record<string, AggregationsAggregationContainer>
+  aggs?: Record<string, <<AggregationsAggregationContainer>>>
   buffer?: <<_integer, integer>>
   exact_bounds?: boolean
   extent?: <<_integer, integer>>
@@ -61,8 +62,8 @@ interface SearchMvtRequest extends <<RequestBase>> {
   grid_agg?: SearchMvtGridAggregationType
   grid_precision?: <<_integer, integer>>
   grid_type?: SearchMvtGridType
-  query?: QueryDslQueryContainer
-  runtime_mappings?: MappingRuntimeFields
+  query?: <<QueryDslQueryContainer>>
+  runtime_mappings?: <<MappingRuntimeFields>>
   size?: <<_integer, integer>>
   sort?: <<Sort>>
   track_total_hits?: SearchTrackHits

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.putIndexTemplate]]
 === client.indices.putIndexTemplate
 
 Create or update an index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices.

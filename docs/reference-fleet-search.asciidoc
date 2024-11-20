@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.fleet.search]]
 === client.fleet.search
 
 The purpose of the fleet search api is to provide a search api where the search will only be executed after provided checkpoint has been processed and is visible for searches inside of Elasticsearch.
@@ -52,7 +53,7 @@ interface FleetSearchRequest extends <<RequestBase>> {
   analyze_wildcard?: boolean
   batched_reduce_size?: <<_long, long>>
   ccs_minimize_roundtrips?: boolean
-  default_operator?: QueryDslOperator
+  default_operator?: <<QueryDslOperator>>
   df?: string
   expand_wildcards?: <<ExpandWildcards>>
   ignore_throttled?: boolean
@@ -77,9 +78,9 @@ interface FleetSearchRequest extends <<RequestBase>> {
   q?: string
   wait_for_checkpoints?: FleetCheckpoint[]
   allow_partial_search_results?: boolean
-  aggregations?: Record<string, AggregationsAggregationContainer>
+  aggregations?: Record<string, <<AggregationsAggregationContainer>>>
   pass:[/**] @alias aggregations */
-  aggs?: Record<string, AggregationsAggregationContainer>
+  aggs?: Record<string, <<AggregationsAggregationContainer>>>
   collapse?: SearchFieldCollapse
   explain?: boolean
   ext?: Record<string, any>
@@ -87,11 +88,11 @@ interface FleetSearchRequest extends <<RequestBase>> {
   highlight?: SearchHighlight
   track_total_hits?: SearchTrackHits
   indices_boost?: Record<<<IndexName>>, <<_double, double>>>[]
-  docvalue_fields?: (QueryDslFieldAndFormat | <<Field>>)[]
+  docvalue_fields?: (<<QueryDslFieldAndFormat>> | <<Field>>)[]
   min_score?: <<_double, double>>
-  post_filter?: QueryDslQueryContainer
+  post_filter?: <<QueryDslQueryContainer>>
   profile?: boolean
-  query?: QueryDslQueryContainer
+  query?: <<QueryDslQueryContainer>>
   rescore?: SearchRescore | SearchRescore[]
   script_fields?: Record<string, <<ScriptField>>>
   search_after?: <<SortResults>>
@@ -99,7 +100,7 @@ interface FleetSearchRequest extends <<RequestBase>> {
   slice?: <<SlicedScroll>>
   sort?: <<Sort>>
   _source?: SearchSourceConfig
-  fields?: (QueryDslFieldAndFormat | <<Field>>)[]
+  fields?: (<<QueryDslFieldAndFormat>> | <<Field>>)[]
   suggest?: SearchSuggester
   terminate_after?: <<_long, long>>
   timeout?: string
@@ -108,7 +109,7 @@ interface FleetSearchRequest extends <<RequestBase>> {
   seq_no_primary_term?: boolean
   stored_fields?: <<Fields>>
   pit?: SearchPointInTimeReference
-  runtime_mappings?: MappingRuntimeFields
+  runtime_mappings?: <<MappingRuntimeFields>>
   stats?: string[]
 }
 
@@ -128,7 +129,7 @@ interface FleetSearchResponse<TDocument = unknown> {
   timed_out: boolean
   _shards: <<ShardStatistics>>
   hits: SearchHitsMetadata<TDocument>
-  aggregations?: Record<<<AggregateName>>, AggregationsAggregate>
+  aggregations?: Record<<<AggregateName>>, <<AggregationsAggregate>>>
   _clusters?: <<ClusterStatistics>>
   fields?: Record<string, any>
   max_score?: <<_double, double>>

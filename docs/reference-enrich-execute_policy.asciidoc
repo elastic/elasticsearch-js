@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.enrich.executePolicy]]
 === client.enrich.executePolicy
 
 Creates the enrich index for an existing enrich policy.

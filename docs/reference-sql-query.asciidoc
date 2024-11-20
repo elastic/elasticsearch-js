@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.sql.query]]
 === client.sql.query
 
 Executes a SQL request
@@ -53,13 +54,13 @@ interface SqlQueryRequest extends <<RequestBase>> {
   columnar?: boolean
   cursor?: string
   fetch_size?: <<_integer, integer>>
-  filter?: QueryDslQueryContainer
+  filter?: <<QueryDslQueryContainer>>
   query?: string
   request_timeout?: <<Duration>>
   page_timeout?: <<Duration>>
   time_zone?: <<TimeZone>>
   field_multi_value_leniency?: boolean
-  runtime_mappings?: MappingRuntimeFields
+  runtime_mappings?: <<MappingRuntimeFields>>
   wait_for_completion_timeout?: <<Duration>>
   params?: Record<string, any>
   keep_alive?: <<Duration>>

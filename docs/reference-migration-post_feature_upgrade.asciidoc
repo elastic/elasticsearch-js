@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.migration.postFeatureUpgrade]]
 === client.migration.postFeatureUpgrade
 
 Begin upgrades for system features

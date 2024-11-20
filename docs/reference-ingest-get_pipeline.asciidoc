@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ingest.getPipeline]]
 === client.ingest.getPipeline
 
 Returns information about one or more ingest pipelines. This API returns a local reference of the pipeline.

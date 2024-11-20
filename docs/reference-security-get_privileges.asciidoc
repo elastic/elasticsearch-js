@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.getPrivileges]]
 === client.security.getPrivileges
 
 Get application privileges.

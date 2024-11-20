@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.nodes.hotThreads]]
 === client.nodes.hotThreads
 
 This API yields a breakdown of the hot threads on each selected node in the cluster. The output is plain text with a breakdown of each node’s top hot threads.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.sql.getAsync]]
 === client.sql.getAsync
 
 Returns the current status and available results for an async SQL search or stored synchronous SQL search

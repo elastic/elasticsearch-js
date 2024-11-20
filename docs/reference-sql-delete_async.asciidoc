@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.sql.deleteAsync]]
 === client.sql.deleteAsync
 
 Deletes an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it.

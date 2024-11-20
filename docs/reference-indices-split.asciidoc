@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.split]]
 === client.indices.split
 
 Splits an existing index into a new index with more primary shards.

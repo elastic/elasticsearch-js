@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cluster.postVotingConfigExclusions]]
 === client.cluster.postVotingConfigExclusions
 
 Updates the cluster voting config exclusions by node ids or node names.

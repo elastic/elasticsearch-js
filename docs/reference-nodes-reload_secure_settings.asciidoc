@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.nodes.reloadSecureSettings]]
 === client.nodes.reloadSecureSettings
 
 Reloads the keystore on nodes in the cluster.

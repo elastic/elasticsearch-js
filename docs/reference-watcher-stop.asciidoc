@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.watcher.stop]]
 === client.watcher.stop
 
 Stops Watcher if it is running.

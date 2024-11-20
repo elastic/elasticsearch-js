@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.enrollNode]]
 === client.security.enrollNode
 
 Enroll a node. Enroll a new node to allow it to join an existing cluster with security features enabled.

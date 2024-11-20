@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.samlPrepareAuthentication]]
 === client.security.samlPrepareAuthentication
 
 Prepare SAML authentication. Creates a SAML authentication request (`<AuthnRequest>`) as a URL string, based on the configuration of the respective SAML realm in Elasticsearch.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.eql.get]]
 === client.eql.get
 
 Returns the current status and available results for an async EQL search or a stored synchronous EQL search.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cluster.state]]
 === client.cluster.state
 
 Returns a comprehensive information about the state of the cluster.

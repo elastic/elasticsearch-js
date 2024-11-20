@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ccr.resumeAutoFollowPattern]]
 === client.ccr.resumeAutoFollowPattern
 
 Resumes an auto-follow pattern that has been paused

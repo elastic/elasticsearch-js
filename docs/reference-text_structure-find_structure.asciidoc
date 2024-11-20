@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.textStructure.findStructure]]
 === client.textStructure.findStructure
 
 Finds the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch.
@@ -85,7 +86,7 @@ interface TextStructureFindStructureResponse {
   field_stats: Record<<<Field>>, TextStructureFindStructureFieldStat>
   sample_start: string
   num_messages_analyzed: <<_integer, integer>>
-  mappings: MappingTypeMapping
+  mappings: <<MappingTypeMapping>>
   quote?: string
   delimiter?: string
   need_client_timezone: boolean

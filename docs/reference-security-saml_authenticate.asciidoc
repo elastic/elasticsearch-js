@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.samlAuthenticate]]
 === client.security.samlAuthenticate
 
 Authenticate SAML. Submits a SAML response message to Elasticsearch for consumption.

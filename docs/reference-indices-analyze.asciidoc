@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.analyze]]
 === client.indices.analyze
 
 Get tokens from text analysis. The analyze API performs [analysis](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis.html) on a text string and returns the resulting tokens.
@@ -51,13 +52,13 @@ interface IndicesAnalyzeRequest extends <<RequestBase>> {
   index?: <<IndexName>>
   analyzer?: string
   attributes?: string[]
-  char_filter?: AnalysisCharFilter[]
+  char_filter?: <<AnalysisCharFilter>>[]
   explain?: boolean
   field?: <<Field>>
-  filter?: AnalysisTokenFilter[]
+  filter?: <<AnalysisTokenFilter>>[]
   normalizer?: string
   text?: IndicesAnalyzeTextToAnalyze
-  tokenizer?: AnalysisTokenizer
+  tokenizer?: <<AnalysisTokenizer>>
 }
 
 [pass]

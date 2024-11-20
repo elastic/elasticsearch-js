@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ccr.pauseAutoFollowPattern]]
 === client.ccr.pauseAutoFollowPattern
 
 Pauses an auto-follow pattern

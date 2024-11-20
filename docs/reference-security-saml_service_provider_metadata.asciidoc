@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.samlServiceProviderMetadata]]
 === client.security.samlServiceProviderMetadata
 
 Create SAML service provider metadata. Generate SAML metadata for a SAML 2.0 Service Provider.

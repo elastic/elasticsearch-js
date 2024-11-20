@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cluster.reroute]]
 === client.cluster.reroute
 
 Allows to manually change the allocation of individual shards in the cluster.

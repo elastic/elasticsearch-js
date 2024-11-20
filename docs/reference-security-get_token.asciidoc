@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.getToken]]
 === client.security.getToken
 
 Get a token. Create a bearer token for access without requiring basic authentication.

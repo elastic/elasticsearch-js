@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.queryRules.putRule]]
 === client.queryRules.putRule
 
 Creates or updates a query rule within a query ruleset.

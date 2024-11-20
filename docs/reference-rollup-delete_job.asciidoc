@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.rollup.deleteJob]]
 === client.rollup.deleteJob
 
 Deletes an existing rollup job.

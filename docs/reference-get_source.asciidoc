@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.getSource]]
 === client.getSource
 
 Get a document's source. Returns the source of a document.

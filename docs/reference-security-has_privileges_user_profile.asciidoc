@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.hasPrivilegesUserProfile]]
 === client.security.hasPrivilegesUserProfile
 
 Check user profile privileges. Determine whether the users associated with the specified user profile IDs have all the requested privileges.

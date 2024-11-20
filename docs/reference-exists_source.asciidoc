@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.existsSource]]
 === client.existsSource
 
 Check for a document source. Checks if a document's `_source` is stored.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.enrich.putPolicy]]
 === client.enrich.putPolicy
 
 Create an enrich policy. Creates an enrich policy.

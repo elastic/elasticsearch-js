@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cat.help]]
 === client.cat.help
 
 Get CAT help. Returns help for the CAT APIs.

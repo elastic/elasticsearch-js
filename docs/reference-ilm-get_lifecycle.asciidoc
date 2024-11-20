@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ilm.getLifecycle]]
 === client.ilm.getLifecycle
 
 Retrieves a lifecycle policy.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.watcher.ackWatch]]
 === client.watcher.ackWatch
 
 Acknowledges a watch, manually throttling the execution of the watch's actions.

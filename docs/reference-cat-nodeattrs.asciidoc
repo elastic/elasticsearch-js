@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cat.nodeattrs]]
 === client.cat.nodeattrs
 
 Returns information about custom node attributes. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.

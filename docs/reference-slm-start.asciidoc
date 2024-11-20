@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.slm.start]]
 === client.slm.start
 
 Turns on snapshot lifecycle management (SLM).

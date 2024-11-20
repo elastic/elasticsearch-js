@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.getSettings]]
 === client.indices.getSettings
 
 Get index settings. Returns setting information for one or more indices. For data streams, returns setting information for the stream’s backing indices.

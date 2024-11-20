@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.createDataStream]]
 === client.indices.createDataStream
 
 Create a data stream. Creates a data stream. You must have a matching index template with data stream enabled.

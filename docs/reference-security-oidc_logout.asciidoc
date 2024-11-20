@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.oidcLogout]]
 === client.security.oidcLogout
 
 Invalidates a refresh token and access token that was generated from the OpenID Connect Authenticate API

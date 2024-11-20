@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.simulateTemplate]]
 === client.indices.simulateTemplate
 
 Simulate an index template. Returns the index configuration that would be applied by a particular index template.

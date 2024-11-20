@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.snapshot.get]]
 === client.snapshot.get
 
 Returns information about a snapshot.

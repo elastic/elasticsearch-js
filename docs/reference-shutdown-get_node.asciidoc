@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.shutdown.getNode]]
 === client.shutdown.getNode
 
 Retrieve status of a node or nodes that are currently marked as shutting down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.

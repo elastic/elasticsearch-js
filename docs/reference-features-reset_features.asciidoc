@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.features.resetFeatures]]
 === client.features.resetFeatures
 
 Resets the internal state of features, usually by deleting system indices

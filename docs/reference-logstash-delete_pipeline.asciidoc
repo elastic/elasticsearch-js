@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.logstash.deletePipeline]]
 === client.logstash.deletePipeline
 
 Deletes a pipeline used for Logstash Central Management.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.syncJobCancel]]
 === client.connector.syncJobCancel
 
 Cancel a connector sync job. Cancel a connector sync job, which sets the status to cancelling and updates `cancellation_requested_at` to the current time. The connector service is then responsible for setting the status of connector sync jobs to cancelled.

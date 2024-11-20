@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ilm.explainLifecycle]]
 === client.ilm.explainLifecycle
 
 Retrieves information about the index’s current lifecycle state, such as the currently executing phase, action, and step. Shows when the index entered each one, the definition of the running phase, and information about any failures.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.updateIndexName]]
 === client.connector.updateIndexName
 
 Update the connector index name. Update the `index_name` field of a connector, specifying the index where the data ingested by the connector is stored.

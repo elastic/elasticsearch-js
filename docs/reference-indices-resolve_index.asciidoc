@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.resolveIndex]]
 === client.indices.resolveIndex
 
 Resolves the specified name(s) and/or index patterns for indices, aliases, and data streams. Multiple patterns and remote clusters are supported.

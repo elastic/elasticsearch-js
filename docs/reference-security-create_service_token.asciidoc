@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.createServiceToken]]
 === client.security.createServiceToken
 
 Create a service account token. Create a service accounts token for access without requiring basic authentication.

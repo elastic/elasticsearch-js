@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.getDataLifecycle]]
 === client.indices.getDataLifecycle
 
 Get data stream lifecycles. Retrieves the data stream lifecycle configuration of one or more data streams.

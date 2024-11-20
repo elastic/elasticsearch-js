@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.eql.delete]]
 === client.eql.delete
 
 Deletes an async EQL search or a stored synchronous EQL search. The API also deletes results for the search.

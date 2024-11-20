@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.tasks.list]]
 === client.tasks.list
 
 The task management API returns information about tasks currently executing on one or more nodes in the cluster.

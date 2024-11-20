@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.syncJobList]]
 === client.connector.syncJobList
 
 Get all connector sync jobs. Get information about all stored connector sync jobs listed by their creation date in ascending order.

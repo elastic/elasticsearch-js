@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.putScript]]
 === client.putScript
 
 Create or update a script or search template. Creates or updates a stored script or search template.

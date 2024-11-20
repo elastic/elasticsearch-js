@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.inference.streamInference]]
 === client.inference.streamInference
 
 Perform streaming inference

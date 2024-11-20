@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.slm.getLifecycle]]
 === client.slm.getLifecycle
 
 Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.

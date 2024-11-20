@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.queryApiKeys]]
 === client.security.queryApiKeys
 
 Find API keys with a query. Get a paginated list of API keys and their information. You can optionally filter the results with a query.

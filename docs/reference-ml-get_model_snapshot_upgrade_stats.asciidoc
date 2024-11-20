@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.getModelSnapshotUpgradeStats]]
 === client.ml.getModelSnapshotUpgradeStats
 
 Get anomaly detection job model snapshot upgrade usage info.

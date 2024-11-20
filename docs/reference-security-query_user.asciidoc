@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.queryUser]]
 === client.security.queryUser
 
 Find users with a query. Get information for users in a paginated manner. You can optionally filter the results with a query.

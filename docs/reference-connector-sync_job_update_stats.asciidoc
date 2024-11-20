@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.syncJobUpdateStats]]
 === client.connector.syncJobUpdateStats
 
 Updates the stats fields in the connector sync job document.

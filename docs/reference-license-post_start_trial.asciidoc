@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.license.postStartTrial]]
 === client.license.postStartTrial
 
 The start trial API enables you to start a 30-day trial, which gives access to all subscription features.

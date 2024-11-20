@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.tasks.cancel]]
 === client.tasks.cancel
 
 Cancels a task, if it can be cancelled through an API.

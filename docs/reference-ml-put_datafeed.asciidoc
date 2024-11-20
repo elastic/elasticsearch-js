@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.putDatafeed]]
 === client.ml.putDatafeed
 
 Create a datafeed. Datafeeds retrieve data from Elasticsearch for analysis by an anomaly detection job. You can associate only one datafeed with each anomaly detection job. The datafeed contains a query that runs at a defined interval (`frequency`). If you are concerned about delayed data, you can add a delay (`query_delay') at each interval. When Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead. You must use Kibana, this API, or the create anomaly detection jobs API to create a datafeed. Do not add a datafeed directly to the `.ml-config` index. Do not give users `write` privileges on the `.ml-config` index.
@@ -53,7 +54,7 @@ interface MlPutDatafeedRequest extends <<RequestBase>> {
   expand_wildcards?: <<ExpandWildcards>>
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
-  aggregations?: Record<string, AggregationsAggregationContainer>
+  aggregations?: Record<string, <<AggregationsAggregationContainer>>>
   chunking_config?: MlChunkingConfig
   delayed_data_check_config?: MlDelayedDataCheckConfig
   frequency?: <<Duration>>
@@ -63,9 +64,9 @@ interface MlPutDatafeedRequest extends <<RequestBase>> {
   indices_options?: <<IndicesOptions>>
   job_id?: <<Id>>
   max_empty_searches?: <<_integer, integer>>
-  query?: QueryDslQueryContainer
+  query?: <<QueryDslQueryContainer>>
   query_delay?: <<Duration>>
-  runtime_mappings?: MappingRuntimeFields
+  runtime_mappings?: <<MappingRuntimeFields>>
   script_fields?: Record<string, <<ScriptField>>>
   scroll_size?: <<_integer, integer>>
   headers?: <<HttpHeaders>>
@@ -83,7 +84,7 @@ interface MlPutDatafeedRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlPutDatafeedResponse {
-  aggregations?: Record<string, AggregationsAggregationContainer>
+  aggregations?: Record<string, <<AggregationsAggregationContainer>>>
   authorization?: MlDatafeedAuthorization
   chunking_config: MlChunkingConfig
   delayed_data_check_config?: MlDelayedDataCheckConfig
@@ -93,9 +94,9 @@ interface MlPutDatafeedResponse {
   job_id: <<Id>>
   indices_options?: <<IndicesOptions>>
   max_empty_searches?: <<_integer, integer>>
-  query: QueryDslQueryContainer
+  query: <<QueryDslQueryContainer>>
   query_delay: <<Duration>>
-  runtime_mappings?: MappingRuntimeFields
+  runtime_mappings?: <<MappingRuntimeFields>>
   script_fields?: Record<string, <<ScriptField>>>
   scroll_size: <<_integer, integer>>
 }

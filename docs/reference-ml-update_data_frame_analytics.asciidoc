@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.updateDataFrameAnalytics]]
 === client.ml.updateDataFrameAnalytics
 
 Update a data frame analytics job.

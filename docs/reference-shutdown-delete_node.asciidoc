@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.shutdown.deleteNode]]
 === client.shutdown.deleteNode
 
 Removes a node from the shutdown list. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.

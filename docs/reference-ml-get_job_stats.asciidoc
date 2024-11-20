@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.getJobStats]]
 === client.ml.getJobStats
 
 Get anomaly detection jobs usage info.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.delete]]
 === client.indices.delete
 
 Delete indices. Deletes one or more indices.

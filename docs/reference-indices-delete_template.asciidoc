@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.deleteTemplate]]
 === client.indices.deleteTemplate
 
 Deletes a legacy index template.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.msearchTemplate]]
 === client.msearchTemplate
 
 Run multiple templated searches.
@@ -68,7 +69,7 @@ interface MsearchTemplateRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
+type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = MsearchMultiSearchResult<TDocument, TAggregations>
 
 [pass]
 ++++

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.xpack.usage]]
 === client.xpack.usage
 
 This API provides information about which features are currently enabled and available under the current license and some usage statistics.

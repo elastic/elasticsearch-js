@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.recovery]]
 === client.indices.recovery
 
 Returns information about ongoing and completed shard recoveries for one or more indices. For data streams, the API returns information for the stream’s backing indices.

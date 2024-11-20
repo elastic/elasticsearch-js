@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.searchApplication.renderQuery]]
 === client.searchApplication.renderQuery
 
 Renders a query for given search application search parameters

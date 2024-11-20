@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.updateServiceType]]
 === client.connector.updateServiceType
 
 Update the connector service type.

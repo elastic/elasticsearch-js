@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.getSettings]]
 === client.security.getSettings
 
 Retrieve settings for the security system indices

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.updateUserProfileData]]
 === client.security.updateUserProfileData
 
 Update user profile data. Update specific data for the user profile that is associated with a unique ID.

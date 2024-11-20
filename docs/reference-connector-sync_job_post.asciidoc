@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.syncJobPost]]
 === client.connector.syncJobPost
 
 Create a connector sync job. Create a connector sync job document in the internal index and initialize its counters and timestamps with default values.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.enrich.getPolicy]]
 === client.enrich.getPolicy
 
 Get an enrich policy. Returns information about an enrich policy.

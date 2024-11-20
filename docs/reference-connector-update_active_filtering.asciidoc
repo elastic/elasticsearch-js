@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.updateActiveFiltering]]
 === client.connector.updateActiveFiltering
 
 Activate the connector draft filter. Activates the valid draft filtering for a connector.

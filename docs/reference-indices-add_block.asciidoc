@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.addBlock]]
 === client.indices.addBlock
 
 Add an index block. Limits the operations allowed on an index by blocking specific operation types.

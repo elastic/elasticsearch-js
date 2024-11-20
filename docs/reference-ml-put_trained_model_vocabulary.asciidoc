@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.putTrainedModelVocabulary]]
 === client.ml.putTrainedModelVocabulary
 
 Create a trained model vocabulary. This API is supported only for natural language processing (NLP) models. The vocabulary is stored in the index as described in `inference_config.*.vocabulary` of the trained model definition.

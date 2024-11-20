@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.getMapping]]
 === client.indices.getMapping
 
 Get mapping definitions. Retrieves mapping definitions for one or more indices. For data streams, the API retrieves mappings for the stream’s backing indices.

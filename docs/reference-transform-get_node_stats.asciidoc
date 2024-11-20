@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.transform.getNodeStats]]
 === client.transform.getNodeStats
 
 Retrieves transform usage information for transform nodes.

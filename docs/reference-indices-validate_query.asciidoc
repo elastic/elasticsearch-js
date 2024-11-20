@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.validateQuery]]
 === client.indices.validateQuery
 
 Validate a query. Validates a query without running it.
@@ -53,7 +54,7 @@ interface IndicesValidateQueryRequest extends <<RequestBase>> {
   all_shards?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
-  default_operator?: QueryDslOperator
+  default_operator?: <<QueryDslOperator>>
   df?: string
   expand_wildcards?: <<ExpandWildcards>>
   explain?: boolean
@@ -61,7 +62,7 @@ interface IndicesValidateQueryRequest extends <<RequestBase>> {
   lenient?: boolean
   rewrite?: boolean
   q?: string
-  query?: QueryDslQueryContainer
+  query?: <<QueryDslQueryContainer>>
 }
 
 [pass]

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ccr.stats]]
 === client.ccr.stats
 
 Gets all stats related to cross-cluster replication.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.graph.explore]]
 === client.graph.explore
 
 Extracts and summarizes information about the documents and terms in an Elasticsearch data stream or index.
@@ -53,7 +54,7 @@ interface GraphExploreRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
   connections?: GraphHop
   controls?: GraphExploreControls
-  query?: QueryDslQueryContainer
+  query?: <<QueryDslQueryContainer>>
   vertices?: GraphVertexDefinition[]
 }
 

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.searchableSnapshots.mount]]
 === client.searchableSnapshots.mount
 
 Mount a snapshot as a searchable index.

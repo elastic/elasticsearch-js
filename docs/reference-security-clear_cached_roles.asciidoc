@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.clearCachedRoles]]
 === client.security.clearCachedRoles
 
 Clear the roles cache. Evict roles from the native role cache.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.rankEval]]
 === client.rankEval
 
 Evaluate ranked search results. Evaluate the quality of ranked search results over a set of typical search queries.

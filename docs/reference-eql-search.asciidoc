@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.eql.search]]
 === client.eql.search
 
 Returns results matching a query expressed in Event Query Language (EQL)
@@ -58,14 +59,14 @@ interface EqlSearchRequest extends <<RequestBase>> {
   tiebreaker_field?: <<Field>>
   timestamp_field?: <<Field>>
   fetch_size?: <<_uint, uint>>
-  filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+  filter?: <<QueryDslQueryContainer>> | <<QueryDslQueryContainer>>[]
   keep_alive?: <<Duration>>
   keep_on_completion?: boolean
   wait_for_completion_timeout?: <<Duration>>
   size?: <<_uint, uint>>
-  fields?: QueryDslFieldAndFormat | <<Field>> | (QueryDslFieldAndFormat | <<Field>>)[]
+  fields?: <<QueryDslFieldAndFormat>> | <<Field>> | (<<QueryDslFieldAndFormat>> | <<Field>>)[]
   result_position?: EqlSearchResultPosition
-  runtime_mappings?: MappingRuntimeFields
+  runtime_mappings?: <<MappingRuntimeFields>>
 }
 
 [pass]

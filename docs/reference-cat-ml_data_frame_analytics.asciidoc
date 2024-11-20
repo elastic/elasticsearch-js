@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cat.mlDataFrameAnalytics]]
 === client.cat.mlDataFrameAnalytics
 
 Get data frame analytics jobs. Returns configuration and usage information about data frame analytics jobs. CAT APIs are only intended for human consumption using the Kibana console or command line. They are not intended for use by applications. For application consumption, use the get data frame analytics jobs statistics API.

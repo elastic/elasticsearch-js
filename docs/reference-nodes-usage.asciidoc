@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.nodes.usage]]
 === client.nodes.usage
 
 Returns information on the usage of features.

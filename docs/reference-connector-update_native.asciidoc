@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.updateNative]]
 === client.connector.updateNative
 
 Update the connector is_native flag.

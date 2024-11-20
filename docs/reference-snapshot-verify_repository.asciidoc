@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.snapshot.verifyRepository]]
 === client.snapshot.verifyRepository
 
 Verifies a repository.

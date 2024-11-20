@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.shutdown.putNode]]
 === client.shutdown.putNode
 
 Adds a node to be shut down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.snapshot.create]]
 === client.snapshot.create
 
 Creates a snapshot in a repository.

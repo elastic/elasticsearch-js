@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cluster.info]]
 === client.cluster.info
 
 Get cluster info. Returns basic information about the cluster.

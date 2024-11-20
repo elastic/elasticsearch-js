@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.synonyms.putSynonymRule]]
 === client.synonyms.putSynonymRule
 
 Creates or updates a synonym rule in a synonym set

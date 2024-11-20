@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ccr.forgetFollower]]
 === client.ccr.forgetFollower
 
 Removes the follower retention leases from the leader.

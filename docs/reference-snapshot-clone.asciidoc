@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.snapshot.clone]]
 === client.snapshot.clone
 
 Clones indices from one snapshot into another snapshot in the same repository.

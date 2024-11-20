@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.autoscaling.getAutoscalingPolicy]]
 === client.autoscaling.getAutoscalingPolicy
 
 Get an autoscaling policy. NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.

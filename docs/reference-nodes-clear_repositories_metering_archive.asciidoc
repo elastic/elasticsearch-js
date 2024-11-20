@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.nodes.clearRepositoriesMeteringArchive]]
 === client.nodes.clearRepositoriesMeteringArchive
 
 You can use this API to clear the archived repositories metering information in the cluster.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.textStructure.findFieldStructure]]
 === client.textStructure.findFieldStructure
 
 Finds the structure of a text field in an index.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.fleet.globalCheckpoints]]
 === client.fleet.globalCheckpoints
 
 Returns the current global checkpoints for an index. This API is design for internal use by the fleet server project.

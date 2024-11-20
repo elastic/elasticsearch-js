@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.searchApplication.putBehavioralAnalytics]]
 === client.searchApplication.putBehavioralAnalytics
 
 Create a behavioral analytics collection.

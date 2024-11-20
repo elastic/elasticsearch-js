@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ingest.getGeoipDatabase]]
 === client.ingest.getGeoipDatabase
 
 Returns information about one or more geoip database configurations.

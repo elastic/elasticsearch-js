@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.searchableSnapshots.cacheStats]]
 === client.searchableSnapshots.cacheStats
 
 Retrieve node-level cache statistics about searchable snapshots.

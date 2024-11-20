@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.clearCache]]
 === client.indices.clearCache
 
 Clears the caches of one or more indices. For data streams, the API clears the caches of the stream’s backing indices.

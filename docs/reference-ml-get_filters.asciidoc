@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.getFilters]]
 === client.ml.getFilters
 
 Get filters. You can get a single filter or all filters.

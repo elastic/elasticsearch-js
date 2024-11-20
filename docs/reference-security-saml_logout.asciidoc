@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.samlLogout]]
 === client.security.samlLogout
 
 Logout of SAML. Submits a request to invalidate an access token and refresh token.

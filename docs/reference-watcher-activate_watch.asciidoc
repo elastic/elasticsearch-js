@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.watcher.activateWatch]]
 === client.watcher.activateWatch
 
 Activates a currently inactive watch.

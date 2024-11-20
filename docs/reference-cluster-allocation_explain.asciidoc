@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cluster.allocationExplain]]
 === client.cluster.allocationExplain
 
 Provides explanations for shard allocations in the cluster.

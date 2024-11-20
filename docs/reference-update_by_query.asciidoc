@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.updateByQuery]]
 === client.updateByQuery
 
 Update documents. Updates documents that match the specified query. If no query is specified, performs an update on every document in the data stream or index without modifying the source, which is useful for picking up mapping changes.
@@ -52,7 +53,7 @@ interface UpdateByQueryRequest extends <<RequestBase>> {
   allow_no_indices?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
-  default_operator?: QueryDslOperator
+  default_operator?: <<QueryDslOperator>>
   df?: string
   expand_wildcards?: <<ExpandWildcards>>
   from?: <<_long, long>>
@@ -79,7 +80,7 @@ interface UpdateByQueryRequest extends <<RequestBase>> {
   wait_for_active_shards?: <<WaitForActiveShards>>
   wait_for_completion?: boolean
   max_docs?: <<_long, long>>
-  query?: QueryDslQueryContainer
+  query?: <<QueryDslQueryContainer>>
   script?: <<Script>> | string
   slice?: <<SlicedScroll>>
   conflicts?: <<Conflicts>>

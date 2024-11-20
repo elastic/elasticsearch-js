@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.transform.deleteTransform]]
 === client.transform.deleteTransform
 
 Delete a transform. Deletes a transform.

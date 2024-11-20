@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.updateFeatures]]
 === client.connector.updateFeatures
 
 Updates the connector features in the connector document.

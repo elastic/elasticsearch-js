@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.rollup.rollupSearch]]
 === client.rollup.rollupSearch
 
 Enables searching rolled-up data using the standard Query DSL.
@@ -51,10 +52,10 @@ interface RollupRollupSearchRequest extends <<RequestBase>> {
   index: <<Indices>>
   rest_total_hits_as_int?: boolean
   typed_keys?: boolean
-  aggregations?: Record<string, AggregationsAggregationContainer>
+  aggregations?: Record<string, <<AggregationsAggregationContainer>>>
   pass:[/**] @alias aggregations */
-  aggs?: Record<string, AggregationsAggregationContainer>
-  query?: QueryDslQueryContainer
+  aggs?: Record<string, <<AggregationsAggregationContainer>>>
+  query?: <<QueryDslQueryContainer>>
   size?: <<_integer, integer>>
 }
 
@@ -69,7 +70,7 @@ interface RollupRollupSearchRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-interface RollupRollupSearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> {
+interface RollupRollupSearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> {
   took: <<_long, long>>
   timed_out: boolean
   terminated_early?: boolean

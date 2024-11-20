@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.getTrainedModelsStats]]
 === client.ml.getTrainedModelsStats
 
 Get trained models usage info. You can get usage information for multiple trained models in a single API request by using a comma-separated list of model IDs or a wildcard expression.

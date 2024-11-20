@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.searchApplication.delete]]
 === client.searchApplication.delete
 
 Delete a search application. Remove a search application and its associated alias. Indices attached to the search application are not removed.

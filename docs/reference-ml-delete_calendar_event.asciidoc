@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.deleteCalendarEvent]]
 === client.ml.deleteCalendarEvent
 
 Delete events from a calendar.

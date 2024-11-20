@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.postCalendarEvents]]
 === client.ml.postCalendarEvents
 
 Add scheduled events to the calendar.

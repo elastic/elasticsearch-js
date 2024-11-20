@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.oidcAuthenticate]]
 === client.security.oidcAuthenticate
 
 Exchanges an OpenID Connection authentication response message for an Elasticsearch access token and refresh token pair

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.update]]
 === client.update
 
 Update a document. Updates a document by running a script or passing a partial document.

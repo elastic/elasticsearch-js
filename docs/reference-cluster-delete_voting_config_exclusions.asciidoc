@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.cluster.deleteVotingConfigExclusions]]
 === client.cluster.deleteVotingConfigExclusions
 
 Clears cluster voting config exclusions.

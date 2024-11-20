@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.deleteByQuery]]
 === client.deleteByQuery
 
 Delete documents. Deletes documents that match the specified query.
@@ -53,7 +54,7 @@ interface DeleteByQueryRequest extends <<RequestBase>> {
   analyzer?: string
   analyze_wildcard?: boolean
   conflicts?: <<Conflicts>>
-  default_operator?: QueryDslOperator
+  default_operator?: <<QueryDslOperator>>
   df?: string
   expand_wildcards?: <<ExpandWildcards>>
   from?: <<_long, long>>
@@ -78,7 +79,7 @@ interface DeleteByQueryRequest extends <<RequestBase>> {
   wait_for_active_shards?: <<WaitForActiveShards>>
   wait_for_completion?: boolean
   max_docs?: <<_long, long>>
-  query?: QueryDslQueryContainer
+  query?: <<QueryDslQueryContainer>>
   slice?: <<SlicedScroll>>
 }
 

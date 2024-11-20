@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.slm.executeLifecycle]]
 === client.slm.executeLifecycle
 
 Immediately creates a snapshot according to the lifecycle policy, without waiting for the scheduled time.

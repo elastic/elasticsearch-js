@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ccr.pauseFollow]]
 === client.ccr.pauseFollow
 
 Pauses a follower index. The follower index will not fetch any additional operations from the leader index.

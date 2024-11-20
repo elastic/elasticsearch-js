@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.renderSearchTemplate]]
 === client.renderSearchTemplate
 
 Render a search template. Render a search template as a search request body.

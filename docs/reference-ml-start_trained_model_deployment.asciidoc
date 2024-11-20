@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.startTrainedModelDeployment]]
 === client.ml.startTrainedModelDeployment
 
 Start a trained model deployment. It allocates the model to every machine learning node.

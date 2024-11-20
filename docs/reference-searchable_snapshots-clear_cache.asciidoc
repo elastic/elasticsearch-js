@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.searchableSnapshots.clearCache]]
 === client.searchableSnapshots.clearCache
 
 Clear the cache of searchable snapshots.

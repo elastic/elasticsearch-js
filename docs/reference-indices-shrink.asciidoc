@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.shrink]]
 === client.indices.shrink
 
 Shrinks an existing index into a new index with fewer primary shards.

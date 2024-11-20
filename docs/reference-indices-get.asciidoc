@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.get]]
 === client.indices.get
 
 Get index information. Returns information about one or more indices. For data streams, the API returns information about the stream’s backing indices.

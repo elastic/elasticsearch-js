@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ingest.geoIpStats]]
 === client.ingest.geoIpStats
 
 Gets download statistics for GeoIP2 databases used with the geoip processor.

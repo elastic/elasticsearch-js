@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.clearScroll]]
 === client.clearScroll
 
 Clear a scrolling search. Clear the search context and results for a scrolling search.

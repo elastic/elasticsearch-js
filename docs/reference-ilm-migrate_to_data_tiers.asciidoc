@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ilm.migrateToDataTiers]]
 === client.ilm.migrateToDataTiers
 
 Switches the indices, ILM policies, and legacy, composable and component templates from using custom node attributes and attribute-based allocation filters to using data tiers, and optionally deletes one legacy index template.+ Using node roles enables ILM to automatically move the indices between data tiers.

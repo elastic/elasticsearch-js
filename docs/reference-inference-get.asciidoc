@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.inference.get]]
 === client.inference.get
 
 Get an inference endpoint

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.esql.asyncQueryGet]]
 === client.esql.asyncQueryGet
 
 Retrieves the results of a previously submitted async query request given its ID.

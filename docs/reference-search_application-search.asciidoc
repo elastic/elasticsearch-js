@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.searchApplication.search]]
 === client.searchApplication.search
 
 Run a search application search. Generate and run an Elasticsearch query that uses the specified query parameteter and the search template associated with the search application or default template. Unspecified template parameters are assigned their default values if applicable.
@@ -64,7 +65,7 @@ interface SearchApplicationSearchRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type SearchApplicationSearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
+type SearchApplicationSearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = SearchResponseBody<TDocument, TAggregations>
 
 [pass]
 ++++

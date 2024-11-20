@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.queryRules.deleteRule]]
 === client.queryRules.deleteRule
 
 Deletes a query rule within a query ruleset.

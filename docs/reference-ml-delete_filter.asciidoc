@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.deleteFilter]]
 === client.ml.deleteFilter
 
 Delete a filter. If an anomaly detection job references the filter, you cannot delete the filter. You must update or delete the job before you can delete the filter.

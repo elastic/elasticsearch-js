@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.getCalendarEvents]]
 === client.ml.getCalendarEvents
 
 Get info about events in calendars.

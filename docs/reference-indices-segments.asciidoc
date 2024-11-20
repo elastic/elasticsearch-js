@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.segments]]
 === client.indices.segments
 
 Returns low-level information about the Lucene segments in index shards. For data streams, the API returns information about the stream’s backing indices.

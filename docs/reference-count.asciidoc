@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.count]]
 === client.count
 
 Returns number of documents matching a query.
@@ -52,7 +53,7 @@ interface CountRequest extends <<RequestBase>> {
   allow_no_indices?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
-  default_operator?: QueryDslOperator
+  default_operator?: <<QueryDslOperator>>
   df?: string
   expand_wildcards?: <<ExpandWildcards>>
   ignore_throttled?: boolean
@@ -63,7 +64,7 @@ interface CountRequest extends <<RequestBase>> {
   routing?: <<Routing>>
   terminate_after?: <<_long, long>>
   q?: string
-  query?: QueryDslQueryContainer
+  query?: <<QueryDslQueryContainer>>
 }
 
 [pass]

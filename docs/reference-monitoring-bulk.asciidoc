@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.monitoring.bulk]]
 === client.monitoring.bulk
 
 Used by the monitoring features to send monitoring data.

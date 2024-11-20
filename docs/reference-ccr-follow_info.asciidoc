@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ccr.followInfo]]
 === client.ccr.followInfo
 
 Retrieves information about all follower indices, including parameters and status for each follower index

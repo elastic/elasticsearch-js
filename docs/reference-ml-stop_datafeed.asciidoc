@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.stopDatafeed]]
 === client.ml.stopDatafeed
 
 Stop datafeeds. A datafeed that is stopped ceases to retrieve data from Elasticsearch. A datafeed can be started and stopped multiple times throughout its lifecycle.

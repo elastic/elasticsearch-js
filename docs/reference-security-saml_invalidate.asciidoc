@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.samlInvalidate]]
 === client.security.samlInvalidate
 
 Invalidate SAML. Submits a SAML LogoutRequest message to Elasticsearch for consumption.

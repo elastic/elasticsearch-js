@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.searchTemplate]]
 === client.searchTemplate
 
 Run a search with a search template.
@@ -83,7 +84,7 @@ interface SearchTemplateResponse<TDocument = unknown> {
   timed_out: boolean
   _shards: <<ShardStatistics>>
   hits: SearchHitsMetadata<TDocument>
-  aggregations?: Record<<<AggregateName>>, AggregationsAggregate>
+  aggregations?: Record<<<AggregateName>>, <<AggregationsAggregate>>>
   _clusters?: <<ClusterStatistics>>
   fields?: Record<string, any>
   max_score?: <<_double, double>>

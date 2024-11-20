@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.getTrainedModels]]
 === client.ml.getTrainedModels
 
 Get trained model configuration info.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.textStructure.findMessageStructure]]
 === client.textStructure.findMessageStructure
 
 Finds the structure of a list of messages. The messages must contain data that is suitable to be ingested into Elasticsearch.

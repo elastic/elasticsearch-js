@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ilm.putLifecycle]]
 === client.ilm.putLifecycle
 
 Creates a lifecycle policy. If the specified policy exists, the policy is replaced and the policy version is incremented.

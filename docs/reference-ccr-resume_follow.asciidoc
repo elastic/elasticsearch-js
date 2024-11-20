@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ccr.resumeFollow]]
 === client.ccr.resumeFollow
 
 Resumes a follower index that has been paused

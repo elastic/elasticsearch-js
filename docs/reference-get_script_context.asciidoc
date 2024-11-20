@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.getScriptContext]]
 === client.getScriptContext
 
 Get script contexts. Get a list of supported script contexts and their methods.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.sql.clearCursor]]
 === client.sql.clearCursor
 
 Clears the SQL cursor

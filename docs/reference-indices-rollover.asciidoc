@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.rollover]]
 === client.indices.rollover
 
 Roll over to a new index. Creates a new index for a data stream or index alias.
@@ -56,7 +57,7 @@ interface IndicesRolloverRequest extends <<RequestBase>> {
   wait_for_active_shards?: <<WaitForActiveShards>>
   aliases?: Record<<<IndexName>>, IndicesAlias>
   conditions?: IndicesRolloverRolloverConditions
-  mappings?: MappingTypeMapping
+  mappings?: <<MappingTypeMapping>>
   settings?: Record<string, any>
 }
 

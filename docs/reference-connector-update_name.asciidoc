@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.updateName]]
 === client.connector.updateName
 
 Update the connector name and description.

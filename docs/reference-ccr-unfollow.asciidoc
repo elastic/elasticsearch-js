@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ccr.unfollow]]
 === client.ccr.unfollow
 
 Stops the following task associated with a follower index and removes index metadata and settings associated with cross-cluster replication.

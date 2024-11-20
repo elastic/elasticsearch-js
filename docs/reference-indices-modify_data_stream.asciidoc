@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.modifyDataStream]]
 === client.indices.modifyDataStream
 
 Update data streams. Performs one or more data stream modification actions in a single atomic operation.

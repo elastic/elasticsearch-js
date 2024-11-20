@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.snapshot.deleteRepository]]
 === client.snapshot.deleteRepository
 
 Deletes a repository.

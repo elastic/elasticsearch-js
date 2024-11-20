@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.deleteDataStream]]
 === client.indices.deleteDataStream
 
 Delete data streams. Deletes one or more data streams and their backing indices.

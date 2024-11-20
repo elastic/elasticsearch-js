@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.put]]
 === client.connector.put
 
 Create or update a connector.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.queryRules.getRule]]
 === client.queryRules.getRule
 
 Returns the details about a query rule within a query ruleset

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.termvectors]]
 === client.termvectors
 
 Get term vector information. Get information and statistics about terms in the fields of a particular document.

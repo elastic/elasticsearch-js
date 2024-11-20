@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.snapshot.restore]]
 === client.snapshot.restore
 
 Restores a snapshot.

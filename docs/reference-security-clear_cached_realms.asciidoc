@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.clearCachedRealms]]
 === client.security.clearCachedRealms
 
 Clear the user cache. Evict users from the user cache. You can completely clear the cache or evict specific users.

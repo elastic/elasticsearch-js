@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.exists]]
 === client.exists
 
 Check a document. Checks if a specified document exists.

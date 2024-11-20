@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.getCategories]]
 === client.ml.getCategories
 
 Get anomaly detection job results for categories.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ilm.deleteLifecycle]]
 === client.ilm.deleteLifecycle
 
 Deletes the specified lifecycle policy definition. You cannot delete policies that are currently in use. If the policy is being used to manage any indices, the request fails and returns an error.

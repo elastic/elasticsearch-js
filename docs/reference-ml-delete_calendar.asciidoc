@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ml.deleteCalendar]]
 === client.ml.deleteCalendar
 
 Delete a calendar. Removes all scheduled events from a calendar, then deletes it.

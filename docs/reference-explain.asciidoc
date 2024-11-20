@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.explain]]
 === client.explain
 
 Explain a document match result. Returns information about why a specific document matches, or doesn’t match, a query.
@@ -52,7 +53,7 @@ interface ExplainRequest extends <<RequestBase>> {
   index: <<IndexName>>
   analyzer?: string
   analyze_wildcard?: boolean
-  default_operator?: QueryDslOperator
+  default_operator?: <<QueryDslOperator>>
   df?: string
   lenient?: boolean
   preference?: string
@@ -62,7 +63,7 @@ interface ExplainRequest extends <<RequestBase>> {
   _source_includes?: <<Fields>>
   stored_fields?: <<Fields>>
   q?: string
-  query?: QueryDslQueryContainer
+  query?: <<QueryDslQueryContainer>>
 }
 
 [pass]

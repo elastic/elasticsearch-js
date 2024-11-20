@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.forcemerge]]
 === client.indices.forcemerge
 
 Performs the force merge operation on one or more indices.

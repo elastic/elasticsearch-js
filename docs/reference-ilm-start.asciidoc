@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.ilm.start]]
 === client.ilm.start
 
 Start the index lifecycle management (ILM) plugin.

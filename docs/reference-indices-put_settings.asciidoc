@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.putSettings]]
 === client.indices.putSettings
 
 Update index settings. Changes dynamic index settings in real time. For data streams, index setting changes are applied to all backing indices by default.

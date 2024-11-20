@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.simulate.ingest]]
 === client.simulate.ingest
 
 Simulates running ingest with example documents.

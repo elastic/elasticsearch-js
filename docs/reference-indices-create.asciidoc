@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.create]]
 === client.indices.create
 
 Create an index. Creates a new index.
@@ -53,7 +54,7 @@ interface IndicesCreateRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
   wait_for_active_shards?: <<WaitForActiveShards>>
   aliases?: Record<<<Name>>, IndicesAlias>
-  mappings?: MappingTypeMapping
+  mappings?: <<MappingTypeMapping>>
   settings?: IndicesIndexSettings
 }
 

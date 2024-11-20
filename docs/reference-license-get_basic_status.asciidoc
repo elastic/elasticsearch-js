@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.license.getBasicStatus]]
 === client.license.getBasicStatus
 
 Retrieves information about the status of the basic license.

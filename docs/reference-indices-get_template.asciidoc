@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.getTemplate]]
 === client.indices.getTemplate
 
 Get index templates. Retrieves information about one or more index templates.

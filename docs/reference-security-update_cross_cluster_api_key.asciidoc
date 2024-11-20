@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.updateCrossClusterApiKey]]
 === client.security.updateCrossClusterApiKey
 
 Update a cross-cluster API key. Update the attributes of an existing cross-cluster API key, which is used for API key based remote cluster access.

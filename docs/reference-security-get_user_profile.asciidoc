@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.getUserProfile]]
 === client.security.getUserProfile
 
 Get a user profile. Get a user's profile using the unique profile ID.

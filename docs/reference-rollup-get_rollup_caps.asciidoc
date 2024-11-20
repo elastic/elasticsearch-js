@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.rollup.getRollupCaps]]
 === client.rollup.getRollupCaps
 
 Returns the capabilities of any rollup jobs that have been configured for a specific index or index pattern.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.oidcPrepareAuthentication]]
 === client.security.oidcPrepareAuthentication
 
 Creates an OAuth 2.0 authentication request as a URL string

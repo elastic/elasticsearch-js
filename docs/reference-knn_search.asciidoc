@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.knnSearch]]
 === client.knnSearch
 
 Run a knn search. NOTE: The kNN search API has been replaced by the `knn` option in the search API. Perform a k-nearest neighbor (kNN) search on a dense_vector field and return the matching documents. Given a query vector, the API finds the k closest vectors and returns those documents as search hits. Elasticsearch uses the HNSW algorithm to support efficient kNN search. Like most kNN algorithms, HNSW is an approximate method that sacrifices result accuracy for improved search speed. This means the results returned are not always the true k closest neighbors. The kNN search API supports restricting the search using a filter. The search will return the top k documents that also match the filter query.
@@ -51,10 +52,10 @@ interface KnnSearchRequest extends <<RequestBase>> {
   index: <<Indices>>
   routing?: <<Routing>>
   _source?: SearchSourceConfig
-  docvalue_fields?: (QueryDslFieldAndFormat | <<Field>>)[]
+  docvalue_fields?: (<<QueryDslFieldAndFormat>> | <<Field>>)[]
   stored_fields?: <<Fields>>
   fields?: <<Fields>>
-  filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+  filter?: <<QueryDslQueryContainer>> | <<QueryDslQueryContainer>>[]
   knn: KnnSearchQuery
 }
 

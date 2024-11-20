@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.bulkUpdateApiKeys]]
 === client.security.bulkUpdateApiKeys
 
 Updates the attributes of multiple existing API keys.

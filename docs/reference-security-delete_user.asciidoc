@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.deleteUser]]
 === client.security.deleteUser
 
 Delete users. Delete users from the native realm.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.connector.list]]
 === client.connector.list
 
 Get all connectors. Get information about all connectors.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.enableUser]]
 === client.security.enableUser
 
 Enable users. Enable users in the native realm.

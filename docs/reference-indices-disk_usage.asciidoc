@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.diskUsage]]
 === client.indices.diskUsage
 
 Analyzes the disk usage of each field of an index or data stream.

@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.indices.reloadSearchAnalyzers]]
 === client.indices.reloadSearchAnalyzers
 
 Reloads an index's search analyzers and their resources.

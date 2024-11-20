@@ -26,6 +26,7 @@
 ////////
 
 [discrete]
+[[client.security.getUser]]
 === client.security.getUser
 
 Get users. Get information about users in the native realm and built-in users.
