@@ -49,7 +49,7 @@ Throttle an update by query operation. Change the number of requests per second 
 ++++
 interface UpdateByQueryRethrottleRequest extends <<RequestBase>> {
   task_id: <<Id>>
-  requests_per_second?: number
+  requests_per_second?: <<_float, float>>
 }
 
 [pass]

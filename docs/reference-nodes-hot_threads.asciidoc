@@ -51,9 +51,9 @@ interface NodesHotThreadsRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   ignore_idle_threads?: boolean
   interval?: <<Duration>>
-  snapshots?: number
+  snapshots?: <<_long, long>>
   master_timeout?: <<Duration>>
-  threads?: number
+  threads?: <<_long, long>>
   timeout?: <<Duration>>
   type?: <<ThreadType>>
   sort?: <<ThreadType>>

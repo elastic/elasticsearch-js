@@ -51,7 +51,7 @@ interface MlUpdateDataFrameAnalyticsRequest extends <<RequestBase>> {
   id: <<Id>>
   description?: string
   model_memory_limit?: string
-  max_num_threads?: number
+  max_num_threads?: <<_integer, integer>>
   allow_lazy_start?: boolean
 }
 
@@ -71,11 +71,11 @@ interface MlUpdateDataFrameAnalyticsResponse {
   allow_lazy_start: boolean
   analysis: MlDataframeAnalysisContainer
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
-  create_time: number
+  create_time: <<_long, long>>
   description?: string
   dest: MlDataframeAnalyticsDestination
   id: <<Id>>
-  max_num_threads: number
+  max_num_threads: <<_integer, integer>>
   model_memory_limit: string
   source: MlDataframeAnalyticsSource
   version: <<VersionString>>

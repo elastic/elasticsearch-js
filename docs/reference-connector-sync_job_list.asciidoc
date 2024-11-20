@@ -48,8 +48,8 @@ Get all connector sync jobs. Get information about all stored connector sync job
 <pre>
 ++++
 interface ConnectorSyncJobListRequest extends <<RequestBase>> {
-  from?: number
-  size?: number
+  from?: <<_integer, integer>>
+  size?: <<_integer, integer>>
   status?: ConnectorSyncStatus
   connector_id?: <<Id>>
   job_type?: ConnectorSyncJobType | ConnectorSyncJobType[]
@@ -67,7 +67,7 @@ interface ConnectorSyncJobListRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface ConnectorSyncJobListResponse {
-  count: number
+  count: <<_long, long>>
   results: ConnectorConnectorSyncJob[]
 }
 

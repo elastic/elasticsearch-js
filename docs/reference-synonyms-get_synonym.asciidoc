@@ -49,8 +49,8 @@ Retrieves a synonym set
 ++++
 interface SynonymsGetSynonymRequest extends <<RequestBase>> {
   id: <<Id>>
-  from?: number
-  size?: number
+  from?: <<_integer, integer>>
+  size?: <<_integer, integer>>
 }
 
 [pass]
@@ -65,7 +65,7 @@ interface SynonymsGetSynonymRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SynonymsGetSynonymResponse {
-  count: number
+  count: <<_integer, integer>>
   synonyms_set: SynonymsSynonymRuleRead[]
 }
 

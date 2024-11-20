@@ -53,7 +53,7 @@ interface IndicesForcemergeRequest extends <<RequestBase>> {
   expand_wildcards?: <<ExpandWildcards>>
   flush?: boolean
   ignore_unavailable?: boolean
-  max_num_segments?: number
+  max_num_segments?: <<_long, long>>
   only_expunge_deletes?: boolean
   wait_for_completion?: boolean
 }

@@ -51,14 +51,14 @@ interface CcrFollowRequest extends <<RequestBase>> {
   index: <<IndexName>>
   wait_for_active_shards?: <<WaitForActiveShards>>
   leader_index?: <<IndexName>>
-  max_outstanding_read_requests?: number
-  max_outstanding_write_requests?: number
-  max_read_request_operation_count?: number
+  max_outstanding_read_requests?: <<_long, long>>
+  max_outstanding_write_requests?: <<_long, long>>
+  max_read_request_operation_count?: <<_long, long>>
   max_read_request_size?: string
   max_retry_delay?: <<Duration>>
-  max_write_buffer_count?: number
+  max_write_buffer_count?: <<_long, long>>
   max_write_buffer_size?: string
-  max_write_request_operation_count?: number
+  max_write_request_operation_count?: <<_long, long>>
   max_write_request_size?: string
   read_poll_timeout?: <<Duration>>
   remote_cluster?: string

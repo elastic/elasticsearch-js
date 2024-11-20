@@ -49,7 +49,7 @@ Throttle a delete by query operation. Change the number of requests per second f
 ++++
 interface DeleteByQueryRethrottleRequest extends <<RequestBase>> {
   task_id: <<TaskId>>
-  requests_per_second?: number
+  requests_per_second?: <<_float, float>>
 }
 
 [pass]

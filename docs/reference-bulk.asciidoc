@@ -75,8 +75,8 @@ interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <
 interface BulkResponse {
   errors: boolean
   items: Partial<Record<BulkOperationType, BulkResponseItem>>[]
-  took: number
-  ingest_took?: number
+  took: <<_long, long>>
+  ingest_took?: <<_long, long>>
 }
 
 [pass]

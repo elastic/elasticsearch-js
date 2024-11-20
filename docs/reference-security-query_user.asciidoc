@@ -50,9 +50,9 @@ Find users with a query. Get information for users in a paginated manner. You ca
 interface SecurityQueryUserRequest extends <<RequestBase>> {
   with_profile_uid?: boolean
   query?: SecurityQueryUserUserQueryContainer
-  from?: number
+  from?: <<_integer, integer>>
   sort?: <<Sort>>
-  size?: number
+  size?: <<_integer, integer>>
   search_after?: <<SortResults>>
 }
 
@@ -68,8 +68,8 @@ interface SecurityQueryUserRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SecurityQueryUserResponse {
-  total: number
-  count: number
+  total: <<_integer, integer>>
+  count: <<_integer, integer>>
   users: SecurityQueryUserQueryUser[]
 }
 

@@ -69,7 +69,7 @@ interface MlFlushJobRequest extends <<RequestBase>> {
 ++++
 interface MlFlushJobResponse {
   flushed: boolean
-  last_finalized_bucket_end?: number
+  last_finalized_bucket_end?: <<_integer, integer>>
 }
 
 [pass]

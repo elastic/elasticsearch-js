@@ -50,7 +50,7 @@ Delete a document. Removes a JSON document from the specified index.
 interface DeleteRequest extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
-  if_primary_term?: number
+  if_primary_term?: <<_long, long>>
   if_seq_no?: <<SequenceNumber>>
   refresh?: <<Refresh>>
   routing?: <<Routing>>

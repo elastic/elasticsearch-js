@@ -50,7 +50,7 @@ Get terms in an index. Discover terms that match a partial string in an index. T
 interface TermsEnumRequest extends <<RequestBase>> {
   index: <<IndexName>>
   field: <<Field>>
-  size?: number
+  size?: <<_integer, integer>>
   timeout?: <<Duration>>
   case_insensitive?: boolean
   index_filter?: QueryDslQueryContainer

@@ -50,7 +50,7 @@ Run multiple templated searches.
 interface MsearchTemplateRequest extends <<RequestBase>> {
   index?: <<Indices>>
   ccs_minimize_roundtrips?: boolean
-  max_concurrent_searches?: number
+  max_concurrent_searches?: <<_long, long>>
   search_type?: <<SearchType>>
   rest_total_hits_as_int?: boolean
   typed_keys?: boolean

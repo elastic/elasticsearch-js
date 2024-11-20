@@ -51,10 +51,10 @@ interface MlStartTrainedModelDeploymentRequest extends <<RequestBase>> {
   model_id: <<Id>>
   cache_size?: <<ByteSize>>
   deployment_id?: string
-  number_of_allocations?: number
+  number_of_allocations?: <<_integer, integer>>
   priority?: MlTrainingPriority
-  queue_capacity?: number
-  threads_per_allocation?: number
+  queue_capacity?: <<_integer, integer>>
+  threads_per_allocation?: <<_integer, integer>>
   timeout?: <<Duration>>
   wait_for?: MlDeploymentAllocationState
 }

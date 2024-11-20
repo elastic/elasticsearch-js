@@ -50,11 +50,11 @@ Get transforms. Returns configuration and usage information about transforms. CA
 interface CatTransformsRequest extends CatCatRequestBase {
   transform_id?: <<Id>>
   allow_no_match?: boolean
-  from?: number
+  from?: <<_integer, integer>>
   h?: CatCatTransformColumns
   s?: CatCatTransformColumns
   time?: <<TimeUnit>>
-  size?: number
+  size?: <<_integer, integer>>
 }
 
 [pass]

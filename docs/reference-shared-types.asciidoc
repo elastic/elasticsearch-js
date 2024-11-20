@@ -5,13 +5,12 @@
 [discrete]
 === AcknowledgedResponseBase
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface AcknowledgedResponseBase {
-  /** @property acknowledged For a successful response, this value is always true. On failure, an exception is returned instead. */
+  pass:[/**] @property acknowledged For a successful response, this value is always true. On failure, an exception is returned instead. */
   acknowledged: boolean
 }
 [pass]
@@ -22,7 +21,6 @@ interface AcknowledgedResponseBase {
 [discrete]
 === AggregateName
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -36,7 +34,6 @@ type AggregateName = string
 [discrete]
 === BulkIndexByScrollFailure
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -45,7 +42,7 @@ interface BulkIndexByScrollFailure {
   cause: <<ErrorCause>>
   id: <<Id>>
   index: <<IndexName>>
-  status: number
+  status: <<_integer, integer>>
   type: string
 }
 [pass]
@@ -56,21 +53,20 @@ interface BulkIndexByScrollFailure {
 [discrete]
 === BulkStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface BulkStats {
-  total_operations: number
+  total_operations: <<_long, long>>
   total_time?: <<Duration>>
   total_time_in_millis: <<DurationValue>><<<UnitMillis>>>
   total_size?: <<ByteSize>>
-  total_size_in_bytes: number
+  total_size_in_bytes: <<_long, long>>
   avg_time?: <<Duration>>
   avg_time_in_millis: <<DurationValue>><<<UnitMillis>>>
   avg_size?: <<ByteSize>>
-  avg_size_in_bytes: number
+  avg_size_in_bytes: <<_long, long>>
 }
 [pass]
 ++++
@@ -80,12 +76,11 @@ interface BulkStats {
 [discrete]
 === ByteSize
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type ByteSize = number | string
+type ByteSize = <<_long, long>> | string
 [pass]
 ++++
 </pre>
@@ -94,7 +89,6 @@ type ByteSize = number | string
 [discrete]
 === Bytes
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -108,7 +102,6 @@ type Bytes = 'b' | 'kb' | 'mb' | 'gb' | 'tb' | 'pb'
 [discrete]
 === CategoryId
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -122,7 +115,6 @@ type CategoryId = string
 [discrete]
 === ClusterAlias
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -136,7 +128,6 @@ type ClusterAlias = string
 [discrete]
 === ClusterDetails
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -157,7 +148,6 @@ interface ClusterDetails {
 [discrete]
 === ClusterInfoTarget
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -171,7 +161,6 @@ type ClusterInfoTarget = '_all' | 'http' | 'ingest' | 'thread_pool' | 'script'
 [discrete]
 === ClusterInfoTargets
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -185,7 +174,6 @@ type ClusterInfoTargets = <<ClusterInfoTarget>> | <<ClusterInfoTarget>>[]
 [discrete]
 === ClusterSearchStatus
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -199,18 +187,17 @@ type ClusterSearchStatus = 'running' | 'successful' | 'partial' | 'skipped' | 'f
 [discrete]
 === ClusterStatistics
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface ClusterStatistics {
-  skipped: number
-  successful: number
-  total: number
-  running: number
-  partial: number
-  failed: number
+  skipped: <<_integer, integer>>
+  successful: <<_integer, integer>>
+  total: <<_integer, integer>>
+  running: <<_integer, integer>>
+  partial: <<_integer, integer>>
+  failed: <<_integer, integer>>
   details?: Record<<<ClusterAlias>>, <<ClusterDetails>>>
 }
 [pass]
@@ -221,15 +208,14 @@ interface ClusterStatistics {
 [discrete]
 === CompletionStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface CompletionStats {
-  /** @property size_in_bytes Total amount, in bytes, of memory used for completion across all shards assigned to selected nodes. */
-  size_in_bytes: number
-  /** @property size Total amount of memory used for completion across all shards assigned to selected nodes. */
+  pass:[/**] @property size_in_bytes Total amount, in bytes, of memory used for completion across all shards assigned to selected nodes. */
+  size_in_bytes: <<_long, long>>
+  pass:[/**] @property size Total amount of memory used for completion across all shards assigned to selected nodes. */
   size?: <<ByteSize>>
   fields?: Record<<<Field>>, <<FieldSizeUsage>>>
 }
@@ -241,7 +227,6 @@ interface CompletionStats {
 [discrete]
 === Conflicts
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -255,16 +240,15 @@ type Conflicts = 'abort' | 'proceed'
 [discrete]
 === CoordsGeoBounds
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface CoordsGeoBounds {
-  top: number
-  bottom: number
-  left: number
-  right: number
+  top: <<_double, double>>
+  bottom: <<_double, double>>
+  left: <<_double, double>>
+  right: <<_double, double>>
 }
 [pass]
 ++++
@@ -274,7 +258,6 @@ interface CoordsGeoBounds {
 [discrete]
 === DFIIndependenceMeasure
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -288,7 +271,6 @@ type DFIIndependenceMeasure = 'standardized' | 'saturated' | 'chisquared'
 [discrete]
 === DFRAfterEffect
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -302,7 +284,6 @@ type DFRAfterEffect = 'no' | 'b' | 'l'
 [discrete]
 === DFRBasicModel
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -316,7 +297,6 @@ type DFRBasicModel = 'be' | 'd' | 'g' | 'if' | 'in' | 'ine' | 'p'
 [discrete]
 === DataStreamName
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -330,7 +310,6 @@ type DataStreamName = string
 [discrete]
 === DataStreamNames
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -344,7 +323,6 @@ type DataStreamNames = <<DataStreamName>> | <<DataStreamName>>[]
 [discrete]
 === DateFormat
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -358,7 +336,6 @@ type DateFormat = string
 [discrete]
 === DateMath
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -372,7 +349,6 @@ type DateMath = string | Date
 [discrete]
 === DateTime
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -386,7 +362,6 @@ type DateTime = string | <<EpochTime>><<<UnitMillis>>> | Date
 [discrete]
 === Distance
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -400,7 +375,6 @@ type Distance = string
 [discrete]
 === DistanceUnit
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -414,16 +388,15 @@ type DistanceUnit = 'in' | 'ft' | 'yd' | 'mi' | 'nmi' | 'km' | 'm' | 'cm' | 'mm'
 [discrete]
 === DocStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface DocStats {
-  /** @property count Total number of non-deleted documents across all primary shards assigned to selected nodes. This number is based on documents in Lucene segments and may include documents from nested fields. */
-  count: number
-  /** @property deleted Total number of deleted documents across all primary shards assigned to selected nodes. This number is based on documents in Lucene segments. Elasticsearch reclaims the disk space of deleted Lucene documents when a segment is merged. */
-  deleted?: number
+  pass:[/**] @property count Total number of non-deleted documents across all primary shards assigned to selected nodes. This number is based on documents in Lucene segments and may include documents from nested fields. */
+  count: <<_long, long>>
+  pass:[/**] @property deleted Total number of deleted documents across all primary shards assigned to selected nodes. This number is based on documents in Lucene segments. Elasticsearch reclaims the disk space of deleted Lucene documents when a segment is merged. */
+  deleted?: <<_long, long>>
 }
 [pass]
 ++++
@@ -433,7 +406,6 @@ interface DocStats {
 [discrete]
 === Duration
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -447,7 +419,6 @@ type Duration = string | -1 | 0
 [discrete]
 === DurationLarge
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -461,7 +432,6 @@ type DurationLarge = string
 [discrete]
 === DurationValue
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -475,7 +445,6 @@ type DurationValue<Unit = unknown> = Unit
 [discrete]
 === ElasticsearchVersionInfo
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -499,7 +468,6 @@ interface ElasticsearchVersionInfo {
 [discrete]
 === ElasticsearchVersionMinInfo
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -518,7 +486,6 @@ interface ElasticsearchVersionMinInfo {
 [discrete]
 === EmptyObject
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -533,7 +500,6 @@ interface EmptyObject {
 [discrete]
 === EpochTime
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -547,7 +513,6 @@ type EpochTime<Unit = unknown> = Unit
 [discrete]
 === ErrorCause
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -560,7 +525,7 @@ interface ErrorCauseKeys {
   root_cause?: <<ErrorCause>>[]
   suppressed?: <<ErrorCause>>[]
 }
-export type <<ErrorCause>> = ErrorCauseKeys
+type ErrorCause = ErrorCauseKeys
   & { [property: string]: any }
 [pass]
 ++++
@@ -570,14 +535,13 @@ export type <<ErrorCause>> = ErrorCauseKeys
 [discrete]
 === ErrorResponseBase
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface ErrorResponseBase {
   error: <<ErrorCause>>
-  status: number
+  status: <<_integer, integer>>
 }
 [pass]
 ++++
@@ -587,7 +551,6 @@ interface ErrorResponseBase {
 [discrete]
 === EsqlColumns
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -601,7 +564,6 @@ type EsqlColumns = ArrayBuffer
 [discrete]
 === ExpandWildcard
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -615,7 +577,6 @@ type ExpandWildcard = 'all' | 'open' | 'closed' | 'hidden' | 'none'
 [discrete]
 === ExpandWildcards
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -629,7 +590,6 @@ type ExpandWildcards = <<ExpandWildcard>> | <<ExpandWildcard>>[]
 [discrete]
 === Field
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -643,14 +603,13 @@ type Field = string
 [discrete]
 === FieldMemoryUsage
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface FieldMemoryUsage {
   memory_size?: <<ByteSize>>
-  memory_size_in_bytes: number
+  memory_size_in_bytes: <<_long, long>>
 }
 [pass]
 ++++
@@ -660,14 +619,13 @@ interface FieldMemoryUsage {
 [discrete]
 === FieldSizeUsage
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface FieldSizeUsage {
   size?: <<ByteSize>>
-  size_in_bytes: number
+  size_in_bytes: <<_long, long>>
 }
 [pass]
 ++++
@@ -677,7 +635,6 @@ interface FieldSizeUsage {
 [discrete]
 === FieldSort
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -699,12 +656,11 @@ interface FieldSort {
 [discrete]
 === FieldSortNumericType
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type FieldSortNumericType = 'number' | 'number' | 'date' | 'date_nanos'
+type FieldSortNumericType = '<<_long, long>>' | '<<_double, double>>' | 'date' | 'date_nanos'
 [pass]
 ++++
 </pre>
@@ -713,12 +669,11 @@ type FieldSortNumericType = 'number' | 'number' | 'date' | 'date_nanos'
 [discrete]
 === FieldValue
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type FieldValue = number | number | string | boolean | null | any
+type FieldValue = <<_long, long>> | <<_double, double>> | string | boolean | null | any
 [pass]
 ++++
 </pre>
@@ -727,15 +682,14 @@ type FieldValue = number | number | string | boolean | null | any
 [discrete]
 === FielddataStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface FielddataStats {
-  evictions?: number
+  evictions?: <<_long, long>>
   memory_size?: <<ByteSize>>
-  memory_size_in_bytes: number
+  memory_size_in_bytes: <<_long, long>>
   fields?: Record<<<Field>>, <<FieldMemoryUsage>>>
 }
 [pass]
@@ -746,7 +700,6 @@ interface FielddataStats {
 [discrete]
 === Fields
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -760,14 +713,13 @@ type Fields = <<Field>> | <<Field>>[]
 [discrete]
 === FlushStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface FlushStats {
-  periodic: number
-  total: number
+  periodic: <<_long, long>>
+  total: <<_long, long>>
   total_time?: <<Duration>>
   total_time_in_millis: <<DurationValue>><<<UnitMillis>>>
 }
@@ -779,12 +731,11 @@ interface FlushStats {
 [discrete]
 === Fuzziness
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type Fuzziness = string | number
+type Fuzziness = string | <<_integer, integer>>
 [pass]
 ++++
 </pre>
@@ -793,7 +744,6 @@ type Fuzziness = string | number
 [discrete]
 === GeoBounds
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -807,7 +757,6 @@ type GeoBounds = <<CoordsGeoBounds>> | <<TopLeftBottomRightGeoBounds>> | <<TopRi
 [discrete]
 === GeoDistanceSort
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -820,7 +769,7 @@ interface GeoDistanceSortKeys {
   unit?: <<DistanceUnit>>
   nested?: <<NestedSortValue>>
 }
-export type <<GeoDistanceSort>> = GeoDistanceSortKeys
+type GeoDistanceSort = GeoDistanceSortKeys
   & { [property: string]: <<GeoLocation>> | <<GeoLocation>>[] | <<SortMode>> | <<GeoDistanceType>> | boolean | <<SortOrder>> | <<DistanceUnit>> | <<NestedSortValue>> }
 [pass]
 ++++
@@ -830,7 +779,6 @@ export type <<GeoDistanceSort>> = GeoDistanceSortKeys
 [discrete]
 === GeoDistanceType
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -844,7 +792,6 @@ type GeoDistanceType = 'arc' | 'plane'
 [discrete]
 === GeoHash
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -858,7 +805,6 @@ type GeoHash = string
 [discrete]
 === GeoHashLocation
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -874,7 +820,6 @@ interface GeoHashLocation {
 [discrete]
 === GeoHashPrecision
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -888,7 +833,6 @@ type GeoHashPrecision = number | string
 [discrete]
 === GeoHexCell
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -902,16 +846,15 @@ type GeoHexCell = string
 [discrete]
 === GeoLine
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface GeoLine {
-  /** @property type Always `"LineString"` */
+  pass:[/**] @property type Always `"LineString"` */
   type: string
-  /** @property coordinates Array of `[lon, lat]` coordinates */
-  coordinates: number[][]
+  pass:[/**] @property coordinates Array of `[lon, lat]` coordinates */
+  coordinates: <<_double, double>>[][]
 }
 [pass]
 ++++
@@ -921,12 +864,11 @@ interface GeoLine {
 [discrete]
 === GeoLocation
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type GeoLocation = <<LatLonGeoLocation>> | <<GeoHashLocation>> | number[] | string
+type GeoLocation = <<LatLonGeoLocation>> | <<GeoHashLocation>> | <<_double, double>>[] | string
 [pass]
 ++++
 </pre>
@@ -935,7 +877,6 @@ type GeoLocation = <<LatLonGeoLocation>> | <<GeoHashLocation>> | number[] | stri
 [discrete]
 === GeoShape
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -949,7 +890,6 @@ type GeoShape = any
 [discrete]
 === GeoShapeRelation
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -963,7 +903,6 @@ type GeoShapeRelation = 'intersects' | 'disjoint' | 'within' | 'contains'
 [discrete]
 === GeoTile
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -977,7 +916,6 @@ type GeoTile = string
 [discrete]
 === GeoTilePrecision
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -991,22 +929,21 @@ type GeoTilePrecision = number
 [discrete]
 === GetStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface GetStats {
-  current: number
+  current: <<_long, long>>
   exists_time?: <<Duration>>
   exists_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  exists_total: number
+  exists_total: <<_long, long>>
   missing_time?: <<Duration>>
   missing_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  missing_total: number
+  missing_total: <<_long, long>>
   time?: <<Duration>>
   time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  total: number
+  total: <<_long, long>>
 }
 [pass]
 ++++
@@ -1016,7 +953,6 @@ interface GetStats {
 [discrete]
 === GrokPattern
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1030,7 +966,6 @@ type GrokPattern = string
 [discrete]
 === HealthStatus
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1044,7 +979,6 @@ type HealthStatus = 'green' | 'GREEN' | 'yellow' | 'YELLOW' | 'red' | 'RED'
 [discrete]
 === Host
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1058,7 +992,6 @@ type Host = string
 [discrete]
 === HttpHeaders
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1072,7 +1005,6 @@ type HttpHeaders = Record<string, string | string[]>
 [discrete]
 === IBDistribution
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1086,7 +1018,6 @@ type IBDistribution = 'll' | 'spl'
 [discrete]
 === IBLambda
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1100,7 +1031,6 @@ type IBLambda = 'df' | 'ttf'
 [discrete]
 === Id
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1114,7 +1044,6 @@ type Id = string
 [discrete]
 === Ids
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1128,7 +1057,6 @@ type Ids = <<Id>> | <<Id>>[]
 [discrete]
 === IndexAlias
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1142,7 +1070,6 @@ type IndexAlias = string
 [discrete]
 === IndexName
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1156,7 +1083,6 @@ type IndexName = string
 [discrete]
 === IndexPattern
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1170,7 +1096,6 @@ type IndexPattern = string
 [discrete]
 === IndexPatterns
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1184,27 +1109,26 @@ type IndexPatterns = <<IndexPattern>>[]
 [discrete]
 === IndexingStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface IndexingStats {
-  index_current: number
-  delete_current: number
+  index_current: <<_long, long>>
+  delete_current: <<_long, long>>
   delete_time?: <<Duration>>
   delete_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  delete_total: number
+  delete_total: <<_long, long>>
   is_throttled: boolean
-  noop_update_total: number
+  noop_update_total: <<_long, long>>
   throttle_time?: <<Duration>>
   throttle_time_in_millis: <<DurationValue>><<<UnitMillis>>>
   index_time?: <<Duration>>
   index_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  index_total: number
-  index_failed: number
+  index_total: <<_long, long>>
+  index_failed: <<_long, long>>
   types?: Record<string, <<IndexingStats>>>
-  write_load?: number
+  write_load?: <<_double, double>>
 }
 [pass]
 ++++
@@ -1214,7 +1138,6 @@ interface IndexingStats {
 [discrete]
 === Indices
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1228,19 +1151,18 @@ type Indices = <<IndexName>> | <<IndexName>>[]
 [discrete]
 === IndicesOptions
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface IndicesOptions {
-  /** @property allow_no_indices If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  pass:[/**] @property allow_no_indices If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
-  /** @property expand_wildcards Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. */
+  pass:[/**] @property expand_wildcards Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: <<ExpandWildcards>>
-  /** @property ignore_unavailable If true, missing or closed indices are not included in the response. */
+  pass:[/**] @property ignore_unavailable If true, missing or closed indices are not included in the response. */
   ignore_unavailable?: boolean
-  /** @property ignore_throttled If true, concrete, expanded or aliased indices are ignored when frozen. */
+  pass:[/**] @property ignore_throttled If true, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
 }
 [pass]
@@ -1251,7 +1173,6 @@ interface IndicesOptions {
 [discrete]
 === IndicesResponseBase
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1267,7 +1188,6 @@ interface IndicesResponseBase extends <<AcknowledgedResponseBase>> {
 [discrete]
 === InlineGet
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1276,11 +1196,11 @@ interface InlineGetKeys<TDocument = unknown> {
   fields?: Record<string, any>
   found: boolean
   _seq_no?: <<SequenceNumber>>
-  _primary_term?: number
+  _primary_term?: <<_long, long>>
   _routing?: <<Routing>>
   _source?: TDocument
 }
-export type <<InlineGet>><TDocument = unknown> = InlineGetKeys<TDocument>
+type InlineGet<TDocument = unknown> = InlineGetKeys<TDocument>
   & { [property: string]: any }
 [pass]
 ++++
@@ -1290,7 +1210,6 @@ export type <<InlineGet>><TDocument = unknown> = InlineGetKeys<TDocument>
 [discrete]
 === Ip
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1304,26 +1223,25 @@ type Ip = string
 [discrete]
 === KnnQuery
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface KnnQuery extends QueryDslQueryBase {
-  /** @property field The name of the vector field to search against */
+  pass:[/**] @property field The name of the vector field to search against */
   field: <<Field>>
-  /** @property query_vector The query vector */
+  pass:[/**] @property query_vector The query vector */
   query_vector?: <<QueryVector>>
-  /** @property query_vector_builder The query vector builder. You must provide a query_vector_builder or query_vector, but not both. */
+  pass:[/**] @property query_vector_builder The query vector builder. You must provide a query_vector_builder or query_vector, but not both. */
   query_vector_builder?: <<QueryVectorBuilder>>
-  /** @property num_candidates The number of nearest neighbor candidates to consider per shard */
-  num_candidates?: number
-  /** @property k The final number of nearest neighbors to return as top hits */
-  k?: number
-  /** @property filter Filters for the kNN search query */
+  pass:[/**] @property num_candidates The number of nearest neighbor candidates to consider per shard */
+  num_candidates?: <<_integer, integer>>
+  pass:[/**] @property k The final number of nearest neighbors to return as top hits */
+  k?: <<_integer, integer>>
+  pass:[/**] @property filter Filters for the kNN search query */
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
-  /** @property similarity The minimum similarity for a vector to be considered a match */
-  similarity?: number
+  pass:[/**] @property similarity The minimum similarity for a vector to be considered a match */
+  similarity?: <<_float, float>>
 }
 [pass]
 ++++
@@ -1333,24 +1251,23 @@ interface KnnQuery extends QueryDslQueryBase {
 [discrete]
 === KnnRetriever
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface KnnRetriever extends <<RetrieverBase>> {
-  /** @property field The name of the vector field to search against. */
+  pass:[/**] @property field The name of the vector field to search against. */
   field: string
-  /** @property query_vector Query vector. Must have the same number of dimensions as the vector field you are searching against. You must provide a query_vector_builder or query_vector, but not both. */
+  pass:[/**] @property query_vector Query vector. Must have the same number of dimensions as the vector field you are searching against. You must provide a query_vector_builder or query_vector, but not both. */
   query_vector?: <<QueryVector>>
-  /** @property query_vector_builder Defines a model to build a query vector. */
+  pass:[/**] @property query_vector_builder Defines a model to build a query vector. */
   query_vector_builder?: <<QueryVectorBuilder>>
-  /** @property k Number of nearest neighbors to return as top hits. */
-  k: number
-  /** @property num_candidates Number of nearest neighbor candidates to consider per shard. */
-  num_candidates: number
-  /** @property similarity The minimum similarity required for a document to be considered a match. */
-  similarity?: number
+  pass:[/**] @property k Number of nearest neighbors to return as top hits. */
+  k: <<_integer, integer>>
+  pass:[/**] @property num_candidates Number of nearest neighbor candidates to consider per shard. */
+  num_candidates: <<_integer, integer>>
+  pass:[/**] @property similarity The minimum similarity required for a document to be considered a match. */
+  similarity?: <<_float, float>>
 }
 [pass]
 ++++
@@ -1360,29 +1277,28 @@ interface KnnRetriever extends <<RetrieverBase>> {
 [discrete]
 === KnnSearch
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface KnnSearch {
-  /** @property field The name of the vector field to search against */
+  pass:[/**] @property field The name of the vector field to search against */
   field: <<Field>>
-  /** @property query_vector The query vector */
+  pass:[/**] @property query_vector The query vector */
   query_vector?: <<QueryVector>>
-  /** @property query_vector_builder The query vector builder. You must provide a query_vector_builder or query_vector, but not both. */
+  pass:[/**] @property query_vector_builder The query vector builder. You must provide a query_vector_builder or query_vector, but not both. */
   query_vector_builder?: <<QueryVectorBuilder>>
-  /** @property k The final number of nearest neighbors to return as top hits */
-  k?: number
-  /** @property num_candidates The number of nearest neighbor candidates to consider per shard */
-  num_candidates?: number
-  /** @property boost Boost value to apply to kNN scores */
-  boost?: number
-  /** @property filter Filters for the kNN search query */
+  pass:[/**] @property k The final number of nearest neighbors to return as top hits */
+  k?: <<_integer, integer>>
+  pass:[/**] @property num_candidates The number of nearest neighbor candidates to consider per shard */
+  num_candidates?: <<_integer, integer>>
+  pass:[/**] @property boost Boost value to apply to kNN scores */
+  boost?: <<_float, float>>
+  pass:[/**] @property filter Filters for the kNN search query */
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
-  /** @property similarity The minimum similarity for a vector to be considered a match */
-  similarity?: number
-  /** @property inner_hits If defined, each search hit will contain inner hits. */
+  pass:[/**] @property similarity The minimum similarity for a vector to be considered a match */
+  similarity?: <<_float, float>>
+  pass:[/**] @property inner_hits If defined, each search hit will contain inner hits. */
   inner_hits?: SearchInnerHits
 }
 [pass]
@@ -1393,16 +1309,15 @@ interface KnnSearch {
 [discrete]
 === LatLonGeoLocation
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface LatLonGeoLocation {
-  /** @property lat Latitude */
-  lat: number
-  /** @property lon Longitude */
-  lon: number
+  pass:[/**] @property lat Latitude */
+  lat: <<_double, double>>
+  pass:[/**] @property lon Longitude */
+  lon: <<_double, double>>
 }
 [pass]
 ++++
@@ -1412,7 +1327,6 @@ interface LatLonGeoLocation {
 [discrete]
 === Level
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1426,7 +1340,6 @@ type Level = 'cluster' | 'indices' | 'shards'
 [discrete]
 === LifecycleOperationMode
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1440,7 +1353,6 @@ type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
 [discrete]
 === MapboxVectorTiles
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1454,22 +1366,21 @@ type MapboxVectorTiles = ArrayBuffer
 [discrete]
 === MergesStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface MergesStats {
-  current: number
-  current_docs: number
+  current: <<_long, long>>
+  current_docs: <<_long, long>>
   current_size?: string
-  current_size_in_bytes: number
-  total: number
+  current_size_in_bytes: <<_long, long>>
+  total: <<_long, long>>
   total_auto_throttle?: string
-  total_auto_throttle_in_bytes: number
-  total_docs: number
+  total_auto_throttle_in_bytes: <<_long, long>>
+  total_docs: <<_long, long>>
   total_size?: string
-  total_size_in_bytes: number
+  total_size_in_bytes: <<_long, long>>
   total_stopped_time?: <<Duration>>
   total_stopped_time_in_millis: <<DurationValue>><<<UnitMillis>>>
   total_throttled_time?: <<Duration>>
@@ -1485,7 +1396,6 @@ interface MergesStats {
 [discrete]
 === Metadata
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1499,7 +1409,6 @@ type Metadata = Record<string, any>
 [discrete]
 === Metrics
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1513,12 +1422,11 @@ type Metrics = string | string[]
 [discrete]
 === MinimumShouldMatch
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type MinimumShouldMatch = number | string
+type MinimumShouldMatch = <<_integer, integer>> | string
 [pass]
 ++++
 </pre>
@@ -1527,7 +1435,6 @@ type MinimumShouldMatch = number | string
 [discrete]
 === MultiTermQueryRewrite
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1541,7 +1448,6 @@ type MultiTermQueryRewrite = string
 [discrete]
 === Name
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1555,7 +1461,6 @@ type Name = string
 [discrete]
 === Names
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1569,7 +1474,6 @@ type Names = <<Name>> | <<Name>>[]
 [discrete]
 === Namespace
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1583,14 +1487,13 @@ type Namespace = string
 [discrete]
 === NestedSortValue
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface NestedSortValue {
   filter?: QueryDslQueryContainer
-  max_children?: number
+  max_children?: <<_integer, integer>>
   nested?: <<NestedSortValue>>
   path: <<Field>>
 }
@@ -1602,21 +1505,20 @@ interface NestedSortValue {
 [discrete]
 === NodeAttributes
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface NodeAttributes {
-  /** @property attributes Lists node attributes. */
+  pass:[/**] @property attributes Lists node attributes. */
   attributes: Record<string, string>
-  /** @property ephemeral_id The ephemeral ID of the node. */
+  pass:[/**] @property ephemeral_id The ephemeral ID of the node. */
   ephemeral_id: <<Id>>
-  /** @property id The unique identifier of the node. */
+  pass:[/**] @property id The unique identifier of the node. */
   id?: <<NodeId>>
-  /** @property name The unique identifier of the node. */
+  pass:[/**] @property name The unique identifier of the node. */
   name: <<NodeName>>
-  /** @property transport_address The host and port where transport HTTP connections are accepted. */
+  pass:[/**] @property transport_address The host and port where transport HTTP connections are accepted. */
   transport_address: <<TransportAddress>>
 }
 [pass]
@@ -1627,7 +1529,6 @@ interface NodeAttributes {
 [discrete]
 === NodeId
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1641,7 +1542,6 @@ type NodeId = string
 [discrete]
 === NodeIds
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1655,7 +1555,6 @@ type NodeIds = <<NodeId>> | <<NodeId>>[]
 [discrete]
 === NodeName
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1669,7 +1568,6 @@ type NodeName = string
 [discrete]
 === NodeRole
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1683,7 +1581,6 @@ type NodeRole = 'master' | 'data' | 'data_cold' | 'data_content' | 'data_frozen'
 [discrete]
 === NodeRoles
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1697,7 +1594,6 @@ type NodeRoles = <<NodeRole>>[]
 [discrete]
 === NodeShard
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1706,7 +1602,7 @@ interface NodeShard {
   state: IndicesStatsShardRoutingState
   primary: boolean
   node?: <<NodeName>>
-  shard: number
+  shard: <<_integer, integer>>
   index: <<IndexName>>
   allocation_id?: Record<string, <<Id>>>
   recovery_source?: Record<string, <<Id>>>
@@ -1722,19 +1618,18 @@ interface NodeShard {
 [discrete]
 === NodeStatistics
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface NodeStatistics {
   failures?: <<ErrorCause>>[]
-  /** @property total Total number of nodes selected by the request. */
-  total: number
-  /** @property successful Number of nodes that responded successfully to the request. */
-  successful: number
-  /** @property failed Number of nodes that rejected the request or failed to respond. If this value is not 0, a reason for the rejection or failure is included in the response. */
-  failed: number
+  pass:[/**] @property total Total number of nodes selected by the request. */
+  total: <<_integer, integer>>
+  pass:[/**] @property successful Number of nodes that responded successfully to the request. */
+  successful: <<_integer, integer>>
+  pass:[/**] @property failed Number of nodes that rejected the request or failed to respond. If this value is not 0, a reason for the rejection or failure is included in the response. */
+  failed: <<_integer, integer>>
 }
 [pass]
 ++++
@@ -1744,7 +1639,6 @@ interface NodeStatistics {
 [discrete]
 === Normalization
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1758,7 +1652,6 @@ type Normalization = 'no' | 'h1' | 'h2' | 'h3' | 'z'
 [discrete]
 === OpType
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1772,7 +1665,6 @@ type OpType = 'index' | 'create'
 [discrete]
 === Password
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1786,12 +1678,11 @@ type Password = string
 [discrete]
 === Percentage
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type Percentage = string | number
+type Percentage = string | <<_float, float>>
 [pass]
 ++++
 </pre>
@@ -1800,7 +1691,6 @@ type Percentage = string | number
 [discrete]
 === PipelineName
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1814,7 +1704,6 @@ type PipelineName = string
 [discrete]
 === PluginStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1838,7 +1727,6 @@ interface PluginStats {
 [discrete]
 === PropertyName
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1852,28 +1740,27 @@ type PropertyName = string
 [discrete]
 === QueryCacheStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface QueryCacheStats {
-  /** @property cache_count Total number of entries added to the query cache across all shards assigned to selected nodes. This number includes current and evicted entries. */
-  cache_count: number
-  /** @property cache_size Total number of entries currently in the query cache across all shards assigned to selected nodes. */
-  cache_size: number
-  /** @property evictions Total number of query cache evictions across all shards assigned to selected nodes. */
-  evictions: number
-  /** @property hit_count Total count of query cache hits across all shards assigned to selected nodes. */
-  hit_count: number
-  /** @property memory_size Total amount of memory used for the query cache across all shards assigned to selected nodes. */
+  pass:[/**] @property cache_count Total number of entries added to the query cache across all shards assigned to selected nodes. This number includes current and evicted entries. */
+  cache_count: <<_long, long>>
+  pass:[/**] @property cache_size Total number of entries currently in the query cache across all shards assigned to selected nodes. */
+  cache_size: <<_long, long>>
+  pass:[/**] @property evictions Total number of query cache evictions across all shards assigned to selected nodes. */
+  evictions: <<_long, long>>
+  pass:[/**] @property hit_count Total count of query cache hits across all shards assigned to selected nodes. */
+  hit_count: <<_long, long>>
+  pass:[/**] @property memory_size Total amount of memory used for the query cache across all shards assigned to selected nodes. */
   memory_size?: <<ByteSize>>
-  /** @property memory_size_in_bytes Total amount, in bytes, of memory used for the query cache across all shards assigned to selected nodes. */
-  memory_size_in_bytes: number
-  /** @property miss_count Total count of query cache misses across all shards assigned to selected nodes. */
-  miss_count: number
-  /** @property total_count Total count of hits and misses in the query cache across all shards assigned to selected nodes. */
-  total_count: number
+  pass:[/**] @property memory_size_in_bytes Total amount, in bytes, of memory used for the query cache across all shards assigned to selected nodes. */
+  memory_size_in_bytes: <<_long, long>>
+  pass:[/**] @property miss_count Total count of query cache misses across all shards assigned to selected nodes. */
+  miss_count: <<_long, long>>
+  pass:[/**] @property total_count Total count of hits and misses in the query cache across all shards assigned to selected nodes. */
+  total_count: <<_long, long>>
 }
 [pass]
 ++++
@@ -1883,12 +1770,11 @@ interface QueryCacheStats {
 [discrete]
 === QueryVector
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type QueryVector = number[]
+type QueryVector = <<_float, float>>[]
 [pass]
 ++++
 </pre>
@@ -1897,7 +1783,6 @@ type QueryVector = number[]
 [discrete]
 === QueryVectorBuilder
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1913,18 +1798,17 @@ interface QueryVectorBuilder {
 [discrete]
 === RRFRetriever
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface RRFRetriever extends <<RetrieverBase>> {
-  /** @property retrievers A list of child retrievers to specify which sets of returned top documents will have the RRF formula applied to them. */
+  pass:[/**] @property retrievers A list of child retrievers to specify which sets of returned top documents will have the RRF formula applied to them. */
   retrievers: <<RetrieverContainer>>[]
-  /** @property rank_constant This value determines how much influence documents in individual result sets per query have over the final ranked result set. */
-  rank_constant?: number
-  /** @property rank_window_size This value determines the size of the individual result sets per query. */
-  rank_window_size?: number
+  pass:[/**] @property rank_constant This value determines how much influence documents in individual result sets per query have over the final ranked result set. */
+  rank_constant?: <<_integer, integer>>
+  pass:[/**] @property rank_window_size This value determines the size of the individual result sets per query. */
+  rank_window_size?: <<_integer, integer>>
 }
 [pass]
 ++++
@@ -1934,7 +1818,6 @@ interface RRFRetriever extends <<RetrieverBase>> {
 [discrete]
 === RankBase
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1949,13 +1832,12 @@ interface RankBase {
 [discrete]
 === RankContainer
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface RankContainer {
-  /** @property rrf The reciprocal rank fusion parameters */
+  pass:[/**] @property rrf The reciprocal rank fusion parameters */
   rrf?: <<RrfRank>>
 }
 [pass]
@@ -1966,14 +1848,13 @@ interface RankContainer {
 [discrete]
 === RecoveryStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface RecoveryStats {
-  current_as_source: number
-  current_as_target: number
+  current_as_source: <<_long, long>>
+  current_as_target: <<_long, long>>
   throttle_time?: <<Duration>>
   throttle_time_in_millis: <<DurationValue>><<<UnitMillis>>>
 }
@@ -1985,7 +1866,6 @@ interface RecoveryStats {
 [discrete]
 === Refresh
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1999,16 +1879,15 @@ type Refresh = boolean | 'true' | 'false' | 'wait_for'
 [discrete]
 === RefreshStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface RefreshStats {
-  external_total: number
+  external_total: <<_long, long>>
   external_total_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  listeners: number
-  total: number
+  listeners: <<_long, long>>
+  total: <<_long, long>>
   total_time?: <<Duration>>
   total_time_in_millis: <<DurationValue>><<<UnitMillis>>>
 }
@@ -2020,7 +1899,6 @@ interface RefreshStats {
 [discrete]
 === RelationName
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2034,13 +1912,12 @@ type RelationName = string
 [discrete]
 === RelocationFailureInfo
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface RelocationFailureInfo {
-  failed_attempts: number
+  failed_attempts: <<_integer, integer>>
 }
 [pass]
 ++++
@@ -2050,7 +1927,6 @@ interface RelocationFailureInfo {
 [discrete]
 === RequestBase
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2065,17 +1941,16 @@ interface RequestBase extends <<SpecUtilsCommonQueryParameters>> {
 [discrete]
 === RequestCacheStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface RequestCacheStats {
-  evictions: number
-  hit_count: number
+  evictions: <<_long, long>>
+  hit_count: <<_long, long>>
   memory_size?: string
-  memory_size_in_bytes: number
-  miss_count: number
+  memory_size_in_bytes: <<_long, long>>
+  miss_count: <<_long, long>>
 }
 [pass]
 ++++
@@ -2085,7 +1960,6 @@ interface RequestCacheStats {
 [discrete]
 === Result
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2099,14 +1973,13 @@ type Result = 'created' | 'updated' | 'deleted' | 'not_found' | 'noop'
 [discrete]
 === Retries
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface Retries {
-  bulk: number
-  search: number
+  bulk: <<_long, long>>
+  search: <<_long, long>>
 }
 [pass]
 ++++
@@ -2116,16 +1989,15 @@ interface Retries {
 [discrete]
 === RetrieverBase
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface RetrieverBase {
-  /** @property filter Query to filter the documents that can match. */
+  pass:[/**] @property filter Query to filter the documents that can match. */
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
-  /** @property min_score Minimum _score for matching documents. Documents with a lower _score are not included in the top documents. */
-  min_score?: number
+  pass:[/**] @property min_score Minimum _score for matching documents. Documents with a lower _score are not included in the top documents. */
+  min_score?: <<_float, float>>
 }
 [pass]
 ++++
@@ -2135,19 +2007,18 @@ interface RetrieverBase {
 [discrete]
 === RetrieverContainer
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface RetrieverContainer {
-  /** @property standard A retriever that replaces the functionality of a traditional query. */
+  pass:[/**] @property standard A retriever that replaces the functionality of a traditional query. */
   standard?: <<StandardRetriever>>
-  /** @property knn A retriever that replaces the functionality of a knn search. */
+  pass:[/**] @property knn A retriever that replaces the functionality of a knn search. */
   knn?: <<KnnRetriever>>
-  /** @property rrf A retriever that produces top documents from reciprocal rank fusion (RRF). */
+  pass:[/**] @property rrf A retriever that produces top documents from reciprocal rank fusion (RRF). */
   rrf?: <<RRFRetriever>>
-  /** @property text_similarity_reranker A retriever that reranks the top documents based on a reranking model using the InferenceAPI */
+  pass:[/**] @property text_similarity_reranker A retriever that reranks the top documents based on a reranking model using the InferenceAPI */
   text_similarity_reranker?: <<TextSimilarityReranker>>
 }
 [pass]
@@ -2158,7 +2029,6 @@ interface RetrieverContainer {
 [discrete]
 === Routing
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2172,16 +2042,15 @@ type Routing = string
 [discrete]
 === RrfRank
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface RrfRank {
-  /** @property rank_constant How much influence documents in individual result sets per query have over the final ranked result set */
-  rank_constant?: number
-  /** @property rank_window_size Size of the individual result sets per query */
-  rank_window_size?: number
+  pass:[/**] @property rank_constant How much influence documents in individual result sets per query have over the final ranked result set */
+  rank_constant?: <<_long, long>>
+  pass:[/**] @property rank_window_size Size of the individual result sets per query */
+  rank_window_size?: <<_long, long>>
 }
 [pass]
 ++++
@@ -2191,12 +2060,11 @@ interface RrfRank {
 [discrete]
 === ScalarValue
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type ScalarValue = number | number | string | boolean | null
+type ScalarValue = <<_long, long>> | <<_double, double>> | string | boolean | null
 [pass]
 ++++
 </pre>
@@ -2205,7 +2073,6 @@ type ScalarValue = number | number | string | boolean | null
 [discrete]
 === ScoreSort
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2221,19 +2088,18 @@ interface ScoreSort {
 [discrete]
 === Script
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface Script {
-  /** @property source The script source. */
+  pass:[/**] @property source The script source. */
   source?: string
-  /** @property id The `id` for a stored script. */
+  pass:[/**] @property id The `id` for a stored script. */
   id?: <<Id>>
-  /** @property params Specifies any named parameters that are passed into the script as variables. Use parameters instead of hard-coded values to decrease compile time. */
+  pass:[/**] @property params Specifies any named parameters that are passed into the script as variables. Use parameters instead of hard-coded values to decrease compile time. */
   params?: Record<string, any>
-  /** @property lang Specifies the language the script is written in. */
+  pass:[/**] @property lang Specifies the language the script is written in. */
   lang?: <<ScriptLanguage>>
   options?: Record<string, string>
 }
@@ -2245,7 +2111,6 @@ interface Script {
 [discrete]
 === ScriptField
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2262,7 +2127,6 @@ interface ScriptField {
 [discrete]
 === ScriptLanguage
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2276,7 +2140,6 @@ type ScriptLanguage = 'painless' | 'expression' | 'mustache' | 'java' | string
 [discrete]
 === ScriptSort
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2296,7 +2159,6 @@ interface ScriptSort {
 [discrete]
 === ScriptSortType
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2310,7 +2172,6 @@ type ScriptSortType = 'string' | 'number' | 'version'
 [discrete]
 === ScriptTransform
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2329,7 +2190,6 @@ interface ScriptTransform {
 [discrete]
 === ScrollId
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2343,7 +2203,6 @@ type ScrollId = string
 [discrete]
 === ScrollIds
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2357,29 +2216,28 @@ type ScrollIds = <<ScrollId>> | <<ScrollId>>[]
 [discrete]
 === SearchStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface SearchStats {
-  fetch_current: number
+  fetch_current: <<_long, long>>
   fetch_time?: <<Duration>>
   fetch_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  fetch_total: number
-  open_contexts?: number
-  query_current: number
+  fetch_total: <<_long, long>>
+  open_contexts?: <<_long, long>>
+  query_current: <<_long, long>>
   query_time?: <<Duration>>
   query_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  query_total: number
-  scroll_current: number
+  query_total: <<_long, long>>
+  scroll_current: <<_long, long>>
   scroll_time?: <<Duration>>
   scroll_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  scroll_total: number
-  suggest_current: number
+  scroll_total: <<_long, long>>
+  suggest_current: <<_long, long>>
   suggest_time?: <<Duration>>
   suggest_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  suggest_total: number
+  suggest_total: <<_long, long>>
   groups?: Record<string, <<SearchStats>>>
 }
 [pass]
@@ -2390,7 +2248,6 @@ interface SearchStats {
 [discrete]
 === SearchTransform
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2407,7 +2264,6 @@ interface SearchTransform {
 [discrete]
 === SearchType
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2421,58 +2277,57 @@ type SearchType = 'query_then_fetch' | 'dfs_query_then_fetch'
 [discrete]
 === SegmentsStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface SegmentsStats {
-  /** @property count Total number of segments across all shards assigned to selected nodes. */
-  count: number
-  /** @property doc_values_memory Total amount of memory used for doc values across all shards assigned to selected nodes. */
+  pass:[/**] @property count Total number of segments across all shards assigned to selected nodes. */
+  count: <<_integer, integer>>
+  pass:[/**] @property doc_values_memory Total amount of memory used for doc values across all shards assigned to selected nodes. */
   doc_values_memory?: <<ByteSize>>
-  /** @property doc_values_memory_in_bytes Total amount, in bytes, of memory used for doc values across all shards assigned to selected nodes. */
-  doc_values_memory_in_bytes: number
-  /** @property file_sizes This object is not populated by the cluster stats API. To get information on segment files, use the node stats API. */
+  pass:[/**] @property doc_values_memory_in_bytes Total amount, in bytes, of memory used for doc values across all shards assigned to selected nodes. */
+  doc_values_memory_in_bytes: <<_long, long>>
+  pass:[/**] @property file_sizes This object is not populated by the cluster stats API. To get information on segment files, use the node stats API. */
   file_sizes: Record<string, IndicesStatsShardFileSizeInfo>
-  /** @property fixed_bit_set Total amount of memory used by fixed bit sets across all shards assigned to selected nodes. Fixed bit sets are used for nested object field types and type filters for join fields. */
+  pass:[/**] @property fixed_bit_set Total amount of memory used by fixed bit sets across all shards assigned to selected nodes. Fixed bit sets are used for nested object field types and type filters for join fields. */
   fixed_bit_set?: <<ByteSize>>
-  /** @property fixed_bit_set_memory_in_bytes Total amount of memory, in bytes, used by fixed bit sets across all shards assigned to selected nodes. */
-  fixed_bit_set_memory_in_bytes: number
-  /** @property index_writer_memory Total amount of memory used by all index writers across all shards assigned to selected nodes. */
+  pass:[/**] @property fixed_bit_set_memory_in_bytes Total amount of memory, in bytes, used by fixed bit sets across all shards assigned to selected nodes. */
+  fixed_bit_set_memory_in_bytes: <<_long, long>>
+  pass:[/**] @property index_writer_memory Total amount of memory used by all index writers across all shards assigned to selected nodes. */
   index_writer_memory?: <<ByteSize>>
-  index_writer_max_memory_in_bytes?: number
-  /** @property index_writer_memory_in_bytes Total amount, in bytes, of memory used by all index writers across all shards assigned to selected nodes. */
-  index_writer_memory_in_bytes: number
-  /** @property max_unsafe_auto_id_timestamp Unix timestamp, in milliseconds, of the most recently retried indexing request. */
-  max_unsafe_auto_id_timestamp: number
-  /** @property memory Total amount of memory used for segments across all shards assigned to selected nodes. */
+  index_writer_max_memory_in_bytes?: <<_long, long>>
+  pass:[/**] @property index_writer_memory_in_bytes Total amount, in bytes, of memory used by all index writers across all shards assigned to selected nodes. */
+  index_writer_memory_in_bytes: <<_long, long>>
+  pass:[/**] @property max_unsafe_auto_id_timestamp Unix timestamp, in milliseconds, of the most recently retried indexing request. */
+  max_unsafe_auto_id_timestamp: <<_long, long>>
+  pass:[/**] @property memory Total amount of memory used for segments across all shards assigned to selected nodes. */
   memory?: <<ByteSize>>
-  /** @property memory_in_bytes Total amount, in bytes, of memory used for segments across all shards assigned to selected nodes. */
-  memory_in_bytes: number
-  /** @property norms_memory Total amount of memory used for normalization factors across all shards assigned to selected nodes. */
+  pass:[/**] @property memory_in_bytes Total amount, in bytes, of memory used for segments across all shards assigned to selected nodes. */
+  memory_in_bytes: <<_long, long>>
+  pass:[/**] @property norms_memory Total amount of memory used for normalization factors across all shards assigned to selected nodes. */
   norms_memory?: <<ByteSize>>
-  /** @property norms_memory_in_bytes Total amount, in bytes, of memory used for normalization factors across all shards assigned to selected nodes. */
-  norms_memory_in_bytes: number
-  /** @property points_memory Total amount of memory used for points across all shards assigned to selected nodes. */
+  pass:[/**] @property norms_memory_in_bytes Total amount, in bytes, of memory used for normalization factors across all shards assigned to selected nodes. */
+  norms_memory_in_bytes: <<_long, long>>
+  pass:[/**] @property points_memory Total amount of memory used for points across all shards assigned to selected nodes. */
   points_memory?: <<ByteSize>>
-  /** @property points_memory_in_bytes Total amount, in bytes, of memory used for points across all shards assigned to selected nodes. */
-  points_memory_in_bytes: number
+  pass:[/**] @property points_memory_in_bytes Total amount, in bytes, of memory used for points across all shards assigned to selected nodes. */
+  points_memory_in_bytes: <<_long, long>>
   stored_memory?: <<ByteSize>>
-  /** @property stored_fields_memory_in_bytes Total amount, in bytes, of memory used for stored fields across all shards assigned to selected nodes. */
-  stored_fields_memory_in_bytes: number
-  /** @property terms_memory_in_bytes Total amount, in bytes, of memory used for terms across all shards assigned to selected nodes. */
-  terms_memory_in_bytes: number
-  /** @property terms_memory Total amount of memory used for terms across all shards assigned to selected nodes. */
+  pass:[/**] @property stored_fields_memory_in_bytes Total amount, in bytes, of memory used for stored fields across all shards assigned to selected nodes. */
+  stored_fields_memory_in_bytes: <<_long, long>>
+  pass:[/**] @property terms_memory_in_bytes Total amount, in bytes, of memory used for terms across all shards assigned to selected nodes. */
+  terms_memory_in_bytes: <<_long, long>>
+  pass:[/**] @property terms_memory Total amount of memory used for terms across all shards assigned to selected nodes. */
   terms_memory?: <<ByteSize>>
-  /** @property term_vectory_memory Total amount of memory used for term vectors across all shards assigned to selected nodes. */
+  pass:[/**] @property term_vectory_memory Total amount of memory used for term vectors across all shards assigned to selected nodes. */
   term_vectory_memory?: <<ByteSize>>
-  /** @property term_vectors_memory_in_bytes Total amount, in bytes, of memory used for term vectors across all shards assigned to selected nodes. */
-  term_vectors_memory_in_bytes: number
-  /** @property version_map_memory Total amount of memory used by all version maps across all shards assigned to selected nodes. */
+  pass:[/**] @property term_vectors_memory_in_bytes Total amount, in bytes, of memory used for term vectors across all shards assigned to selected nodes. */
+  term_vectors_memory_in_bytes: <<_long, long>>
+  pass:[/**] @property version_map_memory Total amount of memory used by all version maps across all shards assigned to selected nodes. */
   version_map_memory?: <<ByteSize>>
-  /** @property version_map_memory_in_bytes Total amount, in bytes, of memory used by all version maps across all shards assigned to selected nodes. */
-  version_map_memory_in_bytes: number
+  pass:[/**] @property version_map_memory_in_bytes Total amount, in bytes, of memory used by all version maps across all shards assigned to selected nodes. */
+  version_map_memory_in_bytes: <<_long, long>>
 }
 [pass]
 ++++
@@ -2482,12 +2337,11 @@ interface SegmentsStats {
 [discrete]
 === SequenceNumber
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type SequenceNumber = number
+type SequenceNumber = <<_long, long>>
 [pass]
 ++++
 </pre>
@@ -2496,7 +2350,6 @@ type SequenceNumber = number
 [discrete]
 === Service
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2510,7 +2363,6 @@ type Service = string
 [discrete]
 === ShardFailure
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2519,7 +2371,7 @@ interface ShardFailure {
   index?: <<IndexName>>
   node?: string
   reason: <<ErrorCause>>
-  shard: number
+  shard: <<_integer, integer>>
   status?: string
 }
 [pass]
@@ -2530,19 +2382,18 @@ interface ShardFailure {
 [discrete]
 === ShardStatistics
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface ShardStatistics {
-  failed: number
-  /** @property successful Indicates how many shards have successfully run the search. */
-  successful: number
-  /** @property total Indicates how many shards the search will run on overall. */
-  total: number
+  failed: <<_uint, uint>>
+  pass:[/**] @property successful Indicates how many shards have successfully run the search. */
+  successful: <<_uint, uint>>
+  pass:[/**] @property total Indicates how many shards the search will run on overall. */
+  total: <<_uint, uint>>
   failures?: <<ShardFailure>>[]
-  skipped?: number
+  skipped?: <<_uint, uint>>
 }
 [pass]
 ++++
@@ -2552,7 +2403,6 @@ interface ShardStatistics {
 [discrete]
 === ShardsOperationResponseBase
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2568,7 +2418,6 @@ interface ShardsOperationResponseBase {
 [discrete]
 === SlicedScroll
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2576,7 +2425,7 @@ SHARED TYPE!
 interface SlicedScroll {
   field?: <<Field>>
   id: <<Id>>
-  max: number
+  max: <<_integer, integer>>
 }
 [pass]
 ++++
@@ -2586,12 +2435,11 @@ interface SlicedScroll {
 [discrete]
 === Slices
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type Slices = number | <<SlicesCalculation>>
+type Slices = <<_integer, integer>> | <<SlicesCalculation>>
 [pass]
 ++++
 </pre>
@@ -2600,7 +2448,6 @@ type Slices = number | <<SlicesCalculation>>
 [discrete]
 === SlicesCalculation
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2614,7 +2461,6 @@ type SlicesCalculation = 'auto'
 [discrete]
 === Sort
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2628,7 +2474,6 @@ type Sort = <<SortCombinations>> | <<SortCombinations>>[]
 [discrete]
 === SortCombinations
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2642,7 +2487,6 @@ type SortCombinations = <<Field>> | <<SortOptions>>
 [discrete]
 === SortMode
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2656,7 +2500,6 @@ type SortMode = 'min' | 'max' | 'sum' | 'avg' | 'median'
 [discrete]
 === SortOptions
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2667,7 +2510,7 @@ interface SortOptionsKeys {
   _geo_distance?: <<GeoDistanceSort>>
   _script?: <<ScriptSort>>
 }
-export type <<SortOptions>> = SortOptionsKeys
+type SortOptions = SortOptionsKeys
   & { [property: string]: <<FieldSort>> | <<SortOrder>> | <<ScoreSort>> | <<GeoDistanceSort>> | <<ScriptSort>> }
 [pass]
 ++++
@@ -2677,7 +2520,6 @@ export type <<SortOptions>> = SortOptionsKeys
 [discrete]
 === SortOrder
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2691,7 +2533,6 @@ type SortOrder = 'asc' | 'desc'
 [discrete]
 === SortResults
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2705,21 +2546,20 @@ type SortResults = <<FieldValue>>[]
 [discrete]
 === StandardRetriever
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface StandardRetriever extends <<RetrieverBase>> {
-  /** @property query Defines a query to retrieve a set of top documents. */
+  pass:[/**] @property query Defines a query to retrieve a set of top documents. */
   query?: QueryDslQueryContainer
-  /** @property search_after Defines a search after object parameter used for pagination. */
+  pass:[/**] @property search_after Defines a search after object parameter used for pagination. */
   search_after?: <<SortResults>>
-  /** @property terminate_after Maximum number of documents to collect for each shard. */
-  terminate_after?: number
-  /** @property sort A sort object that that specifies the order of matching documents. */
+  pass:[/**] @property terminate_after Maximum number of documents to collect for each shard. */
+  terminate_after?: <<_integer, integer>>
+  pass:[/**] @property sort A sort object that that specifies the order of matching documents. */
   sort?: <<Sort>>
-  /** @property collapse Collapses the top documents by a specified key into a single top document per key. */
+  pass:[/**] @property collapse Collapses the top documents by a specified key into a single top document per key. */
   collapse?: SearchFieldCollapse
 }
 [pass]
@@ -2730,24 +2570,23 @@ interface StandardRetriever extends <<RetrieverBase>> {
 [discrete]
 === StoreStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface StoreStats {
-  /** @property size Total size of all shards assigned to selected nodes. */
+  pass:[/**] @property size Total size of all shards assigned to selected nodes. */
   size?: <<ByteSize>>
-  /** @property size_in_bytes Total size, in bytes, of all shards assigned to selected nodes. */
-  size_in_bytes: number
-  /** @property reserved A prediction of how much larger the shard stores will eventually grow due to ongoing peer recoveries, restoring snapshots, and similar activities. */
+  pass:[/**] @property size_in_bytes Total size, in bytes, of all shards assigned to selected nodes. */
+  size_in_bytes: <<_long, long>>
+  pass:[/**] @property reserved A prediction of how much larger the shard stores will eventually grow due to ongoing peer recoveries, restoring snapshots, and similar activities. */
   reserved?: <<ByteSize>>
-  /** @property reserved_in_bytes A prediction, in bytes, of how much larger the shard stores will eventually grow due to ongoing peer recoveries, restoring snapshots, and similar activities. */
-  reserved_in_bytes: number
-  /** @property total_data_set_size Total data set size of all shards assigned to selected nodes. This includes the size of shards not stored fully on the nodes, such as the cache for partially mounted indices. */
+  pass:[/**] @property reserved_in_bytes A prediction, in bytes, of how much larger the shard stores will eventually grow due to ongoing peer recoveries, restoring snapshots, and similar activities. */
+  reserved_in_bytes: <<_long, long>>
+  pass:[/**] @property total_data_set_size Total data set size of all shards assigned to selected nodes. This includes the size of shards not stored fully on the nodes, such as the cache for partially mounted indices. */
   total_data_set_size?: <<ByteSize>>
-  /** @property total_data_set_size_in_bytes Total data set size, in bytes, of all shards assigned to selected nodes. This includes the size of shards not stored fully on the nodes, such as the cache for partially mounted indices. */
-  total_data_set_size_in_bytes?: number
+  pass:[/**] @property total_data_set_size_in_bytes Total data set size, in bytes, of all shards assigned to selected nodes. This includes the size of shards not stored fully on the nodes, such as the cache for partially mounted indices. */
+  total_data_set_size_in_bytes?: <<_long, long>>
 }
 [pass]
 ++++
@@ -2757,16 +2596,15 @@ interface StoreStats {
 [discrete]
 === StoredScript
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface StoredScript {
-  /** @property lang Specifies the language the script is written in. */
+  pass:[/**] @property lang Specifies the language the script is written in. */
   lang: <<ScriptLanguage>>
   options?: Record<string, string>
-  /** @property source The script source. */
+  pass:[/**] @property source The script source. */
   source: string
 }
 [pass]
@@ -2777,7 +2615,6 @@ interface StoredScript {
 [discrete]
 === SuggestMode
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2791,7 +2628,6 @@ type SuggestMode = 'missing' | 'popular' | 'always'
 [discrete]
 === SuggestionName
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2805,13 +2641,12 @@ type SuggestionName = string
 [discrete]
 === TaskFailure
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface TaskFailure {
-  task_id: number
+  task_id: <<_long, long>>
   node_id: <<NodeId>>
   status: string
   reason: <<ErrorCause>>
@@ -2824,12 +2659,11 @@ interface TaskFailure {
 [discrete]
 === TaskId
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type TaskId = string | number
+type TaskId = string | <<_integer, integer>>
 [pass]
 ++++
 </pre>
@@ -2838,7 +2672,6 @@ type TaskId = string | number
 [discrete]
 === TextEmbedding
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2855,21 +2688,20 @@ interface TextEmbedding {
 [discrete]
 === TextSimilarityReranker
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface TextSimilarityReranker extends <<RetrieverBase>> {
-  /** @property retriever The nested retriever which will produce the first-level results, that will later be used for reranking. */
+  pass:[/**] @property retriever The nested retriever which will produce the first-level results, that will later be used for reranking. */
   retriever: <<RetrieverContainer>>
-  /** @property rank_window_size This value determines how many documents we will consider from the nested retriever. */
-  rank_window_size?: number
-  /** @property inference_id Unique identifier of the inference endpoint created using the inference API. */
+  pass:[/**] @property rank_window_size This value determines how many documents we will consider from the nested retriever. */
+  rank_window_size?: <<_integer, integer>>
+  pass:[/**] @property inference_id Unique identifier of the inference endpoint created using the inference API. */
   inference_id?: string
-  /** @property inference_text The text snippet used as the basis for similarity comparison */
+  pass:[/**] @property inference_text The text snippet used as the basis for similarity comparison */
   inference_text?: string
-  /** @property field The document field to be used for text similarity comparisons. This field should contain the text that will be evaluated against the inference_text */
+  pass:[/**] @property field The document field to be used for text similarity comparisons. This field should contain the text that will be evaluated against the inference_text */
   field?: string
 }
 [pass]
@@ -2880,7 +2712,6 @@ interface TextSimilarityReranker extends <<RetrieverBase>> {
 [discrete]
 === ThreadType
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2894,7 +2725,6 @@ type ThreadType = 'cpu' | 'wait' | 'block' | 'gpu' | 'mem'
 [discrete]
 === TimeOfDay
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2908,7 +2738,6 @@ type TimeOfDay = string
 [discrete]
 === TimeUnit
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2922,7 +2751,6 @@ type TimeUnit = 'nanos' | 'micros' | 'ms' | 's' | 'm' | 'h' | 'd'
 [discrete]
 === TimeZone
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2936,7 +2764,6 @@ type TimeZone = string
 [discrete]
 === TopLeftBottomRightGeoBounds
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2953,7 +2780,6 @@ interface TopLeftBottomRightGeoBounds {
 [discrete]
 === TopRightBottomLeftGeoBounds
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2970,7 +2796,6 @@ interface TopRightBottomLeftGeoBounds {
 [discrete]
 === TransformContainer
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2988,19 +2813,18 @@ interface TransformContainer {
 [discrete]
 === TranslogStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface TranslogStats {
-  earliest_last_modified_age: number
-  operations: number
+  earliest_last_modified_age: <<_long, long>>
+  operations: <<_long, long>>
   size?: string
-  size_in_bytes: number
-  uncommitted_operations: number
+  size_in_bytes: <<_long, long>>
+  uncommitted_operations: <<_integer, integer>>
   uncommitted_size?: string
-  uncommitted_size_in_bytes: number
+  uncommitted_size_in_bytes: <<_long, long>>
 }
 [pass]
 ++++
@@ -3010,7 +2834,6 @@ interface TranslogStats {
 [discrete]
 === TransportAddress
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3024,12 +2847,11 @@ type TransportAddress = string
 [discrete]
 === UnitFloatMillis
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type UnitFloatMillis = number
+type UnitFloatMillis = <<_double, double>>
 [pass]
 ++++
 </pre>
@@ -3038,12 +2860,11 @@ type UnitFloatMillis = number
 [discrete]
 === UnitMillis
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type UnitMillis = number
+type UnitMillis = <<_long, long>>
 [pass]
 ++++
 </pre>
@@ -3052,12 +2873,11 @@ type UnitMillis = number
 [discrete]
 === UnitNanos
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type UnitNanos = number
+type UnitNanos = <<_long, long>>
 [pass]
 ++++
 </pre>
@@ -3066,12 +2886,11 @@ type UnitNanos = number
 [discrete]
 === UnitSeconds
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type UnitSeconds = number
+type UnitSeconds = <<_long, long>>
 [pass]
 ++++
 </pre>
@@ -3080,7 +2899,6 @@ type UnitSeconds = number
 [discrete]
 === Username
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3094,7 +2912,6 @@ type Username = string
 [discrete]
 === Uuid
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3108,12 +2925,11 @@ type Uuid = string
 [discrete]
 === VersionNumber
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type VersionNumber = number
+type VersionNumber = <<_long, long>>
 [pass]
 ++++
 </pre>
@@ -3122,7 +2938,6 @@ type VersionNumber = number
 [discrete]
 === VersionString
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3136,7 +2951,6 @@ type VersionString = string
 [discrete]
 === VersionType
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3150,7 +2964,6 @@ type VersionType = 'internal' | 'external' | 'external_gte' | 'force'
 [discrete]
 === WaitForActiveShardOptions
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3164,12 +2977,11 @@ type WaitForActiveShardOptions = 'all' | 'index-setting'
 [discrete]
 === WaitForActiveShards
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type WaitForActiveShards = number | <<WaitForActiveShardOptions>>
+type WaitForActiveShards = <<_integer, integer>> | <<WaitForActiveShardOptions>>
 [pass]
 ++++
 </pre>
@@ -3178,7 +2990,6 @@ type WaitForActiveShards = number | <<WaitForActiveShardOptions>>
 [discrete]
 === WaitForEvents
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3192,14 +3003,13 @@ type WaitForEvents = 'immediate' | 'urgent' | 'high' | 'normal' | 'low' | 'langu
 [discrete]
 === WarmerStats
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface WarmerStats {
-  current: number
-  total: number
+  current: <<_long, long>>
+  total: <<_long, long>>
   total_time?: <<Duration>>
   total_time_in_millis: <<DurationValue>><<<UnitMillis>>>
 }
@@ -3211,7 +3021,6 @@ interface WarmerStats {
 [discrete]
 === WktGeoBounds
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3227,7 +3036,6 @@ interface WktGeoBounds {
 [discrete]
 === WriteResponseBase
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3235,7 +3043,7 @@ SHARED TYPE!
 interface WriteResponseBase {
   _id: <<Id>>
   _index: <<IndexName>>
-  _primary_term?: number
+  _primary_term?: <<_long, long>>
   result: <<Result>>
   _seq_no?: <<SequenceNumber>>
   _shards: <<ShardStatistics>>
@@ -3250,12 +3058,11 @@ interface WriteResponseBase {
 [discrete]
 === byte
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type number = number
+type byte = number
 [pass]
 ++++
 </pre>
@@ -3264,12 +3071,11 @@ type number = number
 [discrete]
 === double
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type number = number
+type double = number
 [pass]
 ++++
 </pre>
@@ -3278,12 +3084,11 @@ type number = number
 [discrete]
 === float
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type number = number
+type float = number
 [pass]
 ++++
 </pre>
@@ -3292,12 +3097,11 @@ type number = number
 [discrete]
 === integer
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type number = number
+type integer = number
 [pass]
 ++++
 </pre>
@@ -3306,12 +3110,11 @@ type number = number
 [discrete]
 === long
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type number = number
+type long = number
 [pass]
 ++++
 </pre>
@@ -3320,12 +3123,11 @@ type number = number
 [discrete]
 === short
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type number = number
+type short = number
 [pass]
 ++++
 </pre>
@@ -3334,12 +3136,11 @@ type number = number
 [discrete]
 === uint
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type number = number
+type uint = number
 [pass]
 ++++
 </pre>
@@ -3348,12 +3149,11 @@ type number = number
 [discrete]
 === ulong
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
-type number = number
+type ulong = number
 [pass]
 ++++
 </pre>
@@ -3362,7 +3162,6 @@ type number = number
 [discrete]
 === SpecUtilsBaseNode
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3383,7 +3182,6 @@ interface SpecUtilsBaseNode {
 [discrete]
 === SpecUtilsNullValue
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3397,7 +3195,6 @@ type SpecUtilsNullValue = null
 [discrete]
 === SpecUtilsPipeSeparatedFlags
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3411,7 +3208,6 @@ type SpecUtilsPipeSeparatedFlags<T = unknown> = T | string
 [discrete]
 === SpecUtilsStringified
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3425,7 +3221,6 @@ type SpecUtilsStringified<T = unknown> = T | string
 [discrete]
 === SpecUtilsVoid
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3439,7 +3234,6 @@ SHARED TYPE!
 [discrete]
 === SpecUtilsWithNullValue
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3453,7 +3247,6 @@ type SpecUtilsWithNullValue<T = unknown> = T | <<SpecUtilsNullValue>>
 [discrete]
 === SpecUtilsAdditionalProperties
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3468,7 +3261,6 @@ interface SpecUtilsAdditionalProperties<TKey = unknown, TValue = unknown> {
 [discrete]
 === SpecUtilsAdditionalProperty
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3483,19 +3275,18 @@ interface SpecUtilsAdditionalProperty<TKey = unknown, TValue = unknown> {
 [discrete]
 === SpecUtilsCommonQueryParameters
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface SpecUtilsCommonQueryParameters {
-  /** @property error_trace When set to `true` Elasticsearch will include the full stack trace of errors when they occur. */
+  pass:[/**] @property error_trace When set to `true` Elasticsearch will include the full stack trace of errors when they occur. */
   error_trace?: boolean
-  /** @property filter_path Comma-separated list of filters in dot notation which reduce the response returned by Elasticsearch. */
+  pass:[/**] @property filter_path Comma-separated list of filters in dot notation which reduce the response returned by Elasticsearch. */
   filter_path?: string | string[]
-  /** @property human When set to `true` will return statistics in a format suitable for humans. For example `"exists_time": "1h"` for humans and `"eixsts_time_in_millis": 3600000` for computers. When disabled the human readable values will be omitted. This makes sense for responses being consumed only by machines. */
+  pass:[/**] @property human When set to `true` will return statistics in a format suitable for humans. For example `"exists_time": "1h"` for humans and `"eixsts_time_in_millis": 3600000` for computers. When disabled the human readable values will be omitted. This makes sense for responses being consumed only by machines. */
   human?: boolean
-  /** @property pretty If set to `true` the returned JSON will be "pretty-formatted". Only use this option for debugging only. */
+  pass:[/**] @property pretty If set to `true` the returned JSON will be "pretty-formatted". Only use this option for debugging only. */
   pretty?: boolean
 }
 [pass]
@@ -3506,25 +3297,24 @@ interface SpecUtilsCommonQueryParameters {
 [discrete]
 === SpecUtilsCommonCatQueryParameters
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>
 ++++
 interface SpecUtilsCommonCatQueryParameters {
-  /** @property format Specifies the format to return the columnar data in, can be set to `text`, `json`, `cbor`, `yaml`, or `smile`. */
+  pass:[/**] @property format Specifies the format to return the columnar data in, can be set to `text`, `json`, `cbor`, `yaml`, or `smile`. */
   format?: string
-  /** @property h List of columns to appear in the response. Supports simple wildcards. */
+  pass:[/**] @property h List of columns to appear in the response. Supports simple wildcards. */
   h?: <<Names>>
-  /** @property help When set to `true` will output available columns. This option can't be combined with any other query string option. */
+  pass:[/**] @property help When set to `true` will output available columns. This option can't be combined with any other query string option. */
   help?: boolean
-  /** @property local If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
+  pass:[/**] @property local If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
-  /** @property master_timeout Period to wait for a connection to the master node. */
+  pass:[/**] @property master_timeout Period to wait for a connection to the master node. */
   master_timeout?: <<Duration>>
-  /** @property s List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  pass:[/**] @property s List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
   s?: <<Names>>
-  /** @property v When set to `true` will enable verbose output. */
+  pass:[/**] @property v When set to `true` will enable verbose output. */
   v?: boolean
 }
 [pass]
@@ -3535,7 +3325,6 @@ interface SpecUtilsCommonCatQueryParameters {
 [discrete]
 === SpecUtilsOverloadOf
 
-SHARED TYPE!
 [pass]
 ++++
 <pre>

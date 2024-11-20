@@ -64,7 +64,7 @@ interface ClosePointInTimeRequest extends <<RequestBase>> {
 ++++
 interface ClosePointInTimeResponse {
   succeeded: boolean
-  num_freed: number
+  num_freed: <<_integer, integer>>
 }
 
 [pass]

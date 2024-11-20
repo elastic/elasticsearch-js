@@ -65,7 +65,7 @@ interface MlGetDatafeedsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlGetDatafeedsResponse {
-  count: number
+  count: <<_long, long>>
   datafeeds: MlDatafeed[]
 }
 

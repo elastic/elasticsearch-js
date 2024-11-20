@@ -67,7 +67,7 @@ interface SecuritySamlAuthenticateRequest extends <<RequestBase>> {
 interface SecuritySamlAuthenticateResponse {
   access_token: string
   username: string
-  expires_in: number
+  expires_in: <<_integer, integer>>
   refresh_token: string
   realm: string
 }

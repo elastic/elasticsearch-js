@@ -64,7 +64,7 @@ interface ClearScrollRequest extends <<RequestBase>> {
 ++++
 interface ClearScrollResponse {
   succeeded: boolean
-  num_freed: number
+  num_freed: <<_integer, integer>>
 }
 
 [pass]

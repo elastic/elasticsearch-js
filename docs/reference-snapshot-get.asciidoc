@@ -57,10 +57,10 @@ interface SnapshotGetRequest extends <<RequestBase>> {
   index_names?: boolean
   include_repository?: boolean
   sort?: SnapshotSnapshotSort
-  size?: number
+  size?: <<_integer, integer>>
   order?: <<SortOrder>>
   after?: string
-  offset?: number
+  offset?: <<_integer, integer>>
   from_sort_value?: string
   slm_policy_filter?: <<Name>>
 }
@@ -79,8 +79,8 @@ interface SnapshotGetRequest extends <<RequestBase>> {
 interface SnapshotGetResponse {
   responses?: SnapshotGetSnapshotResponseItem[]
   snapshots?: SnapshotSnapshotInfo[]
-  total: number
-  remaining: number
+  total: <<_integer, integer>>
+  remaining: <<_integer, integer>>
 }
 
 [pass]

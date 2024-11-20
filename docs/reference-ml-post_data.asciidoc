@@ -66,21 +66,21 @@ interface MlPostDataRequest<TData = unknown> extends <<RequestBase>> {
 <pre>
 ++++
 interface MlPostDataResponse {
-  bucket_count: number
-  earliest_record_timestamp: number
-  empty_bucket_count: number
-  input_bytes: number
-  input_field_count: number
-  input_record_count: number
-  invalid_date_count: number
+  bucket_count: <<_long, long>>
+  earliest_record_timestamp: <<_long, long>>
+  empty_bucket_count: <<_long, long>>
+  input_bytes: <<_long, long>>
+  input_field_count: <<_long, long>>
+  input_record_count: <<_long, long>>
+  invalid_date_count: <<_long, long>>
   job_id: <<Id>>
-  last_data_time: number
-  latest_record_timestamp: number
-  missing_field_count: number
-  out_of_order_timestamp_count: number
-  processed_field_count: number
-  processed_record_count: number
-  sparse_bucket_count: number
+  last_data_time: <<_integer, integer>>
+  latest_record_timestamp: <<_long, long>>
+  missing_field_count: <<_long, long>>
+  out_of_order_timestamp_count: <<_long, long>>
+  processed_field_count: <<_long, long>>
+  processed_record_count: <<_long, long>>
+  sparse_bucket_count: <<_long, long>>
 }
 
 [pass]

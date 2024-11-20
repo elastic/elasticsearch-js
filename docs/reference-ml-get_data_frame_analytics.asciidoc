@@ -50,8 +50,8 @@ Get data frame analytics job configuration info. You can get information for mul
 interface MlGetDataFrameAnalyticsRequest extends <<RequestBase>> {
   id?: <<Id>>
   allow_no_match?: boolean
-  from?: number
-  size?: number
+  from?: <<_integer, integer>>
+  size?: <<_integer, integer>>
   exclude_generated?: boolean
 }
 
@@ -67,7 +67,7 @@ interface MlGetDataFrameAnalyticsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlGetDataFrameAnalyticsResponse {
-  count: number
+  count: <<_integer, integer>>
   data_frame_analytics: MlDataframeAnalyticsSummary[]
 }
 

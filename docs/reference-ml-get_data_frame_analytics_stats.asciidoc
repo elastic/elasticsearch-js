@@ -50,8 +50,8 @@ Get data frame analytics jobs usage info.
 interface MlGetDataFrameAnalyticsStatsRequest extends <<RequestBase>> {
   id?: <<Id>>
   allow_no_match?: boolean
-  from?: number
-  size?: number
+  from?: <<_integer, integer>>
+  size?: <<_integer, integer>>
   verbose?: boolean
 }
 
@@ -67,7 +67,7 @@ interface MlGetDataFrameAnalyticsStatsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlGetDataFrameAnalyticsStatsResponse {
-  count: number
+  count: <<_long, long>>
   data_frame_analytics: MlDataframeAnalytics[]
 }
 

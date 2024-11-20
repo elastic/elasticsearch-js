@@ -68,7 +68,7 @@ interface SecurityCreateApiKeyRequest extends <<RequestBase>> {
 ++++
 interface SecurityCreateApiKeyResponse {
   api_key: string
-  expiration?: number
+  expiration?: <<_long, long>>
   id: <<Id>>
   name: <<Name>>
   encoded: string

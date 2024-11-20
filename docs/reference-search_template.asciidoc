@@ -79,15 +79,15 @@ interface SearchTemplateRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SearchTemplateResponse<TDocument = unknown> {
-  took: number
+  took: <<_long, long>>
   timed_out: boolean
   _shards: <<ShardStatistics>>
   hits: SearchHitsMetadata<TDocument>
   aggregations?: Record<<<AggregateName>>, AggregationsAggregate>
   _clusters?: <<ClusterStatistics>>
   fields?: Record<string, any>
-  max_score?: number
-  num_reduce_phases?: number
+  max_score?: <<_double, double>>
+  num_reduce_phases?: <<_long, long>>
   profile?: SearchProfile
   pit_id?: <<Id>>
   _scroll_id?: <<ScrollId>>

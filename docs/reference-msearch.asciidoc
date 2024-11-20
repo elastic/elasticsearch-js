@@ -55,9 +55,9 @@ interface MsearchRequest extends <<RequestBase>> {
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   include_named_queries_score?: boolean
-  max_concurrent_searches?: number
-  max_concurrent_shard_requests?: number
-  pre_filter_shard_size?: number
+  max_concurrent_searches?: <<_long, long>>
+  max_concurrent_shard_requests?: <<_long, long>>
+  pre_filter_shard_size?: <<_long, long>>
   rest_total_hits_as_int?: boolean
   routing?: <<Routing>>
   search_type?: <<SearchType>>

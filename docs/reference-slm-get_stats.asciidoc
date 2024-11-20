@@ -64,13 +64,13 @@ interface SlmGetStatsRequest extends <<RequestBase>> {
 interface SlmGetStatsResponse {
   retention_deletion_time: <<Duration>>
   retention_deletion_time_millis: <<DurationValue>><<<UnitMillis>>>
-  retention_failed: number
-  retention_runs: number
-  retention_timed_out: number
-  total_snapshots_deleted: number
-  total_snapshot_deletion_failures: number
-  total_snapshots_failed: number
-  total_snapshots_taken: number
+  retention_failed: <<_long, long>>
+  retention_runs: <<_long, long>>
+  retention_timed_out: <<_long, long>>
+  total_snapshots_deleted: <<_long, long>>
+  total_snapshot_deletion_failures: <<_long, long>>
+  total_snapshots_failed: <<_long, long>>
+  total_snapshots_taken: <<_long, long>>
   policy_stats: string[]
 }
 

@@ -50,8 +50,8 @@ Get transform stats. Retrieves usage information for transforms.
 interface TransformGetTransformStatsRequest extends <<RequestBase>> {
   transform_id: <<Names>>
   allow_no_match?: boolean
-  from?: number
-  size?: number
+  from?: <<_long, long>>
+  size?: <<_long, long>>
   timeout?: <<Duration>>
 }
 
@@ -67,7 +67,7 @@ interface TransformGetTransformStatsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface TransformGetTransformStatsResponse {
-  count: number
+  count: <<_long, long>>
   transforms: TransformGetTransformStatsTransformStats[]
 }
 

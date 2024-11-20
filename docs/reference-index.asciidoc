@@ -50,7 +50,7 @@ Index a document. Adds a JSON document to the specified data stream or index and
 interface IndexRequest<TDocument = unknown> extends <<RequestBase>> {
   id?: <<Id>>
   index: <<IndexName>>
-  if_primary_term?: number
+  if_primary_term?: <<_long, long>>
   if_seq_no?: <<SequenceNumber>>
   op_type?: <<OpType>>
   pipeline?: string

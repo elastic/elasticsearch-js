@@ -54,7 +54,7 @@ interface MlExplainDataFrameAnalyticsRequest extends <<RequestBase>> {
   analysis?: MlDataframeAnalysisContainer
   description?: string
   model_memory_limit?: string
-  max_num_threads?: number
+  max_num_threads?: <<_integer, integer>>
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
   allow_lazy_start?: boolean
 }

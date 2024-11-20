@@ -74,7 +74,7 @@ interface TransformUpdateTransformRequest extends <<RequestBase>> {
 ++++
 interface TransformUpdateTransformResponse {
   authorization?: MlTransformAuthorization
-  create_time: number
+  create_time: <<_long, long>>
   description: string
   dest: ReindexDestination
   frequency?: <<Duration>>

@@ -53,8 +53,8 @@ interface CatMlTrainedModelsRequest extends CatCatRequestBase {
   bytes?: <<Bytes>>
   h?: CatCatTrainedModelsColumns
   s?: CatCatTrainedModelsColumns
-  from?: number
-  size?: number
+  from?: <<_integer, integer>>
+  size?: <<_integer, integer>>
 }
 
 [pass]

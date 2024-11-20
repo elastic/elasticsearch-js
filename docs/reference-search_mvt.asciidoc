@@ -54,16 +54,16 @@ interface SearchMvtRequest extends <<RequestBase>> {
   x: SearchMvtCoordinate
   y: SearchMvtCoordinate
   aggs?: Record<string, AggregationsAggregationContainer>
-  buffer?: number
+  buffer?: <<_integer, integer>>
   exact_bounds?: boolean
-  extent?: number
+  extent?: <<_integer, integer>>
   fields?: <<Fields>>
   grid_agg?: SearchMvtGridAggregationType
-  grid_precision?: number
+  grid_precision?: <<_integer, integer>>
   grid_type?: SearchMvtGridType
   query?: QueryDslQueryContainer
   runtime_mappings?: MappingRuntimeFields
-  size?: number
+  size?: <<_integer, integer>>
   sort?: <<Sort>>
   track_total_hits?: SearchTrackHits
   with_labels?: boolean

@@ -57,12 +57,12 @@ interface EqlSearchRequest extends <<RequestBase>> {
   event_category_field?: <<Field>>
   tiebreaker_field?: <<Field>>
   timestamp_field?: <<Field>>
-  fetch_size?: number
+  fetch_size?: <<_uint, uint>>
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   keep_alive?: <<Duration>>
   keep_on_completion?: boolean
   wait_for_completion_timeout?: <<Duration>>
-  size?: number
+  size?: <<_uint, uint>>
   fields?: QueryDslFieldAndFormat | <<Field>> | (QueryDslFieldAndFormat | <<Field>>)[]
   result_position?: EqlSearchResultPosition
   runtime_mappings?: MappingRuntimeFields

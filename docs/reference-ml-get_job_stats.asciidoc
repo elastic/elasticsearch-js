@@ -64,7 +64,7 @@ interface MlGetJobStatsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlGetJobStatsResponse {
-  count: number
+  count: <<_long, long>>
   jobs: MlJobStats[]
 }
 

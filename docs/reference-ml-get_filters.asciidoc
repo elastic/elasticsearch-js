@@ -49,8 +49,8 @@ Get filters. You can get a single filter or all filters.
 ++++
 interface MlGetFiltersRequest extends <<RequestBase>> {
   filter_id?: <<Ids>>
-  from?: number
-  size?: number
+  from?: <<_integer, integer>>
+  size?: <<_integer, integer>>
 }
 
 [pass]
@@ -65,7 +65,7 @@ interface MlGetFiltersRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlGetFiltersResponse {
-  count: number
+  count: <<_long, long>>
   filters: MlFilter[]
 }
 

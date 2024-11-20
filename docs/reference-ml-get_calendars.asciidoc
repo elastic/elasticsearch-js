@@ -49,8 +49,8 @@ Get calendar configuration info.
 ++++
 interface MlGetCalendarsRequest extends <<RequestBase>> {
   calendar_id?: <<Id>>
-  from?: number
-  size?: number
+  from?: <<_integer, integer>>
+  size?: <<_integer, integer>>
   page?: MlPage
 }
 
@@ -67,7 +67,7 @@ interface MlGetCalendarsRequest extends <<RequestBase>> {
 ++++
 interface MlGetCalendarsResponse {
   calendars: MlGetCalendarsCalendar[]
-  count: number
+  count: <<_long, long>>
 }
 
 [pass]

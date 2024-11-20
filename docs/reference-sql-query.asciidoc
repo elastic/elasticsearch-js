@@ -52,7 +52,7 @@ interface SqlQueryRequest extends <<RequestBase>> {
   catalog?: string
   columnar?: boolean
   cursor?: string
-  fetch_size?: number
+  fetch_size?: <<_integer, integer>>
   filter?: QueryDslQueryContainer
   query?: string
   request_timeout?: <<Duration>>

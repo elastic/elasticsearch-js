@@ -65,7 +65,7 @@ interface SecuritySamlInvalidateRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SecuritySamlInvalidateResponse {
-  invalidated: number
+  invalidated: <<_integer, integer>>
   realm: string
   redirect: string
 }

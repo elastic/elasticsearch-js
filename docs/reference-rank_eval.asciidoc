@@ -69,7 +69,7 @@ interface RankEvalRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface RankEvalResponse {
-  metric_score: number
+  metric_score: <<_double, double>>
   details: Record<<<Id>>, RankEvalRankEvalMetricDetail>
   failures: Record<string, any>
 }

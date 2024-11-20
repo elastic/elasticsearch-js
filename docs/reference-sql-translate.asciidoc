@@ -48,7 +48,7 @@ Translates SQL into Elasticsearch queries
 <pre>
 ++++
 interface SqlTranslateRequest extends <<RequestBase>> {
-  fetch_size?: number
+  fetch_size?: <<_integer, integer>>
   filter?: QueryDslQueryContainer
   query: string
   time_zone?: <<TimeZone>>
@@ -67,7 +67,7 @@ interface SqlTranslateRequest extends <<RequestBase>> {
 ++++
 interface SqlTranslateResponse {
   aggregations?: Record<string, AggregationsAggregationContainer>
-  size?: number
+  size?: <<_long, long>>
   _source?: SearchSourceConfig
   fields?: (QueryDslFieldAndFormat | <<Field>>)[]
   query?: QueryDslQueryContainer

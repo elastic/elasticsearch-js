@@ -50,7 +50,7 @@ interface FleetSearchRequest extends <<RequestBase>> {
   allow_no_indices?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
-  batched_reduce_size?: number
+  batched_reduce_size?: <<_long, long>>
   ccs_minimize_roundtrips?: boolean
   default_operator?: QueryDslOperator
   df?: string
@@ -58,17 +58,17 @@ interface FleetSearchRequest extends <<RequestBase>> {
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
-  max_concurrent_shard_requests?: number
+  max_concurrent_shard_requests?: <<_long, long>>
   min_compatible_shard_node?: <<VersionString>>
   preference?: string
-  pre_filter_shard_size?: number
+  pre_filter_shard_size?: <<_long, long>>
   request_cache?: boolean
   routing?: <<Routing>>
   scroll?: <<Duration>>
   search_type?: <<SearchType>>
   suggest_field?: <<Field>>
   suggest_mode?: <<SuggestMode>>
-  suggest_size?: number
+  suggest_size?: <<_long, long>>
   suggest_text?: string
   typed_keys?: boolean
   rest_total_hits_as_int?: boolean
@@ -78,30 +78,30 @@ interface FleetSearchRequest extends <<RequestBase>> {
   wait_for_checkpoints?: FleetCheckpoint[]
   allow_partial_search_results?: boolean
   aggregations?: Record<string, AggregationsAggregationContainer>
-  /** @alias aggregations */
+  pass:[/**] @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
   explain?: boolean
   ext?: Record<string, any>
-  from?: number
+  from?: <<_integer, integer>>
   highlight?: SearchHighlight
   track_total_hits?: SearchTrackHits
-  indices_boost?: Record<<<IndexName>>, number>[]
+  indices_boost?: Record<<<IndexName>>, <<_double, double>>>[]
   docvalue_fields?: (QueryDslFieldAndFormat | <<Field>>)[]
-  min_score?: number
+  min_score?: <<_double, double>>
   post_filter?: QueryDslQueryContainer
   profile?: boolean
   query?: QueryDslQueryContainer
   rescore?: SearchRescore | SearchRescore[]
   script_fields?: Record<string, <<ScriptField>>>
   search_after?: <<SortResults>>
-  size?: number
+  size?: <<_integer, integer>>
   slice?: <<SlicedScroll>>
   sort?: <<Sort>>
   _source?: SearchSourceConfig
   fields?: (QueryDslFieldAndFormat | <<Field>>)[]
   suggest?: SearchSuggester
-  terminate_after?: number
+  terminate_after?: <<_long, long>>
   timeout?: string
   track_scores?: boolean
   version?: boolean
@@ -124,15 +124,15 @@ interface FleetSearchRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface FleetSearchResponse<TDocument = unknown> {
-  took: number
+  took: <<_long, long>>
   timed_out: boolean
   _shards: <<ShardStatistics>>
   hits: SearchHitsMetadata<TDocument>
   aggregations?: Record<<<AggregateName>>, AggregationsAggregate>
   _clusters?: <<ClusterStatistics>>
   fields?: Record<string, any>
-  max_score?: number
-  num_reduce_phases?: number
+  max_score?: <<_double, double>>
+  num_reduce_phases?: <<_long, long>>
   profile?: SearchProfile
   pit_id?: <<Id>>
   _scroll_id?: <<ScrollId>>

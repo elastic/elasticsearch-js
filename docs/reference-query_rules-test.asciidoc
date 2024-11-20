@@ -64,7 +64,7 @@ interface QueryRulesTestRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface QueryRulesTestResponse {
-  total_matched_rules: number
+  total_matched_rules: <<_integer, integer>>
   matched_rules: QueryRulesTestQueryRulesetMatchedRule[]
 }
 

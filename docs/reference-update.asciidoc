@@ -50,12 +50,12 @@ Update a document. Updates a document by running a script or passing a partial d
 interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
-  if_primary_term?: number
+  if_primary_term?: <<_long, long>>
   if_seq_no?: <<SequenceNumber>>
   lang?: string
   refresh?: <<Refresh>>
   require_alias?: boolean
-  retry_on_conflict?: number
+  retry_on_conflict?: <<_integer, integer>>
   routing?: <<Routing>>
   timeout?: <<Duration>>
   wait_for_active_shards?: <<WaitForActiveShards>>

@@ -49,7 +49,7 @@ Reindex documents. Copies documents from a source to a destination. The source c
 ++++
 interface ReindexRequest extends <<RequestBase>> {
   refresh?: boolean
-  requests_per_second?: number
+  requests_per_second?: <<_float, float>>
   scroll?: <<Duration>>
   slices?: <<Slices>>
   timeout?: <<Duration>>
@@ -58,9 +58,9 @@ interface ReindexRequest extends <<RequestBase>> {
   require_alias?: boolean
   conflicts?: <<Conflicts>>
   dest: ReindexDestination
-  max_docs?: number
+  max_docs?: <<_long, long>>
   script?: <<Script>> | string
-  size?: number
+  size?: <<_long, long>>
   source: ReindexSource
 }
 
@@ -76,22 +76,22 @@ interface ReindexRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface ReindexResponse {
-  batches?: number
-  created?: number
-  deleted?: number
+  batches?: <<_long, long>>
+  created?: <<_long, long>>
+  deleted?: <<_long, long>>
   failures?: <<BulkIndexByScrollFailure>>[]
-  noops?: number
+  noops?: <<_long, long>>
   retries?: <<Retries>>
-  requests_per_second?: number
-  slice_id?: number
+  requests_per_second?: <<_float, float>>
+  slice_id?: <<_integer, integer>>
   task?: <<TaskId>>
   throttled_millis?: <<EpochTime>><<<UnitMillis>>>
   throttled_until_millis?: <<EpochTime>><<<UnitMillis>>>
   timed_out?: boolean
   took?: <<DurationValue>><<<UnitMillis>>>
-  total?: number
-  updated?: number
-  version_conflicts?: number
+  total?: <<_long, long>>
+  updated?: <<_long, long>>
+  version_conflicts?: <<_long, long>>
 }
 
 [pass]
