@@ -31,28 +31,37 @@
 
 
 [discrete]
-[[KnnSearchQuery]]
-=== KnnSearchQuery
+[[KnnSearchRequest]]
+=== KnnSearchRequest
 
 [pass]
 ++++
 <pre>
 ++++
-interface KnnSearchQuery {
-  pass:[/**] @property field The name of the vector field to search against */
-  field: <<Field>>
-  pass:[/**] @property query_vector The query vector */
-  query_vector: <<QueryVector>>
-  pass:[/**] @property k The final number of nearest neighbors to return as top hits */
-  k: <<integer>>
-  pass:[/**] @property num_candidates The number of nearest neighbor candidates to consider per shard */
-  num_candidates: <<integer>>
+interface KnnSearchRequest extends <<RequestBase>> {
+  index: <<Indices>>
+  routing?: <<Routing>>
+  _source?: <<SearchSourceConfig>>
+  docvalue_fields?: (<<QueryDslFieldAndFormat>> | <<Field>>)[]
+  stored_fields?: <<Fields>>
+  fields?: <<Fields>>
+  filter?: <<QueryDslQueryContainer>> | <<QueryDslQueryContainer>>[]
+  knn: <<KnnSearchQuery>>
 }
 [pass]
 ++++
 </pre>
 ++++
-<TDocument = unknown> {
+
+[discrete]
+[[KnnSearchResponse]]
+=== KnnSearchResponse
+
+[pass]
+++++
+<pre>
+++++
+interface KnnSearchResponse<TDocument = unknown> {
   took: <<long>>
   timed_out: boolean
   _shards: <<ShardStatistics>>
