@@ -42,7 +42,7 @@ Delete an index template. The provided <index-template> may contain multiple tem
 ----
 
 [discrete]
-==== IndicesDeleteIndexTemplateRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IndicesDeleteIndexTemplateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesDeleteIndexTemplateResponse
+==== Response
 
 [pass]
 ++++

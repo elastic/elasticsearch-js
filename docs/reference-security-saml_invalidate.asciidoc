@@ -42,7 +42,7 @@ Invalidate SAML. Submits a SAML LogoutRequest message to Elasticsearch for consu
 ----
 
 [discrete]
-==== SecuritySamlInvalidateRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SecuritySamlInvalidateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecuritySamlInvalidateResponse
+==== Response
 
 [pass]
 ++++

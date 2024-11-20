@@ -42,7 +42,7 @@ Find API keys with a query. Get a paginated list of API keys and their informati
 ----
 
 [discrete]
-==== SecurityQueryApiKeysRequest
+==== Request
 
 [pass]
 ++++
@@ -67,7 +67,7 @@ interface SecurityQueryApiKeysRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityQueryApiKeysResponse
+==== Response
 
 [pass]
 ++++

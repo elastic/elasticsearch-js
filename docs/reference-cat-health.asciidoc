@@ -42,7 +42,7 @@ Returns the health status of a cluster, similar to the cluster health API. IMPOR
 ----
 
 [discrete]
-==== CatHealthRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface CatHealthRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatHealthResponse
+==== Response
 
 [pass]
 ++++

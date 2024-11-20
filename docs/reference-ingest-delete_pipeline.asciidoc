@@ -42,7 +42,7 @@ Deletes one or more existing ingest pipeline.
 ----
 
 [discrete]
-==== IngestDeletePipelineRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IngestDeletePipelineRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IngestDeletePipelineResponse
+==== Response
 
 [pass]
 ++++

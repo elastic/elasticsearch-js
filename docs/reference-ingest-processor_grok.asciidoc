@@ -42,7 +42,7 @@ Extracts structured fields out of a single text field within a document. You cho
 ----
 
 [discrete]
-==== IngestProcessorGrokRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface IngestProcessorGrokRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IngestProcessorGrokResponse
+==== Response
 
 [pass]
 ++++

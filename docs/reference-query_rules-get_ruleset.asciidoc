@@ -42,7 +42,7 @@ Returns the details about a query ruleset
 ----
 
 [discrete]
-==== QueryRulesGetRulesetRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface QueryRulesGetRulesetRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== QueryRulesGetRulesetResponse
+==== Response
 
 [pass]
 ++++

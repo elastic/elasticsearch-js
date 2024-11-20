@@ -42,7 +42,7 @@ Delete an unreferenced trained model. The request deletes a trained inference mo
 ----
 
 [discrete]
-==== MlDeleteTrainedModelRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface MlDeleteTrainedModelRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlDeleteTrainedModelResponse
+==== Response
 
 [pass]
 ++++

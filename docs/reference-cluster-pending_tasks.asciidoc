@@ -42,7 +42,7 @@ Returns cluster-level changes (such as create index, update mapping, allocate or
 ----
 
 [discrete]
-==== ClusterPendingTasksRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface ClusterPendingTasksRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClusterPendingTasksResponse
+==== Response
 
 [pass]
 ++++

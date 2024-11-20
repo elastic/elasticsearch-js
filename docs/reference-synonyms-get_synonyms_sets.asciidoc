@@ -42,7 +42,7 @@ Retrieves a summary of all defined synonym sets
 ----
 
 [discrete]
-==== SynonymsGetSynonymsSetsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SynonymsGetSynonymsSetsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SynonymsGetSynonymsSetsResponse
+==== Response
 
 [pass]
 ++++

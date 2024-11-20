@@ -42,7 +42,7 @@ Get a document's source. Returns the source of a document.
 ----
 
 [discrete]
-==== GetSourceRequest
+==== Request
 
 [pass]
 ++++
@@ -68,7 +68,7 @@ interface GetSourceRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== GetSourceResponse
+==== Response
 
 [pass]
 ++++

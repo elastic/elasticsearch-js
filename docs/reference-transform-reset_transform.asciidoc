@@ -42,7 +42,7 @@ Reset a transform. Resets a transform. Before you can reset it, you must stop it
 ----
 
 [discrete]
-==== TransformResetTransformRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface TransformResetTransformRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TransformResetTransformResponse
+==== Response
 
 [pass]
 ++++

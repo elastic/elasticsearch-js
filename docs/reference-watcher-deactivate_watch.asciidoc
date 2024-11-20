@@ -42,7 +42,7 @@ Deactivates a currently active watch.
 ----
 
 [discrete]
-==== WatcherDeactivateWatchRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface WatcherDeactivateWatchRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== WatcherDeactivateWatchResponse
+==== Response
 
 [pass]
 ++++

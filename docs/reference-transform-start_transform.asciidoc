@@ -42,7 +42,7 @@ Start a transform. Starts a transform. When you start a transform, it creates th
 ----
 
 [discrete]
-==== TransformStartTransformRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface TransformStartTransformRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TransformStartTransformResponse
+==== Response
 
 [pass]
 ++++

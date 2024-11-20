@@ -42,7 +42,7 @@ Creates the enrich index for an existing enrich policy.
 ----
 
 [discrete]
-==== EnrichExecutePolicyRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface EnrichExecutePolicyRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== EnrichExecutePolicyResponse
+==== Response
 
 [pass]
 ++++

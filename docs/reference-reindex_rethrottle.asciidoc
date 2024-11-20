@@ -42,7 +42,7 @@ Throttle a reindex operation. Change the number of requests per second for a par
 ----
 
 [discrete]
-==== ReindexRethrottleRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface ReindexRethrottleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ReindexRethrottleResponse
+==== Response
 
 [pass]
 ++++

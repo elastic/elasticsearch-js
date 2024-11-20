@@ -42,7 +42,7 @@ Get index templates. Returns information about one or more index templates.
 ----
 
 [discrete]
-==== IndicesGetIndexTemplateRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface IndicesGetIndexTemplateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesGetIndexTemplateResponse
+==== Response
 
 [pass]
 ++++

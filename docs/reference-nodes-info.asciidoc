@@ -42,7 +42,7 @@ Returns cluster nodes information.
 ----
 
 [discrete]
-==== NodesInfoRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface NodesInfoRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== NodesInfoResponse
+==== Response
 
 [pass]
 ++++

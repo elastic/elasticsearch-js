@@ -42,7 +42,7 @@ Get data stream stats. Retrieves statistics for one or more data streams.
 ----
 
 [discrete]
-==== IndicesDataStreamsStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface IndicesDataStreamsStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesDataStreamsStatsResponse
+==== Response
 
 [pass]
 ++++

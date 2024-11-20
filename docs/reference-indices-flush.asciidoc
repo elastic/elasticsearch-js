@@ -42,7 +42,7 @@ Flushes one or more data streams or indices.
 ----
 
 [discrete]
-==== IndicesFlushRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface IndicesFlushRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesFlushResponse
+==== Response
 
 [pass]
 ++++

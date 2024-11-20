@@ -42,7 +42,7 @@ Get user privileges.
 ----
 
 [discrete]
-==== SecurityGetUserPrivilegesRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SecurityGetUserPrivilegesRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityGetUserPrivilegesResponse
+==== Response
 
 [pass]
 ++++

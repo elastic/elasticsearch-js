@@ -42,7 +42,7 @@ Returns a comprehensive information about the state of the cluster.
 ----
 
 [discrete]
-==== ClusterStateRequest
+==== Request
 
 [pass]
 ++++
@@ -66,7 +66,7 @@ interface ClusterStateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClusterStateResponse
+==== Response
 
 [pass]
 ++++

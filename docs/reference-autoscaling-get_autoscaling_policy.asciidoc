@@ -42,7 +42,7 @@ Get an autoscaling policy. NOTE: This feature is designed for indirect use by El
 ----
 
 [discrete]
-==== AutoscalingGetAutoscalingPolicyRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface AutoscalingGetAutoscalingPolicyRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== AutoscalingGetAutoscalingPolicyResponse
+==== Response
 
 [pass]
 ++++

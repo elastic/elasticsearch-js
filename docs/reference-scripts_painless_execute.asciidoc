@@ -42,7 +42,7 @@ Run a script. Runs a script and returns a result.
 ----
 
 [discrete]
-==== ScriptsPainlessExecuteRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface ScriptsPainlessExecuteRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ScriptsPainlessExecuteResponse
+==== Response
 
 [pass]
 ++++

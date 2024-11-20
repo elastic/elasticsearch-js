@@ -42,7 +42,7 @@ Create or update an index template. Index templates define settings, mappings, a
 ----
 
 [discrete]
-==== IndicesPutIndexTemplateRequest
+==== Request
 
 [pass]
 ++++
@@ -70,7 +70,7 @@ interface IndicesPutIndexTemplateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesPutIndexTemplateResponse
+==== Response
 
 [pass]
 ++++

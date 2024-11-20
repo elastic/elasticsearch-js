@@ -42,7 +42,7 @@ Splits an existing index into a new index with more primary shards.
 ----
 
 [discrete]
-==== IndicesSplitRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface IndicesSplitRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesSplitResponse
+==== Response
 
 [pass]
 ++++

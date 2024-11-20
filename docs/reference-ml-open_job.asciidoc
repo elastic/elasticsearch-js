@@ -42,7 +42,7 @@ Open anomaly detection jobs. An anomaly detection job must be opened to be ready
 ----
 
 [discrete]
-==== MlOpenJobRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface MlOpenJobRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlOpenJobResponse
+==== Response
 
 [pass]
 ++++

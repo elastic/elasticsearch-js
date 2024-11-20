@@ -42,7 +42,7 @@ Update user profile data. Update specific data for the user profile that is asso
 ----
 
 [discrete]
-==== SecurityUpdateUserProfileDataRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface SecurityUpdateUserProfileDataRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityUpdateUserProfileDataResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Create an anomaly detection job. If you include a `datafeed_config`, you must ha
 ----
 
 [discrete]
-==== MlPutJobRequest
+==== Request
 
 [pass]
 ++++
@@ -72,7 +72,7 @@ interface MlPutJobRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlPutJobResponse
+==== Response
 
 [pass]
 ++++

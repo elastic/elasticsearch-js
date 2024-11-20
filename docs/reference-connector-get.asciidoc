@@ -42,7 +42,7 @@ Get a connector. Get the details about a connector.
 ----
 
 [discrete]
-==== ConnectorGetRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface ConnectorGetRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorGetResponse
+==== Response
 
 [pass]
 ++++

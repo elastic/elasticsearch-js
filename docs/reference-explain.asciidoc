@@ -42,7 +42,7 @@ Explain a document match result. Returns information about why a specific docume
 ----
 
 [discrete]
-==== ExplainRequest
+==== Request
 
 [pass]
 ++++
@@ -71,7 +71,7 @@ interface ExplainRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ExplainResponse
+==== Response
 
 [pass]
 ++++

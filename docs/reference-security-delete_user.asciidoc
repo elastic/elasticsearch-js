@@ -42,7 +42,7 @@ Delete users. Delete users from the native realm.
 ----
 
 [discrete]
-==== SecurityDeleteUserRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SecurityDeleteUserRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityDeleteUserResponse
+==== Response
 
 [pass]
 ++++

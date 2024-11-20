@@ -42,7 +42,7 @@ Get filters. You can get a single filter or all filters.
 ----
 
 [discrete]
-==== MlGetFiltersRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface MlGetFiltersRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetFiltersResponse
+==== Response
 
 [pass]
 ++++

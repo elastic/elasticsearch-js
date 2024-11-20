@@ -42,7 +42,7 @@ Used by the monitoring features to send monitoring data.
 ----
 
 [discrete]
-==== MonitoringBulkRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = unknown>
 </pre>
 ++++
 [discrete]
-==== MonitoringBulkResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Force buffered data to be processed. The flush jobs API is only applicable when 
 ----
 
 [discrete]
-==== MlFlushJobRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface MlFlushJobRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlFlushJobResponse
+==== Response
 
 [pass]
 ++++

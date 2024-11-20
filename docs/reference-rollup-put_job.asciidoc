@@ -42,7 +42,7 @@ Creates a rollup job.
 ----
 
 [discrete]
-==== RollupPutJobRequest
+==== Request
 
 [pass]
 ++++
@@ -65,7 +65,7 @@ interface RollupPutJobRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== RollupPutJobResponse
+==== Response
 
 [pass]
 ++++

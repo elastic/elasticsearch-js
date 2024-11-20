@@ -42,7 +42,7 @@ Pauses an auto-follow pattern
 ----
 
 [discrete]
-==== CcrPauseAutoFollowPatternRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface CcrPauseAutoFollowPatternRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CcrPauseAutoFollowPatternResponse
+==== Response
 
 [pass]
 ++++

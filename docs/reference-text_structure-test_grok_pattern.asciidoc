@@ -42,7 +42,7 @@ Tests a Grok pattern on some text.
 ----
 
 [discrete]
-==== TextStructureTestGrokPatternRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface TextStructureTestGrokPatternRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TextStructureTestGrokPatternResponse
+==== Response
 
 [pass]
 ++++

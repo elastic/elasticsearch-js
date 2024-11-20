@@ -42,7 +42,7 @@ Get component templates. Retrieves information about component templates.
 ----
 
 [discrete]
-==== ClusterGetComponentTemplateRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface ClusterGetComponentTemplateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClusterGetComponentTemplateResponse
+==== Response
 
 [pass]
 ++++

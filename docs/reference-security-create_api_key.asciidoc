@@ -42,7 +42,7 @@ Create an API key. Create an API key for access without requiring basic authenti
 ----
 
 [discrete]
-==== SecurityCreateApiKeyRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface SecurityCreateApiKeyRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityCreateApiKeyResponse
+==== Response
 
 [pass]
 ++++

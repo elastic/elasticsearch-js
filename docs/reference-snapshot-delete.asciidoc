@@ -42,7 +42,7 @@ Deletes one or more snapshots.
 ----
 
 [discrete]
-==== SnapshotDeleteRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SnapshotDeleteRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SnapshotDeleteResponse
+==== Response
 
 [pass]
 ++++

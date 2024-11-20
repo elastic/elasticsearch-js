@@ -40,7 +40,7 @@ The purpose of the fleet search api is to provide a search api where the search 
 ----
 
 [discrete]
-==== FleetSearchRequest
+==== Request
 
 [pass]
 ++++
@@ -118,7 +118,7 @@ interface FleetSearchRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== FleetSearchResponse
+==== Response
 
 [pass]
 ++++

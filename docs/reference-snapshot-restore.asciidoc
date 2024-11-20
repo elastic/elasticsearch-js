@@ -42,7 +42,7 @@ Restores a snapshot.
 ----
 
 [discrete]
-==== SnapshotRestoreRequest
+==== Request
 
 [pass]
 ++++
@@ -70,7 +70,7 @@ interface SnapshotRestoreRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SnapshotRestoreResponse
+==== Response
 
 [pass]
 ++++

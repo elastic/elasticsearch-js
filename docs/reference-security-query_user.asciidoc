@@ -42,7 +42,7 @@ Find users with a query. Get information for users in a paginated manner. You ca
 ----
 
 [discrete]
-==== SecurityQueryUserRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface SecurityQueryUserRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityQueryUserResponse
+==== Response
 
 [pass]
 ++++

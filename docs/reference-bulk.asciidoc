@@ -42,7 +42,7 @@ Bulk index or delete documents. Performs multiple indexing or delete operations 
 ----
 
 [discrete]
-==== BulkRequest
+==== Request
 
 [pass]
 ++++
@@ -67,7 +67,7 @@ interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <
 </pre>
 ++++
 [discrete]
-==== BulkResponse
+==== Response
 
 [pass]
 ++++

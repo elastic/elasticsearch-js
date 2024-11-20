@@ -42,7 +42,7 @@ Stop transforms. Stops one or more transforms.
 ----
 
 [discrete]
-==== TransformStopTransformRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface TransformStopTransformRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TransformStopTransformResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Reset an anomaly detection job. All model state and results are deleted. The job
 ----
 
 [discrete]
-==== MlResetJobRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface MlResetJobRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlResetJobResponse
+==== Response
 
 [pass]
 ++++

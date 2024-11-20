@@ -42,7 +42,7 @@ Delete a filter. If an anomaly detection job references the filter, you cannot d
 ----
 
 [discrete]
-==== MlDeleteFilterRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface MlDeleteFilterRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlDeleteFilterResponse
+==== Response
 
 [pass]
 ++++

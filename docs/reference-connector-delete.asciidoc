@@ -42,7 +42,7 @@ Delete a connector. Removes a connector and associated sync jobs. This is a dest
 ----
 
 [discrete]
-==== ConnectorDeleteRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface ConnectorDeleteRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorDeleteResponse
+==== Response
 
 [pass]
 ++++

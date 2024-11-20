@@ -42,7 +42,7 @@ Get a document count. Provides quick access to a document count for a data strea
 ----
 
 [discrete]
-==== CatCountRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface CatCountRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatCountResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Get transform stats. Retrieves usage information for transforms.
 ----
 
 [discrete]
-==== TransformGetTransformStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface TransformGetTransformStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TransformGetTransformStatsResponse
+==== Response
 
 [pass]
 ++++

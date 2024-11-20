@@ -42,7 +42,7 @@ Get an enrich policy. Returns information about an enrich policy.
 ----
 
 [discrete]
-==== EnrichGetPolicyRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface EnrichGetPolicyRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== EnrichGetPolicyResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Get an inference endpoint
 ----
 
 [discrete]
-==== InferenceGetRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface InferenceGetRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== InferenceGetResponse
+==== Response
 
 [pass]
 ++++

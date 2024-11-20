@@ -42,7 +42,7 @@ Open a point in time. A search request by default runs against the most recent v
 ----
 
 [discrete]
-==== OpenPointInTimeRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface OpenPointInTimeRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== OpenPointInTimeResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Get data frame analytics jobs usage info.
 ----
 
 [discrete]
-==== MlGetDataFrameAnalyticsStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface MlGetDataFrameAnalyticsStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetDataFrameAnalyticsStatsResponse
+==== Response
 
 [pass]
 ++++

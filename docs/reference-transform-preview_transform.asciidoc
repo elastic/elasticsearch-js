@@ -42,7 +42,7 @@ Preview a transform. Generates a preview of the results that you will get when y
 ----
 
 [discrete]
-==== TransformPreviewTransformRequest
+==== Request
 
 [pass]
 ++++
@@ -67,7 +67,7 @@ interface TransformPreviewTransformRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TransformPreviewTransformResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Get multiple documents. Get multiple JSON documents by ID from one or more indic
 ----
 
 [discrete]
-==== MgetRequest
+==== Request
 
 [pass]
 ++++
@@ -68,7 +68,7 @@ interface MgetRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MgetResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Start a trained model deployment. It allocates the model to every machine learni
 ----
 
 [discrete]
-==== MlStartTrainedModelDeploymentRequest
+==== Request
 
 [pass]
 ++++
@@ -65,7 +65,7 @@ interface MlStartTrainedModelDeploymentRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlStartTrainedModelDeploymentResponse
+==== Response
 
 [pass]
 ++++

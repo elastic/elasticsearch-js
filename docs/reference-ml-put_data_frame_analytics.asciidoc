@@ -42,7 +42,7 @@ Create a data frame analytics job. This API creates a data frame analytics job t
 ----
 
 [discrete]
-==== MlPutDataFrameAnalyticsRequest
+==== Request
 
 [pass]
 ++++
@@ -67,7 +67,7 @@ interface MlPutDataFrameAnalyticsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlPutDataFrameAnalyticsResponse
+==== Response
 
 [pass]
 ++++

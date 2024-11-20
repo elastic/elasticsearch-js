@@ -42,7 +42,7 @@ Update a datafeed. You must stop and start the datafeed for the changes to be ap
 ----
 
 [discrete]
-==== MlUpdateDatafeedRequest
+==== Request
 
 [pass]
 ++++
@@ -76,7 +76,7 @@ interface MlUpdateDatafeedRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlUpdateDatafeedResponse
+==== Response
 
 [pass]
 ++++

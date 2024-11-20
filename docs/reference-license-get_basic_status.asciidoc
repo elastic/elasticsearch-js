@@ -42,7 +42,7 @@ Retrieves information about the status of the basic license.
 ----
 
 [discrete]
-==== LicenseGetBasicStatusRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface LicenseGetBasicStatusRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== LicenseGetBasicStatusResponse
+==== Response
 
 [pass]
 ++++

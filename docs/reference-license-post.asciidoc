@@ -42,7 +42,7 @@ Updates the license for the cluster.
 ----
 
 [discrete]
-==== LicensePostRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface LicensePostRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== LicensePostResponse
+==== Response
 
 [pass]
 ++++

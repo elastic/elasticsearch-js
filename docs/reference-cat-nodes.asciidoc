@@ -42,7 +42,7 @@ Returns information about the nodes in a cluster. IMPORTANT: cat APIs are only i
 ----
 
 [discrete]
-==== CatNodesRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface CatNodesRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatNodesResponse
+==== Response
 
 [pass]
 ++++

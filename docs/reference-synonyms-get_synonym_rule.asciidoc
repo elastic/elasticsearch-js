@@ -42,7 +42,7 @@ Retrieves a synonym rule from a synonym set
 ----
 
 [discrete]
-==== SynonymsGetSynonymRuleRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SynonymsGetSynonymRuleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SynonymsGetSynonymRuleResponse
+==== Response
 
 [pass]
 ++++

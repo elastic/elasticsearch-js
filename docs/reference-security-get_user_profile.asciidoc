@@ -42,7 +42,7 @@ Get a user profile. Get a user's profile using the unique profile ID.
 ----
 
 [discrete]
-==== SecurityGetUserProfileRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SecurityGetUserProfileRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityGetUserProfileResponse
+==== Response
 
 [pass]
 ++++

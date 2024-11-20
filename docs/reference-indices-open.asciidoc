@@ -42,7 +42,7 @@ Opens a closed index. For data streams, the API opens any closed backing indices
 ----
 
 [discrete]
-==== IndicesOpenRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface IndicesOpenRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesOpenResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Update data stream lifecycles. Update the data stream lifecycle of the specified
 ----
 
 [discrete]
-==== IndicesPutDataLifecycleRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface IndicesPutDataLifecycleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesPutDataLifecycleResponse
+==== Response
 
 [pass]
 ++++

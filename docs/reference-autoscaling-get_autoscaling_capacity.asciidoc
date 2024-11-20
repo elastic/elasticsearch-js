@@ -42,7 +42,7 @@ Get the autoscaling capacity. NOTE: This feature is designed for indirect use by
 ----
 
 [discrete]
-==== AutoscalingGetAutoscalingCapacityRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface AutoscalingGetAutoscalingCapacityRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== AutoscalingGetAutoscalingCapacityResponse
+==== Response
 
 [pass]
 ++++

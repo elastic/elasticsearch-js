@@ -42,7 +42,7 @@ Deletes any snapshots that are expired according to the policy's retention rules
 ----
 
 [discrete]
-==== SlmExecuteRetentionRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface SlmExecuteRetentionRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SlmExecuteRetentionResponse
+==== Response
 
 [pass]
 ++++

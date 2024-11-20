@@ -42,7 +42,7 @@ Update a transform. Updates certain properties of a transform. All updated prope
 ----
 
 [discrete]
-==== TransformUpdateTransformRequest
+==== Request
 
 [pass]
 ++++
@@ -67,7 +67,7 @@ interface TransformUpdateTransformRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TransformUpdateTransformResponse
+==== Response
 
 [pass]
 ++++

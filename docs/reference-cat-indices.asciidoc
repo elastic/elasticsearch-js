@@ -42,7 +42,7 @@ Get index information. Returns high-level information about indices in a cluster
 ----
 
 [discrete]
-==== CatIndicesRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface CatIndicesRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatIndicesResponse
+==== Response
 
 [pass]
 ++++

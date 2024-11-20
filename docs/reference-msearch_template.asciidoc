@@ -42,7 +42,7 @@ Run multiple templated searches.
 ----
 
 [discrete]
-==== MsearchTemplateRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface MsearchTemplateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MsearchTemplateResponse
+==== Response
 
 [pass]
 ++++

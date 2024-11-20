@@ -42,7 +42,7 @@ Explain data frame analytics config. This API provides explanations for a data f
 ----
 
 [discrete]
-==== MlExplainDataFrameAnalyticsRequest
+==== Request
 
 [pass]
 ++++
@@ -65,7 +65,7 @@ interface MlExplainDataFrameAnalyticsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlExplainDataFrameAnalyticsResponse
+==== Response
 
 [pass]
 ++++

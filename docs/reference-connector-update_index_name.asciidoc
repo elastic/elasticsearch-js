@@ -42,7 +42,7 @@ Update the connector index name. Update the `index_name` field of a connector, s
 ----
 
 [discrete]
-==== ConnectorUpdateIndexNameRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface ConnectorUpdateIndexNameRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorUpdateIndexNameResponse
+==== Response
 
 [pass]
 ++++

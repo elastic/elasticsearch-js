@@ -42,7 +42,7 @@ Prepare SAML authentication. Creates a SAML authentication request (`<AuthnReque
 ----
 
 [discrete]
-==== SecuritySamlPrepareAuthenticationRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SecuritySamlPrepareAuthenticationRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecuritySamlPrepareAuthenticationResponse
+==== Response
 
 [pass]
 ++++

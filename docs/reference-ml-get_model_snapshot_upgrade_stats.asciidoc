@@ -42,7 +42,7 @@ Get anomaly detection job model snapshot upgrade usage info.
 ----
 
 [discrete]
-==== MlGetModelSnapshotUpgradeStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface MlGetModelSnapshotUpgradeStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetModelSnapshotUpgradeStatsResponse
+==== Response
 
 [pass]
 ++++

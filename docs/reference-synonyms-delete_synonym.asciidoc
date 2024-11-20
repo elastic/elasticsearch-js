@@ -42,7 +42,7 @@ Deletes a synonym set
 ----
 
 [discrete]
-==== SynonymsDeleteSynonymRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SynonymsDeleteSynonymRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SynonymsDeleteSynonymResponse
+==== Response
 
 [pass]
 ++++

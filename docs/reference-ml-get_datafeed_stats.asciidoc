@@ -42,7 +42,7 @@ Get datafeeds usage info. You can get statistics for multiple datafeeds in a sin
 ----
 
 [discrete]
-==== MlGetDatafeedStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface MlGetDatafeedStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetDatafeedStatsResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Deletes a repository.
 ----
 
 [discrete]
-==== SnapshotDeleteRepositoryRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SnapshotDeleteRepositoryRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SnapshotDeleteRepositoryResponse
+==== Response
 
 [pass]
 ++++

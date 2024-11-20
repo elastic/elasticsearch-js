@@ -42,7 +42,7 @@ Set upgrade_mode for ML indices. Sets a cluster wide upgrade_mode setting that p
 ----
 
 [discrete]
-==== MlSetUpgradeModeRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface MlSetUpgradeModeRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlSetUpgradeModeResponse
+==== Response
 
 [pass]
 ++++

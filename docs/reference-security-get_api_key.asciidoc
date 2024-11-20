@@ -42,7 +42,7 @@ Get API key information. Retrieves information for one or more API keys. NOTE: I
 ----
 
 [discrete]
-==== SecurityGetApiKeyRequest
+==== Request
 
 [pass]
 ++++
@@ -64,7 +64,7 @@ interface SecurityGetApiKeyRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityGetApiKeyResponse
+==== Response
 
 [pass]
 ++++

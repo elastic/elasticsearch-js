@@ -42,7 +42,7 @@ Create a connector. Connectors are Elasticsearch integrations that bring content
 ----
 
 [discrete]
-==== ConnectorPostRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface ConnectorPostRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorPostResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Get term vector information. Get information and statistics about terms in the f
 ----
 
 [discrete]
-==== TermvectorsRequest
+==== Request
 
 [pass]
 ++++
@@ -72,7 +72,7 @@ interface TermvectorsRequest<TDocument = unknown> extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TermvectorsResponse
+==== Response
 
 [pass]
 ++++

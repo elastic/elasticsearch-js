@@ -42,7 +42,7 @@ Clear the roles cache. Evict roles from the native role cache.
 ----
 
 [discrete]
-==== SecurityClearCachedRolesRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SecurityClearCachedRolesRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityClearCachedRolesResponse
+==== Response
 
 [pass]
 ++++

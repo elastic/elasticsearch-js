@@ -42,7 +42,7 @@ Schedule a transform to start now. Instantly runs a transform to process data. I
 ----
 
 [discrete]
-==== TransformScheduleNowTransformRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface TransformScheduleNowTransformRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TransformScheduleNowTransformResponse
+==== Response
 
 [pass]
 ++++

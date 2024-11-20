@@ -42,7 +42,7 @@ Get license information. Returns information about your Elastic license, includi
 ----
 
 [discrete]
-==== LicenseGetRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface LicenseGetRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== LicenseGetResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Create part of a trained model definition.
 ----
 
 [discrete]
-==== MlPutTrainedModelDefinitionPartRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface MlPutTrainedModelDefinitionPartRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlPutTrainedModelDefinitionPartResponse
+==== Response
 
 [pass]
 ++++

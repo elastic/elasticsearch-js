@@ -42,7 +42,7 @@ Reloads the keystore on nodes in the cluster.
 ----
 
 [discrete]
-==== NodesReloadSecureSettingsRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface NodesReloadSecureSettingsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== NodesReloadSecureSettingsResponse
+==== Response
 
 [pass]
 ++++

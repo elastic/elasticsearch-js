@@ -42,7 +42,7 @@ Bulk create or update roles. The role management APIs are generally the preferre
 ----
 
 [discrete]
-==== SecurityBulkPutRoleRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SecurityBulkPutRoleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityBulkPutRoleResponse
+==== Response
 
 [pass]
 ++++

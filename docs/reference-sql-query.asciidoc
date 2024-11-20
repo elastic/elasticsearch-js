@@ -42,7 +42,7 @@ Executes a SQL request
 ----
 
 [discrete]
-==== SqlQueryRequest
+==== Request
 
 [pass]
 ++++
@@ -73,7 +73,7 @@ interface SqlQueryRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SqlQueryResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Close a point in time. A point in time must be opened explicitly before being us
 ----
 
 [discrete]
-==== ClosePointInTimeRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface ClosePointInTimeRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClosePointInTimeResponse
+==== Response
 
 [pass]
 ++++

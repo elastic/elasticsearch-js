@@ -42,7 +42,7 @@ Returns results matching a query expressed in Event Query Language (EQL)
 ----
 
 [discrete]
-==== EqlSearchRequest
+==== Request
 
 [pass]
 ++++
@@ -74,7 +74,7 @@ interface EqlSearchRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== EqlSearchResponse
+==== Response
 
 [pass]
 ++++

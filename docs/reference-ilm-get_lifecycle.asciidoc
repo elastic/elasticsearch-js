@@ -42,7 +42,7 @@ Retrieves a lifecycle policy.
 ----
 
 [discrete]
-==== IlmGetLifecycleRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IlmGetLifecycleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IlmGetLifecycleResponse
+==== Response
 
 [pass]
 ++++

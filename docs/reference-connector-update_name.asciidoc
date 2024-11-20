@@ -42,7 +42,7 @@ Update the connector name and description.
 ----
 
 [discrete]
-==== ConnectorUpdateNameRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface ConnectorUpdateNameRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorUpdateNameResponse
+==== Response
 
 [pass]
 ++++

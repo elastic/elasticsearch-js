@@ -42,7 +42,7 @@ Create a datafeed. Datafeeds retrieve data from Elasticsearch for analysis by an
 ----
 
 [discrete]
-==== MlPutDatafeedRequest
+==== Request
 
 [pass]
 ++++
@@ -77,7 +77,7 @@ interface MlPutDatafeedRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlPutDatafeedResponse
+==== Response
 
 [pass]
 ++++

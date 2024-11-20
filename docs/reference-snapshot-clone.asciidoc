@@ -42,7 +42,7 @@ Clones indices from one snapshot into another snapshot in the same repository.
 ----
 
 [discrete]
-==== SnapshotCloneRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface SnapshotCloneRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SnapshotCloneResponse
+==== Response
 
 [pass]
 ++++

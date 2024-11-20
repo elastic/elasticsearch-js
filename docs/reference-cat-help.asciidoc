@@ -42,7 +42,7 @@ Get CAT help. Returns help for the CAT APIs.
 ----
 
 [discrete]
-==== CatHelpRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface CatHelpRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatHelpResponse
+==== Response
 
 [pass]
 ++++

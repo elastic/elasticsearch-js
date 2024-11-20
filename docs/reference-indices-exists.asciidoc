@@ -42,7 +42,7 @@ Check indices. Checks if one or more indices, index aliases, or data streams exi
 ----
 
 [discrete]
-==== IndicesExistsRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface IndicesExistsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesExistsResponse
+==== Response
 
 [pass]
 ++++

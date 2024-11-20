@@ -42,7 +42,7 @@ Gets a list of features which can be included in snapshots using the feature_sta
 ----
 
 [discrete]
-==== FeaturesGetFeaturesRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface FeaturesGetFeaturesRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== FeaturesGetFeaturesResponse
+==== Response
 
 [pass]
 ++++

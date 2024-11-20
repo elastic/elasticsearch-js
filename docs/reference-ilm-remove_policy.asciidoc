@@ -42,7 +42,7 @@ Removes the assigned lifecycle policy and stops managing the specified index
 ----
 
 [discrete]
-==== IlmRemovePolicyRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface IlmRemovePolicyRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IlmRemovePolicyResponse
+==== Response
 
 [pass]
 ++++

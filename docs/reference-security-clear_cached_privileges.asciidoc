@@ -42,7 +42,7 @@ Clear the privileges cache. Evict privileges from the native application privile
 ----
 
 [discrete]
-==== SecurityClearCachedPrivilegesRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SecurityClearCachedPrivilegesRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityClearCachedPrivilegesResponse
+==== Response
 
 [pass]
 ++++

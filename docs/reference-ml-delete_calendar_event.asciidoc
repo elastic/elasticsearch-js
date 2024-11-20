@@ -42,7 +42,7 @@ Delete events from a calendar.
 ----
 
 [discrete]
-==== MlDeleteCalendarEventRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface MlDeleteCalendarEventRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlDeleteCalendarEventResponse
+==== Response
 
 [pass]
 ++++

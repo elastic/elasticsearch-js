@@ -42,7 +42,7 @@ Deletes an existing snapshot lifecycle policy.
 ----
 
 [discrete]
-==== SlmDeleteLifecycleRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SlmDeleteLifecycleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SlmDeleteLifecycleResponse
+==== Response
 
 [pass]
 ++++

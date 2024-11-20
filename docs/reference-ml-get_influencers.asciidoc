@@ -42,7 +42,7 @@ Get anomaly detection job results for influencers. Influencers are the entities 
 ----
 
 [discrete]
-==== MlGetInfluencersRequest
+==== Request
 
 [pass]
 ++++
@@ -66,7 +66,7 @@ interface MlGetInfluencersRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetInfluencersResponse
+==== Response
 
 [pass]
 ++++

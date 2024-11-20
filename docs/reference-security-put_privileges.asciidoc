@@ -42,7 +42,7 @@ Create or update application privileges.
 ----
 
 [discrete]
-==== SecurityPutPrivilegesRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SecurityPutPrivilegesRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityPutPrivilegesResponse
+==== Response
 
 [pass]
 ++++

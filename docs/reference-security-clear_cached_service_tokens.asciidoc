@@ -42,7 +42,7 @@ Clear service account token caches. Evict a subset of all entries from the servi
 ----
 
 [discrete]
-==== SecurityClearCachedServiceTokensRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SecurityClearCachedServiceTokensRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityClearCachedServiceTokensResponse
+==== Response
 
 [pass]
 ++++

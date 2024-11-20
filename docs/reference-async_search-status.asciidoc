@@ -42,7 +42,7 @@ Get the async search status. Get the status of a previously submitted async sear
 ----
 
 [discrete]
-==== AsyncSearchStatusRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface AsyncSearchStatusRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== AsyncSearchStatusResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Update field mappings. Adds new fields to an existing data stream or index. You 
 ----
 
 [discrete]
-==== IndicesPutMappingRequest
+==== Request
 
 [pass]
 ++++
@@ -74,7 +74,7 @@ interface IndicesPutMappingRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesPutMappingResponse
+==== Response
 
 [pass]
 ++++

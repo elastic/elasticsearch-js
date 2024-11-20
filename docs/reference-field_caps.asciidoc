@@ -42,7 +42,7 @@ Get the field capabilities. Get information about the capabilities of fields amo
 ----
 
 [discrete]
-==== FieldCapsRequest
+==== Request
 
 [pass]
 ++++
@@ -67,7 +67,7 @@ interface FieldCapsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== FieldCapsResponse
+==== Response
 
 [pass]
 ++++

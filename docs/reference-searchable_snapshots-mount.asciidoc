@@ -42,7 +42,7 @@ Mount a snapshot as a searchable index.
 ----
 
 [discrete]
-==== SearchableSnapshotsMountRequest
+==== Request
 
 [pass]
 ++++
@@ -65,7 +65,7 @@ interface SearchableSnapshotsMountRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SearchableSnapshotsMountResponse
+==== Response
 
 [pass]
 ++++

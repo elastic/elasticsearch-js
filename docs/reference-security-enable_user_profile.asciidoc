@@ -42,7 +42,7 @@ Enable a user profile. Enable user profiles to make them visible in user profile
 ----
 
 [discrete]
-==== SecurityEnableUserProfileRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SecurityEnableUserProfileRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityEnableUserProfileResponse
+==== Response
 
 [pass]
 ++++

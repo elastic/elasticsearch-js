@@ -42,7 +42,7 @@ Update a document. Updates a document by running a script or passing a partial d
 ----
 
 [discrete]
-==== UpdateRequest
+==== Request
 
 [pass]
 ++++
@@ -76,7 +76,7 @@ interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> extends
 </pre>
 ++++
 [discrete]
-==== UpdateResponse
+==== Response
 
 [pass]
 ++++

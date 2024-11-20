@@ -42,7 +42,7 @@ Get SSL certificates. Get information about the X.509 certificates that are used
 ----
 
 [discrete]
-==== SslCertificatesRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface SslCertificatesRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SslCertificatesResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Updates the cluster voting config exclusions by node ids or node names.
 ----
 
 [discrete]
-==== ClusterPostVotingConfigExclusionsRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface ClusterPostVotingConfigExclusionsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClusterPostVotingConfigExclusionsResponse
+==== Response
 
 [pass]
 ++++

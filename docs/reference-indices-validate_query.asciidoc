@@ -42,7 +42,7 @@ Validate a query. Validates a query without running it.
 ----
 
 [discrete]
-==== IndicesValidateQueryRequest
+==== Request
 
 [pass]
 ++++
@@ -70,7 +70,7 @@ interface IndicesValidateQueryRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesValidateQueryResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Delete indices. Deletes one or more indices.
 ----
 
 [discrete]
-==== IndicesDeleteRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface IndicesDeleteRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesDeleteResponse
+==== Response
 
 [pass]
 ++++

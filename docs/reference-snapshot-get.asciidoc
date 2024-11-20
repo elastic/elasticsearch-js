@@ -42,7 +42,7 @@ Returns information about a snapshot.
 ----
 
 [discrete]
-==== SnapshotGetRequest
+==== Request
 
 [pass]
 ++++
@@ -71,7 +71,7 @@ interface SnapshotGetRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SnapshotGetResponse
+==== Response
 
 [pass]
 ++++

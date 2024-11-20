@@ -42,7 +42,7 @@ Creates a repository.
 ----
 
 [discrete]
-==== SnapshotCreateRepositoryRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface SnapshotCreateRepositoryRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SnapshotCreateRepositoryResponse
+==== Response
 
 [pass]
 ++++

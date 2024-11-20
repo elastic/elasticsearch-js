@@ -42,7 +42,7 @@ Get aliases. Retrieves information for one or more data stream or index aliases.
 ----
 
 [discrete]
-==== IndicesGetAliasRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface IndicesGetAliasRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesGetAliasResponse
+==== Response
 
 [pass]
 ++++

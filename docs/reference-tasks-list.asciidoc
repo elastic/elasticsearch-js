@@ -42,7 +42,7 @@ The task management API returns information about tasks currently executing on o
 ----
 
 [discrete]
-==== TasksListRequest
+==== Request
 
 [pass]
 ++++
@@ -64,7 +64,7 @@ interface TasksListRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TasksListResponse
+==== Response
 
 [pass]
 ++++

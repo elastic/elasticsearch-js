@@ -42,7 +42,7 @@ Create a calendar.
 ----
 
 [discrete]
-==== MlPutCalendarRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface MlPutCalendarRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlPutCalendarResponse
+==== Response
 
 [pass]
 ++++

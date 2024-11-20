@@ -42,7 +42,7 @@ Delete application privileges.
 ----
 
 [discrete]
-==== SecurityDeletePrivilegesRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SecurityDeletePrivilegesRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityDeletePrivilegesResponse
+==== Response
 
 [pass]
 ++++

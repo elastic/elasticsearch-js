@@ -42,7 +42,7 @@ Ping the cluster. Returns whether the cluster is running.
 ----
 
 [discrete]
-==== PingRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface PingRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== PingResponse
+==== Response
 
 [pass]
 ++++

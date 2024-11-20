@@ -42,7 +42,7 @@ Throttle a delete by query operation. Change the number of requests per second f
 ----
 
 [discrete]
-==== DeleteByQueryRethrottleRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface DeleteByQueryRethrottleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== DeleteByQueryRethrottleResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Update an anomaly detection job. Updates certain properties of an anomaly detect
 ----
 
 [discrete]
-==== MlUpdateJobRequest
+==== Request
 
 [pass]
 ++++
@@ -72,7 +72,7 @@ interface MlUpdateJobRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlUpdateJobResponse
+==== Response
 
 [pass]
 ++++

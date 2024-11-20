@@ -42,7 +42,7 @@ Deletes a pipeline used for Logstash Central Management.
 ----
 
 [discrete]
-==== LogstashDeletePipelineRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface LogstashDeletePipelineRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== LogstashDeletePipelineResponse
+==== Response
 
 [pass]
 ++++

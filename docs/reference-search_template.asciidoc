@@ -42,7 +42,7 @@ Run a search with a search template.
 ----
 
 [discrete]
-==== SearchTemplateRequest
+==== Request
 
 [pass]
 ++++
@@ -73,7 +73,7 @@ interface SearchTemplateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SearchTemplateResponse
+==== Response
 
 [pass]
 ++++

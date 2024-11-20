@@ -42,7 +42,7 @@ Authenticate a user. Authenticates a user and returns information about the auth
 ----
 
 [discrete]
-==== SecurityAuthenticateRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface SecurityAuthenticateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityAuthenticateResponse
+==== Response
 
 [pass]
 ++++

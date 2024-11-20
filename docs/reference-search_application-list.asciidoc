@@ -42,7 +42,7 @@ Returns the existing search applications.
 ----
 
 [discrete]
-==== SearchApplicationListRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SearchApplicationListRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SearchApplicationListResponse
+==== Response
 
 [pass]
 ++++

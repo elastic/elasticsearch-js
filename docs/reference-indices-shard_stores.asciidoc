@@ -42,7 +42,7 @@ Retrieves store information about replica shards in one or more indices. For dat
 ----
 
 [discrete]
-==== IndicesShardStoresRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface IndicesShardStoresRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesShardStoresResponse
+==== Response
 
 [pass]
 ++++

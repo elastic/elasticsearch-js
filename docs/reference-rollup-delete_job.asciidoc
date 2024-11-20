@@ -42,7 +42,7 @@ Deletes an existing rollup job.
 ----
 
 [discrete]
-==== RollupDeleteJobRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface RollupDeleteJobRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== RollupDeleteJobResponse
+==== Response
 
 [pass]
 ++++

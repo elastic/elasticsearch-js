@@ -42,7 +42,7 @@ Clear the user cache. Evict users from the user cache. You can completely clear 
 ----
 
 [discrete]
-==== SecurityClearCachedRealmsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SecurityClearCachedRealmsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityClearCachedRealmsResponse
+==== Response
 
 [pass]
 ++++

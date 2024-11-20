@@ -42,7 +42,7 @@ Returns thread pool statistics for each node in a cluster. Returned information 
 ----
 
 [discrete]
-==== CatThreadPoolRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface CatThreadPoolRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatThreadPoolResponse
+==== Response
 
 [pass]
 ++++

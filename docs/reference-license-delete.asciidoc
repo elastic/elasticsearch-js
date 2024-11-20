@@ -42,7 +42,7 @@ Deletes licensing information for the cluster
 ----
 
 [discrete]
-==== LicenseDeleteRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface LicenseDeleteRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== LicenseDeleteResponse
+==== Response
 
 [pass]
 ++++

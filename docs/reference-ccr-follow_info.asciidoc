@@ -42,7 +42,7 @@ Retrieves information about all follower indices, including parameters and statu
 ----
 
 [discrete]
-==== CcrFollowInfoRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface CcrFollowInfoRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CcrFollowInfoResponse
+==== Response
 
 [pass]
 ++++

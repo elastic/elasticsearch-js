@@ -42,7 +42,7 @@ Retrieves the current Watcher metrics.
 ----
 
 [discrete]
-==== WatcherStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface WatcherStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== WatcherStatsResponse
+==== Response
 
 [pass]
 ++++

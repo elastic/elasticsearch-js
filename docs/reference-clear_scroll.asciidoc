@@ -42,7 +42,7 @@ Clear a scrolling search. Clear the search context and results for a scrolling s
 ----
 
 [discrete]
-==== ClearScrollRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface ClearScrollRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClearScrollResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Create or update a connector.
 ----
 
 [discrete]
-==== ConnectorPutRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface ConnectorPutRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorPutResponse
+==== Response
 
 [pass]
 ++++

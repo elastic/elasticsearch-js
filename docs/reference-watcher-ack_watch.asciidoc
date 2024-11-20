@@ -42,7 +42,7 @@ Acknowledges a watch, manually throttling the execution of the watch's actions.
 ----
 
 [discrete]
-==== WatcherAckWatchRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface WatcherAckWatchRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== WatcherAckWatchResponse
+==== Response
 
 [pass]
 ++++

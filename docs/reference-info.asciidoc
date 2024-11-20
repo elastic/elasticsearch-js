@@ -42,7 +42,7 @@ Get cluster info. Returns basic information about the cluster.
 ----
 
 [discrete]
-==== InfoRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface InfoRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== InfoResponse
+==== Response
 
 [pass]
 ++++

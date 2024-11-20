@@ -42,7 +42,7 @@ Create an index. Creates a new index.
 ----
 
 [discrete]
-==== IndicesCreateRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface IndicesCreateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesCreateResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Activate the connector draft filter. Activates the valid draft filtering for a c
 ----
 
 [discrete]
-==== ConnectorUpdateActiveFilteringRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface ConnectorUpdateActiveFilteringRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorUpdateActiveFilteringResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Update the connector configuration. Update the configuration field in the connec
 ----
 
 [discrete]
-==== ConnectorUpdateConfigurationRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface ConnectorUpdateConfigurationRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorUpdateConfigurationResponse
+==== Response
 
 [pass]
 ++++

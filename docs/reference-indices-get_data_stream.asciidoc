@@ -42,7 +42,7 @@ Get data streams. Retrieves information about one or more data streams.
 ----
 
 [discrete]
-==== IndicesGetDataStreamRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface IndicesGetDataStreamRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesGetDataStreamResponse
+==== Response
 
 [pass]
 ++++

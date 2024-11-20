@@ -42,7 +42,7 @@ Run a scrolling search. IMPORTANT: The scroll API is no longer recommend for dee
 ----
 
 [discrete]
-==== ScrollRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface ScrollRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ScrollResponse
+==== Response
 
 [pass]
 ++++

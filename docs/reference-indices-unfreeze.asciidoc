@@ -42,7 +42,7 @@ Unfreezes an index.
 ----
 
 [discrete]
-==== IndicesUnfreezeRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface IndicesUnfreezeRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesUnfreezeResponse
+==== Response
 
 [pass]
 ++++

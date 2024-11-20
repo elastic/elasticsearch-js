@@ -42,7 +42,7 @@ Get machine learning memory usage info. Get information about how machine learni
 ----
 
 [discrete]
-==== MlGetMemoryStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -60,7 +60,7 @@ interface MlGetMemoryStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetMemoryStatsResponse
+==== Response
 
 [pass]
 ++++

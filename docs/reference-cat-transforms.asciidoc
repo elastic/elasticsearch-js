@@ -42,7 +42,7 @@ Get transforms. Returns configuration and usage information about transforms. CA
 ----
 
 [discrete]
-==== CatTransformsRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface CatTransformsRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatTransformsResponse
+==== Response
 
 [pass]
 ++++

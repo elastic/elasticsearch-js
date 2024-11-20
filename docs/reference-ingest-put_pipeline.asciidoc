@@ -42,7 +42,7 @@ Creates or updates an ingest pipeline. Changes made using this API take effect i
 ----
 
 [discrete]
-==== IngestPutPipelineRequest
+==== Request
 
 [pass]
 ++++
@@ -66,7 +66,7 @@ interface IngestPutPipelineRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IngestPutPipelineResponse
+==== Response
 
 [pass]
 ++++

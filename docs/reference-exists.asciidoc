@@ -42,7 +42,7 @@ Check a document. Checks if a specified document exists.
 ----
 
 [discrete]
-==== ExistsRequest
+==== Request
 
 [pass]
 ++++
@@ -68,7 +68,7 @@ interface ExistsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ExistsResponse
+==== Response
 
 [pass]
 ++++

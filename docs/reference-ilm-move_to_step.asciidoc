@@ -42,7 +42,7 @@ Manually moves an index into the specified step and executes that step.
 ----
 
 [discrete]
-==== IlmMoveToStepRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IlmMoveToStepRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IlmMoveToStepResponse
+==== Response
 
 [pass]
 ++++

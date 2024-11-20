@@ -42,7 +42,7 @@ Delete a behavioral analytics collection. The associated data stream is also del
 ----
 
 [discrete]
-==== SearchApplicationDeleteBehavioralAnalyticsRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SearchApplicationDeleteBehavioralAnalyticsRequest extends <<RequestBas
 </pre>
 ++++
 [discrete]
-==== SearchApplicationDeleteBehavioralAnalyticsResponse
+==== Response
 
 [pass]
 ++++

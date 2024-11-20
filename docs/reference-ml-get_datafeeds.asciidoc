@@ -42,7 +42,7 @@ Get datafeeds configuration info. You can get information for multiple datafeeds
 ----
 
 [discrete]
-==== MlGetDatafeedsRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface MlGetDatafeedsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetDatafeedsResponse
+==== Response
 
 [pass]
 ++++

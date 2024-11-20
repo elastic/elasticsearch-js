@@ -42,7 +42,7 @@ Creates or updates a pipeline used for Logstash Central Management.
 ----
 
 [discrete]
-==== LogstashPutPipelineRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface LogstashPutPipelineRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== LogstashPutPipelineResponse
+==== Response
 
 [pass]
 ++++

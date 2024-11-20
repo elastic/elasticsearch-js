@@ -42,7 +42,7 @@ Clear the API key cache. Evict a subset of all entries from the API key cache. T
 ----
 
 [discrete]
-==== SecurityClearApiKeyCacheRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SecurityClearApiKeyCacheRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityClearApiKeyCacheResponse
+==== Response
 
 [pass]
 ++++

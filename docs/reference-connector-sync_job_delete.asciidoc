@@ -42,7 +42,7 @@ Delete a connector sync job. Remove a connector sync job and its associated data
 ----
 
 [discrete]
-==== ConnectorSyncJobDeleteRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface ConnectorSyncJobDeleteRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorSyncJobDeleteResponse
+==== Response
 
 [pass]
 ++++

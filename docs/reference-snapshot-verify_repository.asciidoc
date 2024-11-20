@@ -42,7 +42,7 @@ Verifies a repository.
 ----
 
 [discrete]
-==== SnapshotVerifyRepositoryRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SnapshotVerifyRepositoryRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SnapshotVerifyRepositoryResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Index a document. Adds a JSON document to the specified data stream or index and
 ----
 
 [discrete]
-==== CreateRequest
+==== Request
 
 [pass]
 ++++
@@ -66,7 +66,7 @@ interface CreateRequest<TDocument = unknown> extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CreateResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Create or update an autoscaling policy. NOTE: This feature is designed for indir
 ----
 
 [discrete]
-==== AutoscalingPutAutoscalingPolicyRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface AutoscalingPutAutoscalingPolicyRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== AutoscalingPutAutoscalingPolicyResponse
+==== Response
 
 [pass]
 ++++

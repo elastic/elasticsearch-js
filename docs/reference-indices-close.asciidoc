@@ -42,7 +42,7 @@ Closes an index.
 ----
 
 [discrete]
-==== IndicesCloseRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface IndicesCloseRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesCloseResponse
+==== Response
 
 [pass]
 ++++

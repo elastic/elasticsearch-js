@@ -42,7 +42,7 @@ Evaluate a trained model.
 ----
 
 [discrete]
-==== MlInferTrainedModelRequest
+==== Request
 
 [pass]
 ++++
@@ -60,7 +60,7 @@ interface MlInferTrainedModelRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlInferTrainedModelResponse
+==== Response
 
 [pass]
 ++++

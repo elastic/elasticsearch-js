@@ -42,7 +42,7 @@ Delete a datafeed.
 ----
 
 [discrete]
-==== MlDeleteDatafeedRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface MlDeleteDatafeedRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlDeleteDatafeedResponse
+==== Response
 
 [pass]
 ++++

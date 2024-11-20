@@ -42,7 +42,7 @@ Create a connector sync job. Create a connector sync job document in the interna
 ----
 
 [discrete]
-==== ConnectorSyncJobPostRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface ConnectorSyncJobPostRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorSyncJobPostResponse
+==== Response
 
 [pass]
 ++++

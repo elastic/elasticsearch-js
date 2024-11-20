@@ -42,7 +42,7 @@ Create a cross-cluster API key. Create an API key of the `cross_cluster` type fo
 ----
 
 [discrete]
-==== SecurityCreateCrossClusterApiKeyRequest
+==== Request
 
 [pass]
 ++++
@@ -60,7 +60,7 @@ interface SecurityCreateCrossClusterApiKeyRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityCreateCrossClusterApiKeyResponse
+==== Response
 
 [pass]
 ++++

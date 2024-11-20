@@ -42,7 +42,7 @@ Get the status for a data stream lifecycle. Retrieves information about an index
 ----
 
 [discrete]
-==== IndicesExplainDataLifecycleRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IndicesExplainDataLifecycleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesExplainDataLifecycleResponse
+==== Response
 
 [pass]
 ++++

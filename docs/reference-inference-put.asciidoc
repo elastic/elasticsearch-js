@@ -42,7 +42,7 @@ Create an inference endpoint
 ----
 
 [discrete]
-==== InferencePutRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface InferencePutRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== InferencePutResponse
+==== Response
 
 [pass]
 ++++

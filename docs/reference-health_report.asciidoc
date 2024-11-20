@@ -42,7 +42,7 @@ Returns the health of the cluster.
 ----
 
 [discrete]
-==== HealthReportRequest
+==== Request
 
 [pass]
 ++++
@@ -60,7 +60,7 @@ interface HealthReportRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== HealthReportResponse
+==== Response
 
 [pass]
 ++++

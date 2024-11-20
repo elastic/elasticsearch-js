@@ -42,7 +42,7 @@ Deletes a legacy index template.
 ----
 
 [discrete]
-==== IndicesDeleteTemplateRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IndicesDeleteTemplateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesDeleteTemplateResponse
+==== Response
 
 [pass]
 ++++

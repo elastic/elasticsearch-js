@@ -42,7 +42,7 @@ You can use the cluster repositories metering API to retrieve repositories meter
 ----
 
 [discrete]
-==== NodesGetRepositoriesMeteringInfoRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface NodesGetRepositoriesMeteringInfoRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== NodesGetRepositoriesMeteringInfoResponse
+==== Response
 
 [pass]
 ++++

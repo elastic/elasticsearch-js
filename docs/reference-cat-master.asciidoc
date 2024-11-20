@@ -42,7 +42,7 @@ Returns information about the master node, including the ID, bound IP address, a
 ----
 
 [discrete]
-==== CatMasterRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface CatMasterRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatMasterResponse
+==== Response
 
 [pass]
 ++++

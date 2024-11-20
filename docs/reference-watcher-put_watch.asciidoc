@@ -42,7 +42,7 @@ Creates a new watch, or updates an existing one.
 ----
 
 [discrete]
-==== WatcherPutWatchRequest
+==== Request
 
 [pass]
 ++++
@@ -68,7 +68,7 @@ interface WatcherPutWatchRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== WatcherPutWatchResponse
+==== Response
 
 [pass]
 ++++

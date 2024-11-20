@@ -42,7 +42,7 @@ Deletes a query ruleset.
 ----
 
 [discrete]
-==== QueryRulesDeleteRulesetRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface QueryRulesDeleteRulesetRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== QueryRulesDeleteRulesetResponse
+==== Response
 
 [pass]
 ++++

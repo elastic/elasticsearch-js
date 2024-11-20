@@ -42,7 +42,7 @@ Enables searching rolled-up data using the standard Query DSL.
 ----
 
 [discrete]
-==== RollupRollupSearchRequest
+==== Request
 
 [pass]
 ++++
@@ -64,7 +64,7 @@ interface RollupRollupSearchRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== RollupRollupSearchResponse
+==== Response
 
 [pass]
 ++++

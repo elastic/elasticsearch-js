@@ -42,7 +42,7 @@ Get all connector sync jobs. Get information about all stored connector sync job
 ----
 
 [discrete]
-==== ConnectorSyncJobListRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface ConnectorSyncJobListRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorSyncJobListResponse
+==== Response
 
 [pass]
 ++++

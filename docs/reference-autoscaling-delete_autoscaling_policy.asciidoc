@@ -42,7 +42,7 @@ Delete an autoscaling policy. NOTE: This feature is designed for indirect use by
 ----
 
 [discrete]
-==== AutoscalingDeleteAutoscalingPolicyRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface AutoscalingDeleteAutoscalingPolicyRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== AutoscalingDeleteAutoscalingPolicyResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Allows to manually change the allocation of individual shards in the cluster.
 ----
 
 [discrete]
-==== ClusterRerouteRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface ClusterRerouteRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClusterRerouteResponse
+==== Response
 
 [pass]
 ++++

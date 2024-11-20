@@ -42,7 +42,7 @@ Extracts and summarizes information about the documents and terms in an Elastics
 ----
 
 [discrete]
-==== GraphExploreRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface GraphExploreRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== GraphExploreResponse
+==== Response
 
 [pass]
 ++++

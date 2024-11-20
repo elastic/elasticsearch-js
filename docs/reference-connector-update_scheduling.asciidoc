@@ -42,7 +42,7 @@ Update the connector scheduling.
 ----
 
 [discrete]
-==== ConnectorUpdateSchedulingRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface ConnectorUpdateSchedulingRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorUpdateSchedulingResponse
+==== Response
 
 [pass]
 ++++

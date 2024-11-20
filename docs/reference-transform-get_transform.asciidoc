@@ -42,7 +42,7 @@ Get transforms. Retrieves configuration information for transforms.
 ----
 
 [discrete]
-==== TransformGetTransformRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface TransformGetTransformRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TransformGetTransformResponse
+==== Response
 
 [pass]
 ++++

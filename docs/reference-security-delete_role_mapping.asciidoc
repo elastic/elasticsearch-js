@@ -42,7 +42,7 @@ Delete role mappings.
 ----
 
 [discrete]
-==== SecurityDeleteRoleMappingRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SecurityDeleteRoleMappingRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityDeleteRoleMappingResponse
+==== Response
 
 [pass]
 ++++

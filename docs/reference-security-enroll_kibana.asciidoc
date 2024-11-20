@@ -42,7 +42,7 @@ Enroll Kibana. Enable a Kibana instance to configure itself for communication wi
 ----
 
 [discrete]
-==== SecurityEnrollKibanaRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface SecurityEnrollKibanaRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityEnrollKibanaResponse
+==== Response
 
 [pass]
 ++++

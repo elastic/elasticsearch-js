@@ -42,7 +42,7 @@ Start the index lifecycle management (ILM) plugin.
 ----
 
 [discrete]
-==== IlmStartRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface IlmStartRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IlmStartResponse
+==== Response
 
 [pass]
 ++++

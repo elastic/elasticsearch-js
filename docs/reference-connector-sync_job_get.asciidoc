@@ -42,7 +42,7 @@ Get a connector sync job.
 ----
 
 [discrete]
-==== ConnectorSyncJobGetRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface ConnectorSyncJobGetRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorSyncJobGetResponse
+==== Response
 
 [pass]
 ++++

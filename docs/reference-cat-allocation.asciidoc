@@ -42,7 +42,7 @@ Provides a snapshot of the number of shards allocated to each data node and thei
 ----
 
 [discrete]
-==== CatAllocationRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface CatAllocationRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatAllocationResponse
+==== Response
 
 [pass]
 ++++

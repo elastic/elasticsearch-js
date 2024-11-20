@@ -42,7 +42,7 @@ Get model snapshots info.
 ----
 
 [discrete]
-==== MlGetModelSnapshotsRequest
+==== Request
 
 [pass]
 ++++
@@ -65,7 +65,7 @@ interface MlGetModelSnapshotsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetModelSnapshotsResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Get anomaly detection jobs configuration info. You can get information for multi
 ----
 
 [discrete]
-==== MlGetJobsRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface MlGetJobsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetJobsResponse
+==== Response
 
 [pass]
 ++++

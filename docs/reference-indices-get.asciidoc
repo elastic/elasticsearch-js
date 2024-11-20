@@ -42,7 +42,7 @@ Get index information. Returns information about one or more indices. For data s
 ----
 
 [discrete]
-==== IndicesGetRequest
+==== Request
 
 [pass]
 ++++
@@ -65,7 +65,7 @@ interface IndicesGetRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesGetResponse
+==== Response
 
 [pass]
 ++++

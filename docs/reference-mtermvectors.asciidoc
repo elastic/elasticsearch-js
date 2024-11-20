@@ -42,7 +42,7 @@ Get multiple term vectors. You can specify existing documents by index and ID or
 ----
 
 [discrete]
-==== MtermvectorsRequest
+==== Request
 
 [pass]
 ++++
@@ -70,7 +70,7 @@ interface MtermvectorsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MtermvectorsResponse
+==== Response
 
 [pass]
 ++++

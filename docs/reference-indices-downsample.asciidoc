@@ -42,7 +42,7 @@ Aggregates a time series (TSDS) index and stores pre-computed statistical summar
 ----
 
 [discrete]
-==== IndicesDownsampleRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IndicesDownsampleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesDownsampleResponse
+==== Response
 
 [pass]
 ++++

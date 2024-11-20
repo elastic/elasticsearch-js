@@ -42,7 +42,7 @@ Creates a new named collection of auto-follow patterns against a specified remot
 ----
 
 [discrete]
-==== CcrPutAutoFollowPatternRequest
+==== Request
 
 [pass]
 ++++
@@ -72,7 +72,7 @@ interface CcrPutAutoFollowPatternRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CcrPutAutoFollowPatternResponse
+==== Response
 
 [pass]
 ++++

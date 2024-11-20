@@ -42,7 +42,7 @@ Turns on snapshot lifecycle management (SLM).
 ----
 
 [discrete]
-==== SlmStartRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface SlmStartRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SlmStartResponse
+==== Response
 
 [pass]
 ++++

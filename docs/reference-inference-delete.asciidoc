@@ -42,7 +42,7 @@ Delete an inference endpoint
 ----
 
 [discrete]
-==== InferenceDeleteRequest
+==== Request
 
 [pass]
 ++++
@@ -60,7 +60,7 @@ interface InferenceDeleteRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== InferenceDeleteResponse
+==== Response
 
 [pass]
 ++++

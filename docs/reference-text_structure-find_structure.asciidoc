@@ -42,7 +42,7 @@ Finds the structure of a text file. The text file must contain data that is suit
 ----
 
 [discrete]
-==== TextStructureFindStructureRequest
+==== Request
 
 [pass]
 ++++
@@ -72,7 +72,7 @@ interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
 </pre>
 ++++
 [discrete]
-==== TextStructureFindStructureResponse
+==== Response
 
 [pass]
 ++++

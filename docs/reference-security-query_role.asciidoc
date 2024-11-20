@@ -42,7 +42,7 @@ Find roles with a query. Get roles in a paginated manner. You can optionally fil
 ----
 
 [discrete]
-==== SecurityQueryRoleRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface SecurityQueryRoleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityQueryRoleResponse
+==== Response
 
 [pass]
 ++++

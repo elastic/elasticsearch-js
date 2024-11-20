@@ -42,7 +42,7 @@ Removes a watch from Watcher.
 ----
 
 [discrete]
-==== WatcherDeleteWatchRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface WatcherDeleteWatchRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== WatcherDeleteWatchResponse
+==== Response
 
 [pass]
 ++++

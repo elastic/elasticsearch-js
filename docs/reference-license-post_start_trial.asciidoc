@@ -42,7 +42,7 @@ The start trial API enables you to start a 30-day trial, which gives access to a
 ----
 
 [discrete]
-==== LicensePostStartTrialRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface LicensePostStartTrialRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== LicensePostStartTrialResponse
+==== Response
 
 [pass]
 ++++

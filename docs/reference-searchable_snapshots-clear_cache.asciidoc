@@ -42,7 +42,7 @@ Clear the cache of searchable snapshots.
 ----
 
 [discrete]
-==== SearchableSnapshotsClearCacheRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface SearchableSnapshotsClearCacheRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SearchableSnapshotsClearCacheResponse
+==== Response
 
 [pass]
 ++++

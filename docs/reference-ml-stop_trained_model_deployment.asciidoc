@@ -42,7 +42,7 @@ Stop a trained model deployment.
 ----
 
 [discrete]
-==== MlStopTrainedModelDeploymentRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface MlStopTrainedModelDeploymentRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlStopTrainedModelDeploymentResponse
+==== Response
 
 [pass]
 ++++

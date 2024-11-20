@@ -42,7 +42,7 @@ Search a vector tile. Search a vector tile for geospatial values.
 ----
 
 [discrete]
-==== SearchMvtRequest
+==== Request
 
 [pass]
 ++++
@@ -75,7 +75,7 @@ interface SearchMvtRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SearchMvtResponse
+==== Response
 
 [pass]
 ++++

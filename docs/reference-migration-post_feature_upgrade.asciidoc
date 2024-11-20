@@ -42,7 +42,7 @@ Begin upgrades for system features
 ----
 
 [discrete]
-==== MigrationPostFeatureUpgradeRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface MigrationPostFeatureUpgradeRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MigrationPostFeatureUpgradeResponse
+==== Response
 
 [pass]
 ++++

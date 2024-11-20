@@ -42,7 +42,7 @@ Get aliases. Retrieves the cluster’s index aliases, including filter and routi
 ----
 
 [discrete]
-==== CatAliasesRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface CatAliasesRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatAliasesResponse
+==== Response
 
 [pass]
 ++++

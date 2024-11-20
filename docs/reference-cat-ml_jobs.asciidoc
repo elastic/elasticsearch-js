@@ -42,7 +42,7 @@ Get anomaly detection jobs. Returns configuration and usage information for anom
 ----
 
 [discrete]
-==== CatMlJobsRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface CatMlJobsRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatMlJobsResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Returns the amount of heap memory currently used by the field data cache on ever
 ----
 
 [discrete]
-==== CatFielddataRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface CatFielddataRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatFielddataResponse
+==== Response
 
 [pass]
 ++++

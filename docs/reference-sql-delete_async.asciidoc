@@ -42,7 +42,7 @@ Deletes an async SQL search or a stored synchronous SQL search. If the search is
 ----
 
 [discrete]
-==== SqlDeleteAsyncRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SqlDeleteAsyncRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SqlDeleteAsyncResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Get anomaly detection jobs usage info.
 ----
 
 [discrete]
-==== MlGetJobStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface MlGetJobStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetJobStatsResponse
+==== Response
 
 [pass]
 ++++

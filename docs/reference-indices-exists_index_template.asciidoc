@@ -42,7 +42,7 @@ Returns information about whether a particular index template exists.
 ----
 
 [discrete]
-==== IndicesExistsIndexTemplateRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface IndicesExistsIndexTemplateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesExistsIndexTemplateResponse
+==== Response
 
 [pass]
 ++++

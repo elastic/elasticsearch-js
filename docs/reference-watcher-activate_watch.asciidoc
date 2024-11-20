@@ -42,7 +42,7 @@ Activates a currently inactive watch.
 ----
 
 [discrete]
-==== WatcherActivateWatchRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface WatcherActivateWatchRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== WatcherActivateWatchResponse
+==== Response
 
 [pass]
 ++++

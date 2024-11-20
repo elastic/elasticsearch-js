@@ -42,7 +42,7 @@ Disable a user profile. Disable user profiles so that they are not visible in us
 ----
 
 [discrete]
-==== SecurityDisableUserProfileRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SecurityDisableUserProfileRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityDisableUserProfileResponse
+==== Response
 
 [pass]
 ++++

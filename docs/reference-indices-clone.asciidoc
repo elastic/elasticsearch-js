@@ -42,7 +42,7 @@ Clones an existing index.
 ----
 
 [discrete]
-==== IndicesCloneRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface IndicesCloneRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesCloneResponse
+==== Response
 
 [pass]
 ++++

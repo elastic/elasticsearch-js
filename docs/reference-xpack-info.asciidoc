@@ -42,7 +42,7 @@ Provides general information about the installed X-Pack features.
 ----
 
 [discrete]
-==== XpackInfoRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface XpackInfoRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== XpackInfoResponse
+==== Response
 
 [pass]
 ++++

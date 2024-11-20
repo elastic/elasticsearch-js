@@ -42,7 +42,7 @@ Create or update an alias. Adds a data stream or index to an alias.
 ----
 
 [discrete]
-==== IndicesPutAliasRequest
+==== Request
 
 [pass]
 ++++
@@ -65,7 +65,7 @@ interface IndicesPutAliasRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesPutAliasResponse
+==== Response
 
 [pass]
 ++++

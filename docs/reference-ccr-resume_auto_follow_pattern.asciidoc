@@ -42,7 +42,7 @@ Resumes an auto-follow pattern that has been paused
 ----
 
 [discrete]
-==== CcrResumeAutoFollowPatternRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface CcrResumeAutoFollowPatternRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CcrResumeAutoFollowPatternResponse
+==== Response
 
 [pass]
 ++++

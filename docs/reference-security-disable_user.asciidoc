@@ -42,7 +42,7 @@ Disable users. Disable users in the native realm.
 ----
 
 [discrete]
-==== SecurityDisableUserRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SecurityDisableUserRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityDisableUserResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Returns information about one or more ingest pipelines. This API returns a local
 ----
 
 [discrete]
-==== IngestGetPipelineRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IngestGetPipelineRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IngestGetPipelineResponse
+==== Response
 
 [pass]
 ++++

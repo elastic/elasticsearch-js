@@ -42,7 +42,7 @@ Get users. Get information about users in the native realm and built-in users.
 ----
 
 [discrete]
-==== SecurityGetUserRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SecurityGetUserRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityGetUserResponse
+==== Response
 
 [pass]
 ++++

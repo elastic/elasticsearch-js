@@ -42,7 +42,7 @@ Analyzes the disk usage of each field of an index or data stream.
 ----
 
 [discrete]
-==== IndicesDiskUsageRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface IndicesDiskUsageRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesDiskUsageResponse
+==== Response
 
 [pass]
 ++++

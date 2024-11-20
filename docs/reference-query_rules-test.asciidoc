@@ -42,7 +42,7 @@ Creates or updates a query ruleset.
 ----
 
 [discrete]
-==== QueryRulesTestRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface QueryRulesTestRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== QueryRulesTestResponse
+==== Response
 
 [pass]
 ++++

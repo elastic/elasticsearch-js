@@ -42,7 +42,7 @@ Estimate job model memory usage. Makes an estimation of the memory usage for an 
 ----
 
 [discrete]
-==== MlEstimateModelMemoryRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface MlEstimateModelMemoryRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlEstimateModelMemoryResponse
+==== Response
 
 [pass]
 ++++

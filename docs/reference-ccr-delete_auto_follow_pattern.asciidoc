@@ -42,7 +42,7 @@ Deletes auto-follow patterns.
 ----
 
 [discrete]
-==== CcrDeleteAutoFollowPatternRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface CcrDeleteAutoFollowPatternRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CcrDeleteAutoFollowPatternResponse
+==== Response
 
 [pass]
 ++++

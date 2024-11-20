@@ -42,7 +42,7 @@ Get script languages. Get a list of available script types, languages, and conte
 ----
 
 [discrete]
-==== GetScriptLanguagesRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface GetScriptLanguagesRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== GetScriptLanguagesResponse
+==== Response
 
 [pass]
 ++++

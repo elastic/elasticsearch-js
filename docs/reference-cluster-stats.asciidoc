@@ -42,7 +42,7 @@ Returns cluster statistics. It returns basic index metrics (shard numbers, store
 ----
 
 [discrete]
-==== ClusterStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface ClusterStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClusterStatsResponse
+==== Response
 
 [pass]
 ++++

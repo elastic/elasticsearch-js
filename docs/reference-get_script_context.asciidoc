@@ -42,7 +42,7 @@ Get script contexts. Get a list of supported script contexts and their methods.
 ----
 
 [discrete]
-==== GetScriptContextRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface GetScriptContextRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== GetScriptContextResponse
+==== Response
 
 [pass]
 ++++

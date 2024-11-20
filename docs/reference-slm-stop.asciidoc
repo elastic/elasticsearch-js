@@ -42,7 +42,7 @@ Turns off snapshot lifecycle management (SLM).
 ----
 
 [discrete]
-==== SlmStopRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface SlmStopRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SlmStopResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Switches the indices, ILM policies, and legacy, composable and component templat
 ----
 
 [discrete]
-==== IlmMigrateToDataTiersRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IlmMigrateToDataTiersRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IlmMigrateToDataTiersResponse
+==== Response
 
 [pass]
 ++++

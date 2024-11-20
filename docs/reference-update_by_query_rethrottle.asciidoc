@@ -42,7 +42,7 @@ Throttle an update by query operation. Change the number of requests per second 
 ----
 
 [discrete]
-==== UpdateByQueryRethrottleRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface UpdateByQueryRethrottleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== UpdateByQueryRethrottleResponse
+==== Response
 
 [pass]
 ++++

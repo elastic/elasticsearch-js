@@ -42,7 +42,7 @@ Get mapping definitions. Retrieves mapping definitions for one or more indices. 
 ----
 
 [discrete]
-==== IndicesGetMappingRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface IndicesGetMappingRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesGetMappingResponse
+==== Response
 
 [pass]
 ++++

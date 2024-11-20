@@ -42,7 +42,7 @@ Returns the rollup capabilities of all jobs inside of a rollup index (for exampl
 ----
 
 [discrete]
-==== RollupGetRollupIndexCapsRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface RollupGetRollupIndexCapsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== RollupGetRollupIndexCapsResponse
+==== Response
 
 [pass]
 ++++

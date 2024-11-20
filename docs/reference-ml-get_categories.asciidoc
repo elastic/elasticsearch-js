@@ -42,7 +42,7 @@ Get anomaly detection job results for categories.
 ----
 
 [discrete]
-==== MlGetCategoriesRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface MlGetCategoriesRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetCategoriesResponse
+==== Response
 
 [pass]
 ++++

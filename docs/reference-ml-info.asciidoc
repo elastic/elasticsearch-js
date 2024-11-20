@@ -42,7 +42,7 @@ Return ML defaults and limits. Returns defaults and limits used by machine learn
 ----
 
 [discrete]
-==== MlInfoRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface MlInfoRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlInfoResponse
+==== Response
 
 [pass]
 ++++

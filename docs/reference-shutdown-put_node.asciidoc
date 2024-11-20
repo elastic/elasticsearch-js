@@ -42,7 +42,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentati
 ----
 
 [discrete]
-==== ShutdownPutNodeRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface ShutdownPutNodeRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ShutdownPutNodeResponse
+==== Response
 
 [pass]
 ++++

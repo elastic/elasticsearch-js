@@ -42,7 +42,7 @@ Creates a new follower index configured to follow the referenced leader index.
 ----
 
 [discrete]
-==== CcrFollowRequest
+==== Request
 
 [pass]
 ++++
@@ -70,7 +70,7 @@ interface CcrFollowRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CcrFollowResponse
+==== Response
 
 [pass]
 ++++

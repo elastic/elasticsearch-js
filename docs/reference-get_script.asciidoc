@@ -42,7 +42,7 @@ Get a script or search template. Retrieves a stored script or search template.
 ----
 
 [discrete]
-==== GetScriptRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface GetScriptRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== GetScriptResponse
+==== Response
 
 [pass]
 ++++

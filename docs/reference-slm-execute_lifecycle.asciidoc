@@ -42,7 +42,7 @@ Immediately creates a snapshot according to the lifecycle policy, without waitin
 ----
 
 [discrete]
-==== SlmExecuteLifecycleRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SlmExecuteLifecycleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SlmExecuteLifecycleResponse
+==== Response
 
 [pass]
 ++++

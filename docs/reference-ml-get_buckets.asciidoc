@@ -42,7 +42,7 @@ Get anomaly detection job results for buckets. The API presents a chronological 
 ----
 
 [discrete]
-==== MlGetBucketsRequest
+==== Request
 
 [pass]
 ++++
@@ -68,7 +68,7 @@ interface MlGetBucketsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetBucketsResponse
+==== Response
 
 [pass]
 ++++

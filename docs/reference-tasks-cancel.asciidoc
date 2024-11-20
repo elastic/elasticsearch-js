@@ -42,7 +42,7 @@ Cancels a task, if it can be cancelled through an API.
 ----
 
 [discrete]
-==== TasksCancelRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface TasksCancelRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TasksCancelResponse
+==== Response
 
 [pass]
 ++++

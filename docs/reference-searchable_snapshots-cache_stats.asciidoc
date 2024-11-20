@@ -42,7 +42,7 @@ Retrieve node-level cache statistics about searchable snapshots.
 ----
 
 [discrete]
-==== SearchableSnapshotsCacheStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SearchableSnapshotsCacheStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SearchableSnapshotsCacheStatsResponse
+==== Response
 
 [pass]
 ++++

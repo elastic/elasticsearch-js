@@ -42,7 +42,7 @@ Retrieves follower stats. return shard-level stats about the following tasks ass
 ----
 
 [discrete]
-==== CcrFollowStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface CcrFollowStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CcrFollowStatsResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Get the search shards. Get the indices and shards that a search request would be
 ----
 
 [discrete]
-==== SearchShardsRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface SearchShardsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SearchShardsResponse
+==== Response
 
 [pass]
 ++++

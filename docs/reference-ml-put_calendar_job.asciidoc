@@ -42,7 +42,7 @@ Add anomaly detection job to calendar.
 ----
 
 [discrete]
-==== MlPutCalendarJobRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface MlPutCalendarJobRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlPutCalendarJobResponse
+==== Response
 
 [pass]
 ++++

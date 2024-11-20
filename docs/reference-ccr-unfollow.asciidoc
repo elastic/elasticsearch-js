@@ -42,7 +42,7 @@ Stops the following task associated with a follower index and removes index meta
 ----
 
 [discrete]
-==== CcrUnfollowRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface CcrUnfollowRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CcrUnfollowResponse
+==== Response
 
 [pass]
 ++++

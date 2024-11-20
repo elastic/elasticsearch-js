@@ -42,7 +42,7 @@ Retrieves a watch by its ID.
 ----
 
 [discrete]
-==== WatcherGetWatchRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface WatcherGetWatchRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== WatcherGetWatchResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ The start basic API enables you to initiate an indefinite basic license, which g
 ----
 
 [discrete]
-==== LicensePostStartBasicRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface LicensePostStartBasicRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== LicensePostStartBasicResponse
+==== Response
 
 [pass]
 ++++

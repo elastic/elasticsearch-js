@@ -42,7 +42,7 @@ Delete a calendar. Removes all scheduled events from a calendar, then deletes it
 ----
 
 [discrete]
-==== MlDeleteCalendarRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface MlDeleteCalendarRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlDeleteCalendarResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Starts Watcher if it is not already running.
 ----
 
 [discrete]
-==== WatcherStartRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface WatcherStartRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== WatcherStartResponse
+==== Response
 
 [pass]
 ++++

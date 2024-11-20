@@ -42,7 +42,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentati
 ----
 
 [discrete]
-==== ShutdownDeleteNodeRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface ShutdownDeleteNodeRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ShutdownDeleteNodeResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Promotes a data stream from a replicated data stream managed by CCR to a regular
 ----
 
 [discrete]
-==== IndicesPromoteDataStreamRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface IndicesPromoteDataStreamRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesPromoteDataStreamResponse
+==== Response
 
 [pass]
 ++++

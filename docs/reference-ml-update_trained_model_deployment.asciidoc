@@ -42,7 +42,7 @@ Update a trained model deployment.
 ----
 
 [discrete]
-==== MlUpdateTrainedModelDeploymentRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface MlUpdateTrainedModelDeploymentRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlUpdateTrainedModelDeploymentResponse
+==== Response
 
 [pass]
 ++++

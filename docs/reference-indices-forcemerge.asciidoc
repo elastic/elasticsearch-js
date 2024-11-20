@@ -42,7 +42,7 @@ Performs the force merge operation on one or more indices.
 ----
 
 [discrete]
-==== IndicesForcemergeRequest
+==== Request
 
 [pass]
 ++++
@@ -64,7 +64,7 @@ interface IndicesForcemergeRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesForcemergeResponse
+==== Response
 
 [pass]
 ++++

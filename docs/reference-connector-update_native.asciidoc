@@ -40,7 +40,7 @@ Update the connector is_native flag.
 ----
 
 [discrete]
-==== ConnectorUpdateNativeRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface ConnectorUpdateNativeRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorUpdateNativeResponse
+==== Response
 
 [pass]
 ++++

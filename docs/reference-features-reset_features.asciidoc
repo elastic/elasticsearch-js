@@ -42,7 +42,7 @@ Resets the internal state of features, usually by deleting system indices
 ----
 
 [discrete]
-==== FeaturesResetFeaturesRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface FeaturesResetFeaturesRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== FeaturesResetFeaturesResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Add scheduled events to the calendar.
 ----
 
 [discrete]
-==== MlPostCalendarEventsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface MlPostCalendarEventsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlPostCalendarEventsResponse
+==== Response
 
 [pass]
 ++++

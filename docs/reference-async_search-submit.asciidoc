@@ -42,7 +42,7 @@ Run an async search. When the primary sort of the results is an indexed field, s
 ----
 
 [discrete]
-==== AsyncSearchSubmitRequest
+==== Request
 
 [pass]
 ++++
@@ -123,7 +123,7 @@ interface AsyncSearchSubmitRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== AsyncSearchSubmitResponse
+==== Response
 
 [pass]
 ++++

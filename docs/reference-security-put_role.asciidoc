@@ -42,7 +42,7 @@ Create or update roles. The role management APIs are generally the preferred way
 ----
 
 [discrete]
-==== SecurityPutRoleRequest
+==== Request
 
 [pass]
 ++++
@@ -67,7 +67,7 @@ interface SecurityPutRoleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityPutRoleResponse
+==== Response
 
 [pass]
 ++++

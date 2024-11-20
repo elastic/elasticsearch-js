@@ -42,7 +42,7 @@ Resolves the specified index expressions to return information about each cluste
 ----
 
 [discrete]
-==== IndicesResolveClusterRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface IndicesResolveClusterRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesResolveClusterResponse
+==== Response
 
 [pass]
 ++++

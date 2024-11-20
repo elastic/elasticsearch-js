@@ -42,7 +42,7 @@ Invalidate API keys. This API invalidates API keys created by the create API key
 ----
 
 [discrete]
-==== SecurityInvalidateApiKeyRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface SecurityInvalidateApiKeyRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityInvalidateApiKeyResponse
+==== Response
 
 [pass]
 ++++

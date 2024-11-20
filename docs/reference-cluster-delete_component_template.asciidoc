@@ -42,7 +42,7 @@ Delete component templates. Deletes component templates. Component templates are
 ----
 
 [discrete]
-==== ClusterDeleteComponentTemplateRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface ClusterDeleteComponentTemplateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClusterDeleteComponentTemplateResponse
+==== Response
 
 [pass]
 ++++

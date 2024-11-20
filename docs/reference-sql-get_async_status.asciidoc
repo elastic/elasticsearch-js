@@ -42,7 +42,7 @@ Returns the current status of an async SQL search or a stored synchronous SQL se
 ----
 
 [discrete]
-==== SqlGetAsyncStatusRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SqlGetAsyncStatusRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SqlGetAsyncStatusResponse
+==== Response
 
 [pass]
 ++++

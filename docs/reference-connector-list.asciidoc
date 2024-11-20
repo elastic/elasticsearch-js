@@ -42,7 +42,7 @@ Get all connectors. Get information about all connectors.
 ----
 
 [discrete]
-==== ConnectorListRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface ConnectorListRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorListResponse
+==== Response
 
 [pass]
 ++++

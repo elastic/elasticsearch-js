@@ -42,7 +42,7 @@ Evaluate data frame analytics. The API packages together commonly used evaluatio
 ----
 
 [discrete]
-==== MlEvaluateDataFrameRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface MlEvaluateDataFrameRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlEvaluateDataFrameResponse
+==== Response
 
 [pass]
 ++++

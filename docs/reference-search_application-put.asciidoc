@@ -42,7 +42,7 @@ Create or update a search application.
 ----
 
 [discrete]
-==== SearchApplicationPutRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SearchApplicationPutRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SearchApplicationPutResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Simulate an index. Returns the index configuration that would be applied to the 
 ----
 
 [discrete]
-==== IndicesSimulateIndexTemplateRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IndicesSimulateIndexTemplateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesSimulateIndexTemplateResponse
+==== Response
 
 [pass]
 ++++

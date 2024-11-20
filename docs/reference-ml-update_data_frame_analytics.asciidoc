@@ -42,7 +42,7 @@ Update a data frame analytics job.
 ----
 
 [discrete]
-==== MlUpdateDataFrameAnalyticsRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface MlUpdateDataFrameAnalyticsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlUpdateDataFrameAnalyticsResponse
+==== Response
 
 [pass]
 ++++

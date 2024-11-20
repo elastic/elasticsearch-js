@@ -42,7 +42,7 @@ Check component templates. Returns information about whether a particular compon
 ----
 
 [discrete]
-==== ClusterExistsComponentTemplateRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface ClusterExistsComponentTemplateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClusterExistsComponentTemplateResponse
+==== Response
 
 [pass]
 ++++

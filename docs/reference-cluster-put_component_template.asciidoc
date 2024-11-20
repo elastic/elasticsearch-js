@@ -42,7 +42,7 @@ Create or update a component template. Creates or updates a component template. 
 ----
 
 [discrete]
-==== ClusterPutComponentTemplateRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface ClusterPutComponentTemplateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClusterPutComponentTemplateResponse
+==== Response
 
 [pass]
 ++++

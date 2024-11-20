@@ -42,7 +42,7 @@ Revert to a snapshot. The machine learning features react quickly to anomalous i
 ----
 
 [discrete]
-==== MlRevertModelSnapshotRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface MlRevertModelSnapshotRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlRevertModelSnapshotResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Returns the current global checkpoints for an index. This API is design for inte
 ----
 
 [discrete]
-==== FleetGlobalCheckpointsRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface FleetGlobalCheckpointsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== FleetGlobalCheckpointsResponse
+==== Response
 
 [pass]
 ++++

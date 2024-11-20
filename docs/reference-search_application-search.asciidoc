@@ -42,7 +42,7 @@ Run a search application search. Generate and run an Elasticsearch query that us
 ----
 
 [discrete]
-==== SearchApplicationSearchRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SearchApplicationSearchRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SearchApplicationSearchResponse
+==== Response
 
 [pass]
 ++++

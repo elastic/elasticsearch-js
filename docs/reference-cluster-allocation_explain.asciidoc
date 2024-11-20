@@ -42,7 +42,7 @@ Provides explanations for shard allocations in the cluster.
 ----
 
 [discrete]
-==== ClusterAllocationExplainRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface ClusterAllocationExplainRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClusterAllocationExplainResponse
+==== Response
 
 [pass]
 ++++

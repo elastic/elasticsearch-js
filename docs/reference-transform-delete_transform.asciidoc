@@ -42,7 +42,7 @@ Delete a transform. Deletes a transform.
 ----
 
 [discrete]
-==== TransformDeleteTransformRequest
+==== Request
 
 [pass]
 ++++
@@ -60,7 +60,7 @@ interface TransformDeleteTransformRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TransformDeleteTransformResponse
+==== Response
 
 [pass]
 ++++

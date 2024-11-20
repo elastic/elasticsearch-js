@@ -42,7 +42,7 @@ Start datafeeds. A datafeed must be started in order to retrieve data from Elast
 ----
 
 [discrete]
-==== MlStartDatafeedRequest
+==== Request
 
 [pass]
 ++++
@@ -60,7 +60,7 @@ interface MlStartDatafeedRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlStartDatafeedResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Starts an existing, stopped rollup job.
 ----
 
 [discrete]
-==== RollupStartJobRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface RollupStartJobRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== RollupStartJobResponse
+==== Response
 
 [pass]
 ++++

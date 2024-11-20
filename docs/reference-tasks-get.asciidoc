@@ -42,7 +42,7 @@ Get task information. Returns information about the tasks currently executing in
 ----
 
 [discrete]
-==== TasksGetRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface TasksGetRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TasksGetResponse
+==== Response
 
 [pass]
 ++++

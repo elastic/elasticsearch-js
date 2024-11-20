@@ -42,7 +42,7 @@ Get search application details.
 ----
 
 [discrete]
-==== SearchApplicationGetRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SearchApplicationGetRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SearchApplicationGetResponse
+==== Response
 
 [pass]
 ++++

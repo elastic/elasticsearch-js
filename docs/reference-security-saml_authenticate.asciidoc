@@ -42,7 +42,7 @@ Authenticate SAML. Submits a SAML response message to Elasticsearch for consumpt
 ----
 
 [discrete]
-==== SecuritySamlAuthenticateRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SecuritySamlAuthenticateRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecuritySamlAuthenticateResponse
+==== Response
 
 [pass]
 ++++

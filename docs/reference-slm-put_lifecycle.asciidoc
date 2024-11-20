@@ -42,7 +42,7 @@ Creates or updates a snapshot lifecycle policy.
 ----
 
 [discrete]
-==== SlmPutLifecycleRequest
+==== Request
 
 [pass]
 ++++
@@ -64,7 +64,7 @@ interface SlmPutLifecycleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SlmPutLifecycleResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Reloads an index's search analyzers and their resources.
 ----
 
 [discrete]
-==== IndicesReloadSearchAnalyzersRequest
+==== Request
 
 [pass]
 ++++
@@ -60,7 +60,7 @@ interface IndicesReloadSearchAnalyzersRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesReloadSearchAnalyzersResponse
+==== Response
 
 [pass]
 ++++

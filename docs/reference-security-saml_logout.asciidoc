@@ -42,7 +42,7 @@ Logout of SAML. Submits a request to invalidate an access token and refresh toke
 ----
 
 [discrete]
-==== SecuritySamlLogoutRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SecuritySamlLogoutRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecuritySamlLogoutResponse
+==== Response
 
 [pass]
 ++++

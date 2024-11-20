@@ -42,7 +42,7 @@ Check user profile privileges. Determine whether the users associated with the s
 ----
 
 [discrete]
-==== SecurityHasPrivilegesUserProfileRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SecurityHasPrivilegesUserProfileRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityHasPrivilegesUserProfileResponse
+==== Response
 
 [pass]
 ++++

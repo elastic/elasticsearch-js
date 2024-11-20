@@ -42,7 +42,7 @@ Returns information about ongoing and completed shard recoveries for one or more
 ----
 
 [discrete]
-==== IndicesRecoveryRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IndicesRecoveryRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesRecoveryResponse
+==== Response
 
 [pass]
 ++++

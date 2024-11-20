@@ -42,7 +42,7 @@ Returns information about a repository.
 ----
 
 [discrete]
-==== SnapshotGetRepositoryRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SnapshotGetRepositoryRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SnapshotGetRepositoryResponse
+==== Response
 
 [pass]
 ++++

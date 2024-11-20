@@ -42,7 +42,7 @@ Resumes a follower index that has been paused
 ----
 
 [discrete]
-==== CcrResumeFollowRequest
+==== Request
 
 [pass]
 ++++
@@ -67,7 +67,7 @@ interface CcrResumeFollowRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CcrResumeFollowResponse
+==== Response
 
 [pass]
 ++++

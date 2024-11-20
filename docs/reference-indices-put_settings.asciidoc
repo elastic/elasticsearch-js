@@ -42,7 +42,7 @@ Update index settings. Changes dynamic index settings in real time. For data str
 ----
 
 [discrete]
-==== IndicesPutSettingsRequest
+==== Request
 
 [pass]
 ++++
@@ -65,7 +65,7 @@ interface IndicesPutSettingsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesPutSettingsResponse
+==== Response
 
 [pass]
 ++++

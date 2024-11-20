@@ -42,7 +42,7 @@ Clears cluster voting config exclusions.
 ----
 
 [discrete]
-==== ClusterDeleteVotingConfigExclusionsRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface ClusterDeleteVotingConfigExclusionsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClusterDeleteVotingConfigExclusionsResponse
+==== Response
 
 [pass]
 ++++

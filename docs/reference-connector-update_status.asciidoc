@@ -42,7 +42,7 @@ Update the connector status.
 ----
 
 [discrete]
-==== ConnectorUpdateStatusRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface ConnectorUpdateStatusRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorUpdateStatusResponse
+==== Response
 
 [pass]
 ++++

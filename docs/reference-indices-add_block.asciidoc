@@ -42,7 +42,7 @@ Add an index block. Limits the operations allowed on an index by blocking specif
 ----
 
 [discrete]
-==== IndicesAddBlockRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface IndicesAddBlockRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesAddBlockResponse
+==== Response
 
 [pass]
 ++++

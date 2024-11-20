@@ -42,7 +42,7 @@ Create a transform. Creates a transform. A transform copies data from source ind
 ----
 
 [discrete]
-==== TransformPutTransformRequest
+==== Request
 
 [pass]
 ++++
@@ -69,7 +69,7 @@ interface TransformPutTransformRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TransformPutTransformResponse
+==== Response
 
 [pass]
 ++++

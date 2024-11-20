@@ -42,7 +42,7 @@ Delete a model snapshot. You cannot delete the active model snapshot. To delete 
 ----
 
 [discrete]
-==== MlDeleteModelSnapshotRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface MlDeleteModelSnapshotRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlDeleteModelSnapshotResponse
+==== Response
 
 [pass]
 ++++

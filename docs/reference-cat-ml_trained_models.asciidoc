@@ -42,7 +42,7 @@ Get trained models. Returns configuration and usage information about inference 
 ----
 
 [discrete]
-==== CatMlTrainedModelsRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface CatMlTrainedModelsRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatMlTrainedModelsResponse
+==== Response
 
 [pass]
 ++++

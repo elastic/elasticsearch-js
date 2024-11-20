@@ -42,7 +42,7 @@ Get overall bucket results. Retrievs overall bucket results that summarize the b
 ----
 
 [discrete]
-==== MlGetOverallBucketsRequest
+==== Request
 
 [pass]
 ++++
@@ -64,7 +64,7 @@ interface MlGetOverallBucketsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetOverallBucketsResponse
+==== Response
 
 [pass]
 ++++

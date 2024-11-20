@@ -42,7 +42,7 @@ This API can be used to force execution of the watch outside of its triggering l
 ----
 
 [discrete]
-==== WatcherExecuteWatchRequest
+==== Request
 
 [pass]
 ++++
@@ -65,7 +65,7 @@ interface WatcherExecuteWatchRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== WatcherExecuteWatchResponse
+==== Response
 
 [pass]
 ++++

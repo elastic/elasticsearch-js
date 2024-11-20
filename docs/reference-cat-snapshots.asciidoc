@@ -42,7 +42,7 @@ Returns information about the snapshots stored in one or more repositories. A sn
 ----
 
 [discrete]
-==== CatSnapshotsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface CatSnapshotsRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatSnapshotsResponse
+==== Response
 
 [pass]
 ++++

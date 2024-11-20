@@ -42,7 +42,7 @@ Delete a script or search template. Deletes a stored script or search template.
 ----
 
 [discrete]
-==== DeleteScriptRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface DeleteScriptRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== DeleteScriptResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Create a data stream. Creates a data stream. You must have a matching index temp
 ----
 
 [discrete]
-==== IndicesCreateDataStreamRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IndicesCreateDataStreamRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesCreateDataStreamResponse
+==== Response
 
 [pass]
 ++++

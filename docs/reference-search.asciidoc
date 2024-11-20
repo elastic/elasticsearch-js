@@ -42,7 +42,7 @@ Run a search. Get search hits that match the query defined in the request. You c
 ----
 
 [discrete]
-==== SearchRequest
+==== Request
 
 [pass]
 ++++
@@ -124,7 +124,7 @@ interface SearchRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SearchResponse
+==== Response
 
 [pass]
 ++++

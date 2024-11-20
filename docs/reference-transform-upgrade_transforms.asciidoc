@@ -42,7 +42,7 @@ Upgrades all transforms. This API identifies transforms that have a legacy confi
 ----
 
 [discrete]
-==== TransformUpgradeTransformsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface TransformUpgradeTransformsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TransformUpgradeTransformsResponse
+==== Response
 
 [pass]
 ++++

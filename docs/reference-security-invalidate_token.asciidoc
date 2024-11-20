@@ -42,7 +42,7 @@ Invalidate a token. The access tokens returned by the get token API have a finit
 ----
 
 [discrete]
-==== SecurityInvalidateTokenRequest
+==== Request
 
 [pass]
 ++++
@@ -60,7 +60,7 @@ interface SecurityInvalidateTokenRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityInvalidateTokenResponse
+==== Response
 
 [pass]
 ++++

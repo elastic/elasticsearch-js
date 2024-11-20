@@ -42,7 +42,7 @@ Returns global and policy-level statistics about actions taken by snapshot lifec
 ----
 
 [discrete]
-==== SlmGetStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface SlmGetStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SlmGetStatsResponse
+==== Response
 
 [pass]
 ++++

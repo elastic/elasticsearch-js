@@ -42,7 +42,7 @@ Create or update users. A password is required for adding a new user but is opti
 ----
 
 [discrete]
-==== SecurityPutUserRequest
+==== Request
 
 [pass]
 ++++
@@ -65,7 +65,7 @@ interface SecurityPutUserRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityPutUserResponse
+==== Response
 
 [pass]
 ++++

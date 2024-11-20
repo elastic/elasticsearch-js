@@ -42,7 +42,7 @@ Stops Watcher if it is running.
 ----
 
 [discrete]
-==== WatcherStopRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface WatcherStopRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== WatcherStopResponse
+==== Response
 
 [pass]
 ++++

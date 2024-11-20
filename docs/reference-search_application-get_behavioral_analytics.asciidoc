@@ -42,7 +42,7 @@ Get behavioral analytics collections.
 ----
 
 [discrete]
-==== SearchApplicationGetBehavioralAnalyticsRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SearchApplicationGetBehavioralAnalyticsRequest extends <<RequestBase>>
 </pre>
 ++++
 [discrete]
-==== SearchApplicationGetBehavioralAnalyticsResponse
+==== Response
 
 [pass]
 ++++

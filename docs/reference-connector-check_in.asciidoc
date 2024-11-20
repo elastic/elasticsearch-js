@@ -42,7 +42,7 @@ Check in a connector. Update the `last_seen` field in the connector and set it t
 ----
 
 [discrete]
-==== ConnectorCheckInRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface ConnectorCheckInRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorCheckInResponse
+==== Response
 
 [pass]
 ++++

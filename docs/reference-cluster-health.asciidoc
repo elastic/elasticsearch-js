@@ -42,7 +42,7 @@ The cluster health API returns a simple status on the health of the cluster. You
 ----
 
 [discrete]
-==== ClusterHealthRequest
+==== Request
 
 [pass]
 ++++
@@ -68,7 +68,7 @@ interface ClusterHealthRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClusterHealthResponse
+==== Response
 
 [pass]
 ++++

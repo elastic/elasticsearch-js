@@ -42,7 +42,7 @@ Run multiple searches. The format of the request is similar to the bulk API form
 ----
 
 [discrete]
-==== MsearchRequest
+==== Request
 
 [pass]
 ++++
@@ -71,7 +71,7 @@ interface MsearchRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MsearchResponse
+==== Response
 
 [pass]
 ++++

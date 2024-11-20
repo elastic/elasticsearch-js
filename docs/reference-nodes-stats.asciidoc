@@ -42,7 +42,7 @@ Returns cluster nodes statistics.
 ----
 
 [discrete]
-==== NodesStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -69,7 +69,7 @@ interface NodesStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== NodesStatsResponse
+==== Response
 
 [pass]
 ++++

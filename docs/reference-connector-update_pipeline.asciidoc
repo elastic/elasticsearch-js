@@ -42,7 +42,7 @@ Update the connector pipeline. When you create a new connector, the configuratio
 ----
 
 [discrete]
-==== ConnectorUpdatePipelineRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface ConnectorUpdatePipelineRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorUpdatePipelineResponse
+==== Response
 
 [pass]
 ++++

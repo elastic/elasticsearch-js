@@ -42,7 +42,7 @@ Check aliases. Checks if one or more data stream or index aliases exist.
 ----
 
 [discrete]
-==== IndicesExistsAliasRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface IndicesExistsAliasRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesExistsAliasResponse
+==== Response
 
 [pass]
 ++++

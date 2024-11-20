@@ -42,7 +42,7 @@ Reindex documents. Copies documents from a source to a destination. The source c
 ----
 
 [discrete]
-==== ReindexRequest
+==== Request
 
 [pass]
 ++++
@@ -70,7 +70,7 @@ interface ReindexRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ReindexResponse
+==== Response
 
 [pass]
 ++++

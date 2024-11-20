@@ -42,7 +42,7 @@ Enable users. Enable users in the native realm.
 ----
 
 [discrete]
-==== SecurityEnableUserRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface SecurityEnableUserRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityEnableUserResponse
+==== Response
 
 [pass]
 ++++

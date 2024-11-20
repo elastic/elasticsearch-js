@@ -42,7 +42,7 @@ Find out whether system features need to be upgraded or not
 ----
 
 [discrete]
-==== MigrationGetFeatureUpgradeStatusRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface MigrationGetFeatureUpgradeStatusRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MigrationGetFeatureUpgradeStatusResponse
+==== Response
 
 [pass]
 ++++

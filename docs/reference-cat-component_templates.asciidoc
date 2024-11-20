@@ -42,7 +42,7 @@ Get component templates. Returns information about component templates in a clus
 ----
 
 [discrete]
-==== CatComponentTemplatesRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface CatComponentTemplatesRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatComponentTemplatesResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Returns low-level information about the Lucene segments in index shards. For dat
 ----
 
 [discrete]
-==== IndicesSegmentsRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface IndicesSegmentsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesSegmentsResponse
+==== Response
 
 [pass]
 ++++

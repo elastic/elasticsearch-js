@@ -42,7 +42,7 @@ Deletes the specified lifecycle policy definition. You cannot delete policies th
 ----
 
 [discrete]
-==== IlmDeleteLifecycleRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IlmDeleteLifecycleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IlmDeleteLifecycleResponse
+==== Response
 
 [pass]
 ++++

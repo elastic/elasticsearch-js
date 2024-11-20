@@ -42,7 +42,7 @@ Preview features used by data frame analytics. Previews the extracted features u
 ----
 
 [discrete]
-==== MlPreviewDataFrameAnalyticsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface MlPreviewDataFrameAnalyticsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlPreviewDataFrameAnalyticsResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Get data frame analytics jobs. Returns configuration and usage information about
 ----
 
 [discrete]
-==== CatMlDataFrameAnalyticsRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface CatMlDataFrameAnalyticsRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatMlDataFrameAnalyticsResponse
+==== Response
 
 [pass]
 ++++

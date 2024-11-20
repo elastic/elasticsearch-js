@@ -42,7 +42,7 @@ Retrieves information about different cluster, node, and index level settings th
 ----
 
 [discrete]
-==== MigrationDeprecationsRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface MigrationDeprecationsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MigrationDeprecationsResponse
+==== Response
 
 [pass]
 ++++

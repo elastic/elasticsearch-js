@@ -42,7 +42,7 @@ Get data frame analytics job configuration info. You can get information for mul
 ----
 
 [discrete]
-==== MlGetDataFrameAnalyticsRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface MlGetDataFrameAnalyticsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetDataFrameAnalyticsResponse
+==== Response
 
 [pass]
 ++++

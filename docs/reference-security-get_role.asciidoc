@@ -42,7 +42,7 @@ Get roles. Get roles in the native realm. The role management APIs are generally
 ----
 
 [discrete]
-==== SecurityGetRoleRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SecurityGetRoleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityGetRoleResponse
+==== Response
 
 [pass]
 ++++

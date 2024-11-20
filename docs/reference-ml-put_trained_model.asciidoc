@@ -42,7 +42,7 @@ Create a trained model. Enable you to supply a trained model that is not created
 ----
 
 [discrete]
-==== MlPutTrainedModelRequest
+==== Request
 
 [pass]
 ++++
@@ -70,7 +70,7 @@ interface MlPutTrainedModelRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlPutTrainedModelResponse
+==== Response
 
 [pass]
 ++++

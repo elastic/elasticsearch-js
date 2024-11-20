@@ -42,7 +42,7 @@ Clears the caches of one or more indices. For data streams, the API clears the c
 ----
 
 [discrete]
-==== IndicesClearCacheRequest
+==== Request
 
 [pass]
 ++++
@@ -64,7 +64,7 @@ interface IndicesClearCacheRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesClearCacheResponse
+==== Response
 
 [pass]
 ++++

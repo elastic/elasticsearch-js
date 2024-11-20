@@ -42,7 +42,7 @@ Returns information about index templates in a cluster. You can use index templa
 ----
 
 [discrete]
-==== CatTemplatesRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface CatTemplatesRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatTemplatesResponse
+==== Response
 
 [pass]
 ++++

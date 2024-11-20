@@ -42,7 +42,7 @@ Get a document by its ID. Retrieves the document with the specified ID from an i
 ----
 
 [discrete]
-==== GetRequest
+==== Request
 
 [pass]
 ++++
@@ -69,7 +69,7 @@ interface GetRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== GetResponse
+==== Response
 
 [pass]
 ++++

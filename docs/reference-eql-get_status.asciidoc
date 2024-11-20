@@ -42,7 +42,7 @@ Returns the current status for an async EQL search or a stored synchronous EQL s
 ----
 
 [discrete]
-==== EqlGetStatusRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface EqlGetStatusRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== EqlGetStatusResponse
+==== Response
 
 [pass]
 ++++

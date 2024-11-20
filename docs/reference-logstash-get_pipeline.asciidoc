@@ -42,7 +42,7 @@ Retrieves pipelines used for Logstash Central Management.
 ----
 
 [discrete]
-==== LogstashGetPipelineRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface LogstashGetPipelineRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== LogstashGetPipelineResponse
+==== Response
 
 [pass]
 ++++

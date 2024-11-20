@@ -42,7 +42,7 @@ Returns field usage information for each shard and field of an index.
 ----
 
 [discrete]
-==== IndicesFieldUsageStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -64,7 +64,7 @@ interface IndicesFieldUsageStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesFieldUsageStatsResponse
+==== Response
 
 [pass]
 ++++

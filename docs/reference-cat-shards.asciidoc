@@ -42,7 +42,7 @@ Returns information about the shards in a cluster. For data streams, the API ret
 ----
 
 [discrete]
-==== CatShardsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface CatShardsRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatShardsResponse
+==== Response
 
 [pass]
 ++++

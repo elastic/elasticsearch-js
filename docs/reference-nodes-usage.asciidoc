@@ -42,7 +42,7 @@ Returns information on the usage of features.
 ----
 
 [discrete]
-==== NodesUsageRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface NodesUsageRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== NodesUsageResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Get terms in an index. Discover terms that match a partial string in an index. T
 ----
 
 [discrete]
-==== TermsEnumRequest
+==== Request
 
 [pass]
 ++++
@@ -64,7 +64,7 @@ interface TermsEnumRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== TermsEnumResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ This API provides information about which features are currently enabled and ava
 ----
 
 [discrete]
-==== XpackUsageRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface XpackUsageRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== XpackUsageResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Convert an index alias to a data stream. Converts an index alias to a data strea
 ----
 
 [discrete]
-==== IndicesMigrateToDataStreamRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IndicesMigrateToDataStreamRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesMigrateToDataStreamResponse
+==== Response
 
 [pass]
 ++++

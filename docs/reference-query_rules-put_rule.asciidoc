@@ -42,7 +42,7 @@ Creates or updates a query rule within a query ruleset.
 ----
 
 [discrete]
-==== QueryRulesPutRuleRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface QueryRulesPutRuleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== QueryRulesPutRuleResponse
+==== Response
 
 [pass]
 ++++

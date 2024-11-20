@@ -42,7 +42,7 @@ Create or update role mappings. Role mappings define which roles are assigned to
 ----
 
 [discrete]
-==== SecurityPutRoleMappingRequest
+==== Request
 
 [pass]
 ++++
@@ -64,7 +64,7 @@ interface SecurityPutRoleMappingRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityPutRoleMappingResponse
+==== Response
 
 [pass]
 ++++

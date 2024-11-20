@@ -42,7 +42,7 @@ Update the connector error field. Set the error field for the connector. If the 
 ----
 
 [discrete]
-==== ConnectorUpdateErrorRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface ConnectorUpdateErrorRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorUpdateErrorResponse
+==== Response
 
 [pass]
 ++++

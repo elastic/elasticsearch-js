@@ -42,7 +42,7 @@ Retrieves the configuration, stats, and status of rollup jobs.
 ----
 
 [discrete]
-==== RollupGetJobsRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface RollupGetJobsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== RollupGetJobsResponse
+==== Response
 
 [pass]
 ++++

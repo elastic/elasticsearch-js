@@ -42,7 +42,7 @@ Check for a document source. Checks if a document's `_source` is stored.
 ----
 
 [discrete]
-==== ExistsSourceRequest
+==== Request
 
 [pass]
 ++++
@@ -67,7 +67,7 @@ interface ExistsSourceRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ExistsSourceResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Delete a data frame analytics job.
 ----
 
 [discrete]
-==== MlDeleteDataFrameAnalyticsRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface MlDeleteDataFrameAnalyticsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlDeleteDataFrameAnalyticsResponse
+==== Response
 
 [pass]
 ++++

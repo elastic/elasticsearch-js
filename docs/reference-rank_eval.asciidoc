@@ -42,7 +42,7 @@ Evaluate ranked search results. Evaluate the quality of ranked search results ov
 ----
 
 [discrete]
-==== RankEvalRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface RankEvalRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== RankEvalResponse
+==== Response
 
 [pass]
 ++++

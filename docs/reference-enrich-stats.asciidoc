@@ -42,7 +42,7 @@ Get enrich stats. Returns enrich coordinator statistics and information about en
 ----
 
 [discrete]
-==== EnrichStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface EnrichStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== EnrichStatsResponse
+==== Response
 
 [pass]
 ++++

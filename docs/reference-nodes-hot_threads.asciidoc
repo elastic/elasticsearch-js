@@ -42,7 +42,7 @@ This API yields a breakdown of the hot threads on each selected node in the clus
 ----
 
 [discrete]
-==== NodesHotThreadsRequest
+==== Request
 
 [pass]
 ++++
@@ -65,7 +65,7 @@ interface NodesHotThreadsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== NodesHotThreadsResponse
+==== Response
 
 [pass]
 ++++

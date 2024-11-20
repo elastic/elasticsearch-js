@@ -42,7 +42,7 @@ Returns low-level information about the Lucene segments in index shards. For dat
 ----
 
 [discrete]
-==== CatSegmentsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface CatSegmentsRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatSegmentsResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Get datafeeds. Returns configuration and usage information about datafeeds. This
 ----
 
 [discrete]
-==== CatMlDatafeedsRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface CatMlDatafeedsRequest extends <<CatCatRequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CatMlDatafeedsResponse
+==== Response
 
 [pass]
 ++++

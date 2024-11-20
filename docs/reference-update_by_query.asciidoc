@@ -42,7 +42,7 @@ Update documents. Updates documents that match the specified query. If no query 
 ----
 
 [discrete]
-==== UpdateByQueryRequest
+==== Request
 
 [pass]
 ++++
@@ -91,7 +91,7 @@ interface UpdateByQueryRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== UpdateByQueryResponse
+==== Response
 
 [pass]
 ++++

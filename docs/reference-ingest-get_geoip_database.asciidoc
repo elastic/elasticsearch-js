@@ -42,7 +42,7 @@ Returns information about one or more geoip database configurations.
 ----
 
 [discrete]
-==== IngestGetGeoipDatabaseRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface IngestGetGeoipDatabaseRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IngestGetGeoipDatabaseResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Updates the cluster settings.
 ----
 
 [discrete]
-==== ClusterPutSettingsRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface ClusterPutSettingsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ClusterPutSettingsResponse
+==== Response
 
 [pass]
 ++++

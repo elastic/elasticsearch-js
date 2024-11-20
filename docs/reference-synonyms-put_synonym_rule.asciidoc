@@ -42,7 +42,7 @@ Creates or updates a synonym rule in a synonym set
 ----
 
 [discrete]
-==== SynonymsPutSynonymRuleRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface SynonymsPutSynonymRuleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SynonymsPutSynonymRuleResponse
+==== Response
 
 [pass]
 ++++

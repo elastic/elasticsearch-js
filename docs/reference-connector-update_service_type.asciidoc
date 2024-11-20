@@ -42,7 +42,7 @@ Update the connector service type.
 ----
 
 [discrete]
-==== ConnectorUpdateServiceTypeRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface ConnectorUpdateServiceTypeRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorUpdateServiceTypeResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Returns the capabilities of any rollup jobs that have been configured for a spec
 ----
 
 [discrete]
-==== RollupGetRollupCapsRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface RollupGetRollupCapsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== RollupGetRollupCapsResponse
+==== Response
 
 [pass]
 ++++

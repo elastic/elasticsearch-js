@@ -42,7 +42,7 @@ Create a behavioral analytics collection.
 ----
 
 [discrete]
-==== SearchApplicationPutBehavioralAnalyticsRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SearchApplicationPutBehavioralAnalyticsRequest extends <<RequestBase>>
 </pre>
 ++++
 [discrete]
-==== SearchApplicationPutBehavioralAnalyticsResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Gets configured auto-follow patterns. Returns the specified auto-follow pattern 
 ----
 
 [discrete]
-==== CcrGetAutoFollowPatternRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface CcrGetAutoFollowPatternRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CcrGetAutoFollowPatternResponse
+==== Response
 
 [pass]
 ++++

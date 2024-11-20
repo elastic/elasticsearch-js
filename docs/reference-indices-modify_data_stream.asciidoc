@@ -42,7 +42,7 @@ Update data streams. Performs one or more data stream modification actions in a 
 ----
 
 [discrete]
-==== IndicesModifyDataStreamRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface IndicesModifyDataStreamRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesModifyDataStreamResponse
+==== Response
 
 [pass]
 ++++

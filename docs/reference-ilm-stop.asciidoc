@@ -42,7 +42,7 @@ Halts all lifecycle management operations and stops the index lifecycle manageme
 ----
 
 [discrete]
-==== IlmStopRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface IlmStopRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IlmStopResponse
+==== Response
 
 [pass]
 ++++

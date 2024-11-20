@@ -42,7 +42,7 @@ Get mapping definitions. Retrieves mapping definitions for one or more fields. F
 ----
 
 [discrete]
-==== IndicesGetFieldMappingRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface IndicesGetFieldMappingRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesGetFieldMappingResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Deletes a geoip database configuration.
 ----
 
 [discrete]
-==== IngestDeleteGeoipDatabaseRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IngestDeleteGeoipDatabaseRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IngestDeleteGeoipDatabaseResponse
+==== Response
 
 [pass]
 ++++

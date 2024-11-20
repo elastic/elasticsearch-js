@@ -42,7 +42,7 @@ Clears the SQL cursor
 ----
 
 [discrete]
-==== SqlClearCursorRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface SqlClearCursorRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SqlClearCursorResponse
+==== Response
 
 [pass]
 ++++

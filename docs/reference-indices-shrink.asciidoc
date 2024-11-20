@@ -42,7 +42,7 @@ Shrinks an existing index into a new index with fewer primary shards.
 ----
 
 [discrete]
-==== IndicesShrinkRequest
+==== Request
 
 [pass]
 ++++
@@ -63,7 +63,7 @@ interface IndicesShrinkRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesShrinkResponse
+==== Response
 
 [pass]
 ++++

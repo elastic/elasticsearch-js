@@ -42,7 +42,7 @@ Get trained model configuration info.
 ----
 
 [discrete]
-==== MlGetTrainedModelsRequest
+==== Request
 
 [pass]
 ++++
@@ -64,7 +64,7 @@ interface MlGetTrainedModelsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlGetTrainedModelsResponse
+==== Response
 
 [pass]
 ++++

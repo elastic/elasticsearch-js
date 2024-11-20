@@ -42,7 +42,7 @@ Delete an enrich policy. Deletes an existing enrich policy and its enrich index.
 ----
 
 [discrete]
-==== EnrichDeletePolicyRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface EnrichDeletePolicyRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== EnrichDeletePolicyResponse
+==== Response
 
 [pass]
 ++++

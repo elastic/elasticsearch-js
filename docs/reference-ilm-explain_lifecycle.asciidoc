@@ -42,7 +42,7 @@ Retrieves information about the index’s current lifecycle state, such as the c
 ----
 
 [discrete]
-==== IlmExplainLifecycleRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface IlmExplainLifecycleRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IlmExplainLifecycleResponse
+==== Response
 
 [pass]
 ++++

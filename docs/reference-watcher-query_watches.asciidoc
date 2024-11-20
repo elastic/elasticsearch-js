@@ -42,7 +42,7 @@ Retrieves stored watches.
 ----
 
 [discrete]
-==== WatcherQueryWatchesRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface WatcherQueryWatchesRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== WatcherQueryWatchesResponse
+==== Response
 
 [pass]
 ++++

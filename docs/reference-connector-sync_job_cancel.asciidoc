@@ -42,7 +42,7 @@ Cancel a connector sync job. Cancel a connector sync job, which sets the status 
 ----
 
 [discrete]
-==== ConnectorSyncJobCancelRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface ConnectorSyncJobCancelRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== ConnectorSyncJobCancelResponse
+==== Response
 
 [pass]
 ++++

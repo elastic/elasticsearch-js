@@ -42,7 +42,7 @@ Get index settings. Returns setting information for one or more indices. For dat
 ----
 
 [discrete]
-==== IndicesGetSettingsRequest
+==== Request
 
 [pass]
 ++++
@@ -65,7 +65,7 @@ interface IndicesGetSettingsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesGetSettingsResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Start a data frame analytics job. A data frame analytics job can be started and 
 ----
 
 [discrete]
-==== MlStartDataFrameAnalyticsRequest
+==== Request
 
 [pass]
 ++++
@@ -58,7 +58,7 @@ interface MlStartDataFrameAnalyticsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlStartDataFrameAnalyticsResponse
+==== Response
 
 [pass]
 ++++

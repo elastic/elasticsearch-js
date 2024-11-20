@@ -42,7 +42,7 @@ Perform inference on the service
 ----
 
 [discrete]
-==== InferenceInferenceRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface InferenceInferenceRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== InferenceInferenceResponse
+==== Response
 
 [pass]
 ++++

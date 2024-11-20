@@ -42,7 +42,7 @@ Delete data streams. Deletes one or more data streams and their backing indices.
 ----
 
 [discrete]
-==== IndicesDeleteDataStreamRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface IndicesDeleteDataStreamRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesDeleteDataStreamResponse
+==== Response
 
 [pass]
 ++++

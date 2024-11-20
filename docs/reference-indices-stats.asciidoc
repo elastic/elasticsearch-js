@@ -42,7 +42,7 @@ Returns statistics for one or more indices. For data streams, the API retrieves 
 ----
 
 [discrete]
-==== IndicesStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -67,7 +67,7 @@ interface IndicesStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IndicesStatsResponse
+==== Response
 
 [pass]
 ++++

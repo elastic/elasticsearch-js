@@ -42,7 +42,7 @@ Removes the follower retention leases from the leader.
 ----
 
 [discrete]
-==== CcrForgetFollowerRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface CcrForgetFollowerRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CcrForgetFollowerResponse
+==== Response
 
 [pass]
 ++++

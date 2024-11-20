@@ -42,7 +42,7 @@ Create a filter. A filter contains a list of strings. It can be used by one or m
 ----
 
 [discrete]
-==== MlPutFilterRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface MlPutFilterRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlPutFilterResponse
+==== Response
 
 [pass]
 ++++

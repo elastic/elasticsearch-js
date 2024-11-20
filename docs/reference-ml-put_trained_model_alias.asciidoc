@@ -42,7 +42,7 @@ Create or update a trained model alias. A trained model alias is a logical name 
 ----
 
 [discrete]
-==== MlPutTrainedModelAliasRequest
+==== Request
 
 [pass]
 ++++
@@ -59,7 +59,7 @@ interface MlPutTrainedModelAliasRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlPutTrainedModelAliasResponse
+==== Response
 
 [pass]
 ++++

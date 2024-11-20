@@ -42,7 +42,7 @@ Gets download statistics for GeoIP2 databases used with the geoip processor.
 ----
 
 [discrete]
-==== IngestGeoIpStatsRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface IngestGeoIpStatsRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== IngestGeoIpStatsResponse
+==== Response
 
 [pass]
 ++++

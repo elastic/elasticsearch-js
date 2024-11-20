@@ -42,7 +42,7 @@ Create or update a script or search template. Creates or updates a stored script
 ----
 
 [discrete]
-==== PutScriptRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface PutScriptRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== PutScriptResponse
+==== Response
 
 [pass]
 ++++

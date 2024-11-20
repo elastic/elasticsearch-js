@@ -42,7 +42,7 @@ Get builtin privileges. Get the list of cluster privileges and index privileges 
 ----
 
 [discrete]
-==== SecurityGetBuiltinPrivilegesRequest
+==== Request
 
 [pass]
 ++++
@@ -56,7 +56,7 @@ interface SecurityGetBuiltinPrivilegesRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityGetBuiltinPrivilegesResponse
+==== Response
 
 [pass]
 ++++

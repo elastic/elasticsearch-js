@@ -42,7 +42,7 @@ Pauses a follower index. The follower index will not fetch any additional operat
 ----
 
 [discrete]
-==== CcrPauseFollowRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface CcrPauseFollowRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== CcrPauseFollowResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Preview a datafeed. This API returns the first "page" of search results from a d
 ----
 
 [discrete]
-==== MlPreviewDatafeedRequest
+==== Request
 
 [pass]
 ++++
@@ -61,7 +61,7 @@ interface MlPreviewDatafeedRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== MlPreviewDatafeedResponse
+==== Response
 
 [pass]
 ++++

@@ -42,7 +42,7 @@ Delete an async search. If the asynchronous search is still running, it is cance
 ----
 
 [discrete]
-==== AsyncSearchDeleteRequest
+==== Request
 
 [pass]
 ++++
@@ -57,7 +57,7 @@ interface AsyncSearchDeleteRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== AsyncSearchDeleteResponse
+==== Response
 
 [pass]
 ++++

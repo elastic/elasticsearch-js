@@ -42,7 +42,7 @@ Grant an API key. Create an API key on behalf of another user. This API is simil
 ----
 
 [discrete]
-==== SecurityGrantApiKeyRequest
+==== Request
 
 [pass]
 ++++
@@ -62,7 +62,7 @@ interface SecurityGrantApiKeyRequest extends <<RequestBase>> {
 </pre>
 ++++
 [discrete]
-==== SecurityGrantApiKeyResponse
+==== Response
 
 [pass]
 ++++
