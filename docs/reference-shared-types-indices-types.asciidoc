@@ -31,22 +31,18 @@
 
 
 [discrete]
-[[IndicesForceMergeResponseBody]]
-=== IndicesForceMergeResponseBody
+[[IndicesAlias]]
+=== IndicesAlias
 
 [pass]
 ++++
 <pre>
 ++++
-interface IndicesForcemergeForceMergeResponseBody extends <<ShardsOperationResponseBase>> {
-  pass:[/**] @property task task contains a task id returned when wait_for_completion=false, you can use the task_id to get the status of the task at _tasks/<task_id> */
-  task?: string
-}
-[pass]
-++++
-</pre>
-++++
-uting?: <<Routing>>
+interface IndicesAlias {
+  pass:[/**] @property filter <<Query>> used to limit documents the alias can access. */
+  filter?: <<QueryDslQueryContainer>>
+  pass:[/**] @property index_routing Value used to route indexing operations to a specific shard. If specified, this overwrites the `routing` value for indexing operations. */
+  index_routing?: <<Routing>>
   pass:[/**] @property is_hidden If `true`, the alias is hidden. All indices for the alias must have the same `is_hidden` value. */
   is_hidden?: boolean
   pass:[/**] @property is_write_index If `true`, the index is the write index for the alias. */
