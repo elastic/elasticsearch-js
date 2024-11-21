@@ -1,4 +1,4 @@
-[[reference-shared-types-mtermvectors]]
+[[reference-shared-types--global-mtermvectors]]
 
 ////////
 ===========================================================================================================================

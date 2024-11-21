@@ -1,4 +1,4 @@
-[[reference-shared-types-open_point_in_time]]
+[[reference-shared-types--global-open-point-in-time]]
 
 ////////
 ===========================================================================================================================

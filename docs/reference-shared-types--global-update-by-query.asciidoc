@@ -1,4 +1,4 @@
-[[reference-shared-types-update_by_query]]
+[[reference-shared-types--global-update-by-query]]
 
 ////////
 ===========================================================================================================================

@@ -1,4 +1,4 @@
-[[reference-shared-types-reindex_rethrottle]]
+[[reference-shared-types--global-reindex-rethrottle]]
 
 ////////
 ===========================================================================================================================

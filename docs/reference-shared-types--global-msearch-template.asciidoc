@@ -1,4 +1,4 @@
-[[reference-shared-types-msearch_template]]
+[[reference-shared-types--global-msearch-template]]
 
 ////////
 ===========================================================================================================================

@@ -1,4 +1,4 @@
-[[reference-shared-types-searchable_snapshots]]
+[[reference-shared-types-searchable-snapshots-types]]
 
 ////////
 ===========================================================================================================================

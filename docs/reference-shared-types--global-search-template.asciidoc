@@ -1,4 +1,4 @@
-[[reference-shared-types-search_template]]
+[[reference-shared-types--global-search-template]]
 
 ////////
 ===========================================================================================================================

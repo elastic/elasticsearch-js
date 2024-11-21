@@ -1,4 +1,4 @@
-[[reference-shared-types-delete_by_query]]
+[[reference-shared-types--global-delete-by-query]]
 
 ////////
 ===========================================================================================================================

@@ -1,4 +1,4 @@
-[[reference-shared-types-scripts_painless_execute]]
+[[reference-shared-types--global-scripts-painless-execute]]
 
 ////////
 ===========================================================================================================================
