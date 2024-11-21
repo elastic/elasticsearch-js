@@ -13299,7 +13299,7 @@ interface QueryDslFuzzyQuery extends <<QueryDslQueryBase>> {
   transpositions?: boolean
   pass:[/**] @property fuzziness Maximum edit distance allowed for matching. */
   fuzziness?: <<Fuzziness>>
-  pass:[/**] @property value <<Term>> you wish to find in the provided field. */
+  pass:[/**] @property value Term you wish to find in the provided field. */
   value: string | <<double>> | boolean
 }
 [pass]
@@ -15137,7 +15137,7 @@ interface QueryDslSparseVectorQuery extends <<QueryDslQueryBase>> {
 <pre>
 ++++
 interface QueryDslTermQuery extends <<QueryDslQueryBase>> {
-  pass:[/**] @property value <<Term>> you wish to find in the provided field. */
+  pass:[/**] @property value Term you wish to find in the provided field. */
   value: <<FieldValue>>
   pass:[/**] @property case_insensitive Allows ASCII case insensitive matching of the value with the indexed field values when set to `true`. When `false`, the case sensitivity of matching depends on the underlying field’s mapping. */
   case_insensitive?: boolean
