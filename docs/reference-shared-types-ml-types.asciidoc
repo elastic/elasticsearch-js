@@ -245,7 +245,7 @@ interface MlAnomalyExplanation {
   anomaly_characteristics_impact?: <<integer>>
   pass:[/**] @property anomaly_length Length of the detected anomaly in the number of buckets. */
   anomaly_length?: <<integer>>
-  pass:[/**] @property anomaly_type <<Type>> of the detected anomaly: `spike` or `dip`. */
+  pass:[/**] @property anomaly_type Type of the detected anomaly: `spike` or `dip`. */
   anomaly_type?: string
   pass:[/**] @property high_variance_penalty Indicates reduction of anomaly score for the bucket with large confidence intervals. If a bucket has large confidence intervals, the score is reduced. */
   high_variance_penalty?: boolean

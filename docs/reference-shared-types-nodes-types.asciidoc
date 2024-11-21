@@ -384,7 +384,7 @@ interface NodesDataPathStats {
   total?: string
   pass:[/**] @property total_in_bytes Total size of the file store in bytes. */
   total_in_bytes?: <<long>>
-  pass:[/**] @property type <<Type>> of the file store (ex: ext4). */
+  pass:[/**] @property type Type of the file store (ex: ext4). */
   type?: string
 }
 [pass]
