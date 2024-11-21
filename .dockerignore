@@ -5,3 +5,4 @@ elasticsearch
 .git
 lib
 junit-output
+.tap
