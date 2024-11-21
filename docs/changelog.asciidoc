@@ -2,10 +2,26 @@
 == Release notes
 
 [discrete]
+=== 8.15.3
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Improved support for Elasticsearch `v8.15`
+
+Updated TypeScript types based on fixes and improvements to the Elasticsearch specification.
+
+[discrete]
+===== Drop testing artifacts from npm package
+
+Tap, the unit testing tool, was recently upgraded and started writing to a `.tap` directory. Since tests are run prior to an `npm publish` in CI, this directory was being included in the published package and bloating its size.
+
+[discrete]
 === 8.15.2
 
 [discrete]
-==== Features
+==== Fixes
 
 [discrete]
 ===== Improved support for Elasticsearch `v8.15`
@@ -16,7 +32,7 @@ Updated TypeScript types based on fixes and improvements to the Elasticsearch sp
 === 8.15.1
 
 [discrete]
-==== Features
+==== Fixes
 
 [discrete]
 ===== Improved support for Elasticsearch `v8.15`
