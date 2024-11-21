@@ -75,11 +75,11 @@ interface MsearchMultisearchBody {
   aggregations?: Record<string, <<AggregationsAggregationContainer>>>
   aggs?: Record<string, <<AggregationsAggregationContainer>>>
   collapse?: <<SearchFieldCollapse>>
-  pass:[/**] @property query Defines the search definition using the <<Query>> DSL. */
+  pass:[/**] @property query Defines the search definition using the Query DSL. */
   query?: <<QueryDslQueryContainer>>
   pass:[/**] @property explain If true, returns detailed information about score computation as part of a hit. */
   explain?: boolean
-  pass:[/**] @property ext <<Configuration>> of search extensions defined by Elasticsearch plugins. */
+  pass:[/**] @property ext Configuration of search extensions defined by Elasticsearch plugins. */
   ext?: Record<string, any>
   pass:[/**] @property stored_fields List of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the _source parameter defaults to false. You can pass _source: true to return both source fields and stored fields in the search response. */
   stored_fields?: <<Fields>>
@@ -109,7 +109,7 @@ interface MsearchMultisearchBody {
   fields?: (<<QueryDslFieldAndFormat>> | <<Field>>)[]
   pass:[/**] @property terminate_after Maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. Defaults to 0, which does not terminate query execution early. */
   terminate_after?: <<long>>
-  pass:[/**] @property stats <<Stats>> groups to associate with the search. Each group maintains a statistics aggregation for its associated searches. You can retrieve these stats using the indices stats API. */
+  pass:[/**] @property stats Stats groups to associate with the search. Each group maintains a statistics aggregation for its associated searches. You can retrieve these stats using the indices stats API. */
   stats?: string[]
   pass:[/**] @property timeout Specifies the period of time to wait for a response from each shard. If no response is received before the timeout expires, the request fails and returns an error. Defaults to no timeout. */
   timeout?: string

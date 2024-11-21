@@ -101,7 +101,7 @@ type InferenceDenseVector = <<float>>[]
 interface InferenceInferenceEndpoint {
   pass:[/**] @property service The service type */
   service: string
-  pass:[/**] @property service_settings <<Settings>> specific to the service */
+  pass:[/**] @property service_settings Settings specific to the service */
   service_settings: <<InferenceServiceSettings>>
   pass:[/**] @property task_settings Task settings specific to the service and task type */
   task_settings?: <<InferenceTaskSettings>>

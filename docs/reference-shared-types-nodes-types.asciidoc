@@ -1176,9 +1176,9 @@ interface NodesRepositoryLocation {
 <pre>
 ++++
 interface NodesRepositoryMeteringInformation {
-  pass:[/**] @property repository_name <<Repository>> name. */
+  pass:[/**] @property repository_name Repository name. */
   repository_name: <<Name>>
-  pass:[/**] @property repository_type <<Repository>> type. */
+  pass:[/**] @property repository_type Repository type. */
   repository_type: string
   pass:[/**] @property repository_location Represents an unique location within the repository. */
   repository_location: <<NodesRepositoryLocation>>
@@ -1348,9 +1348,9 @@ interface NodesSizeHttpHistogram {
 <pre>
 ++++
 interface NodesStats {
-  pass:[/**] @property adaptive_selection <<Statistics>> about adaptive replica selection. */
+  pass:[/**] @property adaptive_selection Statistics about adaptive replica selection. */
   adaptive_selection?: Record<string, <<NodesAdaptiveSelection>>>
-  pass:[/**] @property breakers <<Statistics>> about the field data circuit breaker. */
+  pass:[/**] @property breakers Statistics about the field data circuit breaker. */
   breakers?: Record<string, <<NodesBreaker>>>
   pass:[/**] @property fs File system information, data path, free disk space, read/write stats. */
   fs?: <<NodesFileSystem>>
@@ -1358,7 +1358,7 @@ interface NodesStats {
   host?: <<Host>>
   pass:[/**] @property http HTTP connection information. */
   http?: <<NodesHttp>>
-  pass:[/**] @property ingest <<Statistics>> about ingest preprocessing. */
+  pass:[/**] @property ingest Statistics about ingest preprocessing. */
   ingest?: <<NodesIngest>>
   pass:[/**] @property ip IP address and port for the node. */
   ip?: <<Ip>> | <<Ip>>[]
@@ -1368,17 +1368,17 @@ interface NodesStats {
   name?: <<Name>>
   pass:[/**] @property os Operating system stats, load average, mem, swap. */
   os?: <<NodesOperatingSystem>>
-  pass:[/**] @property process <<Process>> statistics, memory consumption, cpu usage, open file descriptors. */
+  pass:[/**] @property process Process statistics, memory consumption, cpu usage, open file descriptors. */
   process?: <<NodesProcess>>
   pass:[/**] @property roles Roles assigned to the node. */
   roles?: <<NodeRoles>>
   pass:[/**] @property script Contains script statistics for the node. */
   script?: <<NodesScripting>>
   script_cache?: Record<string, <<NodesScriptCache>> | <<NodesScriptCache>>[]>
-  pass:[/**] @property thread_pool <<Statistics>> about each thread pool, including current size, queue and rejected tasks. */
+  pass:[/**] @property thread_pool Statistics about each thread pool, including current size, queue and rejected tasks. */
   thread_pool?: Record<string, <<NodesThreadCount>>>
   timestamp?: <<long>>
-  pass:[/**] @property transport <<Transport>> statistics about sent and received bytes in cluster communication. */
+  pass:[/**] @property transport Transport statistics about sent and received bytes in cluster communication. */
   transport?: <<NodesTransport>>
   pass:[/**] @property transport_address <<Host>> and port for the transport layer, used for internal communication between nodes in a cluster. */
   transport_address?: <<TransportAddress>>
@@ -1468,7 +1468,7 @@ interface NodesTransport {
   tx_size?: string
   pass:[/**] @property tx_size_in_bytes Size, in bytes, of TX packets sent by the node during internal cluster communication. */
   tx_size_in_bytes?: <<long>>
-  pass:[/**] @property total_outbound_connections The cumulative number of outbound transport connections that this node has opened since it started. Each transport connection may comprise multiple TCP connections but is only counted once in this statistic. <<Transport>> connections are typically <<long>>-lived so this statistic should remain constant in a stable cluster. */
+  pass:[/**] @property total_outbound_connections The cumulative number of outbound transport connections that this node has opened since it started. Each transport connection may comprise multiple TCP connections but is only counted once in this statistic. Transport connections are typically <<long>>-lived so this statistic should remain constant in a stable cluster. */
   total_outbound_connections?: <<long>>
 }
 [pass]

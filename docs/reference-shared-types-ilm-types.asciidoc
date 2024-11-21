@@ -39,31 +39,31 @@
 <pre>
 ++++
 interface IlmActions {
-  pass:[/**] @property allocate <<Phases>> allowed: warm, cold. */
+  pass:[/**] @property allocate Phases allowed: warm, cold. */
   allocate?: <<IlmAllocateAction>>
-  pass:[/**] @property delete <<Phases>> allowed: delete. */
+  pass:[/**] @property delete Phases allowed: delete. */
   delete?: <<IlmDeleteAction>>
-  pass:[/**] @property downsample <<Phases>> allowed: hot, warm, cold. */
+  pass:[/**] @property downsample Phases allowed: hot, warm, cold. */
   downsample?: <<IlmDownsampleAction>>
   pass:[/**] @property freeze The freeze action is a noop in 8.x */
   freeze?: <<EmptyObject>>
-  pass:[/**] @property forcemerge <<Phases>> allowed: hot, warm. */
+  pass:[/**] @property forcemerge Phases allowed: hot, warm. */
   forcemerge?: <<IlmForceMergeAction>>
-  pass:[/**] @property migrate <<Phases>> allowed: warm, cold. */
+  pass:[/**] @property migrate Phases allowed: warm, cold. */
   migrate?: <<IlmMigrateAction>>
-  pass:[/**] @property readonly <<Phases>> allowed: hot, warm, cold. */
+  pass:[/**] @property readonly Phases allowed: hot, warm, cold. */
   readonly?: <<EmptyObject>>
-  pass:[/**] @property rollover <<Phases>> allowed: hot. */
+  pass:[/**] @property rollover Phases allowed: hot. */
   rollover?: <<IlmRolloverAction>>
-  pass:[/**] @property set_priority <<Phases>> allowed: hot, warm, cold. */
+  pass:[/**] @property set_priority Phases allowed: hot, warm, cold. */
   set_priority?: <<IlmSetPriorityAction>>
-  pass:[/**] @property searchable_snapshot <<Phases>> allowed: hot, cold, frozen. */
+  pass:[/**] @property searchable_snapshot Phases allowed: hot, cold, frozen. */
   searchable_snapshot?: <<IlmSearchableSnapshotAction>>
-  pass:[/**] @property shrink <<Phases>> allowed: hot, warm. */
+  pass:[/**] @property shrink Phases allowed: hot, warm. */
   shrink?: <<IlmShrinkAction>>
-  pass:[/**] @property unfollow <<Phases>> allowed: hot, warm, cold, frozen. */
+  pass:[/**] @property unfollow Phases allowed: hot, warm, cold, frozen. */
   unfollow?: <<EmptyObject>>
-  pass:[/**] @property wait_for_snapshot <<Phases>> allowed: delete. */
+  pass:[/**] @property wait_for_snapshot Phases allowed: delete. */
   wait_for_snapshot?: <<IlmWaitForSnapshotAction>>
 }
 [pass]

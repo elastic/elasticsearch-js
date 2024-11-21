@@ -463,7 +463,7 @@ interface IngestForeachProcessor extends <<IngestProcessorBase>> {
   field: <<Field>>
   pass:[/**] @property ignore_missing If `true`, the processor silently exits without changing the document if the `field` is `null` or missing. */
   ignore_missing?: boolean
-  pass:[/**] @property processor <<Ingest>> processor to run on each element. */
+  pass:[/**] @property processor Ingest processor to run on each element. */
   processor: <<IngestProcessorContainer>>
 }
 [pass]
@@ -1043,7 +1043,7 @@ interface IngestProcessorContainer {
   fingerprint?: <<IngestFingerprintProcessor>>
   pass:[/**] @property foreach Runs an ingest processor on each element of an array or object. */
   foreach?: <<IngestForeachProcessor>>
-  pass:[/**] @property ip_location Currently an undocumented alias for GeoIP <<Processor>>. */
+  pass:[/**] @property ip_location Currently an undocumented alias for GeoIP Processor. */
   ip_location?: <<IngestIpLocationProcessor>>
   pass:[/**] @property geo_grid Converts geo-grid definitions of grid tiles or cells to regular bounding boxes or polygons which describe their shape. This is useful if there is a need to interact with the tile shapes as spatially indexable fields. */
   geo_grid?: <<IngestGeoGridProcessor>>

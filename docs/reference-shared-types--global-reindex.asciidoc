@@ -153,7 +153,7 @@ interface ReindexResponse {
 interface ReindexSource {
   pass:[/**] @property index The name of the data stream, index, or alias you are copying from. Accepts a comma-separated list to reindex from multiple sources. */
   index: <<Indices>>
-  pass:[/**] @property query Specifies the documents to reindex using the <<Query>> DSL. */
+  pass:[/**] @property query Specifies the documents to reindex using the Query DSL. */
   query?: <<QueryDslQueryContainer>>
   pass:[/**] @property remote A remote instance of Elasticsearch that you want to index from. */
   remote?: <<ReindexRemoteSource>>

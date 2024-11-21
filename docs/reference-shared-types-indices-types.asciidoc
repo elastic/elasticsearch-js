@@ -39,7 +39,7 @@
 <pre>
 ++++
 interface IndicesAlias {
-  pass:[/**] @property filter <<Query>> used to limit documents the alias can access. */
+  pass:[/**] @property filter Query used to limit documents the alias can access. */
   filter?: <<QueryDslQueryContainer>>
   pass:[/**] @property index_routing Value used to route indexing operations to a specific shard. If specified, this overwrites the `routing` value for indexing operations. */
   index_routing?: <<Routing>>
@@ -66,7 +66,7 @@ interface IndicesAlias {
 <pre>
 ++++
 interface IndicesAliasDefinition {
-  pass:[/**] @property filter <<Query>> used to limit documents the alias can access. */
+  pass:[/**] @property filter Query used to limit documents the alias can access. */
   filter?: <<QueryDslQueryContainer>>
   pass:[/**] @property index_routing Value used to route indexing operations to a specific shard. If specified, this overwrites the `routing` value for indexing operations. */
   index_routing?: string
@@ -644,7 +644,7 @@ interface IndicesIndexSettingsAnalysis {
 <pre>
 ++++
 interface IndicesIndexSettingsLifecycle {
-  pass:[/**] @property name The name of the policy to use to manage the index. For information about how Elasticsearch applies policy changes, see <<Policy>> updates. */
+  pass:[/**] @property name The name of the policy to use to manage the index. For information about how Elasticsearch applies policy changes, see Policy updates. */
   name?: <<Name>>
   pass:[/**] @property indexing_complete Indicates whether or not the index has been rolled over. Automatically set to true when ILM completes the rollover action. You can explicitly set it to skip rollover. */
   indexing_complete?: <<SpecUtilsStringified>><boolean>
@@ -780,7 +780,7 @@ interface IndicesIndexTemplateSummary {
   aliases?: Record<<<IndexName>>, <<IndicesAlias>>>
   pass:[/**] @property mappings Mapping for fields in the index. If specified, this mapping can include field names, field data types, and mapping parameters. */
   mappings?: <<MappingTypeMapping>>
-  pass:[/**] @property settings <<Configuration>> options for the index. */
+  pass:[/**] @property settings Configuration options for the index. */
   settings?: <<IndicesIndexSettings>>
   lifecycle?: <<IndicesDataStreamLifecycleWithRollover>>
 }

@@ -549,7 +549,7 @@ interface SearchHighlightBase {
   pass:[/**] @property fragment_size The size of the highlighted fragment in characters. */
   fragment_size?: <<integer>>
   highlight_filter?: boolean
-  pass:[/**] @property highlight_query <<Highlight>> matches for a query other than the search query. This is especially useful if you use a rescore query because those are not taken into account by highlighting by default. */
+  pass:[/**] @property highlight_query Highlight matches for a query other than the search query. This is especially useful if you use a rescore query because those are not taken into account by highlighting by default. */
   highlight_query?: <<QueryDslQueryContainer>>
   max_fragment_length?: <<integer>>
   pass:[/**] @property max_analyzed_offset If set to a non-negative value, highlighting stops at this defined maximum limit. The rest of the text is not processed, thus not highlighted and no error is returned The `max_analyzed_offset` query setting does not override the `index.highlight.max_analyzed_offset` setting, which prevails when it’s set to lower value than the query setting. */

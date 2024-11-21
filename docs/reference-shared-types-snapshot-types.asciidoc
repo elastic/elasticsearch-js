@@ -201,7 +201,7 @@ interface SnapshotReadOnlyUrlRepositorySettings extends <<SnapshotRepositorySett
 ++++
 <pre>
 ++++
-type SnapshotRepository = <<SnapshotAzureRepository>> | <<SnapshotGcsRepository>> | SnapshotS3<<Repository>> | <<SnapshotSharedFileSystemRepository>> | <<SnapshotReadOnlyUrlRepository>> | <<SnapshotSourceOnlyRepository>>
+type SnapshotRepository = <<SnapshotAzureRepository>> | <<SnapshotGcsRepository>> | SnapshotS3Repository | <<SnapshotSharedFileSystemRepository>> | <<SnapshotReadOnlyUrlRepository>> | <<SnapshotSourceOnlyRepository>>
 [pass]
 ++++
 </pre>
@@ -250,7 +250,7 @@ interface SnapshotRepositorySettingsBase {
 ++++
 <pre>
 ++++
-interface SnapshotS3<<Repository>> extends <<SnapshotRepositoryBase>> {
+interface SnapshotS3Repository extends <<SnapshotRepositoryBase>> {
   type: 's3'
   settings: SnapshotS3RepositorySettings
 }

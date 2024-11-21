@@ -49,7 +49,7 @@ interface MtermvectorsOperation {
   fields?: <<Fields>>
   pass:[/**] @property field_statistics If `true`, the response includes the document count, sum of document frequencies, and sum of total term frequencies. */
   field_statistics?: boolean
-  pass:[/**] @property filter <<Filter>> terms based on their tf-idf scores. */
+  pass:[/**] @property filter Filter terms based on their tf-idf scores. */
   filter?: <<TermvectorsFilter>>
   pass:[/**] @property offsets If `true`, the response includes term offsets. */
   offsets?: boolean

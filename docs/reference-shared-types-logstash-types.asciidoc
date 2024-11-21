@@ -45,11 +45,11 @@ interface LogstashPipeline {
   last_modified: <<DateTime>>
   pass:[/**] @property pipeline_metadata Optional metadata about the pipeline. May have any contents. This metadata is not generated or used by Elasticsearch or Logstash. */
   pipeline_metadata: <<LogstashPipelineMetadata>>
-  pass:[/**] @property username <<User>> who last updated the pipeline. */
+  pass:[/**] @property username User who last updated the pipeline. */
   username: string
-  pass:[/**] @property pipeline <<Configuration>> for the pipeline. */
+  pass:[/**] @property pipeline Configuration for the pipeline. */
   pipeline: string
-  pass:[/**] @property pipeline_settings <<Settings>> for the pipeline. Supports only flat keys in dot notation. */
+  pass:[/**] @property pipeline_settings Settings for the pipeline. Supports only flat keys in dot notation. */
   pipeline_settings: <<LogstashPipelineSettings>>
 }
 [pass]

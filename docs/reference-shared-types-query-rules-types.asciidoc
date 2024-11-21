@@ -122,7 +122,7 @@ type QueryRulesQueryRuleType = 'pinned' | 'exclude'
 <pre>
 ++++
 interface QueryRulesQueryRuleset {
-  pass:[/**] @property ruleset_id <<Query>> Ruleset unique identifier */
+  pass:[/**] @property ruleset_id Query Ruleset unique identifier */
   ruleset_id: <<Id>>
   pass:[/**] @property rules Rules associated with the query ruleset */
   rules: <<QueryRulesQueryRule>>[]

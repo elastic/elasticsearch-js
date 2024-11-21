@@ -1369,7 +1369,7 @@ interface KnnQuery extends <<QueryDslQueryBase>> {
 interface KnnRetriever extends <<RetrieverBase>> {
   pass:[/**] @property field The name of the vector field to search against. */
   field: string
-  pass:[/**] @property query_vector <<Query>> vector. Must have the same number of dimensions as the vector field you are searching against. You must provide a query_vector_builder or query_vector, but not both. */
+  pass:[/**] @property query_vector Query vector. Must have the same number of dimensions as the vector field you are searching against. You must provide a query_vector_builder or query_vector, but not both. */
   query_vector?: <<QueryVector>>
   pass:[/**] @property query_vector_builder Defines a model to build a query vector. */
   query_vector_builder?: <<QueryVectorBuilder>>
@@ -2150,7 +2150,7 @@ interface Retries {
 <pre>
 ++++
 interface RetrieverBase {
-  pass:[/**] @property filter <<Query>> to filter the documents that can match. */
+  pass:[/**] @property filter Query to filter the documents that can match. */
   filter?: <<QueryDslQueryContainer>> | <<QueryDslQueryContainer>>[]
   pass:[/**] @property min_score Minimum _score for matching documents. Documents with a lower _score are not included in the top documents. */
   min_score?: <<float>>
@@ -4029,7 +4029,7 @@ interface AggregationsBoxPlotAggregate extends <<AggregationsAggregateBase>> {
 <pre>
 ++++
 interface AggregationsBoxplotAggregation extends <<AggregationsMetricAggregationBase>> {
-  pass:[/**] @property compression Limits the maximum number of nodes used by the underlying <<TDigest>> algorithm to `20 * compression`, enabling control of memory usage and approximation error. */
+  pass:[/**] @property compression Limits the maximum number of nodes used by the underlying TDigest algorithm to `20 * compression`, enabling control of memory usage and approximation error. */
   compression?: <<double>>
 }
 [pass]
@@ -4221,7 +4221,7 @@ interface AggregationsBucketSelectorAggregation extends <<AggregationsPipelineAg
 <pre>
 ++++
 interface AggregationsBucketSortAggregation {
-  pass:[/**] @property from <<Buckets>> in positions prior to `from` will be truncated. */
+  pass:[/**] @property from Buckets in positions prior to `from` will be truncated. */
   from?: <<integer>>
   pass:[/**] @property gap_policy The policy to apply when gaps are found in the data. */
   gap_policy?: <<AggregationsGapPolicy>>
@@ -5188,7 +5188,7 @@ interface AggregationsFrequentItemSetsAggregation {
   minimum_support?: <<double>>
   pass:[/**] @property size The number of top item sets to return. */
   size?: <<integer>>
-  pass:[/**] @property filter <<Query>> that filters documents from analysis. */
+  pass:[/**] @property filter Query that filters documents from analysis. */
   filter?: <<QueryDslQueryContainer>>
 }
 [pass]
@@ -6352,7 +6352,7 @@ interface AggregationsMedianAbsoluteDeviationAggregate extends <<AggregationsSin
 <pre>
 ++++
 interface AggregationsMedianAbsoluteDeviationAggregation extends <<AggregationsFormatMetricAggregationBase>> {
-  pass:[/**] @property compression Limits the maximum number of nodes used by the underlying <<TDigest>> algorithm to `20 * compression`, enabling control of memory usage and approximation error. */
+  pass:[/**] @property compression Limits the maximum number of nodes used by the underlying TDigest algorithm to `20 * compression`, enabling control of memory usage and approximation error. */
   compression?: <<double>>
 }
 [pass]
@@ -6840,7 +6840,7 @@ interface AggregationsPercentileRanksAggregation extends <<AggregationsFormatMet
   values?: <<double>>[] | null
   pass:[/**] @property hdr Uses the alternative High Dynamic Range Histogram algorithm to calculate percentile ranks. */
   hdr?: <<AggregationsHdrMethod>>
-  pass:[/**] @property tdigest Sets parameters for the default <<TDigest>> algorithm used to calculate percentile ranks. */
+  pass:[/**] @property tdigest Sets parameters for the default TDigest algorithm used to calculate percentile ranks. */
   tdigest?: <<AggregationsTDigest>>
 }
 [pass]
@@ -6893,7 +6893,7 @@ interface AggregationsPercentilesAggregation extends <<AggregationsFormatMetricA
   percents?: <<double>>[]
   pass:[/**] @property hdr Uses the alternative High Dynamic Range Histogram algorithm to calculate percentiles. */
   hdr?: <<AggregationsHdrMethod>>
-  pass:[/**] @property tdigest Sets parameters for the default <<TDigest>> algorithm used to calculate percentiles. */
+  pass:[/**] @property tdigest Sets parameters for the default TDigest algorithm used to calculate percentiles. */
   tdigest?: <<AggregationsTDigest>>
 }
 [pass]
@@ -6944,7 +6944,7 @@ interface AggregationsPercentilesBucketAggregation extends <<AggregationsPipelin
 interface AggregationsPipelineAggregationBase extends <<AggregationsBucketPathAggregation>> {
   pass:[/**] @property format `DecimalFormat` pattern for the output value. If specified, the formatted value is returned in the aggregation’s `value_as_string` property. */
   format?: string
-  pass:[/**] @property gap_policy <<Policy>> to apply when gaps are found in the data. */
+  pass:[/**] @property gap_policy Policy to apply when gaps are found in the data. */
   gap_policy?: <<AggregationsGapPolicy>>
 }
 [pass]
@@ -7802,7 +7802,7 @@ interface AggregationsSumBucketAggregation extends <<AggregationsPipelineAggrega
 <pre>
 ++++
 interface AggregationsTDigest {
-  pass:[/**] @property compression Limits the maximum number of nodes used by the underlying <<TDigest>> algorithm to `20 * compression`, enabling control of memory usage and approximation error. */
+  pass:[/**] @property compression Limits the maximum number of nodes used by the underlying TDigest algorithm to `20 * compression`, enabling control of memory usage and approximation error. */
   compression?: <<integer>>
 }
 [pass]
@@ -8424,10 +8424,10 @@ type AggregationsVariableWidthHistogramBucket = AggregationsVariableWidthHistogr
 interface AggregationsWeightedAverageAggregation {
   pass:[/**] @property format A numeric response formatter. */
   format?: string
-  pass:[/**] @property value <<Configuration>> for the field that provides the values. */
+  pass:[/**] @property value Configuration for the field that provides the values. */
   value?: <<AggregationsWeightedAverageValue>>
   value_type?: <<AggregationsValueType>>
-  pass:[/**] @property weight <<Configuration>> for the field or script that provides the weights. */
+  pass:[/**] @property weight Configuration for the field or script that provides the weights. */
   weight?: <<AggregationsWeightedAverageValue>>
 }
 [pass]
@@ -12823,7 +12823,7 @@ interface QueryDslBoolQuery extends <<QueryDslQueryBase>> {
 interface QueryDslBoostingQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property negative_boost Floating point number between 0 and 1.0 used to decrease the relevance scores of documents matching the `negative` query. */
   negative_boost: <<double>>
-  pass:[/**] @property negative <<Query>> used to decrease the relevance score of matching documents. */
+  pass:[/**] @property negative Query used to decrease the relevance score of matching documents. */
   negative: <<QueryDslQueryContainer>>
   pass:[/**] @property positive Any returned documents must match this query. */
   positive: <<QueryDslQueryContainer>>
@@ -12932,7 +12932,7 @@ interface QueryDslCommonTermsQuery extends <<QueryDslQueryBase>> {
 <pre>
 ++++
 interface QueryDslConstantScoreQuery extends <<QueryDslQueryBase>> {
-  pass:[/**] @property filter <<Filter>> query you wish to run. Any returned documents must match this query. <<Filter>> queries do not calculate relevance scores. To speed up performance, Elasticsearch automatically caches frequently used filter queries. */
+  pass:[/**] @property filter Filter query you wish to run. Any returned documents must match this query. Filter queries do not calculate relevance scores. To speed up performance, Elasticsearch automatically caches frequently used filter queries. */
   filter: <<QueryDslQueryContainer>>
 }
 [pass]
@@ -13439,7 +13439,7 @@ type QueryDslGeoPolygonQuery = QueryDslGeoPolygonQueryKeys
 ++++
 interface QueryDslGeoShapeFieldQuery {
   shape?: <<GeoShape>>
-  pass:[/**] @property indexed_shape <<Query>> using an indexed shape retrieved from the the specified document and path. */
+  pass:[/**] @property indexed_shape Query using an indexed shape retrieved from the the specified document and path. */
   indexed_shape?: <<QueryDslFieldLookup>>
   pass:[/**] @property relation Spatial relation operator used to search a geo field. */
   relation?: <<GeoShapeRelation>>
@@ -13498,7 +13498,7 @@ interface QueryDslHasChildQuery extends <<QueryDslQueryBase>> {
   max_children?: <<integer>>
   pass:[/**] @property min_children Minimum number of child documents that match the query required to match the query for a returned parent document. If the parent document does not meet this limit, it is excluded from the search results. */
   min_children?: <<integer>>
-  pass:[/**] @property query <<Query>> you wish to run on child documents of the `type` field. If a child document matches the search, the query returns the parent document. */
+  pass:[/**] @property query Query you wish to run on child documents of the `type` field. If a child document matches the search, the query returns the parent document. */
   query: <<QueryDslQueryContainer>>
   pass:[/**] @property score_mode Indicates how scores for matching child documents affect the root parent document’s relevance score. */
   score_mode?: <<QueryDslChildScoreMode>>
@@ -13525,7 +13525,7 @@ interface QueryDslHasParentQuery extends <<QueryDslQueryBase>> {
   inner_hits?: <<SearchInnerHits>>
   pass:[/**] @property parent_type <<Name>> of the parent relationship mapped for the `join` field. */
   parent_type: <<RelationName>>
-  pass:[/**] @property query <<Query>> you wish to run on parent documents of the `parent_type` field. If a parent document matches the search, the query returns its child documents. */
+  pass:[/**] @property query Query you wish to run on parent documents of the `parent_type` field. If a parent document matches the search, the query returns its child documents. */
   query: <<QueryDslQueryContainer>>
   pass:[/**] @property score Indicates whether the relevance score of a matching parent document is aggregated into its child documents. */
   score?: boolean
@@ -13630,21 +13630,21 @@ interface QueryDslIntervalsContainer {
 <pre>
 ++++
 interface QueryDslIntervalsFilter {
-  pass:[/**] @property after <<Query>> used to return intervals that follow an interval from the `filter` rule. */
+  pass:[/**] @property after Query used to return intervals that follow an interval from the `filter` rule. */
   after?: <<QueryDslIntervalsContainer>>
-  pass:[/**] @property before <<Query>> used to return intervals that occur before an interval from the `filter` rule. */
+  pass:[/**] @property before Query used to return intervals that occur before an interval from the `filter` rule. */
   before?: <<QueryDslIntervalsContainer>>
-  pass:[/**] @property contained_by <<Query>> used to return intervals contained by an interval from the `filter` rule. */
+  pass:[/**] @property contained_by Query used to return intervals contained by an interval from the `filter` rule. */
   contained_by?: <<QueryDslIntervalsContainer>>
-  pass:[/**] @property containing <<Query>> used to return intervals that contain an interval from the `filter` rule. */
+  pass:[/**] @property containing Query used to return intervals that contain an interval from the `filter` rule. */
   containing?: <<QueryDslIntervalsContainer>>
-  pass:[/**] @property not_contained_by <<Query>> used to return intervals that are **not** contained by an interval from the `filter` rule. */
+  pass:[/**] @property not_contained_by Query used to return intervals that are **not** contained by an interval from the `filter` rule. */
   not_contained_by?: <<QueryDslIntervalsContainer>>
-  pass:[/**] @property not_containing <<Query>> used to return intervals that do **not** contain an interval from the `filter` rule. */
+  pass:[/**] @property not_containing Query used to return intervals that do **not** contain an interval from the `filter` rule. */
   not_containing?: <<QueryDslIntervalsContainer>>
-  pass:[/**] @property not_overlapping <<Query>> used to return intervals that do **not** overlap with an interval from the `filter` rule. */
+  pass:[/**] @property not_overlapping Query used to return intervals that do **not** overlap with an interval from the `filter` rule. */
   not_overlapping?: <<QueryDslIntervalsContainer>>
-  pass:[/**] @property overlapping <<Query>> used to return intervals that overlap with an interval from the `filter` rule. */
+  pass:[/**] @property overlapping Query used to return intervals that overlap with an interval from the `filter` rule. */
   overlapping?: <<QueryDslIntervalsContainer>>
   pass:[/**] @property script <<Script>> used to return matching documents. This script must return a boolean value: `true` or `false`. */
   script?: <<Script>> | string
@@ -13663,7 +13663,7 @@ interface QueryDslIntervalsFilter {
 <pre>
 ++++
 interface QueryDslIntervalsFuzzy {
-  pass:[/**] @property analyzer <<Analyzer>> used to normalize the term. */
+  pass:[/**] @property analyzer Analyzer used to normalize the term. */
   analyzer?: string
   pass:[/**] @property fuzziness Maximum edit distance allowed for matching. */
   fuzziness?: <<Fuzziness>>
@@ -13690,7 +13690,7 @@ interface QueryDslIntervalsFuzzy {
 <pre>
 ++++
 interface QueryDslIntervalsMatch {
-  pass:[/**] @property analyzer <<Analyzer>> used to analyze terms in the query. */
+  pass:[/**] @property analyzer Analyzer used to analyze terms in the query. */
   analyzer?: string
   pass:[/**] @property max_gaps Maximum number of positions between the matching terms. Terms further apart than this are not considered matches. */
   max_gaps?: <<integer>>
@@ -13717,7 +13717,7 @@ interface QueryDslIntervalsMatch {
 <pre>
 ++++
 interface QueryDslIntervalsPrefix {
-  pass:[/**] @property analyzer <<Analyzer>> used to analyze the `prefix`. */
+  pass:[/**] @property analyzer Analyzer used to analyze the `prefix`. */
   analyzer?: string
   pass:[/**] @property prefix Beginning characters of terms you wish to find in the top-level field. */
   prefix: string
@@ -13765,7 +13765,7 @@ interface QueryDslIntervalsQuery extends <<QueryDslQueryBase>> {
 <pre>
 ++++
 interface QueryDslIntervalsWildcard {
-  pass:[/**] @property analyzer <<Analyzer>> used to analyze the `pattern`. Defaults to the top-level field's analyzer. */
+  pass:[/**] @property analyzer Analyzer used to analyze the `pattern`. Defaults to the top-level field's analyzer. */
   analyzer?: string
   pass:[/**] @property pattern Wildcard pattern used to find matching terms. */
   pattern: string
@@ -13842,7 +13842,7 @@ interface QueryDslMatchAllQuery extends <<QueryDslQueryBase>> {
 <pre>
 ++++
 interface QueryDslMatchBoolPrefixQuery extends <<QueryDslQueryBase>> {
-  pass:[/**] @property analyzer <<Analyzer>> used to convert the text in the query value into tokens. */
+  pass:[/**] @property analyzer Analyzer used to convert the text in the query value into tokens. */
   analyzer?: string
   pass:[/**] @property fuzziness Maximum edit distance allowed for matching. Can be applied to the term subqueries constructed for all terms but the final term. */
   fuzziness?: <<Fuzziness>>
@@ -13890,7 +13890,7 @@ interface QueryDslMatchNoneQuery extends <<QueryDslQueryBase>> {
 <pre>
 ++++
 interface QueryDslMatchPhrasePrefixQuery extends <<QueryDslQueryBase>> {
-  pass:[/**] @property analyzer <<Analyzer>> used to convert text in the query value into tokens. */
+  pass:[/**] @property analyzer Analyzer used to convert text in the query value into tokens. */
   analyzer?: string
   pass:[/**] @property max_expansions Maximum number of terms to which the last provided term of the query value will expand. */
   max_expansions?: <<integer>>
@@ -13915,9 +13915,9 @@ interface QueryDslMatchPhrasePrefixQuery extends <<QueryDslQueryBase>> {
 <pre>
 ++++
 interface QueryDslMatchPhraseQuery extends <<QueryDslQueryBase>> {
-  pass:[/**] @property analyzer <<Analyzer>> used to convert the text in the query value into tokens. */
+  pass:[/**] @property analyzer Analyzer used to convert the text in the query value into tokens. */
   analyzer?: string
-  pass:[/**] @property query <<Query>> terms that are analyzed and turned into a phrase query. */
+  pass:[/**] @property query Query terms that are analyzed and turned into a phrase query. */
   query: string
   pass:[/**] @property slop Maximum number of positions allowed between matching tokens. */
   slop?: <<integer>>
@@ -13938,7 +13938,7 @@ interface QueryDslMatchPhraseQuery extends <<QueryDslQueryBase>> {
 <pre>
 ++++
 interface QueryDslMatchQuery extends <<QueryDslQueryBase>> {
-  pass:[/**] @property analyzer <<Analyzer>> used to convert the text in the query value into tokens. */
+  pass:[/**] @property analyzer Analyzer used to convert the text in the query value into tokens. */
   analyzer?: string
   pass:[/**] @property auto_generate_synonyms_phrase_query If `true`, match phrase queries are automatically created for multi-term synonyms. */
   auto_generate_synonyms_phrase_query?: boolean
@@ -14026,7 +14026,7 @@ interface QueryDslMoreLikeThisQuery extends <<QueryDslQueryBase>> {
 <pre>
 ++++
 interface QueryDslMultiMatchQuery extends <<QueryDslQueryBase>> {
-  pass:[/**] @property analyzer <<Analyzer>> used to convert the text in the query value into tokens. */
+  pass:[/**] @property analyzer Analyzer used to convert the text in the query value into tokens. */
   analyzer?: string
   pass:[/**] @property auto_generate_synonyms_phrase_query If `true`, match phrase queries are automatically created for multi-term synonyms. */
   auto_generate_synonyms_phrase_query?: boolean
@@ -14094,7 +14094,7 @@ interface QueryDslNestedQuery extends <<QueryDslQueryBase>> {
   inner_hits?: <<SearchInnerHits>>
   pass:[/**] @property path Path to the nested object you wish to search. */
   path: <<Field>>
-  pass:[/**] @property query <<Query>> you wish to run on nested objects in the path. */
+  pass:[/**] @property query Query you wish to run on nested objects in the path. */
   query: <<QueryDslQueryContainer>>
   pass:[/**] @property score_mode How scores for matching child objects affect the root parent document’s relevance score. */
   score_mode?: <<QueryDslChildScoreMode>>
@@ -14316,7 +14316,7 @@ interface QueryDslQueryContainer {
   pass:[/**] @property geo_distance Matches `geo_point` and `geo_shape` values within a given distance of a geopoint. */
   geo_distance?: <<QueryDslGeoDistanceQuery>>
   geo_polygon?: <<QueryDslGeoPolygonQuery>>
-  pass:[/**] @property geo_shape <<Filter>> documents indexed using either the `geo_shape` or the `geo_point` type. */
+  pass:[/**] @property geo_shape Filter documents indexed using either the `geo_shape` or the `geo_point` type. */
   geo_shape?: <<QueryDslGeoShapeQuery>>
   pass:[/**] @property has_child Returns parent documents whose joined child documents match a provided query. */
   has_child?: <<QueryDslHasChildQuery>>
@@ -14369,7 +14369,7 @@ interface QueryDslQueryContainer {
   script_score?: <<QueryDslScriptScoreQuery>>
   pass:[/**] @property semantic A semantic query to semantic_text field types */
   semantic?: <<QueryDslSemanticQuery>>
-  pass:[/**] @property shape <<Queries>> documents that contain fields indexed using the `shape` type. */
+  pass:[/**] @property shape Queries documents that contain fields indexed using the `shape` type. */
   shape?: <<QueryDslShapeQuery>>
   pass:[/**] @property simple_query_string Returns documents based on a provided query string, using a parser with a limited but fault-tolerant syntax. */
   simple_query_string?: <<QueryDslSimpleQueryStringQuery>>
@@ -14425,7 +14425,7 @@ interface QueryDslQueryContainer {
 interface QueryDslQueryStringQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property allow_leading_wildcard If `true`, the wildcard characters `*` and `?` are allowed as the first character of the query string. */
   allow_leading_wildcard?: boolean
-  pass:[/**] @property analyzer <<Analyzer>> used to convert text in the query string into tokens. */
+  pass:[/**] @property analyzer Analyzer used to convert text in the query string into tokens. */
   analyzer?: string
   pass:[/**] @property analyze_wildcard If `true`, the query attempts to analyze wildcard terms in the query string. */
   analyze_wildcard?: boolean
@@ -14458,9 +14458,9 @@ interface QueryDslQueryStringQuery extends <<QueryDslQueryBase>> {
   minimum_should_match?: <<MinimumShouldMatch>>
   pass:[/**] @property phrase_slop Maximum number of positions allowed between matching tokens for phrases. */
   phrase_slop?: <<double>>
-  pass:[/**] @property query <<Query>> string you wish to parse and use for search. */
+  pass:[/**] @property query Query string you wish to parse and use for search. */
   query: string
-  pass:[/**] @property quote_analyzer <<Analyzer>> used to convert quoted text in the query string into tokens. For quoted text, this parameter overrides the analyzer specified in the `analyzer` parameter. */
+  pass:[/**] @property quote_analyzer Analyzer used to convert quoted text in the query string into tokens. For quoted text, this parameter overrides the analyzer specified in the `analyzer` parameter. */
   quote_analyzer?: string
   pass:[/**] @property quote_field_suffix Suffix appended to quoted text in the query string. You can use this suffix to use a different analysis method for exact matches. */
   quote_field_suffix?: string
@@ -14746,7 +14746,7 @@ interface QueryDslScriptScoreFunction {
 interface QueryDslScriptScoreQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property min_score Documents with a score lower than this floating point number are excluded from the search results. */
   min_score?: <<float>>
-  pass:[/**] @property query <<Query>> used to return documents. */
+  pass:[/**] @property query Query used to return documents. */
   query: <<QueryDslQueryContainer>>
   pass:[/**] @property script <<Script>> used to compute the score of documents returned by the query. Important: final relevance scores from the `script_score` query cannot be negative. */
   script: <<Script>> | string
@@ -14784,11 +14784,11 @@ interface QueryDslSemanticQuery extends <<QueryDslQueryBase>> {
 <pre>
 ++++
 interface QueryDslShapeFieldQuery {
-  pass:[/**] @property indexed_shape <<Queries>> using a pre-indexed shape. */
+  pass:[/**] @property indexed_shape Queries using a pre-indexed shape. */
   indexed_shape?: <<QueryDslFieldLookup>>
   pass:[/**] @property relation Spatial relation between the query shape and the document shape. */
   relation?: <<GeoShapeRelation>>
-  pass:[/**] @property shape <<Queries>> using an inline shape definition in GeoJSON or Well Known Text (WKT) format. */
+  pass:[/**] @property shape Queries using an inline shape definition in GeoJSON or Well Known Text (WKT) format. */
   shape?: <<GeoShape>>
 }
 [pass]
@@ -14851,7 +14851,7 @@ type QueryDslSimpleQueryStringFlags = <<SpecUtilsPipeSeparatedFlags>><<<QueryDsl
 <pre>
 ++++
 interface QueryDslSimpleQueryStringQuery extends <<QueryDslQueryBase>> {
-  pass:[/**] @property analyzer <<Analyzer>> used to convert text in the query string into tokens. */
+  pass:[/**] @property analyzer Analyzer used to convert text in the query string into tokens. */
   analyzer?: string
   pass:[/**] @property analyze_wildcard If `true`, the query attempts to analyze wildcard terms in the query string. */
   analyze_wildcard?: boolean
@@ -14873,7 +14873,7 @@ interface QueryDslSimpleQueryStringQuery extends <<QueryDslQueryBase>> {
   lenient?: boolean
   pass:[/**] @property minimum_should_match Minimum number of clauses that must match for a document to be returned. */
   minimum_should_match?: <<MinimumShouldMatch>>
-  pass:[/**] @property query <<Query>> string in the simple query string syntax you wish to parse and use for search. */
+  pass:[/**] @property query Query string in the simple query string syntax you wish to parse and use for search. */
   query: string
   pass:[/**] @property quote_field_suffix Suffix appended to quoted text in the query string. */
   quote_field_suffix?: string
@@ -15248,7 +15248,7 @@ interface QueryDslTextExpansionQuery extends <<QueryDslQueryBase>> {
   model_id: string
   pass:[/**] @property model_text The query text */
   model_text: string
-  pass:[/**] @property pruning_config <<Token>> pruning configurations */
+  pass:[/**] @property pruning_config Token pruning configurations */
   pruning_config?: <<QueryDslTokenPruningConfig>>
 }
 [pass]
@@ -15369,7 +15369,7 @@ interface QueryDslUntypedRangeQuery extends <<QueryDslRangeQueryBase>><any> {
 interface QueryDslWeightedTokensQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property tokens The tokens representing this query */
   tokens: Record<string, <<float>>>
-  pass:[/**] @property pruning_config <<Token>> pruning configurations */
+  pass:[/**] @property pruning_config Token pruning configurations */
   pruning_config?: <<QueryDslTokenPruningConfig>>
 }
 [pass]
