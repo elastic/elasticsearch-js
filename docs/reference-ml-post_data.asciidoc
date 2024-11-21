@@ -29,7 +29,7 @@
 [[client.ml.postData]]
 === client.ml.postData
 
-Send data to an anomaly detection job for analysis. IMPORTANT: For each job, data can be accepted from only a single connection at a time. It is not currently possible to post data to multiple jobs using wildcards or a comma-separated list.
+Send data to an anomaly detection job for analysis. IMPORTANT: For each job, data can be accepted from only a single connection at a time. It is not currently possible to post data to multiple jobs using wildcards or a list.
 
 {ref}/ml-post-data.html[{es} documentation]
 

@@ -29,7 +29,7 @@
 [[client.ml.deleteExpiredData]]
 === client.ml.deleteExpiredData
 
-Delete expired ML data. Deletes all job results, model snapshots and forecast data that have exceeded their retention days period. Machine learning state documents that are not associated with any job are also deleted. You can limit the request to a single or set of anomaly detection jobs by using a job identifier, a group name, a comma-separated list of jobs, or a wildcard expression. You can delete expired data for all anomaly detection jobs by using _all, by specifying * as the <job_id>, or by omitting the <job_id>.
+Delete expired ML data. Deletes all job results, model snapshots and forecast data that have exceeded their retention days period. Machine learning state documents that are not associated with any job are also deleted. You can limit the request to a single or set of anomaly detection jobs by using a job identifier, a group name, a list of jobs, or a wildcard expression. You can delete expired data for all anomaly detection jobs by using _all, by specifying * as the <job_id>, or by omitting the <job_id>.
 
 {ref}/ml-delete-expired-data.html[{es} documentation]
 

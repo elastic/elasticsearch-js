@@ -41,7 +41,7 @@
 interface SynonymsSynonymRule {
   pass:[/**] @property id Synonym Rule identifier */
   id?: <<Id>>
-  pass:[/**] @property synonyms Synonyms, in Solr format, that conform the synonym rule. See https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-synonym-graph-tokenfilter.html#_solr_synonyms_2 */
+  pass:[/**] @property synonyms Synonyms, in Solr format, that conform the synonym rule. See  */
   synonyms: <<SynonymsSynonymString>>
 }
 [pass]
@@ -60,7 +60,7 @@ interface SynonymsSynonymRule {
 interface SynonymsSynonymRuleRead {
   pass:[/**] @property id Synonym Rule identifier */
   id: <<Id>>
-  pass:[/**] @property synonyms Synonyms, in Solr format, that conform the synonym rule. See https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-synonym-graph-tokenfilter.html#_solr_synonyms_2 */
+  pass:[/**] @property synonyms Synonyms, in Solr format, that conform the synonym rule. See  */
   synonyms: <<SynonymsSynonymString>>
 }
 [pass]
