@@ -2,6 +2,22 @@
 == Release notes
 
 [discrete]
+=== 8.16.2
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Improved support for Elasticsearch `v8.16`
+
+Updated TypeScript types based on fixes and improvements to the Elasticsearch specification.
+
+[discrete]
+===== Drop testing artifacts from npm package
+
+Tap, the unit testing tool used by this project, was recently upgraded and started writing to a `.tap` directory. Since tests are run prior to an `npm publish` in CI, this directory was being included in the published package and bloating its size.
+
+[discrete]
 === 8.16.1
 
 [discrete]
@@ -38,10 +54,26 @@ The ES|QL helper can now return results as an Apache Arrow `Table` or `RecordBat
 The client's `disablePrototypePoisoningProtection` option was set to `true` by default, but when it was set to any other value it was ignored, making it impossible to enable prototype poisoning protection without providing a custom serializer implementation.
 
 [discrete]
+=== 8.15.3
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Improved support for Elasticsearch `v8.15`
+
+Updated TypeScript types based on fixes and improvements to the Elasticsearch specification.
+
+[discrete]
+===== Drop testing artifacts from npm package
+
+Tap, the unit testing tool, was recently upgraded and started writing to a `.tap` directory. Since tests are run prior to an `npm publish` in CI, this directory was being included in the published package and bloating its size.
+
+[discrete]
 === 8.15.2
 
 [discrete]
-==== Features
+==== Fixes
 
 [discrete]
 ===== Improved support for Elasticsearch `v8.15`
@@ -52,7 +84,7 @@ Updated TypeScript types based on fixes and improvements to the Elasticsearch sp
 === 8.15.1
 
 [discrete]
-==== Features
+==== Fixes
 
 [discrete]
 ===== Improved support for Elasticsearch `v8.15`
