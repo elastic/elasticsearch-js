@@ -40,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Throttle an update by query operation. Change the number of requests per second for a particular update by query operation. Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/docs-update-by-query.html | Elasticsearch API documentation}
   */
 export default async function UpdateByQueryRethrottleApi (this: That, params: T.UpdateByQueryRethrottleRequest | TB.UpdateByQueryRethrottleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.UpdateByQueryRethrottleResponse>
 export default async function UpdateByQueryRethrottleApi (this: That, params: T.UpdateByQueryRethrottleRequest | TB.UpdateByQueryRethrottleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.UpdateByQueryRethrottleResponse, unknown>>

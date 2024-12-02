@@ -917,6 +917,7 @@ export interface OpenPointInTimeRequest extends RequestBase {
   preference?: string
   routing?: Routing
   expand_wildcards?: ExpandWildcards
+  allow_partial_search_results?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     index_filter?: QueryDslQueryContainer
@@ -1211,6 +1212,7 @@ export interface SearchRequest extends RequestBase {
   include_named_queries_score?: boolean
   lenient?: boolean
   max_concurrent_shard_requests?: long
+  min_compatible_shard_node?: VersionString
   preference?: string
   pre_filter_shard_size?: long
   request_cache?: boolean
@@ -5428,27 +5430,21 @@ export interface MappingDateRangeProperty extends MappingRangePropertyBase {
   type: 'date_range'
 }
 
-export type MappingDenseVectorElementType = 'bit' | 'byte' | 'float'
-
 export interface MappingDenseVectorIndexOptions {
-  confidence_interval?: float
-  ef_construction?: integer
+  type: string
   m?: integer
-  type: MappingDenseVectorIndexOptionsType
+  ef_construction?: integer
+  confidence_interval?: float
 }
-
-export type MappingDenseVectorIndexOptionsType = 'flat' | 'hnsw' | 'int4_flat' | 'int4_hnsw' | 'int8_flat' | 'int8_hnsw'
 
 export interface MappingDenseVectorProperty extends MappingPropertyBase {
   type: 'dense_vector'
+  element_type?: string
   dims?: integer
-  element_type?: MappingDenseVectorElementType
+  similarity?: string
   index?: boolean
   index_options?: MappingDenseVectorIndexOptions
-  similarity?: MappingDenseVectorSimilarity
 }
-
-export type MappingDenseVectorSimilarity = 'cosine' | 'dot_product' | 'l2_norm' | 'max_inner_product'
 
 export interface MappingDocValuesPropertyBase extends MappingCorePropertyBase {
   doc_values?: boolean
@@ -6637,7 +6633,7 @@ export interface QueryDslTermsSetQuery extends QueryDslQueryBase {
   minimum_should_match?: MinimumShouldMatch
   minimum_should_match_field?: Field
   minimum_should_match_script?: Script | string
-  terms: FieldValue[]
+  terms: string[]
 }
 
 export interface QueryDslTextExpansionQuery extends QueryDslQueryBase {
@@ -6739,6 +6735,7 @@ export type AsyncSearchGetResponse<TDocument = unknown, TAggregations = Record<A
 
 export interface AsyncSearchStatusRequest extends RequestBase {
   id: Id
+  keep_alive?: Duration
 }
 
 export type AsyncSearchStatusResponse = AsyncSearchStatusStatusResponseBase
@@ -6767,11 +6764,11 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   ignore_unavailable?: boolean
   lenient?: boolean
   max_concurrent_shard_requests?: long
+  min_compatible_shard_node?: VersionString
   preference?: string
   pre_filter_shard_size?: long
   request_cache?: boolean
   routing?: Routing
-  scroll?: Duration
   search_type?: SearchType
   suggest_field?: Field
   suggest_mode?: SuggestMode
@@ -6830,6 +6827,8 @@ export interface AutoscalingAutoscalingPolicy {
 
 export interface AutoscalingDeleteAutoscalingPolicyRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export type AutoscalingDeleteAutoscalingPolicyResponse = AcknowledgedResponseBase
@@ -6862,6 +6861,7 @@ export interface AutoscalingGetAutoscalingCapacityAutoscalingResources {
 }
 
 export interface AutoscalingGetAutoscalingCapacityRequest extends RequestBase {
+  master_timeout?: Duration
 }
 
 export interface AutoscalingGetAutoscalingCapacityResponse {
@@ -6870,12 +6870,15 @@ export interface AutoscalingGetAutoscalingCapacityResponse {
 
 export interface AutoscalingGetAutoscalingPolicyRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
 }
 
 export type AutoscalingGetAutoscalingPolicyResponse = AutoscalingAutoscalingPolicy
 
 export interface AutoscalingPutAutoscalingPolicyRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, use 'policy' instead. */
   body?: AutoscalingAutoscalingPolicy
 }
@@ -6971,7 +6974,6 @@ export interface CatAllocationAllocationRecord {
 export interface CatAllocationRequest extends CatCatRequestBase {
   node_id?: NodeIds
   bytes?: Bytes
-  local?: boolean
 }
 
 export type CatAllocationResponse = CatAllocationAllocationRecord[]
@@ -6988,7 +6990,6 @@ export interface CatComponentTemplatesComponentTemplate {
 
 export interface CatComponentTemplatesRequest extends CatCatRequestBase {
   name?: string
-  local?: boolean
 }
 
 export type CatComponentTemplatesResponse = CatComponentTemplatesComponentTemplate[]
@@ -7414,7 +7415,6 @@ export interface CatMasterMasterRecord {
 }
 
 export interface CatMasterRequest extends CatCatRequestBase {
-  local?: boolean
 }
 
 export type CatMasterResponse = CatMasterMasterRecord[]
@@ -7782,7 +7782,6 @@ export interface CatNodeattrsNodeAttributesRecord {
 }
 
 export interface CatNodeattrsRequest extends CatCatRequestBase {
-  local?: boolean
 }
 
 export type CatNodeattrsResponse = CatNodeattrsNodeAttributesRecord[]
@@ -8077,7 +8076,6 @@ export interface CatPendingTasksPendingTasksRecord {
 }
 
 export interface CatPendingTasksRequest extends CatCatRequestBase {
-  local?: boolean
 }
 
 export type CatPendingTasksResponse = CatPendingTasksPendingTasksRecord[]
@@ -8097,7 +8095,6 @@ export interface CatPluginsPluginsRecord {
 }
 
 export interface CatPluginsRequest extends CatCatRequestBase {
-  local?: boolean
 }
 
 export type CatPluginsResponse = CatPluginsPluginsRecord[]
@@ -8184,7 +8181,6 @@ export type CatRepositoriesResponse = CatRepositoriesRepositoriesRecord[]
 export interface CatSegmentsRequest extends CatCatRequestBase {
   index?: Indices
   bytes?: Bytes
-  local?: boolean
 }
 
 export type CatSegmentsResponse = CatSegmentsSegmentsRecord[]
@@ -8540,7 +8536,6 @@ export interface CatTasksTasksRecord {
 
 export interface CatTemplatesRequest extends CatCatRequestBase {
   name?: Name
-  local?: boolean
 }
 
 export type CatTemplatesResponse = CatTemplatesTemplatesRecord[]
@@ -8562,7 +8557,6 @@ export interface CatTemplatesTemplatesRecord {
 export interface CatThreadPoolRequest extends CatCatRequestBase {
   thread_pool_patterns?: Names
   time?: TimeUnit
-  local?: boolean
 }
 
 export type CatThreadPoolResponse = CatThreadPoolThreadPoolRecord[]
@@ -8755,20 +8749,18 @@ export interface CcrFollowRequest extends RequestBase {
   wait_for_active_shards?: WaitForActiveShards
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
-    data_stream_name?: string
-    leader_index: IndexName
+    leader_index?: IndexName
     max_outstanding_read_requests?: long
-    max_outstanding_write_requests?: integer
-    max_read_request_operation_count?: integer
-    max_read_request_size?: ByteSize
+    max_outstanding_write_requests?: long
+    max_read_request_operation_count?: long
+    max_read_request_size?: string
     max_retry_delay?: Duration
-    max_write_buffer_count?: integer
-    max_write_buffer_size?: ByteSize
-    max_write_request_operation_count?: integer
-    max_write_request_size?: ByteSize
+    max_write_buffer_count?: long
+    max_write_buffer_size?: string
+    max_write_request_operation_count?: long
+    max_write_request_size?: string
     read_poll_timeout?: Duration
-    remote_cluster: string
-    settings?: IndicesIndexSettings
+    remote_cluster?: string
   }
 }
 
@@ -8787,16 +8779,16 @@ export interface CcrFollowInfoFollowerIndex {
 }
 
 export interface CcrFollowInfoFollowerIndexParameters {
-  max_outstanding_read_requests?: long
-  max_outstanding_write_requests?: integer
-  max_read_request_operation_count?: integer
-  max_read_request_size?: ByteSize
-  max_retry_delay?: Duration
-  max_write_buffer_count?: integer
-  max_write_buffer_size?: ByteSize
-  max_write_request_operation_count?: integer
-  max_write_request_size?: ByteSize
-  read_poll_timeout?: Duration
+  max_outstanding_read_requests: integer
+  max_outstanding_write_requests: integer
+  max_read_request_operation_count: integer
+  max_read_request_size: string
+  max_retry_delay: Duration
+  max_write_buffer_count: integer
+  max_write_buffer_size: string
+  max_write_request_operation_count: integer
+  max_write_request_size: string
+  read_poll_timeout: Duration
 }
 
 export type CcrFollowInfoFollowerIndexStatus = 'active' | 'paused'
@@ -10367,7 +10359,6 @@ export interface EqlSearchRequest extends RequestBase {
     fields?: QueryDslFieldAndFormat | Field | (QueryDslFieldAndFormat | Field)[]
     result_position?: EqlSearchResultPosition
     runtime_mappings?: MappingRuntimeFields
-    max_samples_per_key?: integer
   }
 }
 
@@ -10481,6 +10472,7 @@ export interface FleetSearchRequest extends RequestBase {
   ignore_unavailable?: boolean
   lenient?: boolean
   max_concurrent_shard_requests?: long
+  min_compatible_shard_node?: VersionString
   preference?: string
   pre_filter_shard_size?: long
   request_cache?: boolean
@@ -10922,7 +10914,6 @@ export interface IndicesDataStreamIndex {
 export interface IndicesDataStreamLifecycle {
   data_retention?: Duration
   downsampling?: IndicesDataStreamLifecycleDownsampling
-  enabled?: boolean
 }
 
 export interface IndicesDataStreamLifecycleDownsampling {
@@ -10942,7 +10933,9 @@ export interface IndicesDataStreamLifecycleRolloverConditions {
   max_primary_shard_docs?: long
 }
 
-export interface IndicesDataStreamLifecycleWithRollover extends IndicesDataStreamLifecycle {
+export interface IndicesDataStreamLifecycleWithRollover {
+  data_retention?: Duration
+  downsampling?: IndicesDataStreamLifecycleDownsampling
   rollover?: IndicesDataStreamLifecycleRolloverConditions
 }
 
@@ -11650,6 +11643,7 @@ export interface IndicesExistsAliasRequest extends RequestBase {
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
+  local?: boolean
 }
 
 export type IndicesExistsAliasResponse = boolean
@@ -11804,13 +11798,14 @@ export interface IndicesGetAliasRequest extends RequestBase {
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
+  local?: boolean
 }
 
 export type IndicesGetAliasResponse = Record<IndexName, IndicesGetAliasIndexAliases>
 
 export interface IndicesGetDataLifecycleDataStreamWithLifecycle {
   name: DataStreamName
-  lifecycle?: IndicesDataStreamLifecycleWithRollover
+  lifecycle?: IndicesDataStreamLifecycle
 }
 
 export interface IndicesGetDataLifecycleRequest extends RequestBase {
@@ -11979,8 +11974,11 @@ export interface IndicesPutDataLifecycleRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   master_timeout?: Duration
   timeout?: Duration
-  /** @deprecated The use of the 'body' key has been deprecated, use 'lifecycle' instead. */
-  body?: IndicesDataStreamLifecycle
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    data_retention?: Duration
+    downsampling?: IndicesDataStreamLifecycleDownsampling
+  }
 }
 
 export type IndicesPutDataLifecycleResponse = AcknowledgedResponseBase
@@ -12311,6 +12309,7 @@ export interface IndicesSegmentsRequest extends RequestBase {
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
+  verbose?: boolean
 }
 
 export interface IndicesSegmentsResponse {
@@ -13774,9 +13773,6 @@ export interface MlCalendarEvent {
   description: string
   end_time: DateTime
   start_time: DateTime
-  skip_result?: boolean
-  skip_model_update?: boolean
-  force_time_shift?: integer
 }
 
 export type MlCategorizationAnalyzer = string | MlCategorizationAnalyzerDefinition
@@ -17226,6 +17222,7 @@ export interface QueryRulesListRulesetsQueryRulesetListItem {
   ruleset_id: Id
   rule_total_count: integer
   rule_criteria_types_counts: Record<string, integer>
+  rule_type_counts: Record<string, integer>
 }
 
 export interface QueryRulesListRulesetsRequest extends RequestBase {
@@ -17485,13 +17482,10 @@ export interface SearchApplicationEventDataStream {
   name: IndexName
 }
 
-export interface SearchApplicationSearchApplication extends SearchApplicationSearchApplicationParameters {
+export interface SearchApplicationSearchApplication {
   name: Name
-  updated_at_millis: EpochTime<UnitMillis>
-}
-
-export interface SearchApplicationSearchApplicationParameters {
   indices: IndexName[]
+  updated_at_millis: EpochTime<UnitMillis>
   analytics_collection_name?: Name
   template?: SearchApplicationSearchApplicationTemplate
 }
@@ -17532,14 +17526,21 @@ export interface SearchApplicationListRequest extends RequestBase {
 
 export interface SearchApplicationListResponse {
   count: long
-  results: SearchApplicationSearchApplication[]
+  results: SearchApplicationListSearchApplicationListItem[]
+}
+
+export interface SearchApplicationListSearchApplicationListItem {
+  name: Name
+  indices: IndexName[]
+  updated_at_millis: EpochTime<UnitMillis>
+  analytics_collection_name?: Name
 }
 
 export interface SearchApplicationPutRequest extends RequestBase {
   name: Name
   create?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, use 'search_application' instead. */
-  body?: SearchApplicationSearchApplicationParameters
+  body?: SearchApplicationSearchApplication
 }
 
 export interface SearchApplicationPutResponse {
@@ -17645,20 +17646,25 @@ export interface SecurityAccess {
 }
 
 export interface SecurityApiKey {
-  creation?: long
-  expiration?: long
   id: Id
-  invalidated?: boolean
   name: Name
-  realm?: string
+  type: SecurityApiKeyType
+  creation: EpochTime<UnitMillis>
+  expiration?: EpochTime<UnitMillis>
+  invalidated: boolean
+  invalidation?: EpochTime<UnitMillis>
+  username: Username
+  realm: string
   realm_type?: string
-  username?: Username
-  profile_uid?: string
-  metadata?: Metadata
+  metadata: Metadata
   role_descriptors?: Record<string, SecurityRoleDescriptor>
   limited_by?: Record<string, SecurityRoleDescriptor>[]
+  access?: SecurityAccess
+  profile_uid?: string
   _sort?: SortResults
 }
+
+export type SecurityApiKeyType = 'rest' | 'cross_cluster'
 
 export interface SecurityApplicationGlobalUserPrivileges {
   manage: SecurityManageUserPrivileges
@@ -17706,7 +17712,7 @@ export type SecurityIndexPrivilege = 'all' | 'auto_configure' | 'create' | 'crea
 
 export interface SecurityIndicesPrivileges {
   field_security?: SecurityFieldSecurity
-  names: IndexName[]
+  names: IndexName | IndexName[]
   privileges: SecurityIndexPrivilege[]
   query?: SecurityIndicesPrivilegesQuery
   allow_restricted_indices?: boolean
@@ -17733,16 +17739,22 @@ export interface SecurityRemoteClusterPrivileges {
 export interface SecurityRemoteIndicesPrivileges {
   clusters: Names
   field_security?: SecurityFieldSecurity
-  names: IndexName[]
+  names: IndexName | IndexName[]
   privileges: SecurityIndexPrivilege[]
   query?: SecurityIndicesPrivilegesQuery
   allow_restricted_indices?: boolean
 }
 
 export interface SecurityReplicationAccess {
-  names: IndexName[]
+  names: IndexName | IndexName[]
   allow_restricted_indices?: boolean
 }
+
+export interface SecurityRestriction {
+  workflows: SecurityRestrictionWorkflow[]
+}
+
+export type SecurityRestrictionWorkflow = 'search_application_query' | string
 
 export interface SecurityRoleDescriptor {
   cluster?: SecurityClusterPrivilege[]
@@ -17755,6 +17767,7 @@ export interface SecurityRoleDescriptor {
   metadata?: Metadata
   run_as?: string[]
   description?: string
+  restriction?: SecurityRestriction
   transient_metadata?: Record<string, any>
 }
 
@@ -17769,6 +17782,7 @@ export interface SecurityRoleDescriptorRead {
   metadata?: Metadata
   run_as?: string[]
   description?: string
+  restriction?: SecurityRestriction
   transient_metadata?: Record<string, any>
 }
 
@@ -17808,7 +17822,7 @@ export interface SecurityRoleTemplateScript {
 
 export interface SecuritySearchAccess {
   field_security?: SecurityFieldSecurity
-  names: IndexName[]
+  names: IndexName | IndexName[]
   query?: SecurityIndicesPrivilegesQuery
   allow_restricted_indices?: boolean
 }
@@ -17827,7 +17841,7 @@ export interface SecurityUser {
 
 export interface SecurityUserIndicesPrivileges {
   field_security?: SecurityFieldSecurity[]
-  names: IndexName[]
+  names: IndexName | IndexName[]
   privileges: SecurityIndexPrivilege[]
   query?: SecurityIndicesPrivilegesQuery[]
   allow_restricted_indices: boolean
@@ -17874,11 +17888,16 @@ export interface SecurityActivateUserProfileRequest extends RequestBase {
 
 export type SecurityActivateUserProfileResponse = SecurityUserProfileWithMetadata
 
+export interface SecurityAuthenticateAuthenticateApiKey {
+  id: Id
+  name?: Name
+}
+
 export interface SecurityAuthenticateRequest extends RequestBase {
 }
 
 export interface SecurityAuthenticateResponse {
-  api_key?: SecurityApiKey
+  api_key?: SecurityAuthenticateAuthenticateApiKey
   authentication_realm: SecurityRealmInfo
   email?: string | null
   full_name?: Name | null
@@ -18170,7 +18189,7 @@ export interface SecurityGetBuiltinPrivilegesRequest extends RequestBase {
 
 export interface SecurityGetBuiltinPrivilegesResponse {
   cluster: SecurityClusterPrivilege[]
-  index: IndexName[]
+  index: Indices
   remote_cluster: SecurityRemoteClusterPrivilege[]
 }
 
@@ -21252,6 +21271,7 @@ export interface SpecUtilsCommonCatQueryParameters {
   format?: string
   h?: Names
   help?: boolean
+  local?: boolean
   master_timeout?: Duration
   s?: Names
   v?: boolean
