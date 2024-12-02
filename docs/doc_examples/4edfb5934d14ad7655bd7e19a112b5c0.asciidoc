@@ -10,11 +10,6 @@ const response = await client.search({
       must: [
         {
           term: {
-            "category.keyword": "Main Course",
-          },
-        },
-        {
-          term: {
             tags: "vegetarian",
           },
         },
@@ -27,6 +22,11 @@ const response = await client.search({
         },
       ],
       should: [
+        {
+          term: {
+            category: "Main Course",
+          },
+        },
         {
           multi_match: {
             query: "curry spicy",

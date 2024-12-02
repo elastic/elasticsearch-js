@@ -3,8 +3,9 @@
 
 [source, js]
 ----
-const response = await client.searchApplication.renderQuery({
-  name: "my_search_application",
+const response = await client.transport.request({
+  method: "POST",
+  path: "/_application/search_application/my_search_application/_render_query",
   body: {
     params: {
       query_string: "rock climbing",
