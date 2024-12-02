@@ -15,6 +15,15 @@
       "labels": [
         "backport 8.x"
       ]
+    },
+    {
+      "matchPackageNames": [
+        "node"
+      ],
+      "matchManagers": [
+        "dockerfile"
+      ],
+      "enabled": false
     }
   ]
 }
