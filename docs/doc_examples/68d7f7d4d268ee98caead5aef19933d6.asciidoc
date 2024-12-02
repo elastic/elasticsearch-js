@@ -45,7 +45,7 @@ console.log(response);
 
 const response1 = await client.indices.putIndexTemplate({
   name: 2,
-  index_patterns: ["k8s*"],
+  index_patterns: ["k9s*"],
   composed_of: ["destination_template"],
   data_stream: {},
 });

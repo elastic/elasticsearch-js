@@ -9,7 +9,6 @@ const response = await client.indices.create({
     properties: {
       inference_field: {
         type: "semantic_text",
-        inference_id: "my-elser-endpoint",
       },
     },
   },
