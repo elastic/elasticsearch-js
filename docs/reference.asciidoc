@@ -818,6 +818,8 @@ Random by default.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+** *`allow_partial_search_results` (Optional, boolean)*: If `false`, creating a point in time request when a shard is missing or unavailable will throw an exception.
+If `true`, the point in time will contain all the shards that are available at the time of the request.
 
 [discrete]
 === ping
@@ -1560,6 +1562,8 @@ client.asyncSearch.status({ id })
 
 * *Request (object):*
 ** *`id` (string)*: A unique identifier for the async search.
+** *`keep_alive` (Optional, string | -1 | 0)*: Specifies how long the async search needs to be available.
+Ongoing async searches and any saved search results are deleted after this period.
 
 [discrete]
 ==== submit
@@ -1662,7 +1666,6 @@ A partial reduction is performed every time the coordinating node has received a
 ** *`pre_filter_shard_size` (Optional, number)*: The default value cannot be changed, which enforces the execution of a pre-filter roundtrip to retrieve statistics from each shard so that the ones that surely don’t hold any document matching the query get skipped.
 ** *`request_cache` (Optional, boolean)*: Specify if request cache should be used for this request or not, defaults to true
 ** *`routing` (Optional, string)*: A list of specific routing values
-** *`scroll` (Optional, string | -1 | 0)*
 ** *`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))*: Search operation type
 ** *`suggest_field` (Optional, string)*: Specifies which field to use for suggestions.
 ** *`suggest_mode` (Optional, Enum("missing" | "popular" | "always"))*: Specify suggest mode
@@ -1693,6 +1696,9 @@ client.autoscaling.deleteAutoscalingPolicy({ name })
 
 * *Request (object):*
 ** *`name` (string)*: the name of the autoscaling policy
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_autoscaling_capacity
@@ -1714,9 +1720,15 @@ Do not use this information to make autoscaling decisions.
 {ref}/autoscaling-get-autoscaling-capacity.html[Endpoint documentation]
 [source,ts]
 ----
-client.autoscaling.getAutoscalingCapacity()
+client.autoscaling.getAutoscalingCapacity({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_autoscaling_policy
@@ -1735,6 +1747,8 @@ client.autoscaling.getAutoscalingPolicy({ name })
 
 * *Request (object):*
 ** *`name` (string)*: the name of the autoscaling policy
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== put_autoscaling_policy
@@ -1754,6 +1768,9 @@ client.autoscaling.putAutoscalingPolicy({ name })
 * *Request (object):*
 ** *`name` (string)*: the name of the autoscaling policy
 ** *`policy` (Optional, { roles, deciders })*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 === cat

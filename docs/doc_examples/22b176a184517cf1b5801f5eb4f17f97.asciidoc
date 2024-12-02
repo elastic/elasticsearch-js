@@ -3,9 +3,8 @@
 
 [source, js]
 ----
-const response = await client.cluster.getSettings({
-  flat_settings: "true",
-  filter_path: "transient",
+const response = await client.indices.rollover({
+  alias: "datastream",
 });
 console.log(response);
 ----
