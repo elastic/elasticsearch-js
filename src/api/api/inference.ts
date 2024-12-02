@@ -46,7 +46,7 @@ export default class Inference {
 
   /**
     * Delete an inference endpoint
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-inference-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/delete-inference-api.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteResponse>
   async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceDeleteResponse, unknown>>
@@ -86,7 +86,7 @@ export default class Inference {
 
   /**
     * Get an inference endpoint
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-inference-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/get-inference-api.html | Elasticsearch API documentation}
     */
   async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetResponse>
   async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceGetResponse, unknown>>
@@ -130,7 +130,7 @@ export default class Inference {
 
   /**
     * Perform inference on the service
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/post-inference-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/post-inference-api.html | Elasticsearch API documentation}
     */
   async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceInferenceResponse>
   async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceInferenceResponse, unknown>>
@@ -182,7 +182,7 @@ export default class Inference {
 
   /**
     * Create an inference endpoint
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-inference-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/put-inference-api.html | Elasticsearch API documentation}
     */
   async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutResponse>
   async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutResponse, unknown>>
@@ -227,7 +227,7 @@ export default class Inference {
 
   /**
     * Perform streaming inference
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/post-stream-inference-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/post-stream-inference-api.html | Elasticsearch API documentation}
     */
   async streamInference (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async streamInference (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
