@@ -56,7 +56,7 @@
     "node": ">=18"
   },
   "devDependencies": {
-    "@elastic/request-converter": "8.16.1",
+    "@elastic/request-converter": "8.16.2",
     "@sinonjs/fake-timers": "github:sinonjs/fake-timers#0bfffc1",
     "@types/debug": "4.1.12",
     "@types/ms": "0.7.34",
