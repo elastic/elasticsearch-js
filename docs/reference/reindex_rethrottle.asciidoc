@@ -1,4 +1,5 @@
 [[reference-reindex_rethrottle]]
+== client.reindexRethrottle
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.reindexRethrottle]]
-== client.reindexRethrottle
+== `client.reindexRethrottle()`
 
 Throttle a reindex operation. Change the number of requests per second for a particular reindex operation.
 
 {ref}/docs-reindex.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(ReindexRethrottleRequest, options?): Promise<ReindexRethrottleResponse>
+(request: ReindexRethrottleRequest, options?: TransportRequestOptions) => Promise<ReindexRethrottleResponse>
 ----
 
 [discrete]
@@ -58,6 +61,7 @@ interface ReindexRethrottleRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -68,4 +72,5 @@ interface ReindexRethrottleResponse {
 }
 
 ----
+
 

@@ -1,4 +1,5 @@
 [[reference-delete_by_query]]
+== client.deleteByQuery
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.deleteByQuery]]
-== client.deleteByQuery
+== `client.deleteByQuery()`
 
 Delete documents. Deletes documents that match the specified query.
 
 {ref}/docs-delete-by-query.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(DeleteByQueryRequest, options?): Promise<DeleteByQueryResponse>
+(request: DeleteByQueryRequest, options?: TransportRequestOptions) => Promise<DeleteByQueryResponse>
 ----
 
 [discrete]
@@ -88,6 +91,7 @@ interface DeleteByQueryRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -113,4 +117,5 @@ interface DeleteByQueryResponse {
 }
 
 ----
+
 

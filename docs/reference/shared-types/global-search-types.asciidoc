@@ -1,6 +1,6 @@
-[[reference-shared-types--global-search-types]]
+[[reference-shared-types-global-search-types]]
 
-== `Search` types
+=== `Search` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[SearchAggregationBreakdown]]
-== SearchAggregationBreakdown
+=== SearchAggregationBreakdown
 
 [source,ts,subs=+macros]
 ----
@@ -57,9 +57,10 @@ interface SearchAggregationBreakdown {
 }
 ----
 
+
 [discrete]
 [[SearchAggregationProfile]]
-== SearchAggregationProfile
+=== SearchAggregationProfile
 
 [source,ts,subs=+macros]
 ----
@@ -73,9 +74,10 @@ interface SearchAggregationProfile {
 }
 ----
 
+
 [discrete]
 [[SearchAggregationProfileDebug]]
-== SearchAggregationProfileDebug
+=== SearchAggregationProfileDebug
 
 [source,ts,subs=+macros]
 ----
@@ -115,9 +117,10 @@ interface SearchAggregationProfileDebug {
 }
 ----
 
+
 [discrete]
 [[SearchAggregationProfileDelegateDebugFilter]]
-== SearchAggregationProfileDelegateDebugFilter
+=== SearchAggregationProfileDelegateDebugFilter
 
 [source,ts,subs=+macros]
 ----
@@ -129,18 +132,20 @@ interface SearchAggregationProfileDelegateDebugFilter {
 }
 ----
 
+
 [discrete]
 [[SearchBoundaryScanner]]
-== SearchBoundaryScanner
+=== SearchBoundaryScanner
 
 [source,ts,subs=+macros]
 ----
 type SearchBoundaryScanner = 'chars' | 'sentence' | 'word'
 ----
 
+
 [discrete]
 [[SearchCollector]]
-== SearchCollector
+=== SearchCollector
 
 [source,ts,subs=+macros]
 ----
@@ -152,9 +157,10 @@ interface SearchCollector {
 }
 ----
 
+
 [discrete]
 [[SearchCompletionContext]]
-== SearchCompletionContext
+=== SearchCompletionContext
 
 [source,ts,subs=+macros]
 ----
@@ -172,9 +178,10 @@ interface SearchCompletionContext {
 }
 ----
 
+
 [discrete]
 [[SearchCompletionSuggest]]
-== SearchCompletionSuggest
+=== SearchCompletionSuggest
 
 [source,ts,subs=+macros]
 ----
@@ -183,9 +190,10 @@ interface SearchCompletionSuggest<TDocument = unknown> extends <<SearchSuggestBa
 }
 ----
 
+
 [discrete]
 [[SearchCompletionSuggestOption]]
-== SearchCompletionSuggestOption
+=== SearchCompletionSuggestOption
 
 [source,ts,subs=+macros]
 ----
@@ -203,9 +211,10 @@ interface SearchCompletionSuggestOption<TDocument = unknown> {
 }
 ----
 
+
 [discrete]
 [[SearchCompletionSuggester]]
-== SearchCompletionSuggester
+=== SearchCompletionSuggester
 
 [source,ts,subs=+macros]
 ----
@@ -221,18 +230,20 @@ interface SearchCompletionSuggester extends <<SearchSuggesterBase>> {
 }
 ----
 
+
 [discrete]
 [[SearchContext]]
-== SearchContext
+=== SearchContext
 
 [source,ts,subs=+macros]
 ----
 type SearchContext = string | <<GeoLocation>>
 ----
 
+
 [discrete]
 [[SearchDfsKnnProfile]]
-== SearchDfsKnnProfile
+=== SearchDfsKnnProfile
 
 [source,ts,subs=+macros]
 ----
@@ -244,9 +255,10 @@ interface SearchDfsKnnProfile {
 }
 ----
 
+
 [discrete]
 [[SearchDfsProfile]]
-== SearchDfsProfile
+=== SearchDfsProfile
 
 [source,ts,subs=+macros]
 ----
@@ -256,9 +268,10 @@ interface SearchDfsProfile {
 }
 ----
 
+
 [discrete]
 [[SearchDfsStatisticsBreakdown]]
-== SearchDfsStatisticsBreakdown
+=== SearchDfsStatisticsBreakdown
 
 [source,ts,subs=+macros]
 ----
@@ -274,9 +287,10 @@ interface SearchDfsStatisticsBreakdown {
 }
 ----
 
+
 [discrete]
 [[SearchDfsStatisticsProfile]]
-== SearchDfsStatisticsProfile
+=== SearchDfsStatisticsProfile
 
 [source,ts,subs=+macros]
 ----
@@ -291,9 +305,10 @@ interface SearchDfsStatisticsProfile {
 }
 ----
 
+
 [discrete]
 [[SearchDirectGenerator]]
-== SearchDirectGenerator
+=== SearchDirectGenerator
 
 [source,ts,subs=+macros]
 ----
@@ -323,9 +338,10 @@ interface SearchDirectGenerator {
 }
 ----
 
+
 [discrete]
 [[SearchFetchProfile]]
-== SearchFetchProfile
+=== SearchFetchProfile
 
 [source,ts,subs=+macros]
 ----
@@ -339,9 +355,10 @@ interface SearchFetchProfile {
 }
 ----
 
+
 [discrete]
 [[SearchFetchProfileBreakdown]]
-== SearchFetchProfileBreakdown
+=== SearchFetchProfileBreakdown
 
 [source,ts,subs=+macros]
 ----
@@ -357,9 +374,10 @@ interface SearchFetchProfileBreakdown {
 }
 ----
 
+
 [discrete]
 [[SearchFetchProfileDebug]]
-== SearchFetchProfileDebug
+=== SearchFetchProfileDebug
 
 [source,ts,subs=+macros]
 ----
@@ -369,9 +387,10 @@ interface SearchFetchProfileDebug {
 }
 ----
 
+
 [discrete]
 [[SearchFieldCollapse]]
-== SearchFieldCollapse
+=== SearchFieldCollapse
 
 [source,ts,subs=+macros]
 ----
@@ -386,9 +405,10 @@ interface SearchFieldCollapse {
 }
 ----
 
+
 [discrete]
 [[SearchFieldSuggester]]
-== SearchFieldSuggester
+=== SearchFieldSuggester
 
 [source,ts,subs=+macros]
 ----
@@ -408,9 +428,10 @@ interface SearchFieldSuggester {
 }
 ----
 
+
 [discrete]
 [[SearchHighlight]]
-== SearchHighlight
+=== SearchHighlight
 
 [source,ts,subs=+macros]
 ----
@@ -420,9 +441,10 @@ interface SearchHighlight extends <<SearchHighlightBase>> {
 }
 ----
 
+
 [discrete]
 [[SearchHighlightBase]]
-== SearchHighlightBase
+=== SearchHighlightBase
 
 [source,ts,subs=+macros]
 ----
@@ -467,9 +489,10 @@ interface SearchHighlightBase {
 }
 ----
 
+
 [discrete]
 [[SearchHighlightField]]
-== SearchHighlightField
+=== SearchHighlightField
 
 [source,ts,subs=+macros]
 ----
@@ -479,54 +502,60 @@ interface SearchHighlightField extends <<SearchHighlightBase>> {
 }
 ----
 
+
 [discrete]
 [[SearchHighlighterEncoder]]
-== SearchHighlighterEncoder
+=== SearchHighlighterEncoder
 
 [source,ts,subs=+macros]
 ----
 type SearchHighlighterEncoder = 'default' | 'html'
 ----
 
+
 [discrete]
 [[SearchHighlighterFragmenter]]
-== SearchHighlighterFragmenter
+=== SearchHighlighterFragmenter
 
 [source,ts,subs=+macros]
 ----
 type SearchHighlighterFragmenter = 'simple' | 'span'
 ----
 
+
 [discrete]
 [[SearchHighlighterOrder]]
-== SearchHighlighterOrder
+=== SearchHighlighterOrder
 
 [source,ts,subs=+macros]
 ----
 type SearchHighlighterOrder = 'score'
 ----
 
+
 [discrete]
 [[SearchHighlighterTagsSchema]]
-== SearchHighlighterTagsSchema
+=== SearchHighlighterTagsSchema
 
 [source,ts,subs=+macros]
 ----
 type SearchHighlighterTagsSchema = 'styled'
 ----
 
+
 [discrete]
 [[SearchHighlighterType]]
-== SearchHighlighterType
+=== SearchHighlighterType
 
 [source,ts,subs=+macros]
 ----
 type SearchHighlighterType = 'plain' | 'fvh' | 'unified' | string
 ----
 
+
 [discrete]
 [[SearchHit]]
-== SearchHit
+=== SearchHit
 
 [source,ts,subs=+macros]
 ----
@@ -554,9 +583,10 @@ interface SearchHit<TDocument = unknown> {
 }
 ----
 
+
 [discrete]
 [[SearchHitsMetadata]]
-== SearchHitsMetadata
+=== SearchHitsMetadata
 
 [source,ts,subs=+macros]
 ----
@@ -568,9 +598,10 @@ interface SearchHitsMetadata<T = unknown> {
 }
 ----
 
+
 [discrete]
 [[SearchInnerHits]]
-== SearchInnerHits
+=== SearchInnerHits
 
 [source,ts,subs=+macros]
 ----
@@ -598,9 +629,10 @@ interface SearchInnerHits {
 }
 ----
 
+
 [discrete]
 [[SearchInnerHitsResult]]
-== SearchInnerHitsResult
+=== SearchInnerHitsResult
 
 [source,ts,subs=+macros]
 ----
@@ -609,9 +641,10 @@ interface SearchInnerHitsResult {
 }
 ----
 
+
 [discrete]
 [[SearchKnnCollectorResult]]
-== SearchKnnCollectorResult
+=== SearchKnnCollectorResult
 
 [source,ts,subs=+macros]
 ----
@@ -624,9 +657,10 @@ interface SearchKnnCollectorResult {
 }
 ----
 
+
 [discrete]
 [[SearchKnnQueryProfileBreakdown]]
-== SearchKnnQueryProfileBreakdown
+=== SearchKnnQueryProfileBreakdown
 
 [source,ts,subs=+macros]
 ----
@@ -654,9 +688,10 @@ interface SearchKnnQueryProfileBreakdown {
 }
 ----
 
+
 [discrete]
 [[SearchKnnQueryProfileResult]]
-== SearchKnnQueryProfileResult
+=== SearchKnnQueryProfileResult
 
 [source,ts,subs=+macros]
 ----
@@ -671,9 +706,10 @@ interface SearchKnnQueryProfileResult {
 }
 ----
 
+
 [discrete]
 [[SearchLaplaceSmoothingModel]]
-== SearchLaplaceSmoothingModel
+=== SearchLaplaceSmoothingModel
 
 [source,ts,subs=+macros]
 ----
@@ -683,9 +719,10 @@ interface SearchLaplaceSmoothingModel {
 }
 ----
 
+
 [discrete]
 [[SearchLearningToRank]]
-== SearchLearningToRank
+=== SearchLearningToRank
 
 [source,ts,subs=+macros]
 ----
@@ -697,9 +734,10 @@ interface SearchLearningToRank {
 }
 ----
 
+
 [discrete]
 [[SearchLinearInterpolationSmoothingModel]]
-== SearchLinearInterpolationSmoothingModel
+=== SearchLinearInterpolationSmoothingModel
 
 [source,ts,subs=+macros]
 ----
@@ -710,9 +748,10 @@ interface SearchLinearInterpolationSmoothingModel {
 }
 ----
 
+
 [discrete]
 [[SearchNestedIdentity]]
-== SearchNestedIdentity
+=== SearchNestedIdentity
 
 [source,ts,subs=+macros]
 ----
@@ -723,9 +762,10 @@ interface SearchNestedIdentity {
 }
 ----
 
+
 [discrete]
 [[SearchPhraseSuggest]]
-== SearchPhraseSuggest
+=== SearchPhraseSuggest
 
 [source,ts,subs=+macros]
 ----
@@ -734,9 +774,10 @@ interface SearchPhraseSuggest extends <<SearchSuggestBase>> {
 }
 ----
 
+
 [discrete]
 [[SearchPhraseSuggestCollate]]
-== SearchPhraseSuggestCollate
+=== SearchPhraseSuggestCollate
 
 [source,ts,subs=+macros]
 ----
@@ -750,9 +791,10 @@ interface SearchPhraseSuggestCollate {
 }
 ----
 
+
 [discrete]
 [[SearchPhraseSuggestCollateQuery]]
-== SearchPhraseSuggestCollateQuery
+=== SearchPhraseSuggestCollateQuery
 
 [source,ts,subs=+macros]
 ----
@@ -764,9 +806,10 @@ interface SearchPhraseSuggestCollateQuery {
 }
 ----
 
+
 [discrete]
 [[SearchPhraseSuggestHighlight]]
-== SearchPhraseSuggestHighlight
+=== SearchPhraseSuggestHighlight
 
 [source,ts,subs=+macros]
 ----
@@ -778,9 +821,10 @@ interface SearchPhraseSuggestHighlight {
 }
 ----
 
+
 [discrete]
 [[SearchPhraseSuggestOption]]
-== SearchPhraseSuggestOption
+=== SearchPhraseSuggestOption
 
 [source,ts,subs=+macros]
 ----
@@ -792,9 +836,10 @@ interface SearchPhraseSuggestOption {
 }
 ----
 
+
 [discrete]
 [[SearchPhraseSuggester]]
-== SearchPhraseSuggester
+=== SearchPhraseSuggester
 
 [source,ts,subs=+macros]
 ----
@@ -826,9 +871,10 @@ interface SearchPhraseSuggester extends <<SearchSuggesterBase>> {
 }
 ----
 
+
 [discrete]
 [[SearchPointInTimeReference]]
-== SearchPointInTimeReference
+=== SearchPointInTimeReference
 
 [source,ts,subs=+macros]
 ----
@@ -838,9 +884,10 @@ interface SearchPointInTimeReference {
 }
 ----
 
+
 [discrete]
 [[SearchProfile]]
-== SearchProfile
+=== SearchProfile
 
 [source,ts,subs=+macros]
 ----
@@ -849,9 +896,10 @@ interface SearchProfile {
 }
 ----
 
+
 [discrete]
 [[SearchQueryBreakdown]]
-== SearchQueryBreakdown
+=== SearchQueryBreakdown
 
 [source,ts,subs=+macros]
 ----
@@ -879,9 +927,10 @@ interface SearchQueryBreakdown {
 }
 ----
 
+
 [discrete]
 [[SearchQueryProfile]]
-== SearchQueryProfile
+=== SearchQueryProfile
 
 [source,ts,subs=+macros]
 ----
@@ -894,9 +943,10 @@ interface SearchQueryProfile {
 }
 ----
 
+
 [discrete]
 [[SearchRegexOptions]]
-== SearchRegexOptions
+=== SearchRegexOptions
 
 [source,ts,subs=+macros]
 ----
@@ -908,9 +958,10 @@ interface SearchRegexOptions {
 }
 ----
 
+
 [discrete]
 [[SearchRescore]]
-== SearchRescore
+=== SearchRescore
 
 [source,ts,subs=+macros]
 ----
@@ -921,9 +972,10 @@ interface SearchRescore {
 }
 ----
 
+
 [discrete]
 [[SearchRescoreQuery]]
-== SearchRescoreQuery
+=== SearchRescoreQuery
 
 [source,ts,subs=+macros]
 ----
@@ -939,18 +991,20 @@ interface SearchRescoreQuery {
 }
 ----
 
+
 [discrete]
 [[SearchScoreMode]]
-== SearchScoreMode
+=== SearchScoreMode
 
 [source,ts,subs=+macros]
 ----
 type SearchScoreMode = 'avg' | 'max' | 'min' | 'multiply' | 'total'
 ----
 
+
 [discrete]
 [[SearchSearchProfile]]
-== SearchSearchProfile
+=== SearchSearchProfile
 
 [source,ts,subs=+macros]
 ----
@@ -961,9 +1015,10 @@ interface SearchSearchProfile {
 }
 ----
 
+
 [discrete]
 [[SearchShardProfile]]
-== SearchShardProfile
+=== SearchShardProfile
 
 [source,ts,subs=+macros]
 ----
@@ -980,9 +1035,10 @@ interface SearchShardProfile {
 }
 ----
 
+
 [discrete]
 [[SearchSmoothingModelContainer]]
-== SearchSmoothingModelContainer
+=== SearchSmoothingModelContainer
 
 [source,ts,subs=+macros]
 ----
@@ -996,27 +1052,30 @@ interface SearchSmoothingModelContainer {
 }
 ----
 
+
 [discrete]
 [[SearchSourceConfig]]
-== SearchSourceConfig
+=== SearchSourceConfig
 
 [source,ts,subs=+macros]
 ----
 type SearchSourceConfig = boolean | <<SearchSourceFilter>> | <<Fields>>
 ----
 
+
 [discrete]
 [[SearchSourceConfigParam]]
-== SearchSourceConfigParam
+=== SearchSourceConfigParam
 
 [source,ts,subs=+macros]
 ----
 type SearchSourceConfigParam = boolean | <<Fields>>
 ----
 
+
 [discrete]
 [[SearchSourceFilter]]
-== SearchSourceFilter
+=== SearchSourceFilter
 
 [source,ts,subs=+macros]
 ----
@@ -1028,18 +1087,20 @@ interface SearchSourceFilter {
 }
 ----
 
+
 [discrete]
 [[SearchStringDistance]]
-== SearchStringDistance
+=== SearchStringDistance
 
 [source,ts,subs=+macros]
 ----
 type SearchStringDistance = 'internal' | 'damerau_levenshtein' | 'levenshtein' | 'jaro_winkler' | 'ngram'
 ----
 
+
 [discrete]
 [[SearchStupidBackoffSmoothingModel]]
-== SearchStupidBackoffSmoothingModel
+=== SearchStupidBackoffSmoothingModel
 
 [source,ts,subs=+macros]
 ----
@@ -1049,18 +1110,20 @@ interface SearchStupidBackoffSmoothingModel {
 }
 ----
 
+
 [discrete]
 [[SearchSuggest]]
-== SearchSuggest
+=== SearchSuggest
 
 [source,ts,subs=+macros]
 ----
 type SearchSuggest<TDocument = unknown> = <<SearchCompletionSuggest>><TDocument> | <<SearchPhraseSuggest>> | <<SearchTermSuggest>>
 ----
 
+
 [discrete]
 [[SearchSuggestBase]]
-== SearchSuggestBase
+=== SearchSuggestBase
 
 [source,ts,subs=+macros]
 ----
@@ -1071,9 +1134,10 @@ interface SearchSuggestBase {
 }
 ----
 
+
 [discrete]
 [[SearchSuggestFuzziness]]
-== SearchSuggestFuzziness
+=== SearchSuggestFuzziness
 
 [source,ts,subs=+macros]
 ----
@@ -1091,18 +1155,20 @@ interface SearchSuggestFuzziness {
 }
 ----
 
+
 [discrete]
 [[SearchSuggestSort]]
-== SearchSuggestSort
+=== SearchSuggestSort
 
 [source,ts,subs=+macros]
 ----
 type SearchSuggestSort = 'score' | 'frequency'
 ----
 
+
 [discrete]
 [[SearchSuggester]]
-== SearchSuggester
+=== SearchSuggester
 
 [source,ts,subs=+macros]
 ----
@@ -1113,9 +1179,10 @@ type SearchSuggester = SearchSuggesterKeys
   & { [property: string]: <<SearchFieldSuggester>> | string }
 ----
 
+
 [discrete]
 [[SearchSuggesterBase]]
-== SearchSuggesterBase
+=== SearchSuggesterBase
 
 [source,ts,subs=+macros]
 ----
@@ -1129,9 +1196,10 @@ interface SearchSuggesterBase {
 }
 ----
 
+
 [discrete]
 [[SearchTermSuggest]]
-== SearchTermSuggest
+=== SearchTermSuggest
 
 [source,ts,subs=+macros]
 ----
@@ -1140,9 +1208,10 @@ interface SearchTermSuggest extends <<SearchSuggestBase>> {
 }
 ----
 
+
 [discrete]
 [[SearchTermSuggestOption]]
-== SearchTermSuggestOption
+=== SearchTermSuggestOption
 
 [source,ts,subs=+macros]
 ----
@@ -1155,9 +1224,10 @@ interface SearchTermSuggestOption {
 }
 ----
 
+
 [discrete]
 [[SearchTermSuggester]]
-== SearchTermSuggester
+=== SearchTermSuggester
 
 [source,ts,subs=+macros]
 ----
@@ -1188,9 +1258,10 @@ interface SearchTermSuggester extends <<SearchSuggesterBase>> {
 }
 ----
 
+
 [discrete]
 [[SearchTotalHits]]
-== SearchTotalHits
+=== SearchTotalHits
 
 [source,ts,subs=+macros]
 ----
@@ -1200,21 +1271,24 @@ interface SearchTotalHits {
 }
 ----
 
+
 [discrete]
 [[SearchTotalHitsRelation]]
-== SearchTotalHitsRelation
+=== SearchTotalHitsRelation
 
 [source,ts,subs=+macros]
 ----
 type SearchTotalHitsRelation = 'eq' | 'gte'
 ----
 
+
 [discrete]
 [[SearchTrackHits]]
-== SearchTrackHits
+=== SearchTrackHits
 
 [source,ts,subs=+macros]
 ----
 type SearchTrackHits = boolean | <<integer>>
 ----
+
 

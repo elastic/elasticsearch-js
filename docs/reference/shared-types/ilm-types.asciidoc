@@ -1,6 +1,6 @@
 [[reference-shared-types-ilm-types]]
 
-== `Ilm` types
+=== `Ilm` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[IlmActions]]
-== IlmActions
+=== IlmActions
 
 [source,ts,subs=+macros]
 ----
@@ -71,9 +71,10 @@ interface IlmActions {
 }
 ----
 
+
 [discrete]
 [[IlmAllocateAction]]
-== IlmAllocateAction
+=== IlmAllocateAction
 
 [source,ts,subs=+macros]
 ----
@@ -86,9 +87,10 @@ interface IlmAllocateAction {
 }
 ----
 
+
 [discrete]
 [[IlmDeleteAction]]
-== IlmDeleteAction
+=== IlmDeleteAction
 
 [source,ts,subs=+macros]
 ----
@@ -97,9 +99,10 @@ interface IlmDeleteAction {
 }
 ----
 
+
 [discrete]
 [[IlmDownsampleAction]]
-== IlmDownsampleAction
+=== IlmDownsampleAction
 
 [source,ts,subs=+macros]
 ----
@@ -109,9 +112,10 @@ interface IlmDownsampleAction {
 }
 ----
 
+
 [discrete]
 [[IlmForceMergeAction]]
-== IlmForceMergeAction
+=== IlmForceMergeAction
 
 [source,ts,subs=+macros]
 ----
@@ -121,9 +125,10 @@ interface IlmForceMergeAction {
 }
 ----
 
+
 [discrete]
 [[IlmMigrateAction]]
-== IlmMigrateAction
+=== IlmMigrateAction
 
 [source,ts,subs=+macros]
 ----
@@ -132,9 +137,10 @@ interface IlmMigrateAction {
 }
 ----
 
+
 [discrete]
 [[IlmPhase]]
-== IlmPhase
+=== IlmPhase
 
 [source,ts,subs=+macros]
 ----
@@ -144,9 +150,10 @@ interface IlmPhase {
 }
 ----
 
+
 [discrete]
 [[IlmPhases]]
-== IlmPhases
+=== IlmPhases
 
 [source,ts,subs=+macros]
 ----
@@ -159,9 +166,10 @@ interface IlmPhases {
 }
 ----
 
+
 [discrete]
 [[IlmPolicy]]
-== IlmPolicy
+=== IlmPolicy
 
 [source,ts,subs=+macros]
 ----
@@ -171,9 +179,10 @@ interface IlmPolicy {
 }
 ----
 
+
 [discrete]
 [[IlmRolloverAction]]
-== IlmRolloverAction
+=== IlmRolloverAction
 
 [source,ts,subs=+macros]
 ----
@@ -191,9 +200,10 @@ interface IlmRolloverAction {
 }
 ----
 
+
 [discrete]
 [[IlmSearchableSnapshotAction]]
-== IlmSearchableSnapshotAction
+=== IlmSearchableSnapshotAction
 
 [source,ts,subs=+macros]
 ----
@@ -203,9 +213,10 @@ interface IlmSearchableSnapshotAction {
 }
 ----
 
+
 [discrete]
 [[IlmSetPriorityAction]]
-== IlmSetPriorityAction
+=== IlmSetPriorityAction
 
 [source,ts,subs=+macros]
 ----
@@ -214,9 +225,10 @@ interface IlmSetPriorityAction {
 }
 ----
 
+
 [discrete]
 [[IlmShrinkAction]]
-== IlmShrinkAction
+=== IlmShrinkAction
 
 [source,ts,subs=+macros]
 ----
@@ -227,9 +239,10 @@ interface IlmShrinkAction {
 }
 ----
 
+
 [discrete]
 [[IlmWaitForSnapshotAction]]
-== IlmWaitForSnapshotAction
+=== IlmWaitForSnapshotAction
 
 [source,ts,subs=+macros]
 ----
@@ -237,4 +250,5 @@ interface IlmWaitForSnapshotAction {
   policy: string
 }
 ----
+
 

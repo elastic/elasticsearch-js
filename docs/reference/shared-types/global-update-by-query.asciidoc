@@ -1,6 +1,6 @@
-[[reference-shared-types--global-update-by-query]]
+[[reference-shared-types-global-update-by-query]]
 
-== UpdateByQuery
+=== `UpdateByQuery` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[UpdateByQueryRequest]]
-=== UpdateByQueryRequest
+==== UpdateByQueryRequest
 
 [source,ts,subs=+macros]
 ----
@@ -81,9 +80,10 @@ interface UpdateByQueryRequest extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[UpdateByQueryResponse]]
-=== UpdateByQueryResponse
+==== UpdateByQueryResponse
 
 [source,ts,subs=+macros]
 ----
@@ -106,4 +106,5 @@ interface UpdateByQueryResponse {
   throttled_until_millis?: <<DurationValue>><<<UnitMillis>>>
 }
 ----
+
 

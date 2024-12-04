@@ -1,6 +1,6 @@
-[[reference-shared-types--global-knn-search-types]]
+[[reference-shared-types-global-knn-search-types]]
 
-== `KnnSearch` types
+=== `KnnSearch` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[KnnSearchQuery]]
-== KnnSearchQuery
+=== KnnSearchQuery
 
 [source,ts,subs=+macros]
 ----
@@ -52,4 +52,5 @@ interface KnnSearchQuery {
   num_candidates: <<integer>>
 }
 ----
+
 

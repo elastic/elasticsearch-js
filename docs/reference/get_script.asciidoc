@@ -1,4 +1,5 @@
 [[reference-get_script]]
+== client.getScript
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.getScript]]
-== client.getScript
+== `client.getScript()`
 
 Get a script or search template. Retrieves a stored script or search template.
 
 {ref}/modules-scripting.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(GetScriptRequest, options?): Promise<GetScriptResponse>
+(request: GetScriptRequest, options?: TransportRequestOptions) => Promise<GetScriptResponse>
 ----
 
 [discrete]
@@ -58,6 +61,7 @@ interface GetScriptRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -70,4 +74,5 @@ interface GetScriptResponse {
 }
 
 ----
+
 

@@ -1,4 +1,5 @@
 [[reference-termvectors]]
+== client.termvectors
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.termvectors]]
-== client.termvectors
+== `client.termvectors()`
 
 Get term vector information. Get information and statistics about terms in the fields of a particular document.
 
 {ref}/docs-termvectors.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(TermvectorsRequest, options?): Promise<TermvectorsResponse>
+(request: TermvectorsRequest, options?: TransportRequestOptions) => Promise<TermvectorsResponse>
 ----
 
 [discrete]
@@ -72,6 +75,7 @@ interface TermvectorsRequest<TDocument = unknown> extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -87,4 +91,5 @@ interface TermvectorsResponse {
 }
 
 ----
+
 

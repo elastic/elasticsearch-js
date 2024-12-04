@@ -1,6 +1,6 @@
 [[reference-shared-types-autoscaling-types]]
 
-== `Autoscaling` types
+=== `Autoscaling` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[AutoscalingAutoscalingPolicy]]
-== AutoscalingAutoscalingPolicy
+=== AutoscalingAutoscalingPolicy
 
 [source,ts,subs=+macros]
 ----
@@ -47,4 +47,5 @@ interface AutoscalingAutoscalingPolicy {
   deciders: Record<string, any>
 }
 ----
+
 

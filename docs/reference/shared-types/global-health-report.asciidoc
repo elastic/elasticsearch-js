@@ -1,6 +1,6 @@
-[[reference-shared-types--global-health-report]]
+[[reference-shared-types-global-health-report]]
 
-== HealthReport
+=== `HealthReport` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[HealthReportBaseIndicator]]
-=== HealthReportBaseIndicator
+==== HealthReportBaseIndicator
 
 [source,ts,subs=+macros]
 ----
@@ -50,9 +49,10 @@ interface HealthReportBaseIndicator {
 }
 ----
 
+
 [discrete]
 [[HealthReportDataStreamLifecycleDetails]]
-=== HealthReportDataStreamLifecycleDetails
+==== HealthReportDataStreamLifecycleDetails
 
 [source,ts,subs=+macros]
 ----
@@ -63,9 +63,10 @@ interface HealthReportDataStreamLifecycleDetails {
 }
 ----
 
+
 [discrete]
 [[HealthReportDataStreamLifecycleIndicator]]
-=== HealthReportDataStreamLifecycleIndicator
+==== HealthReportDataStreamLifecycleIndicator
 
 [source,ts,subs=+macros]
 ----
@@ -74,9 +75,10 @@ interface HealthReportDataStreamLifecycleIndicator extends <<HealthReportBaseInd
 }
 ----
 
+
 [discrete]
 [[HealthReportDiagnosis]]
-=== HealthReportDiagnosis
+==== HealthReportDiagnosis
 
 [source,ts,subs=+macros]
 ----
@@ -89,9 +91,10 @@ interface HealthReportDiagnosis {
 }
 ----
 
+
 [discrete]
 [[HealthReportDiagnosisAffectedResources]]
-=== HealthReportDiagnosisAffectedResources
+==== HealthReportDiagnosisAffectedResources
 
 [source,ts,subs=+macros]
 ----
@@ -104,9 +107,10 @@ interface HealthReportDiagnosisAffectedResources {
 }
 ----
 
+
 [discrete]
 [[HealthReportDiskIndicator]]
-=== HealthReportDiskIndicator
+==== HealthReportDiskIndicator
 
 [source,ts,subs=+macros]
 ----
@@ -115,9 +119,10 @@ interface HealthReportDiskIndicator extends <<HealthReportBaseIndicator>> {
 }
 ----
 
+
 [discrete]
 [[HealthReportDiskIndicatorDetails]]
-=== HealthReportDiskIndicatorDetails
+==== HealthReportDiskIndicatorDetails
 
 [source,ts,subs=+macros]
 ----
@@ -130,9 +135,10 @@ interface HealthReportDiskIndicatorDetails {
 }
 ----
 
+
 [discrete]
 [[HealthReportIlmIndicator]]
-=== HealthReportIlmIndicator
+==== HealthReportIlmIndicator
 
 [source,ts,subs=+macros]
 ----
@@ -141,9 +147,10 @@ interface HealthReportIlmIndicator extends <<HealthReportBaseIndicator>> {
 }
 ----
 
+
 [discrete]
 [[HealthReportIlmIndicatorDetails]]
-=== HealthReportIlmIndicatorDetails
+==== HealthReportIlmIndicatorDetails
 
 [source,ts,subs=+macros]
 ----
@@ -154,9 +161,10 @@ interface HealthReportIlmIndicatorDetails {
 }
 ----
 
+
 [discrete]
 [[HealthReportImpact]]
-=== HealthReportImpact
+==== HealthReportImpact
 
 [source,ts,subs=+macros]
 ----
@@ -168,27 +176,30 @@ interface HealthReportImpact {
 }
 ----
 
+
 [discrete]
 [[HealthReportImpactArea]]
-=== HealthReportImpactArea
+==== HealthReportImpactArea
 
 [source,ts,subs=+macros]
 ----
 type HealthReportImpactArea = 'search' | 'ingest' | 'backup' | 'deployment_management'
 ----
 
+
 [discrete]
 [[HealthReportIndicatorHealthStatus]]
-=== HealthReportIndicatorHealthStatus
+==== HealthReportIndicatorHealthStatus
 
 [source,ts,subs=+macros]
 ----
 type HealthReportIndicatorHealthStatus = 'green' | 'yellow' | 'red' | 'unknown'
 ----
 
+
 [discrete]
 [[HealthReportIndicatorNode]]
-=== HealthReportIndicatorNode
+==== HealthReportIndicatorNode
 
 [source,ts,subs=+macros]
 ----
@@ -198,9 +209,10 @@ interface HealthReportIndicatorNode {
 }
 ----
 
+
 [discrete]
 [[HealthReportIndicators]]
-=== HealthReportIndicators
+==== HealthReportIndicators
 
 [source,ts,subs=+macros]
 ----
@@ -216,9 +228,10 @@ interface HealthReportIndicators {
 }
 ----
 
+
 [discrete]
 [[HealthReportMasterIsStableIndicator]]
-=== HealthReportMasterIsStableIndicator
+==== HealthReportMasterIsStableIndicator
 
 [source,ts,subs=+macros]
 ----
@@ -227,9 +240,10 @@ interface HealthReportMasterIsStableIndicator extends <<HealthReportBaseIndicato
 }
 ----
 
+
 [discrete]
 [[HealthReportMasterIsStableIndicatorClusterFormationNode]]
-=== HealthReportMasterIsStableIndicatorClusterFormationNode
+==== HealthReportMasterIsStableIndicatorClusterFormationNode
 
 [source,ts,subs=+macros]
 ----
@@ -240,9 +254,10 @@ interface HealthReportMasterIsStableIndicatorClusterFormationNode {
 }
 ----
 
+
 [discrete]
 [[HealthReportMasterIsStableIndicatorDetails]]
-=== HealthReportMasterIsStableIndicatorDetails
+==== HealthReportMasterIsStableIndicatorDetails
 
 [source,ts,subs=+macros]
 ----
@@ -254,9 +269,10 @@ interface HealthReportMasterIsStableIndicatorDetails {
 }
 ----
 
+
 [discrete]
 [[HealthReportMasterIsStableIndicatorExceptionFetchingHistory]]
-=== HealthReportMasterIsStableIndicatorExceptionFetchingHistory
+==== HealthReportMasterIsStableIndicatorExceptionFetchingHistory
 
 [source,ts,subs=+macros]
 ----
@@ -266,9 +282,10 @@ interface HealthReportMasterIsStableIndicatorExceptionFetchingHistory {
 }
 ----
 
+
 [discrete]
 [[HealthReportRepositoryIntegrityIndicator]]
-=== HealthReportRepositoryIntegrityIndicator
+==== HealthReportRepositoryIntegrityIndicator
 
 [source,ts,subs=+macros]
 ----
@@ -277,9 +294,10 @@ interface HealthReportRepositoryIntegrityIndicator extends <<HealthReportBaseInd
 }
 ----
 
+
 [discrete]
 [[HealthReportRepositoryIntegrityIndicatorDetails]]
-=== HealthReportRepositoryIntegrityIndicatorDetails
+==== HealthReportRepositoryIntegrityIndicatorDetails
 
 [source,ts,subs=+macros]
 ----
@@ -290,9 +308,10 @@ interface HealthReportRepositoryIntegrityIndicatorDetails {
 }
 ----
 
+
 [discrete]
 [[HealthReportRequest]]
-=== HealthReportRequest
+==== HealthReportRequest
 
 [source,ts,subs=+macros]
 ----
@@ -304,9 +323,10 @@ interface HealthReportRequest extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[HealthReportResponse]]
-=== HealthReportResponse
+==== HealthReportResponse
 
 [source,ts,subs=+macros]
 ----
@@ -317,9 +337,10 @@ interface HealthReportResponse {
 }
 ----
 
+
 [discrete]
 [[HealthReportShardsAvailabilityIndicator]]
-=== HealthReportShardsAvailabilityIndicator
+==== HealthReportShardsAvailabilityIndicator
 
 [source,ts,subs=+macros]
 ----
@@ -328,9 +349,10 @@ interface HealthReportShardsAvailabilityIndicator extends <<HealthReportBaseIndi
 }
 ----
 
+
 [discrete]
 [[HealthReportShardsAvailabilityIndicatorDetails]]
-=== HealthReportShardsAvailabilityIndicatorDetails
+==== HealthReportShardsAvailabilityIndicatorDetails
 
 [source,ts,subs=+macros]
 ----
@@ -348,9 +370,10 @@ interface HealthReportShardsAvailabilityIndicatorDetails {
 }
 ----
 
+
 [discrete]
 [[HealthReportShardsCapacityIndicator]]
-=== HealthReportShardsCapacityIndicator
+==== HealthReportShardsCapacityIndicator
 
 [source,ts,subs=+macros]
 ----
@@ -359,9 +382,10 @@ interface HealthReportShardsCapacityIndicator extends <<HealthReportBaseIndicato
 }
 ----
 
+
 [discrete]
 [[HealthReportShardsCapacityIndicatorDetails]]
-=== HealthReportShardsCapacityIndicatorDetails
+==== HealthReportShardsCapacityIndicatorDetails
 
 [source,ts,subs=+macros]
 ----
@@ -371,9 +395,10 @@ interface HealthReportShardsCapacityIndicatorDetails {
 }
 ----
 
+
 [discrete]
 [[HealthReportShardsCapacityIndicatorTierDetail]]
-=== HealthReportShardsCapacityIndicatorTierDetail
+==== HealthReportShardsCapacityIndicatorTierDetail
 
 [source,ts,subs=+macros]
 ----
@@ -383,9 +408,10 @@ interface HealthReportShardsCapacityIndicatorTierDetail {
 }
 ----
 
+
 [discrete]
 [[HealthReportSlmIndicator]]
-=== HealthReportSlmIndicator
+==== HealthReportSlmIndicator
 
 [source,ts,subs=+macros]
 ----
@@ -394,9 +420,10 @@ interface HealthReportSlmIndicator extends <<HealthReportBaseIndicator>> {
 }
 ----
 
+
 [discrete]
 [[HealthReportSlmIndicatorDetails]]
-=== HealthReportSlmIndicatorDetails
+==== HealthReportSlmIndicatorDetails
 
 [source,ts,subs=+macros]
 ----
@@ -407,9 +434,10 @@ interface HealthReportSlmIndicatorDetails {
 }
 ----
 
+
 [discrete]
 [[HealthReportSlmIndicatorUnhealthyPolicies]]
-=== HealthReportSlmIndicatorUnhealthyPolicies
+==== HealthReportSlmIndicatorUnhealthyPolicies
 
 [source,ts,subs=+macros]
 ----
@@ -419,9 +447,10 @@ interface HealthReportSlmIndicatorUnhealthyPolicies {
 }
 ----
 
+
 [discrete]
 [[HealthReportStagnatingBackingIndices]]
-=== HealthReportStagnatingBackingIndices
+==== HealthReportStagnatingBackingIndices
 
 [source,ts,subs=+macros]
 ----
@@ -431,4 +460,5 @@ interface HealthReportStagnatingBackingIndices {
   retry_count: <<integer>>
 }
 ----
+
 

@@ -1,6 +1,6 @@
 [[reference-shared-types-esql-types]]
 
-== `Esql` types
+=== `Esql` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[EsqlTableValuesContainer]]
-== EsqlTableValuesContainer
+=== EsqlTableValuesContainer
 
 [source,ts,subs=+macros]
 ----
@@ -49,39 +49,44 @@ interface EsqlTableValuesContainer {
 }
 ----
 
+
 [discrete]
 [[EsqlTableValuesIntegerValue]]
-== EsqlTableValuesIntegerValue
+=== EsqlTableValuesIntegerValue
 
 [source,ts,subs=+macros]
 ----
 type EsqlTableValuesIntegerValue = <<integer>> | <<integer>>[]
 ----
 
+
 [discrete]
 [[EsqlTableValuesKeywordValue]]
-== EsqlTableValuesKeywordValue
+=== EsqlTableValuesKeywordValue
 
 [source,ts,subs=+macros]
 ----
 type EsqlTableValuesKeywordValue = string | string[]
 ----
 
+
 [discrete]
 [[EsqlTableValuesLongDouble]]
-== EsqlTableValuesLongDouble
+=== EsqlTableValuesLongDouble
 
 [source,ts,subs=+macros]
 ----
 type EsqlTableValuesLongDouble = <<double>> | <<double>>[]
 ----
 
+
 [discrete]
 [[EsqlTableValuesLongValue]]
-== EsqlTableValuesLongValue
+=== EsqlTableValuesLongValue
 
 [source,ts,subs=+macros]
 ----
 type EsqlTableValuesLongValue = <<long>> | <<long>>[]
 ----
+
 

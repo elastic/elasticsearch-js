@@ -1,6 +1,6 @@
 [[reference-shared-types-connector-types]]
 
-== `Connector` types
+=== `Connector` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[ConnectorConnector]]
-== ConnectorConnector
+=== ConnectorConnector
 
 [source,ts,subs=+macros]
 ----
@@ -75,9 +75,10 @@ interface ConnectorConnector {
 }
 ----
 
+
 [discrete]
 [[ConnectorConnectorConfigProperties]]
-== ConnectorConnectorConfigProperties
+=== ConnectorConnectorConfigProperties
 
 [source,ts,subs=+macros]
 ----
@@ -100,27 +101,30 @@ interface ConnectorConnectorConfigProperties {
 }
 ----
 
+
 [discrete]
 [[ConnectorConnectorConfiguration]]
-== ConnectorConnectorConfiguration
+=== ConnectorConnectorConfiguration
 
 [source,ts,subs=+macros]
 ----
 type ConnectorConnectorConfiguration = Record<string, <<ConnectorConnectorConfigProperties>>>
 ----
 
+
 [discrete]
 [[ConnectorConnectorCustomScheduling]]
-== ConnectorConnectorCustomScheduling
+=== ConnectorConnectorCustomScheduling
 
 [source,ts,subs=+macros]
 ----
 type ConnectorConnectorCustomScheduling = Record<string, <<ConnectorCustomScheduling>>>
 ----
 
+
 [discrete]
 [[ConnectorConnectorFeatures]]
-== ConnectorConnectorFeatures
+=== ConnectorConnectorFeatures
 
 [source,ts,subs=+macros]
 ----
@@ -132,18 +136,20 @@ interface ConnectorConnectorFeatures {
 }
 ----
 
+
 [discrete]
 [[ConnectorConnectorFieldType]]
-== ConnectorConnectorFieldType
+=== ConnectorConnectorFieldType
 
 [source,ts,subs=+macros]
 ----
 type ConnectorConnectorFieldType = 'str' | 'int' | 'list' | 'bool'
 ----
 
+
 [discrete]
 [[ConnectorConnectorScheduling]]
-== ConnectorConnectorScheduling
+=== ConnectorConnectorScheduling
 
 [source,ts,subs=+macros]
 ----
@@ -154,18 +160,20 @@ interface ConnectorConnectorScheduling {
 }
 ----
 
+
 [discrete]
 [[ConnectorConnectorStatus]]
-== ConnectorConnectorStatus
+=== ConnectorConnectorStatus
 
 [source,ts,subs=+macros]
 ----
 type ConnectorConnectorStatus = 'created' | 'needs_configuration' | 'configured' | 'connected' | 'error'
 ----
 
+
 [discrete]
 [[ConnectorConnectorSyncJob]]
-== ConnectorConnectorSyncJob
+=== ConnectorConnectorSyncJob
 
 [source,ts,subs=+macros]
 ----
@@ -191,9 +199,10 @@ interface ConnectorConnectorSyncJob {
 }
 ----
 
+
 [discrete]
 [[ConnectorCustomScheduling]]
-== ConnectorCustomScheduling
+=== ConnectorCustomScheduling
 
 [source,ts,subs=+macros]
 ----
@@ -206,9 +215,10 @@ interface ConnectorCustomScheduling {
 }
 ----
 
+
 [discrete]
 [[ConnectorCustomSchedulingConfigurationOverrides]]
-== ConnectorCustomSchedulingConfigurationOverrides
+=== ConnectorCustomSchedulingConfigurationOverrides
 
 [source,ts,subs=+macros]
 ----
@@ -221,9 +231,10 @@ interface ConnectorCustomSchedulingConfigurationOverrides {
 }
 ----
 
+
 [discrete]
 [[ConnectorDependency]]
-== ConnectorDependency
+=== ConnectorDependency
 
 [source,ts,subs=+macros]
 ----
@@ -233,18 +244,20 @@ interface ConnectorDependency {
 }
 ----
 
+
 [discrete]
 [[ConnectorDisplayType]]
-== ConnectorDisplayType
+=== ConnectorDisplayType
 
 [source,ts,subs=+macros]
 ----
 type ConnectorDisplayType = 'textbox' | 'textarea' | 'numeric' | 'toggle' | 'dropdown'
 ----
 
+
 [discrete]
 [[ConnectorFeatureEnabled]]
-== ConnectorFeatureEnabled
+=== ConnectorFeatureEnabled
 
 [source,ts,subs=+macros]
 ----
@@ -253,9 +266,10 @@ interface ConnectorFeatureEnabled {
 }
 ----
 
+
 [discrete]
 [[ConnectorFilteringAdvancedSnippet]]
-== ConnectorFilteringAdvancedSnippet
+=== ConnectorFilteringAdvancedSnippet
 
 [source,ts,subs=+macros]
 ----
@@ -266,9 +280,10 @@ interface ConnectorFilteringAdvancedSnippet {
 }
 ----
 
+
 [discrete]
 [[ConnectorFilteringConfig]]
-== ConnectorFilteringConfig
+=== ConnectorFilteringConfig
 
 [source,ts,subs=+macros]
 ----
@@ -279,18 +294,20 @@ interface ConnectorFilteringConfig {
 }
 ----
 
+
 [discrete]
 [[ConnectorFilteringPolicy]]
-== ConnectorFilteringPolicy
+=== ConnectorFilteringPolicy
 
 [source,ts,subs=+macros]
 ----
 type ConnectorFilteringPolicy = 'exclude' | 'include'
 ----
 
+
 [discrete]
 [[ConnectorFilteringRule]]
-== ConnectorFilteringRule
+=== ConnectorFilteringRule
 
 [source,ts,subs=+macros]
 ----
@@ -306,18 +323,20 @@ interface ConnectorFilteringRule {
 }
 ----
 
+
 [discrete]
 [[ConnectorFilteringRuleRule]]
-== ConnectorFilteringRuleRule
+=== ConnectorFilteringRuleRule
 
 [source,ts,subs=+macros]
 ----
 type ConnectorFilteringRuleRule = 'contains' | 'ends_with' | 'equals' | 'regex' | 'starts_with' | '>' | '<'
 ----
 
+
 [discrete]
 [[ConnectorFilteringRules]]
-== ConnectorFilteringRules
+=== ConnectorFilteringRules
 
 [source,ts,subs=+macros]
 ----
@@ -328,9 +347,10 @@ interface ConnectorFilteringRules {
 }
 ----
 
+
 [discrete]
 [[ConnectorFilteringRulesValidation]]
-== ConnectorFilteringRulesValidation
+=== ConnectorFilteringRulesValidation
 
 [source,ts,subs=+macros]
 ----
@@ -340,9 +360,10 @@ interface ConnectorFilteringRulesValidation {
 }
 ----
 
+
 [discrete]
 [[ConnectorFilteringValidation]]
-== ConnectorFilteringValidation
+=== ConnectorFilteringValidation
 
 [source,ts,subs=+macros]
 ----
@@ -352,18 +373,20 @@ interface ConnectorFilteringValidation {
 }
 ----
 
+
 [discrete]
 [[ConnectorFilteringValidationState]]
-== ConnectorFilteringValidationState
+=== ConnectorFilteringValidationState
 
 [source,ts,subs=+macros]
 ----
 type ConnectorFilteringValidationState = 'edited' | 'invalid' | 'valid'
 ----
 
+
 [discrete]
 [[ConnectorGreaterThanValidation]]
-== ConnectorGreaterThanValidation
+=== ConnectorGreaterThanValidation
 
 [source,ts,subs=+macros]
 ----
@@ -373,9 +396,10 @@ interface ConnectorGreaterThanValidation {
 }
 ----
 
+
 [discrete]
 [[ConnectorIncludedInValidation]]
-== ConnectorIncludedInValidation
+=== ConnectorIncludedInValidation
 
 [source,ts,subs=+macros]
 ----
@@ -385,9 +409,10 @@ interface ConnectorIncludedInValidation {
 }
 ----
 
+
 [discrete]
 [[ConnectorIngestPipelineParams]]
-== ConnectorIngestPipelineParams
+=== ConnectorIngestPipelineParams
 
 [source,ts,subs=+macros]
 ----
@@ -399,9 +424,10 @@ interface ConnectorIngestPipelineParams {
 }
 ----
 
+
 [discrete]
 [[ConnectorLessThanValidation]]
-== ConnectorLessThanValidation
+=== ConnectorLessThanValidation
 
 [source,ts,subs=+macros]
 ----
@@ -411,9 +437,10 @@ interface ConnectorLessThanValidation {
 }
 ----
 
+
 [discrete]
 [[ConnectorListTypeValidation]]
-== ConnectorListTypeValidation
+=== ConnectorListTypeValidation
 
 [source,ts,subs=+macros]
 ----
@@ -423,9 +450,10 @@ interface ConnectorListTypeValidation {
 }
 ----
 
+
 [discrete]
 [[ConnectorRegexValidation]]
-== ConnectorRegexValidation
+=== ConnectorRegexValidation
 
 [source,ts,subs=+macros]
 ----
@@ -435,9 +463,10 @@ interface ConnectorRegexValidation {
 }
 ----
 
+
 [discrete]
 [[ConnectorSchedulingConfiguration]]
-== ConnectorSchedulingConfiguration
+=== ConnectorSchedulingConfiguration
 
 [source,ts,subs=+macros]
 ----
@@ -448,9 +477,10 @@ interface ConnectorSchedulingConfiguration {
 }
 ----
 
+
 [discrete]
 [[ConnectorSelectOption]]
-== ConnectorSelectOption
+=== ConnectorSelectOption
 
 [source,ts,subs=+macros]
 ----
@@ -460,9 +490,10 @@ interface ConnectorSelectOption {
 }
 ----
 
+
 [discrete]
 [[ConnectorSyncJobConnectorReference]]
-== ConnectorSyncJobConnectorReference
+=== ConnectorSyncJobConnectorReference
 
 [source,ts,subs=+macros]
 ----
@@ -478,27 +509,30 @@ interface ConnectorSyncJobConnectorReference {
 }
 ----
 
+
 [discrete]
 [[ConnectorSyncJobTriggerMethod]]
-== ConnectorSyncJobTriggerMethod
+=== ConnectorSyncJobTriggerMethod
 
 [source,ts,subs=+macros]
 ----
 type ConnectorSyncJobTriggerMethod = 'on_demand' | 'scheduled'
 ----
 
+
 [discrete]
 [[ConnectorSyncJobType]]
-== ConnectorSyncJobType
+=== ConnectorSyncJobType
 
 [source,ts,subs=+macros]
 ----
 type ConnectorSyncJobType = 'full' | 'incremental' | 'access_control'
 ----
 
+
 [discrete]
 [[ConnectorSyncRulesFeature]]
-== ConnectorSyncRulesFeature
+=== ConnectorSyncRulesFeature
 
 [source,ts,subs=+macros]
 ----
@@ -508,21 +542,24 @@ interface ConnectorSyncRulesFeature {
 }
 ----
 
+
 [discrete]
 [[ConnectorSyncStatus]]
-== ConnectorSyncStatus
+=== ConnectorSyncStatus
 
 [source,ts,subs=+macros]
 ----
 type ConnectorSyncStatus = 'canceling' | 'canceled' | 'completed' | 'error' | 'in_progress' | 'pending' | 'suspended'
 ----
 
+
 [discrete]
 [[ConnectorValidation]]
-== ConnectorValidation
+=== ConnectorValidation
 
 [source,ts,subs=+macros]
 ----
 type ConnectorValidation = <<ConnectorLessThanValidation>> | <<ConnectorGreaterThanValidation>> | <<ConnectorListTypeValidation>> | <<ConnectorIncludedInValidation>> | <<ConnectorRegexValidation>>
 ----
+
 

@@ -1,6 +1,6 @@
-[[reference-shared-types--global-create]]
+[[reference-shared-types-global-create]]
 
-== Create
+=== `Create` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[CreateRequest]]
-=== CreateRequest
+==== CreateRequest
 
 [source,ts,subs=+macros]
 ----
@@ -56,12 +55,14 @@ interface CreateRequest<TDocument = unknown> extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[CreateResponse]]
-=== CreateResponse
+==== CreateResponse
 
 [source,ts,subs=+macros]
 ----
 type CreateResponse = <<WriteResponseBase>>
 ----
+
 

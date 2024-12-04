@@ -1,4 +1,5 @@
 [[reference-index]]
+== client.index
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.index]]
-== client.index
+== `client.index()`
 
 Index a document. Adds a JSON document to the specified data stream or index and makes it searchable. If the target is an index and the document already exists, the request updates the document and increments its version.
 
 {ref}/docs-index_.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(IndexRequest, options?): Promise<IndexResponse>
+(request: IndexRequest, options?: TransportRequestOptions) => Promise<IndexResponse>
 ----
 
 [discrete]
@@ -70,6 +73,7 @@ interface IndexRequest<TDocument = unknown> extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -78,4 +82,5 @@ interface IndexRequest<TDocument = unknown> extends <<RequestBase>> {
 type IndexResponse = <<WriteResponseBase>>
 
 ----
+
 

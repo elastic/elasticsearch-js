@@ -1,6 +1,6 @@
 [[reference-shared-types-enrich-types]]
 
-== `Enrich` types
+=== `Enrich` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[EnrichPolicy]]
-== EnrichPolicy
+=== EnrichPolicy
 
 [source,ts,subs=+macros]
 ----
@@ -51,18 +51,20 @@ interface EnrichPolicy {
 }
 ----
 
+
 [discrete]
 [[EnrichPolicyType]]
-== EnrichPolicyType
+=== EnrichPolicyType
 
 [source,ts,subs=+macros]
 ----
 type EnrichPolicyType = 'geo_match' | 'match' | 'range'
 ----
 
+
 [discrete]
 [[EnrichSummary]]
-== EnrichSummary
+=== EnrichSummary
 
 [source,ts,subs=+macros]
 ----
@@ -70,4 +72,5 @@ interface EnrichSummary {
   config: Partial<Record<<<EnrichPolicyType>>, <<EnrichPolicy>>>>
 }
 ----
+
 

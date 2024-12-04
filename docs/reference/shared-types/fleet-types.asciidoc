@@ -1,6 +1,6 @@
 [[reference-shared-types-fleet-types]]
 
-== `Fleet` types
+=== `Fleet` types
 
 ////////
 ===========================================================================================================================
@@ -37,10 +37,11 @@
 
 [discrete]
 [[FleetCheckpoint]]
-== FleetCheckpoint
+=== FleetCheckpoint
 
 [source,ts,subs=+macros]
 ----
 type FleetCheckpoint = <<long>>
 ----
+
 

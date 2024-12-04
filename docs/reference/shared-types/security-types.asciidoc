@@ -1,6 +1,6 @@
 [[reference-shared-types-security-types]]
 
-== `Security` types
+=== `Security` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[SecurityAccess]]
-== SecurityAccess
+=== SecurityAccess
 
 [source,ts,subs=+macros]
 ----
@@ -49,9 +49,10 @@ interface SecurityAccess {
 }
 ----
 
+
 [discrete]
 [[SecurityApiKey]]
-== SecurityApiKey
+=== SecurityApiKey
 
 [source,ts,subs=+macros]
 ----
@@ -84,9 +85,10 @@ interface SecurityApiKey {
 }
 ----
 
+
 [discrete]
 [[SecurityApplicationGlobalUserPrivileges]]
-== SecurityApplicationGlobalUserPrivileges
+=== SecurityApplicationGlobalUserPrivileges
 
 [source,ts,subs=+macros]
 ----
@@ -95,9 +97,10 @@ interface SecurityApplicationGlobalUserPrivileges {
 }
 ----
 
+
 [discrete]
 [[SecurityApplicationPrivileges]]
-== SecurityApplicationPrivileges
+=== SecurityApplicationPrivileges
 
 [source,ts,subs=+macros]
 ----
@@ -111,9 +114,10 @@ interface SecurityApplicationPrivileges {
 }
 ----
 
+
 [discrete]
 [[SecurityBulkError]]
-== SecurityBulkError
+=== SecurityBulkError
 
 [source,ts,subs=+macros]
 ----
@@ -125,9 +129,10 @@ interface SecurityBulkError {
 }
 ----
 
+
 [discrete]
 [[SecurityClusterNode]]
-== SecurityClusterNode
+=== SecurityClusterNode
 
 [source,ts,subs=+macros]
 ----
@@ -136,18 +141,20 @@ interface SecurityClusterNode {
 }
 ----
 
+
 [discrete]
 [[SecurityClusterPrivilege]]
-== SecurityClusterPrivilege
+=== SecurityClusterPrivilege
 
 [source,ts,subs=+macros]
 ----
 type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'cross_cluster_replication' | 'cross_cluster_search' | 'delegate_pki' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_autoscaling' | 'manage_behavioral_analytics' | 'manage_ccr' | 'manage_data_frame_transforms' | 'manage_data_stream_global_retention' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_inference' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_search_application' | 'manage_search_query_rules' | 'manage_search_synonyms' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_data_frame_transforms' | 'monitor_data_stream_global_retention' | 'monitor_enrich' | 'monitor_inference' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'none' | 'post_behavioral_analytics_event' | 'read_ccr' | 'read_fleet_secrets' | 'read_ilm' | 'read_pipeline' | 'read_security' | 'read_slm' | 'transport_client' | 'write_connector_secrets' | 'write_fleet_secrets' | string
 ----
 
+
 [discrete]
 [[SecurityCreatedStatus]]
-== SecurityCreatedStatus
+=== SecurityCreatedStatus
 
 [source,ts,subs=+macros]
 ----
@@ -156,9 +163,10 @@ interface SecurityCreatedStatus {
 }
 ----
 
+
 [discrete]
 [[SecurityFieldRule]]
-== SecurityFieldRule
+=== SecurityFieldRule
 
 [source,ts,subs=+macros]
 ----
@@ -169,9 +177,10 @@ interface SecurityFieldRule {
 }
 ----
 
+
 [discrete]
 [[SecurityFieldSecurity]]
-== SecurityFieldSecurity
+=== SecurityFieldSecurity
 
 [source,ts,subs=+macros]
 ----
@@ -181,9 +190,10 @@ interface SecurityFieldSecurity {
 }
 ----
 
+
 [discrete]
 [[SecurityGlobalPrivilege]]
-== SecurityGlobalPrivilege
+=== SecurityGlobalPrivilege
 
 [source,ts,subs=+macros]
 ----
@@ -192,27 +202,30 @@ interface SecurityGlobalPrivilege {
 }
 ----
 
+
 [discrete]
 [[SecurityGrantType]]
-== SecurityGrantType
+=== SecurityGrantType
 
 [source,ts,subs=+macros]
 ----
 type SecurityGrantType = 'password' | 'access_token'
 ----
 
+
 [discrete]
 [[SecurityIndexPrivilege]]
-== SecurityIndexPrivilege
+=== SecurityIndexPrivilege
 
 [source,ts,subs=+macros]
 ----
 type SecurityIndexPrivilege = 'all' | 'auto_configure' | 'create' | 'create_doc' | 'create_index' | 'cross_cluster_replication' | 'cross_cluster_replication_internal' | 'delete' | 'delete_index' | 'index' | 'maintenance' | 'manage' | 'manage_data_stream_lifecycle' | 'manage_follow_index' | 'manage_ilm' | 'manage_leader_index' | 'monitor' | 'none' | 'read' | 'read_cross_cluster' | 'view_index_metadata' | 'write' | string
 ----
 
+
 [discrete]
 [[SecurityIndicesPrivileges]]
-== SecurityIndicesPrivileges
+=== SecurityIndicesPrivileges
 
 [source,ts,subs=+macros]
 ----
@@ -230,18 +243,20 @@ interface SecurityIndicesPrivileges {
 }
 ----
 
+
 [discrete]
 [[SecurityIndicesPrivilegesQuery]]
-== SecurityIndicesPrivilegesQuery
+=== SecurityIndicesPrivilegesQuery
 
 [source,ts,subs=+macros]
 ----
 type SecurityIndicesPrivilegesQuery = string | <<QueryDslQueryContainer>> | <<SecurityRoleTemplateQuery>>
 ----
 
+
 [discrete]
 [[SecurityManageUserPrivileges]]
-== SecurityManageUserPrivileges
+=== SecurityManageUserPrivileges
 
 [source,ts,subs=+macros]
 ----
@@ -250,9 +265,10 @@ interface SecurityManageUserPrivileges {
 }
 ----
 
+
 [discrete]
 [[SecurityRealmInfo]]
-== SecurityRealmInfo
+=== SecurityRealmInfo
 
 [source,ts,subs=+macros]
 ----
@@ -262,9 +278,10 @@ interface SecurityRealmInfo {
 }
 ----
 
+
 [discrete]
 [[SecurityRemoteIndicesPrivileges]]
-== SecurityRemoteIndicesPrivileges
+=== SecurityRemoteIndicesPrivileges
 
 [source,ts,subs=+macros]
 ----
@@ -284,9 +301,10 @@ interface SecurityRemoteIndicesPrivileges {
 }
 ----
 
+
 [discrete]
 [[SecurityReplicationAccess]]
-== SecurityReplicationAccess
+=== SecurityReplicationAccess
 
 [source,ts,subs=+macros]
 ----
@@ -296,9 +314,10 @@ interface SecurityReplicationAccess {
 }
 ----
 
+
 [discrete]
 [[SecurityRoleDescriptor]]
-== SecurityRoleDescriptor
+=== SecurityRoleDescriptor
 
 [source,ts,subs=+macros]
 ----
@@ -323,9 +342,10 @@ interface SecurityRoleDescriptor {
 }
 ----
 
+
 [discrete]
 [[SecurityRoleDescriptorRead]]
-== SecurityRoleDescriptorRead
+=== SecurityRoleDescriptorRead
 
 [source,ts,subs=+macros]
 ----
@@ -350,9 +370,10 @@ interface SecurityRoleDescriptorRead {
 }
 ----
 
+
 [discrete]
 [[SecurityRoleMapping]]
-== SecurityRoleMapping
+=== SecurityRoleMapping
 
 [source,ts,subs=+macros]
 ----
@@ -365,9 +386,10 @@ interface SecurityRoleMapping {
 }
 ----
 
+
 [discrete]
 [[SecurityRoleMappingRule]]
-== SecurityRoleMappingRule
+=== SecurityRoleMappingRule
 
 [source,ts,subs=+macros]
 ----
@@ -379,9 +401,10 @@ interface SecurityRoleMappingRule {
 }
 ----
 
+
 [discrete]
 [[SecurityRoleTemplate]]
-== SecurityRoleTemplate
+=== SecurityRoleTemplate
 
 [source,ts,subs=+macros]
 ----
@@ -391,18 +414,20 @@ interface SecurityRoleTemplate {
 }
 ----
 
+
 [discrete]
 [[SecurityRoleTemplateInlineQuery]]
-== SecurityRoleTemplateInlineQuery
+=== SecurityRoleTemplateInlineQuery
 
 [source,ts,subs=+macros]
 ----
 type SecurityRoleTemplateInlineQuery = string | <<QueryDslQueryContainer>>
 ----
 
+
 [discrete]
 [[SecurityRoleTemplateQuery]]
-== SecurityRoleTemplateQuery
+=== SecurityRoleTemplateQuery
 
 [source,ts,subs=+macros]
 ----
@@ -412,9 +437,10 @@ interface SecurityRoleTemplateQuery {
 }
 ----
 
+
 [discrete]
 [[SecurityRoleTemplateScript]]
-== SecurityRoleTemplateScript
+=== SecurityRoleTemplateScript
 
 [source,ts,subs=+macros]
 ----
@@ -430,9 +456,10 @@ interface SecurityRoleTemplateScript {
 }
 ----
 
+
 [discrete]
 [[SecuritySearchAccess]]
-== SecuritySearchAccess
+=== SecuritySearchAccess
 
 [source,ts,subs=+macros]
 ----
@@ -448,18 +475,20 @@ interface SecuritySearchAccess {
 }
 ----
 
+
 [discrete]
 [[SecurityTemplateFormat]]
-== SecurityTemplateFormat
+=== SecurityTemplateFormat
 
 [source,ts,subs=+macros]
 ----
 type SecurityTemplateFormat = 'string' | 'json'
 ----
 
+
 [discrete]
 [[SecurityUser]]
-== SecurityUser
+=== SecurityUser
 
 [source,ts,subs=+macros]
 ----
@@ -474,9 +503,10 @@ interface SecurityUser {
 }
 ----
 
+
 [discrete]
 [[SecurityUserIndicesPrivileges]]
-== SecurityUserIndicesPrivileges
+=== SecurityUserIndicesPrivileges
 
 [source,ts,subs=+macros]
 ----
@@ -494,9 +524,10 @@ interface SecurityUserIndicesPrivileges {
 }
 ----
 
+
 [discrete]
 [[SecurityUserProfile]]
-== SecurityUserProfile
+=== SecurityUserProfile
 
 [source,ts,subs=+macros]
 ----
@@ -509,9 +540,10 @@ interface SecurityUserProfile {
 }
 ----
 
+
 [discrete]
 [[SecurityUserProfileHitMetadata]]
-== SecurityUserProfileHitMetadata
+=== SecurityUserProfileHitMetadata
 
 [source,ts,subs=+macros]
 ----
@@ -521,18 +553,20 @@ interface SecurityUserProfileHitMetadata {
 }
 ----
 
+
 [discrete]
 [[SecurityUserProfileId]]
-== SecurityUserProfileId
+=== SecurityUserProfileId
 
 [source,ts,subs=+macros]
 ----
 type SecurityUserProfileId = string
 ----
 
+
 [discrete]
 [[SecurityUserProfileUser]]
-== SecurityUserProfileUser
+=== SecurityUserProfileUser
 
 [source,ts,subs=+macros]
 ----
@@ -546,9 +580,10 @@ interface SecurityUserProfileUser {
 }
 ----
 
+
 [discrete]
 [[SecurityUserProfileWithMetadata]]
-== SecurityUserProfileWithMetadata
+=== SecurityUserProfileWithMetadata
 
 [source,ts,subs=+macros]
 ----
@@ -557,4 +592,5 @@ interface SecurityUserProfileWithMetadata extends <<SecurityUserProfile>> {
   _doc: <<SecurityUserProfileHitMetadata>>
 }
 ----
+
 

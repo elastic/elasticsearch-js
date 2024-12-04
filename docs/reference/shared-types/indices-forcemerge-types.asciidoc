@@ -1,6 +1,6 @@
 [[reference-shared-types-indices-forcemerge-types]]
 
-== `Indices` types
+=== `Indices` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[IndicesForceMergeResponseBody]]
-== IndicesForceMergeResponseBody
+=== IndicesForceMergeResponseBody
 
 [source,ts,subs=+macros]
 ----
@@ -46,4 +46,5 @@ interface IndicesForcemergeForceMergeResponseBody extends <<ShardsOperationRespo
   task?: string
 }
 ----
+
 

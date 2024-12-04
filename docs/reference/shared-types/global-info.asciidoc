@@ -1,6 +1,6 @@
-[[reference-shared-types--global-info]]
+[[reference-shared-types-global-info]]
 
-== Info
+=== `Info` request types
 
 ////////
 ===========================================================================================================================
@@ -35,19 +35,19 @@
 ++++
 
 
-
 [discrete]
 [[InfoRequest]]
-=== InfoRequest
+==== InfoRequest
 
 [source,ts,subs=+macros]
 ----
 interface InfoRequest extends <<RequestBase>> {}
 ----
 
+
 [discrete]
 [[InfoResponse]]
-=== InfoResponse
+==== InfoResponse
 
 [source,ts,subs=+macros]
 ----
@@ -59,4 +59,5 @@ interface InfoResponse {
   version: <<ElasticsearchVersionInfo>>
 }
 ----
+
 

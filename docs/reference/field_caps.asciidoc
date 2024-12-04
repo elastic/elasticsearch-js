@@ -1,4 +1,5 @@
 [[reference-field_caps]]
+== client.fieldCaps
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.fieldCaps]]
-== client.fieldCaps
+== `client.fieldCaps()`
 
 Get the field capabilities. Get information about the capabilities of fields among multiple indices. For data streams, the API returns field capabilities among the stream’s backing indices. It returns runtime fields like any other field. For example, a runtime field with a type of keyword is returned the same as any other field that belongs to the `keyword` family.
 
 {ref}/search-field-caps.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(FieldCapsRequest, options?): Promise<FieldCapsResponse>
+(request: FieldCapsRequest, options?: TransportRequestOptions) => Promise<FieldCapsResponse>
 ----
 
 [discrete]
@@ -67,6 +70,7 @@ interface FieldCapsRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -78,4 +82,5 @@ interface FieldCapsResponse {
 }
 
 ----
+
 

@@ -1,4 +1,5 @@
 [[reference-update_by_query]]
+== client.updateByQuery
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.updateByQuery]]
-== client.updateByQuery
+== `client.updateByQuery()`
 
 Update documents. Updates documents that match the specified query. If no query is specified, performs an update on every document in the data stream or index without modifying the source, which is useful for picking up mapping changes.
 
 {ref}/docs-update-by-query.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(UpdateByQueryRequest, options?): Promise<UpdateByQueryResponse>
+(request: UpdateByQueryRequest, options?: TransportRequestOptions) => Promise<UpdateByQueryResponse>
 ----
 
 [discrete]
@@ -91,6 +94,7 @@ interface UpdateByQueryRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -116,4 +120,5 @@ interface UpdateByQueryResponse {
 }
 
 ----
+
 

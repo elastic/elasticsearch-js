@@ -50,6 +50,7 @@ interface AcknowledgedResponseBase {
 ----
 
 
+
 [discrete]
 [[AggregateName]]
 === AggregateName
@@ -58,6 +59,7 @@ interface AcknowledgedResponseBase {
 ----
 type AggregateName = string
 ----
+
 
 
 [discrete]
@@ -74,6 +76,7 @@ interface BulkIndexByScrollFailure {
   type: string
 }
 ----
+
 
 
 [discrete]
@@ -96,6 +99,7 @@ interface BulkStats {
 ----
 
 
+
 [discrete]
 [[ByteSize]]
 === ByteSize
@@ -104,6 +108,7 @@ interface BulkStats {
 ----
 type ByteSize = <<long>> | string
 ----
+
 
 
 [discrete]
@@ -116,6 +121,7 @@ type Bytes = 'b' | 'kb' | 'mb' | 'gb' | 'tb' | 'pb'
 ----
 
 
+
 [discrete]
 [[CategoryId]]
 === CategoryId
@@ -126,6 +132,7 @@ type CategoryId = string
 ----
 
 
+
 [discrete]
 [[ClusterAlias]]
 === ClusterAlias
@@ -134,6 +141,7 @@ type CategoryId = string
 ----
 type ClusterAlias = string
 ----
+
 
 
 [discrete]
@@ -153,6 +161,7 @@ interface ClusterDetails {
 ----
 
 
+
 [discrete]
 [[ClusterInfoTarget]]
 === ClusterInfoTarget
@@ -161,6 +170,7 @@ interface ClusterDetails {
 ----
 type ClusterInfoTarget = '_all' | 'http' | 'ingest' | 'thread_pool' | 'script'
 ----
+
 
 
 [discrete]
@@ -173,6 +183,7 @@ type ClusterInfoTargets = <<ClusterInfoTarget>> | <<ClusterInfoTarget>>[]
 ----
 
 
+
 [discrete]
 [[ClusterSearchStatus]]
 === ClusterSearchStatus
@@ -181,6 +192,7 @@ type ClusterInfoTargets = <<ClusterInfoTarget>> | <<ClusterInfoTarget>>[]
 ----
 type ClusterSearchStatus = 'running' | 'successful' | 'partial' | 'skipped' | 'failed'
 ----
+
 
 
 [discrete]
@@ -201,6 +213,7 @@ interface ClusterStatistics {
 ----
 
 
+
 [discrete]
 [[CompletionStats]]
 === CompletionStats
@@ -217,6 +230,7 @@ interface CompletionStats {
 ----
 
 
+
 [discrete]
 [[Conflicts]]
 === Conflicts
@@ -225,6 +239,7 @@ interface CompletionStats {
 ----
 type Conflicts = 'abort' | 'proceed'
 ----
+
 
 
 [discrete]
@@ -242,6 +257,7 @@ interface CoordsGeoBounds {
 ----
 
 
+
 [discrete]
 [[DFIIndependenceMeasure]]
 === DFIIndependenceMeasure
@@ -250,6 +266,7 @@ interface CoordsGeoBounds {
 ----
 type DFIIndependenceMeasure = 'standardized' | 'saturated' | 'chisquared'
 ----
+
 
 
 [discrete]
@@ -262,6 +279,7 @@ type DFRAfterEffect = 'no' | 'b' | 'l'
 ----
 
 
+
 [discrete]
 [[DFRBasicModel]]
 === DFRBasicModel
@@ -270,6 +288,7 @@ type DFRAfterEffect = 'no' | 'b' | 'l'
 ----
 type DFRBasicModel = 'be' | 'd' | 'g' | 'if' | 'in' | 'ine' | 'p'
 ----
+
 
 
 [discrete]
@@ -282,6 +301,7 @@ type DataStreamName = string
 ----
 
 
+
 [discrete]
 [[DataStreamNames]]
 === DataStreamNames
@@ -290,6 +310,7 @@ type DataStreamName = string
 ----
 type DataStreamNames = <<DataStreamName>> | <<DataStreamName>>[]
 ----
+
 
 
 [discrete]
@@ -302,6 +323,7 @@ type DateFormat = string
 ----
 
 
+
 [discrete]
 [[DateMath]]
 === DateMath
@@ -310,6 +332,7 @@ type DateFormat = string
 ----
 type DateMath = string | Date
 ----
+
 
 
 [discrete]
@@ -322,6 +345,7 @@ type DateTime = string | <<EpochTime>><<<UnitMillis>>> | Date
 ----
 
 
+
 [discrete]
 [[Distance]]
 === Distance
@@ -332,6 +356,7 @@ type Distance = string
 ----
 
 
+
 [discrete]
 [[DistanceUnit]]
 === DistanceUnit
@@ -340,6 +365,7 @@ type Distance = string
 ----
 type DistanceUnit = 'in' | 'ft' | 'yd' | 'mi' | 'nmi' | 'km' | 'm' | 'cm' | 'mm'
 ----
+
 
 
 [discrete]
@@ -357,6 +383,7 @@ interface DocStats {
 ----
 
 
+
 [discrete]
 [[Duration]]
 === Duration
@@ -365,6 +392,7 @@ interface DocStats {
 ----
 type Duration = string | -1 | 0
 ----
+
 
 
 [discrete]
@@ -377,6 +405,7 @@ type DurationLarge = string
 ----
 
 
+
 [discrete]
 [[DurationValue]]
 === DurationValue
@@ -385,6 +414,7 @@ type DurationLarge = string
 ----
 type DurationValue<Unit = unknown> = Unit
 ----
+
 
 
 [discrete]
@@ -407,6 +437,7 @@ interface ElasticsearchVersionInfo {
 ----
 
 
+
 [discrete]
 [[ElasticsearchVersionMinInfo]]
 === ElasticsearchVersionMinInfo
@@ -422,6 +453,7 @@ interface ElasticsearchVersionMinInfo {
 ----
 
 
+
 [discrete]
 [[EmptyObject]]
 === EmptyObject
@@ -432,6 +464,7 @@ interface EmptyObject {}
 ----
 
 
+
 [discrete]
 [[EpochTime]]
 === EpochTime
@@ -440,6 +473,7 @@ interface EmptyObject {}
 ----
 type EpochTime<Unit = unknown> = Unit
 ----
+
 
 
 [discrete]
@@ -461,6 +495,7 @@ type ErrorCause = ErrorCauseKeys
 ----
 
 
+
 [discrete]
 [[ErrorResponseBase]]
 === ErrorResponseBase
@@ -474,6 +509,7 @@ interface ErrorResponseBase {
 ----
 
 
+
 [discrete]
 [[EsqlColumns]]
 === EsqlColumns
@@ -482,6 +518,7 @@ interface ErrorResponseBase {
 ----
 type EsqlColumns = ArrayBuffer
 ----
+
 
 
 [discrete]
@@ -494,6 +531,7 @@ type ExpandWildcard = 'all' | 'open' | 'closed' | 'hidden' | 'none'
 ----
 
 
+
 [discrete]
 [[ExpandWildcards]]
 === ExpandWildcards
@@ -504,6 +542,7 @@ type ExpandWildcards = <<ExpandWildcard>> | <<ExpandWildcard>>[]
 ----
 
 
+
 [discrete]
 [[Field]]
 === Field
@@ -512,6 +551,7 @@ type ExpandWildcards = <<ExpandWildcard>> | <<ExpandWildcard>>[]
 ----
 type Field = string
 ----
+
 
 
 [discrete]
@@ -527,6 +567,7 @@ interface FieldMemoryUsage {
 ----
 
 
+
 [discrete]
 [[FieldSizeUsage]]
 === FieldSizeUsage
@@ -538,6 +579,7 @@ interface FieldSizeUsage {
   size_in_bytes: <<long>>
 }
 ----
+
 
 
 [discrete]
@@ -558,6 +600,7 @@ interface FieldSort {
 ----
 
 
+
 [discrete]
 [[FieldSortNumericType]]
 === FieldSortNumericType
@@ -568,6 +611,7 @@ type FieldSortNumericType = '<<long>>' | '<<double>>' | 'date' | 'date_nanos'
 ----
 
 
+
 [discrete]
 [[FieldValue]]
 === FieldValue
@@ -576,6 +620,7 @@ type FieldSortNumericType = '<<long>>' | '<<double>>' | 'date' | 'date_nanos'
 ----
 type FieldValue = <<long>> | <<double>> | string | boolean | null | any
 ----
+
 
 
 [discrete]
@@ -593,6 +638,7 @@ interface FielddataStats {
 ----
 
 
+
 [discrete]
 [[Fields]]
 === Fields
@@ -601,6 +647,7 @@ interface FielddataStats {
 ----
 type Fields = <<Field>> | <<Field>>[]
 ----
+
 
 
 [discrete]
@@ -618,6 +665,7 @@ interface FlushStats {
 ----
 
 
+
 [discrete]
 [[Fuzziness]]
 === Fuzziness
@@ -628,6 +676,7 @@ type Fuzziness = string | <<integer>>
 ----
 
 
+
 [discrete]
 [[GeoBounds]]
 === GeoBounds
@@ -636,6 +685,7 @@ type Fuzziness = string | <<integer>>
 ----
 type GeoBounds = <<CoordsGeoBounds>> | <<TopLeftBottomRightGeoBounds>> | <<TopRightBottomLeftGeoBounds>> | <<WktGeoBounds>>
 ----
+
 
 
 [discrete]
@@ -657,6 +707,7 @@ type GeoDistanceSort = GeoDistanceSortKeys
 ----
 
 
+
 [discrete]
 [[GeoDistanceType]]
 === GeoDistanceType
@@ -667,6 +718,7 @@ type GeoDistanceType = 'arc' | 'plane'
 ----
 
 
+
 [discrete]
 [[GeoHash]]
 === GeoHash
@@ -675,6 +727,7 @@ type GeoDistanceType = 'arc' | 'plane'
 ----
 type GeoHash = string
 ----
+
 
 
 [discrete]
@@ -689,6 +742,7 @@ interface GeoHashLocation {
 ----
 
 
+
 [discrete]
 [[GeoHashPrecision]]
 === GeoHashPrecision
@@ -699,6 +753,7 @@ type GeoHashPrecision = number | string
 ----
 
 
+
 [discrete]
 [[GeoHexCell]]
 === GeoHexCell
@@ -707,6 +762,7 @@ type GeoHashPrecision = number | string
 ----
 type GeoHexCell = string
 ----
+
 
 
 [discrete]
@@ -724,6 +780,7 @@ interface GeoLine {
 ----
 
 
+
 [discrete]
 [[GeoLocation]]
 === GeoLocation
@@ -732,6 +789,7 @@ interface GeoLine {
 ----
 type GeoLocation = <<LatLonGeoLocation>> | <<GeoHashLocation>> | <<double>>[] | string
 ----
+
 
 
 [discrete]
@@ -744,6 +802,7 @@ type GeoShape = any
 ----
 
 
+
 [discrete]
 [[GeoShapeRelation]]
 === GeoShapeRelation
@@ -752,6 +811,7 @@ type GeoShape = any
 ----
 type GeoShapeRelation = 'intersects' | 'disjoint' | 'within' | 'contains'
 ----
+
 
 
 [discrete]
@@ -764,6 +824,7 @@ type GeoTile = string
 ----
 
 
+
 [discrete]
 [[GeoTilePrecision]]
 === GeoTilePrecision
@@ -772,6 +833,7 @@ type GeoTile = string
 ----
 type GeoTilePrecision = number
 ----
+
 
 
 [discrete]
@@ -795,6 +857,7 @@ interface GetStats {
 ----
 
 
+
 [discrete]
 [[GrokPattern]]
 === GrokPattern
@@ -803,6 +866,7 @@ interface GetStats {
 ----
 type GrokPattern = string
 ----
+
 
 
 [discrete]
@@ -815,6 +879,7 @@ type HealthStatus = 'green' | 'GREEN' | 'yellow' | 'YELLOW' | 'red' | 'RED'
 ----
 
 
+
 [discrete]
 [[Host]]
 === Host
@@ -823,6 +888,7 @@ type HealthStatus = 'green' | 'GREEN' | 'yellow' | 'YELLOW' | 'red' | 'RED'
 ----
 type Host = string
 ----
+
 
 
 [discrete]
@@ -835,6 +901,7 @@ type HttpHeaders = Record<string, string | string[]>
 ----
 
 
+
 [discrete]
 [[IBDistribution]]
 === IBDistribution
@@ -843,6 +910,7 @@ type HttpHeaders = Record<string, string | string[]>
 ----
 type IBDistribution = 'll' | 'spl'
 ----
+
 
 
 [discrete]
@@ -855,6 +923,7 @@ type IBLambda = 'df' | 'ttf'
 ----
 
 
+
 [discrete]
 [[Id]]
 === Id
@@ -863,6 +932,7 @@ type IBLambda = 'df' | 'ttf'
 ----
 type Id = string
 ----
+
 
 
 [discrete]
@@ -875,6 +945,7 @@ type Ids = <<Id>> | <<Id>>[]
 ----
 
 
+
 [discrete]
 [[IndexAlias]]
 === IndexAlias
@@ -883,6 +954,7 @@ type Ids = <<Id>> | <<Id>>[]
 ----
 type IndexAlias = string
 ----
+
 
 
 [discrete]
@@ -895,6 +967,7 @@ type IndexName = string
 ----
 
 
+
 [discrete]
 [[IndexPattern]]
 === IndexPattern
@@ -905,6 +978,7 @@ type IndexPattern = string
 ----
 
 
+
 [discrete]
 [[IndexPatterns]]
 === IndexPatterns
@@ -913,6 +987,7 @@ type IndexPattern = string
 ----
 type IndexPatterns = <<IndexPattern>>[]
 ----
+
 
 
 [discrete]
@@ -941,6 +1016,7 @@ interface IndexingStats {
 ----
 
 
+
 [discrete]
 [[Indices]]
 === Indices
@@ -949,6 +1025,7 @@ interface IndexingStats {
 ----
 type Indices = <<IndexName>> | <<IndexName>>[]
 ----
+
 
 
 [discrete]
@@ -970,6 +1047,7 @@ interface IndicesOptions {
 ----
 
 
+
 [discrete]
 [[IndicesResponseBase]]
 === IndicesResponseBase
@@ -980,6 +1058,7 @@ interface IndicesResponseBase extends <<AcknowledgedResponseBase>> {
   _shards?: <<ShardStatistics>>
 }
 ----
+
 
 
 [discrete]
@@ -1001,6 +1080,7 @@ type InlineGet<TDocument = unknown> = InlineGetKeys<TDocument>
 ----
 
 
+
 [discrete]
 [[Ip]]
 === Ip
@@ -1009,6 +1089,7 @@ type InlineGet<TDocument = unknown> = InlineGetKeys<TDocument>
 ----
 type Ip = string
 ----
+
 
 
 [discrete]
@@ -1036,6 +1117,7 @@ interface KnnQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[KnnRetriever]]
 === KnnRetriever
@@ -1057,6 +1139,7 @@ interface KnnRetriever extends <<RetrieverBase>> {
   similarity?: <<float>>
 }
 ----
+
 
 
 [discrete]
@@ -1088,6 +1171,7 @@ interface KnnSearch {
 ----
 
 
+
 [discrete]
 [[LatLonGeoLocation]]
 === LatLonGeoLocation
@@ -1103,6 +1187,7 @@ interface LatLonGeoLocation {
 ----
 
 
+
 [discrete]
 [[Level]]
 === Level
@@ -1111,6 +1196,7 @@ interface LatLonGeoLocation {
 ----
 type Level = 'cluster' | 'indices' | 'shards'
 ----
+
 
 
 [discrete]
@@ -1123,6 +1209,7 @@ type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
 ----
 
 
+
 [discrete]
 [[MapboxVectorTiles]]
 === MapboxVectorTiles
@@ -1131,6 +1218,7 @@ type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
 ----
 type MapboxVectorTiles = ArrayBuffer
 ----
+
 
 
 [discrete]
@@ -1160,6 +1248,7 @@ interface MergesStats {
 ----
 
 
+
 [discrete]
 [[Metadata]]
 === Metadata
@@ -1168,6 +1257,7 @@ interface MergesStats {
 ----
 type Metadata = Record<string, any>
 ----
+
 
 
 [discrete]
@@ -1180,6 +1270,7 @@ type Metrics = string | string[]
 ----
 
 
+
 [discrete]
 [[MinimumShouldMatch]]
 === MinimumShouldMatch
@@ -1188,6 +1279,7 @@ type Metrics = string | string[]
 ----
 type MinimumShouldMatch = <<integer>> | string
 ----
+
 
 
 [discrete]
@@ -1200,6 +1292,7 @@ type MultiTermQueryRewrite = string
 ----
 
 
+
 [discrete]
 [[Name]]
 === Name
@@ -1208,6 +1301,7 @@ type MultiTermQueryRewrite = string
 ----
 type Name = string
 ----
+
 
 
 [discrete]
@@ -1220,6 +1314,7 @@ type Names = <<Name>> | <<Name>>[]
 ----
 
 
+
 [discrete]
 [[Namespace]]
 === Namespace
@@ -1228,6 +1323,7 @@ type Names = <<Name>> | <<Name>>[]
 ----
 type Namespace = string
 ----
+
 
 
 [discrete]
@@ -1243,6 +1339,7 @@ interface NestedSortValue {
   path: <<Field>>
 }
 ----
+
 
 
 [discrete]
@@ -1266,6 +1363,7 @@ interface NodeAttributes {
 ----
 
 
+
 [discrete]
 [[NodeId]]
 === NodeId
@@ -1274,6 +1372,7 @@ interface NodeAttributes {
 ----
 type NodeId = string
 ----
+
 
 
 [discrete]
@@ -1286,6 +1385,7 @@ type NodeIds = <<NodeId>> | <<NodeId>>[]
 ----
 
 
+
 [discrete]
 [[NodeName]]
 === NodeName
@@ -1294,6 +1394,7 @@ type NodeIds = <<NodeId>> | <<NodeId>>[]
 ----
 type NodeName = string
 ----
+
 
 
 [discrete]
@@ -1306,6 +1407,7 @@ type NodeRole = 'master' | 'data' | 'data_cold' | 'data_content' | 'data_frozen'
 ----
 
 
+
 [discrete]
 [[NodeRoles]]
 === NodeRoles
@@ -1314,6 +1416,7 @@ type NodeRole = 'master' | 'data' | 'data_cold' | 'data_content' | 'data_frozen'
 ----
 type NodeRoles = <<NodeRole>>[]
 ----
+
 
 
 [discrete]
@@ -1337,6 +1440,7 @@ interface NodeShard {
 ----
 
 
+
 [discrete]
 [[NodeStatistics]]
 === NodeStatistics
@@ -1355,6 +1459,7 @@ interface NodeStatistics {
 ----
 
 
+
 [discrete]
 [[Normalization]]
 === Normalization
@@ -1363,6 +1468,7 @@ interface NodeStatistics {
 ----
 type Normalization = 'no' | 'h1' | 'h2' | 'h3' | 'z'
 ----
+
 
 
 [discrete]
@@ -1375,6 +1481,7 @@ type OpType = 'index' | 'create'
 ----
 
 
+
 [discrete]
 [[Password]]
 === Password
@@ -1383,6 +1490,7 @@ type OpType = 'index' | 'create'
 ----
 type Password = string
 ----
+
 
 
 [discrete]
@@ -1395,6 +1503,7 @@ type Percentage = string | <<float>>
 ----
 
 
+
 [discrete]
 [[PipelineName]]
 === PipelineName
@@ -1403,6 +1512,7 @@ type Percentage = string | <<float>>
 ----
 type PipelineName = string
 ----
+
 
 
 [discrete]
@@ -1425,6 +1535,7 @@ interface PluginStats {
 ----
 
 
+
 [discrete]
 [[PropertyName]]
 === PropertyName
@@ -1433,6 +1544,7 @@ interface PluginStats {
 ----
 type PropertyName = string
 ----
+
 
 
 [discrete]
@@ -1462,6 +1574,7 @@ interface QueryCacheStats {
 ----
 
 
+
 [discrete]
 [[QueryVector]]
 === QueryVector
@@ -1470,6 +1583,7 @@ interface QueryCacheStats {
 ----
 type QueryVector = <<float>>[]
 ----
+
 
 
 [discrete]
@@ -1482,6 +1596,7 @@ interface QueryVectorBuilder {
   text_embedding?: <<TextEmbedding>>
 }
 ----
+
 
 
 [discrete]
@@ -1501,6 +1616,7 @@ interface RRFRetriever extends <<RetrieverBase>> {
 ----
 
 
+
 [discrete]
 [[RankBase]]
 === RankBase
@@ -1509,6 +1625,7 @@ interface RRFRetriever extends <<RetrieverBase>> {
 ----
 interface RankBase {}
 ----
+
 
 
 [discrete]
@@ -1522,6 +1639,7 @@ interface RankContainer {
   rrf?: <<RrfRank>>
 }
 ----
+
 
 
 [discrete]
@@ -1539,6 +1657,7 @@ interface RecoveryStats {
 ----
 
 
+
 [discrete]
 [[Refresh]]
 === Refresh
@@ -1547,6 +1666,7 @@ interface RecoveryStats {
 ----
 type Refresh = boolean | 'true' | 'false' | 'wait_for'
 ----
+
 
 
 [discrete]
@@ -1566,6 +1686,7 @@ interface RefreshStats {
 ----
 
 
+
 [discrete]
 [[RelationName]]
 === RelationName
@@ -1574,6 +1695,7 @@ interface RefreshStats {
 ----
 type RelationName = string
 ----
+
 
 
 [discrete]
@@ -1588,6 +1710,7 @@ interface RelocationFailureInfo {
 ----
 
 
+
 [discrete]
 [[RequestBase]]
 === RequestBase
@@ -1596,6 +1719,7 @@ interface RelocationFailureInfo {
 ----
 interface RequestBase extends <<SpecUtilsCommonQueryParameters>> {}
 ----
+
 
 
 [discrete]
@@ -1614,6 +1738,7 @@ interface RequestCacheStats {
 ----
 
 
+
 [discrete]
 [[Result]]
 === Result
@@ -1622,6 +1747,7 @@ interface RequestCacheStats {
 ----
 type Result = 'created' | 'updated' | 'deleted' | 'not_found' | 'noop'
 ----
+
 
 
 [discrete]
@@ -1637,6 +1763,7 @@ interface Retries {
 ----
 
 
+
 [discrete]
 [[RetrieverBase]]
 === RetrieverBase
@@ -1650,6 +1777,7 @@ interface RetrieverBase {
   min_score?: <<float>>
 }
 ----
+
 
 
 [discrete]
@@ -1671,6 +1799,7 @@ interface RetrieverContainer {
 ----
 
 
+
 [discrete]
 [[Routing]]
 === Routing
@@ -1679,6 +1808,7 @@ interface RetrieverContainer {
 ----
 type Routing = string
 ----
+
 
 
 [discrete]
@@ -1696,6 +1826,7 @@ interface RrfRank {
 ----
 
 
+
 [discrete]
 [[ScalarValue]]
 === ScalarValue
@@ -1704,6 +1835,7 @@ interface RrfRank {
 ----
 type ScalarValue = <<long>> | <<double>> | string | boolean | null
 ----
+
 
 
 [discrete]
@@ -1716,6 +1848,7 @@ interface ScoreSort {
   order?: <<SortOrder>>
 }
 ----
+
 
 
 [discrete]
@@ -1738,6 +1871,7 @@ interface Script {
 ----
 
 
+
 [discrete]
 [[ScriptField]]
 === ScriptField
@@ -1751,6 +1885,7 @@ interface ScriptField {
 ----
 
 
+
 [discrete]
 [[ScriptLanguage]]
 === ScriptLanguage
@@ -1759,6 +1894,7 @@ interface ScriptField {
 ----
 type ScriptLanguage = 'painless' | 'expression' | 'mustache' | 'java' | string
 ----
+
 
 
 [discrete]
@@ -1777,6 +1913,7 @@ interface ScriptSort {
 ----
 
 
+
 [discrete]
 [[ScriptSortType]]
 === ScriptSortType
@@ -1785,6 +1922,7 @@ interface ScriptSort {
 ----
 type ScriptSortType = 'string' | 'number' | 'version'
 ----
+
 
 
 [discrete]
@@ -1802,6 +1940,7 @@ interface ScriptTransform {
 ----
 
 
+
 [discrete]
 [[ScrollId]]
 === ScrollId
@@ -1812,6 +1951,7 @@ type ScrollId = string
 ----
 
 
+
 [discrete]
 [[ScrollIds]]
 === ScrollIds
@@ -1820,6 +1960,7 @@ type ScrollId = string
 ----
 type ScrollIds = <<ScrollId>> | <<ScrollId>>[]
 ----
+
 
 
 [discrete]
@@ -1851,6 +1992,7 @@ interface SearchStats {
 ----
 
 
+
 [discrete]
 [[SearchTransform]]
 === SearchTransform
@@ -1864,6 +2006,7 @@ interface SearchTransform {
 ----
 
 
+
 [discrete]
 [[SearchType]]
 === SearchType
@@ -1872,6 +2015,7 @@ interface SearchTransform {
 ----
 type SearchType = 'query_then_fetch' | 'dfs_query_then_fetch'
 ----
+
 
 
 [discrete]
@@ -1931,6 +2075,7 @@ interface SegmentsStats {
 ----
 
 
+
 [discrete]
 [[SequenceNumber]]
 === SequenceNumber
@@ -1941,6 +2086,7 @@ type SequenceNumber = <<long>>
 ----
 
 
+
 [discrete]
 [[Service]]
 === Service
@@ -1949,6 +2095,7 @@ type SequenceNumber = <<long>>
 ----
 type Service = string
 ----
+
 
 
 [discrete]
@@ -1965,6 +2112,7 @@ interface ShardFailure {
   status?: string
 }
 ----
+
 
 
 [discrete]
@@ -1985,6 +2133,7 @@ interface ShardStatistics {
 ----
 
 
+
 [discrete]
 [[ShardsOperationResponseBase]]
 === ShardsOperationResponseBase
@@ -1995,6 +2144,7 @@ interface ShardsOperationResponseBase {
   _shards?: <<ShardStatistics>>
 }
 ----
+
 
 
 [discrete]
@@ -2011,6 +2161,7 @@ interface SlicedScroll {
 ----
 
 
+
 [discrete]
 [[Slices]]
 === Slices
@@ -2019,6 +2170,7 @@ interface SlicedScroll {
 ----
 type Slices = <<integer>> | <<SlicesCalculation>>
 ----
+
 
 
 [discrete]
@@ -2031,6 +2183,7 @@ type SlicesCalculation = 'auto'
 ----
 
 
+
 [discrete]
 [[Sort]]
 === Sort
@@ -2039,6 +2192,7 @@ type SlicesCalculation = 'auto'
 ----
 type Sort = <<SortCombinations>> | <<SortCombinations>>[]
 ----
+
 
 
 [discrete]
@@ -2051,6 +2205,7 @@ type SortCombinations = <<Field>> | <<SortOptions>>
 ----
 
 
+
 [discrete]
 [[SortMode]]
 === SortMode
@@ -2059,6 +2214,7 @@ type SortCombinations = <<Field>> | <<SortOptions>>
 ----
 type SortMode = 'min' | 'max' | 'sum' | 'avg' | 'median'
 ----
+
 
 
 [discrete]
@@ -2078,6 +2234,7 @@ type SortOptions = SortOptionsKeys
 ----
 
 
+
 [discrete]
 [[SortOrder]]
 === SortOrder
@@ -2088,6 +2245,7 @@ type SortOrder = 'asc' | 'desc'
 ----
 
 
+
 [discrete]
 [[SortResults]]
 === SortResults
@@ -2096,6 +2254,7 @@ type SortOrder = 'asc' | 'desc'
 ----
 type SortResults = <<FieldValue>>[]
 ----
+
 
 
 [discrete]
@@ -2117,6 +2276,7 @@ interface StandardRetriever extends <<RetrieverBase>> {
   collapse?: <<SearchFieldCollapse>>
 }
 ----
+
 
 
 [discrete]
@@ -2142,6 +2302,7 @@ interface StoreStats {
 ----
 
 
+
 [discrete]
 [[StoredScript]]
 === StoredScript
@@ -2158,6 +2319,7 @@ interface StoredScript {
 ----
 
 
+
 [discrete]
 [[SuggestMode]]
 === SuggestMode
@@ -2168,6 +2330,7 @@ type SuggestMode = 'missing' | 'popular' | 'always'
 ----
 
 
+
 [discrete]
 [[SuggestionName]]
 === SuggestionName
@@ -2176,6 +2339,7 @@ type SuggestMode = 'missing' | 'popular' | 'always'
 ----
 type SuggestionName = string
 ----
+
 
 
 [discrete]
@@ -2193,6 +2357,7 @@ interface TaskFailure {
 ----
 
 
+
 [discrete]
 [[TaskId]]
 === TaskId
@@ -2201,6 +2366,7 @@ interface TaskFailure {
 ----
 type TaskId = string | <<integer>>
 ----
+
 
 
 [discrete]
@@ -2214,6 +2380,7 @@ interface TextEmbedding {
   model_text: string
 }
 ----
+
 
 
 [discrete]
@@ -2237,6 +2404,7 @@ interface TextSimilarityReranker extends <<RetrieverBase>> {
 ----
 
 
+
 [discrete]
 [[ThreadType]]
 === ThreadType
@@ -2245,6 +2413,7 @@ interface TextSimilarityReranker extends <<RetrieverBase>> {
 ----
 type ThreadType = 'cpu' | 'wait' | 'block' | 'gpu' | 'mem'
 ----
+
 
 
 [discrete]
@@ -2257,6 +2426,7 @@ type TimeOfDay = string
 ----
 
 
+
 [discrete]
 [[TimeUnit]]
 === TimeUnit
@@ -2267,6 +2437,7 @@ type TimeUnit = 'nanos' | 'micros' | 'ms' | 's' | 'm' | 'h' | 'd'
 ----
 
 
+
 [discrete]
 [[TimeZone]]
 === TimeZone
@@ -2275,6 +2446,7 @@ type TimeUnit = 'nanos' | 'micros' | 'ms' | 's' | 'm' | 'h' | 'd'
 ----
 type TimeZone = string
 ----
+
 
 
 [discrete]
@@ -2290,6 +2462,7 @@ interface TopLeftBottomRightGeoBounds {
 ----
 
 
+
 [discrete]
 [[TopRightBottomLeftGeoBounds]]
 === TopRightBottomLeftGeoBounds
@@ -2301,6 +2474,7 @@ interface TopRightBottomLeftGeoBounds {
   bottom_left: <<GeoLocation>>
 }
 ----
+
 
 
 [discrete]
@@ -2315,6 +2489,7 @@ interface TransformContainer {
   search?: <<SearchTransform>>
 }
 ----
+
 
 
 [discrete]
@@ -2335,6 +2510,7 @@ interface TranslogStats {
 ----
 
 
+
 [discrete]
 [[TransportAddress]]
 === TransportAddress
@@ -2343,6 +2519,7 @@ interface TranslogStats {
 ----
 type TransportAddress = string
 ----
+
 
 
 [discrete]
@@ -2355,6 +2532,7 @@ type UnitFloatMillis = <<double>>
 ----
 
 
+
 [discrete]
 [[UnitMillis]]
 === UnitMillis
@@ -2363,6 +2541,7 @@ type UnitFloatMillis = <<double>>
 ----
 type UnitMillis = <<long>>
 ----
+
 
 
 [discrete]
@@ -2375,6 +2554,7 @@ type UnitNanos = <<long>>
 ----
 
 
+
 [discrete]
 [[UnitSeconds]]
 === UnitSeconds
@@ -2383,6 +2563,7 @@ type UnitNanos = <<long>>
 ----
 type UnitSeconds = <<long>>
 ----
+
 
 
 [discrete]
@@ -2395,6 +2576,7 @@ type Username = string
 ----
 
 
+
 [discrete]
 [[Uuid]]
 === Uuid
@@ -2403,6 +2585,7 @@ type Username = string
 ----
 type Uuid = string
 ----
+
 
 
 [discrete]
@@ -2415,6 +2598,7 @@ type VersionNumber = <<long>>
 ----
 
 
+
 [discrete]
 [[VersionString]]
 === VersionString
@@ -2423,6 +2607,7 @@ type VersionNumber = <<long>>
 ----
 type VersionString = string
 ----
+
 
 
 [discrete]
@@ -2435,6 +2620,7 @@ type VersionType = 'internal' | 'external' | 'external_gte' | 'force'
 ----
 
 
+
 [discrete]
 [[WaitForActiveShardOptions]]
 === WaitForActiveShardOptions
@@ -2443,6 +2629,7 @@ type VersionType = 'internal' | 'external' | 'external_gte' | 'force'
 ----
 type WaitForActiveShardOptions = 'all' | 'index-setting'
 ----
+
 
 
 [discrete]
@@ -2455,6 +2642,7 @@ type WaitForActiveShards = <<integer>> | <<WaitForActiveShardOptions>>
 ----
 
 
+
 [discrete]
 [[WaitForEvents]]
 === WaitForEvents
@@ -2463,6 +2651,7 @@ type WaitForActiveShards = <<integer>> | <<WaitForActiveShardOptions>>
 ----
 type WaitForEvents = 'immediate' | 'urgent' | 'high' | 'normal' | 'low' | 'languid'
 ----
+
 
 
 [discrete]
@@ -2480,6 +2669,7 @@ interface WarmerStats {
 ----
 
 
+
 [discrete]
 [[WktGeoBounds]]
 === WktGeoBounds
@@ -2490,6 +2680,7 @@ interface WktGeoBounds {
   wkt: string
 }
 ----
+
 
 
 [discrete]
@@ -2511,6 +2702,7 @@ interface WriteResponseBase {
 ----
 
 
+
 [discrete]
 [[byte]]
 === byte
@@ -2519,6 +2711,7 @@ interface WriteResponseBase {
 ----
 type byte = number
 ----
+
 
 
 [discrete]
@@ -2531,6 +2724,7 @@ type double = number
 ----
 
 
+
 [discrete]
 [[float]]
 === float
@@ -2539,6 +2733,7 @@ type double = number
 ----
 type float = number
 ----
+
 
 
 [discrete]
@@ -2551,6 +2746,7 @@ type integer = number
 ----
 
 
+
 [discrete]
 [[long]]
 === long
@@ -2559,6 +2755,7 @@ type integer = number
 ----
 type long = number
 ----
+
 
 
 [discrete]
@@ -2571,6 +2768,7 @@ type short = number
 ----
 
 
+
 [discrete]
 [[uint]]
 === uint
@@ -2581,6 +2779,7 @@ type uint = number
 ----
 
 
+
 [discrete]
 [[ulong]]
 === ulong
@@ -2589,6 +2788,7 @@ type uint = number
 ----
 type ulong = number
 ----
+
 
 
 [discrete]
@@ -2608,6 +2808,7 @@ interface SpecUtilsBaseNode {
 ----
 
 
+
 [discrete]
 [[SpecUtilsNullValue]]
 === SpecUtilsNullValue
@@ -2616,6 +2817,7 @@ interface SpecUtilsBaseNode {
 ----
 type SpecUtilsNullValue = null
 ----
+
 
 
 [discrete]
@@ -2628,6 +2830,7 @@ type SpecUtilsPipeSeparatedFlags<T = unknown> = T | string
 ----
 
 
+
 [discrete]
 [[SpecUtilsStringified]]
 === SpecUtilsStringified
@@ -2636,6 +2839,7 @@ type SpecUtilsPipeSeparatedFlags<T = unknown> = T | string
 ----
 type SpecUtilsStringified<T = unknown> = T | string
 ----
+
 
 
 [discrete]
@@ -2648,6 +2852,7 @@ type SpecUtilsStringified<T = unknown> = T | string
 ----
 
 
+
 [discrete]
 [[SpecUtilsWithNullValue]]
 === SpecUtilsWithNullValue
@@ -2656,6 +2861,7 @@ type SpecUtilsStringified<T = unknown> = T | string
 ----
 type SpecUtilsWithNullValue<T = unknown> = T | <<SpecUtilsNullValue>>
 ----
+
 
 
 [discrete]
@@ -2668,6 +2874,7 @@ interface SpecUtilsAdditionalProperties<TKey = unknown, TValue = unknown> {}
 ----
 
 
+
 [discrete]
 [[SpecUtilsAdditionalProperty]]
 === SpecUtilsAdditionalProperty
@@ -2676,6 +2883,7 @@ interface SpecUtilsAdditionalProperties<TKey = unknown, TValue = unknown> {}
 ----
 interface SpecUtilsAdditionalProperty<TKey = unknown, TValue = unknown> {}
 ----
+
 
 
 [discrete]
@@ -2695,6 +2903,7 @@ interface SpecUtilsCommonQueryParameters {
   pretty?: boolean
 }
 ----
+
 
 
 [discrete]
@@ -2722,6 +2931,7 @@ interface SpecUtilsCommonCatQueryParameters {
 ----
 
 
+
 [discrete]
 [[SpecUtilsOverloadOf]]
 === SpecUtilsOverloadOf
@@ -2732,6 +2942,7 @@ interface SpecUtilsOverloadOf<TDefinition = unknown> {}
 ----
 
 
+
 [discrete]
 [[AggregationsAdjacencyMatrixAggregate]]
 === AggregationsAdjacencyMatrixAggregate
@@ -2740,6 +2951,7 @@ interface SpecUtilsOverloadOf<TDefinition = unknown> {}
 ----
 interface AggregationsAdjacencyMatrixAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsAdjacencyMatrixBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -2757,6 +2969,7 @@ interface AggregationsAdjacencyMatrixAggregation extends <<AggregationsBucketAgg
 ----
 
 
+
 [discrete]
 [[AggregationsAdjacencyMatrixBucket]]
 === AggregationsAdjacencyMatrixBucket
@@ -2771,6 +2984,7 @@ type AggregationsAdjacencyMatrixBucket = AggregationsAdjacencyMatrixBucketKeys
 ----
 
 
+
 [discrete]
 [[AggregationsAggregate]]
 === AggregationsAggregate
@@ -2779,6 +2993,7 @@ type AggregationsAdjacencyMatrixBucket = AggregationsAdjacencyMatrixBucketKeys
 ----
 type AggregationsAggregate = <<AggregationsCardinalityAggregate>> | <<AggregationsHdrPercentilesAggregate>> | <<AggregationsHdrPercentileRanksAggregate>> | <<AggregationsTDigestPercentilesAggregate>> | <<AggregationsTDigestPercentileRanksAggregate>> | <<AggregationsPercentilesBucketAggregate>> | <<AggregationsMedianAbsoluteDeviationAggregate>> | <<AggregationsMinAggregate>> | <<AggregationsMaxAggregate>> | <<AggregationsSumAggregate>> | <<AggregationsAvgAggregate>> | <<AggregationsWeightedAvgAggregate>> | <<AggregationsValueCountAggregate>> | <<AggregationsSimpleValueAggregate>> | <<AggregationsDerivativeAggregate>> | <<AggregationsBucketMetricValueAggregate>> | <<AggregationsStatsAggregate>> | <<AggregationsStatsBucketAggregate>> | <<AggregationsExtendedStatsAggregate>> | <<AggregationsExtendedStatsBucketAggregate>> | <<AggregationsGeoBoundsAggregate>> | <<AggregationsGeoCentroidAggregate>> | <<AggregationsHistogramAggregate>> | <<AggregationsDateHistogramAggregate>> | <<AggregationsAutoDateHistogramAggregate>> | <<AggregationsVariableWidthHistogramAggregate>> | <<AggregationsStringTermsAggregate>> | <<AggregationsLongTermsAggregate>> | <<AggregationsDoubleTermsAggregate>> | <<AggregationsUnmappedTermsAggregate>> | <<AggregationsLongRareTermsAggregate>> | <<AggregationsStringRareTermsAggregate>> | <<AggregationsUnmappedRareTermsAggregate>> | <<AggregationsMultiTermsAggregate>> | <<AggregationsMissingAggregate>> | <<AggregationsNestedAggregate>> | <<AggregationsReverseNestedAggregate>> | <<AggregationsGlobalAggregate>> | <<AggregationsFilterAggregate>> | <<AggregationsChildrenAggregate>> | <<AggregationsParentAggregate>> | <<AggregationsSamplerAggregate>> | <<AggregationsUnmappedSamplerAggregate>> | <<AggregationsGeoHashGridAggregate>> | <<AggregationsGeoTileGridAggregate>> | <<AggregationsGeoHexGridAggregate>> | <<AggregationsRangeAggregate>> | <<AggregationsDateRangeAggregate>> | <<AggregationsGeoDistanceAggregate>> | <<AggregationsIpRangeAggregate>> | <<AggregationsIpPrefixAggregate>> | <<AggregationsFiltersAggregate>> | <<AggregationsAdjacencyMatrixAggregate>> | <<AggregationsSignificantLongTermsAggregate>> | <<AggregationsSignificantStringTermsAggregate>> | <<AggregationsUnmappedSignificantTermsAggregate>> | <<AggregationsCompositeAggregate>> | <<AggregationsFrequentItemSetsAggregate>> | <<AggregationsTimeSeriesAggregate>> | <<AggregationsScriptedMetricAggregate>> | <<AggregationsTopHitsAggregate>> | <<AggregationsInferenceAggregate>> | <<AggregationsStringStatsAggregate>> | <<AggregationsBoxPlotAggregate>> | <<AggregationsTopMetricsAggregate>> | <<AggregationsTTestAggregate>> | <<AggregationsRateAggregate>> | <<AggregationsCumulativeCardinalityAggregate>> | <<AggregationsMatrixStatsAggregate>> | <<AggregationsGeoLineAggregate>>
 ----
+
 
 
 [discrete]
@@ -2793,6 +3008,7 @@ interface AggregationsAggregateBase {
 ----
 
 
+
 [discrete]
 [[AggregationsAggregateOrder]]
 === AggregationsAggregateOrder
@@ -2803,6 +3019,7 @@ type AggregationsAggregateOrder = Partial<Record<<<Field>>, <<SortOrder>>>> | Pa
 ----
 
 
+
 [discrete]
 [[AggregationsAggregation]]
 === AggregationsAggregation
@@ -2811,6 +3028,7 @@ type AggregationsAggregateOrder = Partial<Record<<<Field>>, <<SortOrder>>>> | Pa
 ----
 interface AggregationsAggregation {}
 ----
+
 
 
 [discrete]
@@ -2983,6 +3201,7 @@ interface AggregationsAggregationContainer {
 ----
 
 
+
 [discrete]
 [[AggregationsAggregationRange]]
 === AggregationsAggregationRange
@@ -3000,6 +3219,7 @@ interface AggregationsAggregationRange {
 ----
 
 
+
 [discrete]
 [[AggregationsArrayPercentilesItem]]
 === AggregationsArrayPercentilesItem
@@ -3014,6 +3234,7 @@ interface AggregationsArrayPercentilesItem {
 ----
 
 
+
 [discrete]
 [[AggregationsAutoDateHistogramAggregate]]
 === AggregationsAutoDateHistogramAggregate
@@ -3024,6 +3245,7 @@ interface AggregationsAutoDateHistogramAggregate extends <<AggregationsMultiBuck
   interval: <<DurationLarge>>
 }
 ----
+
 
 
 [discrete]
@@ -3053,6 +3275,7 @@ interface AggregationsAutoDateHistogramAggregation extends <<AggregationsBucketA
 ----
 
 
+
 [discrete]
 [[AggregationsAverageAggregation]]
 === AggregationsAverageAggregation
@@ -3061,6 +3284,7 @@ interface AggregationsAutoDateHistogramAggregation extends <<AggregationsBucketA
 ----
 interface AggregationsAverageAggregation extends <<AggregationsFormatMetricAggregationBase>> {}
 ----
+
 
 
 [discrete]
@@ -3073,6 +3297,7 @@ interface AggregationsAverageBucketAggregation extends <<AggregationsPipelineAgg
 ----
 
 
+
 [discrete]
 [[AggregationsAvgAggregate]]
 === AggregationsAvgAggregate
@@ -3081,6 +3306,7 @@ interface AggregationsAverageBucketAggregation extends <<AggregationsPipelineAgg
 ----
 interface AggregationsAvgAggregate extends <<AggregationsSingleMetricAggregateBase>> {}
 ----
+
 
 
 [discrete]
@@ -3108,6 +3334,7 @@ interface AggregationsBoxPlotAggregate extends <<AggregationsAggregateBase>> {
 ----
 
 
+
 [discrete]
 [[AggregationsBoxplotAggregation]]
 === AggregationsBoxplotAggregation
@@ -3121,6 +3348,7 @@ interface AggregationsBoxplotAggregation extends <<AggregationsMetricAggregation
 ----
 
 
+
 [discrete]
 [[AggregationsBucketAggregationBase]]
 === AggregationsBucketAggregationBase
@@ -3129,6 +3357,7 @@ interface AggregationsBoxplotAggregation extends <<AggregationsMetricAggregation
 ----
 interface AggregationsBucketAggregationBase {}
 ----
+
 
 
 [discrete]
@@ -3144,6 +3373,7 @@ interface AggregationsBucketCorrelationAggregation extends <<AggregationsBucketP
 ----
 
 
+
 [discrete]
 [[AggregationsBucketCorrelationFunction]]
 === AggregationsBucketCorrelationFunction
@@ -3157,6 +3387,7 @@ interface AggregationsBucketCorrelationFunction {
 ----
 
 
+
 [discrete]
 [[AggregationsBucketCorrelationFunctionCountCorrelation]]
 === AggregationsBucketCorrelationFunctionCountCorrelation
@@ -3168,6 +3399,7 @@ interface AggregationsBucketCorrelationFunctionCountCorrelation {
   indicator: <<AggregationsBucketCorrelationFunctionCountCorrelationIndicator>>
 }
 ----
+
 
 
 [discrete]
@@ -3187,6 +3419,7 @@ interface AggregationsBucketCorrelationFunctionCountCorrelationIndicator {
 ----
 
 
+
 [discrete]
 [[AggregationsBucketKsAggregation]]
 === AggregationsBucketKsAggregation
@@ -3204,6 +3437,7 @@ interface AggregationsBucketKsAggregation extends <<AggregationsBucketPathAggreg
 ----
 
 
+
 [discrete]
 [[AggregationsBucketMetricValueAggregate]]
 === AggregationsBucketMetricValueAggregate
@@ -3214,6 +3448,7 @@ interface AggregationsBucketMetricValueAggregate extends <<AggregationsSingleMet
   keys: string[]
 }
 ----
+
 
 
 [discrete]
@@ -3229,6 +3464,7 @@ interface AggregationsBucketPathAggregation {
 ----
 
 
+
 [discrete]
 [[AggregationsBucketScriptAggregation]]
 === AggregationsBucketScriptAggregation
@@ -3242,6 +3478,7 @@ interface AggregationsBucketScriptAggregation extends <<AggregationsPipelineAggr
 ----
 
 
+
 [discrete]
 [[AggregationsBucketSelectorAggregation]]
 === AggregationsBucketSelectorAggregation
@@ -3253,6 +3490,7 @@ interface AggregationsBucketSelectorAggregation extends <<AggregationsPipelineAg
   script?: <<Script>> | string
 }
 ----
+
 
 
 [discrete]
@@ -3274,6 +3512,7 @@ interface AggregationsBucketSortAggregation {
 ----
 
 
+
 [discrete]
 [[AggregationsBuckets]]
 === AggregationsBuckets
@@ -3282,6 +3521,7 @@ interface AggregationsBucketSortAggregation {
 ----
 type AggregationsBuckets<TBucket = unknown> = Record<string, TBucket> | TBucket[]
 ----
+
 
 
 [discrete]
@@ -3294,6 +3534,7 @@ type AggregationsBucketsPath = string | string[] | Record<string, string>
 ----
 
 
+
 [discrete]
 [[AggregationsCalendarInterval]]
 === AggregationsCalendarInterval
@@ -3302,6 +3543,7 @@ type AggregationsBucketsPath = string | string[] | Record<string, string>
 ----
 type AggregationsCalendarInterval = 'second' | '1s' | 'minute' | '1m' | 'hour' | '1h' | 'day' | '1d' | 'week' | '1w' | 'month' | '1M' | 'quarter' | '1q' | 'year' | '1y'
 ----
+
 
 
 [discrete]
@@ -3314,6 +3556,7 @@ interface AggregationsCardinalityAggregate extends <<AggregationsAggregateBase>>
   value: <<long>>
 }
 ----
+
 
 
 [discrete]
@@ -3332,6 +3575,7 @@ interface AggregationsCardinalityAggregation extends <<AggregationsMetricAggrega
 ----
 
 
+
 [discrete]
 [[AggregationsCardinalityExecutionMode]]
 === AggregationsCardinalityExecutionMode
@@ -3340,6 +3584,7 @@ interface AggregationsCardinalityAggregation extends <<AggregationsMetricAggrega
 ----
 type AggregationsCardinalityExecutionMode = 'global_ordinals' | 'segment_ordinals' | 'direct' | 'save_memory_heuristic' | 'save_time_heuristic'
 ----
+
 
 
 [discrete]
@@ -3373,6 +3618,7 @@ interface AggregationsCategorizeTextAggregation {
 ----
 
 
+
 [discrete]
 [[AggregationsCategorizeTextAnalyzer]]
 === AggregationsCategorizeTextAnalyzer
@@ -3381,6 +3627,7 @@ interface AggregationsCategorizeTextAggregation {
 ----
 type AggregationsCategorizeTextAnalyzer = string | <<AggregationsCustomCategorizeTextAnalyzer>>
 ----
+
 
 
 [discrete]
@@ -3398,6 +3645,7 @@ interface AggregationsChiSquareHeuristic {
 ----
 
 
+
 [discrete]
 [[AggregationsChildrenAggregate]]
 === AggregationsChildrenAggregate
@@ -3408,6 +3656,7 @@ interface AggregationsChildrenAggregateKeys extends <<AggregationsSingleBucketAg
 type AggregationsChildrenAggregate = AggregationsChildrenAggregateKeys
   & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 ----
+
 
 
 [discrete]
@@ -3423,6 +3672,7 @@ interface AggregationsChildrenAggregation extends <<AggregationsBucketAggregatio
 ----
 
 
+
 [discrete]
 [[AggregationsCompositeAggregate]]
 === AggregationsCompositeAggregate
@@ -3435,6 +3685,7 @@ interface AggregationsCompositeAggregate extends <<AggregationsMultiBucketAggreg
 ----
 
 
+
 [discrete]
 [[AggregationsCompositeAggregateKey]]
 === AggregationsCompositeAggregateKey
@@ -3443,6 +3694,7 @@ interface AggregationsCompositeAggregate extends <<AggregationsMultiBucketAggreg
 ----
 type AggregationsCompositeAggregateKey = Record<<<Field>>, <<FieldValue>>>
 ----
+
 
 
 [discrete]
@@ -3460,6 +3712,7 @@ interface AggregationsCompositeAggregation extends <<AggregationsBucketAggregati
   sources?: Record<string, <<AggregationsCompositeAggregationSource>>>[]
 }
 ----
+
 
 
 [discrete]
@@ -3481,6 +3734,7 @@ interface AggregationsCompositeAggregationBase {
 ----
 
 
+
 [discrete]
 [[AggregationsCompositeAggregationSource]]
 === AggregationsCompositeAggregationSource
@@ -3500,6 +3754,7 @@ interface AggregationsCompositeAggregationSource {
 ----
 
 
+
 [discrete]
 [[AggregationsCompositeBucket]]
 === AggregationsCompositeBucket
@@ -3512,6 +3767,7 @@ interface AggregationsCompositeBucketKeys extends <<AggregationsMultiBucketBase>
 type AggregationsCompositeBucket = AggregationsCompositeBucketKeys
   & { [property: string]: <<AggregationsAggregate>> | <<AggregationsCompositeAggregateKey>> | <<long>> }
 ----
+
 
 
 [discrete]
@@ -3532,6 +3788,7 @@ interface AggregationsCompositeDateHistogramAggregation extends <<AggregationsCo
 ----
 
 
+
 [discrete]
 [[AggregationsCompositeGeoTileGridAggregation]]
 === AggregationsCompositeGeoTileGridAggregation
@@ -3543,6 +3800,7 @@ interface AggregationsCompositeGeoTileGridAggregation extends <<AggregationsComp
   bounds?: <<GeoBounds>>
 }
 ----
+
 
 
 [discrete]
@@ -3557,6 +3815,7 @@ interface AggregationsCompositeHistogramAggregation extends <<AggregationsCompos
 ----
 
 
+
 [discrete]
 [[AggregationsCompositeTermsAggregation]]
 === AggregationsCompositeTermsAggregation
@@ -3565,6 +3824,7 @@ interface AggregationsCompositeHistogramAggregation extends <<AggregationsCompos
 ----
 interface AggregationsCompositeTermsAggregation extends <<AggregationsCompositeAggregationBase>> {}
 ----
+
 
 
 [discrete]
@@ -3580,6 +3840,7 @@ interface AggregationsCumulativeCardinalityAggregate extends <<AggregationsAggre
 ----
 
 
+
 [discrete]
 [[AggregationsCumulativeCardinalityAggregation]]
 === AggregationsCumulativeCardinalityAggregation
@@ -3590,6 +3851,7 @@ interface AggregationsCumulativeCardinalityAggregation extends <<AggregationsPip
 ----
 
 
+
 [discrete]
 [[AggregationsCumulativeSumAggregation]]
 === AggregationsCumulativeSumAggregation
@@ -3598,6 +3860,7 @@ interface AggregationsCumulativeCardinalityAggregation extends <<AggregationsPip
 ----
 interface AggregationsCumulativeSumAggregation extends <<AggregationsPipelineAggregationBase>> {}
 ----
+
 
 
 [discrete]
@@ -3614,6 +3877,7 @@ interface AggregationsCustomCategorizeTextAnalyzer {
 ----
 
 
+
 [discrete]
 [[AggregationsDateHistogramAggregate]]
 === AggregationsDateHistogramAggregate
@@ -3622,6 +3886,7 @@ interface AggregationsCustomCategorizeTextAnalyzer {
 ----
 interface AggregationsDateHistogramAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsDateHistogramBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -3662,6 +3927,7 @@ interface AggregationsDateHistogramAggregation extends <<AggregationsBucketAggre
 ----
 
 
+
 [discrete]
 [[AggregationsDateHistogramBucket]]
 === AggregationsDateHistogramBucket
@@ -3677,6 +3943,7 @@ type AggregationsDateHistogramBucket = AggregationsDateHistogramBucketKeys
 ----
 
 
+
 [discrete]
 [[AggregationsDateRangeAggregate]]
 === AggregationsDateRangeAggregate
@@ -3685,6 +3952,7 @@ type AggregationsDateHistogramBucket = AggregationsDateHistogramBucketKeys
 ----
 interface AggregationsDateRangeAggregate extends <<AggregationsRangeAggregate>> {}
 ----
+
 
 
 [discrete]
@@ -3710,6 +3978,7 @@ interface AggregationsDateRangeAggregation extends <<AggregationsBucketAggregati
 ----
 
 
+
 [discrete]
 [[AggregationsDateRangeExpression]]
 === AggregationsDateRangeExpression
@@ -3727,6 +3996,7 @@ interface AggregationsDateRangeExpression {
 ----
 
 
+
 [discrete]
 [[AggregationsDerivativeAggregate]]
 === AggregationsDerivativeAggregate
@@ -3740,6 +4010,7 @@ interface AggregationsDerivativeAggregate extends <<AggregationsSingleMetricAggr
 ----
 
 
+
 [discrete]
 [[AggregationsDerivativeAggregation]]
 === AggregationsDerivativeAggregation
@@ -3748,6 +4019,7 @@ interface AggregationsDerivativeAggregate extends <<AggregationsSingleMetricAggr
 ----
 interface AggregationsDerivativeAggregation extends <<AggregationsPipelineAggregationBase>> {}
 ----
+
 
 
 [discrete]
@@ -3770,6 +4042,7 @@ interface AggregationsDiversifiedSamplerAggregation extends <<AggregationsBucket
 ----
 
 
+
 [discrete]
 [[AggregationsDoubleTermsAggregate]]
 === AggregationsDoubleTermsAggregate
@@ -3778,6 +4051,7 @@ interface AggregationsDiversifiedSamplerAggregation extends <<AggregationsBucket
 ----
 interface AggregationsDoubleTermsAggregate extends <<AggregationsTermsAggregateBase>><<<AggregationsDoubleTermsBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -3795,6 +4069,7 @@ type AggregationsDoubleTermsBucket = AggregationsDoubleTermsBucketKeys
 ----
 
 
+
 [discrete]
 [[AggregationsEwmaModelSettings]]
 === AggregationsEwmaModelSettings
@@ -3805,6 +4080,7 @@ interface AggregationsEwmaModelSettings {
   alpha?: <<float>>
 }
 ----
+
 
 
 [discrete]
@@ -3820,6 +4096,7 @@ interface AggregationsEwmaMovingAverageAggregation extends <<AggregationsMovingA
 ----
 
 
+
 [discrete]
 [[AggregationsExtendedBounds]]
 === AggregationsExtendedBounds
@@ -3833,6 +4110,7 @@ interface AggregationsExtendedBounds<T = unknown> {
   min?: T
 }
 ----
+
 
 
 [discrete]
@@ -3860,6 +4138,7 @@ interface AggregationsExtendedStatsAggregate extends <<AggregationsStatsAggregat
 ----
 
 
+
 [discrete]
 [[AggregationsExtendedStatsAggregation]]
 === AggregationsExtendedStatsAggregation
@@ -3873,6 +4152,7 @@ interface AggregationsExtendedStatsAggregation extends <<AggregationsFormatMetri
 ----
 
 
+
 [discrete]
 [[AggregationsExtendedStatsBucketAggregate]]
 === AggregationsExtendedStatsBucketAggregate
@@ -3881,6 +4161,7 @@ interface AggregationsExtendedStatsAggregation extends <<AggregationsFormatMetri
 ----
 interface AggregationsExtendedStatsBucketAggregate extends <<AggregationsExtendedStatsAggregate>> {}
 ----
+
 
 
 [discrete]
@@ -3896,6 +4177,7 @@ interface AggregationsExtendedStatsBucketAggregation extends <<AggregationsPipel
 ----
 
 
+
 [discrete]
 [[AggregationsFieldDateMath]]
 === AggregationsFieldDateMath
@@ -3904,6 +4186,7 @@ interface AggregationsExtendedStatsBucketAggregation extends <<AggregationsPipel
 ----
 type AggregationsFieldDateMath = <<DateMath>> | <<double>>
 ----
+
 
 
 [discrete]
@@ -3918,6 +4201,7 @@ type AggregationsFilterAggregate = AggregationsFilterAggregateKeys
 ----
 
 
+
 [discrete]
 [[AggregationsFiltersAggregate]]
 === AggregationsFiltersAggregate
@@ -3926,6 +4210,7 @@ type AggregationsFilterAggregate = AggregationsFilterAggregateKeys
 ----
 interface AggregationsFiltersAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsFiltersBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -3947,6 +4232,7 @@ interface AggregationsFiltersAggregation extends <<AggregationsBucketAggregation
 ----
 
 
+
 [discrete]
 [[AggregationsFiltersBucket]]
 === AggregationsFiltersBucket
@@ -3957,6 +4243,7 @@ interface AggregationsFiltersBucketKeys extends <<AggregationsMultiBucketBase>> 
 type AggregationsFiltersBucket = AggregationsFiltersBucketKeys
   & { [property: string]: <<AggregationsAggregate>> | <<long>> }
 ----
+
 
 
 [discrete]
@@ -3971,6 +4258,7 @@ interface AggregationsFormatMetricAggregationBase extends <<AggregationsMetricAg
 ----
 
 
+
 [discrete]
 [[AggregationsFormattableMetricAggregation]]
 === AggregationsFormattableMetricAggregation
@@ -3983,6 +4271,7 @@ interface AggregationsFormattableMetricAggregation extends <<AggregationsMetricA
 ----
 
 
+
 [discrete]
 [[AggregationsFrequentItemSetsAggregate]]
 === AggregationsFrequentItemSetsAggregate
@@ -3991,6 +4280,7 @@ interface AggregationsFormattableMetricAggregation extends <<AggregationsMetricA
 ----
 interface AggregationsFrequentItemSetsAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsFrequentItemSetsBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -4014,6 +4304,7 @@ interface AggregationsFrequentItemSetsAggregation {
 ----
 
 
+
 [discrete]
 [[AggregationsFrequentItemSetsBucket]]
 === AggregationsFrequentItemSetsBucket
@@ -4027,6 +4318,7 @@ interface AggregationsFrequentItemSetsBucketKeys extends <<AggregationsMultiBuck
 type AggregationsFrequentItemSetsBucket = AggregationsFrequentItemSetsBucketKeys
   & { [property: string]: <<AggregationsAggregate>> | Record<<<Field>>, string[]> | <<double>> | <<long>> }
 ----
+
 
 
 [discrete]
@@ -4045,6 +4337,7 @@ interface AggregationsFrequentItemSetsField {
 ----
 
 
+
 [discrete]
 [[AggregationsGapPolicy]]
 === AggregationsGapPolicy
@@ -4053,6 +4346,7 @@ interface AggregationsFrequentItemSetsField {
 ----
 type AggregationsGapPolicy = 'skip' | 'insert_zeros' | 'keep_values'
 ----
+
 
 
 [discrete]
@@ -4065,6 +4359,7 @@ interface AggregationsGeoBoundsAggregate extends <<AggregationsAggregateBase>> {
   bounds?: <<GeoBounds>>
 }
 ----
+
 
 
 [discrete]
@@ -4080,6 +4375,7 @@ interface AggregationsGeoBoundsAggregation extends <<AggregationsMetricAggregati
 ----
 
 
+
 [discrete]
 [[AggregationsGeoCentroidAggregate]]
 === AggregationsGeoCentroidAggregate
@@ -4091,6 +4387,7 @@ interface AggregationsGeoCentroidAggregate extends <<AggregationsAggregateBase>>
   location?: <<GeoLocation>>
 }
 ----
+
 
 
 [discrete]
@@ -4106,6 +4403,7 @@ interface AggregationsGeoCentroidAggregation extends <<AggregationsMetricAggrega
 ----
 
 
+
 [discrete]
 [[AggregationsGeoDistanceAggregate]]
 === AggregationsGeoDistanceAggregate
@@ -4114,6 +4412,7 @@ interface AggregationsGeoCentroidAggregation extends <<AggregationsMetricAggrega
 ----
 interface AggregationsGeoDistanceAggregate extends <<AggregationsRangeAggregate>> {}
 ----
+
 
 
 [discrete]
@@ -4137,6 +4436,7 @@ interface AggregationsGeoDistanceAggregation extends <<AggregationsBucketAggrega
 ----
 
 
+
 [discrete]
 [[AggregationsGeoHashGridAggregate]]
 === AggregationsGeoHashGridAggregate
@@ -4145,6 +4445,7 @@ interface AggregationsGeoDistanceAggregation extends <<AggregationsBucketAggrega
 ----
 interface AggregationsGeoHashGridAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsGeoHashGridBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -4168,6 +4469,7 @@ interface AggregationsGeoHashGridAggregation extends <<AggregationsBucketAggrega
 ----
 
 
+
 [discrete]
 [[AggregationsGeoHashGridBucket]]
 === AggregationsGeoHashGridBucket
@@ -4182,6 +4484,7 @@ type AggregationsGeoHashGridBucket = AggregationsGeoHashGridBucketKeys
 ----
 
 
+
 [discrete]
 [[AggregationsGeoHexGridAggregate]]
 === AggregationsGeoHexGridAggregate
@@ -4190,6 +4493,7 @@ type AggregationsGeoHashGridBucket = AggregationsGeoHashGridBucketKeys
 ----
 interface AggregationsGeoHexGridAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsGeoHexGridBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -4206,6 +4510,7 @@ type AggregationsGeoHexGridBucket = AggregationsGeoHexGridBucketKeys
 ----
 
 
+
 [discrete]
 [[AggregationsGeoLineAggregate]]
 === AggregationsGeoLineAggregate
@@ -4218,6 +4523,7 @@ interface AggregationsGeoLineAggregate extends <<AggregationsAggregateBase>> {
   properties: any
 }
 ----
+
 
 
 [discrete]
@@ -4241,6 +4547,7 @@ interface AggregationsGeoLineAggregation {
 ----
 
 
+
 [discrete]
 [[AggregationsGeoLinePoint]]
 === AggregationsGeoLinePoint
@@ -4252,6 +4559,7 @@ interface AggregationsGeoLinePoint {
   field: <<Field>>
 }
 ----
+
 
 
 [discrete]
@@ -4267,6 +4575,7 @@ interface AggregationsGeoLineSort {
 ----
 
 
+
 [discrete]
 [[AggregationsGeoTileGridAggregate]]
 === AggregationsGeoTileGridAggregate
@@ -4275,6 +4584,7 @@ interface AggregationsGeoLineSort {
 ----
 interface AggregationsGeoTileGridAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsGeoTileGridBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -4298,6 +4608,7 @@ interface AggregationsGeoTileGridAggregation extends <<AggregationsBucketAggrega
 ----
 
 
+
 [discrete]
 [[AggregationsGeoTileGridBucket]]
 === AggregationsGeoTileGridBucket
@@ -4310,6 +4621,7 @@ interface AggregationsGeoTileGridBucketKeys extends <<AggregationsMultiBucketBas
 type AggregationsGeoTileGridBucket = AggregationsGeoTileGridBucketKeys
   & { [property: string]: <<AggregationsAggregate>> | <<GeoTile>> | <<long>> }
 ----
+
 
 
 [discrete]
@@ -4333,6 +4645,7 @@ interface AggregationsGeohexGridAggregation extends <<AggregationsBucketAggregat
 ----
 
 
+
 [discrete]
 [[AggregationsGlobalAggregate]]
 === AggregationsGlobalAggregate
@@ -4345,6 +4658,7 @@ type AggregationsGlobalAggregate = AggregationsGlobalAggregateKeys
 ----
 
 
+
 [discrete]
 [[AggregationsGlobalAggregation]]
 === AggregationsGlobalAggregation
@@ -4353,6 +4667,7 @@ type AggregationsGlobalAggregate = AggregationsGlobalAggregateKeys
 ----
 interface AggregationsGlobalAggregation extends <<AggregationsBucketAggregationBase>> {}
 ----
+
 
 
 [discrete]
@@ -4368,6 +4683,7 @@ interface AggregationsGoogleNormalizedDistanceHeuristic {
 ----
 
 
+
 [discrete]
 [[AggregationsHdrMethod]]
 === AggregationsHdrMethod
@@ -4381,6 +4697,7 @@ interface AggregationsHdrMethod {
 ----
 
 
+
 [discrete]
 [[AggregationsHdrPercentileRanksAggregate]]
 === AggregationsHdrPercentileRanksAggregate
@@ -4389,6 +4706,7 @@ interface AggregationsHdrMethod {
 ----
 interface AggregationsHdrPercentileRanksAggregate extends <<AggregationsPercentilesAggregateBase>> {}
 ----
+
 
 
 [discrete]
@@ -4401,6 +4719,7 @@ interface AggregationsHdrPercentilesAggregate extends <<AggregationsPercentilesA
 ----
 
 
+
 [discrete]
 [[AggregationsHistogramAggregate]]
 === AggregationsHistogramAggregate
@@ -4409,6 +4728,7 @@ interface AggregationsHdrPercentilesAggregate extends <<AggregationsPercentilesA
 ----
 interface AggregationsHistogramAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsHistogramBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -4442,6 +4762,7 @@ interface AggregationsHistogramAggregation extends <<AggregationsBucketAggregati
 ----
 
 
+
 [discrete]
 [[AggregationsHistogramBucket]]
 === AggregationsHistogramBucket
@@ -4457,6 +4778,7 @@ type AggregationsHistogramBucket = AggregationsHistogramBucketKeys
 ----
 
 
+
 [discrete]
 [[AggregationsHoltLinearModelSettings]]
 === AggregationsHoltLinearModelSettings
@@ -4470,6 +4792,7 @@ interface AggregationsHoltLinearModelSettings {
 ----
 
 
+
 [discrete]
 [[AggregationsHoltMovingAverageAggregation]]
 === AggregationsHoltMovingAverageAggregation
@@ -4481,6 +4804,7 @@ interface AggregationsHoltMovingAverageAggregation extends <<AggregationsMovingA
   settings: <<AggregationsHoltLinearModelSettings>>
 }
 ----
+
 
 
 [discrete]
@@ -4500,6 +4824,7 @@ interface AggregationsHoltWintersModelSettings {
 ----
 
 
+
 [discrete]
 [[AggregationsHoltWintersMovingAverageAggregation]]
 === AggregationsHoltWintersMovingAverageAggregation
@@ -4513,6 +4838,7 @@ interface AggregationsHoltWintersMovingAverageAggregation extends <<Aggregations
 ----
 
 
+
 [discrete]
 [[AggregationsHoltWintersType]]
 === AggregationsHoltWintersType
@@ -4521,6 +4847,7 @@ interface AggregationsHoltWintersMovingAverageAggregation extends <<Aggregations
 ----
 type AggregationsHoltWintersType = 'add' | 'mult'
 ----
+
 
 
 [discrete]
@@ -4540,6 +4867,7 @@ type AggregationsInferenceAggregate = AggregationsInferenceAggregateKeys
 ----
 
 
+
 [discrete]
 [[AggregationsInferenceAggregation]]
 === AggregationsInferenceAggregation
@@ -4555,6 +4883,7 @@ interface AggregationsInferenceAggregation extends <<AggregationsPipelineAggrega
 ----
 
 
+
 [discrete]
 [[AggregationsInferenceClassImportance]]
 === AggregationsInferenceClassImportance
@@ -4566,6 +4895,7 @@ interface AggregationsInferenceClassImportance {
   importance: <<double>>
 }
 ----
+
 
 
 [discrete]
@@ -4583,6 +4913,7 @@ interface AggregationsInferenceConfigContainer {
 ----
 
 
+
 [discrete]
 [[AggregationsInferenceFeatureImportance]]
 === AggregationsInferenceFeatureImportance
@@ -4595,6 +4926,7 @@ interface AggregationsInferenceFeatureImportance {
   classes?: <<AggregationsInferenceClassImportance>>[]
 }
 ----
+
 
 
 [discrete]
@@ -4611,6 +4943,7 @@ interface AggregationsInferenceTopClassEntry {
 ----
 
 
+
 [discrete]
 [[AggregationsIpPrefixAggregate]]
 === AggregationsIpPrefixAggregate
@@ -4619,6 +4952,7 @@ interface AggregationsInferenceTopClassEntry {
 ----
 interface AggregationsIpPrefixAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsIpPrefixBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -4644,6 +4978,7 @@ interface AggregationsIpPrefixAggregation extends <<AggregationsBucketAggregatio
 ----
 
 
+
 [discrete]
 [[AggregationsIpPrefixBucket]]
 === AggregationsIpPrefixBucket
@@ -4661,6 +4996,7 @@ type AggregationsIpPrefixBucket = AggregationsIpPrefixBucketKeys
 ----
 
 
+
 [discrete]
 [[AggregationsIpRangeAggregate]]
 === AggregationsIpRangeAggregate
@@ -4669,6 +5005,7 @@ type AggregationsIpPrefixBucket = AggregationsIpPrefixBucketKeys
 ----
 interface AggregationsIpRangeAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsIpRangeBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -4684,6 +5021,7 @@ interface AggregationsIpRangeAggregation extends <<AggregationsBucketAggregation
   ranges?: <<AggregationsIpRangeAggregationRange>>[]
 }
 ----
+
 
 
 [discrete]
@@ -4703,6 +5041,7 @@ interface AggregationsIpRangeAggregationRange {
 ----
 
 
+
 [discrete]
 [[AggregationsIpRangeBucket]]
 === AggregationsIpRangeBucket
@@ -4719,6 +5058,7 @@ type AggregationsIpRangeBucket = AggregationsIpRangeBucketKeys
 ----
 
 
+
 [discrete]
 [[AggregationsKeyedPercentiles]]
 === AggregationsKeyedPercentiles
@@ -4727,6 +5067,7 @@ type AggregationsIpRangeBucket = AggregationsIpRangeBucketKeys
 ----
 type AggregationsKeyedPercentiles = Record<string, string | <<long>> | null>
 ----
+
 
 
 [discrete]
@@ -4742,6 +5083,7 @@ interface AggregationsLinearMovingAverageAggregation extends <<AggregationsMovin
 ----
 
 
+
 [discrete]
 [[AggregationsLongRareTermsAggregate]]
 === AggregationsLongRareTermsAggregate
@@ -4750,6 +5092,7 @@ interface AggregationsLinearMovingAverageAggregation extends <<AggregationsMovin
 ----
 interface AggregationsLongRareTermsAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsLongRareTermsBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -4767,6 +5110,7 @@ type AggregationsLongRareTermsBucket = AggregationsLongRareTermsBucketKeys
 ----
 
 
+
 [discrete]
 [[AggregationsLongTermsAggregate]]
 === AggregationsLongTermsAggregate
@@ -4775,6 +5119,7 @@ type AggregationsLongRareTermsBucket = AggregationsLongRareTermsBucketKeys
 ----
 interface AggregationsLongTermsAggregate extends <<AggregationsTermsAggregateBase>><<<AggregationsLongTermsBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -4792,6 +5137,7 @@ type AggregationsLongTermsBucket = AggregationsLongTermsBucketKeys
 ----
 
 
+
 [discrete]
 [[AggregationsMatrixAggregation]]
 === AggregationsMatrixAggregation
@@ -4807,6 +5153,7 @@ interface AggregationsMatrixAggregation {
 ----
 
 
+
 [discrete]
 [[AggregationsMatrixStatsAggregate]]
 === AggregationsMatrixStatsAggregate
@@ -4820,6 +5167,7 @@ interface AggregationsMatrixStatsAggregate extends <<AggregationsAggregateBase>>
 ----
 
 
+
 [discrete]
 [[AggregationsMatrixStatsAggregation]]
 === AggregationsMatrixStatsAggregation
@@ -4831,6 +5179,7 @@ interface AggregationsMatrixStatsAggregation extends <<AggregationsMatrixAggrega
   mode?: <<SortMode>>
 }
 ----
+
 
 
 [discrete]
@@ -4852,6 +5201,7 @@ interface AggregationsMatrixStatsFields {
 ----
 
 
+
 [discrete]
 [[AggregationsMaxAggregate]]
 === AggregationsMaxAggregate
@@ -4860,6 +5210,7 @@ interface AggregationsMatrixStatsFields {
 ----
 interface AggregationsMaxAggregate extends <<AggregationsSingleMetricAggregateBase>> {}
 ----
+
 
 
 [discrete]
@@ -4872,6 +5223,7 @@ interface AggregationsMaxAggregation extends <<AggregationsFormatMetricAggregati
 ----
 
 
+
 [discrete]
 [[AggregationsMaxBucketAggregation]]
 === AggregationsMaxBucketAggregation
@@ -4882,6 +5234,7 @@ interface AggregationsMaxBucketAggregation extends <<AggregationsPipelineAggrega
 ----
 
 
+
 [discrete]
 [[AggregationsMedianAbsoluteDeviationAggregate]]
 === AggregationsMedianAbsoluteDeviationAggregate
@@ -4890,6 +5243,7 @@ interface AggregationsMaxBucketAggregation extends <<AggregationsPipelineAggrega
 ----
 interface AggregationsMedianAbsoluteDeviationAggregate extends <<AggregationsSingleMetricAggregateBase>> {}
 ----
+
 
 
 [discrete]
@@ -4903,6 +5257,7 @@ interface AggregationsMedianAbsoluteDeviationAggregation extends <<AggregationsF
   compression?: <<double>>
 }
 ----
+
 
 
 [discrete]
@@ -4921,6 +5276,7 @@ interface AggregationsMetricAggregationBase {
 ----
 
 
+
 [discrete]
 [[AggregationsMinAggregate]]
 === AggregationsMinAggregate
@@ -4929,6 +5285,7 @@ interface AggregationsMetricAggregationBase {
 ----
 interface AggregationsMinAggregate extends <<AggregationsSingleMetricAggregateBase>> {}
 ----
+
 
 
 [discrete]
@@ -4941,6 +5298,7 @@ interface AggregationsMinAggregation extends <<AggregationsFormatMetricAggregati
 ----
 
 
+
 [discrete]
 [[AggregationsMinBucketAggregation]]
 === AggregationsMinBucketAggregation
@@ -4949,6 +5307,7 @@ interface AggregationsMinAggregation extends <<AggregationsFormatMetricAggregati
 ----
 interface AggregationsMinBucketAggregation extends <<AggregationsPipelineAggregationBase>> {}
 ----
+
 
 
 [discrete]
@@ -4961,6 +5320,7 @@ type AggregationsMinimumInterval = 'second' | 'minute' | 'hour' | 'day' | 'month
 ----
 
 
+
 [discrete]
 [[AggregationsMissing]]
 === AggregationsMissing
@@ -4969,6 +5329,7 @@ type AggregationsMinimumInterval = 'second' | 'minute' | 'hour' | 'day' | 'month
 ----
 type AggregationsMissing = string | <<integer>> | <<double>> | boolean
 ----
+
 
 
 [discrete]
@@ -4981,6 +5342,7 @@ interface AggregationsMissingAggregateKeys extends <<AggregationsSingleBucketAgg
 type AggregationsMissingAggregate = AggregationsMissingAggregateKeys
   & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 ----
+
 
 
 [discrete]
@@ -4997,6 +5359,7 @@ interface AggregationsMissingAggregation extends <<AggregationsBucketAggregation
 ----
 
 
+
 [discrete]
 [[AggregationsMissingOrder]]
 === AggregationsMissingOrder
@@ -5007,6 +5370,7 @@ type AggregationsMissingOrder = 'first' | 'last' | 'default'
 ----
 
 
+
 [discrete]
 [[AggregationsMovingAverageAggregation]]
 === AggregationsMovingAverageAggregation
@@ -5015,6 +5379,7 @@ type AggregationsMissingOrder = 'first' | 'last' | 'default'
 ----
 type AggregationsMovingAverageAggregation = <<AggregationsLinearMovingAverageAggregation>> | <<AggregationsSimpleMovingAverageAggregation>> | <<AggregationsEwmaMovingAverageAggregation>> | <<AggregationsHoltMovingAverageAggregation>> | <<AggregationsHoltWintersMovingAverageAggregation>>
 ----
+
 
 
 [discrete]
@@ -5029,6 +5394,7 @@ interface AggregationsMovingAverageAggregationBase extends <<AggregationsPipelin
   window?: <<integer>>
 }
 ----
+
 
 
 [discrete]
@@ -5048,6 +5414,7 @@ interface AggregationsMovingFunctionAggregation extends <<AggregationsPipelineAg
 ----
 
 
+
 [discrete]
 [[AggregationsMovingPercentilesAggregation]]
 === AggregationsMovingPercentilesAggregation
@@ -5064,6 +5431,7 @@ interface AggregationsMovingPercentilesAggregation extends <<AggregationsPipelin
 ----
 
 
+
 [discrete]
 [[AggregationsMultiBucketAggregateBase]]
 === AggregationsMultiBucketAggregateBase
@@ -5076,6 +5444,7 @@ interface AggregationsMultiBucketAggregateBase<TBucket = unknown> extends <<Aggr
 ----
 
 
+
 [discrete]
 [[AggregationsMultiBucketBase]]
 === AggregationsMultiBucketBase
@@ -5086,6 +5455,7 @@ interface AggregationsMultiBucketBase {
   doc_count: <<long>>
 }
 ----
+
 
 
 [discrete]
@@ -5103,6 +5473,7 @@ interface AggregationsMultiTermLookup {
 ----
 
 
+
 [discrete]
 [[AggregationsMultiTermsAggregate]]
 === AggregationsMultiTermsAggregate
@@ -5111,6 +5482,7 @@ interface AggregationsMultiTermLookup {
 ----
 interface AggregationsMultiTermsAggregate extends <<AggregationsTermsAggregateBase>><<<AggregationsMultiTermsBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -5140,6 +5512,7 @@ interface AggregationsMultiTermsAggregation extends <<AggregationsBucketAggregat
 ----
 
 
+
 [discrete]
 [[AggregationsMultiTermsBucket]]
 === AggregationsMultiTermsBucket
@@ -5154,6 +5527,7 @@ interface AggregationsMultiTermsBucketKeys extends <<AggregationsMultiBucketBase
 type AggregationsMultiTermsBucket = AggregationsMultiTermsBucketKeys
   & { [property: string]: <<AggregationsAggregate>> | <<FieldValue>>[] | string | <<long>> }
 ----
+
 
 
 [discrete]
@@ -5171,6 +5545,7 @@ interface AggregationsMutualInformationHeuristic {
 ----
 
 
+
 [discrete]
 [[AggregationsNestedAggregate]]
 === AggregationsNestedAggregate
@@ -5181,6 +5556,7 @@ interface AggregationsNestedAggregateKeys extends <<AggregationsSingleBucketAggr
 type AggregationsNestedAggregate = AggregationsNestedAggregateKeys
   & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 ----
+
 
 
 [discrete]
@@ -5196,6 +5572,7 @@ interface AggregationsNestedAggregation extends <<AggregationsBucketAggregationB
 ----
 
 
+
 [discrete]
 [[AggregationsNormalizeAggregation]]
 === AggregationsNormalizeAggregation
@@ -5209,6 +5586,7 @@ interface AggregationsNormalizeAggregation extends <<AggregationsPipelineAggrega
 ----
 
 
+
 [discrete]
 [[AggregationsNormalizeMethod]]
 === AggregationsNormalizeMethod
@@ -5217,6 +5595,7 @@ interface AggregationsNormalizeAggregation extends <<AggregationsPipelineAggrega
 ----
 type AggregationsNormalizeMethod = 'rescale_0_1' | 'rescale_0_100' | 'percent_of_sum' | 'mean' | 'z-score' | 'softmax'
 ----
+
 
 
 [discrete]
@@ -5229,6 +5608,7 @@ interface AggregationsParentAggregateKeys extends <<AggregationsSingleBucketAggr
 type AggregationsParentAggregate = AggregationsParentAggregateKeys
   & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 ----
+
 
 
 [discrete]
@@ -5244,6 +5624,7 @@ interface AggregationsParentAggregation extends <<AggregationsBucketAggregationB
 ----
 
 
+
 [discrete]
 [[AggregationsPercentageScoreHeuristic]]
 === AggregationsPercentageScoreHeuristic
@@ -5252,6 +5633,7 @@ interface AggregationsParentAggregation extends <<AggregationsBucketAggregationB
 ----
 interface AggregationsPercentageScoreHeuristic {}
 ----
+
 
 
 [discrete]
@@ -5273,6 +5655,7 @@ interface AggregationsPercentileRanksAggregation extends <<AggregationsFormatMet
 ----
 
 
+
 [discrete]
 [[AggregationsPercentiles]]
 === AggregationsPercentiles
@@ -5281,6 +5664,7 @@ interface AggregationsPercentileRanksAggregation extends <<AggregationsFormatMet
 ----
 type AggregationsPercentiles = <<AggregationsKeyedPercentiles>> | <<AggregationsArrayPercentilesItem>>[]
 ----
+
 
 
 [discrete]
@@ -5293,6 +5677,7 @@ interface AggregationsPercentilesAggregateBase extends <<AggregationsAggregateBa
   values: <<AggregationsPercentiles>>
 }
 ----
+
 
 
 [discrete]
@@ -5314,6 +5699,7 @@ interface AggregationsPercentilesAggregation extends <<AggregationsFormatMetricA
 ----
 
 
+
 [discrete]
 [[AggregationsPercentilesBucketAggregate]]
 === AggregationsPercentilesBucketAggregate
@@ -5322,6 +5708,7 @@ interface AggregationsPercentilesAggregation extends <<AggregationsFormatMetricA
 ----
 interface AggregationsPercentilesBucketAggregate extends <<AggregationsPercentilesAggregateBase>> {}
 ----
+
 
 
 [discrete]
@@ -5337,6 +5724,7 @@ interface AggregationsPercentilesBucketAggregation extends <<AggregationsPipelin
 ----
 
 
+
 [discrete]
 [[AggregationsPipelineAggregationBase]]
 === AggregationsPipelineAggregationBase
@@ -5350,6 +5738,7 @@ interface AggregationsPipelineAggregationBase extends <<AggregationsBucketPathAg
   gap_policy?: <<AggregationsGapPolicy>>
 }
 ----
+
 
 
 [discrete]
@@ -5369,6 +5758,7 @@ interface AggregationsRandomSamplerAggregation extends <<AggregationsBucketAggre
 ----
 
 
+
 [discrete]
 [[AggregationsRangeAggregate]]
 === AggregationsRangeAggregate
@@ -5377,6 +5767,7 @@ interface AggregationsRandomSamplerAggregation extends <<AggregationsBucketAggre
 ----
 interface AggregationsRangeAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsRangeBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -5400,6 +5791,7 @@ interface AggregationsRangeAggregation extends <<AggregationsBucketAggregationBa
 ----
 
 
+
 [discrete]
 [[AggregationsRangeBucket]]
 === AggregationsRangeBucket
@@ -5416,6 +5808,7 @@ interface AggregationsRangeBucketKeys extends <<AggregationsMultiBucketBase>> {
 type AggregationsRangeBucket = AggregationsRangeBucketKeys
   & { [property: string]: <<AggregationsAggregate>> | <<double>> | string | <<long>> }
 ----
+
 
 
 [discrete]
@@ -5442,6 +5835,7 @@ interface AggregationsRareTermsAggregation extends <<AggregationsBucketAggregati
 ----
 
 
+
 [discrete]
 [[AggregationsRateAggregate]]
 === AggregationsRateAggregate
@@ -5453,6 +5847,7 @@ interface AggregationsRateAggregate extends <<AggregationsAggregateBase>> {
   value_as_string?: string
 }
 ----
+
 
 
 [discrete]
@@ -5470,6 +5865,7 @@ interface AggregationsRateAggregation extends <<AggregationsFormatMetricAggregat
 ----
 
 
+
 [discrete]
 [[AggregationsRateMode]]
 === AggregationsRateMode
@@ -5478,6 +5874,7 @@ interface AggregationsRateAggregation extends <<AggregationsFormatMetricAggregat
 ----
 type AggregationsRateMode = 'sum' | 'value_count'
 ----
+
 
 
 [discrete]
@@ -5490,6 +5887,7 @@ interface AggregationsReverseNestedAggregateKeys extends <<AggregationsSingleBuc
 type AggregationsReverseNestedAggregate = AggregationsReverseNestedAggregateKeys
   & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 ----
+
 
 
 [discrete]
@@ -5505,6 +5903,7 @@ interface AggregationsReverseNestedAggregation extends <<AggregationsBucketAggre
 ----
 
 
+
 [discrete]
 [[AggregationsSamplerAggregate]]
 === AggregationsSamplerAggregate
@@ -5515,6 +5914,7 @@ interface AggregationsSamplerAggregateKeys extends <<AggregationsSingleBucketAgg
 type AggregationsSamplerAggregate = AggregationsSamplerAggregateKeys
   & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 ----
+
 
 
 [discrete]
@@ -5530,6 +5930,7 @@ interface AggregationsSamplerAggregation extends <<AggregationsBucketAggregation
 ----
 
 
+
 [discrete]
 [[AggregationsSamplerAggregationExecutionHint]]
 === AggregationsSamplerAggregationExecutionHint
@@ -5538,6 +5939,7 @@ interface AggregationsSamplerAggregation extends <<AggregationsBucketAggregation
 ----
 type AggregationsSamplerAggregationExecutionHint = 'map' | 'global_ordinals' | 'bytes_hash'
 ----
+
 
 
 [discrete]
@@ -5552,6 +5954,7 @@ interface AggregationsScriptedHeuristic {
 ----
 
 
+
 [discrete]
 [[AggregationsScriptedMetricAggregate]]
 === AggregationsScriptedMetricAggregate
@@ -5562,6 +5965,7 @@ interface AggregationsScriptedMetricAggregate extends <<AggregationsAggregateBas
   value: any
 }
 ----
+
 
 
 [discrete]
@@ -5585,6 +5989,7 @@ interface AggregationsScriptedMetricAggregation extends <<AggregationsMetricAggr
 ----
 
 
+
 [discrete]
 [[AggregationsSerialDifferencingAggregation]]
 === AggregationsSerialDifferencingAggregation
@@ -5598,6 +6003,7 @@ interface AggregationsSerialDifferencingAggregation extends <<AggregationsPipeli
 ----
 
 
+
 [discrete]
 [[AggregationsSignificantLongTermsAggregate]]
 === AggregationsSignificantLongTermsAggregate
@@ -5606,6 +6012,7 @@ interface AggregationsSerialDifferencingAggregation extends <<AggregationsPipeli
 ----
 interface AggregationsSignificantLongTermsAggregate extends <<AggregationsSignificantTermsAggregateBase>><<<AggregationsSignificantLongTermsBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -5623,6 +6030,7 @@ type AggregationsSignificantLongTermsBucket = AggregationsSignificantLongTermsBu
 ----
 
 
+
 [discrete]
 [[AggregationsSignificantStringTermsAggregate]]
 === AggregationsSignificantStringTermsAggregate
@@ -5631,6 +6039,7 @@ type AggregationsSignificantLongTermsBucket = AggregationsSignificantLongTermsBu
 ----
 interface AggregationsSignificantStringTermsAggregate extends <<AggregationsSignificantTermsAggregateBase>><<<AggregationsSignificantStringTermsBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -5647,6 +6056,7 @@ type AggregationsSignificantStringTermsBucket = AggregationsSignificantStringTer
 ----
 
 
+
 [discrete]
 [[AggregationsSignificantTermsAggregateBase]]
 === AggregationsSignificantTermsAggregateBase
@@ -5658,6 +6068,7 @@ interface AggregationsSignificantTermsAggregateBase<T = unknown> extends <<Aggre
   doc_count?: <<long>>
 }
 ----
+
 
 
 [discrete]
@@ -5701,6 +6112,7 @@ interface AggregationsSignificantTermsAggregation extends <<AggregationsBucketAg
 ----
 
 
+
 [discrete]
 [[AggregationsSignificantTermsBucketBase]]
 === AggregationsSignificantTermsBucketBase
@@ -5712,6 +6124,7 @@ interface AggregationsSignificantTermsBucketBase extends <<AggregationsMultiBuck
   bg_count: <<long>>
 }
 ----
+
 
 
 [discrete]
@@ -5759,6 +6172,7 @@ interface AggregationsSignificantTextAggregation extends <<AggregationsBucketAgg
 ----
 
 
+
 [discrete]
 [[AggregationsSimpleMovingAverageAggregation]]
 === AggregationsSimpleMovingAverageAggregation
@@ -5772,6 +6186,7 @@ interface AggregationsSimpleMovingAverageAggregation extends <<AggregationsMovin
 ----
 
 
+
 [discrete]
 [[AggregationsSimpleValueAggregate]]
 === AggregationsSimpleValueAggregate
@@ -5780,6 +6195,7 @@ interface AggregationsSimpleMovingAverageAggregation extends <<AggregationsMovin
 ----
 interface AggregationsSimpleValueAggregate extends <<AggregationsSingleMetricAggregateBase>> {}
 ----
+
 
 
 [discrete]
@@ -5794,6 +6210,7 @@ interface AggregationsSingleBucketAggregateBase extends <<AggregationsAggregateB
 ----
 
 
+
 [discrete]
 [[AggregationsSingleMetricAggregateBase]]
 === AggregationsSingleMetricAggregateBase
@@ -5806,6 +6223,7 @@ interface AggregationsSingleMetricAggregateBase extends <<AggregationsAggregateB
   value_as_string?: string
 }
 ----
+
 
 
 [discrete]
@@ -5825,6 +6243,7 @@ interface AggregationsStandardDeviationBounds {
 ----
 
 
+
 [discrete]
 [[AggregationsStandardDeviationBoundsAsString]]
 === AggregationsStandardDeviationBoundsAsString
@@ -5840,6 +6259,7 @@ interface AggregationsStandardDeviationBoundsAsString {
   lower_sampling: string
 }
 ----
+
 
 
 [discrete]
@@ -5862,6 +6282,7 @@ interface AggregationsStatsAggregate extends <<AggregationsAggregateBase>> {
 ----
 
 
+
 [discrete]
 [[AggregationsStatsAggregation]]
 === AggregationsStatsAggregation
@@ -5870,6 +6291,7 @@ interface AggregationsStatsAggregate extends <<AggregationsAggregateBase>> {
 ----
 interface AggregationsStatsAggregation extends <<AggregationsFormatMetricAggregationBase>> {}
 ----
+
 
 
 [discrete]
@@ -5882,6 +6304,7 @@ interface AggregationsStatsBucketAggregate extends <<AggregationsStatsAggregate>
 ----
 
 
+
 [discrete]
 [[AggregationsStatsBucketAggregation]]
 === AggregationsStatsBucketAggregation
@@ -5892,6 +6315,7 @@ interface AggregationsStatsBucketAggregation extends <<AggregationsPipelineAggre
 ----
 
 
+
 [discrete]
 [[AggregationsStringRareTermsAggregate]]
 === AggregationsStringRareTermsAggregate
@@ -5900,6 +6324,7 @@ interface AggregationsStatsBucketAggregation extends <<AggregationsPipelineAggre
 ----
 interface AggregationsStringRareTermsAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsStringRareTermsBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -5914,6 +6339,7 @@ interface AggregationsStringRareTermsBucketKeys extends <<AggregationsMultiBucke
 type AggregationsStringRareTermsBucket = AggregationsStringRareTermsBucketKeys
   & { [property: string]: <<AggregationsAggregate>> | string | <<long>> }
 ----
+
 
 
 [discrete]
@@ -5936,6 +6362,7 @@ interface AggregationsStringStatsAggregate extends <<AggregationsAggregateBase>>
 ----
 
 
+
 [discrete]
 [[AggregationsStringStatsAggregation]]
 === AggregationsStringStatsAggregation
@@ -5949,6 +6376,7 @@ interface AggregationsStringStatsAggregation extends <<AggregationsMetricAggrega
 ----
 
 
+
 [discrete]
 [[AggregationsStringTermsAggregate]]
 === AggregationsStringTermsAggregate
@@ -5957,6 +6385,7 @@ interface AggregationsStringStatsAggregation extends <<AggregationsMetricAggrega
 ----
 interface AggregationsStringTermsAggregate extends <<AggregationsTermsAggregateBase>><<<AggregationsStringTermsBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -5973,6 +6402,7 @@ type AggregationsStringTermsBucket = AggregationsStringTermsBucketKeys
 ----
 
 
+
 [discrete]
 [[AggregationsSumAggregate]]
 === AggregationsSumAggregate
@@ -5981,6 +6411,7 @@ type AggregationsStringTermsBucket = AggregationsStringTermsBucketKeys
 ----
 interface AggregationsSumAggregate extends <<AggregationsSingleMetricAggregateBase>> {}
 ----
+
 
 
 [discrete]
@@ -5993,6 +6424,7 @@ interface AggregationsSumAggregation extends <<AggregationsFormatMetricAggregati
 ----
 
 
+
 [discrete]
 [[AggregationsSumBucketAggregation]]
 === AggregationsSumBucketAggregation
@@ -6001,6 +6433,7 @@ interface AggregationsSumAggregation extends <<AggregationsFormatMetricAggregati
 ----
 interface AggregationsSumBucketAggregation extends <<AggregationsPipelineAggregationBase>> {}
 ----
+
 
 
 [discrete]
@@ -6016,6 +6449,7 @@ interface AggregationsTDigest {
 ----
 
 
+
 [discrete]
 [[AggregationsTDigestPercentileRanksAggregate]]
 === AggregationsTDigestPercentileRanksAggregate
@@ -6026,6 +6460,7 @@ interface AggregationsTDigestPercentileRanksAggregate extends <<AggregationsPerc
 ----
 
 
+
 [discrete]
 [[AggregationsTDigestPercentilesAggregate]]
 === AggregationsTDigestPercentilesAggregate
@@ -6034,6 +6469,7 @@ interface AggregationsTDigestPercentileRanksAggregate extends <<AggregationsPerc
 ----
 interface AggregationsTDigestPercentilesAggregate extends <<AggregationsPercentilesAggregateBase>> {}
 ----
+
 
 
 [discrete]
@@ -6047,6 +6483,7 @@ interface AggregationsTTestAggregate extends <<AggregationsAggregateBase>> {
   value_as_string?: string
 }
 ----
+
 
 
 [discrete]
@@ -6066,6 +6503,7 @@ interface AggregationsTTestAggregation {
 ----
 
 
+
 [discrete]
 [[AggregationsTTestType]]
 === AggregationsTTestType
@@ -6074,6 +6512,7 @@ interface AggregationsTTestAggregation {
 ----
 type AggregationsTTestType = 'paired' | 'homoscedastic' | 'heteroscedastic'
 ----
+
 
 
 [discrete]
@@ -6087,6 +6526,7 @@ interface AggregationsTermsAggregateBase<TBucket = unknown> extends <<Aggregatio
   sum_other_doc_count?: <<long>>
 }
 ----
+
 
 
 [discrete]
@@ -6130,6 +6570,7 @@ interface AggregationsTermsAggregation extends <<AggregationsBucketAggregationBa
 ----
 
 
+
 [discrete]
 [[AggregationsTermsAggregationCollectMode]]
 === AggregationsTermsAggregationCollectMode
@@ -6140,6 +6581,7 @@ type AggregationsTermsAggregationCollectMode = 'depth_first' | 'breadth_first'
 ----
 
 
+
 [discrete]
 [[AggregationsTermsAggregationExecutionHint]]
 === AggregationsTermsAggregationExecutionHint
@@ -6148,6 +6590,7 @@ type AggregationsTermsAggregationCollectMode = 'depth_first' | 'breadth_first'
 ----
 type AggregationsTermsAggregationExecutionHint = 'map' | 'global_ordinals' | 'global_ordinals_hash' | 'global_ordinals_low_cardinality'
 ----
+
 
 
 [discrete]
@@ -6162,6 +6605,7 @@ interface AggregationsTermsBucketBase extends <<AggregationsMultiBucketBase>> {
 ----
 
 
+
 [discrete]
 [[AggregationsTermsExclude]]
 === AggregationsTermsExclude
@@ -6172,6 +6616,7 @@ type AggregationsTermsExclude = string | string[]
 ----
 
 
+
 [discrete]
 [[AggregationsTermsInclude]]
 === AggregationsTermsInclude
@@ -6180,6 +6625,7 @@ type AggregationsTermsExclude = string | string[]
 ----
 type AggregationsTermsInclude = string | string[] | <<AggregationsTermsPartition>>
 ----
+
 
 
 [discrete]
@@ -6195,6 +6641,7 @@ interface AggregationsTermsPartition {
   partition: <<long>>
 }
 ----
+
 
 
 [discrete]
@@ -6213,6 +6660,7 @@ interface AggregationsTestPopulation {
 ----
 
 
+
 [discrete]
 [[AggregationsTimeSeriesAggregate]]
 === AggregationsTimeSeriesAggregate
@@ -6221,6 +6669,7 @@ interface AggregationsTestPopulation {
 ----
 interface AggregationsTimeSeriesAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsTimeSeriesBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -6238,6 +6687,7 @@ interface AggregationsTimeSeriesAggregation extends <<AggregationsBucketAggregat
 ----
 
 
+
 [discrete]
 [[AggregationsTimeSeriesBucket]]
 === AggregationsTimeSeriesBucket
@@ -6252,6 +6702,7 @@ type AggregationsTimeSeriesBucket = AggregationsTimeSeriesBucketKeys
 ----
 
 
+
 [discrete]
 [[AggregationsTopHitsAggregate]]
 === AggregationsTopHitsAggregate
@@ -6262,6 +6713,7 @@ interface AggregationsTopHitsAggregate extends <<AggregationsAggregateBase>> {
   hits: <<SearchHitsMetadata>><any>
 }
 ----
+
 
 
 [discrete]
@@ -6301,6 +6753,7 @@ interface AggregationsTopHitsAggregation extends <<AggregationsMetricAggregation
 ----
 
 
+
 [discrete]
 [[AggregationsTopMetrics]]
 === AggregationsTopMetrics
@@ -6314,6 +6767,7 @@ interface AggregationsTopMetrics {
 ----
 
 
+
 [discrete]
 [[AggregationsTopMetricsAggregate]]
 === AggregationsTopMetricsAggregate
@@ -6324,6 +6778,7 @@ interface AggregationsTopMetricsAggregate extends <<AggregationsAggregateBase>> 
   top: <<AggregationsTopMetrics>>[]
 }
 ----
+
 
 
 [discrete]
@@ -6343,6 +6798,7 @@ interface AggregationsTopMetricsAggregation extends <<AggregationsMetricAggregat
 ----
 
 
+
 [discrete]
 [[AggregationsTopMetricsValue]]
 === AggregationsTopMetricsValue
@@ -6356,6 +6812,7 @@ interface AggregationsTopMetricsValue {
 ----
 
 
+
 [discrete]
 [[AggregationsUnmappedRareTermsAggregate]]
 === AggregationsUnmappedRareTermsAggregate
@@ -6364,6 +6821,7 @@ interface AggregationsTopMetricsValue {
 ----
 interface AggregationsUnmappedRareTermsAggregate extends <<AggregationsMultiBucketAggregateBase>><void> {}
 ----
+
 
 
 [discrete]
@@ -6378,6 +6836,7 @@ type AggregationsUnmappedSamplerAggregate = AggregationsUnmappedSamplerAggregate
 ----
 
 
+
 [discrete]
 [[AggregationsUnmappedSignificantTermsAggregate]]
 === AggregationsUnmappedSignificantTermsAggregate
@@ -6386,6 +6845,7 @@ type AggregationsUnmappedSamplerAggregate = AggregationsUnmappedSamplerAggregate
 ----
 interface AggregationsUnmappedSignificantTermsAggregate extends <<AggregationsSignificantTermsAggregateBase>><void> {}
 ----
+
 
 
 [discrete]
@@ -6398,6 +6858,7 @@ interface AggregationsUnmappedTermsAggregate extends <<AggregationsTermsAggregat
 ----
 
 
+
 [discrete]
 [[AggregationsValueCountAggregate]]
 === AggregationsValueCountAggregate
@@ -6406,6 +6867,7 @@ interface AggregationsUnmappedTermsAggregate extends <<AggregationsTermsAggregat
 ----
 interface AggregationsValueCountAggregate extends <<AggregationsSingleMetricAggregateBase>> {}
 ----
+
 
 
 [discrete]
@@ -6418,6 +6880,7 @@ interface AggregationsValueCountAggregation extends <<AggregationsFormattableMet
 ----
 
 
+
 [discrete]
 [[AggregationsValueType]]
 === AggregationsValueType
@@ -6428,6 +6891,7 @@ type AggregationsValueType = 'string' | '<<long>>' | '<<double>>' | 'number' | '
 ----
 
 
+
 [discrete]
 [[AggregationsVariableWidthHistogramAggregate]]
 === AggregationsVariableWidthHistogramAggregate
@@ -6436,6 +6900,7 @@ type AggregationsValueType = 'string' | '<<long>>' | '<<double>>' | 'number' | '
 ----
 interface AggregationsVariableWidthHistogramAggregate extends <<AggregationsMultiBucketAggregateBase>><<<AggregationsVariableWidthHistogramBucket>>> {}
 ----
+
 
 
 [discrete]
@@ -6458,6 +6923,7 @@ interface AggregationsVariableWidthHistogramAggregation {
 ----
 
 
+
 [discrete]
 [[AggregationsVariableWidthHistogramBucket]]
 === AggregationsVariableWidthHistogramBucket
@@ -6475,6 +6941,7 @@ interface AggregationsVariableWidthHistogramBucketKeys extends <<AggregationsMul
 type AggregationsVariableWidthHistogramBucket = AggregationsVariableWidthHistogramBucketKeys
   & { [property: string]: <<AggregationsAggregate>> | <<double>> | string | <<long>> }
 ----
+
 
 
 [discrete]
@@ -6495,6 +6962,7 @@ interface AggregationsWeightedAverageAggregation {
 ----
 
 
+
 [discrete]
 [[AggregationsWeightedAverageValue]]
 === AggregationsWeightedAverageValue
@@ -6511,6 +6979,7 @@ interface AggregationsWeightedAverageValue {
 ----
 
 
+
 [discrete]
 [[AggregationsWeightedAvgAggregate]]
 === AggregationsWeightedAvgAggregate
@@ -6521,6 +6990,7 @@ interface AggregationsWeightedAvgAggregate extends <<AggregationsSingleMetricAgg
 ----
 
 
+
 [discrete]
 [[AnalysisAnalyzer]]
 === AnalysisAnalyzer
@@ -6529,6 +6999,7 @@ interface AggregationsWeightedAvgAggregate extends <<AggregationsSingleMetricAgg
 ----
 type AnalysisAnalyzer = <<AnalysisCustomAnalyzer>> | <<AnalysisFingerprintAnalyzer>> | <<AnalysisKeywordAnalyzer>> | <<AnalysisLanguageAnalyzer>> | <<AnalysisNoriAnalyzer>> | <<AnalysisPatternAnalyzer>> | <<AnalysisSimpleAnalyzer>> | <<AnalysisStandardAnalyzer>> | <<AnalysisStopAnalyzer>> | <<AnalysisWhitespaceAnalyzer>> | <<AnalysisIcuAnalyzer>> | <<AnalysisKuromojiAnalyzer>> | <<AnalysisSnowballAnalyzer>> | <<AnalysisArabicAnalyzer>> | <<AnalysisArmenianAnalyzer>> | <<AnalysisBasqueAnalyzer>> | <<AnalysisBengaliAnalyzer>> | <<AnalysisBrazilianAnalyzer>> | <<AnalysisBulgarianAnalyzer>> | <<AnalysisCatalanAnalyzer>> | <<AnalysisChineseAnalyzer>> | <<AnalysisCjkAnalyzer>> | <<AnalysisCzechAnalyzer>> | <<AnalysisDanishAnalyzer>> | <<AnalysisDutchAnalyzer>> | <<AnalysisEnglishAnalyzer>> | <<AnalysisEstonianAnalyzer>> | <<AnalysisFinnishAnalyzer>> | <<AnalysisFrenchAnalyzer>> | <<AnalysisGalicianAnalyzer>> | <<AnalysisGermanAnalyzer>> | <<AnalysisGreekAnalyzer>> | <<AnalysisHindiAnalyzer>> | <<AnalysisHungarianAnalyzer>> | <<AnalysisIndonesianAnalyzer>> | <<AnalysisIrishAnalyzer>> | <<AnalysisItalianAnalyzer>> | <<AnalysisLatvianAnalyzer>> | <<AnalysisLithuanianAnalyzer>> | <<AnalysisNorwegianAnalyzer>> | <<AnalysisPersianAnalyzer>> | <<AnalysisPortugueseAnalyzer>> | <<AnalysisRomanianAnalyzer>> | <<AnalysisRussianAnalyzer>> | <<AnalysisSerbianAnalyzer>> | <<AnalysisSoraniAnalyzer>> | <<AnalysisSpanishAnalyzer>> | <<AnalysisSwedishAnalyzer>> | <<AnalysisTurkishAnalyzer>> | <<AnalysisThaiAnalyzer>>
 ----
+
 
 
 [discrete]
@@ -6546,6 +7017,7 @@ interface AnalysisArabicAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisArmenianAnalyzer]]
 === AnalysisArmenianAnalyzer
@@ -6561,6 +7033,7 @@ interface AnalysisArmenianAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisAsciiFoldingTokenFilter]]
 === AnalysisAsciiFoldingTokenFilter
@@ -6572,6 +7045,7 @@ interface AnalysisAsciiFoldingTokenFilter extends <<AnalysisTokenFilterBase>> {
   preserve_original?: <<SpecUtilsStringified>><boolean>
 }
 ----
+
 
 
 [discrete]
@@ -6589,6 +7063,7 @@ interface AnalysisBasqueAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisBengaliAnalyzer]]
 === AnalysisBengaliAnalyzer
@@ -6604,6 +7079,7 @@ interface AnalysisBengaliAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisBrazilianAnalyzer]]
 === AnalysisBrazilianAnalyzer
@@ -6616,6 +7092,7 @@ interface AnalysisBrazilianAnalyzer {
   stopwords_path?: string
 }
 ----
+
 
 
 [discrete]
@@ -6633,6 +7110,7 @@ interface AnalysisBulgarianAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisCatalanAnalyzer]]
 === AnalysisCatalanAnalyzer
@@ -6648,6 +7126,7 @@ interface AnalysisCatalanAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisCharFilter]]
 === AnalysisCharFilter
@@ -6656,6 +7135,7 @@ interface AnalysisCatalanAnalyzer {
 ----
 type AnalysisCharFilter = string | <<AnalysisCharFilterDefinition>>
 ----
+
 
 
 [discrete]
@@ -6670,6 +7150,7 @@ interface AnalysisCharFilterBase {
 ----
 
 
+
 [discrete]
 [[AnalysisCharFilterDefinition]]
 === AnalysisCharFilterDefinition
@@ -6678,6 +7159,7 @@ interface AnalysisCharFilterBase {
 ----
 type AnalysisCharFilterDefinition = <<AnalysisHtmlStripCharFilter>> | <<AnalysisMappingCharFilter>> | <<AnalysisPatternReplaceCharFilter>> | <<AnalysisIcuNormalizationCharFilter>> | <<AnalysisKuromojiIterationMarkCharFilter>>
 ----
+
 
 
 [discrete]
@@ -6694,6 +7176,7 @@ interface AnalysisCharGroupTokenizer extends <<AnalysisTokenizerBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisChineseAnalyzer]]
 === AnalysisChineseAnalyzer
@@ -6706,6 +7189,7 @@ interface AnalysisChineseAnalyzer {
   stopwords_path?: string
 }
 ----
+
 
 
 [discrete]
@@ -6722,6 +7206,7 @@ interface AnalysisCjkAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisClassicTokenizer]]
 === AnalysisClassicTokenizer
@@ -6733,6 +7218,7 @@ interface AnalysisClassicTokenizer extends <<AnalysisTokenizerBase>> {
   max_token_length?: <<integer>>
 }
 ----
+
 
 
 [discrete]
@@ -6749,6 +7235,7 @@ interface AnalysisCommonGramsTokenFilter extends <<AnalysisTokenFilterBase>> {
   query_mode?: boolean
 }
 ----
+
 
 
 [discrete]
@@ -6769,6 +7256,7 @@ interface AnalysisCompoundWordTokenFilterBase extends <<AnalysisTokenFilterBase>
 ----
 
 
+
 [discrete]
 [[AnalysisConditionTokenFilter]]
 === AnalysisConditionTokenFilter
@@ -6781,6 +7269,7 @@ interface AnalysisConditionTokenFilter extends <<AnalysisTokenFilterBase>> {
   script: <<Script>> | string
 }
 ----
+
 
 
 [discrete]
@@ -6800,6 +7289,7 @@ interface AnalysisCustomAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisCustomNormalizer]]
 === AnalysisCustomNormalizer
@@ -6812,6 +7302,7 @@ interface AnalysisCustomNormalizer {
   filter?: string[]
 }
 ----
+
 
 
 [discrete]
@@ -6829,6 +7320,7 @@ interface AnalysisCzechAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisDanishAnalyzer]]
 === AnalysisDanishAnalyzer
@@ -6843,6 +7335,7 @@ interface AnalysisDanishAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisDelimitedPayloadEncoding]]
 === AnalysisDelimitedPayloadEncoding
@@ -6851,6 +7344,7 @@ interface AnalysisDanishAnalyzer {
 ----
 type AnalysisDelimitedPayloadEncoding = 'int' | '<<float>>' | 'identity'
 ----
+
 
 
 [discrete]
@@ -6867,6 +7361,7 @@ interface AnalysisDelimitedPayloadTokenFilter extends <<AnalysisTokenFilterBase>
 ----
 
 
+
 [discrete]
 [[AnalysisDictionaryDecompounderTokenFilter]]
 === AnalysisDictionaryDecompounderTokenFilter
@@ -6877,6 +7372,7 @@ interface AnalysisDictionaryDecompounderTokenFilter extends <<AnalysisCompoundWo
   type: 'dictionary_decompounder'
 }
 ----
+
 
 
 [discrete]
@@ -6894,6 +7390,7 @@ interface AnalysisDutchAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisEdgeNGramSide]]
 === AnalysisEdgeNGramSide
@@ -6902,6 +7399,7 @@ interface AnalysisDutchAnalyzer {
 ----
 type AnalysisEdgeNGramSide = 'front' | 'back'
 ----
+
 
 
 [discrete]
@@ -6920,6 +7418,7 @@ interface AnalysisEdgeNGramTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisEdgeNGramTokenizer]]
 === AnalysisEdgeNGramTokenizer
@@ -6934,6 +7433,7 @@ interface AnalysisEdgeNGramTokenizer extends <<AnalysisTokenizerBase>> {
   token_chars?: <<AnalysisTokenChar>>[]
 }
 ----
+
 
 
 [discrete]
@@ -6951,6 +7451,7 @@ interface AnalysisElisionTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisEnglishAnalyzer]]
 === AnalysisEnglishAnalyzer
@@ -6966,6 +7467,7 @@ interface AnalysisEnglishAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisEstonianAnalyzer]]
 === AnalysisEstonianAnalyzer
@@ -6978,6 +7480,7 @@ interface AnalysisEstonianAnalyzer {
   stopwords_path?: string
 }
 ----
+
 
 
 [discrete]
@@ -6998,6 +7501,7 @@ interface AnalysisFingerprintAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisFingerprintTokenFilter]]
 === AnalysisFingerprintTokenFilter
@@ -7010,6 +7514,7 @@ interface AnalysisFingerprintTokenFilter extends <<AnalysisTokenFilterBase>> {
   separator?: string
 }
 ----
+
 
 
 [discrete]
@@ -7027,6 +7532,7 @@ interface AnalysisFinnishAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisFrenchAnalyzer]]
 === AnalysisFrenchAnalyzer
@@ -7040,6 +7546,7 @@ interface AnalysisFrenchAnalyzer {
   stem_exclusion?: string[]
 }
 ----
+
 
 
 [discrete]
@@ -7057,6 +7564,7 @@ interface AnalysisGalicianAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisGermanAnalyzer]]
 === AnalysisGermanAnalyzer
@@ -7072,6 +7580,7 @@ interface AnalysisGermanAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisGreekAnalyzer]]
 === AnalysisGreekAnalyzer
@@ -7084,6 +7593,7 @@ interface AnalysisGreekAnalyzer {
   stopwords_path?: string
 }
 ----
+
 
 
 [discrete]
@@ -7101,6 +7611,7 @@ interface AnalysisHindiAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisHtmlStripCharFilter]]
 === AnalysisHtmlStripCharFilter
@@ -7112,6 +7623,7 @@ interface AnalysisHtmlStripCharFilter extends <<AnalysisCharFilterBase>> {
   escaped_tags?: string[]
 }
 ----
+
 
 
 [discrete]
@@ -7127,6 +7639,7 @@ interface AnalysisHungarianAnalyzer {
   stem_exclusion?: string[]
 }
 ----
+
 
 
 [discrete]
@@ -7145,6 +7658,7 @@ interface AnalysisHunspellTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisHyphenationDecompounderTokenFilter]]
 === AnalysisHyphenationDecompounderTokenFilter
@@ -7155,6 +7669,7 @@ interface AnalysisHyphenationDecompounderTokenFilter extends <<AnalysisCompoundW
   type: 'hyphenation_decompounder'
 }
 ----
+
 
 
 [discrete]
@@ -7171,6 +7686,7 @@ interface AnalysisIcuAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisIcuCollationAlternate]]
 === AnalysisIcuCollationAlternate
@@ -7179,6 +7695,7 @@ interface AnalysisIcuAnalyzer {
 ----
 type AnalysisIcuCollationAlternate = 'shifted' | 'non-ignorable'
 ----
+
 
 
 [discrete]
@@ -7191,6 +7708,7 @@ type AnalysisIcuCollationCaseFirst = 'lower' | 'upper'
 ----
 
 
+
 [discrete]
 [[AnalysisIcuCollationDecomposition]]
 === AnalysisIcuCollationDecomposition
@@ -7201,6 +7719,7 @@ type AnalysisIcuCollationDecomposition = 'no' | 'identical'
 ----
 
 
+
 [discrete]
 [[AnalysisIcuCollationStrength]]
 === AnalysisIcuCollationStrength
@@ -7209,6 +7728,7 @@ type AnalysisIcuCollationDecomposition = 'no' | 'identical'
 ----
 type AnalysisIcuCollationStrength = 'primary' | 'secondary' | 'tertiary' | 'quaternary' | 'identical'
 ----
+
 
 
 [discrete]
@@ -7235,6 +7755,7 @@ interface AnalysisIcuCollationTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisIcuFoldingTokenFilter]]
 === AnalysisIcuFoldingTokenFilter
@@ -7246,6 +7767,7 @@ interface AnalysisIcuFoldingTokenFilter extends <<AnalysisTokenFilterBase>> {
   unicode_set_filter: string
 }
 ----
+
 
 
 [discrete]
@@ -7262,6 +7784,7 @@ interface AnalysisIcuNormalizationCharFilter extends <<AnalysisCharFilterBase>> 
 ----
 
 
+
 [discrete]
 [[AnalysisIcuNormalizationMode]]
 === AnalysisIcuNormalizationMode
@@ -7270,6 +7793,7 @@ interface AnalysisIcuNormalizationCharFilter extends <<AnalysisCharFilterBase>> 
 ----
 type AnalysisIcuNormalizationMode = 'decompose' | 'compose'
 ----
+
 
 
 [discrete]
@@ -7285,6 +7809,7 @@ interface AnalysisIcuNormalizationTokenFilter extends <<AnalysisTokenFilterBase>
 ----
 
 
+
 [discrete]
 [[AnalysisIcuNormalizationType]]
 === AnalysisIcuNormalizationType
@@ -7293,6 +7818,7 @@ interface AnalysisIcuNormalizationTokenFilter extends <<AnalysisTokenFilterBase>
 ----
 type AnalysisIcuNormalizationType = 'nfc' | 'nfkc' | 'nfkc_cf'
 ----
+
 
 
 [discrete]
@@ -7308,6 +7834,7 @@ interface AnalysisIcuTokenizer extends <<AnalysisTokenizerBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisIcuTransformDirection]]
 === AnalysisIcuTransformDirection
@@ -7316,6 +7843,7 @@ interface AnalysisIcuTokenizer extends <<AnalysisTokenizerBase>> {
 ----
 type AnalysisIcuTransformDirection = 'forward' | 'reverse'
 ----
+
 
 
 [discrete]
@@ -7330,6 +7858,7 @@ interface AnalysisIcuTransformTokenFilter extends <<AnalysisTokenFilterBase>> {
   id: string
 }
 ----
+
 
 
 [discrete]
@@ -7347,6 +7876,7 @@ interface AnalysisIndonesianAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisIrishAnalyzer]]
 === AnalysisIrishAnalyzer
@@ -7360,6 +7890,7 @@ interface AnalysisIrishAnalyzer {
   stem_exclusion?: string[]
 }
 ----
+
 
 
 [discrete]
@@ -7377,6 +7908,7 @@ interface AnalysisItalianAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisKStemTokenFilter]]
 === AnalysisKStemTokenFilter
@@ -7389,6 +7921,7 @@ interface AnalysisKStemTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisKeepTypesMode]]
 === AnalysisKeepTypesMode
@@ -7397,6 +7930,7 @@ interface AnalysisKStemTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 type AnalysisKeepTypesMode = 'include' | 'exclude'
 ----
+
 
 
 [discrete]
@@ -7411,6 +7945,7 @@ interface AnalysisKeepTypesTokenFilter extends <<AnalysisTokenFilterBase>> {
   types?: string[]
 }
 ----
+
 
 
 [discrete]
@@ -7428,6 +7963,7 @@ interface AnalysisKeepWordsTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisKeywordAnalyzer]]
 === AnalysisKeywordAnalyzer
@@ -7439,6 +7975,7 @@ interface AnalysisKeywordAnalyzer {
   version?: <<VersionString>>
 }
 ----
+
 
 
 [discrete]
@@ -7457,6 +7994,7 @@ interface AnalysisKeywordMarkerTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisKeywordTokenizer]]
 === AnalysisKeywordTokenizer
@@ -7468,6 +8006,7 @@ interface AnalysisKeywordTokenizer extends <<AnalysisTokenizerBase>> {
   buffer_size?: <<integer>>
 }
 ----
+
 
 
 [discrete]
@@ -7484,6 +8023,7 @@ interface AnalysisKuromojiAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisKuromojiIterationMarkCharFilter]]
 === AnalysisKuromojiIterationMarkCharFilter
@@ -7496,6 +8036,7 @@ interface AnalysisKuromojiIterationMarkCharFilter extends <<AnalysisCharFilterBa
   normalize_kanji: boolean
 }
 ----
+
 
 
 [discrete]
@@ -7511,6 +8052,7 @@ interface AnalysisKuromojiPartOfSpeechTokenFilter extends <<AnalysisTokenFilterB
 ----
 
 
+
 [discrete]
 [[AnalysisKuromojiReadingFormTokenFilter]]
 === AnalysisKuromojiReadingFormTokenFilter
@@ -7522,6 +8064,7 @@ interface AnalysisKuromojiReadingFormTokenFilter extends <<AnalysisTokenFilterBa
   use_romaji: boolean
 }
 ----
+
 
 
 [discrete]
@@ -7537,6 +8080,7 @@ interface AnalysisKuromojiStemmerTokenFilter extends <<AnalysisTokenFilterBase>>
 ----
 
 
+
 [discrete]
 [[AnalysisKuromojiTokenizationMode]]
 === AnalysisKuromojiTokenizationMode
@@ -7545,6 +8089,7 @@ interface AnalysisKuromojiStemmerTokenFilter extends <<AnalysisTokenFilterBase>>
 ----
 type AnalysisKuromojiTokenizationMode = 'normal' | 'search' | 'extended'
 ----
+
 
 
 [discrete]
@@ -7566,6 +8111,7 @@ interface AnalysisKuromojiTokenizer extends <<AnalysisTokenizerBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisLanguage]]
 === AnalysisLanguage
@@ -7574,6 +8120,7 @@ interface AnalysisKuromojiTokenizer extends <<AnalysisTokenizerBase>> {
 ----
 type AnalysisLanguage = 'Arabic' | 'Armenian' | 'Basque' | 'Brazilian' | 'Bulgarian' | 'Catalan' | 'Chinese' | 'Cjk' | 'Czech' | 'Danish' | 'Dutch' | 'English' | 'Estonian' | 'Finnish' | 'French' | 'Galician' | 'German' | 'Greek' | 'Hindi' | 'Hungarian' | 'Indonesian' | 'Irish' | 'Italian' | 'Latvian' | 'Norwegian' | 'Persian' | 'Portuguese' | 'Romanian' | 'Russian' | 'Sorani' | 'Spanish' | 'Swedish' | 'Turkish' | 'Thai'
 ----
+
 
 
 [discrete]
@@ -7593,6 +8140,7 @@ interface AnalysisLanguageAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisLatvianAnalyzer]]
 === AnalysisLatvianAnalyzer
@@ -7606,6 +8154,7 @@ interface AnalysisLatvianAnalyzer {
   stem_exclusion?: string[]
 }
 ----
+
 
 
 [discrete]
@@ -7622,6 +8171,7 @@ interface AnalysisLengthTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisLetterTokenizer]]
 === AnalysisLetterTokenizer
@@ -7632,6 +8182,7 @@ interface AnalysisLetterTokenizer extends <<AnalysisTokenizerBase>> {
   type: 'letter'
 }
 ----
+
 
 
 [discrete]
@@ -7646,6 +8197,7 @@ interface AnalysisLimitTokenCountTokenFilter extends <<AnalysisTokenFilterBase>>
   max_token_count?: <<SpecUtilsStringified>><<<integer>>>
 }
 ----
+
 
 
 [discrete]
@@ -7663,6 +8215,7 @@ interface AnalysisLithuanianAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisLowercaseNormalizer]]
 === AnalysisLowercaseNormalizer
@@ -7673,6 +8226,7 @@ interface AnalysisLowercaseNormalizer {
   type: 'lowercase'
 }
 ----
+
 
 
 [discrete]
@@ -7688,6 +8242,7 @@ interface AnalysisLowercaseTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisLowercaseTokenizer]]
 === AnalysisLowercaseTokenizer
@@ -7698,6 +8253,7 @@ interface AnalysisLowercaseTokenizer extends <<AnalysisTokenizerBase>> {
   type: 'lowercase'
 }
 ----
+
 
 
 [discrete]
@@ -7714,6 +8270,7 @@ interface AnalysisMappingCharFilter extends <<AnalysisCharFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisMultiplexerTokenFilter]]
 === AnalysisMultiplexerTokenFilter
@@ -7726,6 +8283,7 @@ interface AnalysisMultiplexerTokenFilter extends <<AnalysisTokenFilterBase>> {
   preserve_original?: <<SpecUtilsStringified>><boolean>
 }
 ----
+
 
 
 [discrete]
@@ -7741,6 +8299,7 @@ interface AnalysisNGramTokenFilter extends <<AnalysisTokenFilterBase>> {
   preserve_original?: <<SpecUtilsStringified>><boolean>
 }
 ----
+
 
 
 [discrete]
@@ -7759,6 +8318,7 @@ interface AnalysisNGramTokenizer extends <<AnalysisTokenizerBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisNoriAnalyzer]]
 === AnalysisNoriAnalyzer
@@ -7775,6 +8335,7 @@ interface AnalysisNoriAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisNoriDecompoundMode]]
 === AnalysisNoriDecompoundMode
@@ -7783,6 +8344,7 @@ interface AnalysisNoriAnalyzer {
 ----
 type AnalysisNoriDecompoundMode = 'discard' | 'none' | 'mixed'
 ----
+
 
 
 [discrete]
@@ -7796,6 +8358,7 @@ interface AnalysisNoriPartOfSpeechTokenFilter extends <<AnalysisTokenFilterBase>
   stoptags?: string[]
 }
 ----
+
 
 
 [discrete]
@@ -7814,6 +8377,7 @@ interface AnalysisNoriTokenizer extends <<AnalysisTokenizerBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisNormalizer]]
 === AnalysisNormalizer
@@ -7822,6 +8386,7 @@ interface AnalysisNoriTokenizer extends <<AnalysisTokenizerBase>> {
 ----
 type AnalysisNormalizer = <<AnalysisLowercaseNormalizer>> | <<AnalysisCustomNormalizer>>
 ----
+
 
 
 [discrete]
@@ -7837,6 +8402,7 @@ interface AnalysisNorwegianAnalyzer {
   stem_exclusion?: string[]
 }
 ----
+
 
 
 [discrete]
@@ -7856,6 +8422,7 @@ interface AnalysisPathHierarchyTokenizer extends <<AnalysisTokenizerBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisPatternAnalyzer]]
 === AnalysisPatternAnalyzer
@@ -7873,6 +8440,7 @@ interface AnalysisPatternAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisPatternCaptureTokenFilter]]
 === AnalysisPatternCaptureTokenFilter
@@ -7885,6 +8453,7 @@ interface AnalysisPatternCaptureTokenFilter extends <<AnalysisTokenFilterBase>> 
   preserve_original?: <<SpecUtilsStringified>><boolean>
 }
 ----
+
 
 
 [discrete]
@@ -7900,6 +8469,7 @@ interface AnalysisPatternReplaceCharFilter extends <<AnalysisCharFilterBase>> {
   replacement?: string
 }
 ----
+
 
 
 [discrete]
@@ -7918,6 +8488,7 @@ interface AnalysisPatternReplaceTokenFilter extends <<AnalysisTokenFilterBase>> 
 ----
 
 
+
 [discrete]
 [[AnalysisPatternTokenizer]]
 === AnalysisPatternTokenizer
@@ -7931,6 +8502,7 @@ interface AnalysisPatternTokenizer extends <<AnalysisTokenizerBase>> {
   pattern?: string
 }
 ----
+
 
 
 [discrete]
@@ -7947,6 +8519,7 @@ interface AnalysisPersianAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisPhoneticEncoder]]
 === AnalysisPhoneticEncoder
@@ -7955,6 +8528,7 @@ interface AnalysisPersianAnalyzer {
 ----
 type AnalysisPhoneticEncoder = 'metaphone' | 'double_metaphone' | 'soundex' | 'refined_soundex' | 'caverphone1' | 'caverphone2' | 'cologne' | 'nysiis' | 'koelnerphonetik' | 'haasephonetik' | 'beider_morse' | 'daitch_mokotoff'
 ----
+
 
 
 [discrete]
@@ -7967,6 +8541,7 @@ type AnalysisPhoneticLanguage = 'any' | 'common' | 'cyrillic' | 'english' | 'fre
 ----
 
 
+
 [discrete]
 [[AnalysisPhoneticNameType]]
 === AnalysisPhoneticNameType
@@ -7977,6 +8552,7 @@ type AnalysisPhoneticNameType = 'generic' | 'ashkenazi' | 'sephardic'
 ----
 
 
+
 [discrete]
 [[AnalysisPhoneticRuleType]]
 === AnalysisPhoneticRuleType
@@ -7985,6 +8561,7 @@ type AnalysisPhoneticNameType = 'generic' | 'ashkenazi' | 'sephardic'
 ----
 type AnalysisPhoneticRuleType = 'approx' | 'exact'
 ----
+
 
 
 [discrete]
@@ -8005,6 +8582,7 @@ interface AnalysisPhoneticTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisPorterStemTokenFilter]]
 === AnalysisPorterStemTokenFilter
@@ -8015,6 +8593,7 @@ interface AnalysisPorterStemTokenFilter extends <<AnalysisTokenFilterBase>> {
   type: 'porter_stem'
 }
 ----
+
 
 
 [discrete]
@@ -8032,6 +8611,7 @@ interface AnalysisPortugueseAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisPredicateTokenFilter]]
 === AnalysisPredicateTokenFilter
@@ -8043,6 +8623,7 @@ interface AnalysisPredicateTokenFilter extends <<AnalysisTokenFilterBase>> {
   script: <<Script>> | string
 }
 ----
+
 
 
 [discrete]
@@ -8057,6 +8638,7 @@ interface AnalysisRemoveDuplicatesTokenFilter extends <<AnalysisTokenFilterBase>
 ----
 
 
+
 [discrete]
 [[AnalysisReverseTokenFilter]]
 === AnalysisReverseTokenFilter
@@ -8067,6 +8649,7 @@ interface AnalysisReverseTokenFilter extends <<AnalysisTokenFilterBase>> {
   type: 'reverse'
 }
 ----
+
 
 
 [discrete]
@@ -8084,6 +8667,7 @@ interface AnalysisRomanianAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisRussianAnalyzer]]
 === AnalysisRussianAnalyzer
@@ -8099,6 +8683,7 @@ interface AnalysisRussianAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisSerbianAnalyzer]]
 === AnalysisSerbianAnalyzer
@@ -8112,6 +8697,7 @@ interface AnalysisSerbianAnalyzer {
   stem_exclusion?: string[]
 }
 ----
+
 
 
 [discrete]
@@ -8132,6 +8718,7 @@ interface AnalysisShingleTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisSimpleAnalyzer]]
 === AnalysisSimpleAnalyzer
@@ -8143,6 +8730,7 @@ interface AnalysisSimpleAnalyzer {
   version?: <<VersionString>>
 }
 ----
+
 
 
 [discrete]
@@ -8158,6 +8746,7 @@ interface AnalysisSimplePatternSplitTokenizer extends <<AnalysisTokenizerBase>> 
 ----
 
 
+
 [discrete]
 [[AnalysisSimplePatternTokenizer]]
 === AnalysisSimplePatternTokenizer
@@ -8169,6 +8758,7 @@ interface AnalysisSimplePatternTokenizer extends <<AnalysisTokenizerBase>> {
   pattern?: string
 }
 ----
+
 
 
 [discrete]
@@ -8186,6 +8776,7 @@ interface AnalysisSnowballAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisSnowballLanguage]]
 === AnalysisSnowballLanguage
@@ -8194,6 +8785,7 @@ interface AnalysisSnowballAnalyzer {
 ----
 type AnalysisSnowballLanguage = 'Armenian' | 'Basque' | 'Catalan' | 'Danish' | 'Dutch' | 'English' | 'Finnish' | 'French' | 'German' | 'German2' | 'Hungarian' | 'Italian' | 'Kp' | 'Lovins' | 'Norwegian' | 'Porter' | 'Portuguese' | 'Romanian' | 'Russian' | 'Spanish' | 'Swedish' | 'Turkish'
 ----
+
 
 
 [discrete]
@@ -8207,6 +8799,7 @@ interface AnalysisSnowballTokenFilter extends <<AnalysisTokenFilterBase>> {
   language?: <<AnalysisSnowballLanguage>>
 }
 ----
+
 
 
 [discrete]
@@ -8224,6 +8817,7 @@ interface AnalysisSoraniAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisSpanishAnalyzer]]
 === AnalysisSpanishAnalyzer
@@ -8237,6 +8831,7 @@ interface AnalysisSpanishAnalyzer {
   stem_exclusion?: string[]
 }
 ----
+
 
 
 [discrete]
@@ -8253,6 +8848,7 @@ interface AnalysisStandardAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisStandardTokenizer]]
 === AnalysisStandardTokenizer
@@ -8264,6 +8860,7 @@ interface AnalysisStandardTokenizer extends <<AnalysisTokenizerBase>> {
   max_token_length?: <<integer>>
 }
 ----
+
 
 
 [discrete]
@@ -8280,6 +8877,7 @@ interface AnalysisStemmerOverrideTokenFilter extends <<AnalysisTokenFilterBase>>
 ----
 
 
+
 [discrete]
 [[AnalysisStemmerTokenFilter]]
 === AnalysisStemmerTokenFilter
@@ -8292,6 +8890,7 @@ interface AnalysisStemmerTokenFilter extends <<AnalysisTokenFilterBase>> {
   name?: string
 }
 ----
+
 
 
 [discrete]
@@ -8307,6 +8906,7 @@ interface AnalysisStopAnalyzer {
   stopwords_path?: string
 }
 ----
+
 
 
 [discrete]
@@ -8325,6 +8925,7 @@ interface AnalysisStopTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisStopWords]]
 === AnalysisStopWords
@@ -8333,6 +8934,7 @@ interface AnalysisStopTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 type AnalysisStopWords = string | string[]
 ----
+
 
 
 [discrete]
@@ -8350,6 +8952,7 @@ interface AnalysisSwedishAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisSynonymFormat]]
 === AnalysisSynonymFormat
@@ -8358,6 +8961,7 @@ interface AnalysisSwedishAnalyzer {
 ----
 type AnalysisSynonymFormat = 'solr' | 'wordnet'
 ----
+
 
 
 [discrete]
@@ -8380,6 +8984,7 @@ interface AnalysisSynonymGraphTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisSynonymTokenFilter]]
 === AnalysisSynonymTokenFilter
@@ -8400,6 +9005,7 @@ interface AnalysisSynonymTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisThaiAnalyzer]]
 === AnalysisThaiAnalyzer
@@ -8414,6 +9020,7 @@ interface AnalysisThaiAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisThaiTokenizer]]
 === AnalysisThaiTokenizer
@@ -8426,6 +9033,7 @@ interface AnalysisThaiTokenizer extends <<AnalysisTokenizerBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisTokenChar]]
 === AnalysisTokenChar
@@ -8436,6 +9044,7 @@ type AnalysisTokenChar = 'letter' | 'digit' | 'whitespace' | 'punctuation' | 'sy
 ----
 
 
+
 [discrete]
 [[AnalysisTokenFilter]]
 === AnalysisTokenFilter
@@ -8444,6 +9053,7 @@ type AnalysisTokenChar = 'letter' | 'digit' | 'whitespace' | 'punctuation' | 'sy
 ----
 type AnalysisTokenFilter = string | <<AnalysisTokenFilterDefinition>>
 ----
+
 
 
 [discrete]
@@ -8458,6 +9068,7 @@ interface AnalysisTokenFilterBase {
 ----
 
 
+
 [discrete]
 [[AnalysisTokenFilterDefinition]]
 === AnalysisTokenFilterDefinition
@@ -8468,6 +9079,7 @@ type AnalysisTokenFilterDefinition = <<AnalysisAsciiFoldingTokenFilter>> | <<Ana
 ----
 
 
+
 [discrete]
 [[AnalysisTokenizer]]
 === AnalysisTokenizer
@@ -8476,6 +9088,7 @@ type AnalysisTokenFilterDefinition = <<AnalysisAsciiFoldingTokenFilter>> | <<Ana
 ----
 type AnalysisTokenizer = string | <<AnalysisTokenizerDefinition>>
 ----
+
 
 
 [discrete]
@@ -8490,6 +9103,7 @@ interface AnalysisTokenizerBase {
 ----
 
 
+
 [discrete]
 [[AnalysisTokenizerDefinition]]
 === AnalysisTokenizerDefinition
@@ -8498,6 +9112,7 @@ interface AnalysisTokenizerBase {
 ----
 type AnalysisTokenizerDefinition = <<AnalysisCharGroupTokenizer>> | <<AnalysisClassicTokenizer>> | <<AnalysisEdgeNGramTokenizer>> | <<AnalysisKeywordTokenizer>> | <<AnalysisLetterTokenizer>> | <<AnalysisLowercaseTokenizer>> | <<AnalysisNGramTokenizer>> | <<AnalysisPathHierarchyTokenizer>> | <<AnalysisPatternTokenizer>> | <<AnalysisSimplePatternTokenizer>> | <<AnalysisSimplePatternSplitTokenizer>> | <<AnalysisStandardTokenizer>> | <<AnalysisThaiTokenizer>> | <<AnalysisUaxEmailUrlTokenizer>> | <<AnalysisWhitespaceTokenizer>> | <<AnalysisIcuTokenizer>> | <<AnalysisKuromojiTokenizer>> | <<AnalysisNoriTokenizer>>
 ----
+
 
 
 [discrete]
@@ -8512,6 +9127,7 @@ interface AnalysisTrimTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisTruncateTokenFilter]]
 === AnalysisTruncateTokenFilter
@@ -8523,6 +9139,7 @@ interface AnalysisTruncateTokenFilter extends <<AnalysisTokenFilterBase>> {
   length?: <<integer>>
 }
 ----
+
 
 
 [discrete]
@@ -8540,6 +9157,7 @@ interface AnalysisTurkishAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisUaxEmailUrlTokenizer]]
 === AnalysisUaxEmailUrlTokenizer
@@ -8551,6 +9169,7 @@ interface AnalysisUaxEmailUrlTokenizer extends <<AnalysisTokenizerBase>> {
   max_token_length?: <<integer>>
 }
 ----
+
 
 
 [discrete]
@@ -8566,6 +9185,7 @@ interface AnalysisUniqueTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[AnalysisUppercaseTokenFilter]]
 === AnalysisUppercaseTokenFilter
@@ -8576,6 +9196,7 @@ interface AnalysisUppercaseTokenFilter extends <<AnalysisTokenFilterBase>> {
   type: 'uppercase'
 }
 ----
+
 
 
 [discrete]
@@ -8591,6 +9212,7 @@ interface AnalysisWhitespaceAnalyzer {
 ----
 
 
+
 [discrete]
 [[AnalysisWhitespaceTokenizer]]
 === AnalysisWhitespaceTokenizer
@@ -8602,6 +9224,7 @@ interface AnalysisWhitespaceTokenizer extends <<AnalysisTokenizerBase>> {
   max_token_length?: <<integer>>
 }
 ----
+
 
 
 [discrete]
@@ -8631,6 +9254,7 @@ interface AnalysisWordDelimiterGraphTokenFilter extends <<AnalysisTokenFilterBas
 ----
 
 
+
 [discrete]
 [[AnalysisWordDelimiterTokenFilter]]
 === AnalysisWordDelimiterTokenFilter
@@ -8656,6 +9280,7 @@ interface AnalysisWordDelimiterTokenFilter extends <<AnalysisTokenFilterBase>> {
 ----
 
 
+
 [discrete]
 [[MappingAggregateMetricDoubleProperty]]
 === MappingAggregateMetricDoubleProperty
@@ -8669,6 +9294,7 @@ interface MappingAggregateMetricDoubleProperty extends <<MappingPropertyBase>> {
   time_series_metric?: <<MappingTimeSeriesMetricType>>
 }
 ----
+
 
 
 [discrete]
@@ -8692,6 +9318,7 @@ interface MappingAllField {
 ----
 
 
+
 [discrete]
 [[MappingBinaryProperty]]
 === MappingBinaryProperty
@@ -8702,6 +9329,7 @@ interface MappingBinaryProperty extends <<MappingDocValuesPropertyBase>> {
   type: 'binary'
 }
 ----
+
 
 
 [discrete]
@@ -8720,6 +9348,7 @@ interface MappingBooleanProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingByteNumberProperty]]
 === MappingByteNumberProperty
@@ -8731,6 +9360,7 @@ interface MappingByteNumberProperty extends <<MappingNumberPropertyBase>> {
   null_value?: <<byte>>
 }
 ----
+
 
 
 [discrete]
@@ -8751,6 +9381,7 @@ interface MappingCompletionProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingCompositeSubField]]
 === MappingCompositeSubField
@@ -8761,6 +9392,7 @@ interface MappingCompositeSubField {
   type: <<MappingRuntimeFieldType>>
 }
 ----
+
 
 
 [discrete]
@@ -8776,6 +9408,7 @@ interface MappingConstantKeywordProperty extends <<MappingPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingCorePropertyBase]]
 === MappingCorePropertyBase
@@ -8789,6 +9422,7 @@ interface MappingCorePropertyBase extends <<MappingPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingDataStreamTimestamp]]
 === MappingDataStreamTimestamp
@@ -8799,6 +9433,7 @@ interface MappingDataStreamTimestamp {
   enabled: boolean
 }
 ----
+
 
 
 [discrete]
@@ -8817,6 +9452,7 @@ interface MappingDateNanosProperty extends <<MappingDocValuesPropertyBase>> {
   type: 'date_nanos'
 }
 ----
+
 
 
 [discrete]
@@ -8839,6 +9475,7 @@ interface MappingDateProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingDateRangeProperty]]
 === MappingDateRangeProperty
@@ -8850,6 +9487,7 @@ interface MappingDateRangeProperty extends <<MappingRangePropertyBase>> {
   type: 'date_range'
 }
 ----
+
 
 
 [discrete]
@@ -8865,6 +9503,7 @@ interface MappingDenseVectorIndexOptions {
   confidence_interval?: <<float>>
 }
 ----
+
 
 
 [discrete]
@@ -8884,6 +9523,7 @@ interface MappingDenseVectorProperty extends <<MappingPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingDocValuesPropertyBase]]
 === MappingDocValuesPropertyBase
@@ -8894,6 +9534,7 @@ interface MappingDocValuesPropertyBase extends <<MappingCorePropertyBase>> {
   doc_values?: boolean
 }
 ----
+
 
 
 [discrete]
@@ -8909,6 +9550,7 @@ interface MappingDoubleNumberProperty extends <<MappingNumberPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingDoubleRangeProperty]]
 === MappingDoubleRangeProperty
@@ -8921,6 +9563,7 @@ interface MappingDoubleRangeProperty extends <<MappingRangePropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingDynamicMapping]]
 === MappingDynamicMapping
@@ -8929,6 +9572,7 @@ interface MappingDoubleRangeProperty extends <<MappingRangePropertyBase>> {
 ----
 type MappingDynamicMapping = boolean | 'strict' | 'runtime' | 'true' | 'false'
 ----
+
 
 
 [discrete]
@@ -8965,6 +9609,7 @@ interface MappingDynamicProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingDynamicTemplate]]
 === MappingDynamicTemplate
@@ -8985,6 +9630,7 @@ interface MappingDynamicTemplate {
 ----
 
 
+
 [discrete]
 [[MappingFieldAliasProperty]]
 === MappingFieldAliasProperty
@@ -8996,6 +9642,7 @@ interface MappingFieldAliasProperty extends <<MappingPropertyBase>> {
   type: 'alias'
 }
 ----
+
 
 
 [discrete]
@@ -9011,6 +9658,7 @@ interface MappingFieldMapping {
 ----
 
 
+
 [discrete]
 [[MappingFieldNamesField]]
 === MappingFieldNamesField
@@ -9023,6 +9671,7 @@ interface MappingFieldNamesField {
 ----
 
 
+
 [discrete]
 [[MappingFieldType]]
 === MappingFieldType
@@ -9031,6 +9680,7 @@ interface MappingFieldNamesField {
 ----
 type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'version' | 'murmur3' | 'token_count' | 'percolator' | '<<integer>>' | '<<long>>' | '<<short>>' | '<<byte>>' | '<<float>>' | 'half_float' | 'scaled_float' | '<<double>>' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'semantic_text' | 'sparse_vector' | 'match_only_text' | 'icu_collation_keyword'
 ----
+
 
 
 [discrete]
@@ -9054,6 +9704,7 @@ interface MappingFlattenedProperty extends <<MappingPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingFloatNumberProperty]]
 === MappingFloatNumberProperty
@@ -9065,6 +9716,7 @@ interface MappingFloatNumberProperty extends <<MappingNumberPropertyBase>> {
   null_value?: <<float>>
 }
 ----
+
 
 
 [discrete]
@@ -9079,6 +9731,7 @@ interface MappingFloatRangeProperty extends <<MappingRangePropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingGeoOrientation]]
 === MappingGeoOrientation
@@ -9087,6 +9740,7 @@ interface MappingFloatRangeProperty extends <<MappingRangePropertyBase>> {
 ----
 type MappingGeoOrientation = 'right' | 'RIGHT' | 'counterclockwise' | 'ccw' | 'left' | 'LEFT' | 'clockwise' | 'cw'
 ----
+
 
 
 [discrete]
@@ -9107,6 +9761,7 @@ interface MappingGeoPointProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingGeoShapeProperty]]
 === MappingGeoShapeProperty
@@ -9124,6 +9779,7 @@ interface MappingGeoShapeProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingGeoStrategy]]
 === MappingGeoStrategy
@@ -9132,6 +9788,7 @@ interface MappingGeoShapeProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 type MappingGeoStrategy = 'recursive' | 'term'
 ----
+
 
 
 [discrete]
@@ -9147,6 +9804,7 @@ interface MappingHalfFloatNumberProperty extends <<MappingNumberPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingHistogramProperty]]
 === MappingHistogramProperty
@@ -9158,6 +9816,7 @@ interface MappingHistogramProperty extends <<MappingPropertyBase>> {
   type: 'histogram'
 }
 ----
+
 
 
 [discrete]
@@ -9190,6 +9849,7 @@ interface MappingIcuCollationProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingIndexField]]
 === MappingIndexField
@@ -9202,6 +9862,7 @@ interface MappingIndexField {
 ----
 
 
+
 [discrete]
 [[MappingIndexOptions]]
 === MappingIndexOptions
@@ -9210,6 +9871,7 @@ interface MappingIndexField {
 ----
 type MappingIndexOptions = 'docs' | 'freqs' | 'positions' | 'offsets'
 ----
+
 
 
 [discrete]
@@ -9225,6 +9887,7 @@ interface MappingIntegerNumberProperty extends <<MappingNumberPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingIntegerRangeProperty]]
 === MappingIntegerRangeProperty
@@ -9235,6 +9898,7 @@ interface MappingIntegerRangeProperty extends <<MappingRangePropertyBase>> {
   type: 'integer_range'
 }
 ----
+
 
 
 [discrete]
@@ -9257,6 +9921,7 @@ interface MappingIpProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingIpRangeProperty]]
 === MappingIpRangeProperty
@@ -9267,6 +9932,7 @@ interface MappingIpRangeProperty extends <<MappingRangePropertyBase>> {
   type: 'ip_range'
 }
 ----
+
 
 
 [discrete]
@@ -9281,6 +9947,7 @@ interface MappingJoinProperty extends <<MappingPropertyBase>> {
   type: 'join'
 }
 ----
+
 
 
 [discrete]
@@ -9308,6 +9975,7 @@ interface MappingKeywordProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingLongNumberProperty]]
 === MappingLongNumberProperty
@@ -9321,6 +9989,7 @@ interface MappingLongNumberProperty extends <<MappingNumberPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingLongRangeProperty]]
 === MappingLongRangeProperty
@@ -9331,6 +10000,7 @@ interface MappingLongRangeProperty extends <<MappingRangePropertyBase>> {
   type: 'long_range'
 }
 ----
+
 
 
 [discrete]
@@ -9351,6 +10021,7 @@ interface MappingMatchOnlyTextProperty {
 ----
 
 
+
 [discrete]
 [[MappingMatchType]]
 === MappingMatchType
@@ -9359,6 +10030,7 @@ interface MappingMatchOnlyTextProperty {
 ----
 type MappingMatchType = 'simple' | 'regex'
 ----
+
 
 
 [discrete]
@@ -9371,6 +10043,7 @@ interface MappingMurmur3HashProperty extends <<MappingDocValuesPropertyBase>> {
   type: 'murmur3'
 }
 ----
+
 
 
 [discrete]
@@ -9386,6 +10059,7 @@ interface MappingNestedProperty extends <<MappingCorePropertyBase>> {
   type: 'nested'
 }
 ----
+
 
 
 [discrete]
@@ -9409,6 +10083,7 @@ interface MappingNumberPropertyBase extends <<MappingDocValuesPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingObjectProperty]]
 === MappingObjectProperty
@@ -9423,6 +10098,7 @@ interface MappingObjectProperty extends <<MappingCorePropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingOnScriptError]]
 === MappingOnScriptError
@@ -9431,6 +10107,7 @@ interface MappingObjectProperty extends <<MappingCorePropertyBase>> {
 ----
 type MappingOnScriptError = 'fail' | 'continue'
 ----
+
 
 
 [discrete]
@@ -9443,6 +10120,7 @@ interface MappingPercolatorProperty extends <<MappingPropertyBase>> {
   type: 'percolator'
 }
 ----
+
 
 
 [discrete]
@@ -9460,6 +10138,7 @@ interface MappingPointProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingProperty]]
 === MappingProperty
@@ -9468,6 +10147,7 @@ interface MappingPointProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 type MappingProperty = <<MappingBinaryProperty>> | <<MappingBooleanProperty>> | <<MappingDynamicProperty>> | <<MappingJoinProperty>> | <<MappingKeywordProperty>> | <<MappingMatchOnlyTextProperty>> | <<MappingPercolatorProperty>> | <<MappingRankFeatureProperty>> | <<MappingRankFeaturesProperty>> | <<MappingSearchAsYouTypeProperty>> | <<MappingTextProperty>> | <<MappingVersionProperty>> | <<MappingWildcardProperty>> | <<MappingDateNanosProperty>> | <<MappingDateProperty>> | <<MappingAggregateMetricDoubleProperty>> | <<MappingDenseVectorProperty>> | <<MappingFlattenedProperty>> | <<MappingNestedProperty>> | <<MappingObjectProperty>> | <<MappingSemanticTextProperty>> | <<MappingSparseVectorProperty>> | <<MappingCompletionProperty>> | <<MappingConstantKeywordProperty>> | <<MappingFieldAliasProperty>> | <<MappingHistogramProperty>> | <<MappingIpProperty>> | MappingMurmur3HashProperty | <<MappingTokenCountProperty>> | <<MappingGeoPointProperty>> | <<MappingGeoShapeProperty>> | <<MappingPointProperty>> | <<MappingShapeProperty>> | <<MappingByteNumberProperty>> | <<MappingDoubleNumberProperty>> | <<MappingFloatNumberProperty>> | <<MappingHalfFloatNumberProperty>> | <<MappingIntegerNumberProperty>> | <<MappingLongNumberProperty>> | <<MappingScaledFloatNumberProperty>> | <<MappingShortNumberProperty>> | <<MappingUnsignedLongNumberProperty>> | <<MappingDateRangeProperty>> | <<MappingDoubleRangeProperty>> | <<MappingFloatRangeProperty>> | <<MappingIntegerRangeProperty>> | <<MappingIpRangeProperty>> | <<MappingLongRangeProperty>> | <<MappingIcuCollationProperty>>
 ----
+
 
 
 [discrete]
@@ -9487,6 +10167,7 @@ interface MappingPropertyBase {
 ----
 
 
+
 [discrete]
 [[MappingRangePropertyBase]]
 === MappingRangePropertyBase
@@ -9499,6 +10180,7 @@ interface MappingRangePropertyBase extends <<MappingDocValuesPropertyBase>> {
   index?: boolean
 }
 ----
+
 
 
 [discrete]
@@ -9514,6 +10196,7 @@ interface MappingRankFeatureProperty extends <<MappingPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingRankFeaturesProperty]]
 === MappingRankFeaturesProperty
@@ -9527,6 +10210,7 @@ interface MappingRankFeaturesProperty extends <<MappingPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingRoutingField]]
 === MappingRoutingField
@@ -9537,6 +10221,7 @@ interface MappingRoutingField {
   required: boolean
 }
 ----
+
 
 
 [discrete]
@@ -9566,6 +10251,7 @@ interface MappingRuntimeField {
 ----
 
 
+
 [discrete]
 [[MappingRuntimeFieldFetchFields]]
 === MappingRuntimeFieldFetchFields
@@ -9579,6 +10265,7 @@ interface MappingRuntimeFieldFetchFields {
 ----
 
 
+
 [discrete]
 [[MappingRuntimeFieldType]]
 === MappingRuntimeFieldType
@@ -9589,6 +10276,7 @@ type MappingRuntimeFieldType = 'boolean' | 'composite' | 'date' | '<<double>>' |
 ----
 
 
+
 [discrete]
 [[MappingRuntimeFields]]
 === MappingRuntimeFields
@@ -9597,6 +10285,7 @@ type MappingRuntimeFieldType = 'boolean' | 'composite' | 'date' | '<<double>>' |
 ----
 type MappingRuntimeFields = Record<<<Field>>, <<MappingRuntimeField>>>
 ----
+
 
 
 [discrete]
@@ -9611,6 +10300,7 @@ interface MappingScaledFloatNumberProperty extends <<MappingNumberPropertyBase>>
   scaling_factor?: <<double>>
 }
 ----
+
 
 
 [discrete]
@@ -9634,6 +10324,7 @@ interface MappingSearchAsYouTypeProperty extends <<MappingCorePropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingSemanticTextProperty]]
 === MappingSemanticTextProperty
@@ -9646,6 +10337,7 @@ interface MappingSemanticTextProperty {
   inference_id: <<Id>>
 }
 ----
+
 
 
 [discrete]
@@ -9664,6 +10356,7 @@ interface MappingShapeProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingShortNumberProperty]]
 === MappingShortNumberProperty
@@ -9677,6 +10370,7 @@ interface MappingShortNumberProperty extends <<MappingNumberPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingSizeField]]
 === MappingSizeField
@@ -9687,6 +10381,7 @@ interface MappingSizeField {
   enabled: boolean
 }
 ----
+
 
 
 [discrete]
@@ -9706,6 +10401,7 @@ interface MappingSourceField {
 ----
 
 
+
 [discrete]
 [[MappingSourceFieldMode]]
 === MappingSourceFieldMode
@@ -9714,6 +10410,7 @@ interface MappingSourceField {
 ----
 type MappingSourceFieldMode = 'disabled' | 'stored' | 'synthetic'
 ----
+
 
 
 [discrete]
@@ -9726,6 +10423,7 @@ interface MappingSparseVectorProperty extends <<MappingPropertyBase>> {
   type: 'sparse_vector'
 }
 ----
+
 
 
 [discrete]
@@ -9743,6 +10441,7 @@ interface MappingSuggestContext {
 ----
 
 
+
 [discrete]
 [[MappingTermVectorOption]]
 === MappingTermVectorOption
@@ -9751,6 +10450,7 @@ interface MappingSuggestContext {
 ----
 type MappingTermVectorOption = 'no' | 'yes' | 'with_offsets' | 'with_positions' | 'with_positions_offsets' | 'with_positions_offsets_payloads' | 'with_positions_payloads'
 ----
+
 
 
 [discrete]
@@ -9764,6 +10464,7 @@ interface MappingTextIndexPrefixes {
   min_chars: <<integer>>
 }
 ----
+
 
 
 [discrete]
@@ -9793,6 +10494,7 @@ interface MappingTextProperty extends <<MappingCorePropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingTimeSeriesMetricType]]
 === MappingTimeSeriesMetricType
@@ -9801,6 +10503,7 @@ interface MappingTextProperty extends <<MappingCorePropertyBase>> {
 ----
 type MappingTimeSeriesMetricType = 'gauge' | 'counter' | 'summary' | 'histogram' | 'position'
 ----
+
 
 
 [discrete]
@@ -9818,6 +10521,7 @@ interface MappingTokenCountProperty extends <<MappingDocValuesPropertyBase>> {
   type: 'token_count'
 }
 ----
+
 
 
 [discrete]
@@ -9848,6 +10552,7 @@ interface MappingTypeMapping {
 ----
 
 
+
 [discrete]
 [[MappingUnsignedLongNumberProperty]]
 === MappingUnsignedLongNumberProperty
@@ -9859,6 +10564,7 @@ interface MappingUnsignedLongNumberProperty extends <<MappingNumberPropertyBase>
   null_value?: <<ulong>>
 }
 ----
+
 
 
 [discrete]
@@ -9873,6 +10579,7 @@ interface MappingVersionProperty extends <<MappingDocValuesPropertyBase>> {
 ----
 
 
+
 [discrete]
 [[MappingWildcardProperty]]
 === MappingWildcardProperty
@@ -9884,6 +10591,7 @@ interface MappingWildcardProperty extends <<MappingDocValuesPropertyBase>> {
   null_value?: string
 }
 ----
+
 
 
 [discrete]
@@ -9907,6 +10615,7 @@ interface QueryDslBoolQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslBoostingQuery]]
 === QueryDslBoostingQuery
@@ -9924,6 +10633,7 @@ interface QueryDslBoostingQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslChildScoreMode]]
 === QueryDslChildScoreMode
@@ -9934,6 +10644,7 @@ type QueryDslChildScoreMode = 'none' | 'avg' | 'sum' | 'max' | 'min'
 ----
 
 
+
 [discrete]
 [[QueryDslCombinedFieldsOperator]]
 === QueryDslCombinedFieldsOperator
@@ -9942,6 +10653,7 @@ type QueryDslChildScoreMode = 'none' | 'avg' | 'sum' | 'max' | 'min'
 ----
 type QueryDslCombinedFieldsOperator = 'or' | 'and'
 ----
+
 
 
 [discrete]
@@ -9967,6 +10679,7 @@ interface QueryDslCombinedFieldsQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslCombinedFieldsZeroTerms]]
 === QueryDslCombinedFieldsZeroTerms
@@ -9975,6 +10688,7 @@ interface QueryDslCombinedFieldsQuery extends <<QueryDslQueryBase>> {
 ----
 type QueryDslCombinedFieldsZeroTerms = 'none' | 'all'
 ----
+
 
 
 [discrete]
@@ -9994,6 +10708,7 @@ interface QueryDslCommonTermsQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslConstantScoreQuery]]
 === QueryDslConstantScoreQuery
@@ -10005,6 +10720,7 @@ interface QueryDslConstantScoreQuery extends <<QueryDslQueryBase>> {
   filter: <<QueryDslQueryContainer>>
 }
 ----
+
 
 
 [discrete]
@@ -10019,6 +10735,7 @@ type QueryDslDateDecayFunction = QueryDslDateDecayFunctionKeys
 ----
 
 
+
 [discrete]
 [[QueryDslDateDistanceFeatureQuery]]
 === QueryDslDateDistanceFeatureQuery
@@ -10027,6 +10744,7 @@ type QueryDslDateDecayFunction = QueryDslDateDecayFunctionKeys
 ----
 interface QueryDslDateDistanceFeatureQuery extends <<QueryDslDistanceFeatureQueryBase>><<<DateMath>>, <<Duration>>> {}
 ----
+
 
 
 [discrete]
@@ -10044,6 +10762,7 @@ interface QueryDslDateRangeQuery extends <<QueryDslRangeQueryBase>><<<DateMath>>
 ----
 
 
+
 [discrete]
 [[QueryDslDecayFunction]]
 === QueryDslDecayFunction
@@ -10052,6 +10771,7 @@ interface QueryDslDateRangeQuery extends <<QueryDslRangeQueryBase>><<<DateMath>>
 ----
 type QueryDslDecayFunction = <<QueryDslUntypedDecayFunction>> | <<QueryDslDateDecayFunction>> | <<QueryDslNumericDecayFunction>> | <<QueryDslGeoDecayFunction>>
 ----
+
 
 
 [discrete]
@@ -10065,6 +10785,7 @@ interface QueryDslDecayFunctionBase<TOrigin = unknown, TScale = unknown> {
   multi_value_mode?: <<QueryDslMultiValueMode>>
 }
 ----
+
 
 
 [discrete]
@@ -10086,6 +10807,7 @@ interface QueryDslDecayPlacement<TOrigin = unknown, TScale = unknown> {
 ----
 
 
+
 [discrete]
 [[QueryDslDisMaxQuery]]
 === QueryDslDisMaxQuery
@@ -10101,6 +10823,7 @@ interface QueryDslDisMaxQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslDistanceFeatureQuery]]
 === QueryDslDistanceFeatureQuery
@@ -10109,6 +10832,7 @@ interface QueryDslDisMaxQuery extends <<QueryDslQueryBase>> {
 ----
 type QueryDslDistanceFeatureQuery = <<QueryDslUntypedDistanceFeatureQuery>> | <<QueryDslGeoDistanceFeatureQuery>> | <<QueryDslDateDistanceFeatureQuery>>
 ----
+
 
 
 [discrete]
@@ -10128,6 +10852,7 @@ interface QueryDslDistanceFeatureQueryBase<TOrigin = unknown, TDistance = unknow
 ----
 
 
+
 [discrete]
 [[QueryDslExistsQuery]]
 === QueryDslExistsQuery
@@ -10139,6 +10864,7 @@ interface QueryDslExistsQuery extends <<QueryDslQueryBase>> {
   field: <<Field>>
 }
 ----
+
 
 
 [discrete]
@@ -10155,6 +10881,7 @@ interface QueryDslFieldAndFormat {
   include_unmapped?: boolean
 }
 ----
+
 
 
 [discrete]
@@ -10176,6 +10903,7 @@ interface QueryDslFieldLookup {
 ----
 
 
+
 [discrete]
 [[QueryDslFieldValueFactorModifier]]
 === QueryDslFieldValueFactorModifier
@@ -10184,6 +10912,7 @@ interface QueryDslFieldLookup {
 ----
 type QueryDslFieldValueFactorModifier = 'none' | 'log' | 'log1p' | 'log2p' | 'ln' | 'ln1p' | 'ln2p' | 'square' | 'sqrt' | 'reciprocal'
 ----
+
 
 
 [discrete]
@@ -10205,6 +10934,7 @@ interface QueryDslFieldValueFactorScoreFunction {
 ----
 
 
+
 [discrete]
 [[QueryDslFunctionBoostMode]]
 === QueryDslFunctionBoostMode
@@ -10213,6 +10943,7 @@ interface QueryDslFieldValueFactorScoreFunction {
 ----
 type QueryDslFunctionBoostMode = 'multiply' | 'replace' | 'sum' | 'avg' | 'max' | 'min'
 ----
+
 
 
 [discrete]
@@ -10240,6 +10971,7 @@ interface QueryDslFunctionScoreContainer {
 ----
 
 
+
 [discrete]
 [[QueryDslFunctionScoreMode]]
 === QueryDslFunctionScoreMode
@@ -10248,6 +10980,7 @@ interface QueryDslFunctionScoreContainer {
 ----
 type QueryDslFunctionScoreMode = 'multiply' | 'sum' | 'avg' | 'first' | 'max' | 'min'
 ----
+
 
 
 [discrete]
@@ -10273,6 +11006,7 @@ interface QueryDslFunctionScoreQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslFuzzyQuery]]
 === QueryDslFuzzyQuery
@@ -10296,6 +11030,7 @@ interface QueryDslFuzzyQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslGeoBoundingBoxQuery]]
 === QueryDslGeoBoundingBoxQuery
@@ -10312,6 +11047,7 @@ type QueryDslGeoBoundingBoxQuery = QueryDslGeoBoundingBoxQueryKeys
 ----
 
 
+
 [discrete]
 [[QueryDslGeoDecayFunction]]
 === QueryDslGeoDecayFunction
@@ -10324,6 +11060,7 @@ type QueryDslGeoDecayFunction = QueryDslGeoDecayFunctionKeys
 ----
 
 
+
 [discrete]
 [[QueryDslGeoDistanceFeatureQuery]]
 === QueryDslGeoDistanceFeatureQuery
@@ -10332,6 +11069,7 @@ type QueryDslGeoDecayFunction = QueryDslGeoDecayFunctionKeys
 ----
 interface QueryDslGeoDistanceFeatureQuery extends <<QueryDslDistanceFeatureQueryBase>><<<GeoLocation>>, <<Distance>>> {}
 ----
+
 
 
 [discrete]
@@ -10351,6 +11089,7 @@ type QueryDslGeoDistanceQuery = QueryDslGeoDistanceQueryKeys
 ----
 
 
+
 [discrete]
 [[QueryDslGeoExecution]]
 === QueryDslGeoExecution
@@ -10359,6 +11098,7 @@ type QueryDslGeoDistanceQuery = QueryDslGeoDistanceQueryKeys
 ----
 type QueryDslGeoExecution = 'memory' | 'indexed'
 ----
+
 
 
 [discrete]
@@ -10371,6 +11111,7 @@ interface QueryDslGeoPolygonPoints {
   points: <<GeoLocation>>[]
 }
 ----
+
 
 
 [discrete]
@@ -10386,6 +11127,7 @@ interface QueryDslGeoPolygonQueryKeys extends <<QueryDslQueryBase>> {
 type QueryDslGeoPolygonQuery = QueryDslGeoPolygonQueryKeys
   & { [property: string]: <<QueryDslGeoPolygonPoints>> | <<QueryDslGeoValidationMethod>> | boolean | <<float>> | string }
 ----
+
 
 
 [discrete]
@@ -10404,6 +11146,7 @@ interface QueryDslGeoShapeFieldQuery {
 ----
 
 
+
 [discrete]
 [[QueryDslGeoShapeQuery]]
 === QueryDslGeoShapeQuery
@@ -10418,6 +11161,7 @@ type QueryDslGeoShapeQuery = QueryDslGeoShapeQueryKeys
 ----
 
 
+
 [discrete]
 [[QueryDslGeoValidationMethod]]
 === QueryDslGeoValidationMethod
@@ -10426,6 +11170,7 @@ type QueryDslGeoShapeQuery = QueryDslGeoShapeQueryKeys
 ----
 type QueryDslGeoValidationMethod = 'coerce' | 'ignore_malformed' | 'strict'
 ----
+
 
 
 [discrete]
@@ -10453,6 +11198,7 @@ interface QueryDslHasChildQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslHasParentQuery]]
 === QueryDslHasParentQuery
@@ -10474,6 +11220,7 @@ interface QueryDslHasParentQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslIdsQuery]]
 === QueryDslIdsQuery
@@ -10485,6 +11232,7 @@ interface QueryDslIdsQuery extends <<QueryDslQueryBase>> {
   values?: <<Ids>>
 }
 ----
+
 
 
 [discrete]
@@ -10506,6 +11254,7 @@ interface QueryDslIntervalsAllOf {
 ----
 
 
+
 [discrete]
 [[QueryDslIntervalsAnyOf]]
 === QueryDslIntervalsAnyOf
@@ -10519,6 +11268,7 @@ interface QueryDslIntervalsAnyOf {
   filter?: <<QueryDslIntervalsFilter>>
 }
 ----
+
 
 
 [discrete]
@@ -10542,6 +11292,7 @@ interface QueryDslIntervalsContainer {
   wildcard?: <<QueryDslIntervalsWildcard>>
 }
 ----
+
 
 
 [discrete]
@@ -10573,6 +11324,7 @@ interface QueryDslIntervalsFilter {
 ----
 
 
+
 [discrete]
 [[QueryDslIntervalsFuzzy]]
 === QueryDslIntervalsFuzzy
@@ -10594,6 +11346,7 @@ interface QueryDslIntervalsFuzzy {
   use_field?: <<Field>>
 }
 ----
+
 
 
 [discrete]
@@ -10619,6 +11372,7 @@ interface QueryDslIntervalsMatch {
 ----
 
 
+
 [discrete]
 [[QueryDslIntervalsPrefix]]
 === QueryDslIntervalsPrefix
@@ -10634,6 +11388,7 @@ interface QueryDslIntervalsPrefix {
   use_field?: <<Field>>
 }
 ----
+
 
 
 [discrete]
@@ -10659,6 +11414,7 @@ interface QueryDslIntervalsQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslIntervalsWildcard]]
 === QueryDslIntervalsWildcard
@@ -10676,6 +11432,7 @@ interface QueryDslIntervalsWildcard {
 ----
 
 
+
 [discrete]
 [[QueryDslLike]]
 === QueryDslLike
@@ -10684,6 +11441,7 @@ interface QueryDslIntervalsWildcard {
 ----
 type QueryDslLike = string | <<QueryDslLikeDocument>>
 ----
+
 
 
 [discrete]
@@ -10709,6 +11467,7 @@ interface QueryDslLikeDocument {
 ----
 
 
+
 [discrete]
 [[QueryDslMatchAllQuery]]
 === QueryDslMatchAllQuery
@@ -10717,6 +11476,7 @@ interface QueryDslLikeDocument {
 ----
 interface QueryDslMatchAllQuery extends <<QueryDslQueryBase>> {}
 ----
+
 
 
 [discrete]
@@ -10748,6 +11508,7 @@ interface QueryDslMatchBoolPrefixQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslMatchNoneQuery]]
 === QueryDslMatchNoneQuery
@@ -10756,6 +11517,7 @@ interface QueryDslMatchBoolPrefixQuery extends <<QueryDslQueryBase>> {
 ----
 interface QueryDslMatchNoneQuery extends <<QueryDslQueryBase>> {}
 ----
+
 
 
 [discrete]
@@ -10779,6 +11541,7 @@ interface QueryDslMatchPhrasePrefixQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslMatchPhraseQuery]]
 === QueryDslMatchPhraseQuery
@@ -10796,6 +11559,7 @@ interface QueryDslMatchPhraseQuery extends <<QueryDslQueryBase>> {
   zero_terms_query?: <<QueryDslZeroTermsQuery>>
 }
 ----
+
 
 
 [discrete]
@@ -10832,6 +11596,7 @@ interface QueryDslMatchQuery extends <<QueryDslQueryBase>> {
   zero_terms_query?: <<QueryDslZeroTermsQuery>>
 }
 ----
+
 
 
 [discrete]
@@ -10878,6 +11643,7 @@ interface QueryDslMoreLikeThisQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslMultiMatchQuery]]
 === QueryDslMultiMatchQuery
@@ -10922,6 +11688,7 @@ interface QueryDslMultiMatchQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslMultiValueMode]]
 === QueryDslMultiValueMode
@@ -10930,6 +11697,7 @@ interface QueryDslMultiMatchQuery extends <<QueryDslQueryBase>> {
 ----
 type QueryDslMultiValueMode = 'min' | 'max' | 'avg' | 'sum'
 ----
+
 
 
 [discrete]
@@ -10953,6 +11721,7 @@ interface QueryDslNestedQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslNumberRangeQuery]]
 === QueryDslNumberRangeQuery
@@ -10961,6 +11730,7 @@ interface QueryDslNestedQuery extends <<QueryDslQueryBase>> {
 ----
 interface QueryDslNumberRangeQuery extends <<QueryDslRangeQueryBase>><<<double>>> {}
 ----
+
 
 
 [discrete]
@@ -10975,6 +11745,7 @@ type QueryDslNumericDecayFunction = QueryDslNumericDecayFunctionKeys
 ----
 
 
+
 [discrete]
 [[QueryDslOperator]]
 === QueryDslOperator
@@ -10983,6 +11754,7 @@ type QueryDslNumericDecayFunction = QueryDslNumericDecayFunctionKeys
 ----
 type QueryDslOperator = 'and' | 'AND' | 'or' | 'OR'
 ----
+
 
 
 [discrete]
@@ -11000,6 +11772,7 @@ interface QueryDslParentIdQuery extends <<QueryDslQueryBase>> {
   type?: <<RelationName>>
 }
 ----
+
 
 
 [discrete]
@@ -11031,6 +11804,7 @@ interface QueryDslPercolateQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslPinnedDoc]]
 === QueryDslPinnedDoc
@@ -11044,6 +11818,7 @@ interface QueryDslPinnedDoc {
   _index: <<IndexName>>
 }
 ----
+
 
 
 [discrete]
@@ -11063,6 +11838,7 @@ interface QueryDslPinnedQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslPrefixQuery]]
 === QueryDslPrefixQuery
@@ -11080,6 +11856,7 @@ interface QueryDslPrefixQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslQueryBase]]
 === QueryDslQueryBase
@@ -11092,6 +11869,7 @@ interface QueryDslQueryBase {
   _name?: string
 }
 ----
+
 
 
 [discrete]
@@ -11221,6 +11999,7 @@ interface QueryDslQueryContainer {
 ----
 
 
+
 [discrete]
 [[QueryDslQueryStringQuery]]
 === QueryDslQueryStringQuery
@@ -11281,6 +12060,7 @@ interface QueryDslQueryStringQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslRandomScoreFunction]]
 === QueryDslRandomScoreFunction
@@ -11294,6 +12074,7 @@ interface QueryDslRandomScoreFunction {
 ----
 
 
+
 [discrete]
 [[QueryDslRangeQuery]]
 === QueryDslRangeQuery
@@ -11302,6 +12083,7 @@ interface QueryDslRandomScoreFunction {
 ----
 type QueryDslRangeQuery = <<QueryDslUntypedRangeQuery>> | <<QueryDslDateRangeQuery>> | <<QueryDslNumberRangeQuery>> | <<QueryDslTermRangeQuery>>
 ----
+
 
 
 [discrete]
@@ -11327,6 +12109,7 @@ interface QueryDslRangeQueryBase<T = unknown> extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslRangeRelation]]
 === QueryDslRangeRelation
@@ -11335,6 +12118,7 @@ interface QueryDslRangeQueryBase<T = unknown> extends <<QueryDslQueryBase>> {
 ----
 type QueryDslRangeRelation = 'within' | 'contains' | 'intersects'
 ----
+
 
 
 [discrete]
@@ -11347,6 +12131,7 @@ interface QueryDslRankFeatureFunction {}
 ----
 
 
+
 [discrete]
 [[QueryDslRankFeatureFunctionLinear]]
 === QueryDslRankFeatureFunctionLinear
@@ -11355,6 +12140,7 @@ interface QueryDslRankFeatureFunction {}
 ----
 interface QueryDslRankFeatureFunctionLinear {}
 ----
+
 
 
 [discrete]
@@ -11370,6 +12156,7 @@ interface QueryDslRankFeatureFunctionLogarithm {
 ----
 
 
+
 [discrete]
 [[QueryDslRankFeatureFunctionSaturation]]
 === QueryDslRankFeatureFunctionSaturation
@@ -11381,6 +12168,7 @@ interface QueryDslRankFeatureFunctionSaturation {
   pivot?: <<float>>
 }
 ----
+
 
 
 [discrete]
@@ -11396,6 +12184,7 @@ interface QueryDslRankFeatureFunctionSigmoid {
   exponent: <<float>>
 }
 ----
+
 
 
 [discrete]
@@ -11419,6 +12208,7 @@ interface QueryDslRankFeatureQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslRegexpQuery]]
 === QueryDslRegexpQuery
@@ -11440,6 +12230,7 @@ interface QueryDslRegexpQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslRuleQuery]]
 === QueryDslRuleQuery
@@ -11452,6 +12243,7 @@ interface QueryDslRuleQuery extends <<QueryDslQueryBase>> {
   match_criteria: any
 }
 ----
+
 
 
 [discrete]
@@ -11467,6 +12259,7 @@ interface QueryDslScriptQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslScriptScoreFunction]]
 === QueryDslScriptScoreFunction
@@ -11478,6 +12271,7 @@ interface QueryDslScriptScoreFunction {
   script: <<Script>> | string
 }
 ----
+
 
 
 [discrete]
@@ -11497,6 +12291,7 @@ interface QueryDslScriptScoreQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslSemanticQuery]]
 === QueryDslSemanticQuery
@@ -11510,6 +12305,7 @@ interface QueryDslSemanticQuery extends <<QueryDslQueryBase>> {
   query: string
 }
 ----
+
 
 
 [discrete]
@@ -11529,6 +12325,7 @@ interface QueryDslShapeFieldQuery {
 ----
 
 
+
 [discrete]
 [[QueryDslShapeQuery]]
 === QueryDslShapeQuery
@@ -11543,6 +12340,7 @@ type QueryDslShapeQuery = QueryDslShapeQueryKeys
 ----
 
 
+
 [discrete]
 [[QueryDslSimpleQueryStringFlag]]
 === QueryDslSimpleQueryStringFlag
@@ -11553,6 +12351,7 @@ type QueryDslSimpleQueryStringFlag = 'NONE' | 'AND' | 'NOT' | 'OR' | 'PREFIX' | 
 ----
 
 
+
 [discrete]
 [[QueryDslSimpleQueryStringFlags]]
 === QueryDslSimpleQueryStringFlags
@@ -11561,6 +12360,7 @@ type QueryDslSimpleQueryStringFlag = 'NONE' | 'AND' | 'NOT' | 'OR' | 'PREFIX' | 
 ----
 type QueryDslSimpleQueryStringFlags = <<SpecUtilsPipeSeparatedFlags>><<<QueryDslSimpleQueryStringFlag>>>
 ----
+
 
 
 [discrete]
@@ -11600,6 +12400,7 @@ interface QueryDslSimpleQueryStringQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslSpanContainingQuery]]
 === QueryDslSpanContainingQuery
@@ -11615,6 +12416,7 @@ interface QueryDslSpanContainingQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslSpanFieldMaskingQuery]]
 === QueryDslSpanFieldMaskingQuery
@@ -11626,6 +12428,7 @@ interface QueryDslSpanFieldMaskingQuery extends <<QueryDslQueryBase>> {
   query: <<QueryDslSpanQuery>>
 }
 ----
+
 
 
 [discrete]
@@ -11643,6 +12446,7 @@ interface QueryDslSpanFirstQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslSpanGapQuery]]
 === QueryDslSpanGapQuery
@@ -11651,6 +12455,7 @@ interface QueryDslSpanFirstQuery extends <<QueryDslQueryBase>> {
 ----
 type QueryDslSpanGapQuery = Partial<Record<<<Field>>, <<integer>>>>
 ----
+
 
 
 [discrete]
@@ -11664,6 +12469,7 @@ interface QueryDslSpanMultiTermQuery extends <<QueryDslQueryBase>> {
   match: <<QueryDslQueryContainer>>
 }
 ----
+
 
 
 [discrete]
@@ -11681,6 +12487,7 @@ interface QueryDslSpanNearQuery extends <<QueryDslQueryBase>> {
   slop?: <<integer>>
 }
 ----
+
 
 
 [discrete]
@@ -11704,6 +12511,7 @@ interface QueryDslSpanNotQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslSpanOrQuery]]
 === QueryDslSpanOrQuery
@@ -11715,6 +12523,7 @@ interface QueryDslSpanOrQuery extends <<QueryDslQueryBase>> {
   clauses: <<QueryDslSpanQuery>>[]
 }
 ----
+
 
 
 [discrete]
@@ -11747,6 +12556,7 @@ interface QueryDslSpanQuery {
 ----
 
 
+
 [discrete]
 [[QueryDslSpanTermQuery]]
 === QueryDslSpanTermQuery
@@ -11757,6 +12567,7 @@ interface QueryDslSpanTermQuery extends <<QueryDslQueryBase>> {
   value: string
 }
 ----
+
 
 
 [discrete]
@@ -11772,6 +12583,7 @@ interface QueryDslSpanWithinQuery extends <<QueryDslQueryBase>> {
   little: <<QueryDslSpanQuery>>
 }
 ----
+
 
 
 [discrete]
@@ -11797,6 +12609,7 @@ interface QueryDslSparseVectorQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslTermQuery]]
 === QueryDslTermQuery
@@ -11812,6 +12625,7 @@ interface QueryDslTermQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslTermRangeQuery]]
 === QueryDslTermRangeQuery
@@ -11820,6 +12634,7 @@ interface QueryDslTermQuery extends <<QueryDslQueryBase>> {
 ----
 interface QueryDslTermRangeQuery extends <<QueryDslRangeQueryBase>><string> {}
 ----
+
 
 
 [discrete]
@@ -11837,6 +12652,7 @@ interface QueryDslTermsLookup {
 ----
 
 
+
 [discrete]
 [[QueryDslTermsQuery]]
 === QueryDslTermsQuery
@@ -11849,6 +12665,7 @@ type QueryDslTermsQuery = QueryDslTermsQueryKeys
 ----
 
 
+
 [discrete]
 [[QueryDslTermsQueryField]]
 === QueryDslTermsQueryField
@@ -11857,6 +12674,7 @@ type QueryDslTermsQuery = QueryDslTermsQueryKeys
 ----
 type QueryDslTermsQueryField = <<FieldValue>>[] | <<QueryDslTermsLookup>>
 ----
+
 
 
 [discrete]
@@ -11878,6 +12696,7 @@ interface QueryDslTermsSetQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslTextExpansionQuery]]
 === QueryDslTextExpansionQuery
@@ -11895,6 +12714,7 @@ interface QueryDslTextExpansionQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslTextQueryType]]
 === QueryDslTextQueryType
@@ -11903,6 +12723,7 @@ interface QueryDslTextExpansionQuery extends <<QueryDslQueryBase>> {
 ----
 type QueryDslTextQueryType = 'best_fields' | 'most_fields' | 'cross_fields' | 'phrase' | 'phrase_prefix' | 'bool_prefix'
 ----
+
 
 
 [discrete]
@@ -11922,6 +12743,7 @@ interface QueryDslTokenPruningConfig {
 ----
 
 
+
 [discrete]
 [[QueryDslTypeQuery]]
 === QueryDslTypeQuery
@@ -11932,6 +12754,7 @@ interface QueryDslTypeQuery extends <<QueryDslQueryBase>> {
   value: string
 }
 ----
+
 
 
 [discrete]
@@ -11946,6 +12769,7 @@ type QueryDslUntypedDecayFunction = QueryDslUntypedDecayFunctionKeys
 ----
 
 
+
 [discrete]
 [[QueryDslUntypedDistanceFeatureQuery]]
 === QueryDslUntypedDistanceFeatureQuery
@@ -11954,6 +12778,7 @@ type QueryDslUntypedDecayFunction = QueryDslUntypedDecayFunctionKeys
 ----
 interface QueryDslUntypedDistanceFeatureQuery extends <<QueryDslDistanceFeatureQueryBase>><any, any> {}
 ----
+
 
 
 [discrete]
@@ -11971,6 +12796,7 @@ interface QueryDslUntypedRangeQuery extends <<QueryDslRangeQueryBase>><any> {
 ----
 
 
+
 [discrete]
 [[QueryDslWeightedTokensQuery]]
 === QueryDslWeightedTokensQuery
@@ -11984,6 +12810,7 @@ interface QueryDslWeightedTokensQuery extends <<QueryDslQueryBase>> {
   pruning_config?: <<QueryDslTokenPruningConfig>>
 }
 ----
+
 
 
 [discrete]
@@ -12005,6 +12832,7 @@ interface QueryDslWildcardQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslWrapperQuery]]
 === QueryDslWrapperQuery
@@ -12018,6 +12846,7 @@ interface QueryDslWrapperQuery extends <<QueryDslQueryBase>> {
 ----
 
 
+
 [discrete]
 [[QueryDslZeroTermsQuery]]
 === QueryDslZeroTermsQuery
@@ -12027,3 +12856,127 @@ interface QueryDslWrapperQuery extends <<QueryDslQueryBase>> {
 type QueryDslZeroTermsQuery = 'all' | 'none'
 ----
 
+
+
+
+[discrete]
+== Other shared types
+
+* <<reference-shared-types-global-knn-search-types>>
+* <<reference-shared-types-global-search-types>>
+* <<reference-shared-types-global-search-mvt-types>>
+* <<reference-shared-types-async-search-types>>
+* <<reference-shared-types-autoscaling-types>>
+* <<reference-shared-types-cat-types>>
+* <<reference-shared-types-ccr-types>>
+* <<reference-shared-types-cluster-types>>
+* <<reference-shared-types-connector-types>>
+* <<reference-shared-types-enrich-types>>
+* <<reference-shared-types-eql-types>>
+* <<reference-shared-types-esql-types>>
+* <<reference-shared-types-features-types>>
+* <<reference-shared-types-fleet-types>>
+* <<reference-shared-types-graph-types>>
+* <<reference-shared-types-ilm-types>>
+* <<reference-shared-types-indices-types>>
+* <<reference-shared-types-indices-forcemerge-types>>
+* <<reference-shared-types-inference-types>>
+* <<reference-shared-types-ingest-types>>
+* <<reference-shared-types-license-types>>
+* <<reference-shared-types-logstash-types>>
+* <<reference-shared-types-ml-types>>
+* <<reference-shared-types-nodes-types>>
+* <<reference-shared-types-query-rules-types>>
+* <<reference-shared-types-rollup-types>>
+* <<reference-shared-types-search-application-types>>
+* <<reference-shared-types-searchable-snapshots-types>>
+* <<reference-shared-types-security-types>>
+* <<reference-shared-types-shutdown-types>>
+* <<reference-shared-types-slm-types>>
+* <<reference-shared-types-snapshot-types>>
+* <<reference-shared-types-synonyms-types>>
+* <<reference-shared-types-tasks-types>>
+* <<reference-shared-types-transform-types>>
+* <<reference-shared-types-watcher-types>>
+
+
+include::global-knn-search-types.asciidoc[]
+include::global-search-types.asciidoc[]
+include::global-search-mvt-types.asciidoc[]
+include::async-search-types.asciidoc[]
+include::autoscaling-types.asciidoc[]
+include::cat-types.asciidoc[]
+include::ccr-types.asciidoc[]
+include::cluster-types.asciidoc[]
+include::connector-types.asciidoc[]
+include::enrich-types.asciidoc[]
+include::eql-types.asciidoc[]
+include::esql-types.asciidoc[]
+include::features-types.asciidoc[]
+include::fleet-types.asciidoc[]
+include::graph-types.asciidoc[]
+include::ilm-types.asciidoc[]
+include::indices-types.asciidoc[]
+include::indices-forcemerge-types.asciidoc[]
+include::inference-types.asciidoc[]
+include::ingest-types.asciidoc[]
+include::license-types.asciidoc[]
+include::logstash-types.asciidoc[]
+include::ml-types.asciidoc[]
+include::nodes-types.asciidoc[]
+include::query-rules-types.asciidoc[]
+include::rollup-types.asciidoc[]
+include::search-application-types.asciidoc[]
+include::searchable-snapshots-types.asciidoc[]
+include::security-types.asciidoc[]
+include::shutdown-types.asciidoc[]
+include::slm-types.asciidoc[]
+include::snapshot-types.asciidoc[]
+include::synonyms-types.asciidoc[]
+include::tasks-types.asciidoc[]
+include::transform-types.asciidoc[]
+include::watcher-types.asciidoc[]
+include::global-bulk.asciidoc[]
+include::global-clear-scroll.asciidoc[]
+include::global-close-point-in-time.asciidoc[]
+include::global-count.asciidoc[]
+include::global-create.asciidoc[]
+include::global-delete.asciidoc[]
+include::global-delete-by-query.asciidoc[]
+include::global-delete-by-query-rethrottle.asciidoc[]
+include::global-delete-script.asciidoc[]
+include::global-exists.asciidoc[]
+include::global-exists-source.asciidoc[]
+include::global-explain.asciidoc[]
+include::global-field-caps.asciidoc[]
+include::global-get.asciidoc[]
+include::global-get-script.asciidoc[]
+include::global-get-script-context.asciidoc[]
+include::global-get-script-languages.asciidoc[]
+include::global-get-source.asciidoc[]
+include::global-health-report.asciidoc[]
+include::global-index.asciidoc[]
+include::global-info.asciidoc[]
+include::global-knn-search.asciidoc[]
+include::global-mget.asciidoc[]
+include::global-msearch.asciidoc[]
+include::global-msearch-template.asciidoc[]
+include::global-mtermvectors.asciidoc[]
+include::global-open-point-in-time.asciidoc[]
+include::global-ping.asciidoc[]
+include::global-put-script.asciidoc[]
+include::global-rank-eval.asciidoc[]
+include::global-reindex.asciidoc[]
+include::global-reindex-rethrottle.asciidoc[]
+include::global-render-search-template.asciidoc[]
+include::global-scripts-painless-execute.asciidoc[]
+include::global-scroll.asciidoc[]
+include::global-search.asciidoc[]
+include::global-search-mvt.asciidoc[]
+include::global-search-shards.asciidoc[]
+include::global-search-template.asciidoc[]
+include::global-terms-enum.asciidoc[]
+include::global-termvectors.asciidoc[]
+include::global-update.asciidoc[]
+include::global-update-by-query.asciidoc[]
+include::global-update-by-query-rethrottle.asciidoc[]

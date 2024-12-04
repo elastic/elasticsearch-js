@@ -1,6 +1,6 @@
-[[reference-shared-types--global-delete-script]]
+[[reference-shared-types-global-delete-script]]
 
-== DeleteScript
+=== `DeleteScript` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[DeleteScriptRequest]]
-=== DeleteScriptRequest
+==== DeleteScriptRequest
 
 [source,ts,subs=+macros]
 ----
@@ -49,12 +48,14 @@ interface DeleteScriptRequest extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[DeleteScriptResponse]]
-=== DeleteScriptResponse
+==== DeleteScriptResponse
 
 [source,ts,subs=+macros]
 ----
 type DeleteScriptResponse = <<AcknowledgedResponseBase>>
 ----
+
 

@@ -1,4 +1,5 @@
 [[reference-exists_source]]
+== client.existsSource
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.existsSource]]
-== client.existsSource
+== `client.existsSource()`
 
 Check for a document source. Checks if a document's `_source` is stored.
 
 {ref}/docs-get.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(ExistsSourceRequest, options?): Promise<ExistsSourceResponse>
+(request: ExistsSourceRequest, options?: TransportRequestOptions) => Promise<ExistsSourceResponse>
 ----
 
 [discrete]
@@ -67,6 +70,7 @@ interface ExistsSourceRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -75,4 +79,5 @@ interface ExistsSourceRequest extends <<RequestBase>> {
 type ExistsSourceResponse = boolean
 
 ----
+
 

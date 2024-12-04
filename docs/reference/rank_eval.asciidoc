@@ -1,4 +1,5 @@
 [[reference-rank_eval]]
+== client.rankEval
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.rankEval]]
-== client.rankEval
+== `client.rankEval()`
 
 Evaluate ranked search results. Evaluate the quality of ranked search results over a set of typical search queries.
 
 {ref}/search-rank-eval.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(RankEvalRequest, options?): Promise<RankEvalResponse>
+(request: RankEvalRequest, options?: TransportRequestOptions) => Promise<RankEvalResponse>
 ----
 
 [discrete]
@@ -63,6 +66,7 @@ interface RankEvalRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -75,4 +79,5 @@ interface RankEvalResponse {
 }
 
 ----
+
 

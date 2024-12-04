@@ -1,6 +1,6 @@
 [[reference-shared-types-shutdown-types]]
 
-== `Shutdown` types
+=== `Shutdown` types
 
 ////////
 ===========================================================================================================================
@@ -37,10 +37,11 @@
 
 [discrete]
 [[ShutdownType]]
-== ShutdownType
+=== ShutdownType
 
 [source,ts,subs=+macros]
 ----
 type ShutdownType = 'restart' | 'remove' | 'replace'
 ----
+
 

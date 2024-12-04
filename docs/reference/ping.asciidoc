@@ -1,4 +1,5 @@
 [[reference-ping]]
+== client.ping
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.ping]]
-== client.ping
+== `client.ping()`
 
 Ping the cluster. Returns whether the cluster is running.
 
 {ref}/index.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(PingRequest, options?): Promise<PingResponse>
+(request: PingRequest, options?: TransportRequestOptions) => Promise<PingResponse>
 ----
 
 [discrete]
@@ -55,6 +58,7 @@ interface PingRequest extends <<RequestBase>> {}
 
 ----
 
+
 [discrete]
 === Response
 
@@ -63,4 +67,5 @@ interface PingRequest extends <<RequestBase>> {}
 type PingResponse = boolean
 
 ----
+
 

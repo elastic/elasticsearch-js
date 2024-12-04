@@ -1,4 +1,5 @@
 [[reference-reindex]]
+== client.reindex
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.reindex]]
-== client.reindex
+== `client.reindex()`
 
 Reindex documents. Copies documents from a source to a destination. The source can be any existing index, alias, or data stream. The destination must differ from the source. For example, you cannot reindex a data stream into itself.
 
 {ref}/docs-reindex.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(ReindexRequest, options?): Promise<ReindexResponse>
+(request: ReindexRequest, options?: TransportRequestOptions) => Promise<ReindexResponse>
 ----
 
 [discrete]
@@ -70,6 +73,7 @@ interface ReindexRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -95,4 +99,5 @@ interface ReindexResponse {
 }
 
 ----
+
 

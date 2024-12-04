@@ -1,6 +1,6 @@
-[[reference-shared-types--global-delete-by-query-rethrottle]]
+[[reference-shared-types-global-delete-by-query-rethrottle]]
 
-== DeleteByQueryRethrottle
+=== `DeleteByQueryRethrottle` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[DeleteByQueryRethrottleRequest]]
-=== DeleteByQueryRethrottleRequest
+==== DeleteByQueryRethrottleRequest
 
 [source,ts,subs=+macros]
 ----
@@ -48,12 +47,14 @@ interface DeleteByQueryRethrottleRequest extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[DeleteByQueryRethrottleResponse]]
-=== DeleteByQueryRethrottleResponse
+==== DeleteByQueryRethrottleResponse
 
 [source,ts,subs=+macros]
 ----
 type DeleteByQueryRethrottleResponse = <<TasksTaskListResponseBase>>
 ----
+
 

@@ -1,4 +1,5 @@
 [[reference-get_script_context]]
+== client.getScriptContext
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.getScriptContext]]
-== client.getScriptContext
+== `client.getScriptContext()`
 
 Get script contexts. Get a list of supported script contexts and their methods.
 
 {painless}/painless-contexts.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(GetScriptContextRequest, options?): Promise<GetScriptContextResponse>
+(request: GetScriptContextRequest, options?: TransportRequestOptions) => Promise<GetScriptContextResponse>
 ----
 
 [discrete]
@@ -55,6 +58,7 @@ interface GetScriptContextRequest extends <<RequestBase>> {}
 
 ----
 
+
 [discrete]
 === Response
 
@@ -65,4 +69,5 @@ interface GetScriptContextResponse {
 }
 
 ----
+
 

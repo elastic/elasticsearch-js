@@ -1,6 +1,6 @@
-[[reference-shared-types--global-bulk]]
+[[reference-shared-types-global-bulk]]
 
-== Bulk
+=== `Bulk` request types
 
 ////////
 ===========================================================================================================================
@@ -35,37 +35,39 @@
 ++++
 
 
-
 [discrete]
 [[BulkCreateOperation]]
-=== BulkCreateOperation
+==== BulkCreateOperation
 
 [source,ts,subs=+macros]
 ----
 interface BulkCreateOperation extends <<BulkWriteOperation>> {}
 ----
 
+
 [discrete]
 [[BulkDeleteOperation]]
-=== BulkDeleteOperation
+==== BulkDeleteOperation
 
 [source,ts,subs=+macros]
 ----
 interface BulkDeleteOperation extends <<BulkOperationBase>> {}
 ----
 
+
 [discrete]
 [[BulkIndexOperation]]
-=== BulkIndexOperation
+==== BulkIndexOperation
 
 [source,ts,subs=+macros]
 ----
 interface BulkIndexOperation extends <<BulkWriteOperation>> {}
 ----
 
+
 [discrete]
 [[BulkOperationBase]]
-=== BulkOperationBase
+==== BulkOperationBase
 
 [source,ts,subs=+macros]
 ----
@@ -83,9 +85,10 @@ interface BulkOperationBase {
 }
 ----
 
+
 [discrete]
 [[BulkOperationContainer]]
-=== BulkOperationContainer
+==== BulkOperationContainer
 
 [source,ts,subs=+macros]
 ----
@@ -101,18 +104,20 @@ interface BulkOperationContainer {
 }
 ----
 
+
 [discrete]
 [[BulkOperationType]]
-=== BulkOperationType
+==== BulkOperationType
 
 [source,ts,subs=+macros]
 ----
 type BulkOperationType = 'index' | 'create' | 'update' | 'delete'
 ----
 
+
 [discrete]
 [[BulkRequest]]
-=== BulkRequest
+==== BulkRequest
 
 [source,ts,subs=+macros]
 ----
@@ -131,9 +136,10 @@ interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <
 }
 ----
 
+
 [discrete]
 [[BulkResponse]]
-=== BulkResponse
+==== BulkResponse
 
 [source,ts,subs=+macros]
 ----
@@ -145,9 +151,10 @@ interface BulkResponse {
 }
 ----
 
+
 [discrete]
 [[BulkResponseItem]]
-=== BulkResponseItem
+==== BulkResponseItem
 
 [source,ts,subs=+macros]
 ----
@@ -175,9 +182,10 @@ interface BulkResponseItem {
 }
 ----
 
+
 [discrete]
 [[BulkUpdateAction]]
-=== BulkUpdateAction
+==== BulkUpdateAction
 
 [source,ts,subs=+macros]
 ----
@@ -199,9 +207,10 @@ interface BulkUpdateAction<TDocument = unknown, TPartialDocument = unknown> {
 }
 ----
 
+
 [discrete]
 [[BulkUpdateOperation]]
-=== BulkUpdateOperation
+==== BulkUpdateOperation
 
 [source,ts,subs=+macros]
 ----
@@ -212,9 +221,10 @@ interface BulkUpdateOperation extends <<BulkOperationBase>> {
 }
 ----
 
+
 [discrete]
 [[BulkWriteOperation]]
-=== BulkWriteOperation
+==== BulkWriteOperation
 
 [source,ts,subs=+macros]
 ----
@@ -227,4 +237,5 @@ interface BulkWriteOperation extends <<BulkOperationBase>> {
   require_alias?: boolean
 }
 ----
+
 

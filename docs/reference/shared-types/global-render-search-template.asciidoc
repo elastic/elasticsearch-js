@@ -1,6 +1,6 @@
-[[reference-shared-types--global-render-search-template]]
+[[reference-shared-types-global-render-search-template]]
 
-== RenderSearchTemplate
+=== `RenderSearchTemplate` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[RenderSearchTemplateRequest]]
-=== RenderSearchTemplateRequest
+==== RenderSearchTemplateRequest
 
 [source,ts,subs=+macros]
 ----
@@ -50,9 +49,10 @@ interface RenderSearchTemplateRequest extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[RenderSearchTemplateResponse]]
-=== RenderSearchTemplateResponse
+==== RenderSearchTemplateResponse
 
 [source,ts,subs=+macros]
 ----
@@ -60,4 +60,5 @@ interface RenderSearchTemplateResponse {
   template_output: Record<string, any>
 }
 ----
+
 

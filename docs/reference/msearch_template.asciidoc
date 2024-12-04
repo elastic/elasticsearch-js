@@ -1,4 +1,5 @@
 [[reference-msearch_template]]
+== client.msearchTemplate
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.msearchTemplate]]
-== client.msearchTemplate
+== `client.msearchTemplate()`
 
 Run multiple templated searches.
 
 {ref}/search-multi-search.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(MsearchTemplateRequest, options?): Promise<MsearchTemplateResponse>
+(request: MsearchTemplateRequest, options?: TransportRequestOptions) => Promise<MsearchTemplateResponse>
 ----
 
 [discrete]
@@ -63,6 +66,7 @@ interface MsearchTemplateRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -71,4 +75,5 @@ interface MsearchTemplateRequest extends <<RequestBase>> {
 type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = <<MsearchMultiSearchResult>><TDocument, TAggregations>
 
 ----
+
 

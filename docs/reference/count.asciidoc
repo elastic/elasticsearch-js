@@ -1,4 +1,5 @@
 [[reference-count]]
+== client.count
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.count]]
-== client.count
+== `client.count()`
 
 Returns number of documents matching a query.
 
 {ref}/search-count.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(CountRequest, options?): Promise<CountResponse>
+(request: CountRequest, options?: TransportRequestOptions) => Promise<CountResponse>
 ----
 
 [discrete]
@@ -72,6 +75,7 @@ interface CountRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -83,4 +87,5 @@ interface CountResponse {
 }
 
 ----
+
 

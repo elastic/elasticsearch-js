@@ -1,6 +1,6 @@
 [[reference-shared-types-ingest-types]]
 
-== `Ingest` types
+=== `Ingest` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[IngestAppendProcessor]]
-== IngestAppendProcessor
+=== IngestAppendProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -51,9 +51,10 @@ interface IngestAppendProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestAttachmentProcessor]]
-== IngestAttachmentProcessor
+=== IngestAttachmentProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -77,9 +78,10 @@ interface IngestAttachmentProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestBytesProcessor]]
-== IngestBytesProcessor
+=== IngestBytesProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -93,9 +95,10 @@ interface IngestBytesProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestCircleProcessor]]
-== IngestCircleProcessor
+=== IngestCircleProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -113,9 +116,10 @@ interface IngestCircleProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestCommunityIDProcessor]]
-== IngestCommunityIDProcessor
+=== IngestCommunityIDProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -145,9 +149,10 @@ interface IngestCommunityIDProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestConvertProcessor]]
-== IngestConvertProcessor
+=== IngestConvertProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -163,18 +168,20 @@ interface IngestConvertProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestConvertType]]
-== IngestConvertType
+=== IngestConvertType
 
 [source,ts,subs=+macros]
 ----
 type IngestConvertType = '<<integer>>' | '<<long>>' | '<<double>>' | '<<float>>' | 'boolean' | 'ip' | 'string' | 'auto'
 ----
 
+
 [discrete]
 [[IngestCsvProcessor]]
-== IngestCsvProcessor
+=== IngestCsvProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -196,9 +203,10 @@ interface IngestCsvProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestDatabaseConfiguration]]
-== IngestDatabaseConfiguration
+=== IngestDatabaseConfiguration
 
 [source,ts,subs=+macros]
 ----
@@ -210,9 +218,10 @@ interface IngestDatabaseConfiguration {
 }
 ----
 
+
 [discrete]
 [[IngestDateIndexNameProcessor]]
-== IngestDateIndexNameProcessor
+=== IngestDateIndexNameProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -234,9 +243,10 @@ interface IngestDateIndexNameProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestDateProcessor]]
-== IngestDateProcessor
+=== IngestDateProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -256,9 +266,10 @@ interface IngestDateProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestDissectProcessor]]
-== IngestDissectProcessor
+=== IngestDissectProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -274,9 +285,10 @@ interface IngestDissectProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestDotExpanderProcessor]]
-== IngestDotExpanderProcessor
+=== IngestDotExpanderProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -290,18 +302,20 @@ interface IngestDotExpanderProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestDropProcessor]]
-== IngestDropProcessor
+=== IngestDropProcessor
 
 [source,ts,subs=+macros]
 ----
 interface IngestDropProcessor extends <<IngestProcessorBase>> {}
 ----
 
+
 [discrete]
 [[IngestEnrichProcessor]]
-== IngestEnrichProcessor
+=== IngestEnrichProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -323,9 +337,10 @@ interface IngestEnrichProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestFailProcessor]]
-== IngestFailProcessor
+=== IngestFailProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -335,18 +350,20 @@ interface IngestFailProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestFingerprintDigest]]
-== IngestFingerprintDigest
+=== IngestFingerprintDigest
 
 [source,ts,subs=+macros]
 ----
 type IngestFingerprintDigest = 'MD5' | 'SHA-1' | 'SHA-256' | 'SHA-512' | 'MurmurHash3'
 ----
 
+
 [discrete]
 [[IngestFingerprintProcessor]]
-== IngestFingerprintProcessor
+=== IngestFingerprintProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -364,9 +381,10 @@ interface IngestFingerprintProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestForeachProcessor]]
-== IngestForeachProcessor
+=== IngestForeachProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -380,9 +398,10 @@ interface IngestForeachProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestGeoGridProcessor]]
-== IngestGeoGridProcessor
+=== IngestGeoGridProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -408,27 +427,30 @@ interface IngestGeoGridProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestGeoGridTargetFormat]]
-== IngestGeoGridTargetFormat
+=== IngestGeoGridTargetFormat
 
 [source,ts,subs=+macros]
 ----
 type IngestGeoGridTargetFormat = 'geojson' | 'wkt'
 ----
 
+
 [discrete]
 [[IngestGeoGridTileType]]
-== IngestGeoGridTileType
+=== IngestGeoGridTileType
 
 [source,ts,subs=+macros]
 ----
 type IngestGeoGridTileType = 'geotile' | 'geohex' | 'geohash'
 ----
 
+
 [discrete]
 [[IngestGeoIpProcessor]]
-== IngestGeoIpProcessor
+=== IngestGeoIpProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -450,9 +472,10 @@ interface IngestGeoIpProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestGrokProcessor]]
-== IngestGrokProcessor
+=== IngestGrokProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -472,9 +495,10 @@ interface IngestGrokProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestGsubProcessor]]
-== IngestGsubProcessor
+=== IngestGsubProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -492,9 +516,10 @@ interface IngestGsubProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestHtmlStripProcessor]]
-== IngestHtmlStripProcessor
+=== IngestHtmlStripProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -508,9 +533,10 @@ interface IngestHtmlStripProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestInferenceConfig]]
-== IngestInferenceConfig
+=== IngestInferenceConfig
 
 [source,ts,subs=+macros]
 ----
@@ -522,9 +548,10 @@ interface IngestInferenceConfig {
 }
 ----
 
+
 [discrete]
 [[IngestInferenceConfigClassification]]
-== IngestInferenceConfigClassification
+=== IngestInferenceConfigClassification
 
 [source,ts,subs=+macros]
 ----
@@ -542,9 +569,10 @@ interface IngestInferenceConfigClassification {
 }
 ----
 
+
 [discrete]
 [[IngestInferenceConfigRegression]]
-== IngestInferenceConfigRegression
+=== IngestInferenceConfigRegression
 
 [source,ts,subs=+macros]
 ----
@@ -556,9 +584,10 @@ interface IngestInferenceConfigRegression {
 }
 ----
 
+
 [discrete]
 [[IngestInferenceProcessor]]
-== IngestInferenceProcessor
+=== IngestInferenceProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -574,9 +603,10 @@ interface IngestInferenceProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestIpLocationProcessor]]
-== IngestIpLocationProcessor
+=== IngestIpLocationProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -598,9 +628,10 @@ interface IngestIpLocationProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestJoinProcessor]]
-== IngestJoinProcessor
+=== IngestJoinProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -614,9 +645,10 @@ interface IngestJoinProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestJsonProcessor]]
-== IngestJsonProcessor
+=== IngestJsonProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -634,18 +666,20 @@ interface IngestJsonProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestJsonProcessorConflictStrategy]]
-== IngestJsonProcessorConflictStrategy
+=== IngestJsonProcessorConflictStrategy
 
 [source,ts,subs=+macros]
 ----
 type IngestJsonProcessorConflictStrategy = 'replace' | 'merge'
 ----
 
+
 [discrete]
 [[IngestKeyValueProcessor]]
-== IngestKeyValueProcessor
+=== IngestKeyValueProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -675,9 +709,10 @@ interface IngestKeyValueProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestLowercaseProcessor]]
-== IngestLowercaseProcessor
+=== IngestLowercaseProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -691,9 +726,10 @@ interface IngestLowercaseProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestMaxmind]]
-== IngestMaxmind
+=== IngestMaxmind
 
 [source,ts,subs=+macros]
 ----
@@ -702,9 +738,10 @@ interface IngestMaxmind {
 }
 ----
 
+
 [discrete]
 [[IngestNetworkDirectionProcessor]]
-== IngestNetworkDirectionProcessor
+=== IngestNetworkDirectionProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -724,9 +761,10 @@ interface IngestNetworkDirectionProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestPipeline]]
-== IngestPipeline
+=== IngestPipeline
 
 [source,ts,subs=+macros]
 ----
@@ -746,9 +784,10 @@ interface IngestPipeline {
 }
 ----
 
+
 [discrete]
 [[IngestPipelineConfig]]
-== IngestPipelineConfig
+=== IngestPipelineConfig
 
 [source,ts,subs=+macros]
 ----
@@ -762,9 +801,10 @@ interface IngestPipelineConfig {
 }
 ----
 
+
 [discrete]
 [[IngestPipelineProcessor]]
-== IngestPipelineProcessor
+=== IngestPipelineProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -776,9 +816,10 @@ interface IngestPipelineProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestProcessorBase]]
-== IngestProcessorBase
+=== IngestProcessorBase
 
 [source,ts,subs=+macros]
 ----
@@ -796,9 +837,10 @@ interface IngestProcessorBase {
 }
 ----
 
+
 [discrete]
 [[IngestProcessorContainer]]
-== IngestProcessorContainer
+=== IngestProcessorContainer
 
 [source,ts,subs=+macros]
 ----
@@ -896,9 +938,10 @@ interface IngestProcessorContainer {
 }
 ----
 
+
 [discrete]
 [[IngestRedactProcessor]]
-== IngestRedactProcessor
+=== IngestRedactProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -921,9 +964,10 @@ interface IngestRedactProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestRegisteredDomainProcessor]]
-== IngestRegisteredDomainProcessor
+=== IngestRegisteredDomainProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -937,9 +981,10 @@ interface IngestRegisteredDomainProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestRemoveProcessor]]
-== IngestRemoveProcessor
+=== IngestRemoveProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -953,9 +998,10 @@ interface IngestRemoveProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestRenameProcessor]]
-== IngestRenameProcessor
+=== IngestRenameProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -969,9 +1015,10 @@ interface IngestRenameProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestRerouteProcessor]]
-== IngestRerouteProcessor
+=== IngestRerouteProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -985,9 +1032,10 @@ interface IngestRerouteProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestScriptProcessor]]
-== IngestScriptProcessor
+=== IngestScriptProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -1003,9 +1051,10 @@ interface IngestScriptProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestSetProcessor]]
-== IngestSetProcessor
+=== IngestSetProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -1025,9 +1074,10 @@ interface IngestSetProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestSetSecurityUserProcessor]]
-== IngestSetSecurityUserProcessor
+=== IngestSetSecurityUserProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -1039,18 +1089,20 @@ interface IngestSetSecurityUserProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestShapeType]]
-== IngestShapeType
+=== IngestShapeType
 
 [source,ts,subs=+macros]
 ----
 type IngestShapeType = 'geo_shape' | 'shape'
 ----
 
+
 [discrete]
 [[IngestSortProcessor]]
-== IngestSortProcessor
+=== IngestSortProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -1064,9 +1116,10 @@ interface IngestSortProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestSplitProcessor]]
-== IngestSplitProcessor
+=== IngestSplitProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -1084,18 +1137,20 @@ interface IngestSplitProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestTerminateProcessor]]
-== IngestTerminateProcessor
+=== IngestTerminateProcessor
 
 [source,ts,subs=+macros]
 ----
 interface IngestTerminateProcessor extends <<IngestProcessorBase>> {}
 ----
 
+
 [discrete]
 [[IngestTrimProcessor]]
-== IngestTrimProcessor
+=== IngestTrimProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -1109,9 +1164,10 @@ interface IngestTrimProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestUppercaseProcessor]]
-== IngestUppercaseProcessor
+=== IngestUppercaseProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -1125,9 +1181,10 @@ interface IngestUppercaseProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestUriPartsProcessor]]
-== IngestUriPartsProcessor
+=== IngestUriPartsProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -1145,9 +1202,10 @@ interface IngestUriPartsProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestUrlDecodeProcessor]]
-== IngestUrlDecodeProcessor
+=== IngestUrlDecodeProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -1161,9 +1219,10 @@ interface IngestUrlDecodeProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestUserAgentProcessor]]
-== IngestUserAgentProcessor
+=== IngestUserAgentProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -1183,12 +1242,14 @@ interface IngestUserAgentProcessor extends <<IngestProcessorBase>> {
 }
 ----
 
+
 [discrete]
 [[IngestUserAgentProperty]]
-== IngestUserAgentProperty
+=== IngestUserAgentProperty
 
 [source,ts,subs=+macros]
 ----
 type IngestUserAgentProperty = 'name' | 'os' | 'device' | 'original' | 'version'
 ----
+
 

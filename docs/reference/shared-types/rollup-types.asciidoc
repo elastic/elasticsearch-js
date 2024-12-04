@@ -1,6 +1,6 @@
 [[reference-shared-types-rollup-types]]
 
-== `Rollup` types
+=== `Rollup` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[RollupDateHistogramGrouping]]
-== RollupDateHistogramGrouping
+=== RollupDateHistogramGrouping
 
 [source,ts,subs=+macros]
 ----
@@ -57,9 +57,10 @@ interface RollupDateHistogramGrouping {
 }
 ----
 
+
 [discrete]
 [[RollupFieldMetric]]
-== RollupFieldMetric
+=== RollupFieldMetric
 
 [source,ts,subs=+macros]
 ----
@@ -71,9 +72,10 @@ interface RollupFieldMetric {
 }
 ----
 
+
 [discrete]
 [[RollupGroupings]]
-== RollupGroupings
+=== RollupGroupings
 
 [source,ts,subs=+macros]
 ----
@@ -87,9 +89,10 @@ interface RollupGroupings {
 }
 ----
 
+
 [discrete]
 [[RollupHistogramGrouping]]
-== RollupHistogramGrouping
+=== RollupHistogramGrouping
 
 [source,ts,subs=+macros]
 ----
@@ -101,18 +104,20 @@ interface RollupHistogramGrouping {
 }
 ----
 
+
 [discrete]
 [[RollupMetric]]
-== RollupMetric
+=== RollupMetric
 
 [source,ts,subs=+macros]
 ----
 type RollupMetric = 'min' | 'max' | 'sum' | 'avg' | 'value_count'
 ----
 
+
 [discrete]
 [[RollupTermsGrouping]]
-== RollupTermsGrouping
+=== RollupTermsGrouping
 
 [source,ts,subs=+macros]
 ----
@@ -121,4 +126,5 @@ interface RollupTermsGrouping {
   fields: <<Fields>>
 }
 ----
+
 

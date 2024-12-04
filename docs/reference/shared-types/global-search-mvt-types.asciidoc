@@ -1,6 +1,6 @@
-[[reference-shared-types--global-search-mvt-types]]
+[[reference-shared-types-global-search-mvt-types]]
 
-== `SearchMvt` types
+=== `SearchMvt` types
 
 ////////
 ===========================================================================================================================
@@ -37,37 +37,41 @@
 
 [discrete]
 [[SearchMvtCoordinate]]
-== SearchMvtCoordinate
+=== SearchMvtCoordinate
 
 [source,ts,subs=+macros]
 ----
 type SearchMvtCoordinate = <<integer>>
 ----
 
+
 [discrete]
 [[SearchMvtGridAggregationType]]
-== SearchMvtGridAggregationType
+=== SearchMvtGridAggregationType
 
 [source,ts,subs=+macros]
 ----
 type SearchMvtGridAggregationType = 'geotile' | 'geohex'
 ----
 
+
 [discrete]
 [[SearchMvtGridType]]
-== SearchMvtGridType
+=== SearchMvtGridType
 
 [source,ts,subs=+macros]
 ----
 type SearchMvtGridType = 'grid' | 'point' | 'centroid'
 ----
 
+
 [discrete]
 [[SearchMvtZoomLevel]]
-== SearchMvtZoomLevel
+=== SearchMvtZoomLevel
 
 [source,ts,subs=+macros]
 ----
 type SearchMvtZoomLevel = <<integer>>
 ----
+
 

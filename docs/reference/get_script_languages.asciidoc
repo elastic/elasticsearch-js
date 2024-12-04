@@ -1,4 +1,5 @@
 [[reference-get_script_languages]]
+== client.getScriptLanguages
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.getScriptLanguages]]
-== client.getScriptLanguages
+== `client.getScriptLanguages()`
 
 Get script languages. Get a list of available script types, languages, and contexts.
 
 {ref}/modules-scripting.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(GetScriptLanguagesRequest, options?): Promise<GetScriptLanguagesResponse>
+(request: GetScriptLanguagesRequest, options?: TransportRequestOptions) => Promise<GetScriptLanguagesResponse>
 ----
 
 [discrete]
@@ -54,6 +57,7 @@ Get script languages. Get a list of available script types, languages, and conte
 interface GetScriptLanguagesRequest extends <<RequestBase>> {}
 
 ----
+
 
 [discrete]
 === Response
@@ -66,4 +70,5 @@ interface GetScriptLanguagesResponse {
 }
 
 ----
+
 

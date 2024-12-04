@@ -1,6 +1,6 @@
 [[reference-shared-types-license-types]]
 
-== `License` types
+=== `License` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[LicenseLicense]]
-== LicenseLicense
+=== LicenseLicense
 
 [source,ts,subs=+macros]
 ----
@@ -55,21 +55,24 @@ interface LicenseLicense {
 }
 ----
 
+
 [discrete]
 [[LicenseLicenseStatus]]
-== LicenseLicenseStatus
+=== LicenseLicenseStatus
 
 [source,ts,subs=+macros]
 ----
 type LicenseLicenseStatus = 'active' | 'valid' | 'invalid' | 'expired'
 ----
 
+
 [discrete]
 [[LicenseLicenseType]]
-== LicenseLicenseType
+=== LicenseLicenseType
 
 [source,ts,subs=+macros]
 ----
 type LicenseLicenseType = 'missing' | 'trial' | 'basic' | 'standard' | 'dev' | 'silver' | 'gold' | 'platinum' | 'enterprise'
 ----
+
 

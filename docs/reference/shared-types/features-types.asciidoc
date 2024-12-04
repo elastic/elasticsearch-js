@@ -1,6 +1,6 @@
 [[reference-shared-types-features-types]]
 
-== `Features` types
+=== `Features` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[FeaturesFeature]]
-== FeaturesFeature
+=== FeaturesFeature
 
 [source,ts,subs=+macros]
 ----
@@ -46,4 +46,5 @@ interface FeaturesFeature {
   description: string
 }
 ----
+
 

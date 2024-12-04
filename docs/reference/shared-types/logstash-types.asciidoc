@@ -1,6 +1,6 @@
 [[reference-shared-types-logstash-types]]
 
-== `Logstash` types
+=== `Logstash` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[LogstashPipeline]]
-== LogstashPipeline
+=== LogstashPipeline
 
 [source,ts,subs=+macros]
 ----
@@ -57,9 +57,10 @@ interface LogstashPipeline {
 }
 ----
 
+
 [discrete]
 [[LogstashPipelineMetadata]]
-== LogstashPipelineMetadata
+=== LogstashPipelineMetadata
 
 [source,ts,subs=+macros]
 ----
@@ -69,9 +70,10 @@ interface LogstashPipelineMetadata {
 }
 ----
 
+
 [discrete]
 [[LogstashPipelineSettings]]
-== LogstashPipelineSettings
+=== LogstashPipelineSettings
 
 [source,ts,subs=+macros]
 ----
@@ -92,4 +94,5 @@ interface LogstashPipelineSettings {
   'queue.checkpoint.writes': <<integer>>
 }
 ----
+
 

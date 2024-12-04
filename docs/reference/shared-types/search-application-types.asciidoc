@@ -1,6 +1,6 @@
 [[reference-shared-types-search-application-types]]
 
-== `SearchApplication` types
+=== `SearchApplication` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[SearchApplicationAnalyticsCollection]]
-== SearchApplicationAnalyticsCollection
+=== SearchApplicationAnalyticsCollection
 
 [source,ts,subs=+macros]
 ----
@@ -47,9 +47,10 @@ interface SearchApplicationAnalyticsCollection {
 }
 ----
 
+
 [discrete]
 [[SearchApplicationEventDataStream]]
-== SearchApplicationEventDataStream
+=== SearchApplicationEventDataStream
 
 [source,ts,subs=+macros]
 ----
@@ -58,9 +59,10 @@ interface SearchApplicationEventDataStream {
 }
 ----
 
+
 [discrete]
 [[SearchApplicationSearchApplication]]
-== SearchApplicationSearchApplication
+=== SearchApplicationSearchApplication
 
 [source,ts,subs=+macros]
 ----
@@ -78,9 +80,10 @@ interface SearchApplicationSearchApplication {
 }
 ----
 
+
 [discrete]
 [[SearchApplicationSearchApplicationTemplate]]
-== SearchApplicationSearchApplicationTemplate
+=== SearchApplicationSearchApplicationTemplate
 
 [source,ts,subs=+macros]
 ----
@@ -89,4 +92,5 @@ interface SearchApplicationSearchApplicationTemplate {
   script: <<Script>> | string
 }
 ----
+
 

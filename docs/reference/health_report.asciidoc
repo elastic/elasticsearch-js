@@ -1,4 +1,5 @@
 [[reference-health_report]]
+== client.healthReport
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.healthReport]]
-== client.healthReport
+== `client.healthReport()`
 
 Returns the health of the cluster.
 
 {ref}/health-api.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(HealthReportRequest, options?): Promise<HealthReportResponse>
+(request: HealthReportRequest, options?: TransportRequestOptions) => Promise<HealthReportResponse>
 ----
 
 [discrete]
@@ -60,6 +63,7 @@ interface HealthReportRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -72,4 +76,5 @@ interface HealthReportResponse {
 }
 
 ----
+
 

@@ -1,4 +1,5 @@
 [[reference-get_source]]
+== client.getSource
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.getSource]]
-== client.getSource
+== `client.getSource()`
 
 Get a document's source. Returns the source of a document.
 
 {ref}/docs-get.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(GetSourceRequest, options?): Promise<GetSourceResponse>
+(request: GetSourceRequest, options?: TransportRequestOptions) => Promise<GetSourceResponse>
 ----
 
 [discrete]
@@ -68,6 +71,7 @@ interface GetSourceRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -76,4 +80,5 @@ interface GetSourceRequest extends <<RequestBase>> {
 type GetSourceResponse<TDocument = unknown> = TDocument
 
 ----
+
 

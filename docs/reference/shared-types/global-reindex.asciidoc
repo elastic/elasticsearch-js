@@ -1,6 +1,6 @@
-[[reference-shared-types--global-reindex]]
+[[reference-shared-types-global-reindex]]
 
-== Reindex
+=== `Reindex` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[ReindexDestination]]
-=== ReindexDestination
+==== ReindexDestination
 
 [source,ts,subs=+macros]
 ----
@@ -56,9 +55,10 @@ interface ReindexDestination {
 }
 ----
 
+
 [discrete]
 [[ReindexRemoteSource]]
-=== ReindexRemoteSource
+==== ReindexRemoteSource
 
 [source,ts,subs=+macros]
 ----
@@ -78,9 +78,10 @@ interface ReindexRemoteSource {
 }
 ----
 
+
 [discrete]
 [[ReindexRequest]]
-=== ReindexRequest
+==== ReindexRequest
 
 [source,ts,subs=+macros]
 ----
@@ -102,9 +103,10 @@ interface ReindexRequest extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[ReindexResponse]]
-=== ReindexResponse
+==== ReindexResponse
 
 [source,ts,subs=+macros]
 ----
@@ -128,9 +130,10 @@ interface ReindexResponse {
 }
 ----
 
+
 [discrete]
 [[ReindexSource]]
-=== ReindexSource
+==== ReindexSource
 
 [source,ts,subs=+macros]
 ----
@@ -151,4 +154,5 @@ interface ReindexSource {
   runtime_mappings?: <<MappingRuntimeFields>>
 }
 ----
+
 

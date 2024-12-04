@@ -1,6 +1,6 @@
-[[reference-shared-types--global-msearch]]
+[[reference-shared-types-global-msearch]]
 
-== Msearch
+=== `Msearch` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[MsearchMultiSearchItem]]
-=== MsearchMultiSearchItem
+==== MsearchMultiSearchItem
 
 [source,ts,subs=+macros]
 ----
@@ -47,9 +46,10 @@ interface MsearchMultiSearchItem<TDocument = unknown> extends <<SearchResponseBo
 }
 ----
 
+
 [discrete]
 [[MsearchMultiSearchResult]]
-=== MsearchMultiSearchResult
+==== MsearchMultiSearchResult
 
 [source,ts,subs=+macros]
 ----
@@ -59,9 +59,10 @@ interface MsearchMultiSearchResult<TDocument = unknown, TAggregations = Record<<
 }
 ----
 
+
 [discrete]
 [[MsearchMultisearchBody]]
-=== MsearchMultisearchBody
+==== MsearchMultisearchBody
 
 [source,ts,subs=+macros]
 ----
@@ -123,9 +124,10 @@ interface MsearchMultisearchBody {
 }
 ----
 
+
 [discrete]
 [[MsearchMultisearchHeader]]
-=== MsearchMultisearchHeader
+==== MsearchMultisearchHeader
 
 [source,ts,subs=+macros]
 ----
@@ -144,9 +146,10 @@ interface MsearchMultisearchHeader {
 }
 ----
 
+
 [discrete]
 [[MsearchRequest]]
-=== MsearchRequest
+==== MsearchRequest
 
 [source,ts,subs=+macros]
 ----
@@ -169,30 +172,34 @@ interface MsearchRequest extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[MsearchRequestItem]]
-=== MsearchRequestItem
+==== MsearchRequestItem
 
 [source,ts,subs=+macros]
 ----
 type MsearchRequestItem = <<MsearchMultisearchHeader>> | <<MsearchMultisearchBody>>
 ----
 
+
 [discrete]
 [[MsearchResponse]]
-=== MsearchResponse
+==== MsearchResponse
 
 [source,ts,subs=+macros]
 ----
 type MsearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = <<MsearchMultiSearchResult>><TDocument, TAggregations>
 ----
 
+
 [discrete]
 [[MsearchResponseItem]]
-=== MsearchResponseItem
+==== MsearchResponseItem
 
 [source,ts,subs=+macros]
 ----
 type MsearchResponseItem<TDocument = unknown> = <<MsearchMultiSearchItem>><TDocument> | <<ErrorResponseBase>>
 ----
+
 

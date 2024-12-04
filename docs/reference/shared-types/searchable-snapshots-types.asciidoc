@@ -1,6 +1,6 @@
 [[reference-shared-types-searchable-snapshots-types]]
 
-== `SearchableSnapshots` types
+=== `SearchableSnapshots` types
 
 ////////
 ===========================================================================================================================
@@ -37,10 +37,11 @@
 
 [discrete]
 [[SearchableSnapshotsStatsLevel]]
-== SearchableSnapshotsStatsLevel
+=== SearchableSnapshotsStatsLevel
 
 [source,ts,subs=+macros]
 ----
 type SearchableSnapshotsStatsLevel = 'cluster' | 'indices' | 'shards'
 ----
+
 

@@ -1,6 +1,6 @@
 [[reference-shared-types-cluster-types]]
 
-== `Cluster` types
+=== `Cluster` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[ClusterComponentTemplate]]
-== ClusterComponentTemplate
+=== ClusterComponentTemplate
 
 [source,ts,subs=+macros]
 ----
@@ -47,9 +47,10 @@ interface ClusterComponentTemplate {
 }
 ----
 
+
 [discrete]
 [[ClusterComponentTemplateNode]]
-== ClusterComponentTemplateNode
+=== ClusterComponentTemplateNode
 
 [source,ts,subs=+macros]
 ----
@@ -60,9 +61,10 @@ interface ClusterComponentTemplateNode {
 }
 ----
 
+
 [discrete]
 [[ClusterComponentTemplateSummary]]
-== ClusterComponentTemplateSummary
+=== ClusterComponentTemplateSummary
 
 [source,ts,subs=+macros]
 ----
@@ -75,4 +77,5 @@ interface ClusterComponentTemplateSummary {
   lifecycle?: <<IndicesDataStreamLifecycleWithRollover>>
 }
 ----
+
 

@@ -1,6 +1,6 @@
-[[reference-shared-types--global-delete-by-query]]
+[[reference-shared-types-global-delete-by-query]]
 
-== DeleteByQuery
+=== `DeleteByQuery` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[DeleteByQueryRequest]]
-=== DeleteByQueryRequest
+==== DeleteByQueryRequest
 
 [source,ts,subs=+macros]
 ----
@@ -78,9 +77,10 @@ interface DeleteByQueryRequest extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[DeleteByQueryResponse]]
-=== DeleteByQueryResponse
+==== DeleteByQueryResponse
 
 [source,ts,subs=+macros]
 ----
@@ -103,4 +103,5 @@ interface DeleteByQueryResponse {
   version_conflicts?: <<long>>
 }
 ----
+
 

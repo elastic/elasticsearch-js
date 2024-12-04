@@ -1,6 +1,6 @@
-[[reference-shared-types--global-termvectors]]
+[[reference-shared-types-global-termvectors]]
 
-== Termvectors
+=== `Termvectors` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[TermvectorsFieldStatistics]]
-=== TermvectorsFieldStatistics
+==== TermvectorsFieldStatistics
 
 [source,ts,subs=+macros]
 ----
@@ -49,9 +48,10 @@ interface TermvectorsFieldStatistics {
 }
 ----
 
+
 [discrete]
 [[TermvectorsFilter]]
-=== TermvectorsFilter
+==== TermvectorsFilter
 
 [source,ts,subs=+macros]
 ----
@@ -73,9 +73,10 @@ interface TermvectorsFilter {
 }
 ----
 
+
 [discrete]
 [[TermvectorsRequest]]
-=== TermvectorsRequest
+==== TermvectorsRequest
 
 [source,ts,subs=+macros]
 ----
@@ -99,9 +100,10 @@ interface TermvectorsRequest<TDocument = unknown> extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[TermvectorsResponse]]
-=== TermvectorsResponse
+==== TermvectorsResponse
 
 [source,ts,subs=+macros]
 ----
@@ -115,9 +117,10 @@ interface TermvectorsResponse {
 }
 ----
 
+
 [discrete]
 [[TermvectorsTerm]]
-=== TermvectorsTerm
+==== TermvectorsTerm
 
 [source,ts,subs=+macros]
 ----
@@ -130,9 +133,10 @@ interface TermvectorsTerm {
 }
 ----
 
+
 [discrete]
 [[TermvectorsTermVector]]
-=== TermvectorsTermVector
+==== TermvectorsTermVector
 
 [source,ts,subs=+macros]
 ----
@@ -142,9 +146,10 @@ interface TermvectorsTermVector {
 }
 ----
 
+
 [discrete]
 [[TermvectorsToken]]
-=== TermvectorsToken
+==== TermvectorsToken
 
 [source,ts,subs=+macros]
 ----
@@ -155,4 +160,5 @@ interface TermvectorsToken {
   start_offset?: <<integer>>
 }
 ----
+
 

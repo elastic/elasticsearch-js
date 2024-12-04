@@ -1,6 +1,6 @@
 [[reference-shared-types-ccr-types]]
 
-== `Ccr` types
+=== `Ccr` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[CcrFollowIndexStats]]
-== CcrFollowIndexStats
+=== CcrFollowIndexStats
 
 [source,ts,subs=+macros]
 ----
@@ -47,9 +47,10 @@ interface CcrFollowIndexStats {
 }
 ----
 
+
 [discrete]
 [[CcrReadException]]
-== CcrReadException
+=== CcrReadException
 
 [source,ts,subs=+macros]
 ----
@@ -60,9 +61,10 @@ interface CcrReadException {
 }
 ----
 
+
 [discrete]
 [[CcrShardStats]]
-== CcrShardStats
+=== CcrShardStats
 
 [source,ts,subs=+macros]
 ----
@@ -102,4 +104,5 @@ interface CcrShardStats {
   write_buffer_size_in_bytes: <<ByteSize>>
 }
 ----
+
 

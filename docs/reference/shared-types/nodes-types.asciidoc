@@ -1,6 +1,6 @@
 [[reference-shared-types-nodes-types]]
 
-== `Nodes` types
+=== `Nodes` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[NodesAdaptiveSelection]]
-== NodesAdaptiveSelection
+=== NodesAdaptiveSelection
 
 [source,ts,subs=+macros]
 ----
@@ -59,9 +59,10 @@ interface NodesAdaptiveSelection {
 }
 ----
 
+
 [discrete]
 [[NodesBreaker]]
-== NodesBreaker
+=== NodesBreaker
 
 [source,ts,subs=+macros]
 ----
@@ -81,9 +82,10 @@ interface NodesBreaker {
 }
 ----
 
+
 [discrete]
 [[NodesCgroup]]
-== NodesCgroup
+=== NodesCgroup
 
 [source,ts,subs=+macros]
 ----
@@ -97,9 +99,10 @@ interface NodesCgroup {
 }
 ----
 
+
 [discrete]
 [[NodesCgroupCpu]]
-== NodesCgroupCpu
+=== NodesCgroupCpu
 
 [source,ts,subs=+macros]
 ----
@@ -115,9 +118,10 @@ interface NodesCgroupCpu {
 }
 ----
 
+
 [discrete]
 [[NodesCgroupCpuStat]]
-== NodesCgroupCpuStat
+=== NodesCgroupCpuStat
 
 [source,ts,subs=+macros]
 ----
@@ -131,9 +135,10 @@ interface NodesCgroupCpuStat {
 }
 ----
 
+
 [discrete]
 [[NodesCgroupMemory]]
-== NodesCgroupMemory
+=== NodesCgroupMemory
 
 [source,ts,subs=+macros]
 ----
@@ -147,9 +152,10 @@ interface NodesCgroupMemory {
 }
 ----
 
+
 [discrete]
 [[NodesClient]]
-== NodesClient
+=== NodesClient
 
 [source,ts,subs=+macros]
 ----
@@ -179,9 +185,10 @@ interface NodesClient {
 }
 ----
 
+
 [discrete]
 [[NodesClusterAppliedStats]]
-== NodesClusterAppliedStats
+=== NodesClusterAppliedStats
 
 [source,ts,subs=+macros]
 ----
@@ -190,9 +197,10 @@ interface NodesClusterAppliedStats {
 }
 ----
 
+
 [discrete]
 [[NodesClusterStateQueue]]
-== NodesClusterStateQueue
+=== NodesClusterStateQueue
 
 [source,ts,subs=+macros]
 ----
@@ -206,9 +214,10 @@ interface NodesClusterStateQueue {
 }
 ----
 
+
 [discrete]
 [[NodesClusterStateUpdate]]
-== NodesClusterStateUpdate
+=== NodesClusterStateUpdate
 
 [source,ts,subs=+macros]
 ----
@@ -246,9 +255,10 @@ interface NodesClusterStateUpdate {
 }
 ----
 
+
 [discrete]
 [[NodesContext]]
-== NodesContext
+=== NodesContext
 
 [source,ts,subs=+macros]
 ----
@@ -260,9 +270,10 @@ interface NodesContext {
 }
 ----
 
+
 [discrete]
 [[NodesCpu]]
-== NodesCpu
+=== NodesCpu
 
 [source,ts,subs=+macros]
 ----
@@ -278,9 +289,10 @@ interface NodesCpu {
 }
 ----
 
+
 [discrete]
 [[NodesCpuAcct]]
-== NodesCpuAcct
+=== NodesCpuAcct
 
 [source,ts,subs=+macros]
 ----
@@ -292,9 +304,10 @@ interface NodesCpuAcct {
 }
 ----
 
+
 [discrete]
 [[NodesDataPathStats]]
-== NodesDataPathStats
+=== NodesDataPathStats
 
 [source,ts,subs=+macros]
 ----
@@ -327,9 +340,10 @@ interface NodesDataPathStats {
 }
 ----
 
+
 [discrete]
 [[NodesDiscovery]]
-== NodesDiscovery
+=== NodesDiscovery
 
 [source,ts,subs=+macros]
 ----
@@ -345,9 +359,10 @@ interface NodesDiscovery {
 }
 ----
 
+
 [discrete]
 [[NodesExtendedMemoryStats]]
-== NodesExtendedMemoryStats
+=== NodesExtendedMemoryStats
 
 [source,ts,subs=+macros]
 ----
@@ -359,9 +374,10 @@ interface NodesExtendedMemoryStats extends <<NodesMemoryStats>> {
 }
 ----
 
+
 [discrete]
 [[NodesFileSystem]]
-== NodesFileSystem
+=== NodesFileSystem
 
 [source,ts,subs=+macros]
 ----
@@ -377,9 +393,10 @@ interface NodesFileSystem {
 }
 ----
 
+
 [discrete]
 [[NodesFileSystemTotal]]
-== NodesFileSystemTotal
+=== NodesFileSystemTotal
 
 [source,ts,subs=+macros]
 ----
@@ -399,9 +416,10 @@ interface NodesFileSystemTotal {
 }
 ----
 
+
 [discrete]
 [[NodesGarbageCollector]]
-== NodesGarbageCollector
+=== NodesGarbageCollector
 
 [source,ts,subs=+macros]
 ----
@@ -411,9 +429,10 @@ interface NodesGarbageCollector {
 }
 ----
 
+
 [discrete]
 [[NodesGarbageCollectorTotal]]
-== NodesGarbageCollectorTotal
+=== NodesGarbageCollectorTotal
 
 [source,ts,subs=+macros]
 ----
@@ -427,9 +446,10 @@ interface NodesGarbageCollectorTotal {
 }
 ----
 
+
 [discrete]
 [[NodesHttp]]
-== NodesHttp
+=== NodesHttp
 
 [source,ts,subs=+macros]
 ----
@@ -445,9 +465,10 @@ interface NodesHttp {
 }
 ----
 
+
 [discrete]
 [[NodesHttpRoute]]
-== NodesHttpRoute
+=== NodesHttpRoute
 
 [source,ts,subs=+macros]
 ----
@@ -457,9 +478,10 @@ interface NodesHttpRoute {
 }
 ----
 
+
 [discrete]
 [[NodesHttpRouteRequests]]
-== NodesHttpRouteRequests
+=== NodesHttpRouteRequests
 
 [source,ts,subs=+macros]
 ----
@@ -470,9 +492,10 @@ interface NodesHttpRouteRequests {
 }
 ----
 
+
 [discrete]
 [[NodesHttpRouteResponses]]
-== NodesHttpRouteResponses
+=== NodesHttpRouteResponses
 
 [source,ts,subs=+macros]
 ----
@@ -484,9 +507,10 @@ interface NodesHttpRouteResponses {
 }
 ----
 
+
 [discrete]
 [[NodesIndexingPressure]]
-== NodesIndexingPressure
+=== NodesIndexingPressure
 
 [source,ts,subs=+macros]
 ----
@@ -496,9 +520,10 @@ interface NodesIndexingPressure {
 }
 ----
 
+
 [discrete]
 [[NodesIndexingPressureMemory]]
-== NodesIndexingPressureMemory
+=== NodesIndexingPressureMemory
 
 [source,ts,subs=+macros]
 ----
@@ -514,9 +539,10 @@ interface NodesIndexingPressureMemory {
 }
 ----
 
+
 [discrete]
 [[NodesIngest]]
-== NodesIngest
+=== NodesIngest
 
 [source,ts,subs=+macros]
 ----
@@ -528,9 +554,10 @@ interface NodesIngest {
 }
 ----
 
+
 [discrete]
 [[NodesIngestStats]]
-== NodesIngestStats
+=== NodesIngestStats
 
 [source,ts,subs=+macros]
 ----
@@ -552,9 +579,10 @@ interface NodesIngestStats {
 }
 ----
 
+
 [discrete]
 [[NodesIngestTotal]]
-== NodesIngestTotal
+=== NodesIngestTotal
 
 [source,ts,subs=+macros]
 ----
@@ -570,9 +598,10 @@ interface NodesIngestTotal {
 }
 ----
 
+
 [discrete]
 [[NodesIoStatDevice]]
-== NodesIoStatDevice
+=== NodesIoStatDevice
 
 [source,ts,subs=+macros]
 ----
@@ -592,9 +621,10 @@ interface NodesIoStatDevice {
 }
 ----
 
+
 [discrete]
 [[NodesIoStats]]
-== NodesIoStats
+=== NodesIoStats
 
 [source,ts,subs=+macros]
 ----
@@ -606,9 +636,10 @@ interface NodesIoStats {
 }
 ----
 
+
 [discrete]
 [[NodesJvm]]
-== NodesJvm
+=== NodesJvm
 
 [source,ts,subs=+macros]
 ----
@@ -632,9 +663,10 @@ interface NodesJvm {
 }
 ----
 
+
 [discrete]
 [[NodesJvmClasses]]
-== NodesJvmClasses
+=== NodesJvmClasses
 
 [source,ts,subs=+macros]
 ----
@@ -648,9 +680,10 @@ interface NodesJvmClasses {
 }
 ----
 
+
 [discrete]
 [[NodesJvmMemoryStats]]
-== NodesJvmMemoryStats
+=== NodesJvmMemoryStats
 
 [source,ts,subs=+macros]
 ----
@@ -672,9 +705,10 @@ interface NodesJvmMemoryStats {
 }
 ----
 
+
 [discrete]
 [[NodesJvmThreads]]
-== NodesJvmThreads
+=== NodesJvmThreads
 
 [source,ts,subs=+macros]
 ----
@@ -686,9 +720,10 @@ interface NodesJvmThreads {
 }
 ----
 
+
 [discrete]
 [[NodesKeyedProcessor]]
-== NodesKeyedProcessor
+=== NodesKeyedProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -698,9 +733,10 @@ interface NodesKeyedProcessor {
 }
 ----
 
+
 [discrete]
 [[NodesMemoryStats]]
-== NodesMemoryStats
+=== NodesMemoryStats
 
 [source,ts,subs=+macros]
 ----
@@ -722,9 +758,10 @@ interface NodesMemoryStats {
 }
 ----
 
+
 [discrete]
 [[NodesNodeBufferPool]]
-== NodesNodeBufferPool
+=== NodesNodeBufferPool
 
 [source,ts,subs=+macros]
 ----
@@ -742,9 +779,10 @@ interface NodesNodeBufferPool {
 }
 ----
 
+
 [discrete]
 [[NodesNodeReloadError]]
-== NodesNodeReloadError
+=== NodesNodeReloadError
 
 [source,ts,subs=+macros]
 ----
@@ -754,18 +792,20 @@ interface NodesNodeReloadError {
 }
 ----
 
+
 [discrete]
 [[NodesNodeReloadResult]]
-== NodesNodeReloadResult
+=== NodesNodeReloadResult
 
 [source,ts,subs=+macros]
 ----
 type NodesNodeReloadResult = <<NodesStats>> | <<NodesNodeReloadError>>
 ----
 
+
 [discrete]
 [[NodesNodesResponseBase]]
-== NodesNodesResponseBase
+=== NodesNodesResponseBase
 
 [source,ts,subs=+macros]
 ----
@@ -775,9 +815,10 @@ interface NodesNodesResponseBase {
 }
 ----
 
+
 [discrete]
 [[NodesOperatingSystem]]
-== NodesOperatingSystem
+=== NodesOperatingSystem
 
 [source,ts,subs=+macros]
 ----
@@ -790,9 +831,10 @@ interface NodesOperatingSystem {
 }
 ----
 
+
 [discrete]
 [[NodesPool]]
-== NodesPool
+=== NodesPool
 
 [source,ts,subs=+macros]
 ----
@@ -808,9 +850,10 @@ interface NodesPool {
 }
 ----
 
+
 [discrete]
 [[NodesPressureMemory]]
-== NodesPressureMemory
+=== NodesPressureMemory
 
 [source,ts,subs=+macros]
 ----
@@ -844,9 +887,10 @@ interface NodesPressureMemory {
 }
 ----
 
+
 [discrete]
 [[NodesProcess]]
-== NodesProcess
+=== NodesProcess
 
 [source,ts,subs=+macros]
 ----
@@ -864,9 +908,10 @@ interface NodesProcess {
 }
 ----
 
+
 [discrete]
 [[NodesProcessor]]
-== NodesProcessor
+=== NodesProcessor
 
 [source,ts,subs=+macros]
 ----
@@ -882,9 +927,10 @@ interface NodesProcessor {
 }
 ----
 
+
 [discrete]
 [[NodesPublishedClusterStates]]
-== NodesPublishedClusterStates
+=== NodesPublishedClusterStates
 
 [source,ts,subs=+macros]
 ----
@@ -898,9 +944,10 @@ interface NodesPublishedClusterStates {
 }
 ----
 
+
 [discrete]
 [[NodesRecording]]
-== NodesRecording
+=== NodesRecording
 
 [source,ts,subs=+macros]
 ----
@@ -912,9 +959,10 @@ interface NodesRecording {
 }
 ----
 
+
 [discrete]
 [[NodesRepositoryLocation]]
-== NodesRepositoryLocation
+=== NodesRepositoryLocation
 
 [source,ts,subs=+macros]
 ----
@@ -927,9 +975,10 @@ interface NodesRepositoryLocation {
 }
 ----
 
+
 [discrete]
 [[NodesRepositoryMeteringInformation]]
-== NodesRepositoryMeteringInformation
+=== NodesRepositoryMeteringInformation
 
 [source,ts,subs=+macros]
 ----
@@ -955,9 +1004,10 @@ interface NodesRepositoryMeteringInformation {
 }
 ----
 
+
 [discrete]
 [[NodesRequestCounts]]
-== NodesRequestCounts
+=== NodesRequestCounts
 
 [source,ts,subs=+macros]
 ----
@@ -987,9 +1037,10 @@ interface NodesRequestCounts {
 }
 ----
 
+
 [discrete]
 [[NodesScriptCache]]
-== NodesScriptCache
+=== NodesScriptCache
 
 [source,ts,subs=+macros]
 ----
@@ -1004,9 +1055,10 @@ interface NodesScriptCache {
 }
 ----
 
+
 [discrete]
 [[NodesScripting]]
-== NodesScripting
+=== NodesScripting
 
 [source,ts,subs=+macros]
 ----
@@ -1023,9 +1075,10 @@ interface NodesScripting {
 }
 ----
 
+
 [discrete]
 [[NodesSerializedClusterState]]
-== NodesSerializedClusterState
+=== NodesSerializedClusterState
 
 [source,ts,subs=+macros]
 ----
@@ -1036,9 +1089,10 @@ interface NodesSerializedClusterState {
 }
 ----
 
+
 [discrete]
 [[NodesSerializedClusterStateDetail]]
-== NodesSerializedClusterStateDetail
+=== NodesSerializedClusterStateDetail
 
 [source,ts,subs=+macros]
 ----
@@ -1051,9 +1105,10 @@ interface NodesSerializedClusterStateDetail {
 }
 ----
 
+
 [discrete]
 [[NodesSizeHttpHistogram]]
-== NodesSizeHttpHistogram
+=== NodesSizeHttpHistogram
 
 [source,ts,subs=+macros]
 ----
@@ -1064,9 +1119,10 @@ interface NodesSizeHttpHistogram {
 }
 ----
 
+
 [discrete]
 [[NodesStats]]
-== NodesStats
+=== NodesStats
 
 [source,ts,subs=+macros]
 ----
@@ -1116,9 +1172,10 @@ interface NodesStats {
 }
 ----
 
+
 [discrete]
 [[NodesThreadCount]]
-== NodesThreadCount
+=== NodesThreadCount
 
 [source,ts,subs=+macros]
 ----
@@ -1138,9 +1195,10 @@ interface NodesThreadCount {
 }
 ----
 
+
 [discrete]
 [[NodesTimeHttpHistogram]]
-== NodesTimeHttpHistogram
+=== NodesTimeHttpHistogram
 
 [source,ts,subs=+macros]
 ----
@@ -1151,9 +1209,10 @@ interface NodesTimeHttpHistogram {
 }
 ----
 
+
 [discrete]
 [[NodesTransport]]
-== NodesTransport
+=== NodesTransport
 
 [source,ts,subs=+macros]
 ----
@@ -1181,9 +1240,10 @@ interface NodesTransport {
 }
 ----
 
+
 [discrete]
 [[NodesTransportHistogram]]
-== NodesTransportHistogram
+=== NodesTransportHistogram
 
 [source,ts,subs=+macros]
 ----
@@ -1196,4 +1256,5 @@ interface NodesTransportHistogram {
   ge_millis?: <<long>>
 }
 ----
+
 

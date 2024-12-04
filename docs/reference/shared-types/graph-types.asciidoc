@@ -1,6 +1,6 @@
 [[reference-shared-types-graph-types]]
 
-== `Graph` types
+=== `Graph` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[GraphConnection]]
-== GraphConnection
+=== GraphConnection
 
 [source,ts,subs=+macros]
 ----
@@ -49,9 +49,10 @@ interface GraphConnection {
 }
 ----
 
+
 [discrete]
 [[GraphExploreControls]]
-== GraphExploreControls
+=== GraphExploreControls
 
 [source,ts,subs=+macros]
 ----
@@ -67,9 +68,10 @@ interface GraphExploreControls {
 }
 ----
 
+
 [discrete]
 [[GraphHop]]
-== GraphHop
+=== GraphHop
 
 [source,ts,subs=+macros]
 ----
@@ -83,9 +85,10 @@ interface GraphHop {
 }
 ----
 
+
 [discrete]
 [[GraphSampleDiversity]]
-== GraphSampleDiversity
+=== GraphSampleDiversity
 
 [source,ts,subs=+macros]
 ----
@@ -95,9 +98,10 @@ interface GraphSampleDiversity {
 }
 ----
 
+
 [discrete]
 [[GraphVertex]]
-== GraphVertex
+=== GraphVertex
 
 [source,ts,subs=+macros]
 ----
@@ -109,9 +113,10 @@ interface GraphVertex {
 }
 ----
 
+
 [discrete]
 [[GraphVertexDefinition]]
-== GraphVertexDefinition
+=== GraphVertexDefinition
 
 [source,ts,subs=+macros]
 ----
@@ -131,9 +136,10 @@ interface GraphVertexDefinition {
 }
 ----
 
+
 [discrete]
 [[GraphVertexInclude]]
-== GraphVertexInclude
+=== GraphVertexInclude
 
 [source,ts,subs=+macros]
 ----
@@ -142,4 +148,5 @@ interface GraphVertexInclude {
   term: string
 }
 ----
+
 

@@ -1,6 +1,6 @@
-[[reference-shared-types--global-count]]
+[[reference-shared-types-global-count]]
 
-== Count
+=== `Count` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[CountRequest]]
-=== CountRequest
+==== CountRequest
 
 [source,ts,subs=+macros]
 ----
@@ -62,9 +61,10 @@ interface CountRequest extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[CountResponse]]
-=== CountResponse
+==== CountResponse
 
 [source,ts,subs=+macros]
 ----
@@ -73,4 +73,5 @@ interface CountResponse {
   _shards: <<ShardStatistics>>
 }
 ----
+
 

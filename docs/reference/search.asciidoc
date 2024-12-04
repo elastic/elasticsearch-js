@@ -1,4 +1,5 @@
 [[reference-search]]
+== client.search
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.search]]
-== client.search
+== `client.search()`
 
 Run a search. Get search hits that match the query defined in the request. You can provide search queries using the `q` query string parameter or the request body. If both are specified, only the query parameter is used.
 
 {ref}/search-search.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(SearchRequest, options?): Promise<SearchResponse>
+(request: SearchRequest, options?: TransportRequestOptions) => Promise<SearchResponse>
 ----
 
 [discrete]
@@ -124,6 +127,7 @@ interface SearchRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -132,4 +136,5 @@ interface SearchRequest extends <<RequestBase>> {
 type SearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = <<SearchResponseBody>><TDocument, TAggregations>
 
 ----
+
 

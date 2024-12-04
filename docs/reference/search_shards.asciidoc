@@ -1,4 +1,5 @@
 [[reference-search_shards]]
+== client.searchShards
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.searchShards]]
-== client.searchShards
+== `client.searchShards()`
 
 Get the search shards. Get the indices and shards that a search request would be run against. This information can be useful for working out issues or planning optimizations with routing and shard preferences. When filtered aliases are used, the filter is returned as part of the indices section.
 
 {ref}/search-shards.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(SearchShardsRequest, options?): Promise<SearchShardsResponse>
+(request: SearchShardsRequest, options?: TransportRequestOptions) => Promise<SearchShardsResponse>
 ----
 
 [discrete]
@@ -63,6 +66,7 @@ interface SearchShardsRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -75,4 +79,5 @@ interface SearchShardsResponse {
 }
 
 ----
+
 

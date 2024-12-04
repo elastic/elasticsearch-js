@@ -1,6 +1,6 @@
 [[reference-shared-types-query-rules-types]]
 
-== `QueryRules` types
+=== `QueryRules` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[QueryRulesQueryRule]]
-== QueryRulesQueryRule
+=== QueryRulesQueryRule
 
 [source,ts,subs=+macros]
 ----
@@ -50,9 +50,10 @@ interface QueryRulesQueryRule {
 }
 ----
 
+
 [discrete]
 [[QueryRulesQueryRuleActions]]
-== QueryRulesQueryRuleActions
+=== QueryRulesQueryRuleActions
 
 [source,ts,subs=+macros]
 ----
@@ -62,9 +63,10 @@ interface QueryRulesQueryRuleActions {
 }
 ----
 
+
 [discrete]
 [[QueryRulesQueryRuleCriteria]]
-== QueryRulesQueryRuleCriteria
+=== QueryRulesQueryRuleCriteria
 
 [source,ts,subs=+macros]
 ----
@@ -75,27 +77,30 @@ interface QueryRulesQueryRuleCriteria {
 }
 ----
 
+
 [discrete]
 [[QueryRulesQueryRuleCriteriaType]]
-== QueryRulesQueryRuleCriteriaType
+=== QueryRulesQueryRuleCriteriaType
 
 [source,ts,subs=+macros]
 ----
 type QueryRulesQueryRuleCriteriaType = 'global' | 'exact' | 'exact_fuzzy' | 'fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte' | 'always'
 ----
 
+
 [discrete]
 [[QueryRulesQueryRuleType]]
-== QueryRulesQueryRuleType
+=== QueryRulesQueryRuleType
 
 [source,ts,subs=+macros]
 ----
 type QueryRulesQueryRuleType = 'pinned' | 'exclude'
 ----
 
+
 [discrete]
 [[QueryRulesQueryRuleset]]
-== QueryRulesQueryRuleset
+=== QueryRulesQueryRuleset
 
 [source,ts,subs=+macros]
 ----
@@ -106,4 +111,5 @@ interface QueryRulesQueryRuleset {
   rules: <<QueryRulesQueryRule>>[]
 }
 ----
+
 

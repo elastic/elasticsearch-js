@@ -1,6 +1,6 @@
 [[reference-shared-types-synonyms-types]]
 
-== `Synonyms` types
+=== `Synonyms` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[SynonymsSynonymRule]]
-== SynonymsSynonymRule
+=== SynonymsSynonymRule
 
 [source,ts,subs=+macros]
 ----
@@ -49,9 +49,10 @@ interface SynonymsSynonymRule {
 }
 ----
 
+
 [discrete]
 [[SynonymsSynonymRuleRead]]
-== SynonymsSynonymRuleRead
+=== SynonymsSynonymRuleRead
 
 [source,ts,subs=+macros]
 ----
@@ -63,18 +64,20 @@ interface SynonymsSynonymRuleRead {
 }
 ----
 
+
 [discrete]
 [[SynonymsSynonymString]]
-== SynonymsSynonymString
+=== SynonymsSynonymString
 
 [source,ts,subs=+macros]
 ----
 type SynonymsSynonymString = string
 ----
 
+
 [discrete]
 [[SynonymsSynonymsUpdateResult]]
-== SynonymsSynonymsUpdateResult
+=== SynonymsSynonymsUpdateResult
 
 [source,ts,subs=+macros]
 ----
@@ -85,4 +88,5 @@ interface SynonymsSynonymsUpdateResult {
   reload_analyzers_details: IndicesReloadSearchAnalyzersReloadResult
 }
 ----
+
 

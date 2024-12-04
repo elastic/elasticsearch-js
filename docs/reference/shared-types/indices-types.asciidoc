@@ -1,6 +1,6 @@
 [[reference-shared-types-indices-types]]
 
-== `Indices` types
+=== `Indices` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[IndicesAlias]]
-== IndicesAlias
+=== IndicesAlias
 
 [source,ts,subs=+macros]
 ----
@@ -57,9 +57,10 @@ interface IndicesAlias {
 }
 ----
 
+
 [discrete]
 [[IndicesAliasDefinition]]
-== IndicesAliasDefinition
+=== IndicesAliasDefinition
 
 [source,ts,subs=+macros]
 ----
@@ -79,9 +80,10 @@ interface IndicesAliasDefinition {
 }
 ----
 
+
 [discrete]
 [[IndicesCacheQueries]]
-== IndicesCacheQueries
+=== IndicesCacheQueries
 
 [source,ts,subs=+macros]
 ----
@@ -90,9 +92,10 @@ interface IndicesCacheQueries {
 }
 ----
 
+
 [discrete]
 [[IndicesDataStream]]
-== IndicesDataStream
+=== IndicesDataStream
 
 [source,ts,subs=+macros]
 ----
@@ -134,9 +137,10 @@ interface IndicesDataStream {
 }
 ----
 
+
 [discrete]
 [[IndicesDataStreamIndex]]
-== IndicesDataStreamIndex
+=== IndicesDataStreamIndex
 
 [source,ts,subs=+macros]
 ----
@@ -154,9 +158,10 @@ interface IndicesDataStreamIndex {
 }
 ----
 
+
 [discrete]
 [[IndicesDataStreamLifecycle]]
-== IndicesDataStreamLifecycle
+=== IndicesDataStreamLifecycle
 
 [source,ts,subs=+macros]
 ----
@@ -166,9 +171,10 @@ interface IndicesDataStreamLifecycle {
 }
 ----
 
+
 [discrete]
 [[IndicesDataStreamLifecycleDownsampling]]
-== IndicesDataStreamLifecycleDownsampling
+=== IndicesDataStreamLifecycleDownsampling
 
 [source,ts,subs=+macros]
 ----
@@ -178,9 +184,10 @@ interface IndicesDataStreamLifecycleDownsampling {
 }
 ----
 
+
 [discrete]
 [[IndicesDataStreamLifecycleRolloverConditions]]
-== IndicesDataStreamLifecycleRolloverConditions
+=== IndicesDataStreamLifecycleRolloverConditions
 
 [source,ts,subs=+macros]
 ----
@@ -198,9 +205,10 @@ interface IndicesDataStreamLifecycleRolloverConditions {
 }
 ----
 
+
 [discrete]
 [[IndicesDataStreamLifecycleWithRollover]]
-== IndicesDataStreamLifecycleWithRollover
+=== IndicesDataStreamLifecycleWithRollover
 
 [source,ts,subs=+macros]
 ----
@@ -214,9 +222,10 @@ interface IndicesDataStreamLifecycleWithRollover {
 }
 ----
 
+
 [discrete]
 [[IndicesDataStreamTimestampField]]
-== IndicesDataStreamTimestampField
+=== IndicesDataStreamTimestampField
 
 [source,ts,subs=+macros]
 ----
@@ -226,9 +235,10 @@ interface IndicesDataStreamTimestampField {
 }
 ----
 
+
 [discrete]
 [[IndicesDataStreamVisibility]]
-== IndicesDataStreamVisibility
+=== IndicesDataStreamVisibility
 
 [source,ts,subs=+macros]
 ----
@@ -238,9 +248,10 @@ interface IndicesDataStreamVisibility {
 }
 ----
 
+
 [discrete]
 [[IndicesDownsampleConfig]]
-== IndicesDownsampleConfig
+=== IndicesDownsampleConfig
 
 [source,ts,subs=+macros]
 ----
@@ -250,9 +261,10 @@ interface IndicesDownsampleConfig {
 }
 ----
 
+
 [discrete]
 [[IndicesDownsamplingRound]]
-== IndicesDownsamplingRound
+=== IndicesDownsamplingRound
 
 [source,ts,subs=+macros]
 ----
@@ -264,9 +276,10 @@ interface IndicesDownsamplingRound {
 }
 ----
 
+
 [discrete]
 [[IndicesFailureStore]]
-== IndicesFailureStore
+=== IndicesFailureStore
 
 [source,ts,subs=+macros]
 ----
@@ -277,9 +290,10 @@ interface IndicesFailureStore {
 }
 ----
 
+
 [discrete]
 [[IndicesFielddataFrequencyFilter]]
-== IndicesFielddataFrequencyFilter
+=== IndicesFielddataFrequencyFilter
 
 [source,ts,subs=+macros]
 ----
@@ -290,18 +304,20 @@ interface IndicesFielddataFrequencyFilter {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexCheckOnStartup]]
-== IndicesIndexCheckOnStartup
+=== IndicesIndexCheckOnStartup
 
 [source,ts,subs=+macros]
 ----
 type IndicesIndexCheckOnStartup = boolean | 'true' | 'false' | 'checksum'
 ----
 
+
 [discrete]
 [[IndicesIndexRouting]]
-== IndicesIndexRouting
+=== IndicesIndexRouting
 
 [source,ts,subs=+macros]
 ----
@@ -311,9 +327,10 @@ interface IndicesIndexRouting {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexRoutingAllocation]]
-== IndicesIndexRoutingAllocation
+=== IndicesIndexRoutingAllocation
 
 [source,ts,subs=+macros]
 ----
@@ -325,9 +342,10 @@ interface IndicesIndexRoutingAllocation {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexRoutingAllocationDisk]]
-== IndicesIndexRoutingAllocationDisk
+=== IndicesIndexRoutingAllocationDisk
 
 [source,ts,subs=+macros]
 ----
@@ -336,9 +354,10 @@ interface IndicesIndexRoutingAllocationDisk {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexRoutingAllocationInclude]]
-== IndicesIndexRoutingAllocationInclude
+=== IndicesIndexRoutingAllocationInclude
 
 [source,ts,subs=+macros]
 ----
@@ -348,9 +367,10 @@ interface IndicesIndexRoutingAllocationInclude {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexRoutingAllocationInitialRecovery]]
-== IndicesIndexRoutingAllocationInitialRecovery
+=== IndicesIndexRoutingAllocationInitialRecovery
 
 [source,ts,subs=+macros]
 ----
@@ -359,18 +379,20 @@ interface IndicesIndexRoutingAllocationInitialRecovery {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexRoutingAllocationOptions]]
-== IndicesIndexRoutingAllocationOptions
+=== IndicesIndexRoutingAllocationOptions
 
 [source,ts,subs=+macros]
 ----
 type IndicesIndexRoutingAllocationOptions = 'all' | 'primaries' | 'new_primaries' | 'none'
 ----
 
+
 [discrete]
 [[IndicesIndexRoutingRebalance]]
-== IndicesIndexRoutingRebalance
+=== IndicesIndexRoutingRebalance
 
 [source,ts,subs=+macros]
 ----
@@ -379,18 +401,20 @@ interface IndicesIndexRoutingRebalance {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexRoutingRebalanceOptions]]
-== IndicesIndexRoutingRebalanceOptions
+=== IndicesIndexRoutingRebalanceOptions
 
 [source,ts,subs=+macros]
 ----
 type IndicesIndexRoutingRebalanceOptions = 'all' | 'primaries' | 'replicas' | 'none'
 ----
 
+
 [discrete]
 [[IndicesIndexSegmentSort]]
-== IndicesIndexSegmentSort
+=== IndicesIndexSegmentSort
 
 [source,ts,subs=+macros]
 ----
@@ -402,9 +426,10 @@ interface IndicesIndexSegmentSort {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexSettingBlocks]]
-== IndicesIndexSettingBlocks
+=== IndicesIndexSettingBlocks
 
 [source,ts,subs=+macros]
 ----
@@ -417,9 +442,10 @@ interface IndicesIndexSettingBlocks {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexSettings]]
-== IndicesIndexSettings
+=== IndicesIndexSettings
 
 [source,ts,subs=+macros]
 ----
@@ -485,9 +511,10 @@ type IndicesIndexSettings = IndicesIndexSettingsKeys
   & { [property: string]: any }
 ----
 
+
 [discrete]
 [[IndicesIndexSettingsAnalysis]]
-== IndicesIndexSettingsAnalysis
+=== IndicesIndexSettingsAnalysis
 
 [source,ts,subs=+macros]
 ----
@@ -500,9 +527,10 @@ interface IndicesIndexSettingsAnalysis {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexSettingsLifecycle]]
-== IndicesIndexSettingsLifecycle
+=== IndicesIndexSettingsLifecycle
 
 [source,ts,subs=+macros]
 ----
@@ -521,9 +549,10 @@ interface IndicesIndexSettingsLifecycle {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexSettingsLifecycleStep]]
-== IndicesIndexSettingsLifecycleStep
+=== IndicesIndexSettingsLifecycleStep
 
 [source,ts,subs=+macros]
 ----
@@ -533,9 +562,10 @@ interface IndicesIndexSettingsLifecycleStep {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexSettingsTimeSeries]]
-== IndicesIndexSettingsTimeSeries
+=== IndicesIndexSettingsTimeSeries
 
 [source,ts,subs=+macros]
 ----
@@ -545,9 +575,10 @@ interface IndicesIndexSettingsTimeSeries {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexState]]
-== IndicesIndexState
+=== IndicesIndexState
 
 [source,ts,subs=+macros]
 ----
@@ -563,9 +594,10 @@ interface IndicesIndexState {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexTemplate]]
-== IndicesIndexTemplate
+=== IndicesIndexTemplate
 
 [source,ts,subs=+macros]
 ----
@@ -588,9 +620,10 @@ interface IndicesIndexTemplate {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexTemplateDataStreamConfiguration]]
-== IndicesIndexTemplateDataStreamConfiguration
+=== IndicesIndexTemplateDataStreamConfiguration
 
 [source,ts,subs=+macros]
 ----
@@ -602,9 +635,10 @@ interface IndicesIndexTemplateDataStreamConfiguration {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexTemplateSummary]]
-== IndicesIndexTemplateSummary
+=== IndicesIndexTemplateSummary
 
 [source,ts,subs=+macros]
 ----
@@ -619,9 +653,10 @@ interface IndicesIndexTemplateSummary {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexVersioning]]
-== IndicesIndexVersioning
+=== IndicesIndexVersioning
 
 [source,ts,subs=+macros]
 ----
@@ -631,9 +666,10 @@ interface IndicesIndexVersioning {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexingPressure]]
-== IndicesIndexingPressure
+=== IndicesIndexingPressure
 
 [source,ts,subs=+macros]
 ----
@@ -642,9 +678,10 @@ interface IndicesIndexingPressure {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexingPressureMemory]]
-== IndicesIndexingPressureMemory
+=== IndicesIndexingPressureMemory
 
 [source,ts,subs=+macros]
 ----
@@ -654,9 +691,10 @@ interface IndicesIndexingPressureMemory {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexingSlowlogSettings]]
-== IndicesIndexingSlowlogSettings
+=== IndicesIndexingSlowlogSettings
 
 [source,ts,subs=+macros]
 ----
@@ -668,9 +706,10 @@ interface IndicesIndexingSlowlogSettings {
 }
 ----
 
+
 [discrete]
 [[IndicesIndexingSlowlogTresholds]]
-== IndicesIndexingSlowlogTresholds
+=== IndicesIndexingSlowlogTresholds
 
 [source,ts,subs=+macros]
 ----
@@ -680,18 +719,20 @@ interface IndicesIndexingSlowlogTresholds {
 }
 ----
 
+
 [discrete]
 [[IndicesManagedBy]]
-== IndicesManagedBy
+=== IndicesManagedBy
 
 [source,ts,subs=+macros]
 ----
 type IndicesManagedBy = 'Index Lifecycle Management' | 'Data stream lifecycle' | 'Unmanaged'
 ----
 
+
 [discrete]
 [[IndicesMappingLimitSettings]]
-== IndicesMappingLimitSettings
+=== IndicesMappingLimitSettings
 
 [source,ts,subs=+macros]
 ----
@@ -707,9 +748,10 @@ interface IndicesMappingLimitSettings {
 }
 ----
 
+
 [discrete]
 [[IndicesMappingLimitSettingsDepth]]
-== IndicesMappingLimitSettingsDepth
+=== IndicesMappingLimitSettingsDepth
 
 [source,ts,subs=+macros]
 ----
@@ -719,9 +761,10 @@ interface IndicesMappingLimitSettingsDepth {
 }
 ----
 
+
 [discrete]
 [[IndicesMappingLimitSettingsDimensionFields]]
-== IndicesMappingLimitSettingsDimensionFields
+=== IndicesMappingLimitSettingsDimensionFields
 
 [source,ts,subs=+macros]
 ----
@@ -731,9 +774,10 @@ interface IndicesMappingLimitSettingsDimensionFields {
 }
 ----
 
+
 [discrete]
 [[IndicesMappingLimitSettingsFieldNameLength]]
-== IndicesMappingLimitSettingsFieldNameLength
+=== IndicesMappingLimitSettingsFieldNameLength
 
 [source,ts,subs=+macros]
 ----
@@ -743,9 +787,10 @@ interface IndicesMappingLimitSettingsFieldNameLength {
 }
 ----
 
+
 [discrete]
 [[IndicesMappingLimitSettingsNestedFields]]
-== IndicesMappingLimitSettingsNestedFields
+=== IndicesMappingLimitSettingsNestedFields
 
 [source,ts,subs=+macros]
 ----
@@ -755,9 +800,10 @@ interface IndicesMappingLimitSettingsNestedFields {
 }
 ----
 
+
 [discrete]
 [[IndicesMappingLimitSettingsNestedObjects]]
-== IndicesMappingLimitSettingsNestedObjects
+=== IndicesMappingLimitSettingsNestedObjects
 
 [source,ts,subs=+macros]
 ----
@@ -767,9 +813,10 @@ interface IndicesMappingLimitSettingsNestedObjects {
 }
 ----
 
+
 [discrete]
 [[IndicesMappingLimitSettingsTotalFields]]
-== IndicesMappingLimitSettingsTotalFields
+=== IndicesMappingLimitSettingsTotalFields
 
 [source,ts,subs=+macros]
 ----
@@ -781,9 +828,10 @@ interface IndicesMappingLimitSettingsTotalFields {
 }
 ----
 
+
 [discrete]
 [[IndicesMerge]]
-== IndicesMerge
+=== IndicesMerge
 
 [source,ts,subs=+macros]
 ----
@@ -792,9 +840,10 @@ interface IndicesMerge {
 }
 ----
 
+
 [discrete]
 [[IndicesMergeScheduler]]
-== IndicesMergeScheduler
+=== IndicesMergeScheduler
 
 [source,ts,subs=+macros]
 ----
@@ -804,9 +853,10 @@ interface IndicesMergeScheduler {
 }
 ----
 
+
 [discrete]
 [[IndicesNumericFielddata]]
-== IndicesNumericFielddata
+=== IndicesNumericFielddata
 
 [source,ts,subs=+macros]
 ----
@@ -815,18 +865,20 @@ interface IndicesNumericFielddata {
 }
 ----
 
+
 [discrete]
 [[IndicesNumericFielddataFormat]]
-== IndicesNumericFielddataFormat
+=== IndicesNumericFielddataFormat
 
 [source,ts,subs=+macros]
 ----
 type IndicesNumericFielddataFormat = 'array' | 'disabled'
 ----
 
+
 [discrete]
 [[IndicesQueries]]
-== IndicesQueries
+=== IndicesQueries
 
 [source,ts,subs=+macros]
 ----
@@ -835,9 +887,10 @@ interface IndicesQueries {
 }
 ----
 
+
 [discrete]
 [[IndicesRetentionLease]]
-== IndicesRetentionLease
+=== IndicesRetentionLease
 
 [source,ts,subs=+macros]
 ----
@@ -846,9 +899,10 @@ interface IndicesRetentionLease {
 }
 ----
 
+
 [discrete]
 [[IndicesSearchIdle]]
-== IndicesSearchIdle
+=== IndicesSearchIdle
 
 [source,ts,subs=+macros]
 ----
@@ -857,36 +911,40 @@ interface IndicesSearchIdle {
 }
 ----
 
+
 [discrete]
 [[IndicesSegmentSortMissing]]
-== IndicesSegmentSortMissing
+=== IndicesSegmentSortMissing
 
 [source,ts,subs=+macros]
 ----
 type IndicesSegmentSortMissing = '_last' | '_first'
 ----
 
+
 [discrete]
 [[IndicesSegmentSortMode]]
-== IndicesSegmentSortMode
+=== IndicesSegmentSortMode
 
 [source,ts,subs=+macros]
 ----
 type IndicesSegmentSortMode = 'min' | 'MIN' | 'max' | 'MAX'
 ----
 
+
 [discrete]
 [[IndicesSegmentSortOrder]]
-== IndicesSegmentSortOrder
+=== IndicesSegmentSortOrder
 
 [source,ts,subs=+macros]
 ----
 type IndicesSegmentSortOrder = 'asc' | 'ASC' | 'desc' | 'DESC'
 ----
 
+
 [discrete]
 [[IndicesSettingsAnalyze]]
-== IndicesSettingsAnalyze
+=== IndicesSettingsAnalyze
 
 [source,ts,subs=+macros]
 ----
@@ -895,9 +953,10 @@ interface IndicesSettingsAnalyze {
 }
 ----
 
+
 [discrete]
 [[IndicesSettingsHighlight]]
-== IndicesSettingsHighlight
+=== IndicesSettingsHighlight
 
 [source,ts,subs=+macros]
 ----
@@ -906,9 +965,10 @@ interface IndicesSettingsHighlight {
 }
 ----
 
+
 [discrete]
 [[IndicesSettingsQueryString]]
-== IndicesSettingsQueryString
+=== IndicesSettingsQueryString
 
 [source,ts,subs=+macros]
 ----
@@ -917,9 +977,10 @@ interface IndicesSettingsQueryString {
 }
 ----
 
+
 [discrete]
 [[IndicesSettingsSearch]]
-== IndicesSettingsSearch
+=== IndicesSettingsSearch
 
 [source,ts,subs=+macros]
 ----
@@ -929,18 +990,20 @@ interface IndicesSettingsSearch {
 }
 ----
 
+
 [discrete]
 [[IndicesSettingsSimilarity]]
-== IndicesSettingsSimilarity
+=== IndicesSettingsSimilarity
 
 [source,ts,subs=+macros]
 ----
 type IndicesSettingsSimilarity = IndicesSettingsSimilarityBm25 | <<IndicesSettingsSimilarityBoolean>> | <<IndicesSettingsSimilarityDfi>> | <<IndicesSettingsSimilarityDfr>> | <<IndicesSettingsSimilarityIb>> | <<IndicesSettingsSimilarityLmd>> | <<IndicesSettingsSimilarityLmj>> | <<IndicesSettingsSimilarityScripted>>
 ----
 
+
 [discrete]
 [[IndicesSettingsSimilarityBm25]]
-== IndicesSettingsSimilarityBm25
+=== IndicesSettingsSimilarityBm25
 
 [source,ts,subs=+macros]
 ----
@@ -952,9 +1015,10 @@ interface IndicesSettingsSimilarityBm25 {
 }
 ----
 
+
 [discrete]
 [[IndicesSettingsSimilarityBoolean]]
-== IndicesSettingsSimilarityBoolean
+=== IndicesSettingsSimilarityBoolean
 
 [source,ts,subs=+macros]
 ----
@@ -963,9 +1027,10 @@ interface IndicesSettingsSimilarityBoolean {
 }
 ----
 
+
 [discrete]
 [[IndicesSettingsSimilarityDfi]]
-== IndicesSettingsSimilarityDfi
+=== IndicesSettingsSimilarityDfi
 
 [source,ts,subs=+macros]
 ----
@@ -975,9 +1040,10 @@ interface IndicesSettingsSimilarityDfi {
 }
 ----
 
+
 [discrete]
 [[IndicesSettingsSimilarityDfr]]
-== IndicesSettingsSimilarityDfr
+=== IndicesSettingsSimilarityDfr
 
 [source,ts,subs=+macros]
 ----
@@ -989,9 +1055,10 @@ interface IndicesSettingsSimilarityDfr {
 }
 ----
 
+
 [discrete]
 [[IndicesSettingsSimilarityIb]]
-== IndicesSettingsSimilarityIb
+=== IndicesSettingsSimilarityIb
 
 [source,ts,subs=+macros]
 ----
@@ -1003,9 +1070,10 @@ interface IndicesSettingsSimilarityIb {
 }
 ----
 
+
 [discrete]
 [[IndicesSettingsSimilarityLmd]]
-== IndicesSettingsSimilarityLmd
+=== IndicesSettingsSimilarityLmd
 
 [source,ts,subs=+macros]
 ----
@@ -1015,9 +1083,10 @@ interface IndicesSettingsSimilarityLmd {
 }
 ----
 
+
 [discrete]
 [[IndicesSettingsSimilarityLmj]]
-== IndicesSettingsSimilarityLmj
+=== IndicesSettingsSimilarityLmj
 
 [source,ts,subs=+macros]
 ----
@@ -1027,9 +1096,10 @@ interface IndicesSettingsSimilarityLmj {
 }
 ----
 
+
 [discrete]
 [[IndicesSettingsSimilarityScripted]]
-== IndicesSettingsSimilarityScripted
+=== IndicesSettingsSimilarityScripted
 
 [source,ts,subs=+macros]
 ----
@@ -1040,9 +1110,10 @@ interface IndicesSettingsSimilarityScripted {
 }
 ----
 
+
 [discrete]
 [[IndicesSlowlogSettings]]
-== IndicesSlowlogSettings
+=== IndicesSlowlogSettings
 
 [source,ts,subs=+macros]
 ----
@@ -1054,9 +1125,10 @@ interface IndicesSlowlogSettings {
 }
 ----
 
+
 [discrete]
 [[IndicesSlowlogTresholdLevels]]
-== IndicesSlowlogTresholdLevels
+=== IndicesSlowlogTresholdLevels
 
 [source,ts,subs=+macros]
 ----
@@ -1068,9 +1140,10 @@ interface IndicesSlowlogTresholdLevels {
 }
 ----
 
+
 [discrete]
 [[IndicesSlowlogTresholds]]
-== IndicesSlowlogTresholds
+=== IndicesSlowlogTresholds
 
 [source,ts,subs=+macros]
 ----
@@ -1080,9 +1153,10 @@ interface IndicesSlowlogTresholds {
 }
 ----
 
+
 [discrete]
 [[IndicesSoftDeletes]]
-== IndicesSoftDeletes
+=== IndicesSoftDeletes
 
 [source,ts,subs=+macros]
 ----
@@ -1094,9 +1168,10 @@ interface IndicesSoftDeletes {
 }
 ----
 
+
 [discrete]
 [[IndicesStorage]]
-== IndicesStorage
+=== IndicesStorage
 
 [source,ts,subs=+macros]
 ----
@@ -1107,18 +1182,20 @@ interface IndicesStorage {
 }
 ----
 
+
 [discrete]
 [[IndicesStorageType]]
-== IndicesStorageType
+=== IndicesStorageType
 
 [source,ts,subs=+macros]
 ----
 type IndicesStorageType = 'fs' | 'niofs' | 'mmapfs' | 'hybridfs' | string
 ----
 
+
 [discrete]
 [[IndicesTemplateMapping]]
-== IndicesTemplateMapping
+=== IndicesTemplateMapping
 
 [source,ts,subs=+macros]
 ----
@@ -1132,9 +1209,10 @@ interface IndicesTemplateMapping {
 }
 ----
 
+
 [discrete]
 [[IndicesTranslog]]
-== IndicesTranslog
+=== IndicesTranslog
 
 [source,ts,subs=+macros]
 ----
@@ -1149,18 +1227,20 @@ interface IndicesTranslog {
 }
 ----
 
+
 [discrete]
 [[IndicesTranslogDurability]]
-== IndicesTranslogDurability
+=== IndicesTranslogDurability
 
 [source,ts,subs=+macros]
 ----
 type IndicesTranslogDurability = 'request' | 'REQUEST' | 'async' | 'ASYNC'
 ----
 
+
 [discrete]
 [[IndicesTranslogRetention]]
-== IndicesTranslogRetention
+=== IndicesTranslogRetention
 
 [source,ts,subs=+macros]
 ----
@@ -1171,4 +1251,5 @@ interface IndicesTranslogRetention {
   age?: <<Duration>>
 }
 ----
+
 

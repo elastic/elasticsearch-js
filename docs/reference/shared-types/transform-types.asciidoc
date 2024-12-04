@@ -1,6 +1,6 @@
 [[reference-shared-types-transform-types]]
 
-== `Transform` types
+=== `Transform` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[TransformDestination]]
-== TransformDestination
+=== TransformDestination
 
 [source,ts,subs=+macros]
 ----
@@ -49,9 +49,10 @@ interface TransformDestination {
 }
 ----
 
+
 [discrete]
 [[TransformLatest]]
-== TransformLatest
+=== TransformLatest
 
 [source,ts,subs=+macros]
 ----
@@ -63,9 +64,10 @@ interface TransformLatest {
 }
 ----
 
+
 [discrete]
 [[TransformPivot]]
-== TransformPivot
+=== TransformPivot
 
 [source,ts,subs=+macros]
 ----
@@ -79,9 +81,10 @@ interface TransformPivot {
 }
 ----
 
+
 [discrete]
 [[TransformPivotGroupByContainer]]
-== TransformPivotGroupByContainer
+=== TransformPivotGroupByContainer
 
 [source,ts,subs=+macros]
 ----
@@ -93,9 +96,10 @@ interface TransformPivotGroupByContainer {
 }
 ----
 
+
 [discrete]
 [[TransformRetentionPolicy]]
-== TransformRetentionPolicy
+=== TransformRetentionPolicy
 
 [source,ts,subs=+macros]
 ----
@@ -107,9 +111,10 @@ interface TransformRetentionPolicy {
 }
 ----
 
+
 [discrete]
 [[TransformRetentionPolicyContainer]]
-== TransformRetentionPolicyContainer
+=== TransformRetentionPolicyContainer
 
 [source,ts,subs=+macros]
 ----
@@ -119,9 +124,10 @@ interface TransformRetentionPolicyContainer {
 }
 ----
 
+
 [discrete]
 [[TransformSettings]]
-== TransformSettings
+=== TransformSettings
 
 [source,ts,subs=+macros]
 ----
@@ -141,9 +147,10 @@ interface TransformSettings {
 }
 ----
 
+
 [discrete]
 [[TransformSource]]
-== TransformSource
+=== TransformSource
 
 [source,ts,subs=+macros]
 ----
@@ -157,9 +164,10 @@ interface TransformSource {
 }
 ----
 
+
 [discrete]
 [[TransformSyncContainer]]
-== TransformSyncContainer
+=== TransformSyncContainer
 
 [source,ts,subs=+macros]
 ----
@@ -169,9 +177,10 @@ interface TransformSyncContainer {
 }
 ----
 
+
 [discrete]
 [[TransformTimeSync]]
-== TransformTimeSync
+=== TransformTimeSync
 
 [source,ts,subs=+macros]
 ----
@@ -182,4 +191,5 @@ interface TransformTimeSync {
   field: <<Field>>
 }
 ----
+
 

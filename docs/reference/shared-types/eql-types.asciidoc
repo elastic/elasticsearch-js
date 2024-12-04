@@ -1,6 +1,6 @@
 [[reference-shared-types-eql-types]]
 
-== `Eql` types
+=== `Eql` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[EqlEqlHits]]
-== EqlEqlHits
+=== EqlEqlHits
 
 [source,ts,subs=+macros]
 ----
@@ -51,9 +51,10 @@ interface EqlEqlHits<TEvent = unknown> {
 }
 ----
 
+
 [discrete]
 [[EqlEqlSearchResponseBase]]
-== EqlEqlSearchResponseBase
+=== EqlEqlSearchResponseBase
 
 [source,ts,subs=+macros]
 ----
@@ -73,9 +74,10 @@ interface EqlEqlSearchResponseBase<TEvent = unknown> {
 }
 ----
 
+
 [discrete]
 [[EqlHitsEvent]]
-== EqlHitsEvent
+=== EqlHitsEvent
 
 [source,ts,subs=+macros]
 ----
@@ -92,9 +94,10 @@ interface EqlHitsEvent<TEvent = unknown> {
 }
 ----
 
+
 [discrete]
 [[EqlHitsSequence]]
-== EqlHitsSequence
+=== EqlHitsSequence
 
 [source,ts,subs=+macros]
 ----
@@ -105,4 +108,5 @@ interface EqlHitsSequence<TEvent = unknown> {
   join_keys?: any[]
 }
 ----
+
 

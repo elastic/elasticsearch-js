@@ -1,6 +1,6 @@
-[[reference-shared-types--global-rank-eval]]
+[[reference-shared-types-global-rank-eval]]
 
-== RankEval
+=== `RankEval` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[RankEvalDocumentRating]]
-=== RankEvalDocumentRating
+==== RankEvalDocumentRating
 
 [source,ts,subs=+macros]
 ----
@@ -52,9 +51,10 @@ interface RankEvalDocumentRating {
 }
 ----
 
+
 [discrete]
 [[RankEvalRankEvalHit]]
-=== RankEvalRankEvalHit
+==== RankEvalRankEvalHit
 
 [source,ts,subs=+macros]
 ----
@@ -65,9 +65,10 @@ interface RankEvalRankEvalHit {
 }
 ----
 
+
 [discrete]
 [[RankEvalRankEvalHitItem]]
-=== RankEvalRankEvalHitItem
+==== RankEvalRankEvalHitItem
 
 [source,ts,subs=+macros]
 ----
@@ -77,9 +78,10 @@ interface RankEvalRankEvalHitItem {
 }
 ----
 
+
 [discrete]
 [[RankEvalRankEvalMetric]]
-=== RankEvalRankEvalMetric
+==== RankEvalRankEvalMetric
 
 [source,ts,subs=+macros]
 ----
@@ -92,9 +94,10 @@ interface RankEvalRankEvalMetric {
 }
 ----
 
+
 [discrete]
 [[RankEvalRankEvalMetricBase]]
-=== RankEvalRankEvalMetricBase
+==== RankEvalRankEvalMetricBase
 
 [source,ts,subs=+macros]
 ----
@@ -104,9 +107,10 @@ interface RankEvalRankEvalMetricBase {
 }
 ----
 
+
 [discrete]
 [[RankEvalRankEvalMetricDetail]]
-=== RankEvalRankEvalMetricDetail
+==== RankEvalRankEvalMetricDetail
 
 [source,ts,subs=+macros]
 ----
@@ -122,9 +126,10 @@ interface RankEvalRankEvalMetricDetail {
 }
 ----
 
+
 [discrete]
 [[RankEvalRankEvalMetricDiscountedCumulativeGain]]
-=== RankEvalRankEvalMetricDiscountedCumulativeGain
+==== RankEvalRankEvalMetricDiscountedCumulativeGain
 
 [source,ts,subs=+macros]
 ----
@@ -134,9 +139,10 @@ interface RankEvalRankEvalMetricDiscountedCumulativeGain extends <<RankEvalRankE
 }
 ----
 
+
 [discrete]
 [[RankEvalRankEvalMetricExpectedReciprocalRank]]
-=== RankEvalRankEvalMetricExpectedReciprocalRank
+==== RankEvalRankEvalMetricExpectedReciprocalRank
 
 [source,ts,subs=+macros]
 ----
@@ -146,18 +152,20 @@ interface RankEvalRankEvalMetricExpectedReciprocalRank extends <<RankEvalRankEva
 }
 ----
 
+
 [discrete]
 [[RankEvalRankEvalMetricMeanReciprocalRank]]
-=== RankEvalRankEvalMetricMeanReciprocalRank
+==== RankEvalRankEvalMetricMeanReciprocalRank
 
 [source,ts,subs=+macros]
 ----
 interface RankEvalRankEvalMetricMeanReciprocalRank extends <<RankEvalRankEvalMetricRatingTreshold>> {}
 ----
 
+
 [discrete]
 [[RankEvalRankEvalMetricPrecision]]
-=== RankEvalRankEvalMetricPrecision
+==== RankEvalRankEvalMetricPrecision
 
 [source,ts,subs=+macros]
 ----
@@ -167,9 +175,10 @@ interface RankEvalRankEvalMetricPrecision extends <<RankEvalRankEvalMetricRating
 }
 ----
 
+
 [discrete]
 [[RankEvalRankEvalMetricRatingTreshold]]
-=== RankEvalRankEvalMetricRatingTreshold
+==== RankEvalRankEvalMetricRatingTreshold
 
 [source,ts,subs=+macros]
 ----
@@ -179,18 +188,20 @@ interface RankEvalRankEvalMetricRatingTreshold extends <<RankEvalRankEvalMetricB
 }
 ----
 
+
 [discrete]
 [[RankEvalRankEvalMetricRecall]]
-=== RankEvalRankEvalMetricRecall
+==== RankEvalRankEvalMetricRecall
 
 [source,ts,subs=+macros]
 ----
 interface RankEvalRankEvalMetricRecall extends <<RankEvalRankEvalMetricRatingTreshold>> {}
 ----
 
+
 [discrete]
 [[RankEvalRankEvalQuery]]
-=== RankEvalRankEvalQuery
+==== RankEvalRankEvalQuery
 
 [source,ts,subs=+macros]
 ----
@@ -200,9 +211,10 @@ interface RankEvalRankEvalQuery {
 }
 ----
 
+
 [discrete]
 [[RankEvalRankEvalRequestItem]]
-=== RankEvalRankEvalRequestItem
+==== RankEvalRankEvalRequestItem
 
 [source,ts,subs=+macros]
 ----
@@ -220,9 +232,10 @@ interface RankEvalRankEvalRequestItem {
 }
 ----
 
+
 [discrete]
 [[RankEvalRequest]]
-=== RankEvalRequest
+==== RankEvalRequest
 
 [source,ts,subs=+macros]
 ----
@@ -237,9 +250,10 @@ interface RankEvalRequest extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[RankEvalResponse]]
-=== RankEvalResponse
+==== RankEvalResponse
 
 [source,ts,subs=+macros]
 ----
@@ -250,9 +264,10 @@ interface RankEvalResponse {
 }
 ----
 
+
 [discrete]
 [[RankEvalUnratedDocument]]
-=== RankEvalUnratedDocument
+==== RankEvalUnratedDocument
 
 [source,ts,subs=+macros]
 ----
@@ -261,4 +276,5 @@ interface RankEvalUnratedDocument {
   _index: <<IndexName>>
 }
 ----
+
 

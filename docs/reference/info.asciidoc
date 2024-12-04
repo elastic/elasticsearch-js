@@ -1,4 +1,5 @@
 [[reference-info]]
+== client.info
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.info]]
-== client.info
+== `client.info()`
 
 Get cluster info. Returns basic information about the cluster.
 
 {ref}/index.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(InfoRequest, options?): Promise<InfoResponse>
+(request: InfoRequest, options?: TransportRequestOptions) => Promise<InfoResponse>
 ----
 
 [discrete]
@@ -54,6 +57,7 @@ Get cluster info. Returns basic information about the cluster.
 interface InfoRequest extends <<RequestBase>> {}
 
 ----
+
 
 [discrete]
 === Response
@@ -69,4 +73,5 @@ interface InfoResponse {
 }
 
 ----
+
 

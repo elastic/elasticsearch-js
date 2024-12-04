@@ -1,6 +1,6 @@
-[[reference-shared-types--global-delete]]
+[[reference-shared-types-global-delete]]
 
-== Delete
+=== `Delete` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[DeleteRequest]]
-=== DeleteRequest
+==== DeleteRequest
 
 [source,ts,subs=+macros]
 ----
@@ -56,12 +55,14 @@ interface DeleteRequest extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[DeleteResponse]]
-=== DeleteResponse
+==== DeleteResponse
 
 [source,ts,subs=+macros]
 ----
 type DeleteResponse = <<WriteResponseBase>>
 ----
+
 

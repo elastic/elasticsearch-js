@@ -1,4 +1,5 @@
 [[reference-update_by_query_rethrottle]]
+== client.updateByQueryRethrottle
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.updateByQueryRethrottle]]
-== client.updateByQueryRethrottle
+== `client.updateByQueryRethrottle()`
 
 Throttle an update by query operation. Change the number of requests per second for a particular update by query operation. Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
 
 {ref}/docs-update-by-query.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(UpdateByQueryRethrottleRequest, options?): Promise<UpdateByQueryRethrottleResponse>
+(request: UpdateByQueryRethrottleRequest, options?: TransportRequestOptions) => Promise<UpdateByQueryRethrottleResponse>
 ----
 
 [discrete]
@@ -58,6 +61,7 @@ interface UpdateByQueryRethrottleRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -68,4 +72,5 @@ interface UpdateByQueryRethrottleResponse {
 }
 
 ----
+
 

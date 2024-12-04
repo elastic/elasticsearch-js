@@ -1,6 +1,6 @@
 [[reference-shared-types-snapshot-types]]
 
-== `Snapshot` types
+=== `Snapshot` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[SnapshotAzureRepository]]
-== SnapshotAzureRepository
+=== SnapshotAzureRepository
 
 [source,ts,subs=+macros]
 ----
@@ -47,9 +47,10 @@ interface SnapshotAzureRepository extends <<SnapshotRepositoryBase>> {
 }
 ----
 
+
 [discrete]
 [[SnapshotAzureRepositorySettings]]
-== SnapshotAzureRepositorySettings
+=== SnapshotAzureRepositorySettings
 
 [source,ts,subs=+macros]
 ----
@@ -62,9 +63,10 @@ interface SnapshotAzureRepositorySettings extends <<SnapshotRepositorySettingsBa
 }
 ----
 
+
 [discrete]
 [[SnapshotFileCountSnapshotStats]]
-== SnapshotFileCountSnapshotStats
+=== SnapshotFileCountSnapshotStats
 
 [source,ts,subs=+macros]
 ----
@@ -74,9 +76,10 @@ interface SnapshotFileCountSnapshotStats {
 }
 ----
 
+
 [discrete]
 [[SnapshotGcsRepository]]
-== SnapshotGcsRepository
+=== SnapshotGcsRepository
 
 [source,ts,subs=+macros]
 ----
@@ -86,9 +89,10 @@ interface SnapshotGcsRepository extends <<SnapshotRepositoryBase>> {
 }
 ----
 
+
 [discrete]
 [[SnapshotGcsRepositorySettings]]
-== SnapshotGcsRepositorySettings
+=== SnapshotGcsRepositorySettings
 
 [source,ts,subs=+macros]
 ----
@@ -101,9 +105,10 @@ interface SnapshotGcsRepositorySettings extends <<SnapshotRepositorySettingsBase
 }
 ----
 
+
 [discrete]
 [[SnapshotIndexDetails]]
-== SnapshotIndexDetails
+=== SnapshotIndexDetails
 
 [source,ts,subs=+macros]
 ----
@@ -115,9 +120,10 @@ interface SnapshotIndexDetails {
 }
 ----
 
+
 [discrete]
 [[SnapshotInfoFeatureState]]
-== SnapshotInfoFeatureState
+=== SnapshotInfoFeatureState
 
 [source,ts,subs=+macros]
 ----
@@ -127,9 +133,10 @@ interface SnapshotInfoFeatureState {
 }
 ----
 
+
 [discrete]
 [[SnapshotReadOnlyUrlRepository]]
-== SnapshotReadOnlyUrlRepository
+=== SnapshotReadOnlyUrlRepository
 
 [source,ts,subs=+macros]
 ----
@@ -139,9 +146,10 @@ interface SnapshotReadOnlyUrlRepository extends <<SnapshotRepositoryBase>> {
 }
 ----
 
+
 [discrete]
 [[SnapshotReadOnlyUrlRepositorySettings]]
-== SnapshotReadOnlyUrlRepositorySettings
+=== SnapshotReadOnlyUrlRepositorySettings
 
 [source,ts,subs=+macros]
 ----
@@ -153,18 +161,20 @@ interface SnapshotReadOnlyUrlRepositorySettings extends <<SnapshotRepositorySett
 }
 ----
 
+
 [discrete]
 [[SnapshotRepository]]
-== SnapshotRepository
+=== SnapshotRepository
 
 [source,ts,subs=+macros]
 ----
 type SnapshotRepository = <<SnapshotAzureRepository>> | <<SnapshotGcsRepository>> | SnapshotS3Repository | <<SnapshotSharedFileSystemRepository>> | <<SnapshotReadOnlyUrlRepository>> | <<SnapshotSourceOnlyRepository>>
 ----
 
+
 [discrete]
 [[SnapshotRepositoryBase]]
-== SnapshotRepositoryBase
+=== SnapshotRepositoryBase
 
 [source,ts,subs=+macros]
 ----
@@ -173,9 +183,10 @@ interface SnapshotRepositoryBase {
 }
 ----
 
+
 [discrete]
 [[SnapshotRepositorySettingsBase]]
-== SnapshotRepositorySettingsBase
+=== SnapshotRepositorySettingsBase
 
 [source,ts,subs=+macros]
 ----
@@ -187,9 +198,10 @@ interface SnapshotRepositorySettingsBase {
 }
 ----
 
+
 [discrete]
 [[SnapshotS3Repository]]
-== SnapshotS3Repository
+=== SnapshotS3Repository
 
 [source,ts,subs=+macros]
 ----
@@ -199,9 +211,10 @@ interface SnapshotS3Repository extends <<SnapshotRepositoryBase>> {
 }
 ----
 
+
 [discrete]
 [[SnapshotS3RepositorySettings]]
-== SnapshotS3RepositorySettings
+=== SnapshotS3RepositorySettings
 
 [source,ts,subs=+macros]
 ----
@@ -217,9 +230,10 @@ interface SnapshotS3RepositorySettings extends <<SnapshotRepositorySettingsBase>
 }
 ----
 
+
 [discrete]
 [[SnapshotShardsStats]]
-== SnapshotShardsStats
+=== SnapshotShardsStats
 
 [source,ts,subs=+macros]
 ----
@@ -233,18 +247,20 @@ interface SnapshotShardsStats {
 }
 ----
 
+
 [discrete]
 [[SnapshotShardsStatsStage]]
-== SnapshotShardsStatsStage
+=== SnapshotShardsStatsStage
 
 [source,ts,subs=+macros]
 ----
 type SnapshotShardsStatsStage = 'DONE' | 'FAILURE' | 'FINALIZE' | 'INIT' | 'STARTED'
 ----
 
+
 [discrete]
 [[SnapshotShardsStatsSummary]]
-== SnapshotShardsStatsSummary
+=== SnapshotShardsStatsSummary
 
 [source,ts,subs=+macros]
 ----
@@ -257,9 +273,10 @@ interface SnapshotShardsStatsSummary {
 }
 ----
 
+
 [discrete]
 [[SnapshotShardsStatsSummaryItem]]
-== SnapshotShardsStatsSummaryItem
+=== SnapshotShardsStatsSummaryItem
 
 [source,ts,subs=+macros]
 ----
@@ -269,9 +286,10 @@ interface SnapshotShardsStatsSummaryItem {
 }
 ----
 
+
 [discrete]
 [[SnapshotSharedFileSystemRepository]]
-== SnapshotSharedFileSystemRepository
+=== SnapshotSharedFileSystemRepository
 
 [source,ts,subs=+macros]
 ----
@@ -281,9 +299,10 @@ interface SnapshotSharedFileSystemRepository extends <<SnapshotRepositoryBase>> 
 }
 ----
 
+
 [discrete]
 [[SnapshotSharedFileSystemRepositorySettings]]
-== SnapshotSharedFileSystemRepositorySettings
+=== SnapshotSharedFileSystemRepositorySettings
 
 [source,ts,subs=+macros]
 ----
@@ -294,9 +313,10 @@ interface SnapshotSharedFileSystemRepositorySettings extends <<SnapshotRepositor
 }
 ----
 
+
 [discrete]
 [[SnapshotSnapshotIndexStats]]
-== SnapshotSnapshotIndexStats
+=== SnapshotSnapshotIndexStats
 
 [source,ts,subs=+macros]
 ----
@@ -307,9 +327,10 @@ interface SnapshotSnapshotIndexStats {
 }
 ----
 
+
 [discrete]
 [[SnapshotSnapshotInfo]]
-== SnapshotSnapshotInfo
+=== SnapshotSnapshotInfo
 
 [source,ts,subs=+macros]
 ----
@@ -338,9 +359,10 @@ interface SnapshotSnapshotInfo {
 }
 ----
 
+
 [discrete]
 [[SnapshotSnapshotShardFailure]]
-== SnapshotSnapshotShardFailure
+=== SnapshotSnapshotShardFailure
 
 [source,ts,subs=+macros]
 ----
@@ -354,9 +376,10 @@ interface SnapshotSnapshotShardFailure {
 }
 ----
 
+
 [discrete]
 [[SnapshotSnapshotShardsStatus]]
-== SnapshotSnapshotShardsStatus
+=== SnapshotSnapshotShardsStatus
 
 [source,ts,subs=+macros]
 ----
@@ -366,18 +389,20 @@ interface SnapshotSnapshotShardsStatus {
 }
 ----
 
+
 [discrete]
 [[SnapshotSnapshotSort]]
-== SnapshotSnapshotSort
+=== SnapshotSnapshotSort
 
 [source,ts,subs=+macros]
 ----
 type SnapshotSnapshotSort = 'start_time' | 'duration' | 'name' | 'index_count' | 'repository' | 'shard_count' | 'failed_shard_count'
 ----
 
+
 [discrete]
 [[SnapshotSnapshotStats]]
-== SnapshotSnapshotStats
+=== SnapshotSnapshotStats
 
 [source,ts,subs=+macros]
 ----
@@ -390,9 +415,10 @@ interface SnapshotSnapshotStats {
 }
 ----
 
+
 [discrete]
 [[SnapshotSourceOnlyRepository]]
-== SnapshotSourceOnlyRepository
+=== SnapshotSourceOnlyRepository
 
 [source,ts,subs=+macros]
 ----
@@ -402,9 +428,10 @@ interface SnapshotSourceOnlyRepository extends <<SnapshotRepositoryBase>> {
 }
 ----
 
+
 [discrete]
 [[SnapshotSourceOnlyRepositorySettings]]
-== SnapshotSourceOnlyRepositorySettings
+=== SnapshotSourceOnlyRepositorySettings
 
 [source,ts,subs=+macros]
 ----
@@ -416,9 +443,10 @@ interface SnapshotSourceOnlyRepositorySettings extends <<SnapshotRepositorySetti
 }
 ----
 
+
 [discrete]
 [[SnapshotStatus]]
-== SnapshotStatus
+=== SnapshotStatus
 
 [source,ts,subs=+macros]
 ----
@@ -433,4 +461,5 @@ interface SnapshotStatus {
   uuid: <<Uuid>>
 }
 ----
+
 

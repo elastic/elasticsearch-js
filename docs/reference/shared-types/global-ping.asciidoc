@@ -1,6 +1,6 @@
-[[reference-shared-types--global-ping]]
+[[reference-shared-types-global-ping]]
 
-== Ping
+=== `Ping` request types
 
 ////////
 ===========================================================================================================================
@@ -35,22 +35,23 @@
 ++++
 
 
-
 [discrete]
 [[PingRequest]]
-=== PingRequest
+==== PingRequest
 
 [source,ts,subs=+macros]
 ----
 interface PingRequest extends <<RequestBase>> {}
 ----
 
+
 [discrete]
 [[PingResponse]]
-=== PingResponse
+==== PingResponse
 
 [source,ts,subs=+macros]
 ----
 type PingResponse = boolean
 ----
+
 

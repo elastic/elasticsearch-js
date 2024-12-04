@@ -1,4 +1,5 @@
 [[reference-bulk]]
+== client.bulk
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.bulk]]
-== client.bulk
+== `client.bulk()`
 
 Bulk index or delete documents. Performs multiple indexing or delete operations in a single API call. This reduces overhead and can greatly increase indexing speed.
 
 {ref}/docs-bulk.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(BulkRequest, options?): Promise<BulkResponse>
+(request: BulkRequest, options?: TransportRequestOptions) => Promise<BulkResponse>
 ----
 
 [discrete]
@@ -67,6 +70,7 @@ interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <
 
 ----
 
+
 [discrete]
 === Response
 
@@ -80,4 +84,5 @@ interface BulkResponse {
 }
 
 ----
+
 

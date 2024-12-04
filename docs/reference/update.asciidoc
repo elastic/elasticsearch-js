@@ -1,4 +1,5 @@
 [[reference-update]]
+== client.update
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.update]]
-== client.update
+== `client.update()`
 
 Update a document. Updates a document by running a script or passing a partial document.
 
 {ref}/docs-update.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(UpdateRequest, options?): Promise<UpdateResponse>
+(request: UpdateRequest, options?: TransportRequestOptions) => Promise<UpdateResponse>
 ----
 
 [discrete]
@@ -76,6 +79,7 @@ interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> extends
 
 ----
 
+
 [discrete]
 === Response
 
@@ -84,4 +88,5 @@ interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> extends
 type UpdateResponse<TDocument = unknown> = <<UpdateUpdateWriteResponseBase>><TDocument>
 
 ----
+
 

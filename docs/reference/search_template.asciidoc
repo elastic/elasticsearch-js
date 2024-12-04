@@ -1,4 +1,5 @@
 [[reference-search_template]]
+== client.searchTemplate
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.searchTemplate]]
-== client.searchTemplate
+== `client.searchTemplate()`
 
 Run a search with a search template.
 
 {ref}/search-template.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(SearchTemplateRequest, options?): Promise<SearchTemplateResponse>
+(request: SearchTemplateRequest, options?: TransportRequestOptions) => Promise<SearchTemplateResponse>
 ----
 
 [discrete]
@@ -73,6 +76,7 @@ interface SearchTemplateRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -96,4 +100,5 @@ interface SearchTemplateResponse<TDocument = unknown> {
 }
 
 ----
+
 

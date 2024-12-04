@@ -1,6 +1,6 @@
 [[reference-shared-types-inference-types]]
 
-== `Inference` types
+=== `Inference` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[InferenceCompletionResult]]
-== InferenceCompletionResult
+=== InferenceCompletionResult
 
 [source,ts,subs=+macros]
 ----
@@ -46,9 +46,10 @@ interface InferenceCompletionResult {
 }
 ----
 
+
 [discrete]
 [[InferenceDeleteInferenceEndpointResult]]
-== InferenceDeleteInferenceEndpointResult
+=== InferenceDeleteInferenceEndpointResult
 
 [source,ts,subs=+macros]
 ----
@@ -57,27 +58,30 @@ interface InferenceDeleteInferenceEndpointResult extends <<AcknowledgedResponseB
 }
 ----
 
+
 [discrete]
 [[InferenceDenseByteVector]]
-== InferenceDenseByteVector
+=== InferenceDenseByteVector
 
 [source,ts,subs=+macros]
 ----
 type InferenceDenseByteVector = <<byte>>[]
 ----
 
+
 [discrete]
 [[InferenceDenseVector]]
-== InferenceDenseVector
+=== InferenceDenseVector
 
 [source,ts,subs=+macros]
 ----
 type InferenceDenseVector = <<float>>[]
 ----
 
+
 [discrete]
 [[InferenceInferenceEndpoint]]
-== InferenceInferenceEndpoint
+=== InferenceInferenceEndpoint
 
 [source,ts,subs=+macros]
 ----
@@ -91,9 +95,10 @@ interface InferenceInferenceEndpoint {
 }
 ----
 
+
 [discrete]
 [[InferenceInferenceEndpointInfo]]
-== InferenceInferenceEndpointInfo
+=== InferenceInferenceEndpointInfo
 
 [source,ts,subs=+macros]
 ----
@@ -105,9 +110,10 @@ interface InferenceInferenceEndpointInfo extends <<InferenceInferenceEndpoint>> 
 }
 ----
 
+
 [discrete]
 [[InferenceInferenceResult]]
-== InferenceInferenceResult
+=== InferenceInferenceResult
 
 [source,ts,subs=+macros]
 ----
@@ -120,9 +126,10 @@ interface InferenceInferenceResult {
 }
 ----
 
+
 [discrete]
 [[InferenceRankedDocument]]
-== InferenceRankedDocument
+=== InferenceRankedDocument
 
 [source,ts,subs=+macros]
 ----
@@ -133,18 +140,20 @@ interface InferenceRankedDocument {
 }
 ----
 
+
 [discrete]
 [[InferenceServiceSettings]]
-== InferenceServiceSettings
+=== InferenceServiceSettings
 
 [source,ts,subs=+macros]
 ----
 type InferenceServiceSettings = any
 ----
 
+
 [discrete]
 [[InferenceSparseEmbeddingResult]]
-== InferenceSparseEmbeddingResult
+=== InferenceSparseEmbeddingResult
 
 [source,ts,subs=+macros]
 ----
@@ -153,36 +162,40 @@ interface InferenceSparseEmbeddingResult {
 }
 ----
 
+
 [discrete]
 [[InferenceSparseVector]]
-== InferenceSparseVector
+=== InferenceSparseVector
 
 [source,ts,subs=+macros]
 ----
 type InferenceSparseVector = Record<string, <<float>>>
 ----
 
+
 [discrete]
 [[InferenceTaskSettings]]
-== InferenceTaskSettings
+=== InferenceTaskSettings
 
 [source,ts,subs=+macros]
 ----
 type InferenceTaskSettings = any
 ----
 
+
 [discrete]
 [[InferenceTaskType]]
-== InferenceTaskType
+=== InferenceTaskType
 
 [source,ts,subs=+macros]
 ----
 type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank' | 'completion'
 ----
 
+
 [discrete]
 [[InferenceTextEmbeddingByteResult]]
-== InferenceTextEmbeddingByteResult
+=== InferenceTextEmbeddingByteResult
 
 [source,ts,subs=+macros]
 ----
@@ -191,9 +204,10 @@ interface InferenceTextEmbeddingByteResult {
 }
 ----
 
+
 [discrete]
 [[InferenceTextEmbeddingResult]]
-== InferenceTextEmbeddingResult
+=== InferenceTextEmbeddingResult
 
 [source,ts,subs=+macros]
 ----
@@ -201,4 +215,5 @@ interface InferenceTextEmbeddingResult {
   embedding: <<InferenceDenseVector>>
 }
 ----
+
 

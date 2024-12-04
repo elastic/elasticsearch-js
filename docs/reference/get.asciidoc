@@ -1,4 +1,5 @@
 [[reference-get]]
+== client.get
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.get]]
-== client.get
+== `client.get()`
 
 Get a document by its ID. Retrieves the document with the specified ID from an index.
 
 {ref}/docs-get.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(GetRequest, options?): Promise<GetResponse>
+(request: GetRequest, options?: TransportRequestOptions) => Promise<GetResponse>
 ----
 
 [discrete]
@@ -69,6 +72,7 @@ interface GetRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -77,4 +81,5 @@ interface GetRequest extends <<RequestBase>> {
 type GetResponse<TDocument = unknown> = <<GetGetResult>><TDocument>
 
 ----
+
 

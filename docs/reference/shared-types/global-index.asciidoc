@@ -1,6 +1,6 @@
-[[reference-shared-types--global-index]]
+[[reference-shared-types-global-index]]
 
-== Index
+=== `Index` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[IndexRequest]]
-=== IndexRequest
+==== IndexRequest
 
 [source,ts,subs=+macros]
 ----
@@ -60,12 +59,14 @@ interface IndexRequest<TDocument = unknown> extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[IndexResponse]]
-=== IndexResponse
+==== IndexResponse
 
 [source,ts,subs=+macros]
 ----
 type IndexResponse = <<WriteResponseBase>>
 ----
+
 

@@ -1,4 +1,5 @@
 [[reference-search_mvt]]
+== client.searchMvt
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.searchMvt]]
-== client.searchMvt
+== `client.searchMvt()`
 
 Search a vector tile. Search a vector tile for geospatial values.
 
 {ref}/search-vector-tile-api.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(SearchMvtRequest, options?): Promise<SearchMvtResponse>
+(request: SearchMvtRequest, options?: TransportRequestOptions) => Promise<SearchMvtResponse>
 ----
 
 [discrete]
@@ -75,6 +78,7 @@ interface SearchMvtRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -83,4 +87,5 @@ interface SearchMvtRequest extends <<RequestBase>> {
 type SearchMvtResponse = <<MapboxVectorTiles>>
 
 ----
+
 

@@ -1,6 +1,6 @@
-[[reference-shared-types--global-search]]
+[[reference-shared-types-global-search]]
 
-== Search
+=== `Search` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[SearchRequest]]
-=== SearchRequest
+==== SearchRequest
 
 [source,ts,subs=+macros]
 ----
@@ -114,18 +113,20 @@ interface SearchRequest extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[SearchResponse]]
-=== SearchResponse
+==== SearchResponse
 
 [source,ts,subs=+macros]
 ----
 type SearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = <<SearchResponseBody>><TDocument, TAggregations>
 ----
 
+
 [discrete]
 [[SearchResponseBody]]
-=== SearchResponseBody
+==== SearchResponseBody
 
 [source,ts,subs=+macros]
 ----
@@ -146,4 +147,5 @@ interface SearchResponseBody<TDocument = unknown, TAggregations = Record<<<Aggre
   terminated_early?: boolean
 }
 ----
+
 

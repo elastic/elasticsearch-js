@@ -1,4 +1,5 @@
 [[reference-exists]]
+== client.exists
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.exists]]
-== client.exists
+== `client.exists()`
 
 Check a document. Checks if a specified document exists.
 
 {ref}/docs-get.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(ExistsRequest, options?): Promise<ExistsResponse>
+(request: ExistsRequest, options?: TransportRequestOptions) => Promise<ExistsResponse>
 ----
 
 [discrete]
@@ -68,6 +71,7 @@ interface ExistsRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -76,4 +80,5 @@ interface ExistsRequest extends <<RequestBase>> {
 type ExistsResponse = boolean
 
 ----
+
 

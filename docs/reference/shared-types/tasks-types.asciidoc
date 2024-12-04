@@ -1,6 +1,6 @@
 [[reference-shared-types-tasks-types]]
 
-== `Tasks` types
+=== `Tasks` types
 
 ////////
 ===========================================================================================================================
@@ -37,16 +37,17 @@
 
 [discrete]
 [[TasksGroupBy]]
-== TasksGroupBy
+=== TasksGroupBy
 
 [source,ts,subs=+macros]
 ----
 type TasksGroupBy = 'nodes' | 'parents' | 'none'
 ----
 
+
 [discrete]
 [[TasksNodeTasks]]
-== TasksNodeTasks
+=== TasksNodeTasks
 
 [source,ts,subs=+macros]
 ----
@@ -61,9 +62,10 @@ interface TasksNodeTasks {
 }
 ----
 
+
 [discrete]
 [[TasksParentTaskInfo]]
-== TasksParentTaskInfo
+=== TasksParentTaskInfo
 
 [source,ts,subs=+macros]
 ----
@@ -72,9 +74,10 @@ interface TasksParentTaskInfo extends <<TasksTaskInfo>> {
 }
 ----
 
+
 [discrete]
 [[TasksTaskInfo]]
-== TasksTaskInfo
+=== TasksTaskInfo
 
 [source,ts,subs=+macros]
 ----
@@ -96,18 +99,20 @@ interface TasksTaskInfo {
 }
 ----
 
+
 [discrete]
 [[TasksTaskInfos]]
-== TasksTaskInfos
+=== TasksTaskInfos
 
 [source,ts,subs=+macros]
 ----
 type TasksTaskInfos = <<TasksTaskInfo>>[] | Record<string, <<TasksParentTaskInfo>>>
 ----
 
+
 [discrete]
 [[TasksTaskListResponseBase]]
-== TasksTaskListResponseBase
+=== TasksTaskListResponseBase
 
 [source,ts,subs=+macros]
 ----
@@ -120,4 +125,5 @@ interface TasksTaskListResponseBase {
   tasks?: <<TasksTaskInfos>>
 }
 ----
+
 

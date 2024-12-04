@@ -1,6 +1,6 @@
 [[reference-shared-types-slm-types]]
 
-== `Slm` types
+=== `Slm` types
 
 ////////
 ===========================================================================================================================
@@ -37,7 +37,7 @@
 
 [discrete]
 [[SlmConfiguration]]
-== SlmConfiguration
+=== SlmConfiguration
 
 [source,ts,subs=+macros]
 ----
@@ -57,9 +57,10 @@ interface SlmConfiguration {
 }
 ----
 
+
 [discrete]
 [[SlmInProgress]]
-== SlmInProgress
+=== SlmInProgress
 
 [source,ts,subs=+macros]
 ----
@@ -71,9 +72,10 @@ interface SlmInProgress {
 }
 ----
 
+
 [discrete]
 [[SlmInvocation]]
-== SlmInvocation
+=== SlmInvocation
 
 [source,ts,subs=+macros]
 ----
@@ -83,9 +85,10 @@ interface SlmInvocation {
 }
 ----
 
+
 [discrete]
 [[SlmPolicy]]
-== SlmPolicy
+=== SlmPolicy
 
 [source,ts,subs=+macros]
 ----
@@ -98,9 +101,10 @@ interface SlmPolicy {
 }
 ----
 
+
 [discrete]
 [[SlmRetention]]
-== SlmRetention
+=== SlmRetention
 
 [source,ts,subs=+macros]
 ----
@@ -114,9 +118,10 @@ interface SlmRetention {
 }
 ----
 
+
 [discrete]
 [[SlmSnapshotLifecycle]]
-== SlmSnapshotLifecycle
+=== SlmSnapshotLifecycle
 
 [source,ts,subs=+macros]
 ----
@@ -134,9 +139,10 @@ interface SlmSnapshotLifecycle {
 }
 ----
 
+
 [discrete]
 [[SlmStatistics]]
-== SlmStatistics
+=== SlmStatistics
 
 [source,ts,subs=+macros]
 ----
@@ -157,4 +163,5 @@ interface SlmStatistics {
   snapshots_taken?: <<long>>
 }
 ----
+
 

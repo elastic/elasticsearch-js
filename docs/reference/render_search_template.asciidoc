@@ -1,4 +1,5 @@
 [[reference-render_search_template]]
+== client.renderSearchTemplate
 
 ////////
 ===========================================================================================================================
@@ -32,18 +33,20 @@
 </style>
 ++++
 
+
+[discrete]
 [[client.renderSearchTemplate]]
-== client.renderSearchTemplate
+== `client.renderSearchTemplate()`
 
 Render a search template. Render a search template as a search request body.
 
 {ref}/render-search-template-api.html[{es} documentation]
 [discrete]
-== Function signature
+=== Function signature
 
 [source,ts]
 ----
-(RenderSearchTemplateRequest, options?): Promise<RenderSearchTemplateResponse>
+(request: RenderSearchTemplateRequest, options?: TransportRequestOptions) => Promise<RenderSearchTemplateResponse>
 ----
 
 [discrete]
@@ -60,6 +63,7 @@ interface RenderSearchTemplateRequest extends <<RequestBase>> {
 
 ----
 
+
 [discrete]
 === Response
 
@@ -70,4 +74,5 @@ interface RenderSearchTemplateResponse {
 }
 
 ----
+
 

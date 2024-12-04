@@ -1,6 +1,6 @@
-[[reference-shared-types--global-get]]
+[[reference-shared-types-global-get]]
 
-== Get
+=== `Get` request types
 
 ////////
 ===========================================================================================================================
@@ -35,10 +35,9 @@
 ++++
 
 
-
 [discrete]
 [[GetGetResult]]
-=== GetGetResult
+==== GetGetResult
 
 [source,ts,subs=+macros]
 ----
@@ -56,9 +55,10 @@ interface GetGetResult<TDocument = unknown> {
 }
 ----
 
+
 [discrete]
 [[GetRequest]]
-=== GetRequest
+==== GetRequest
 
 [source,ts,subs=+macros]
 ----
@@ -79,12 +79,14 @@ interface GetRequest extends <<RequestBase>> {
 }
 ----
 
+
 [discrete]
 [[GetResponse]]
-=== GetResponse
+==== GetResponse
 
 [source,ts,subs=+macros]
 ----
 type GetResponse<TDocument = unknown> = <<GetGetResult>><TDocument>
 ----
+
 
