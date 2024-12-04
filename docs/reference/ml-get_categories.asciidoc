@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.getCategories]]
-=== client.ml.getCategories
+== client.ml.getCategories
 
 Get anomaly detection job results for categories.
 
 {ref}/ml-get-category.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get anomaly detection job results for categories.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlGetCategoriesRequest extends <<RequestBase>> {
   job_id: <<Id>>
   category_id?: <<CategoryId>>
@@ -57,23 +60,17 @@ interface MlGetCategoriesRequest extends <<RequestBase>> {
   page?: <<MlPage>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlGetCategoriesResponse {
   categories: <<MlCategory>>[]
   count: <<long>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

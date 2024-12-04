@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.revertModelSnapshot]]
-=== client.ml.revertModelSnapshot
+== client.ml.revertModelSnapshot
 
 Revert to a snapshot. The machine learning features react quickly to anomalous input, learning new behaviors in data. Highly anomalous input increases the variance in the models whilst the system learns whether this is a new step-change in behavior or a one-off event. In the case where this anomalous input is known to be a one-off, then it might be appropriate to reset the model state to a time before this event. For example, you might consider reverting to a saved snapshot after Black Friday or a critical system failure.
 
 {ref}/ml-revert-snapshot.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Revert to a snapshot. The machine learning features react quickly to anomalous i
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlRevertModelSnapshotRequest extends <<RequestBase>> {
   job_id: <<Id>>
   snapshot_id: <<Id>>
   delete_intervening_results?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlRevertModelSnapshotResponse {
   model: <<MlModelSnapshot>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

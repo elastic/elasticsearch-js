@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.autoscaling.deleteAutoscalingPolicy]]
-=== client.autoscaling.deleteAutoscalingPolicy
+== client.autoscaling.deleteAutoscalingPolicy
 
 Delete an autoscaling policy. NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
 
 {ref}/autoscaling-delete-autoscaling-policy.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,30 +47,22 @@ Delete an autoscaling policy. NOTE: This feature is designed for indirect use by
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface AutoscalingDeleteAutoscalingPolicyRequest extends <<RequestBase>> {
   name: <<Name>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type AutoscalingDeleteAutoscalingPolicyResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

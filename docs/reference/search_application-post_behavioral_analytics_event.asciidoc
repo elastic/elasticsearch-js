@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.searchApplication.postBehavioralAnalyticsEvent]]
-=== client.searchApplication.postBehavioralAnalyticsEvent
+== client.searchApplication.postBehavioralAnalyticsEvent
 
 Creates a behavioral analytics event for existing collection.
 
 http://todo.com/tbd[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

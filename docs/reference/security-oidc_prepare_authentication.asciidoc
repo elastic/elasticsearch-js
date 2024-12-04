@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.oidcPrepareAuthentication]]
-=== client.security.oidcPrepareAuthentication
+== client.security.oidcPrepareAuthentication
 
 Creates an OAuth 2.0 authentication request as a URL string
 
 {ref}/security-api-oidc-prepare-authentication.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

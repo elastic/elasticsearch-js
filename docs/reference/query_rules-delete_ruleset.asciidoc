@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.queryRules.deleteRuleset]]
-=== client.queryRules.deleteRuleset
+== client.queryRules.deleteRuleset
 
 Deletes a query ruleset.
 
 {ref}/delete-query-ruleset.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,30 +47,22 @@ Deletes a query ruleset.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface QueryRulesDeleteRulesetRequest extends <<RequestBase>> {
   ruleset_id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type QueryRulesDeleteRulesetResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

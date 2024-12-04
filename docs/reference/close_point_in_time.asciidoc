@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.closePointInTime]]
-=== client.closePointInTime
+== client.closePointInTime
 
 Close a point in time. A point in time must be opened explicitly before being used in search requests. The `keep_alive` parameter tells Elasticsearch how long it should persist. A point in time is automatically closed when the `keep_alive` period has elapsed. However, keeping points in time has a cost; close them as soon as they are no longer required for search requests.
 
 {ref}/point-in-time-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,25 @@ Close a point in time. A point in time must be opened explicitly before being us
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ClosePointInTimeRequest extends <<RequestBase>> {
   id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ClosePointInTimeResponse {
   succeeded: boolean
   num_freed: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

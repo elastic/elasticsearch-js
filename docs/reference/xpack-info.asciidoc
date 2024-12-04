@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.xpack.info]]
-=== client.xpack.info
+== client.xpack.info
 
 Provides general information about the installed X-Pack features.
 
 {ref}/info-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,29 +47,23 @@ Provides general information about the installed X-Pack features.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface XpackInfoRequest extends <<RequestBase>> {
   categories?: XpackInfoXPackCategory[]
   accept_enterprise?: boolean
   human?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface XpackInfoResponse {
   build: XpackInfoBuildInformation
   features: XpackInfoFeatures
@@ -72,7 +71,5 @@ interface XpackInfoResponse {
   tagline: string
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

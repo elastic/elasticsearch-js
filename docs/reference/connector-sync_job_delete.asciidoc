@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.connector.syncJobDelete]]
-=== client.connector.syncJobDelete
+== client.connector.syncJobDelete
 
 Delete a connector sync job. Remove a connector sync job and its associated data. This is a destructive action that is not recoverable.
 
 {ref}/delete-connector-sync-job-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,30 +47,22 @@ Delete a connector sync job. Remove a connector sync job and its associated data
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ConnectorSyncJobDeleteRequest extends <<RequestBase>> {
   connector_sync_job_id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type ConnectorSyncJobDeleteResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

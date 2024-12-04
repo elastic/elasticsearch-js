@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.updateDataFrameAnalytics]]
-=== client.ml.updateDataFrameAnalytics
+== client.ml.updateDataFrameAnalytics
 
 Update a data frame analytics job.
 
 {ref}/update-dfanalytics.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Update a data frame analytics job.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlUpdateDataFrameAnalyticsRequest extends <<RequestBase>> {
   id: <<Id>>
   description?: string
@@ -56,17 +59,13 @@ interface MlUpdateDataFrameAnalyticsRequest extends <<RequestBase>> {
   allow_lazy_start?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlUpdateDataFrameAnalyticsResponse {
   authorization?: <<MlDataframeAnalyticsAuthorization>>
   allow_lazy_start: boolean
@@ -82,7 +81,5 @@ interface MlUpdateDataFrameAnalyticsResponse {
   version: <<VersionString>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cluster.postVotingConfigExclusions]]
-=== client.cluster.postVotingConfigExclusions
+== client.cluster.postVotingConfigExclusions
 
 Updates the cluster voting config exclusions by node ids or node names.
 
 {ref}/voting-config-exclusions.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Updates the cluster voting config exclusions by node ids or node names.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ClusterPostVotingConfigExclusionsRequest extends <<RequestBase>> {
   node_names?: <<Names>>
   node_ids?: <<Ids>>
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type ClusterPostVotingConfigExclusionsResponse = boolean
 
-[pass]
-++++
-</pre>
-++++
+----
+

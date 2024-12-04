@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.samlInvalidate]]
-=== client.security.samlInvalidate
+== client.security.samlInvalidate
 
 Invalidate SAML. Submits a SAML LogoutRequest message to Elasticsearch for consumption.
 
 {ref}/security-api-saml-invalidate.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,36 +47,28 @@ Invalidate SAML. Submits a SAML LogoutRequest message to Elasticsearch for consu
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecuritySamlInvalidateRequest extends <<RequestBase>> {
   acs?: string
   query_string: string
   realm?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecuritySamlInvalidateResponse {
   invalidated: <<integer>>
   realm: string
   redirect: string
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

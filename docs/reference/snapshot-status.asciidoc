@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.snapshot.status]]
-=== client.snapshot.status
+== client.snapshot.status
 
 Returns information about the status of a snapshot.
 
 {ref}/modules-snapshots.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Returns information about the status of a snapshot.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SnapshotStatusRequest extends <<RequestBase>> {
   repository?: <<Name>>
   snapshot?: <<Names>>
@@ -55,22 +58,16 @@ interface SnapshotStatusRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SnapshotStatusResponse {
   snapshots: <<SnapshotStatus>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

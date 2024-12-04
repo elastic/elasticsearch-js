@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.searchApplication.put]]
-=== client.searchApplication.put
+== client.searchApplication.put
 
 Create or update a search application.
 
 {ref}/put-search-application.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Create or update a search application.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SearchApplicationPutRequest extends <<RequestBase>> {
   name: <<Name>>
   create?: boolean
   search_application?: <<SearchApplicationSearchApplication>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SearchApplicationPutResponse {
   result: <<Result>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

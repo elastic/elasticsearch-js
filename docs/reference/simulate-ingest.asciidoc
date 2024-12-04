@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.simulate.ingest]]
-=== client.simulate.ingest
+== client.simulate.ingest
 
 Simulates running ingest with example documents.
 
 {ref}/simulate-ingest-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

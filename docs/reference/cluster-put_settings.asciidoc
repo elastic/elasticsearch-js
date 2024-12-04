@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cluster.putSettings]]
-=== client.cluster.putSettings
+== client.cluster.putSettings
 
 Updates the cluster settings.
 
 {ref}/cluster-update-settings.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Updates the cluster settings.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ClusterPutSettingsRequest extends <<RequestBase>> {
   flat_settings?: boolean
   master_timeout?: <<Duration>>
@@ -56,24 +59,18 @@ interface ClusterPutSettingsRequest extends <<RequestBase>> {
   transient?: Record<string, any>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ClusterPutSettingsResponse {
   acknowledged: boolean
   persistent: Record<string, any>
   transient: Record<string, any>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

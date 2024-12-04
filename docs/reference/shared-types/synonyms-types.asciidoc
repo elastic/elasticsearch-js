@@ -1,6 +1,6 @@
 [[reference-shared-types-synonyms-types]]
 
-== `Synonyms`
+== `Synonyms` types
 
 ////////
 ===========================================================================================================================
@@ -26,76 +26,63 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[SynonymsSynonymRule]]
-=== SynonymsSynonymRule
+== SynonymsSynonymRule
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SynonymsSynonymRule {
   pass:[/**] @property id Synonym Rule identifier */
   id?: <<Id>>
   pass:[/**] @property synonyms Synonyms, in Solr format, that conform the synonym rule. See  */
   synonyms: <<SynonymsSynonymString>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SynonymsSynonymRuleRead]]
-=== SynonymsSynonymRuleRead
+== SynonymsSynonymRuleRead
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SynonymsSynonymRuleRead {
   pass:[/**] @property id Synonym Rule identifier */
   id: <<Id>>
   pass:[/**] @property synonyms Synonyms, in Solr format, that conform the synonym rule. See  */
   synonyms: <<SynonymsSynonymString>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SynonymsSynonymString]]
-=== SynonymsSynonymString
+== SynonymsSynonymString
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type SynonymsSynonymString = string
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SynonymsSynonymsUpdateResult]]
-=== SynonymsSynonymsUpdateResult
+== SynonymsSynonymsUpdateResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SynonymsSynonymsUpdateResult {
   pass:[/**] @property result Update operation result */
   result: <<Result>>
   pass:[/**] @property reload_analyzers_details Updating synonyms in a synonym set reloads the associated analyzers. This is the analyzers reloading result */
   reload_analyzers_details: IndicesReloadSearchAnalyzersReloadResult
 }
-[pass]
-++++
-</pre>
-++++
+----
+

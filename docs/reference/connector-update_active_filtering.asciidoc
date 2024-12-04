@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.connector.updateActiveFiltering]]
-=== client.connector.updateActiveFiltering
+== client.connector.updateActiveFiltering
 
 Activate the connector draft filter. Activates the valid draft filtering for a connector.
 
 {ref}/update-connector-filtering-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Activate the connector draft filter. Activates the valid draft filtering for a c
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ConnectorUpdateActiveFilteringRequest extends <<RequestBase>> {
   connector_id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ConnectorUpdateActiveFilteringResponse {
   result: <<Result>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

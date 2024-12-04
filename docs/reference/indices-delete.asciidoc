@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.delete]]
-=== client.indices.delete
+== client.indices.delete
 
 Delete indices. Deletes one or more indices.
 
 {ref}/indices-delete-index.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Delete indices. Deletes one or more indices.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDeleteRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -57,20 +60,14 @@ interface IndicesDeleteRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesDeleteResponse = <<IndicesResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.hasPrivilegesUserProfile]]
-=== client.security.hasPrivilegesUserProfile
+== client.security.hasPrivilegesUserProfile
 
 Check user profile privileges. Determine whether the users associated with the specified user profile IDs have all the requested privileges.
 
 {ref}/security-api-has-privileges-user-profile.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Check user profile privileges. Determine whether the users associated with the s
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityHasPrivilegesUserProfileRequest extends <<RequestBase>> {
   uids: <<SecurityUserProfileId>>[]
   privileges: SecurityHasPrivilegesUserProfilePrivilegesCheck
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityHasPrivilegesUserProfileResponse {
   has_privilege_uids: <<SecurityUserProfileId>>[]
   errors?: SecurityHasPrivilegesUserProfileHasPrivilegesUserProfileErrors
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

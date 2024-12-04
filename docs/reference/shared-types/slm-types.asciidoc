@@ -1,6 +1,6 @@
 [[reference-shared-types-slm-types]]
 
-== `Slm`
+== `Slm` types
 
 ////////
 ===========================================================================================================================
@@ -26,17 +26,21 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[SlmConfiguration]]
-=== SlmConfiguration
+== SlmConfiguration
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SlmConfiguration {
   pass:[/**] @property ignore_unavailable If false, the snapshot fails if any data stream or index in indices is missing or closed. If true, the snapshot ignores missing or closed data streams and indices. */
   ignore_unavailable?: boolean
@@ -51,55 +55,40 @@ interface SlmConfiguration {
   pass:[/**] @property partial If false, the entire snapshot will fail if one or more indices included in the snapshot do not have all primary shards available. */
   partial?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SlmInProgress]]
-=== SlmInProgress
+== SlmInProgress
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SlmInProgress {
   name: <<Name>>
   start_time_millis: <<EpochTime>><<<UnitMillis>>>
   state: string
   uuid: <<Uuid>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SlmInvocation]]
-=== SlmInvocation
+== SlmInvocation
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SlmInvocation {
   snapshot_name: <<Name>>
   time: <<DateTime>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SlmPolicy]]
-=== SlmPolicy
+== SlmPolicy
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SlmPolicy {
   config?: <<SlmConfiguration>>
   name: <<Name>>
@@ -107,19 +96,14 @@ interface SlmPolicy {
   retention?: <<SlmRetention>>
   schedule: <<WatcherCronExpression>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SlmRetention]]
-=== SlmRetention
+== SlmRetention
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SlmRetention {
   pass:[/**] @property expire_after Time period after which a snapshot is considered expired and eligible for deletion. SLM deletes expired snapshots based on the slm.retention_schedule. */
   expire_after: <<Duration>>
@@ -128,19 +112,14 @@ interface SlmRetention {
   pass:[/**] @property min_count Minimum number of snapshots to retain, even if the snapshots have expired. */
   min_count: <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SlmSnapshotLifecycle]]
-=== SlmSnapshotLifecycle
+== SlmSnapshotLifecycle
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SlmSnapshotLifecycle {
   in_progress?: <<SlmInProgress>>
   last_failure?: <<SlmInvocation>>
@@ -153,19 +132,14 @@ interface SlmSnapshotLifecycle {
   version: <<VersionNumber>>
   stats: <<SlmStatistics>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SlmStatistics]]
-=== SlmStatistics
+== SlmStatistics
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SlmStatistics {
   retention_deletion_time?: <<Duration>>
   retention_deletion_time_millis?: <<DurationValue>><<<UnitMillis>>>
@@ -182,7 +156,5 @@ interface SlmStatistics {
   total_snapshots_taken?: <<long>>
   snapshots_taken?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

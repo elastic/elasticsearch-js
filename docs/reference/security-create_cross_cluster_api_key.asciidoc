@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.createCrossClusterApiKey]]
-=== client.security.createCrossClusterApiKey
+== client.security.createCrossClusterApiKey
 
 Create a cross-cluster API key. Create an API key of the `cross_cluster` type for the API key based remote cluster access. A `cross_cluster` API key cannot be used to authenticate through the REST interface. IMPORTANT: To authenticate this request you must use a credential that is not an API key. Even if you use an API key that has the required privilege, the API returns an error. Cross-cluster API keys are created by the Elasticsearch API key service, which is automatically enabled. NOTE: Unlike REST API keys, a cross-cluster API key does not capture permissions of the authenticated user. The API key’s effective permission is exactly as specified with the `access` property. A successful request returns a JSON structure that contains the API key, its unique ID, and its name. If applicable, it also returns expiration information for the API key in milliseconds. By default, API keys never expire. You can specify expiration information when you create the API keys. Cross-cluster API keys can only be updated with the update cross-cluster API key API. Attempting to update them with the update REST API key API or the bulk update REST API keys API will result in an error.
 
 {ref}/security-api-create-cross-cluster-api-key.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Create a cross-cluster API key. Create an API key of the `cross_cluster` type fo
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityCreateCrossClusterApiKeyRequest extends <<RequestBase>> {
   access: <<SecurityAccess>>
   expiration?: <<Duration>>
@@ -55,17 +58,13 @@ interface SecurityCreateCrossClusterApiKeyRequest extends <<RequestBase>> {
   name: <<Name>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityCreateCrossClusterApiKeyResponse {
   api_key: string
   expiration?: <<DurationValue>><<<UnitMillis>>>
@@ -74,7 +73,5 @@ interface SecurityCreateCrossClusterApiKeyResponse {
   encoded: string
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

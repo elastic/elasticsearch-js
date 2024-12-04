@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.slm.getStatus]]
-=== client.slm.getStatus
+== client.slm.getStatus
 
 Retrieves the status of snapshot lifecycle management (SLM).
 
 {ref}/slm-api-get-status.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,22 @@ Retrieves the status of snapshot lifecycle management (SLM).
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface SlmGetStatusRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface SlmGetStatusRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SlmGetStatusResponse {
   operation_mode: <<LifecycleOperationMode>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

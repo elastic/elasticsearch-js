@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.flushJob]]
-=== client.ml.flushJob
+== client.ml.flushJob
 
 Force buffered data to be processed. The flush jobs API is only applicable when sending data for analysis using the post data API. Depending on the content of the buffer, then it might additionally calculate new results. Both flush and close operations are similar, however the flush is more efficient if you are expecting to send more data for analysis. When flushing, the job remains open and is available to continue analyzing data. A close operation additionally prunes and persists the model state to disk and the job must be opened again before analyzing further data.
 
 {ref}/ml-flush-job.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Force buffered data to be processed. The flush jobs API is only applicable when 
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlFlushJobRequest extends <<RequestBase>> {
   job_id: <<Id>>
   advance_time?: <<DateTime>>
@@ -57,23 +60,17 @@ interface MlFlushJobRequest extends <<RequestBase>> {
   start?: <<DateTime>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlFlushJobResponse {
   flushed: boolean
   last_finalized_bucket_end?: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

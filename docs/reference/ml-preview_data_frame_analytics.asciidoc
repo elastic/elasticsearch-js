@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.previewDataFrameAnalytics]]
-=== client.ml.previewDataFrameAnalytics
+== client.ml.previewDataFrameAnalytics
 
 Preview features used by data frame analytics. Previews the extracted features used by a data frame analytics config.
 
 {ref}/preview-dfanalytics.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,25 @@ Preview features used by data frame analytics. Previews the extracted features u
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlPreviewDataFrameAnalyticsRequest extends <<RequestBase>> {
   id?: <<Id>>
   config?: MlPreviewDataFrameAnalyticsDataframePreviewConfig
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlPreviewDataFrameAnalyticsResponse {
   feature_values: Record<<<Field>>, string>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

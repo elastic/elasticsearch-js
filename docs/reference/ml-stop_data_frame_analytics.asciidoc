@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.stopDataFrameAnalytics]]
-=== client.ml.stopDataFrameAnalytics
+== client.ml.stopDataFrameAnalytics
 
 Stop data frame analytics jobs. A data frame analytics job can be started and stopped multiple times throughout its lifecycle.
 
 {ref}/stop-dfanalytics.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Stop data frame analytics jobs. A data frame analytics job can be started and st
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlStopDataFrameAnalyticsRequest extends <<RequestBase>> {
   id: <<Id>>
   allow_no_match?: boolean
@@ -55,22 +58,16 @@ interface MlStopDataFrameAnalyticsRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlStopDataFrameAnalyticsResponse {
   stopped: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

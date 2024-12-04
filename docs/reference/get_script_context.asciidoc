@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.getScriptContext]]
-=== client.getScriptContext
+== client.getScriptContext
 
 Get script contexts. Get a list of supported script contexts and their methods.
 
 {painless}/painless-contexts.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,22 @@ Get script contexts. Get a list of supported script contexts and their methods.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface GetScriptContextRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface GetScriptContextRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface GetScriptContextResponse {
   contexts: <<GetScriptContextContext>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

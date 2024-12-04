@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.reindex]]
-=== client.reindex
+== client.reindex
 
 Reindex documents. Copies documents from a source to a destination. The source can be any existing index, alias, or data stream. The destination must differ from the source. For example, you cannot reindex a data stream into itself.
 
 {ref}/docs-reindex.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Reindex documents. Copies documents from a source to a destination. The source c
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ReindexRequest extends <<RequestBase>> {
   refresh?: boolean
   requests_per_second?: <<float>>
@@ -65,17 +68,13 @@ interface ReindexRequest extends <<RequestBase>> {
   source: <<ReindexSource>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ReindexResponse {
   batches?: <<long>>
   created?: <<long>>
@@ -95,7 +94,5 @@ interface ReindexResponse {
   version_conflicts?: <<long>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

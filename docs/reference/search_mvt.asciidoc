@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.searchMvt]]
-=== client.searchMvt
+== client.searchMvt
 
 Search a vector tile. Search a vector tile for geospatial values.
 
 {ref}/search-vector-tile-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Search a vector tile. Search a vector tile for geospatial values.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SearchMvtRequest extends <<RequestBase>> {
   index: <<Indices>>
   field: <<Field>>
@@ -70,20 +73,14 @@ interface SearchMvtRequest extends <<RequestBase>> {
   with_labels?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type SearchMvtResponse = <<MapboxVectorTiles>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

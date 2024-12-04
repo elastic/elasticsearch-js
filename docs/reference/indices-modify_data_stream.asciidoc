@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.modifyDataStream]]
-=== client.indices.modifyDataStream
+== client.indices.modifyDataStream
 
 Update data streams. Performs one or more data stream modification actions in a single atomic operation.
 
 {ref}/data-streams.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,30 +47,22 @@ Update data streams. Performs one or more data stream modification actions in a 
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesModifyDataStreamRequest extends <<RequestBase>> {
   actions: IndicesModifyDataStreamAction[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesModifyDataStreamResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

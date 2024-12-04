@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.invalidateApiKey]]
-=== client.security.invalidateApiKey
+== client.security.invalidateApiKey
 
 Invalidate API keys. This API invalidates API keys created by the create API key or grant API key APIs. Invalidated API keys fail authentication, but they can still be viewed using the get API key information and query API key information APIs, for at least the configured retention period, until they are automatically deleted. The `manage_api_key` privilege allows deleting any API keys. The `manage_own_api_key` only allows deleting API keys that are owned by the user. In addition, with the `manage_own_api_key` privilege, an invalidation request must be issued in one of the three formats: - Set the parameter `owner=true`. - Or, set both `username` and `realm_name` to match the user’s identity. - Or, if the request is issued by an API key, that is to say an API key invalidates itself, specify its ID in the `ids` field.
 
 {ref}/security-api-invalidate-api-key.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Invalidate API keys. This API invalidates API keys created by the create API key
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityInvalidateApiKeyRequest extends <<RequestBase>> {
   id?: <<Id>>
   ids?: <<Id>>[]
@@ -57,17 +60,13 @@ interface SecurityInvalidateApiKeyRequest extends <<RequestBase>> {
   username?: <<Username>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityInvalidateApiKeyResponse {
   error_count: <<integer>>
   error_details?: <<ErrorCause>>[]
@@ -75,7 +74,5 @@ interface SecurityInvalidateApiKeyResponse {
   previously_invalidated_api_keys: string[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

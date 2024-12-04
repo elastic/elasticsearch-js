@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.eql.delete]]
-=== client.eql.delete
+== client.eql.delete
 
 Deletes an async EQL search or a stored synchronous EQL search. The API also deletes results for the search.
 
 {ref}/eql-search-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,30 +47,22 @@ Deletes an async EQL search or a stored synchronous EQL search. The API also del
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EqlDeleteRequest extends <<RequestBase>> {
   id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type EqlDeleteResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.migration.postFeatureUpgrade]]
-=== client.migration.postFeatureUpgrade
+== client.migration.postFeatureUpgrade
 
 Begin upgrades for system features
 
 {ref}/migration-api-feature-upgrade.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,23 @@ Begin upgrades for system features
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface MigrationPostFeatureUpgradeRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface MigrationPostFeatureUpgradeRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MigrationPostFeatureUpgradeResponse {
   accepted: boolean
   features: MigrationPostFeatureUpgradeMigrationFeature[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

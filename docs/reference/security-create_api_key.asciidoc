@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.createApiKey]]
-=== client.security.createApiKey
+== client.security.createApiKey
 
 Create an API key. Create an API key for access without requiring basic authentication. A successful request returns a JSON structure that contains the API key, its unique id, and its name. If applicable, it also returns expiration information for the API key in milliseconds. NOTE: By default, API keys never expire. You can specify expiration information when you create the API keys.
 
 {ref}/security-api-create-api-key.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Create an API key. Create an API key for access without requiring basic authenti
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityCreateApiKeyRequest extends <<RequestBase>> {
   refresh?: <<Refresh>>
   expiration?: <<Duration>>
@@ -56,17 +59,13 @@ interface SecurityCreateApiKeyRequest extends <<RequestBase>> {
   metadata?: <<Metadata>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityCreateApiKeyResponse {
   api_key: string
   expiration?: <<long>>
@@ -75,7 +74,5 @@ interface SecurityCreateApiKeyResponse {
   encoded: string
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

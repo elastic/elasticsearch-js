@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.create]]
-=== client.indices.create
+== client.indices.create
 
 Create an index. Creates a new index.
 
 {ref}/indices-create-index.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Create an index. Creates a new index.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesCreateRequest extends <<RequestBase>> {
   index: <<IndexName>>
   master_timeout?: <<Duration>>
@@ -58,24 +61,18 @@ interface IndicesCreateRequest extends <<RequestBase>> {
   settings?: <<IndicesIndexSettings>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesCreateResponse {
   index: <<IndexName>>
   shards_acknowledged: boolean
   acknowledged: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

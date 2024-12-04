@@ -1,6 +1,6 @@
 [[reference-shared-types-graph-types]]
 
-== `Graph`
+== `Graph` types
 
 ////////
 ===========================================================================================================================
@@ -26,36 +26,35 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[GraphConnection]]
-=== GraphConnection
+== GraphConnection
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface GraphConnection {
   doc_count: <<long>>
   source: <<long>>
   target: <<long>>
   weight: <<double>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[GraphExploreControls]]
-=== GraphExploreControls
+== GraphExploreControls
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface GraphExploreControls {
   pass:[/**] @property sample_diversity To avoid the top-matching documents sample being dominated by a single source of results, it is sometimes necessary to request diversity in the sample. You can do this by selecting a single-value field and setting a maximum number of documents per value for that field. */
   sample_diversity?: <<GraphSampleDiversity>>
@@ -66,19 +65,14 @@ interface GraphExploreControls {
   pass:[/**] @property use_significance Filters associated terms so only those that are significantly associated with your query are included. */
   use_significance: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[GraphHop]]
-=== GraphHop
+== GraphHop
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface GraphHop {
   pass:[/**] @property connections Specifies one or more fields from which you want to extract terms that are associated with the specified vertices. */
   connections?: <<GraphHop>>
@@ -87,55 +81,40 @@ interface GraphHop {
   pass:[/**] @property vertices Contains the fields you are interested in. */
   vertices: <<GraphVertexDefinition>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[GraphSampleDiversity]]
-=== GraphSampleDiversity
+== GraphSampleDiversity
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface GraphSampleDiversity {
   field: <<Field>>
   max_docs_per_value: <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[GraphVertex]]
-=== GraphVertex
+== GraphVertex
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface GraphVertex {
   depth: <<long>>
   field: <<Field>>
   term: string
   weight: <<double>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[GraphVertexDefinition]]
-=== GraphVertexDefinition
+== GraphVertexDefinition
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface GraphVertexDefinition {
   pass:[/**] @property exclude Prevents the specified terms from being included in the results. */
   exclude?: string[]
@@ -150,24 +129,17 @@ interface GraphVertexDefinition {
   pass:[/**] @property size Specifies the maximum number of vertex terms returned for each field. */
   size?: <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[GraphVertexInclude]]
-=== GraphVertexInclude
+== GraphVertexInclude
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface GraphVertexInclude {
   boost: <<double>>
   term: string
 }
-[pass]
-++++
-</pre>
-++++
+----
+

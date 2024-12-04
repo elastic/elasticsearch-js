@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.enrollNode]]
-=== client.security.enrollNode
+== client.security.enrollNode
 
 Enroll a node. Enroll a new node to allow it to join an existing cluster with security features enabled.
 
 {ref}/security-api-node-enrollment.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,26 +47,19 @@ Enroll a node. Enroll a new node to allow it to join an existing cluster with se
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface SecurityEnrollNodeRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface SecurityEnrollNodeRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityEnrollNodeResponse {
   http_ca_key: string
   http_ca_cert: string
@@ -71,7 +69,5 @@ interface SecurityEnrollNodeResponse {
   nodes_addresses: string[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

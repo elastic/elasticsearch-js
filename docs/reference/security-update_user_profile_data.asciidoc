@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.updateUserProfileData]]
-=== client.security.updateUserProfileData
+== client.security.updateUserProfileData
 
 Update user profile data. Update specific data for the user profile that is associated with a unique ID.
 
 {ref}/security-api-update-user-profile-data.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Update user profile data. Update specific data for the user profile that is asso
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityUpdateUserProfileDataRequest extends <<RequestBase>> {
   uid: <<SecurityUserProfileId>>
   if_seq_no?: <<SequenceNumber>>
@@ -57,20 +60,14 @@ interface SecurityUpdateUserProfileDataRequest extends <<RequestBase>> {
   data?: Record<string, any>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type SecurityUpdateUserProfileDataResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.invalidateToken]]
-=== client.security.invalidateToken
+== client.security.invalidateToken
 
 Invalidate a token. The access tokens returned by the get token API have a finite period of time for which they are valid. After that time period, they can no longer be used. The time period is defined by the `xpack.security.authc.token.timeout` setting. The refresh tokens returned by the get token API are only valid for 24 hours. They can also be used exactly once. If you want to invalidate one or more access or refresh tokens immediately, use this invalidate token API.
 
 {ref}/security-api-invalidate-token.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Invalidate a token. The access tokens returned by the get token API have a finit
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityInvalidateTokenRequest extends <<RequestBase>> {
   token?: string
   refresh_token?: string
@@ -55,17 +58,13 @@ interface SecurityInvalidateTokenRequest extends <<RequestBase>> {
   username?: <<Username>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityInvalidateTokenResponse {
   error_count: <<long>>
   error_details?: <<ErrorCause>>[]
@@ -73,7 +72,5 @@ interface SecurityInvalidateTokenResponse {
   previously_invalidated_tokens: <<long>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

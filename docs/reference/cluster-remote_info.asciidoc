@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cluster.remoteInfo]]
-=== client.cluster.remoteInfo
+== client.cluster.remoteInfo
 
 The cluster remote info API allows you to retrieve all of the configured remote cluster information. It returns connection and endpoint information keyed by the configured remote cluster alias.
 
 {ref}/cluster-remote-info.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,29 +47,20 @@ The cluster remote info API allows you to retrieve all of the configured remote 
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface ClusterRemoteInfoRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface ClusterRemoteInfoRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type ClusterRemoteInfoResponse = Record<string, ClusterRemoteInfoClusterRemoteInfo>
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,15 +24,20 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.fleet.msearch]]
-=== client.fleet.msearch
+== client.fleet.msearch
 
 Executes several [fleet searches](https://www.elastic.co/guide/en/elasticsearch/reference/current/fleet-search.html) with a single API request. The API follows the same structure as the [multi search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html) API. However, similar to the fleet search API, it supports the wait_for_checkpoints parameter.
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -40,12 +45,10 @@ Executes several [fleet searches](https://www.elastic.co/guide/en/elasticsearch/
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface FleetMsearchRequest extends <<RequestBase>> {
   index?: <<IndexName>> | <<IndexAlias>>
   allow_no_indices?: boolean
@@ -64,22 +67,16 @@ interface FleetMsearchRequest extends <<RequestBase>> {
   searches?: <<MsearchRequestItem>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface FleetMsearchResponse<TDocument = unknown> {
   docs: <<MsearchResponseItem>><TDocument>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

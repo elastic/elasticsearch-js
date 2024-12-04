@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.getScript]]
-=== client.getScript
+== client.getScript
 
 Get a script or search template. Retrieves a stored script or search template.
 
 {ref}/modules-scripting.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,35 +47,27 @@ Get a script or search template. Retrieves a stored script or search template.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface GetScriptRequest extends <<RequestBase>> {
   id: <<Id>>
   master_timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface GetScriptResponse {
   _id: <<Id>>
   found: boolean
   script?: <<StoredScript>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

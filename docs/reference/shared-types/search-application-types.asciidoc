@@ -1,6 +1,6 @@
 [[reference-shared-types-search-application-types]]
 
-== `SearchApplication`
+== `SearchApplication` types
 
 ////////
 ===========================================================================================================================
@@ -26,50 +26,44 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[SearchApplicationAnalyticsCollection]]
-=== SearchApplicationAnalyticsCollection
+== SearchApplicationAnalyticsCollection
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SearchApplicationAnalyticsCollection {
   pass:[/**] @property event_data_stream Data stream for the collection. */
   event_data_stream: <<SearchApplicationEventDataStream>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SearchApplicationEventDataStream]]
-=== SearchApplicationEventDataStream
+== SearchApplicationEventDataStream
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SearchApplicationEventDataStream {
   name: <<IndexName>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SearchApplicationSearchApplication]]
-=== SearchApplicationSearchApplication
+== SearchApplicationSearchApplication
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SearchApplicationSearchApplication {
   pass:[/**] @property name Search Application name. */
   name: <<Name>>
@@ -82,24 +76,17 @@ interface SearchApplicationSearchApplication {
   pass:[/**] @property template Search template to use on search operations. */
   template?: <<SearchApplicationSearchApplicationTemplate>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SearchApplicationSearchApplicationTemplate]]
-=== SearchApplicationSearchApplicationTemplate
+== SearchApplicationSearchApplicationTemplate
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SearchApplicationSearchApplicationTemplate {
   pass:[/**] @property script The associated mustache template. */
   script: <<Script>> | string
 }
-[pass]
-++++
-</pre>
-++++
+----
+

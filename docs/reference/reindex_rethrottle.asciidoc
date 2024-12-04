@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.reindexRethrottle]]
-=== client.reindexRethrottle
+== client.reindexRethrottle
 
 Throttle a reindex operation. Change the number of requests per second for a particular reindex operation.
 
 {ref}/docs-reindex.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,25 @@ Throttle a reindex operation. Change the number of requests per second for a par
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ReindexRethrottleRequest extends <<RequestBase>> {
   task_id: <<Id>>
   requests_per_second?: <<float>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ReindexRethrottleResponse {
   nodes: Record<string, <<ReindexRethrottleReindexNode>>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

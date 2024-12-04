@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.searchApplication.renderQuery]]
-=== client.searchApplication.renderQuery
+== client.searchApplication.renderQuery
 
 Renders a query for given search application search parameters
 
 {ref}/search-application-render-query.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

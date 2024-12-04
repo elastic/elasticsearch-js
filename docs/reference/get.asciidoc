@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.get]]
-=== client.get
+== client.get
 
 Get a document by its ID. Retrieves the document with the specified ID from an index.
 
 {ref}/docs-get.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get a document by its ID. Retrieves the document with the specified ID from an i
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface GetRequest extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
@@ -64,20 +67,14 @@ interface GetRequest extends <<RequestBase>> {
   version_type?: <<VersionType>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type GetResponse<TDocument = unknown> = <<GetGetResult>><TDocument>
 
-[pass]
-++++
-</pre>
-++++
+----
+

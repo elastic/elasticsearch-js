@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.updateCrossClusterApiKey]]
-=== client.security.updateCrossClusterApiKey
+== client.security.updateCrossClusterApiKey
 
 Update a cross-cluster API key. Update the attributes of an existing cross-cluster API key, which is used for API key based remote cluster access.
 
 {ref}/security-api-update-cross-cluster-api-key.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Update a cross-cluster API key. Update the attributes of an existing cross-clust
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityUpdateCrossClusterApiKeyRequest extends <<RequestBase>> {
   id: <<Id>>
   access: <<SecurityAccess>>
@@ -55,22 +58,16 @@ interface SecurityUpdateCrossClusterApiKeyRequest extends <<RequestBase>> {
   metadata?: <<Metadata>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityUpdateCrossClusterApiKeyResponse {
   updated: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

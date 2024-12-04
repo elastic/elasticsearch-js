@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ccr.stats]]
-=== client.ccr.stats
+== client.ccr.stats
 
 Gets all stats related to cross-cluster replication.
 
 {ref}/ccr-get-stats.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,23 @@ Gets all stats related to cross-cluster replication.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface CcrStatsRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface CcrStatsRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface CcrStatsResponse {
   auto_follow_stats: CcrStatsAutoFollowStats
   follow_stats: CcrStatsFollowStats
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.searchableSnapshots.clearCache]]
-=== client.searchableSnapshots.clearCache
+== client.searchableSnapshots.clearCache
 
 Clear the cache of searchable snapshots.
 
 {ref}/searchable-snapshots-apis.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Clear the cache of searchable snapshots.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SearchableSnapshotsClearCacheRequest extends <<RequestBase>> {
   index?: <<Indices>>
   expand_wildcards?: <<ExpandWildcards>>
@@ -57,20 +60,14 @@ interface SearchableSnapshotsClearCacheRequest extends <<RequestBase>> {
   human?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type SearchableSnapshotsClearCacheResponse = any
 
-[pass]
-++++
-</pre>
-++++
+----
+

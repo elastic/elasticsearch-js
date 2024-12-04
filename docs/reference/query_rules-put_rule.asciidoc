@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.queryRules.putRule]]
-=== client.queryRules.putRule
+== client.queryRules.putRule
 
 Creates or updates a query rule within a query ruleset.
 
 {ref}/put-query-rule.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Creates or updates a query rule within a query ruleset.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface QueryRulesPutRuleRequest extends <<RequestBase>> {
   ruleset_id: <<Id>>
   rule_id: <<Id>>
@@ -57,22 +60,16 @@ interface QueryRulesPutRuleRequest extends <<RequestBase>> {
   priority?: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface QueryRulesPutRuleResponse {
   result: <<Result>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

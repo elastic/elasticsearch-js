@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.connector.syncJobError]]
-=== client.connector.syncJobError
+== client.connector.syncJobError
 
 Sets an error for a connector sync job.
 
 {ref}/set-connector-sync-job-error-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

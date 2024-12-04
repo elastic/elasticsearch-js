@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.license.post]]
-=== client.license.post
+== client.license.post
 
 Updates the license for the cluster.
 
 {ref}/update-license.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,36 +47,28 @@ Updates the license for the cluster.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface LicensePostRequest extends <<RequestBase>> {
   acknowledge?: boolean
   license?: <<LicenseLicense>>
   licenses?: <<LicenseLicense>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface LicensePostResponse {
   acknowledge?: LicensePostAcknowledgement
   acknowledged: boolean
   license_status: <<LicenseLicenseStatus>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

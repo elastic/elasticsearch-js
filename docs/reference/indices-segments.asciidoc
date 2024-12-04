@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.segments]]
-=== client.indices.segments
+== client.indices.segments
 
 Returns low-level information about the Lucene segments in index shards. For data streams, the API returns information about the stream’s backing indices.
 
 {ref}/indices-segments.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Returns low-level information about the Lucene segments in index shards. For dat
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSegmentsRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -56,23 +59,17 @@ interface IndicesSegmentsRequest extends <<RequestBase>> {
   verbose?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesSegmentsResponse {
   indices: Record<string, IndicesSegmentsIndexSegment>
   _shards: <<ShardStatistics>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

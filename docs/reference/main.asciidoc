@@ -24,10 +24,518 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 
-== API Reference
+= API Functions
+
+* <<client.asyncSearch.delete>>
+* <<client.asyncSearch.get>>
+* <<client.asyncSearch.status>>
+* <<client.asyncSearch.submit>>
+* <<client.autoscaling.deleteAutoscalingPolicy>>
+* <<client.autoscaling.getAutoscalingCapacity>>
+* <<client.autoscaling.getAutoscalingPolicy>>
+* <<client.autoscaling.putAutoscalingPolicy>>
+* <<client.bulk>>
+* <<client.cat.aliases>>
+* <<client.cat.allocation>>
+* <<client.cat.componentTemplates>>
+* <<client.cat.count>>
+* <<client.cat.fielddata>>
+* <<client.cat.health>>
+* <<client.cat.help>>
+* <<client.cat.indices>>
+* <<client.cat.master>>
+* <<client.cat.mlDataFrameAnalytics>>
+* <<client.cat.mlDatafeeds>>
+* <<client.cat.mlJobs>>
+* <<client.cat.mlTrainedModels>>
+* <<client.cat.nodeattrs>>
+* <<client.cat.nodes>>
+* <<client.cat.pendingTasks>>
+* <<client.cat.plugins>>
+* <<client.cat.recovery>>
+* <<client.cat.repositories>>
+* <<client.cat.segments>>
+* <<client.cat.shards>>
+* <<client.cat.snapshots>>
+* <<client.cat.tasks>>
+* <<client.cat.templates>>
+* <<client.cat.threadPool>>
+* <<client.cat.transforms>>
+* <<client.ccr.deleteAutoFollowPattern>>
+* <<client.ccr.follow>>
+* <<client.ccr.followInfo>>
+* <<client.ccr.followStats>>
+* <<client.ccr.forgetFollower>>
+* <<client.ccr.getAutoFollowPattern>>
+* <<client.ccr.pauseAutoFollowPattern>>
+* <<client.ccr.pauseFollow>>
+* <<client.ccr.putAutoFollowPattern>>
+* <<client.ccr.resumeAutoFollowPattern>>
+* <<client.ccr.resumeFollow>>
+* <<client.ccr.stats>>
+* <<client.ccr.unfollow>>
+* <<client.clearScroll>>
+* <<client.closePointInTime>>
+* <<client.cluster.allocationExplain>>
+* <<client.cluster.deleteComponentTemplate>>
+* <<client.cluster.deleteVotingConfigExclusions>>
+* <<client.cluster.existsComponentTemplate>>
+* <<client.cluster.getComponentTemplate>>
+* <<client.cluster.getSettings>>
+* <<client.cluster.health>>
+* <<client.cluster.info>>
+* <<client.cluster.pendingTasks>>
+* <<client.cluster.postVotingConfigExclusions>>
+* <<client.cluster.putComponentTemplate>>
+* <<client.cluster.putSettings>>
+* <<client.cluster.remoteInfo>>
+* <<client.cluster.reroute>>
+* <<client.cluster.state>>
+* <<client.cluster.stats>>
+* <<client.connector.checkIn>>
+* <<client.connector.delete>>
+* <<client.connector.get>>
+* <<client.connector.list>>
+* <<client.connector.post>>
+* <<client.connector.put>>
+* <<client.connector.syncJobCancel>>
+* <<client.connector.syncJobCheckIn>>
+* <<client.connector.syncJobClaim>>
+* <<client.connector.syncJobDelete>>
+* <<client.connector.syncJobError>>
+* <<client.connector.syncJobGet>>
+* <<client.connector.syncJobList>>
+* <<client.connector.syncJobPost>>
+* <<client.connector.syncJobUpdateStats>>
+* <<client.connector.updateActiveFiltering>>
+* <<client.connector.updateApiKeyId>>
+* <<client.connector.updateConfiguration>>
+* <<client.connector.updateError>>
+* <<client.connector.updateFeatures>>
+* <<client.connector.updateFiltering>>
+* <<client.connector.updateFilteringValidation>>
+* <<client.connector.updateIndexName>>
+* <<client.connector.updateName>>
+* <<client.connector.updateNative>>
+* <<client.connector.updatePipeline>>
+* <<client.connector.updateScheduling>>
+* <<client.connector.updateServiceType>>
+* <<client.connector.updateStatus>>
+* <<client.count>>
+* <<client.create>>
+* <<client.danglingIndices.deleteDanglingIndex>>
+* <<client.danglingIndices.importDanglingIndex>>
+* <<client.danglingIndices.listDanglingIndices>>
+* <<client.delete>>
+* <<client.deleteByQuery>>
+* <<client.deleteByQueryRethrottle>>
+* <<client.deleteScript>>
+* <<client.enrich.deletePolicy>>
+* <<client.enrich.executePolicy>>
+* <<client.enrich.getPolicy>>
+* <<client.enrich.putPolicy>>
+* <<client.enrich.stats>>
+* <<client.eql.delete>>
+* <<client.eql.get>>
+* <<client.eql.getStatus>>
+* <<client.eql.search>>
+* <<client.esql.asyncQuery>>
+* <<client.esql.asyncQueryGet>>
+* <<client.esql.query>>
+* <<client.exists>>
+* <<client.existsSource>>
+* <<client.explain>>
+* <<client.features.getFeatures>>
+* <<client.features.resetFeatures>>
+* <<client.fieldCaps>>
+* <<client.fleet.globalCheckpoints>>
+* <<client.fleet.msearch>>
+* <<client.fleet.search>>
+* <<client.get>>
+* <<client.getScript>>
+* <<client.getScriptContext>>
+* <<client.getScriptLanguages>>
+* <<client.getSource>>
+* <<client.graph.explore>>
+* <<client.healthReport>>
+* <<client.ilm.deleteLifecycle>>
+* <<client.ilm.explainLifecycle>>
+* <<client.ilm.getLifecycle>>
+* <<client.ilm.getStatus>>
+* <<client.ilm.migrateToDataTiers>>
+* <<client.ilm.moveToStep>>
+* <<client.ilm.putLifecycle>>
+* <<client.ilm.removePolicy>>
+* <<client.ilm.retry>>
+* <<client.ilm.start>>
+* <<client.ilm.stop>>
+* <<client.index>>
+* <<client.indices.addBlock>>
+* <<client.indices.analyze>>
+* <<client.indices.clearCache>>
+* <<client.indices.clone>>
+* <<client.indices.close>>
+* <<client.indices.create>>
+* <<client.indices.createDataStream>>
+* <<client.indices.dataStreamsStats>>
+* <<client.indices.delete>>
+* <<client.indices.deleteAlias>>
+* <<client.indices.deleteDataLifecycle>>
+* <<client.indices.deleteDataStream>>
+* <<client.indices.deleteIndexTemplate>>
+* <<client.indices.deleteTemplate>>
+* <<client.indices.diskUsage>>
+* <<client.indices.downsample>>
+* <<client.indices.exists>>
+* <<client.indices.existsAlias>>
+* <<client.indices.existsIndexTemplate>>
+* <<client.indices.existsTemplate>>
+* <<client.indices.explainDataLifecycle>>
+* <<client.indices.fieldUsageStats>>
+* <<client.indices.flush>>
+* <<client.indices.forcemerge>>
+* <<client.indices.get>>
+* <<client.indices.getAlias>>
+* <<client.indices.getDataLifecycle>>
+* <<client.indices.getDataStream>>
+* <<client.indices.getFieldMapping>>
+* <<client.indices.getIndexTemplate>>
+* <<client.indices.getMapping>>
+* <<client.indices.getSettings>>
+* <<client.indices.getTemplate>>
+* <<client.indices.migrateToDataStream>>
+* <<client.indices.modifyDataStream>>
+* <<client.indices.open>>
+* <<client.indices.promoteDataStream>>
+* <<client.indices.putAlias>>
+* <<client.indices.putDataLifecycle>>
+* <<client.indices.putIndexTemplate>>
+* <<client.indices.putMapping>>
+* <<client.indices.putSettings>>
+* <<client.indices.putTemplate>>
+* <<client.indices.recovery>>
+* <<client.indices.refresh>>
+* <<client.indices.reloadSearchAnalyzers>>
+* <<client.indices.resolveCluster>>
+* <<client.indices.resolveIndex>>
+* <<client.indices.rollover>>
+* <<client.indices.segments>>
+* <<client.indices.shardStores>>
+* <<client.indices.shrink>>
+* <<client.indices.simulateIndexTemplate>>
+* <<client.indices.simulateTemplate>>
+* <<client.indices.split>>
+* <<client.indices.stats>>
+* <<client.indices.unfreeze>>
+* <<client.indices.updateAliases>>
+* <<client.indices.validateQuery>>
+* <<client.inference.delete>>
+* <<client.inference.get>>
+* <<client.inference.inference>>
+* <<client.inference.put>>
+* <<client.inference.streamInference>>
+* <<client.info>>
+* <<client.ingest.deleteGeoipDatabase>>
+* <<client.ingest.deletePipeline>>
+* <<client.ingest.geoIpStats>>
+* <<client.ingest.getGeoipDatabase>>
+* <<client.ingest.getPipeline>>
+* <<client.ingest.processorGrok>>
+* <<client.ingest.putGeoipDatabase>>
+* <<client.ingest.putPipeline>>
+* <<client.ingest.simulate>>
+* <<client.knnSearch>>
+* <<client.license.delete>>
+* <<client.license.get>>
+* <<client.license.getBasicStatus>>
+* <<client.license.getTrialStatus>>
+* <<client.license.post>>
+* <<client.license.postStartBasic>>
+* <<client.license.postStartTrial>>
+* <<client.logstash.deletePipeline>>
+* <<client.logstash.getPipeline>>
+* <<client.logstash.putPipeline>>
+* <<client.mget>>
+* <<client.migration.deprecations>>
+* <<client.migration.getFeatureUpgradeStatus>>
+* <<client.migration.postFeatureUpgrade>>
+* <<client.ml.clearTrainedModelDeploymentCache>>
+* <<client.ml.closeJob>>
+* <<client.ml.deleteCalendar>>
+* <<client.ml.deleteCalendarEvent>>
+* <<client.ml.deleteCalendarJob>>
+* <<client.ml.deleteDataFrameAnalytics>>
+* <<client.ml.deleteDatafeed>>
+* <<client.ml.deleteExpiredData>>
+* <<client.ml.deleteFilter>>
+* <<client.ml.deleteForecast>>
+* <<client.ml.deleteJob>>
+* <<client.ml.deleteModelSnapshot>>
+* <<client.ml.deleteTrainedModel>>
+* <<client.ml.deleteTrainedModelAlias>>
+* <<client.ml.estimateModelMemory>>
+* <<client.ml.evaluateDataFrame>>
+* <<client.ml.explainDataFrameAnalytics>>
+* <<client.ml.flushJob>>
+* <<client.ml.forecast>>
+* <<client.ml.getBuckets>>
+* <<client.ml.getCalendarEvents>>
+* <<client.ml.getCalendars>>
+* <<client.ml.getCategories>>
+* <<client.ml.getDataFrameAnalytics>>
+* <<client.ml.getDataFrameAnalyticsStats>>
+* <<client.ml.getDatafeedStats>>
+* <<client.ml.getDatafeeds>>
+* <<client.ml.getFilters>>
+* <<client.ml.getInfluencers>>
+* <<client.ml.getJobStats>>
+* <<client.ml.getJobs>>
+* <<client.ml.getMemoryStats>>
+* <<client.ml.getModelSnapshotUpgradeStats>>
+* <<client.ml.getModelSnapshots>>
+* <<client.ml.getOverallBuckets>>
+* <<client.ml.getRecords>>
+* <<client.ml.getTrainedModels>>
+* <<client.ml.getTrainedModelsStats>>
+* <<client.ml.inferTrainedModel>>
+* <<client.ml.info>>
+* <<client.ml.openJob>>
+* <<client.ml.postCalendarEvents>>
+* <<client.ml.postData>>
+* <<client.ml.previewDataFrameAnalytics>>
+* <<client.ml.previewDatafeed>>
+* <<client.ml.putCalendar>>
+* <<client.ml.putCalendarJob>>
+* <<client.ml.putDataFrameAnalytics>>
+* <<client.ml.putDatafeed>>
+* <<client.ml.putFilter>>
+* <<client.ml.putJob>>
+* <<client.ml.putTrainedModel>>
+* <<client.ml.putTrainedModelAlias>>
+* <<client.ml.putTrainedModelDefinitionPart>>
+* <<client.ml.putTrainedModelVocabulary>>
+* <<client.ml.resetJob>>
+* <<client.ml.revertModelSnapshot>>
+* <<client.ml.setUpgradeMode>>
+* <<client.ml.startDataFrameAnalytics>>
+* <<client.ml.startDatafeed>>
+* <<client.ml.startTrainedModelDeployment>>
+* <<client.ml.stopDataFrameAnalytics>>
+* <<client.ml.stopDatafeed>>
+* <<client.ml.stopTrainedModelDeployment>>
+* <<client.ml.updateDataFrameAnalytics>>
+* <<client.ml.updateDatafeed>>
+* <<client.ml.updateFilter>>
+* <<client.ml.updateJob>>
+* <<client.ml.updateModelSnapshot>>
+* <<client.ml.updateTrainedModelDeployment>>
+* <<client.ml.upgradeJobSnapshot>>
+* <<client.monitoring.bulk>>
+* <<client.msearch>>
+* <<client.msearchTemplate>>
+* <<client.mtermvectors>>
+* <<client.nodes.clearRepositoriesMeteringArchive>>
+* <<client.nodes.getRepositoriesMeteringInfo>>
+* <<client.nodes.hotThreads>>
+* <<client.nodes.info>>
+* <<client.nodes.reloadSecureSettings>>
+* <<client.nodes.stats>>
+* <<client.nodes.usage>>
+* <<client.openPointInTime>>
+* <<client.ping>>
+* <<client.putScript>>
+* <<client.queryRules.deleteRule>>
+* <<client.queryRules.deleteRuleset>>
+* <<client.queryRules.getRule>>
+* <<client.queryRules.getRuleset>>
+* <<client.queryRules.listRulesets>>
+* <<client.queryRules.putRule>>
+* <<client.queryRules.putRuleset>>
+* <<client.queryRules.test>>
+* <<client.rankEval>>
+* <<client.reindex>>
+* <<client.reindexRethrottle>>
+* <<client.renderSearchTemplate>>
+* <<client.rollup.deleteJob>>
+* <<client.rollup.getJobs>>
+* <<client.rollup.getRollupCaps>>
+* <<client.rollup.getRollupIndexCaps>>
+* <<client.rollup.putJob>>
+* <<client.rollup.rollupSearch>>
+* <<client.rollup.startJob>>
+* <<client.rollup.stopJob>>
+* <<client.scriptsPainlessExecute>>
+* <<client.scroll>>
+* <<client.search>>
+* <<client.searchApplication.delete>>
+* <<client.searchApplication.deleteBehavioralAnalytics>>
+* <<client.searchApplication.get>>
+* <<client.searchApplication.getBehavioralAnalytics>>
+* <<client.searchApplication.list>>
+* <<client.searchApplication.postBehavioralAnalyticsEvent>>
+* <<client.searchApplication.put>>
+* <<client.searchApplication.putBehavioralAnalytics>>
+* <<client.searchApplication.renderQuery>>
+* <<client.searchApplication.search>>
+* <<client.searchMvt>>
+* <<client.searchShards>>
+* <<client.searchTemplate>>
+* <<client.searchableSnapshots.cacheStats>>
+* <<client.searchableSnapshots.clearCache>>
+* <<client.searchableSnapshots.mount>>
+* <<client.searchableSnapshots.stats>>
+* <<client.security.activateUserProfile>>
+* <<client.security.authenticate>>
+* <<client.security.bulkDeleteRole>>
+* <<client.security.bulkPutRole>>
+* <<client.security.bulkUpdateApiKeys>>
+* <<client.security.changePassword>>
+* <<client.security.clearApiKeyCache>>
+* <<client.security.clearCachedPrivileges>>
+* <<client.security.clearCachedRealms>>
+* <<client.security.clearCachedRoles>>
+* <<client.security.clearCachedServiceTokens>>
+* <<client.security.createApiKey>>
+* <<client.security.createCrossClusterApiKey>>
+* <<client.security.createServiceToken>>
+* <<client.security.deletePrivileges>>
+* <<client.security.deleteRole>>
+* <<client.security.deleteRoleMapping>>
+* <<client.security.deleteServiceToken>>
+* <<client.security.deleteUser>>
+* <<client.security.disableUser>>
+* <<client.security.disableUserProfile>>
+* <<client.security.enableUser>>
+* <<client.security.enableUserProfile>>
+* <<client.security.enrollKibana>>
+* <<client.security.enrollNode>>
+* <<client.security.getApiKey>>
+* <<client.security.getBuiltinPrivileges>>
+* <<client.security.getPrivileges>>
+* <<client.security.getRole>>
+* <<client.security.getRoleMapping>>
+* <<client.security.getServiceAccounts>>
+* <<client.security.getServiceCredentials>>
+* <<client.security.getSettings>>
+* <<client.security.getToken>>
+* <<client.security.getUser>>
+* <<client.security.getUserPrivileges>>
+* <<client.security.getUserProfile>>
+* <<client.security.grantApiKey>>
+* <<client.security.hasPrivileges>>
+* <<client.security.hasPrivilegesUserProfile>>
+* <<client.security.invalidateApiKey>>
+* <<client.security.invalidateToken>>
+* <<client.security.oidcAuthenticate>>
+* <<client.security.oidcLogout>>
+* <<client.security.oidcPrepareAuthentication>>
+* <<client.security.putPrivileges>>
+* <<client.security.putRole>>
+* <<client.security.putRoleMapping>>
+* <<client.security.putUser>>
+* <<client.security.queryApiKeys>>
+* <<client.security.queryRole>>
+* <<client.security.queryUser>>
+* <<client.security.samlAuthenticate>>
+* <<client.security.samlCompleteLogout>>
+* <<client.security.samlInvalidate>>
+* <<client.security.samlLogout>>
+* <<client.security.samlPrepareAuthentication>>
+* <<client.security.samlServiceProviderMetadata>>
+* <<client.security.suggestUserProfiles>>
+* <<client.security.updateApiKey>>
+* <<client.security.updateCrossClusterApiKey>>
+* <<client.security.updateSettings>>
+* <<client.security.updateUserProfileData>>
+* <<client.shutdown.deleteNode>>
+* <<client.shutdown.getNode>>
+* <<client.shutdown.putNode>>
+* <<client.simulate.ingest>>
+* <<client.slm.deleteLifecycle>>
+* <<client.slm.executeLifecycle>>
+* <<client.slm.executeRetention>>
+* <<client.slm.getLifecycle>>
+* <<client.slm.getStats>>
+* <<client.slm.getStatus>>
+* <<client.slm.putLifecycle>>
+* <<client.slm.start>>
+* <<client.slm.stop>>
+* <<client.snapshot.cleanupRepository>>
+* <<client.snapshot.clone>>
+* <<client.snapshot.create>>
+* <<client.snapshot.createRepository>>
+* <<client.snapshot.delete>>
+* <<client.snapshot.deleteRepository>>
+* <<client.snapshot.get>>
+* <<client.snapshot.getRepository>>
+* <<client.snapshot.repositoryAnalyze>>
+* <<client.snapshot.restore>>
+* <<client.snapshot.status>>
+* <<client.snapshot.verifyRepository>>
+* <<client.sql.clearCursor>>
+* <<client.sql.deleteAsync>>
+* <<client.sql.getAsync>>
+* <<client.sql.getAsyncStatus>>
+* <<client.sql.query>>
+* <<client.sql.translate>>
+* <<client.ssl.certificates>>
+* <<client.synonyms.deleteSynonym>>
+* <<client.synonyms.deleteSynonymRule>>
+* <<client.synonyms.getSynonym>>
+* <<client.synonyms.getSynonymRule>>
+* <<client.synonyms.getSynonymsSets>>
+* <<client.synonyms.putSynonym>>
+* <<client.synonyms.putSynonymRule>>
+* <<client.tasks.cancel>>
+* <<client.tasks.get>>
+* <<client.tasks.list>>
+* <<client.termsEnum>>
+* <<client.termvectors>>
+* <<client.textStructure.findFieldStructure>>
+* <<client.textStructure.findMessageStructure>>
+* <<client.textStructure.findStructure>>
+* <<client.textStructure.testGrokPattern>>
+* <<client.transform.deleteTransform>>
+* <<client.transform.getNodeStats>>
+* <<client.transform.getTransform>>
+* <<client.transform.getTransformStats>>
+* <<client.transform.previewTransform>>
+* <<client.transform.putTransform>>
+* <<client.transform.resetTransform>>
+* <<client.transform.scheduleNowTransform>>
+* <<client.transform.startTransform>>
+* <<client.transform.stopTransform>>
+* <<client.transform.updateTransform>>
+* <<client.transform.upgradeTransforms>>
+* <<client.update>>
+* <<client.updateByQuery>>
+* <<client.updateByQueryRethrottle>>
+* <<client.watcher.ackWatch>>
+* <<client.watcher.activateWatch>>
+* <<client.watcher.deactivateWatch>>
+* <<client.watcher.deleteWatch>>
+* <<client.watcher.executeWatch>>
+* <<client.watcher.getSettings>>
+* <<client.watcher.getWatch>>
+* <<client.watcher.putWatch>>
+* <<client.watcher.queryWatches>>
+* <<client.watcher.start>>
+* <<client.watcher.stats>>
+* <<client.watcher.stop>>
+* <<client.watcher.updateSettings>>
+* <<client.xpack.info>>
+* <<client.xpack.usage>>
+
 
 include::shared-types/index.asciidoc[]
 include::async_search-delete.asciidoc[]
@@ -529,9 +1037,9 @@ include::watcher-stop.asciidoc[]
 include::watcher-update_settings.asciidoc[]
 include::xpack-info.asciidoc[]
 include::xpack-usage.asciidoc[]
-include::shared-types/-global-knn-search-types.asciidoc[]
-include::shared-types/-global-search-types.asciidoc[]
-include::shared-types/-global-search-mvt-types.asciidoc[]
+include::shared-types/global-knn-search-types.asciidoc[]
+include::shared-types/global-search-types.asciidoc[]
+include::shared-types/global-search-mvt-types.asciidoc[]
 include::shared-types/async-search-types.asciidoc[]
 include::shared-types/autoscaling-types.asciidoc[]
 include::shared-types/cat-types.asciidoc[]
@@ -565,548 +1073,47 @@ include::shared-types/synonyms-types.asciidoc[]
 include::shared-types/tasks-types.asciidoc[]
 include::shared-types/transform-types.asciidoc[]
 include::shared-types/watcher-types.asciidoc[]
-include::reference-shared-types--global-bulk.asciidoc[]
-include::reference-shared-types--global-clear-scroll.asciidoc[]
-include::reference-shared-types--global-close-point-in-time.asciidoc[]
-include::reference-shared-types--global-count.asciidoc[]
-include::reference-shared-types--global-create.asciidoc[]
-include::reference-shared-types--global-delete.asciidoc[]
-include::reference-shared-types--global-delete-by-query.asciidoc[]
-include::reference-shared-types--global-delete-by-query-rethrottle.asciidoc[]
-include::reference-shared-types--global-delete-script.asciidoc[]
-include::reference-shared-types--global-exists.asciidoc[]
-include::reference-shared-types--global-exists-source.asciidoc[]
-include::reference-shared-types--global-explain.asciidoc[]
-include::reference-shared-types--global-field-caps.asciidoc[]
-include::reference-shared-types--global-get.asciidoc[]
-include::reference-shared-types--global-get-script.asciidoc[]
-include::reference-shared-types--global-get-script-context.asciidoc[]
-include::reference-shared-types--global-get-script-languages.asciidoc[]
-include::reference-shared-types--global-get-source.asciidoc[]
-include::reference-shared-types--global-health-report.asciidoc[]
-include::reference-shared-types--global-index.asciidoc[]
-include::reference-shared-types--global-info.asciidoc[]
-include::reference-shared-types--global-knn-search.asciidoc[]
-include::reference-shared-types--global-mget.asciidoc[]
-include::reference-shared-types--global-msearch.asciidoc[]
-include::reference-shared-types--global-msearch-template.asciidoc[]
-include::reference-shared-types--global-mtermvectors.asciidoc[]
-include::reference-shared-types--global-open-point-in-time.asciidoc[]
-include::reference-shared-types--global-ping.asciidoc[]
-include::reference-shared-types--global-put-script.asciidoc[]
-include::reference-shared-types--global-rank-eval.asciidoc[]
-include::reference-shared-types--global-reindex.asciidoc[]
-include::reference-shared-types--global-reindex-rethrottle.asciidoc[]
-include::reference-shared-types--global-render-search-template.asciidoc[]
-include::reference-shared-types--global-scripts-painless-execute.asciidoc[]
-include::reference-shared-types--global-scroll.asciidoc[]
-include::reference-shared-types--global-search.asciidoc[]
-include::reference-shared-types--global-search-mvt.asciidoc[]
-include::reference-shared-types--global-search-shards.asciidoc[]
-include::reference-shared-types--global-search-template.asciidoc[]
-include::reference-shared-types--global-terms-enum.asciidoc[]
-include::reference-shared-types--global-termvectors.asciidoc[]
-include::reference-shared-types--global-update.asciidoc[]
-include::reference-shared-types--global-update-by-query.asciidoc[]
-include::reference-shared-types--global-update-by-query-rethrottle.asciidoc[]
-
-
-* <<client.asyncSearch.delete>>
-* <<client.asyncSearch.get>>
-* <<client.asyncSearch.status>>
-* <<client.asyncSearch.submit>>
-* <<client.autoscaling.deleteAutoscalingPolicy>>
-* <<client.autoscaling.getAutoscalingCapacity>>
-* <<client.autoscaling.getAutoscalingPolicy>>
-* <<client.autoscaling.putAutoscalingPolicy>>
-* <<client.bulk>>
-* <<client.cat.aliases>>
-* <<client.cat.allocation>>
-* <<client.cat.componentTemplates>>
-* <<client.cat.count>>
-* <<client.cat.fielddata>>
-* <<client.cat.health>>
-* <<client.cat.help>>
-* <<client.cat.indices>>
-* <<client.cat.master>>
-* <<client.cat.mlDataFrameAnalytics>>
-* <<client.cat.mlDatafeeds>>
-* <<client.cat.mlJobs>>
-* <<client.cat.mlTrainedModels>>
-* <<client.cat.nodeattrs>>
-* <<client.cat.nodes>>
-* <<client.cat.pendingTasks>>
-* <<client.cat.plugins>>
-* <<client.cat.recovery>>
-* <<client.cat.repositories>>
-* <<client.cat.segments>>
-* <<client.cat.shards>>
-* <<client.cat.snapshots>>
-* <<client.cat.tasks>>
-* <<client.cat.templates>>
-* <<client.cat.threadPool>>
-* <<client.cat.transforms>>
-* <<client.ccr.deleteAutoFollowPattern>>
-* <<client.ccr.follow>>
-* <<client.ccr.followInfo>>
-* <<client.ccr.followStats>>
-* <<client.ccr.forgetFollower>>
-* <<client.ccr.getAutoFollowPattern>>
-* <<client.ccr.pauseAutoFollowPattern>>
-* <<client.ccr.pauseFollow>>
-* <<client.ccr.putAutoFollowPattern>>
-* <<client.ccr.resumeAutoFollowPattern>>
-* <<client.ccr.resumeFollow>>
-* <<client.ccr.stats>>
-* <<client.ccr.unfollow>>
-* <<client.clearScroll>>
-* <<client.closePointInTime>>
-* <<client.cluster.allocationExplain>>
-* <<client.cluster.deleteComponentTemplate>>
-* <<client.cluster.deleteVotingConfigExclusions>>
-* <<client.cluster.existsComponentTemplate>>
-* <<client.cluster.getComponentTemplate>>
-* <<client.cluster.getSettings>>
-* <<client.cluster.health>>
-* <<client.cluster.info>>
-* <<client.cluster.pendingTasks>>
-* <<client.cluster.postVotingConfigExclusions>>
-* <<client.cluster.putComponentTemplate>>
-* <<client.cluster.putSettings>>
-* <<client.cluster.remoteInfo>>
-* <<client.cluster.reroute>>
-* <<client.cluster.state>>
-* <<client.cluster.stats>>
-* <<client.connector.checkIn>>
-* <<client.connector.delete>>
-* <<client.connector.get>>
-* <<client.connector.list>>
-* <<client.connector.post>>
-* <<client.connector.put>>
-* <<client.connector.syncJobCancel>>
-* <<client.connector.syncJobCheckIn>>
-* <<client.connector.syncJobClaim>>
-* <<client.connector.syncJobDelete>>
-* <<client.connector.syncJobError>>
-* <<client.connector.syncJobGet>>
-* <<client.connector.syncJobList>>
-* <<client.connector.syncJobPost>>
-* <<client.connector.syncJobUpdateStats>>
-* <<client.connector.updateActiveFiltering>>
-* <<client.connector.updateApiKeyId>>
-* <<client.connector.updateConfiguration>>
-* <<client.connector.updateError>>
-* <<client.connector.updateFeatures>>
-* <<client.connector.updateFiltering>>
-* <<client.connector.updateFilteringValidation>>
-* <<client.connector.updateIndexName>>
-* <<client.connector.updateName>>
-* <<client.connector.updateNative>>
-* <<client.connector.updatePipeline>>
-* <<client.connector.updateScheduling>>
-* <<client.connector.updateServiceType>>
-* <<client.connector.updateStatus>>
-* <<client.count>>
-* <<client.create>>
-* <<client.danglingIndices.deleteDanglingIndex>>
-* <<client.danglingIndices.importDanglingIndex>>
-* <<client.danglingIndices.listDanglingIndices>>
-* <<client.delete>>
-* <<client.deleteByQuery>>
-* <<client.deleteByQueryRethrottle>>
-* <<client.deleteScript>>
-* <<client.enrich.deletePolicy>>
-* <<client.enrich.executePolicy>>
-* <<client.enrich.getPolicy>>
-* <<client.enrich.putPolicy>>
-* <<client.enrich.stats>>
-* <<client.eql.delete>>
-* <<client.eql.get>>
-* <<client.eql.getStatus>>
-* <<client.eql.search>>
-* <<client.esql.asyncQuery>>
-* <<client.esql.asyncQueryGet>>
-* <<client.esql.query>>
-* <<client.exists>>
-* <<client.existsSource>>
-* <<client.explain>>
-* <<client.features.getFeatures>>
-* <<client.features.resetFeatures>>
-* <<client.fieldCaps>>
-* <<client.fleet.globalCheckpoints>>
-* <<client.fleet.msearch>>
-* <<client.fleet.search>>
-* <<client.get>>
-* <<client.getScript>>
-* <<client.getScriptContext>>
-* <<client.getScriptLanguages>>
-* <<client.getSource>>
-* <<client.graph.explore>>
-* <<client.healthReport>>
-* <<client.ilm.deleteLifecycle>>
-* <<client.ilm.explainLifecycle>>
-* <<client.ilm.getLifecycle>>
-* <<client.ilm.getStatus>>
-* <<client.ilm.migrateToDataTiers>>
-* <<client.ilm.moveToStep>>
-* <<client.ilm.putLifecycle>>
-* <<client.ilm.removePolicy>>
-* <<client.ilm.retry>>
-* <<client.ilm.start>>
-* <<client.ilm.stop>>
-* <<client.index>>
-* <<client.indices.addBlock>>
-* <<client.indices.analyze>>
-* <<client.indices.clearCache>>
-* <<client.indices.clone>>
-* <<client.indices.close>>
-* <<client.indices.create>>
-* <<client.indices.createDataStream>>
-* <<client.indices.dataStreamsStats>>
-* <<client.indices.delete>>
-* <<client.indices.deleteAlias>>
-* <<client.indices.deleteDataLifecycle>>
-* <<client.indices.deleteDataStream>>
-* <<client.indices.deleteIndexTemplate>>
-* <<client.indices.deleteTemplate>>
-* <<client.indices.diskUsage>>
-* <<client.indices.downsample>>
-* <<client.indices.exists>>
-* <<client.indices.existsAlias>>
-* <<client.indices.existsIndexTemplate>>
-* <<client.indices.existsTemplate>>
-* <<client.indices.explainDataLifecycle>>
-* <<client.indices.fieldUsageStats>>
-* <<client.indices.flush>>
-* <<client.indices.forcemerge>>
-* <<client.indices.get>>
-* <<client.indices.getAlias>>
-* <<client.indices.getDataLifecycle>>
-* <<client.indices.getDataStream>>
-* <<client.indices.getFieldMapping>>
-* <<client.indices.getIndexTemplate>>
-* <<client.indices.getMapping>>
-* <<client.indices.getSettings>>
-* <<client.indices.getTemplate>>
-* <<client.indices.migrateToDataStream>>
-* <<client.indices.modifyDataStream>>
-* <<client.indices.open>>
-* <<client.indices.promoteDataStream>>
-* <<client.indices.putAlias>>
-* <<client.indices.putDataLifecycle>>
-* <<client.indices.putIndexTemplate>>
-* <<client.indices.putMapping>>
-* <<client.indices.putSettings>>
-* <<client.indices.putTemplate>>
-* <<client.indices.recovery>>
-* <<client.indices.refresh>>
-* <<client.indices.reloadSearchAnalyzers>>
-* <<client.indices.resolveCluster>>
-* <<client.indices.resolveIndex>>
-* <<client.indices.rollover>>
-* <<client.indices.segments>>
-* <<client.indices.shardStores>>
-* <<client.indices.shrink>>
-* <<client.indices.simulateIndexTemplate>>
-* <<client.indices.simulateTemplate>>
-* <<client.indices.split>>
-* <<client.indices.stats>>
-* <<client.indices.unfreeze>>
-* <<client.indices.updateAliases>>
-* <<client.indices.validateQuery>>
-* <<client.inference.delete>>
-* <<client.inference.get>>
-* <<client.inference.inference>>
-* <<client.inference.put>>
-* <<client.inference.streamInference>>
-* <<client.info>>
-* <<client.ingest.deleteGeoipDatabase>>
-* <<client.ingest.deletePipeline>>
-* <<client.ingest.geoIpStats>>
-* <<client.ingest.getGeoipDatabase>>
-* <<client.ingest.getPipeline>>
-* <<client.ingest.processorGrok>>
-* <<client.ingest.putGeoipDatabase>>
-* <<client.ingest.putPipeline>>
-* <<client.ingest.simulate>>
-* <<client.knnSearch>>
-* <<client.license.delete>>
-* <<client.license.get>>
-* <<client.license.getBasicStatus>>
-* <<client.license.getTrialStatus>>
-* <<client.license.post>>
-* <<client.license.postStartBasic>>
-* <<client.license.postStartTrial>>
-* <<client.logstash.deletePipeline>>
-* <<client.logstash.getPipeline>>
-* <<client.logstash.putPipeline>>
-* <<client.mget>>
-* <<client.migration.deprecations>>
-* <<client.migration.getFeatureUpgradeStatus>>
-* <<client.migration.postFeatureUpgrade>>
-* <<client.ml.clearTrainedModelDeploymentCache>>
-* <<client.ml.closeJob>>
-* <<client.ml.deleteCalendar>>
-* <<client.ml.deleteCalendarEvent>>
-* <<client.ml.deleteCalendarJob>>
-* <<client.ml.deleteDataFrameAnalytics>>
-* <<client.ml.deleteDatafeed>>
-* <<client.ml.deleteExpiredData>>
-* <<client.ml.deleteFilter>>
-* <<client.ml.deleteForecast>>
-* <<client.ml.deleteJob>>
-* <<client.ml.deleteModelSnapshot>>
-* <<client.ml.deleteTrainedModel>>
-* <<client.ml.deleteTrainedModelAlias>>
-* <<client.ml.estimateModelMemory>>
-* <<client.ml.evaluateDataFrame>>
-* <<client.ml.explainDataFrameAnalytics>>
-* <<client.ml.flushJob>>
-* <<client.ml.forecast>>
-* <<client.ml.getBuckets>>
-* <<client.ml.getCalendarEvents>>
-* <<client.ml.getCalendars>>
-* <<client.ml.getCategories>>
-* <<client.ml.getDataFrameAnalytics>>
-* <<client.ml.getDataFrameAnalyticsStats>>
-* <<client.ml.getDatafeedStats>>
-* <<client.ml.getDatafeeds>>
-* <<client.ml.getFilters>>
-* <<client.ml.getInfluencers>>
-* <<client.ml.getJobStats>>
-* <<client.ml.getJobs>>
-* <<client.ml.getMemoryStats>>
-* <<client.ml.getModelSnapshotUpgradeStats>>
-* <<client.ml.getModelSnapshots>>
-* <<client.ml.getOverallBuckets>>
-* <<client.ml.getRecords>>
-* <<client.ml.getTrainedModels>>
-* <<client.ml.getTrainedModelsStats>>
-* <<client.ml.inferTrainedModel>>
-* <<client.ml.info>>
-* <<client.ml.openJob>>
-* <<client.ml.postCalendarEvents>>
-* <<client.ml.postData>>
-* <<client.ml.previewDataFrameAnalytics>>
-* <<client.ml.previewDatafeed>>
-* <<client.ml.putCalendar>>
-* <<client.ml.putCalendarJob>>
-* <<client.ml.putDataFrameAnalytics>>
-* <<client.ml.putDatafeed>>
-* <<client.ml.putFilter>>
-* <<client.ml.putJob>>
-* <<client.ml.putTrainedModel>>
-* <<client.ml.putTrainedModelAlias>>
-* <<client.ml.putTrainedModelDefinitionPart>>
-* <<client.ml.putTrainedModelVocabulary>>
-* <<client.ml.resetJob>>
-* <<client.ml.revertModelSnapshot>>
-* <<client.ml.setUpgradeMode>>
-* <<client.ml.startDataFrameAnalytics>>
-* <<client.ml.startDatafeed>>
-* <<client.ml.startTrainedModelDeployment>>
-* <<client.ml.stopDataFrameAnalytics>>
-* <<client.ml.stopDatafeed>>
-* <<client.ml.stopTrainedModelDeployment>>
-* <<client.ml.updateDataFrameAnalytics>>
-* <<client.ml.updateDatafeed>>
-* <<client.ml.updateFilter>>
-* <<client.ml.updateJob>>
-* <<client.ml.updateModelSnapshot>>
-* <<client.ml.updateTrainedModelDeployment>>
-* <<client.ml.upgradeJobSnapshot>>
-* <<client.monitoring.bulk>>
-* <<client.msearch>>
-* <<client.msearchTemplate>>
-* <<client.mtermvectors>>
-* <<client.nodes.clearRepositoriesMeteringArchive>>
-* <<client.nodes.getRepositoriesMeteringInfo>>
-* <<client.nodes.hotThreads>>
-* <<client.nodes.info>>
-* <<client.nodes.reloadSecureSettings>>
-* <<client.nodes.stats>>
-* <<client.nodes.usage>>
-* <<client.openPointInTime>>
-* <<client.ping>>
-* <<client.putScript>>
-* <<client.queryRules.deleteRule>>
-* <<client.queryRules.deleteRuleset>>
-* <<client.queryRules.getRule>>
-* <<client.queryRules.getRuleset>>
-* <<client.queryRules.listRulesets>>
-* <<client.queryRules.putRule>>
-* <<client.queryRules.putRuleset>>
-* <<client.queryRules.test>>
-* <<client.rankEval>>
-* <<client.reindex>>
-* <<client.reindexRethrottle>>
-* <<client.renderSearchTemplate>>
-* <<client.rollup.deleteJob>>
-* <<client.rollup.getJobs>>
-* <<client.rollup.getRollupCaps>>
-* <<client.rollup.getRollupIndexCaps>>
-* <<client.rollup.putJob>>
-* <<client.rollup.rollupSearch>>
-* <<client.rollup.startJob>>
-* <<client.rollup.stopJob>>
-* <<client.scriptsPainlessExecute>>
-* <<client.scroll>>
-* <<client.search>>
-* <<client.searchApplication.delete>>
-* <<client.searchApplication.deleteBehavioralAnalytics>>
-* <<client.searchApplication.get>>
-* <<client.searchApplication.getBehavioralAnalytics>>
-* <<client.searchApplication.list>>
-* <<client.searchApplication.postBehavioralAnalyticsEvent>>
-* <<client.searchApplication.put>>
-* <<client.searchApplication.putBehavioralAnalytics>>
-* <<client.searchApplication.renderQuery>>
-* <<client.searchApplication.search>>
-* <<client.searchMvt>>
-* <<client.searchShards>>
-* <<client.searchTemplate>>
-* <<client.searchableSnapshots.cacheStats>>
-* <<client.searchableSnapshots.clearCache>>
-* <<client.searchableSnapshots.mount>>
-* <<client.searchableSnapshots.stats>>
-* <<client.security.activateUserProfile>>
-* <<client.security.authenticate>>
-* <<client.security.bulkDeleteRole>>
-* <<client.security.bulkPutRole>>
-* <<client.security.bulkUpdateApiKeys>>
-* <<client.security.changePassword>>
-* <<client.security.clearApiKeyCache>>
-* <<client.security.clearCachedPrivileges>>
-* <<client.security.clearCachedRealms>>
-* <<client.security.clearCachedRoles>>
-* <<client.security.clearCachedServiceTokens>>
-* <<client.security.createApiKey>>
-* <<client.security.createCrossClusterApiKey>>
-* <<client.security.createServiceToken>>
-* <<client.security.deletePrivileges>>
-* <<client.security.deleteRole>>
-* <<client.security.deleteRoleMapping>>
-* <<client.security.deleteServiceToken>>
-* <<client.security.deleteUser>>
-* <<client.security.disableUser>>
-* <<client.security.disableUserProfile>>
-* <<client.security.enableUser>>
-* <<client.security.enableUserProfile>>
-* <<client.security.enrollKibana>>
-* <<client.security.enrollNode>>
-* <<client.security.getApiKey>>
-* <<client.security.getBuiltinPrivileges>>
-* <<client.security.getPrivileges>>
-* <<client.security.getRole>>
-* <<client.security.getRoleMapping>>
-* <<client.security.getServiceAccounts>>
-* <<client.security.getServiceCredentials>>
-* <<client.security.getSettings>>
-* <<client.security.getToken>>
-* <<client.security.getUser>>
-* <<client.security.getUserPrivileges>>
-* <<client.security.getUserProfile>>
-* <<client.security.grantApiKey>>
-* <<client.security.hasPrivileges>>
-* <<client.security.hasPrivilegesUserProfile>>
-* <<client.security.invalidateApiKey>>
-* <<client.security.invalidateToken>>
-* <<client.security.oidcAuthenticate>>
-* <<client.security.oidcLogout>>
-* <<client.security.oidcPrepareAuthentication>>
-* <<client.security.putPrivileges>>
-* <<client.security.putRole>>
-* <<client.security.putRoleMapping>>
-* <<client.security.putUser>>
-* <<client.security.queryApiKeys>>
-* <<client.security.queryRole>>
-* <<client.security.queryUser>>
-* <<client.security.samlAuthenticate>>
-* <<client.security.samlCompleteLogout>>
-* <<client.security.samlInvalidate>>
-* <<client.security.samlLogout>>
-* <<client.security.samlPrepareAuthentication>>
-* <<client.security.samlServiceProviderMetadata>>
-* <<client.security.suggestUserProfiles>>
-* <<client.security.updateApiKey>>
-* <<client.security.updateCrossClusterApiKey>>
-* <<client.security.updateSettings>>
-* <<client.security.updateUserProfileData>>
-* <<client.shutdown.deleteNode>>
-* <<client.shutdown.getNode>>
-* <<client.shutdown.putNode>>
-* <<client.simulate.ingest>>
-* <<client.slm.deleteLifecycle>>
-* <<client.slm.executeLifecycle>>
-* <<client.slm.executeRetention>>
-* <<client.slm.getLifecycle>>
-* <<client.slm.getStats>>
-* <<client.slm.getStatus>>
-* <<client.slm.putLifecycle>>
-* <<client.slm.start>>
-* <<client.slm.stop>>
-* <<client.snapshot.cleanupRepository>>
-* <<client.snapshot.clone>>
-* <<client.snapshot.create>>
-* <<client.snapshot.createRepository>>
-* <<client.snapshot.delete>>
-* <<client.snapshot.deleteRepository>>
-* <<client.snapshot.get>>
-* <<client.snapshot.getRepository>>
-* <<client.snapshot.repositoryAnalyze>>
-* <<client.snapshot.restore>>
-* <<client.snapshot.status>>
-* <<client.snapshot.verifyRepository>>
-* <<client.sql.clearCursor>>
-* <<client.sql.deleteAsync>>
-* <<client.sql.getAsync>>
-* <<client.sql.getAsyncStatus>>
-* <<client.sql.query>>
-* <<client.sql.translate>>
-* <<client.ssl.certificates>>
-* <<client.synonyms.deleteSynonym>>
-* <<client.synonyms.deleteSynonymRule>>
-* <<client.synonyms.getSynonym>>
-* <<client.synonyms.getSynonymRule>>
-* <<client.synonyms.getSynonymsSets>>
-* <<client.synonyms.putSynonym>>
-* <<client.synonyms.putSynonymRule>>
-* <<client.tasks.cancel>>
-* <<client.tasks.get>>
-* <<client.tasks.list>>
-* <<client.termsEnum>>
-* <<client.termvectors>>
-* <<client.textStructure.findFieldStructure>>
-* <<client.textStructure.findMessageStructure>>
-* <<client.textStructure.findStructure>>
-* <<client.textStructure.testGrokPattern>>
-* <<client.transform.deleteTransform>>
-* <<client.transform.getNodeStats>>
-* <<client.transform.getTransform>>
-* <<client.transform.getTransformStats>>
-* <<client.transform.previewTransform>>
-* <<client.transform.putTransform>>
-* <<client.transform.resetTransform>>
-* <<client.transform.scheduleNowTransform>>
-* <<client.transform.startTransform>>
-* <<client.transform.stopTransform>>
-* <<client.transform.updateTransform>>
-* <<client.transform.upgradeTransforms>>
-* <<client.update>>
-* <<client.updateByQuery>>
-* <<client.updateByQueryRethrottle>>
-* <<client.watcher.ackWatch>>
-* <<client.watcher.activateWatch>>
-* <<client.watcher.deactivateWatch>>
-* <<client.watcher.deleteWatch>>
-* <<client.watcher.executeWatch>>
-* <<client.watcher.getSettings>>
-* <<client.watcher.getWatch>>
-* <<client.watcher.putWatch>>
-* <<client.watcher.queryWatches>>
-* <<client.watcher.start>>
-* <<client.watcher.stats>>
-* <<client.watcher.stop>>
-* <<client.watcher.updateSettings>>
-* <<client.xpack.info>>
-* <<client.xpack.usage>>
+include::shared-types/global-bulk.asciidoc[]
+include::shared-types/global-clear-scroll.asciidoc[]
+include::shared-types/global-close-point-in-time.asciidoc[]
+include::shared-types/global-count.asciidoc[]
+include::shared-types/global-create.asciidoc[]
+include::shared-types/global-delete.asciidoc[]
+include::shared-types/global-delete-by-query.asciidoc[]
+include::shared-types/global-delete-by-query-rethrottle.asciidoc[]
+include::shared-types/global-delete-script.asciidoc[]
+include::shared-types/global-exists.asciidoc[]
+include::shared-types/global-exists-source.asciidoc[]
+include::shared-types/global-explain.asciidoc[]
+include::shared-types/global-field-caps.asciidoc[]
+include::shared-types/global-get.asciidoc[]
+include::shared-types/global-get-script.asciidoc[]
+include::shared-types/global-get-script-context.asciidoc[]
+include::shared-types/global-get-script-languages.asciidoc[]
+include::shared-types/global-get-source.asciidoc[]
+include::shared-types/global-health-report.asciidoc[]
+include::shared-types/global-index.asciidoc[]
+include::shared-types/global-info.asciidoc[]
+include::shared-types/global-knn-search.asciidoc[]
+include::shared-types/global-mget.asciidoc[]
+include::shared-types/global-msearch.asciidoc[]
+include::shared-types/global-msearch-template.asciidoc[]
+include::shared-types/global-mtermvectors.asciidoc[]
+include::shared-types/global-open-point-in-time.asciidoc[]
+include::shared-types/global-ping.asciidoc[]
+include::shared-types/global-put-script.asciidoc[]
+include::shared-types/global-rank-eval.asciidoc[]
+include::shared-types/global-reindex.asciidoc[]
+include::shared-types/global-reindex-rethrottle.asciidoc[]
+include::shared-types/global-render-search-template.asciidoc[]
+include::shared-types/global-scripts-painless-execute.asciidoc[]
+include::shared-types/global-scroll.asciidoc[]
+include::shared-types/global-search.asciidoc[]
+include::shared-types/global-search-mvt.asciidoc[]
+include::shared-types/global-search-shards.asciidoc[]
+include::shared-types/global-search-template.asciidoc[]
+include::shared-types/global-terms-enum.asciidoc[]
+include::shared-types/global-termvectors.asciidoc[]
+include::shared-types/global-update.asciidoc[]
+include::shared-types/global-update-by-query.asciidoc[]
+include::shared-types/global-update-by-query-rethrottle.asciidoc[]

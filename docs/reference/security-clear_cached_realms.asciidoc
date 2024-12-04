@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.clearCachedRealms]]
-=== client.security.clearCachedRealms
+== client.security.clearCachedRealms
 
 Clear the user cache. Evict users from the user cache. You can completely clear the cache or evict specific users.
 
 {ref}/security-api-clear-cache.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,35 +47,27 @@ Clear the user cache. Evict users from the user cache. You can completely clear 
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityClearCachedRealmsRequest extends <<RequestBase>> {
   realms: <<Names>>
   usernames?: string[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityClearCachedRealmsResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
   nodes: Record<string, <<SecurityClusterNode>>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

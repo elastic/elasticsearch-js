@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.autoscaling.getAutoscalingPolicy]]
-=== client.autoscaling.getAutoscalingPolicy
+== client.autoscaling.getAutoscalingPolicy
 
 Get an autoscaling policy. NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
 
 {ref}/autoscaling-get-autoscaling-capacity.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,30 +47,22 @@ Get an autoscaling policy. NOTE: This feature is designed for indirect use by El
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface AutoscalingGetAutoscalingPolicyRequest extends <<RequestBase>> {
   name: <<Name>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type AutoscalingGetAutoscalingPolicyResponse = <<AutoscalingAutoscalingPolicy>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

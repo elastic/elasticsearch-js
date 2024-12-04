@@ -1,6 +1,6 @@
 [[reference-shared-types-enrich-types]]
 
-== `Enrich`
+== `Enrich` types
 
 ////////
 ===========================================================================================================================
@@ -26,17 +26,21 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[EnrichPolicy]]
-=== EnrichPolicy
+== EnrichPolicy
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EnrichPolicy {
   enrich_fields: <<Fields>>
   indices: <<Indices>>
@@ -45,37 +49,25 @@ interface EnrichPolicy {
   name?: <<Name>>
   elasticsearch_version?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[EnrichPolicyType]]
-=== EnrichPolicyType
+== EnrichPolicyType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type EnrichPolicyType = 'geo_match' | 'match' | 'range'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[EnrichSummary]]
-=== EnrichSummary
+== EnrichSummary
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EnrichSummary {
   config: Partial<Record<<<EnrichPolicyType>>, <<EnrichPolicy>>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.slm.executeRetention]]
-=== client.slm.executeRetention
+== client.slm.executeRetention
 
 Deletes any snapshots that are expired according to the policy's retention rules.
 
 {ref}/slm-api-execute-retention.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,29 +47,20 @@ Deletes any snapshots that are expired according to the policy's retention rules
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface SlmExecuteRetentionRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface SlmExecuteRetentionRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type SlmExecuteRetentionResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

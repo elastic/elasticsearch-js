@@ -1,6 +1,6 @@
 [[reference-shared-types-ccr-types]]
 
-== `Ccr`
+== `Ccr` types
 
 ////////
 ===========================================================================================================================
@@ -26,52 +26,46 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[CcrFollowIndexStats]]
-=== CcrFollowIndexStats
+== CcrFollowIndexStats
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface CcrFollowIndexStats {
   index: <<IndexName>>
   shards: <<CcrShardStats>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[CcrReadException]]
-=== CcrReadException
+== CcrReadException
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface CcrReadException {
   exception: <<ErrorCause>>
   from_seq_no: <<SequenceNumber>>
   retries: <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[CcrShardStats]]
-=== CcrShardStats
+== CcrShardStats
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface CcrShardStats {
   bytes_read: <<long>>
   failed_read_requests: <<long>>
@@ -107,7 +101,5 @@ interface CcrShardStats {
   write_buffer_operation_count: <<long>>
   write_buffer_size_in_bytes: <<ByteSize>>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

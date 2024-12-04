@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ccr.followStats]]
-=== client.ccr.followStats
+== client.ccr.followStats
 
 Retrieves follower stats. return shard-level stats about the following tasks associated with each shard for the specified indices.
 
 {ref}/ccr-get-follow-stats.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Retrieves follower stats. return shard-level stats about the following tasks ass
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface CcrFollowStatsRequest extends <<RequestBase>> {
   index: <<Indices>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface CcrFollowStatsResponse {
   indices: <<CcrFollowIndexStats>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

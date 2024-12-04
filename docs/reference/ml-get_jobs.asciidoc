@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.getJobs]]
-=== client.ml.getJobs
+== client.ml.getJobs
 
 Get anomaly detection jobs configuration info. You can get information for multiple anomaly detection jobs in a single API request by using a group name, a list of jobs, or a wildcard expression. You can get information for all anomaly detection jobs by using `_all`, by specifying `*` as the `<job_id>`, or by omitting the `<job_id>`.
 
 {ref}/ml-get-job.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,35 +47,27 @@ Get anomaly detection jobs configuration info. You can get information for multi
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlGetJobsRequest extends <<RequestBase>> {
   job_id?: <<Ids>>
   allow_no_match?: boolean
   exclude_generated?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlGetJobsResponse {
   count: <<long>>
   jobs: <<MlJob>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.snapshot.repositoryAnalyze]]
-=== client.snapshot.repositoryAnalyze
+== client.snapshot.repositoryAnalyze
 
 Analyzes a repository for correctness and performance
 
 {ref}/modules-snapshots.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cat.fielddata]]
-=== client.cat.fielddata
+== client.cat.fielddata
 
 Returns the amount of heap memory currently used by the field data cache on every data node in the cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes stats API.
 
 {ref}/cat-fielddata.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,23 @@ Returns the amount of heap memory currently used by the field data cache on ever
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface CatFielddataRequest extends <<CatCatRequestBase>> {
   fields?: <<Fields>>
   bytes?: <<Bytes>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type CatFielddataResponse = CatFielddataFielddataRecord[]
 
-[pass]
-++++
-</pre>
-++++
+----
+

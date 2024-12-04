@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.license.postStartBasic]]
-=== client.license.postStartBasic
+== client.license.postStartBasic
 
 The start basic API enables you to initiate an indefinite basic license, which gives access to all the basic features. If the basic license does not support all of the features that are available with your current license, however, you are notified in the response. You must then re-submit the API request with the acknowledge parameter set to true. To check the status of your basic license, use the following API: [Get basic status](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-basic-status.html).
 
 {ref}/start-basic.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,27 +47,21 @@ The start basic API enables you to initiate an indefinite basic license, which g
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface LicensePostStartBasicRequest extends <<RequestBase>> {
   acknowledge?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface LicensePostStartBasicResponse {
   acknowledged: boolean
   basic_was_started: boolean
@@ -71,7 +70,5 @@ interface LicensePostStartBasicResponse {
   acknowledge?: Record<string, string | string[]>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

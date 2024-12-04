@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.connector.syncJobPost]]
-=== client.connector.syncJobPost
+== client.connector.syncJobPost
 
 Create a connector sync job. Create a connector sync job document in the internal index and initialize its counters and timestamps with default values.
 
 {ref}/create-connector-sync-job-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Create a connector sync job. Create a connector sync job document in the interna
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ConnectorSyncJobPostRequest extends <<RequestBase>> {
   id: <<Id>>
   job_type?: <<ConnectorSyncJobType>>
   trigger_method?: <<ConnectorSyncJobTriggerMethod>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ConnectorSyncJobPostResponse {
   id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

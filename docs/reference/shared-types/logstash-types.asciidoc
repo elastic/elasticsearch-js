@@ -1,6 +1,6 @@
 [[reference-shared-types-logstash-types]]
 
-== `Logstash`
+== `Logstash` types
 
 ////////
 ===========================================================================================================================
@@ -26,17 +26,21 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[LogstashPipeline]]
-=== LogstashPipeline
+== LogstashPipeline
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface LogstashPipeline {
   pass:[/**] @property description Description of the pipeline. This description is not used by Elasticsearch or Logstash. */
   description: string
@@ -51,36 +55,26 @@ interface LogstashPipeline {
   pass:[/**] @property pipeline_settings Settings for the pipeline. Supports only flat keys in dot notation. */
   pipeline_settings: <<LogstashPipelineSettings>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[LogstashPipelineMetadata]]
-=== LogstashPipelineMetadata
+== LogstashPipelineMetadata
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface LogstashPipelineMetadata {
   type: string
   version: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[LogstashPipelineSettings]]
-=== LogstashPipelineSettings
+== LogstashPipelineSettings
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface LogstashPipelineSettings {
   pass:[/**] @property 'pipeline.workers' The number of workers that will, in parallel, execute the filter and output stages of the pipeline. */
   'pipeline.workers': <<integer>>
@@ -97,7 +91,5 @@ interface LogstashPipelineSettings {
   pass:[/**] @property 'queue.checkpoint.writes' The maximum number of written events before forcing a checkpoint when persistent queues are enabled (`queue.type: persisted`). */
   'queue.checkpoint.writes': <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

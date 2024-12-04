@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.getBuiltinPrivileges]]
-=== client.security.getBuiltinPrivileges
+== client.security.getBuiltinPrivileges
 
 Get builtin privileges. Get the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
 
 {ref}/security-api-get-builtin-privileges.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,23 @@ Get builtin privileges. Get the list of cluster privileges and index privileges 
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface SecurityGetBuiltinPrivilegesRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface SecurityGetBuiltinPrivilegesRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityGetBuiltinPrivilegesResponse {
   cluster: string[]
   index: <<Indices>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

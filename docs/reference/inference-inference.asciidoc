@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.inference.inference]]
-=== client.inference.inference
+== client.inference.inference
 
 Perform inference on the service
 
 {ref}/post-inference-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Perform inference on the service
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface InferenceInferenceRequest extends <<RequestBase>> {
   task_type?: <<InferenceTaskType>>
   inference_id: <<Id>>
@@ -57,20 +60,14 @@ interface InferenceInferenceRequest extends <<RequestBase>> {
   task_settings?: <<InferenceTaskSettings>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type InferenceInferenceResponse = <<InferenceInferenceResult>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

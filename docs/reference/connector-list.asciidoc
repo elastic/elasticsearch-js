@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.connector.list]]
-=== client.connector.list
+== client.connector.list
 
 Get all connectors. Get information about all connectors.
 
 {ref}/list-connector-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get all connectors. Get information about all connectors.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ConnectorListRequest extends <<RequestBase>> {
   from?: <<integer>>
   size?: <<integer>>
@@ -57,23 +60,17 @@ interface ConnectorListRequest extends <<RequestBase>> {
   query?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ConnectorListResponse {
   count: <<long>>
   results: <<ConnectorConnector>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.searchApplication.list]]
-=== client.searchApplication.list
+== client.searchApplication.list
 
 Returns the existing search applications.
 
 {ref}/list-search-applications.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,35 +47,27 @@ Returns the existing search applications.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SearchApplicationListRequest extends <<RequestBase>> {
   q?: string
   from?: <<integer>>
   size?: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SearchApplicationListResponse {
   count: <<long>>
   results: SearchApplicationListSearchApplicationListItem[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

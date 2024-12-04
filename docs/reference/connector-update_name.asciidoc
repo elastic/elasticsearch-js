@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.connector.updateName]]
-=== client.connector.updateName
+== client.connector.updateName
 
 Update the connector name and description.
 
 {ref}/update-connector-name-description-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Update the connector name and description.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ConnectorUpdateNameRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   name?: string
   description?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ConnectorUpdateNameResponse {
   result: <<Result>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

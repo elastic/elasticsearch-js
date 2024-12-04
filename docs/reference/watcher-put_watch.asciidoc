@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.watcher.putWatch]]
-=== client.watcher.putWatch
+== client.watcher.putWatch
 
 Creates a new watch, or updates an existing one.
 
 {ref}/watcher-api-put-watch.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Creates a new watch, or updates an existing one.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherPutWatchRequest extends <<RequestBase>> {
   id: <<Id>>
   active?: boolean
@@ -63,17 +66,13 @@ interface WatcherPutWatchRequest extends <<RequestBase>> {
   trigger?: <<WatcherTriggerContainer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface WatcherPutWatchResponse {
   created: boolean
   _id: <<Id>>
@@ -82,7 +81,5 @@ interface WatcherPutWatchResponse {
   _version: <<VersionNumber>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

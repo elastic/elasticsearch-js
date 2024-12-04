@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.snapshot.create]]
-=== client.snapshot.create
+== client.snapshot.create
 
 Creates a snapshot in a repository.
 
 {ref}/modules-snapshots.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Creates a snapshot in a repository.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SnapshotCreateRequest extends <<RequestBase>> {
   repository: <<Name>>
   snapshot: <<Name>>
@@ -61,23 +64,17 @@ interface SnapshotCreateRequest extends <<RequestBase>> {
   partial?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SnapshotCreateResponse {
   accepted?: boolean
   snapshot?: <<SnapshotSnapshotInfo>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.oidcAuthenticate]]
-=== client.security.oidcAuthenticate
+== client.security.oidcAuthenticate
 
 Exchanges an OpenID Connection authentication response message for an Elasticsearch access token and refresh token pair
 
 {ref}/security-api-oidc-authenticate.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

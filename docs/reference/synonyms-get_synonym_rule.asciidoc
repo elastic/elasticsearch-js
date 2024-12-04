@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.synonyms.getSynonymRule]]
-=== client.synonyms.getSynonymRule
+== client.synonyms.getSynonymRule
 
 Retrieves a synonym rule from a synonym set
 
 {ref}/get-synonym-rule.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,23 @@ Retrieves a synonym rule from a synonym set
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SynonymsGetSynonymRuleRequest extends <<RequestBase>> {
   set_id: <<Id>>
   rule_id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type SynonymsGetSynonymRuleResponse = <<SynonymsSynonymRuleRead>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

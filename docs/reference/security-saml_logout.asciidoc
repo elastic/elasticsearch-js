@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.samlLogout]]
-=== client.security.samlLogout
+== client.security.samlLogout
 
 Logout of SAML. Submits a request to invalidate an access token and refresh token.
 
 {ref}/security-api-saml-logout.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,25 @@ Logout of SAML. Submits a request to invalidate an access token and refresh toke
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecuritySamlLogoutRequest extends <<RequestBase>> {
   token: string
   refresh_token?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecuritySamlLogoutResponse {
   redirect: string
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

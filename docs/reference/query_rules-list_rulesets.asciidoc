@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.queryRules.listRulesets]]
-=== client.queryRules.listRulesets
+== client.queryRules.listRulesets
 
 Returns summarized information about existing query rulesets.
 
 {ref}/list-query-rulesets.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Returns summarized information about existing query rulesets.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface QueryRulesListRulesetsRequest extends <<RequestBase>> {
   from?: <<integer>>
   size?: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface QueryRulesListRulesetsResponse {
   count: <<long>>
   results: QueryRulesListRulesetsQueryRulesetListItem[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

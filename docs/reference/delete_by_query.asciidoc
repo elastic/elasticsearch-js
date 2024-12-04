@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.deleteByQuery]]
-=== client.deleteByQuery
+== client.deleteByQuery
 
 Delete documents. Deletes documents that match the specified query.
 
 {ref}/docs-delete-by-query.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Delete documents. Deletes documents that match the specified query.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface DeleteByQueryRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -83,17 +86,13 @@ interface DeleteByQueryRequest extends <<RequestBase>> {
   slice?: <<SlicedScroll>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface DeleteByQueryResponse {
   batches?: <<long>>
   deleted?: <<long>>
@@ -113,7 +112,5 @@ interface DeleteByQueryResponse {
   version_conflicts?: <<long>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

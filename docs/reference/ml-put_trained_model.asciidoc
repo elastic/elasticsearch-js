@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.putTrainedModel]]
-=== client.ml.putTrainedModel
+== client.ml.putTrainedModel
 
 Create a trained model. Enable you to supply a trained model that is not created by data frame analytics.
 
 {ref}/put-trained-models.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Create a trained model. Enable you to supply a trained model that is not created
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlPutTrainedModelRequest extends <<RequestBase>> {
   model_id: <<Id>>
   defer_definition_decompression?: boolean
@@ -65,20 +68,14 @@ interface MlPutTrainedModelRequest extends <<RequestBase>> {
   prefix_strings?: <<MlTrainedModelPrefixStrings>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type MlPutTrainedModelResponse = <<MlTrainedModelConfig>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

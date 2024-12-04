@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.startTrainedModelDeployment]]
-=== client.ml.startTrainedModelDeployment
+== client.ml.startTrainedModelDeployment
 
 Start a trained model deployment. It allocates the model to every machine learning node.
 
 {ref}/start-trained-model-deployment.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Start a trained model deployment. It allocates the model to every machine learni
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlStartTrainedModelDeploymentRequest extends <<RequestBase>> {
   model_id: <<Id>>
   cache_size?: <<ByteSize>>
@@ -60,22 +63,16 @@ interface MlStartTrainedModelDeploymentRequest extends <<RequestBase>> {
   wait_for?: <<MlDeploymentAllocationState>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlStartTrainedModelDeploymentResponse {
   assignment: <<MlTrainedModelAssignment>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

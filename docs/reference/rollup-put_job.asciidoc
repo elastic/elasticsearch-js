@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.rollup.putJob]]
-=== client.rollup.putJob
+== client.rollup.putJob
 
 Creates a rollup job.
 
 {ref}/rollup-put-job.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Creates a rollup job.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface RollupPutJobRequest extends <<RequestBase>> {
   id: <<Id>>
   cron: string
@@ -60,20 +63,14 @@ interface RollupPutJobRequest extends <<RequestBase>> {
   headers?: <<HttpHeaders>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type RollupPutJobResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

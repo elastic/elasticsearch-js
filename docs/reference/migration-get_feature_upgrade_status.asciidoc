@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.migration.getFeatureUpgradeStatus]]
-=== client.migration.getFeatureUpgradeStatus
+== client.migration.getFeatureUpgradeStatus
 
 Find out whether system features need to be upgraded or not
 
 {ref}/migration-api-feature-upgrade.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,23 @@ Find out whether system features need to be upgraded or not
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface MigrationGetFeatureUpgradeStatusRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface MigrationGetFeatureUpgradeStatusRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MigrationGetFeatureUpgradeStatusResponse {
   features: MigrationGetFeatureUpgradeStatusMigrationFeature[]
   migration_status: MigrationGetFeatureUpgradeStatusMigrationStatus
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

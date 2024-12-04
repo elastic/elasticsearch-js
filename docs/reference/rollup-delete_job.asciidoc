@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.rollup.deleteJob]]
-=== client.rollup.deleteJob
+== client.rollup.deleteJob
 
 Deletes an existing rollup job.
 
 {ref}/rollup-delete-job.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,25 @@ Deletes an existing rollup job.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface RollupDeleteJobRequest extends <<RequestBase>> {
   id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface RollupDeleteJobResponse {
   acknowledged: boolean
   task_failures?: <<TaskFailure>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

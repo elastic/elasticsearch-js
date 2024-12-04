@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.clearCache]]
-=== client.indices.clearCache
+== client.indices.clearCache
 
 Clears the caches of one or more indices. For data streams, the API clears the caches of the stream’s backing indices.
 
 {ref}/indices-clearcache.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Clears the caches of one or more indices. For data streams, the API clears the c
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesClearCacheRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -59,20 +62,14 @@ interface IndicesClearCacheRequest extends <<RequestBase>> {
   request?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesClearCacheResponse = <<ShardsOperationResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

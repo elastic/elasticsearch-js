@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.getToken]]
-=== client.security.getToken
+== client.security.getToken
 
 Get a token. Create a bearer token for access without requiring basic authentication.
 
 {ref}/security-api-get-token.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get a token. Create a bearer token for access without requiring basic authentica
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityGetTokenRequest extends <<RequestBase>> {
   grant_type?: SecurityGetTokenAccessTokenGrantType
   scope?: string
@@ -57,17 +60,13 @@ interface SecurityGetTokenRequest extends <<RequestBase>> {
   username?: <<Username>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityGetTokenResponse {
   access_token: string
   expires_in: <<long>>
@@ -78,7 +77,5 @@ interface SecurityGetTokenResponse {
   authentication: SecurityGetTokenAuthenticatedUser
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

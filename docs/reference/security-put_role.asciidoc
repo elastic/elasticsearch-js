@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.putRole]]
-=== client.security.putRole
+== client.security.putRole
 
 Create or update roles. The role management APIs are generally the preferred way to manage roles in the native realm, rather than using file-based role management. The create or update roles API cannot update roles that are defined in roles files. File-based role management is not available in Elastic Serverless.
 
 {ref}/security-api-put-role.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Create or update roles. The role management APIs are generally the preferred way
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityPutRoleRequest extends <<RequestBase>> {
   name: <<Name>>
   refresh?: <<Refresh>>
@@ -62,22 +65,16 @@ interface SecurityPutRoleRequest extends <<RequestBase>> {
   transient_metadata?: Record<string, any>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityPutRoleResponse {
   role: <<SecurityCreatedStatus>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

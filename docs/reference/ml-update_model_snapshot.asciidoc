@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.updateModelSnapshot]]
-=== client.ml.updateModelSnapshot
+== client.ml.updateModelSnapshot
 
 Update a snapshot. Updates certain properties of a snapshot.
 
 {ref}/ml-update-snapshot.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Update a snapshot. Updates certain properties of a snapshot.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlUpdateModelSnapshotRequest extends <<RequestBase>> {
   job_id: <<Id>>
   snapshot_id: <<Id>>
@@ -55,23 +58,17 @@ interface MlUpdateModelSnapshotRequest extends <<RequestBase>> {
   retain?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlUpdateModelSnapshotResponse {
   acknowledged: boolean
   model: <<MlModelSnapshot>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

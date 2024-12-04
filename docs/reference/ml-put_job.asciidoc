@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.putJob]]
-=== client.ml.putJob
+== client.ml.putJob
 
 Create an anomaly detection job. If you include a `datafeed_config`, you must have read index privileges on the source index.
 
 {ref}/ml-put-job.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Create an anomaly detection job. If you include a `datafeed_config`, you must ha
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlPutJobRequest extends <<RequestBase>> {
   job_id: <<Id>>
   allow_lazy_open?: boolean
@@ -67,17 +70,13 @@ interface MlPutJobRequest extends <<RequestBase>> {
   results_retention_days?: <<long>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlPutJobResponse {
   allow_lazy_open: boolean
   analysis_config: <<MlAnalysisConfigRead>>
@@ -101,7 +100,5 @@ interface MlPutJobResponse {
   results_retention_days?: <<long>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

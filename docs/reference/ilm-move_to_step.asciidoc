@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ilm.moveToStep]]
-=== client.ilm.moveToStep
+== client.ilm.moveToStep
 
 Manually moves an index into the specified step and executes that step.
 
 {ref}/ilm-move-to-step.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Manually moves an index into the specified step and executes that step.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmMoveToStepRequest extends <<RequestBase>> {
   index: <<IndexName>>
   current_step: IlmMoveToStepStepKey
   next_step: IlmMoveToStepStepKey
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IlmMoveToStepResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

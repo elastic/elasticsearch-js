@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.queryRole]]
-=== client.security.queryRole
+== client.security.queryRole
 
 Find roles with a query. Get roles in a paginated manner. You can optionally filter the results with a query.
 
 {ref}/security-api-query-role.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Find roles with a query. Get roles in a paginated manner. You can optionally fil
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityQueryRoleRequest extends <<RequestBase>> {
   query?: SecurityQueryRoleRoleQueryContainer
   from?: <<integer>>
@@ -56,24 +59,18 @@ interface SecurityQueryRoleRequest extends <<RequestBase>> {
   search_after?: <<SortResults>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityQueryRoleResponse {
   total: <<integer>>
   count: <<integer>>
   roles: SecurityQueryRoleQueryRole[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

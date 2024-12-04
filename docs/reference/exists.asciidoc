@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.exists]]
-=== client.exists
+== client.exists
 
 Check a document. Checks if a specified document exists.
 
 {ref}/docs-get.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Check a document. Checks if a specified document exists.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ExistsRequest extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
@@ -63,20 +66,14 @@ interface ExistsRequest extends <<RequestBase>> {
   version_type?: <<VersionType>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type ExistsResponse = boolean
 
-[pass]
-++++
-</pre>
-++++
+----
+

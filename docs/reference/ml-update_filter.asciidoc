@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.updateFilter]]
-=== client.ml.updateFilter
+== client.ml.updateFilter
 
 Update a filter. Updates the description of a filter, adds items, or removes items from the list.
 
 {ref}/ml-update-filter.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Update a filter. Updates the description of a filter, adds items, or removes ite
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlUpdateFilterRequest extends <<RequestBase>> {
   filter_id: <<Id>>
   add_items?: string[]
@@ -55,24 +58,18 @@ interface MlUpdateFilterRequest extends <<RequestBase>> {
   remove_items?: string[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlUpdateFilterResponse {
   description: string
   filter_id: <<Id>>
   items: string[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

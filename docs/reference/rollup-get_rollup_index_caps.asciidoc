@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.rollup.getRollupIndexCaps]]
-=== client.rollup.getRollupIndexCaps
+== client.rollup.getRollupIndexCaps
 
 Returns the rollup capabilities of all jobs inside of a rollup index (for example, the index where rollup data is stored).
 
 {ref}/rollup-get-rollup-index-caps.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,30 +47,22 @@ Returns the rollup capabilities of all jobs inside of a rollup index (for exampl
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface RollupGetRollupIndexCapsRequest extends <<RequestBase>> {
   index: <<Ids>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type RollupGetRollupIndexCapsResponse = Record<<<IndexName>>, RollupGetRollupIndexCapsIndexCapabilities>
 
-[pass]
-++++
-</pre>
-++++
+----
+

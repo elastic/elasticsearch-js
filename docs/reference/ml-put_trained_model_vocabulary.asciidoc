@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.putTrainedModelVocabulary]]
-=== client.ml.putTrainedModelVocabulary
+== client.ml.putTrainedModelVocabulary
 
 Create a trained model vocabulary. This API is supported only for natural language processing (NLP) models. The vocabulary is stored in the index as described in `inference_config.*.vocabulary` of the trained model definition.
 
 {ref}/put-trained-model-vocabulary.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Create a trained model vocabulary. This API is supported only for natural langua
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlPutTrainedModelVocabularyRequest extends <<RequestBase>> {
   model_id: <<Id>>
   vocabulary: string[]
@@ -55,20 +58,14 @@ interface MlPutTrainedModelVocabularyRequest extends <<RequestBase>> {
   scores?: <<double>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type MlPutTrainedModelVocabularyResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

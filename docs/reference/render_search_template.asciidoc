@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.renderSearchTemplate]]
-=== client.renderSearchTemplate
+== client.renderSearchTemplate
 
 Render a search template. Render a search template as a search request body.
 
 {ref}/render-search-template-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Render a search template. Render a search template as a search request body.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface RenderSearchTemplateRequest extends <<RequestBase>> {
   id?: <<Id>>
   file?: string
@@ -55,22 +58,16 @@ interface RenderSearchTemplateRequest extends <<RequestBase>> {
   source?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface RenderSearchTemplateResponse {
   template_output: Record<string, any>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

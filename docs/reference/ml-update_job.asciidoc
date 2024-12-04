@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.updateJob]]
-=== client.ml.updateJob
+== client.ml.updateJob
 
 Update an anomaly detection job. Updates certain properties of an anomaly detection job.
 
 {ref}/ml-update-job.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Update an anomaly detection job. Updates certain properties of an anomaly detect
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlUpdateJobRequest extends <<RequestBase>> {
   job_id: <<Id>>
   allow_lazy_open?: boolean
@@ -67,17 +70,13 @@ interface MlUpdateJobRequest extends <<RequestBase>> {
   per_partition_categorization?: <<MlPerPartitionCategorization>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlUpdateJobResponse {
   allow_lazy_open: boolean
   analysis_config: <<MlAnalysisConfigRead>>
@@ -102,7 +101,5 @@ interface MlUpdateJobResponse {
   results_retention_days?: <<long>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

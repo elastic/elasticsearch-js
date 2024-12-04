@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.getApiKey]]
-=== client.security.getApiKey
+== client.security.getApiKey
 
 Get API key information. Retrieves information for one or more API keys. NOTE: If you have only the `manage_own_api_key` privilege, this API returns only the API keys that you own. If you have `read_security`, `manage_api_key` or greater privileges (including `manage_security`), this API returns all API keys regardless of ownership.
 
 {ref}/security-api-get-api-key.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get API key information. Retrieves information for one or more API keys. NOTE: I
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityGetApiKeyRequest extends <<RequestBase>> {
   id?: <<Id>>
   name?: <<Name>>
@@ -59,22 +62,16 @@ interface SecurityGetApiKeyRequest extends <<RequestBase>> {
   with_profile_uid?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityGetApiKeyResponse {
   api_keys: <<SecurityApiKey>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

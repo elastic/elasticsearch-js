@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.esql.query]]
-=== client.esql.query
+== client.esql.query
 
 Executes an ES|QL request
 
 {ref}/esql-rest.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Executes an ES|QL request
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EsqlQueryRequest extends <<RequestBase>> {
   format?: EsqlQueryEsqlFormat
   delimiter?: string
@@ -61,20 +64,14 @@ interface EsqlQueryRequest extends <<RequestBase>> {
   tables?: Record<string, Record<string, <<EsqlTableValuesContainer>>>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type EsqlQueryResponse = <<EsqlColumns>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.close]]
-=== client.indices.close
+== client.indices.close
 
 Closes an index.
 
 {ref}/indices-close.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Closes an index.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesCloseRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -58,24 +61,18 @@ interface IndicesCloseRequest extends <<RequestBase>> {
   wait_for_active_shards?: <<WaitForActiveShards>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesCloseResponse {
   acknowledged: boolean
   indices: Record<<<IndexName>>, IndicesCloseCloseIndexResult>
   shards_acknowledged: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

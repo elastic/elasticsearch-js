@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.create]]
-=== client.create
+== client.create
 
 Index a document. Adds a JSON document to the specified data stream or index and makes it searchable. If the target is an index and the document already exists, the request updates the document and increments its version.
 
 {ref}/docs-index_.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Index a document. Adds a JSON document to the specified data stream or index and
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface CreateRequest<TDocument = unknown> extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
@@ -61,20 +64,14 @@ interface CreateRequest<TDocument = unknown> extends <<RequestBase>> {
   document?: TDocument
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type CreateResponse = <<WriteResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ingest.geoIpStats]]
-=== client.ingest.geoIpStats
+== client.ingest.geoIpStats
 
 Gets download statistics for GeoIP2 databases used with the geoip processor.
 
 {ref}/geoip-processor.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,23 @@ Gets download statistics for GeoIP2 databases used with the geoip processor.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface IngestGeoIpStatsRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface IngestGeoIpStatsRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestGeoIpStatsResponse {
   stats: IngestGeoIpStatsGeoIpDownloadStatistics
   nodes: Record<<<Id>>, IngestGeoIpStatsGeoIpNodeDatabases>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

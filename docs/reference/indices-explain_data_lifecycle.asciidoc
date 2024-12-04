@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.explainDataLifecycle]]
-=== client.indices.explainDataLifecycle
+== client.indices.explainDataLifecycle
 
 Get the status for a data stream lifecycle. Retrieves information about an index or data stream’s current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
 
 {ref}/data-streams-explain-lifecycle.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Get the status for a data stream lifecycle. Retrieves information about an index
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesExplainDataLifecycleRequest extends <<RequestBase>> {
   index: <<Indices>>
   include_defaults?: boolean
   master_timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesExplainDataLifecycleResponse {
   indices: Record<<<IndexName>>, IndicesExplainDataLifecycleDataStreamLifecycleExplain>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

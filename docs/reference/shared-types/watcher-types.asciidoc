@@ -1,6 +1,6 @@
 [[reference-shared-types-watcher-types]]
 
-== `Watcher`
+== `Watcher` types
 
 ////////
 ===========================================================================================================================
@@ -26,48 +26,42 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[WatcherAcknowledgeState]]
-=== WatcherAcknowledgeState
+== WatcherAcknowledgeState
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherAcknowledgeState {
   state: <<WatcherAcknowledgementOptions>>
   timestamp: <<DateTime>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherAcknowledgementOptions]]
-=== WatcherAcknowledgementOptions
+== WatcherAcknowledgementOptions
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherAcknowledgementOptions = 'awaits_successful_execution' | 'ackable' | 'acked'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherAction]]
-=== WatcherAction
+== WatcherAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherAction {
   action_type?: <<WatcherActionType>>
   condition?: <<WatcherConditionContainer>>
@@ -84,195 +78,134 @@ interface WatcherAction {
   slack?: <<WatcherSlackAction>>
   webhook?: <<WatcherWebhookAction>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherActionExecutionMode]]
-=== WatcherActionExecutionMode
+== WatcherActionExecutionMode
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherActionExecutionMode = 'simulate' | 'force_simulate' | 'execute' | 'force_execute' | 'skip'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherActionStatus]]
-=== WatcherActionStatus
+== WatcherActionStatus
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherActionStatus {
   ack: <<WatcherAcknowledgeState>>
   last_execution?: <<WatcherExecutionState>>
   last_successful_execution?: <<WatcherExecutionState>>
   last_throttle?: <<WatcherThrottleState>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherActionStatusOptions]]
-=== WatcherActionStatusOptions
+== WatcherActionStatusOptions
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherActionStatusOptions = 'success' | 'failure' | 'simulated' | 'throttled'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherActionType]]
-=== WatcherActionType
+== WatcherActionType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherActionType = 'email' | 'webhook' | 'index' | 'logging' | 'slack' | 'pagerduty'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherActions]]
-=== WatcherActions
+== WatcherActions
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherActions = Record<<<IndexName>>, <<WatcherActionStatus>>>
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherActivationState]]
-=== WatcherActivationState
+== WatcherActivationState
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherActivationState {
   active: boolean
   timestamp: <<DateTime>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherActivationStatus]]
-=== WatcherActivationStatus
+== WatcherActivationStatus
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherActivationStatus {
   actions: <<WatcherActions>>
   state: <<WatcherActivationState>>
   version: <<VersionNumber>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherAlwaysCondition]]
-=== WatcherAlwaysCondition
+== WatcherAlwaysCondition
 
-[pass]
-++++
-<pre>
-++++
-interface WatcherAlwaysCondition {
-}
-[pass]
-++++
-</pre>
-++++
+[source,ts,subs=+macros]
+----
+interface WatcherAlwaysCondition {}
+----
 
 [discrete]
 [[WatcherArrayCompareCondition]]
-=== WatcherArrayCompareCondition
+== WatcherArrayCompareCondition
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherArrayCompareConditionKeys {
   path: string
 }
 type WatcherArrayCompareCondition = WatcherArrayCompareConditionKeys
   & { [property: string]: <<WatcherArrayCompareOpParams>> | string }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherArrayCompareOpParams]]
-=== WatcherArrayCompareOpParams
+== WatcherArrayCompareOpParams
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherArrayCompareOpParams {
   quantifier: <<WatcherQuantifier>>
   value: <<FieldValue>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherChainInput]]
-=== WatcherChainInput
+== WatcherChainInput
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherChainInput {
   inputs: Partial<Record<string, <<WatcherInputContainer>>>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherConditionContainer]]
-=== WatcherConditionContainer
+== WatcherConditionContainer
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherConditionContainer {
   always?: <<WatcherAlwaysCondition>>
   array_compare?: Partial<Record<string, <<WatcherArrayCompareCondition>>>>
@@ -280,135 +213,90 @@ interface WatcherConditionContainer {
   never?: <<WatcherNeverCondition>>
   script?: <<WatcherScriptCondition>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherConditionOp]]
-=== WatcherConditionOp
+== WatcherConditionOp
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherConditionOp = 'not_eq' | 'eq' | 'lt' | 'gt' | 'lte' | 'gte'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherConditionType]]
-=== WatcherConditionType
+== WatcherConditionType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherConditionType = 'always' | 'never' | 'script' | 'compare' | 'array_compare'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherConnectionScheme]]
-=== WatcherConnectionScheme
+== WatcherConnectionScheme
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherConnectionScheme = 'http' | 'https'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherCronExpression]]
-=== WatcherCronExpression
+== WatcherCronExpression
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherCronExpression = string
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherDailySchedule]]
-=== WatcherDailySchedule
+== WatcherDailySchedule
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherDailySchedule {
   at: <<WatcherScheduleTimeOfDay>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherDataAttachmentFormat]]
-=== WatcherDataAttachmentFormat
+== WatcherDataAttachmentFormat
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherDataAttachmentFormat = 'json' | 'yaml'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherDataEmailAttachment]]
-=== WatcherDataEmailAttachment
+== WatcherDataEmailAttachment
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherDataEmailAttachment {
   format?: <<WatcherDataAttachmentFormat>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherDay]]
-=== WatcherDay
+== WatcherDay
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherDay = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherEmail]]
-=== WatcherEmail
+== WatcherEmail
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherEmail {
   id?: <<Id>>
   bcc?: string[]
@@ -422,115 +310,79 @@ interface WatcherEmail {
   to: string[]
   attachments?: Record<string, <<WatcherEmailAttachmentContainer>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherEmailAction]]
-=== WatcherEmailAction
+== WatcherEmailAction
 
-[pass]
-++++
-<pre>
-++++
-interface WatcherEmailAction extends <<WatcherEmail>> {
-}
-[pass]
-++++
-</pre>
-++++
+[source,ts,subs=+macros]
+----
+interface WatcherEmailAction extends <<WatcherEmail>> {}
+----
 
 [discrete]
 [[WatcherEmailAttachmentContainer]]
-=== WatcherEmailAttachmentContainer
+== WatcherEmailAttachmentContainer
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherEmailAttachmentContainer {
   http?: <<WatcherHttpEmailAttachment>>
   reporting?: <<WatcherReportingEmailAttachment>>
   data?: <<WatcherDataEmailAttachment>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherEmailBody]]
-=== WatcherEmailBody
+== WatcherEmailBody
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherEmailBody {
   html?: string
   text?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherEmailPriority]]
-=== WatcherEmailPriority
+== WatcherEmailPriority
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherEmailPriority = 'lowest' | 'low' | 'normal' | 'high' | 'highest'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherEmailResult]]
-=== WatcherEmailResult
+== WatcherEmailResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherEmailResult {
   account?: string
   message: <<WatcherEmail>>
   reason?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherExecutionPhase]]
-=== WatcherExecutionPhase
+== WatcherExecutionPhase
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherExecutionPhase = 'awaits_execution' | 'started' | 'input' | 'condition' | 'actions' | 'watch_transform' | 'aborted' | 'finished'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherExecutionResult]]
-=== WatcherExecutionResult
+== WatcherExecutionResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherExecutionResult {
   actions: <<WatcherExecutionResultAction>>[]
   condition: <<WatcherExecutionResultCondition>>
@@ -538,19 +390,14 @@ interface WatcherExecutionResult {
   execution_time: <<DateTime>>
   input: <<WatcherExecutionResultInput>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherExecutionResultAction]]
-=== WatcherExecutionResultAction
+== WatcherExecutionResultAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherExecutionResultAction {
   email?: <<WatcherEmailResult>>
   id: <<Id>>
@@ -564,237 +411,167 @@ interface WatcherExecutionResultAction {
   webhook?: <<WatcherWebhookResult>>
   error?: <<ErrorCause>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherExecutionResultCondition]]
-=== WatcherExecutionResultCondition
+== WatcherExecutionResultCondition
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherExecutionResultCondition {
   met: boolean
   status: <<WatcherActionStatusOptions>>
   type: <<WatcherConditionType>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherExecutionResultInput]]
-=== WatcherExecutionResultInput
+== WatcherExecutionResultInput
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherExecutionResultInput {
   payload: Record<string, any>
   status: <<WatcherActionStatusOptions>>
   type: <<WatcherInputType>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherExecutionState]]
-=== WatcherExecutionState
+== WatcherExecutionState
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherExecutionState {
   successful: boolean
   timestamp: <<DateTime>>
   reason?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherExecutionStatus]]
-=== WatcherExecutionStatus
+== WatcherExecutionStatus
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherExecutionStatus = 'awaits_execution' | 'checking' | 'execution_not_needed' | 'throttled' | 'executed' | 'failed' | 'deleted_while_queued' | 'not_executed_already_queued'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherExecutionThreadPool]]
-=== WatcherExecutionThreadPool
+== WatcherExecutionThreadPool
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherExecutionThreadPool {
   max_size: <<long>>
   queue_size: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherHourAndMinute]]
-=== WatcherHourAndMinute
+== WatcherHourAndMinute
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherHourAndMinute {
   hour: <<integer>>[]
   minute: <<integer>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherHourlySchedule]]
-=== WatcherHourlySchedule
+== WatcherHourlySchedule
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherHourlySchedule {
   minute: <<integer>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherHttpEmailAttachment]]
-=== WatcherHttpEmailAttachment
+== WatcherHttpEmailAttachment
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherHttpEmailAttachment {
   content_type?: string
   inline?: boolean
   request?: <<WatcherHttpInputRequestDefinition>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherHttpInput]]
-=== WatcherHttpInput
+== WatcherHttpInput
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherHttpInput {
   extract?: string[]
   request?: <<WatcherHttpInputRequestDefinition>>
   response_content_type?: <<WatcherResponseContentType>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherHttpInputAuthentication]]
-=== WatcherHttpInputAuthentication
+== WatcherHttpInputAuthentication
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherHttpInputAuthentication {
   basic: <<WatcherHttpInputBasicAuthentication>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherHttpInputBasicAuthentication]]
-=== WatcherHttpInputBasicAuthentication
+== WatcherHttpInputBasicAuthentication
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherHttpInputBasicAuthentication {
   password: <<Password>>
   username: <<Username>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherHttpInputMethod]]
-=== WatcherHttpInputMethod
+== WatcherHttpInputMethod
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherHttpInputMethod = 'head' | 'get' | 'post' | 'put' | 'delete'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherHttpInputProxy]]
-=== WatcherHttpInputProxy
+== WatcherHttpInputProxy
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherHttpInputProxy {
   host: <<Host>>
   port: <<uint>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherHttpInputRequestDefinition]]
-=== WatcherHttpInputRequestDefinition
+== WatcherHttpInputRequestDefinition
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherHttpInputRequestDefinition {
   auth?: <<WatcherHttpInputAuthentication>>
   body?: string
@@ -810,52 +587,36 @@ interface WatcherHttpInputRequestDefinition {
   scheme?: <<WatcherConnectionScheme>>
   url?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherHttpInputRequestResult]]
-=== WatcherHttpInputRequestResult
+== WatcherHttpInputRequestResult
 
-[pass]
-++++
-<pre>
-++++
-interface WatcherHttpInputRequestResult extends <<WatcherHttpInputRequestDefinition>> {
-}
-[pass]
-++++
-</pre>
-++++
+[source,ts,subs=+macros]
+----
+interface WatcherHttpInputRequestResult extends <<WatcherHttpInputRequestDefinition>> {}
+----
 
 [discrete]
 [[WatcherHttpInputResponseResult]]
-=== WatcherHttpInputResponseResult
+== WatcherHttpInputResponseResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherHttpInputResponseResult {
   body: string
   headers: <<HttpHeaders>>
   status: <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherIndexAction]]
-=== WatcherIndexAction
+== WatcherIndexAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherIndexAction {
   index: <<IndexName>>
   doc_id?: <<Id>>
@@ -864,35 +625,25 @@ interface WatcherIndexAction {
   timeout?: <<Duration>>
   execution_time_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherIndexResult]]
-=== WatcherIndexResult
+== WatcherIndexResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherIndexResult {
   response: <<WatcherIndexResultSummary>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherIndexResultSummary]]
-=== WatcherIndexResultSummary
+== WatcherIndexResultSummary
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherIndexResultSummary {
   created: boolean
   id: <<Id>>
@@ -900,162 +651,110 @@ interface WatcherIndexResultSummary {
   result: <<Result>>
   version: <<VersionNumber>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherInputContainer]]
-=== WatcherInputContainer
+== WatcherInputContainer
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherInputContainer {
   chain?: <<WatcherChainInput>>
   http?: <<WatcherHttpInput>>
   search?: <<WatcherSearchInput>>
   simple?: Record<string, any>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherInputType]]
-=== WatcherInputType
+== WatcherInputType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherInputType = 'http' | 'search' | 'simple'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherLoggingAction]]
-=== WatcherLoggingAction
+== WatcherLoggingAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherLoggingAction {
   level?: string
   text: string
   category?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherLoggingResult]]
-=== WatcherLoggingResult
+== WatcherLoggingResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherLoggingResult {
   logged_text: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherMonth]]
-=== WatcherMonth
+== WatcherMonth
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherMonth = 'january' | 'february' | 'march' | 'april' | 'may' | 'june' | 'july' | 'august' | 'september' | 'october' | 'november' | 'december'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherNeverCondition]]
-=== WatcherNeverCondition
+== WatcherNeverCondition
 
-[pass]
-++++
-<pre>
-++++
-interface WatcherNeverCondition {
-}
-[pass]
-++++
-</pre>
-++++
+[source,ts,subs=+macros]
+----
+interface WatcherNeverCondition {}
+----
 
 [discrete]
 [[WatcherPagerDutyAction]]
-=== WatcherPagerDutyAction
+== WatcherPagerDutyAction
 
-[pass]
-++++
-<pre>
-++++
-interface WatcherPagerDutyAction extends <<WatcherPagerDutyEvent>> {
-}
-[pass]
-++++
-</pre>
-++++
+[source,ts,subs=+macros]
+----
+interface WatcherPagerDutyAction extends <<WatcherPagerDutyEvent>> {}
+----
 
 [discrete]
 [[WatcherPagerDutyContext]]
-=== WatcherPagerDutyContext
+== WatcherPagerDutyContext
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherPagerDutyContext {
   href?: string
   src?: string
   type: <<WatcherPagerDutyContextType>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherPagerDutyContextType]]
-=== WatcherPagerDutyContextType
+== WatcherPagerDutyContextType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherPagerDutyContextType = 'link' | 'image'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherPagerDutyEvent]]
-=== WatcherPagerDutyEvent
+== WatcherPagerDutyEvent
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherPagerDutyEvent {
   account?: string
   attach_payload: boolean
@@ -1068,83 +767,58 @@ interface WatcherPagerDutyEvent {
   incident_key: string
   proxy?: <<WatcherPagerDutyEventProxy>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherPagerDutyEventProxy]]
-=== WatcherPagerDutyEventProxy
+== WatcherPagerDutyEventProxy
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherPagerDutyEventProxy {
   host?: <<Host>>
   port?: <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherPagerDutyEventType]]
-=== WatcherPagerDutyEventType
+== WatcherPagerDutyEventType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherPagerDutyEventType = 'trigger' | 'resolve' | 'acknowledge'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherPagerDutyResult]]
-=== WatcherPagerDutyResult
+== WatcherPagerDutyResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherPagerDutyResult {
   event: <<WatcherPagerDutyEvent>>
   reason?: string
   request?: <<WatcherHttpInputRequestResult>>
   response?: <<WatcherHttpInputResponseResult>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherQuantifier]]
-=== WatcherQuantifier
+== WatcherQuantifier
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherQuantifier = 'some' | 'all'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherQueryWatch]]
-=== WatcherQueryWatch
+== WatcherQueryWatch
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherQueryWatch {
   _id: <<Id>>
   status?: <<WatcherWatchStatus>>
@@ -1152,19 +826,14 @@ interface WatcherQueryWatch {
   _primary_term?: <<integer>>
   _seq_no?: <<SequenceNumber>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherReportingEmailAttachment]]
-=== WatcherReportingEmailAttachment
+== WatcherReportingEmailAttachment
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherReportingEmailAttachment {
   url: string
   inline?: boolean
@@ -1172,33 +841,23 @@ interface WatcherReportingEmailAttachment {
   interval?: <<Duration>>
   request?: <<WatcherHttpInputRequestDefinition>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherResponseContentType]]
-=== WatcherResponseContentType
+== WatcherResponseContentType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherResponseContentType = 'json' | 'yaml' | 'text'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherScheduleContainer]]
-=== WatcherScheduleContainer
+== WatcherScheduleContainer
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherScheduleContainer {
   cron?: <<WatcherCronExpression>>
   daily?: <<WatcherDailySchedule>>
@@ -1208,103 +867,73 @@ interface WatcherScheduleContainer {
   weekly?: <<WatcherTimeOfWeek>> | <<WatcherTimeOfWeek>>[]
   yearly?: <<WatcherTimeOfYear>> | <<WatcherTimeOfYear>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherScheduleTimeOfDay]]
-=== WatcherScheduleTimeOfDay
+== WatcherScheduleTimeOfDay
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type WatcherScheduleTimeOfDay = string | <<WatcherHourAndMinute>>
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherScheduleTriggerEvent]]
-=== WatcherScheduleTriggerEvent
+== WatcherScheduleTriggerEvent
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherScheduleTriggerEvent {
   scheduled_time: <<DateTime>>
   triggered_time?: <<DateTime>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherScriptCondition]]
-=== WatcherScriptCondition
+== WatcherScriptCondition
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherScriptCondition {
   lang?: string
   params?: Record<string, any>
   source?: string
   id?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherSearchInput]]
-=== WatcherSearchInput
+== WatcherSearchInput
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherSearchInput {
   extract?: string[]
   request: <<WatcherSearchInputRequestDefinition>>
   timeout?: <<Duration>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherSearchInputRequestBody]]
-=== WatcherSearchInputRequestBody
+== WatcherSearchInputRequestBody
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherSearchInputRequestBody {
   query: <<QueryDslQueryContainer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherSearchInputRequestDefinition]]
-=== WatcherSearchInputRequestDefinition
+== WatcherSearchInputRequestDefinition
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherSearchInputRequestDefinition {
   body?: <<WatcherSearchInputRequestBody>>
   indices?: <<IndexName>>[]
@@ -1313,19 +942,14 @@ interface WatcherSearchInputRequestDefinition {
   template?: <<WatcherSearchTemplateRequestBody>>
   rest_total_hits_as_int?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherSearchTemplateRequestBody]]
-=== WatcherSearchTemplateRequestBody
+== WatcherSearchTemplateRequestBody
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherSearchTemplateRequestBody {
   explain?: boolean
   pass:[/**] @property id ID of the search template to use. If no source is specified, this parameter is required. */
@@ -1335,54 +959,39 @@ interface WatcherSearchTemplateRequestBody {
   pass:[/**] @property source An inline search template. Supports the same parameters as the search API's request body. Also supports Mustache variables. If no id is specified, this parameter is required. */
   source?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherSimulatedActions]]
-=== WatcherSimulatedActions
+== WatcherSimulatedActions
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherSimulatedActions {
   actions: string[]
   all: <<WatcherSimulatedActions>>
   use_all: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherSlackAction]]
-=== WatcherSlackAction
+== WatcherSlackAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherSlackAction {
   account?: string
   message: <<WatcherSlackMessage>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherSlackAttachment]]
-=== WatcherSlackAttachment
+== WatcherSlackAttachment
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherSlackAttachment {
   author_icon?: string
   author_link?: string
@@ -1400,54 +1009,39 @@ interface WatcherSlackAttachment {
   title_link?: string
   ts?: <<EpochTime>><<<UnitSeconds>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherSlackAttachmentField]]
-=== WatcherSlackAttachmentField
+== WatcherSlackAttachmentField
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherSlackAttachmentField {
   <<short>>: boolean
   title: string
   value: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherSlackDynamicAttachment]]
-=== WatcherSlackDynamicAttachment
+== WatcherSlackDynamicAttachment
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherSlackDynamicAttachment {
   attachment_template: <<WatcherSlackAttachment>>
   list_path: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherSlackMessage]]
-=== WatcherSlackMessage
+== WatcherSlackMessage
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherSlackMessage {
   attachments: <<WatcherSlackAttachment>>[]
   dynamic_attachments?: <<WatcherSlackDynamicAttachment>>
@@ -1456,155 +1050,110 @@ interface WatcherSlackMessage {
   text: string
   to: string[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherSlackResult]]
-=== WatcherSlackResult
+== WatcherSlackResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherSlackResult {
   account?: string
   message: <<WatcherSlackMessage>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherThrottleState]]
-=== WatcherThrottleState
+== WatcherThrottleState
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherThrottleState {
   reason: string
   timestamp: <<DateTime>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherTimeOfMonth]]
-=== WatcherTimeOfMonth
+== WatcherTimeOfMonth
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherTimeOfMonth {
   at: string[]
   on: <<integer>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherTimeOfWeek]]
-=== WatcherTimeOfWeek
+== WatcherTimeOfWeek
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherTimeOfWeek {
   at: string[]
   on: <<WatcherDay>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherTimeOfYear]]
-=== WatcherTimeOfYear
+== WatcherTimeOfYear
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherTimeOfYear {
   at: string[]
   int: <<WatcherMonth>>[]
   on: <<integer>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherTriggerContainer]]
-=== WatcherTriggerContainer
+== WatcherTriggerContainer
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherTriggerContainer {
   schedule?: <<WatcherScheduleContainer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherTriggerEventContainer]]
-=== WatcherTriggerEventContainer
+== WatcherTriggerEventContainer
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherTriggerEventContainer {
   schedule?: <<WatcherScheduleTriggerEvent>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherTriggerEventResult]]
-=== WatcherTriggerEventResult
+== WatcherTriggerEventResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherTriggerEventResult {
   manual: <<WatcherTriggerEventContainer>>
   triggered_time: <<DateTime>>
   type: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherWatch]]
-=== WatcherWatch
+== WatcherWatch
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherWatch {
   actions: Record<<<IndexName>>, <<WatcherAction>>>
   condition: <<WatcherConditionContainer>>
@@ -1616,19 +1165,14 @@ interface WatcherWatch {
   transform?: <<TransformContainer>>
   trigger: <<WatcherTriggerContainer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherWatchStatus]]
-=== WatcherWatchStatus
+== WatcherWatchStatus
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherWatchStatus {
   actions: <<WatcherActions>>
   last_checked?: <<DateTime>>
@@ -1637,39 +1181,26 @@ interface WatcherWatchStatus {
   version: <<VersionNumber>>
   execution_state?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[WatcherWebhookAction]]
-=== WatcherWebhookAction
+== WatcherWebhookAction
 
-[pass]
-++++
-<pre>
-++++
-interface WatcherWebhookAction extends <<WatcherHttpInputRequestDefinition>> {
-}
-[pass]
-++++
-</pre>
-++++
+[source,ts,subs=+macros]
+----
+interface WatcherWebhookAction extends <<WatcherHttpInputRequestDefinition>> {}
+----
 
 [discrete]
 [[WatcherWebhookResult]]
-=== WatcherWebhookResult
+== WatcherWebhookResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherWebhookResult {
   request: <<WatcherHttpInputRequestResult>>
   response?: <<WatcherHttpInputResponseResult>>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

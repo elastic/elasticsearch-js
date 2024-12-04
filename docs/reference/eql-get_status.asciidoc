@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.eql.getStatus]]
-=== client.eql.getStatus
+== client.eql.getStatus
 
 Returns the current status for an async EQL search or a stored synchronous EQL search without returning results.
 
 {ref}/get-async-eql-status-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,27 +47,21 @@ Returns the current status for an async EQL search or a stored synchronous EQL s
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EqlGetStatusRequest extends <<RequestBase>> {
   id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface EqlGetStatusResponse {
   id: <<Id>>
   is_partial: boolean
@@ -72,7 +71,5 @@ interface EqlGetStatusResponse {
   completion_status?: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

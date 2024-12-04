@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.bulkPutRole]]
-=== client.security.bulkPutRole
+== client.security.bulkPutRole
 
 Bulk create or update roles. The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The bulk create or update roles API cannot update roles that are defined in roles files.
 
 {ref}/security-api-bulk-put-role.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,28 +47,22 @@ Bulk create or update roles. The role management APIs are generally the preferre
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityBulkPutRoleRequest extends <<RequestBase>> {
   refresh?: <<Refresh>>
   roles: Record<string, <<SecurityRoleDescriptor>>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityBulkPutRoleResponse {
   created?: string[]
   updated?: string[]
@@ -71,7 +70,5 @@ interface SecurityBulkPutRoleResponse {
   errors?: <<SecurityBulkError>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

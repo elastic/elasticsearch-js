@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.getFieldMapping]]
-=== client.indices.getFieldMapping
+== client.indices.getFieldMapping
 
 Get mapping definitions. Retrieves mapping definitions for one or more fields. For data streams, the API retrieves field mappings for the stream’s backing indices.
 
 {ref}/indices-get-field-mapping.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get mapping definitions. Retrieves mapping definitions for one or more fields. F
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesGetFieldMappingRequest extends <<RequestBase>> {
   fields: <<Fields>>
   index?: <<Indices>>
@@ -58,20 +61,14 @@ interface IndicesGetFieldMappingRequest extends <<RequestBase>> {
   local?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesGetFieldMappingResponse = Record<<<IndexName>>, IndicesGetFieldMappingTypeFieldMappings>
 
-[pass]
-++++
-</pre>
-++++
+----
+

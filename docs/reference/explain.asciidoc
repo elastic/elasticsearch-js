@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.explain]]
-=== client.explain
+== client.explain
 
 Explain a document match result. Returns information about why a specific document matches, or doesn’t match, a query.
 
 {ref}/search-explain.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Explain a document match result. Returns information about why a specific docume
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ExplainRequest extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
@@ -66,17 +69,13 @@ interface ExplainRequest extends <<RequestBase>> {
   query?: <<QueryDslQueryContainer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ExplainResponse<TDocument = unknown> {
   _index: <<IndexName>>
   _id: <<Id>>
@@ -85,7 +84,5 @@ interface ExplainResponse<TDocument = unknown> {
   get?: <<InlineGet>><TDocument>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

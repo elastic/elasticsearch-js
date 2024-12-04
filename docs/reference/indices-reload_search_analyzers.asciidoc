@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.reloadSearchAnalyzers]]
-=== client.indices.reloadSearchAnalyzers
+== client.indices.reloadSearchAnalyzers
 
 Reloads an index's search analyzers and their resources.
 
 {ref}/indices-reload-analyzers.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Reloads an index's search analyzers and their resources.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesReloadSearchAnalyzersRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -55,20 +58,14 @@ interface IndicesReloadSearchAnalyzersRequest extends <<RequestBase>> {
   ignore_unavailable?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesReloadSearchAnalyzersResponse = IndicesReloadSearchAnalyzersReloadResult
 
-[pass]
-++++
-</pre>
-++++
+----
+

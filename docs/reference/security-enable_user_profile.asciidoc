@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.enableUserProfile]]
-=== client.security.enableUserProfile
+== client.security.enableUserProfile
 
 Enable a user profile. Enable user profiles to make them visible in user profile searches.
 
 {ref}/security-api-enable-user-profile.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,23 @@ Enable a user profile. Enable user profiles to make them visible in user profile
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityEnableUserProfileRequest extends <<RequestBase>> {
   uid: <<SecurityUserProfileId>>
   refresh?: <<Refresh>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type SecurityEnableUserProfileResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

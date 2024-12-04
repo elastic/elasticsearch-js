@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.getRecords]]
-=== client.ml.getRecords
+== client.ml.getRecords
 
 Get anomaly records for an anomaly detection job. Records contain the detailed analytical results. They describe the anomalous activity that has been identified in the input data based on the detector configuration. There can be many anomaly records depending on the characteristics and size of the input data. In practice, there are often too many to be able to manually process them. The machine learning features therefore perform a sophisticated aggregation of the anomaly records into buckets. The number of record results depends on the number of anomalies found in each bucket, which relates to the number of time series being modeled and the number of detectors.
 
 {ref}/ml-get-record.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get anomaly records for an anomaly detection job. Records contain the detailed a
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlGetRecordsRequest extends <<RequestBase>> {
   job_id: <<Id>>
   from?: <<integer>>
@@ -61,23 +64,17 @@ interface MlGetRecordsRequest extends <<RequestBase>> {
   start?: <<DateTime>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlGetRecordsResponse {
   count: <<long>>
   records: <<MlAnomaly>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

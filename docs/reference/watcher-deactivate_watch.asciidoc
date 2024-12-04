@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.watcher.deactivateWatch]]
-=== client.watcher.deactivateWatch
+== client.watcher.deactivateWatch
 
 Deactivates a currently active watch.
 
 {ref}/watcher-api-deactivate-watch.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Deactivates a currently active watch.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherDeactivateWatchRequest extends <<RequestBase>> {
   watch_id: <<Name>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface WatcherDeactivateWatchResponse {
   status: <<WatcherActivationStatus>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.watcher.stats]]
-=== client.watcher.stats
+== client.watcher.stats
 
 Retrieves the current Watcher metrics.
 
 {ref}/watcher-api-stats.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,28 +47,22 @@ Retrieves the current Watcher metrics.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherStatsRequest extends <<RequestBase>> {
   metric?: WatcherStatsWatcherMetric | WatcherStatsWatcherMetric[]
   emit_stacktraces?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface WatcherStatsResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
@@ -71,7 +70,5 @@ interface WatcherStatsResponse {
   stats: WatcherStatsWatcherNodeStats[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

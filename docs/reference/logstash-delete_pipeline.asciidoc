@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.logstash.deletePipeline]]
-=== client.logstash.deletePipeline
+== client.logstash.deletePipeline
 
 Deletes a pipeline used for Logstash Central Management.
 
 {ref}/logstash-api-delete-pipeline.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,30 +47,22 @@ Deletes a pipeline used for Logstash Central Management.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface LogstashDeletePipelineRequest extends <<RequestBase>> {
   id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type LogstashDeletePipelineResponse = boolean
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.nodes.info]]
-=== client.nodes.info
+== client.nodes.info
 
 Returns cluster nodes information.
 
 {ref}/cluster-nodes-info.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Returns cluster nodes information.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesInfoRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   metric?: <<Metrics>>
@@ -56,20 +59,14 @@ interface NodesInfoRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type NodesInfoResponse = NodesInfoResponseBase
 
-[pass]
-++++
-</pre>
-++++
+----
+

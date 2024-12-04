@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cluster.getComponentTemplate]]
-=== client.cluster.getComponentTemplate
+== client.cluster.getComponentTemplate
 
 Get component templates. Retrieves information about component templates.
 
 {ref}/indices-component-template.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get component templates. Retrieves information about component templates.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ClusterGetComponentTemplateRequest extends <<RequestBase>> {
   name?: <<Name>>
   flat_settings?: boolean
@@ -56,22 +59,16 @@ interface ClusterGetComponentTemplateRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ClusterGetComponentTemplateResponse {
   component_templates: <<ClusterComponentTemplate>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

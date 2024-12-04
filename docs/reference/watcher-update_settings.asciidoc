@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.watcher.updateSettings]]
-=== client.watcher.updateSettings
+== client.watcher.updateSettings
 
 Update settings for the watcher system index
 
 {ref}/watcher-api-update-settings.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

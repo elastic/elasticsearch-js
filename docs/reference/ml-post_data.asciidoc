@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.postData]]
-=== client.ml.postData
+== client.ml.postData
 
 Send data to an anomaly detection job for analysis. IMPORTANT: For each job, data can be accepted from only a single connection at a time. It is not currently possible to post data to multiple jobs using wildcards or a list.
 
 {ref}/ml-post-data.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Send data to an anomaly detection job for analysis. IMPORTANT: For each job, dat
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlPostDataRequest<TData = unknown> extends <<RequestBase>> {
   job_id: <<Id>>
   reset_end?: <<DateTime>>
@@ -55,17 +58,13 @@ interface MlPostDataRequest<TData = unknown> extends <<RequestBase>> {
   data?: TData[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlPostDataResponse {
   bucket_count: <<long>>
   earliest_record_timestamp: <<long>>
@@ -84,7 +83,5 @@ interface MlPostDataResponse {
   sparse_bucket_count: <<long>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

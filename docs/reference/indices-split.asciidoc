@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.split]]
-=== client.indices.split
+== client.indices.split
 
 Splits an existing index into a new index with more primary shards.
 
 {ref}/indices-split-index.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Splits an existing index into a new index with more primary shards.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSplitRequest extends <<RequestBase>> {
   index: <<IndexName>>
   target: <<IndexName>>
@@ -58,24 +61,18 @@ interface IndicesSplitRequest extends <<RequestBase>> {
   settings?: Record<string, any>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesSplitResponse {
   acknowledged: boolean
   shards_acknowledged: boolean
   index: <<IndexName>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

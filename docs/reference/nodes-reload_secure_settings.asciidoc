@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.nodes.reloadSecureSettings]]
-=== client.nodes.reloadSecureSettings
+== client.nodes.reloadSecureSettings
 
 Reloads the keystore on nodes in the cluster.
 
 {ref}/secure-settings.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Reloads the keystore on nodes in the cluster.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesReloadSecureSettingsRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   timeout?: <<Duration>>
   secure_settings_password?: <<Password>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type NodesReloadSecureSettingsResponse = NodesReloadSecureSettingsResponseBase
 
-[pass]
-++++
-</pre>
-++++
+----
+

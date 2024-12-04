@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.bulkDeleteRole]]
-=== client.security.bulkDeleteRole
+== client.security.bulkDeleteRole
 
 Bulk delete roles. The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The bulk delete roles API cannot delete roles that are defined in roles files.
 
 {ref}/security-api-bulk-delete-role.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,35 +47,27 @@ Bulk delete roles. The role management APIs are generally the preferred way to m
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityBulkDeleteRoleRequest extends <<RequestBase>> {
   refresh?: <<Refresh>>
   names: string[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityBulkDeleteRoleResponse {
   deleted?: string[]
   not_found?: string[]
   errors?: <<SecurityBulkError>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

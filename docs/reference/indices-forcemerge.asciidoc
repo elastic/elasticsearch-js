@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.forcemerge]]
-=== client.indices.forcemerge
+== client.indices.forcemerge
 
 Performs the force merge operation on one or more indices.
 
 {ref}/indices-forcemerge.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Performs the force merge operation on one or more indices.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesForcemergeRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -59,20 +62,14 @@ interface IndicesForcemergeRequest extends <<RequestBase>> {
   wait_for_completion?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesForcemergeResponse = IndicesForcemergeForceMergeResponseBody
 
-[pass]
-++++
-</pre>
-++++
+----
+

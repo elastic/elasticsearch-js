@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.getJobStats]]
-=== client.ml.getJobStats
+== client.ml.getJobStats
 
 Get anomaly detection jobs usage info.
 
 {ref}/ml-get-job-stats.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Get anomaly detection jobs usage info.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlGetJobStatsRequest extends <<RequestBase>> {
   job_id?: <<Id>>
   allow_no_match?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlGetJobStatsResponse {
   count: <<long>>
   jobs: <<MlJobStats>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

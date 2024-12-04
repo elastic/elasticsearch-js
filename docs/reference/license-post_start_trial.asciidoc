@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.license.postStartTrial]]
-=== client.license.postStartTrial
+== client.license.postStartTrial
 
 The start trial API enables you to start a 30-day trial, which gives access to all subscription features.
 
 {ref}/start-trial.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,28 +47,22 @@ The start trial API enables you to start a 30-day trial, which gives access to a
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface LicensePostStartTrialRequest extends <<RequestBase>> {
   acknowledge?: boolean
   type_query_string?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface LicensePostStartTrialResponse {
   acknowledged: boolean
   error_message?: string
@@ -71,7 +70,5 @@ interface LicensePostStartTrialResponse {
   type?: <<LicenseLicenseType>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

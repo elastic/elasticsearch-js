@@ -1,6 +1,6 @@
 [[reference-shared-types-esql-types]]
 
-== `Esql`
+== `Esql` types
 
 ////////
 ===========================================================================================================================
@@ -26,80 +26,62 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[EsqlTableValuesContainer]]
-=== EsqlTableValuesContainer
+== EsqlTableValuesContainer
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EsqlTableValuesContainer {
   <<integer>>?: <<EsqlTableValuesIntegerValue>>[]
   keyword?: <<EsqlTableValuesKeywordValue>>[]
   <<long>>?: <<EsqlTableValuesLongValue>>[]
   <<double>>?: <<EsqlTableValuesLongDouble>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[EsqlTableValuesIntegerValue]]
-=== EsqlTableValuesIntegerValue
+== EsqlTableValuesIntegerValue
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type EsqlTableValuesIntegerValue = <<integer>> | <<integer>>[]
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[EsqlTableValuesKeywordValue]]
-=== EsqlTableValuesKeywordValue
+== EsqlTableValuesKeywordValue
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type EsqlTableValuesKeywordValue = string | string[]
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[EsqlTableValuesLongDouble]]
-=== EsqlTableValuesLongDouble
+== EsqlTableValuesLongDouble
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type EsqlTableValuesLongDouble = <<double>> | <<double>>[]
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[EsqlTableValuesLongValue]]
-=== EsqlTableValuesLongValue
+== EsqlTableValuesLongValue
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type EsqlTableValuesLongValue = <<long>> | <<long>>[]
-[pass]
-++++
-</pre>
-++++
+----
+

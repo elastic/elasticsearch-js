@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.getDataLifecycle]]
-=== client.indices.getDataLifecycle
+== client.indices.getDataLifecycle
 
 Get data stream lifecycles. Retrieves the data stream lifecycle configuration of one or more data streams.
 
 {ref}/data-streams-get-lifecycle.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get data stream lifecycles. Retrieves the data stream lifecycle configuration of
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesGetDataLifecycleRequest extends <<RequestBase>> {
   name: <<DataStreamNames>>
   expand_wildcards?: <<ExpandWildcards>>
@@ -55,22 +58,16 @@ interface IndicesGetDataLifecycleRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesGetDataLifecycleResponse {
   data_streams: IndicesGetDataLifecycleDataStreamWithLifecycle[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

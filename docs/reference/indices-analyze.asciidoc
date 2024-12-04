@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.analyze]]
-=== client.indices.analyze
+== client.indices.analyze
 
 Get tokens from text analysis. The analyze API performs [analysis](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis.html) on a text string and returns the resulting tokens.
 
 {ref}/indices-analyze.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get tokens from text analysis. The analyze API performs [analysis](https://www.e
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesAnalyzeRequest extends <<RequestBase>> {
   index?: <<IndexName>>
   analyzer?: string
@@ -61,23 +64,17 @@ interface IndicesAnalyzeRequest extends <<RequestBase>> {
   tokenizer?: <<AnalysisTokenizer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesAnalyzeResponse {
   detail?: IndicesAnalyzeAnalyzeDetail
   tokens?: IndicesAnalyzeAnalyzeToken[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

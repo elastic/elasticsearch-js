@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.existsSource]]
-=== client.existsSource
+== client.existsSource
 
 Check for a document source. Checks if a document's `_source` is stored.
 
 {ref}/docs-get.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Check for a document source. Checks if a document's `_source` is stored.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ExistsSourceRequest extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
@@ -62,20 +65,14 @@ interface ExistsSourceRequest extends <<RequestBase>> {
   version_type?: <<VersionType>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type ExistsSourceResponse = boolean
 
-[pass]
-++++
-</pre>
-++++
+----
+

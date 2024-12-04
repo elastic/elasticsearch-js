@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.watcher.activateWatch]]
-=== client.watcher.activateWatch
+== client.watcher.activateWatch
 
 Activates a currently inactive watch.
 
 {ref}/watcher-api-activate-watch.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Activates a currently inactive watch.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherActivateWatchRequest extends <<RequestBase>> {
   watch_id: <<Name>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface WatcherActivateWatchResponse {
   status: <<WatcherActivationStatus>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

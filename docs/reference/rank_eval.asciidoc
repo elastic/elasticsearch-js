@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.rankEval]]
-=== client.rankEval
+== client.rankEval
 
 Evaluate ranked search results. Evaluate the quality of ranked search results over a set of typical search queries.
 
 {ref}/search-rank-eval.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Evaluate ranked search results. Evaluate the quality of ranked search results ov
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface RankEvalRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -58,24 +61,18 @@ interface RankEvalRequest extends <<RequestBase>> {
   metric?: <<RankEvalRankEvalMetric>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface RankEvalResponse {
   metric_score: <<double>>
   details: Record<<<Id>>, <<RankEvalRankEvalMetricDetail>>>
   failures: Record<string, any>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

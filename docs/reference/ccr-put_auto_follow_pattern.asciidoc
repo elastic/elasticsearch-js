@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ccr.putAutoFollowPattern]]
-=== client.ccr.putAutoFollowPattern
+== client.ccr.putAutoFollowPattern
 
 Creates a new named collection of auto-follow patterns against a specified remote cluster. Newly created indices on the remote cluster matching any of the specified patterns will be automatically configured as follower indices.
 
 {ref}/ccr-put-auto-follow-pattern.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Creates a new named collection of auto-follow patterns against a specified remot
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface CcrPutAutoFollowPatternRequest extends <<RequestBase>> {
   name: <<Name>>
   remote_cluster: string
@@ -67,20 +70,14 @@ interface CcrPutAutoFollowPatternRequest extends <<RequestBase>> {
   max_write_request_size?: <<ByteSize>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type CcrPutAutoFollowPatternResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

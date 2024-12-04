@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.enrich.putPolicy]]
-=== client.enrich.putPolicy
+== client.enrich.putPolicy
 
 Create an enrich policy. Creates an enrich policy.
 
 {ref}/put-enrich-policy-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Create an enrich policy. Creates an enrich policy.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EnrichPutPolicyRequest extends <<RequestBase>> {
   name: <<Name>>
   geo_match?: <<EnrichPolicy>>
@@ -55,20 +58,14 @@ interface EnrichPutPolicyRequest extends <<RequestBase>> {
   range?: <<EnrichPolicy>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type EnrichPutPolicyResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

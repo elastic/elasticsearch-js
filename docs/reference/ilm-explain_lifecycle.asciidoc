@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ilm.explainLifecycle]]
-=== client.ilm.explainLifecycle
+== client.ilm.explainLifecycle
 
 Retrieves information about the index’s current lifecycle state, such as the currently executing phase, action, and step. Shows when the index entered each one, the definition of the running phase, and information about any failures.
 
 {ref}/ilm-explain-lifecycle.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Retrieves information about the index’s current lifecycle state, such as the c
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmExplainLifecycleRequest extends <<RequestBase>> {
   index: <<IndexName>>
   only_errors?: boolean
@@ -56,22 +59,16 @@ interface IlmExplainLifecycleRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IlmExplainLifecycleResponse {
   indices: Record<<<IndexName>>, IlmExplainLifecycleLifecycleExplain>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

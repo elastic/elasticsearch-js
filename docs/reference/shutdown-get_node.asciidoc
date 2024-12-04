@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.shutdown.getNode]]
-=== client.shutdown.getNode
+== client.shutdown.getNode
 
 Retrieve status of a node or nodes that are currently marked as shutting down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentati
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ShutdownGetNodeRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   master_timeout?: <<TimeUnit>>
   timeout?: <<TimeUnit>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ShutdownGetNodeResponse {
   nodes: ShutdownGetNodeNodeShutdownStatus[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

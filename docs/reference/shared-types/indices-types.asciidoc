@@ -1,6 +1,6 @@
 [[reference-shared-types-indices-types]]
 
-== `Indices`
+== `Indices` types
 
 ////////
 ===========================================================================================================================
@@ -26,17 +26,21 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[IndicesAlias]]
-=== IndicesAlias
+== IndicesAlias
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesAlias {
   pass:[/**] @property filter Query used to limit documents the alias can access. */
   filter?: <<QueryDslQueryContainer>>
@@ -51,19 +55,14 @@ interface IndicesAlias {
   pass:[/**] @property search_routing Value used to route search operations to a specific shard. If specified, this overwrites the `routing` value for search operations. */
   search_routing?: <<Routing>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesAliasDefinition]]
-=== IndicesAliasDefinition
+== IndicesAliasDefinition
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesAliasDefinition {
   pass:[/**] @property filter Query used to limit documents the alias can access. */
   filter?: <<QueryDslQueryContainer>>
@@ -78,35 +77,25 @@ interface IndicesAliasDefinition {
   pass:[/**] @property is_hidden If `true`, the alias is hidden. All indices for the alias must have the same `is_hidden` value. */
   is_hidden?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesCacheQueries]]
-=== IndicesCacheQueries
+== IndicesCacheQueries
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesCacheQueries {
   enabled: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesDataStream]]
-=== IndicesDataStream
+== IndicesDataStream
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDataStream {
   pass:[/**] @property _meta Custom metadata for the stream, copied from the `_meta` object of the stream’s matching index template. If empty, the response omits this property. */
   _meta?: <<Metadata>>
@@ -143,19 +132,14 @@ interface IndicesDataStream {
   pass:[/**] @property timestamp_field Information about the `@timestamp` field in the data stream. */
   timestamp_field: <<IndicesDataStreamTimestampField>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesDataStreamIndex]]
-=== IndicesDataStreamIndex
+== IndicesDataStreamIndex
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDataStreamIndex {
   pass:[/**] @property index_name <<Name>> of the backing index. */
   index_name: <<IndexName>>
@@ -168,53 +152,38 @@ interface IndicesDataStreamIndex {
   pass:[/**] @property prefer_ilm Indicates if ILM should take precedence over DSL in case both are configured to manage this index. */
   prefer_ilm?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesDataStreamLifecycle]]
-=== IndicesDataStreamLifecycle
+== IndicesDataStreamLifecycle
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDataStreamLifecycle {
   data_retention?: <<Duration>>
   downsampling?: <<IndicesDataStreamLifecycleDownsampling>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesDataStreamLifecycleDownsampling]]
-=== IndicesDataStreamLifecycleDownsampling
+== IndicesDataStreamLifecycleDownsampling
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDataStreamLifecycleDownsampling {
   pass:[/**] @property rounds The list of downsampling rounds to execute as part of this downsampling configuration */
   rounds: <<IndicesDownsamplingRound>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesDataStreamLifecycleRolloverConditions]]
-=== IndicesDataStreamLifecycleRolloverConditions
+== IndicesDataStreamLifecycleRolloverConditions
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDataStreamLifecycleRolloverConditions {
   min_age?: <<Duration>>
   max_age?: string
@@ -227,19 +196,14 @@ interface IndicesDataStreamLifecycleRolloverConditions {
   min_primary_shard_docs?: <<long>>
   max_primary_shard_docs?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesDataStreamLifecycleWithRollover]]
-=== IndicesDataStreamLifecycleWithRollover
+== IndicesDataStreamLifecycleWithRollover
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDataStreamLifecycleWithRollover {
   pass:[/**] @property data_retention If defined, every document added to this data stream will be stored at least for this time frame. Any time after this duration the document could be deleted. When empty, every document in this data stream will be stored indefinitely. */
   data_retention?: <<Duration>>
@@ -248,287 +212,202 @@ interface IndicesDataStreamLifecycleWithRollover {
   pass:[/**] @property rollover The conditions which will trigger the rollover of a backing index as configured by the cluster setting `cluster.lifecycle.default.rollover`. This property is an implementation detail and it will only be retrieved when the query param `include_defaults` is set to true. The contents of this field are subject to change. */
   rollover?: <<IndicesDataStreamLifecycleRolloverConditions>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesDataStreamTimestampField]]
-=== IndicesDataStreamTimestampField
+== IndicesDataStreamTimestampField
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDataStreamTimestampField {
   pass:[/**] @property name <<Name>> of the timestamp field for the data stream, which must be `@timestamp`. The `@timestamp` field must be included in every document indexed to the data stream. */
   name: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesDataStreamVisibility]]
-=== IndicesDataStreamVisibility
+== IndicesDataStreamVisibility
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDataStreamVisibility {
   hidden?: boolean
   allow_custom_routing?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesDownsampleConfig]]
-=== IndicesDownsampleConfig
+== IndicesDownsampleConfig
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDownsampleConfig {
   pass:[/**] @property fixed_interval The interval at which to aggregate the original time series index. */
   fixed_interval: <<DurationLarge>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesDownsamplingRound]]
-=== IndicesDownsamplingRound
+== IndicesDownsamplingRound
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDownsamplingRound {
   pass:[/**] @property after The duration since rollover when this downsampling round should execute */
   after: <<Duration>>
   pass:[/**] @property config The downsample configuration to execute. */
   config: <<IndicesDownsampleConfig>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesFailureStore]]
-=== IndicesFailureStore
+== IndicesFailureStore
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesFailureStore {
   enabled: boolean
   indices: <<IndicesDataStreamIndex>>[]
   rollover_on_write: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesFielddataFrequencyFilter]]
-=== IndicesFielddataFrequencyFilter
+== IndicesFielddataFrequencyFilter
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesFielddataFrequencyFilter {
   max: <<double>>
   min: <<double>>
   min_segment_size: <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexCheckOnStartup]]
-=== IndicesIndexCheckOnStartup
+== IndicesIndexCheckOnStartup
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IndicesIndexCheckOnStartup = boolean | 'true' | 'false' | 'checksum'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexRouting]]
-=== IndicesIndexRouting
+== IndicesIndexRouting
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexRouting {
   allocation?: <<IndicesIndexRoutingAllocation>>
   rebalance?: <<IndicesIndexRoutingRebalance>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexRoutingAllocation]]
-=== IndicesIndexRoutingAllocation
+== IndicesIndexRoutingAllocation
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexRoutingAllocation {
   enable?: <<IndicesIndexRoutingAllocationOptions>>
   include?: <<IndicesIndexRoutingAllocationInclude>>
   initial_recovery?: <<IndicesIndexRoutingAllocationInitialRecovery>>
   disk?: <<IndicesIndexRoutingAllocationDisk>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexRoutingAllocationDisk]]
-=== IndicesIndexRoutingAllocationDisk
+== IndicesIndexRoutingAllocationDisk
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexRoutingAllocationDisk {
   threshold_enabled?: boolean | string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexRoutingAllocationInclude]]
-=== IndicesIndexRoutingAllocationInclude
+== IndicesIndexRoutingAllocationInclude
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexRoutingAllocationInclude {
   _tier_preference?: string
   _id?: <<Id>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexRoutingAllocationInitialRecovery]]
-=== IndicesIndexRoutingAllocationInitialRecovery
+== IndicesIndexRoutingAllocationInitialRecovery
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexRoutingAllocationInitialRecovery {
   _id?: <<Id>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexRoutingAllocationOptions]]
-=== IndicesIndexRoutingAllocationOptions
+== IndicesIndexRoutingAllocationOptions
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IndicesIndexRoutingAllocationOptions = 'all' | 'primaries' | 'new_primaries' | 'none'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexRoutingRebalance]]
-=== IndicesIndexRoutingRebalance
+== IndicesIndexRoutingRebalance
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexRoutingRebalance {
   enable: <<IndicesIndexRoutingRebalanceOptions>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexRoutingRebalanceOptions]]
-=== IndicesIndexRoutingRebalanceOptions
+== IndicesIndexRoutingRebalanceOptions
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IndicesIndexRoutingRebalanceOptions = 'all' | 'primaries' | 'replicas' | 'none'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexSegmentSort]]
-=== IndicesIndexSegmentSort
+== IndicesIndexSegmentSort
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexSegmentSort {
   field?: <<Fields>>
   order?: <<IndicesSegmentSortOrder>> | <<IndicesSegmentSortOrder>>[]
   mode?: <<IndicesSegmentSortMode>> | <<IndicesSegmentSortMode>>[]
   missing?: <<IndicesSegmentSortMissing>> | <<IndicesSegmentSortMissing>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexSettingBlocks]]
-=== IndicesIndexSettingBlocks
+== IndicesIndexSettingBlocks
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexSettingBlocks {
   read_only?: <<SpecUtilsStringified>><boolean>
   read_only_allow_delete?: <<SpecUtilsStringified>><boolean>
@@ -536,19 +415,14 @@ interface IndicesIndexSettingBlocks {
   write?: <<SpecUtilsStringified>><boolean>
   metadata?: <<SpecUtilsStringified>><boolean>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexSettings]]
-=== IndicesIndexSettings
+== IndicesIndexSettings
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexSettingsKeys {
   index?: <<IndicesIndexSettings>>
   mode?: string
@@ -609,19 +483,14 @@ interface IndicesIndexSettingsKeys {
 }
 type IndicesIndexSettings = IndicesIndexSettingsKeys
   & { [property: string]: any }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexSettingsAnalysis]]
-=== IndicesIndexSettingsAnalysis
+== IndicesIndexSettingsAnalysis
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexSettingsAnalysis {
   analyzer?: Record<string, <<AnalysisAnalyzer>>>
   char_filter?: Record<string, <<AnalysisCharFilter>>>
@@ -629,19 +498,14 @@ interface IndicesIndexSettingsAnalysis {
   normalizer?: Record<string, <<AnalysisNormalizer>>>
   tokenizer?: Record<string, <<AnalysisTokenizer>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexSettingsLifecycle]]
-=== IndicesIndexSettingsLifecycle
+== IndicesIndexSettingsLifecycle
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexSettingsLifecycle {
   pass:[/**] @property name The name of the policy to use to manage the index. For information about how Elasticsearch applies policy changes, see Policy updates. */
   name?: <<Name>>
@@ -655,53 +519,38 @@ interface IndicesIndexSettingsLifecycle {
   pass:[/**] @property rollover_alias The index alias to update when the index rolls over. Specify when using a policy that contains a rollover action. When the index rolls over, the alias is updated to reflect that the index is no longer the write index. For more information about rolling indices, see Rollover. */
   rollover_alias?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexSettingsLifecycleStep]]
-=== IndicesIndexSettingsLifecycleStep
+== IndicesIndexSettingsLifecycleStep
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexSettingsLifecycleStep {
   pass:[/**] @property wait_time_threshold Time to wait for the cluster to resolve allocation issues during an ILM shrink action. Must be greater than 1h (1 hour). See Shard allocation for shrink. */
   wait_time_threshold?: <<Duration>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexSettingsTimeSeries]]
-=== IndicesIndexSettingsTimeSeries
+== IndicesIndexSettingsTimeSeries
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexSettingsTimeSeries {
   end_time?: <<DateTime>>
   start_time?: <<DateTime>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexState]]
-=== IndicesIndexState
+== IndicesIndexState
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexState {
   aliases?: Record<<<IndexName>>, <<IndicesAlias>>>
   mappings?: <<MappingTypeMapping>>
@@ -712,19 +561,14 @@ interface IndicesIndexState {
   pass:[/**] @property lifecycle Data stream lifecycle applicable if this is a data stream. */
   lifecycle?: <<IndicesDataStreamLifecycle>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexTemplate]]
-=== IndicesIndexTemplate
+== IndicesIndexTemplate
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexTemplate {
   pass:[/**] @property index_patterns <<Name>> of the index template. */
   index_patterns: <<Names>>
@@ -742,38 +586,28 @@ interface IndicesIndexTemplate {
   pass:[/**] @property data_stream If this object is included, the template is used to create data streams and their backing indices. Supports an empty object. Data streams require a matching index template with a `data_stream` object. */
   data_stream?: <<IndicesIndexTemplateDataStreamConfiguration>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexTemplateDataStreamConfiguration]]
-=== IndicesIndexTemplateDataStreamConfiguration
+== IndicesIndexTemplateDataStreamConfiguration
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexTemplateDataStreamConfiguration {
   pass:[/**] @property hidden If true, the data stream is hidden. */
   hidden?: boolean
   pass:[/**] @property allow_custom_routing If true, the data stream supports custom routing. */
   allow_custom_routing?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexTemplateSummary]]
-=== IndicesIndexTemplateSummary
+== IndicesIndexTemplateSummary
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexTemplateSummary {
   pass:[/**] @property aliases Aliases to add. If the index template includes a `data_stream` object, these are data stream aliases. Otherwise, these are index aliases. Data stream aliases ignore the `index_routing`, `routing`, and `search_routing` options. */
   aliases?: Record<<<IndexName>>, <<IndicesAlias>>>
@@ -783,119 +617,84 @@ interface IndicesIndexTemplateSummary {
   settings?: <<IndicesIndexSettings>>
   lifecycle?: <<IndicesDataStreamLifecycleWithRollover>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexVersioning]]
-=== IndicesIndexVersioning
+== IndicesIndexVersioning
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexVersioning {
   created?: <<VersionString>>
   created_string?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexingPressure]]
-=== IndicesIndexingPressure
+== IndicesIndexingPressure
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexingPressure {
   memory: <<IndicesIndexingPressureMemory>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexingPressureMemory]]
-=== IndicesIndexingPressureMemory
+== IndicesIndexingPressureMemory
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexingPressureMemory {
   pass:[/**] @property limit Number of outstanding bytes that may be consumed by indexing requests. When this limit is reached or exceeded, the node will reject new coordinating and primary operations. When replica operations consume 1.5x this limit, the node will reject new replica operations. Defaults to 10% of the heap. */
   limit?: <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexingSlowlogSettings]]
-=== IndicesIndexingSlowlogSettings
+== IndicesIndexingSlowlogSettings
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexingSlowlogSettings {
   level?: string
   source?: <<integer>>
   reformat?: boolean
   threshold?: <<IndicesIndexingSlowlogTresholds>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesIndexingSlowlogTresholds]]
-=== IndicesIndexingSlowlogTresholds
+== IndicesIndexingSlowlogTresholds
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesIndexingSlowlogTresholds {
   pass:[/**] @property index The indexing slow log, similar in functionality to the search slow log. The log file name ends with `_index_indexing_slowlog.json`. Log and the thresholds are configured in the same way as the search slowlog. */
   index?: <<IndicesSlowlogTresholdLevels>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesManagedBy]]
-=== IndicesManagedBy
+== IndicesManagedBy
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IndicesManagedBy = 'Index Lifecycle Management' | 'Data stream lifecycle' | 'Unmanaged'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesMappingLimitSettings]]
-=== IndicesMappingLimitSettings
+== IndicesMappingLimitSettings
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesMappingLimitSettings {
   coerce?: boolean
   total_fields?: <<IndicesMappingLimitSettingsTotalFields>>
@@ -906,603 +705,423 @@ interface IndicesMappingLimitSettings {
   dimension_fields?: <<IndicesMappingLimitSettingsDimensionFields>>
   ignore_malformed?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesMappingLimitSettingsDepth]]
-=== IndicesMappingLimitSettingsDepth
+== IndicesMappingLimitSettingsDepth
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesMappingLimitSettingsDepth {
   pass:[/**] @property limit The maximum depth for a field, which is measured as the number of inner objects. For instance, if all fields are defined at the root object level, then the depth is 1. If there is one object mapping, then the depth is 2, etc. */
   limit?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesMappingLimitSettingsDimensionFields]]
-=== IndicesMappingLimitSettingsDimensionFields
+== IndicesMappingLimitSettingsDimensionFields
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesMappingLimitSettingsDimensionFields {
   pass:[/**] @property limit [preview] This functionality is in technical preview and may be changed or removed in a future release. Elastic will work to fix any issues, but features in technical preview are not subject to the support SLA of official GA features. */
   limit?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesMappingLimitSettingsFieldNameLength]]
-=== IndicesMappingLimitSettingsFieldNameLength
+== IndicesMappingLimitSettingsFieldNameLength
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesMappingLimitSettingsFieldNameLength {
   pass:[/**] @property limit Setting for the maximum length of a field name. This setting isn’t really something that addresses mappings explosion but might still be useful if you want to limit the field length. It usually shouldn’t be necessary to set this setting. The default is okay unless a user starts to add a huge number of fields with really <<long>> names. Default is `Long.MAX_VALUE` (no limit). */
   limit?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesMappingLimitSettingsNestedFields]]
-=== IndicesMappingLimitSettingsNestedFields
+== IndicesMappingLimitSettingsNestedFields
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesMappingLimitSettingsNestedFields {
   pass:[/**] @property limit The maximum number of distinct nested mappings in an index. The nested type should only be used in special cases, when arrays of objects need to be queried independently of each other. To safeguard against poorly designed mappings, this setting limits the number of unique nested types per index. */
   limit?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesMappingLimitSettingsNestedObjects]]
-=== IndicesMappingLimitSettingsNestedObjects
+== IndicesMappingLimitSettingsNestedObjects
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesMappingLimitSettingsNestedObjects {
   pass:[/**] @property limit The maximum number of nested JSON objects that a single document can contain across all nested types. This limit helps to prevent out of memory errors when a document contains too many nested objects. */
   limit?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesMappingLimitSettingsTotalFields]]
-=== IndicesMappingLimitSettingsTotalFields
+== IndicesMappingLimitSettingsTotalFields
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesMappingLimitSettingsTotalFields {
   pass:[/**] @property limit The maximum number of fields in an index. <<Field>> and object mappings, as well as field aliases count towards this limit. The limit is in place to prevent mappings and searches from becoming too large. Higher values can lead to performance degradations and memory issues, especially in clusters with a high load or few resources. */
   limit?: <<long>>
   pass:[/**] @property ignore_dynamic_beyond_limit This setting determines what happens when a dynamically mapped field would exceed the total fields limit. When set to false (the default), the index request of the document that tries to add a dynamic field to the mapping will fail with the message Limit of total fields [X] has been exceeded. When set to true, the index request will not fail. Instead, fields that would exceed the limit are not added to the mapping, similar to dynamic: false. The fields that were not added to the mapping will be added to the _ignored field. */
   ignore_dynamic_beyond_limit?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesMerge]]
-=== IndicesMerge
+== IndicesMerge
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesMerge {
   scheduler?: <<IndicesMergeScheduler>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesMergeScheduler]]
-=== IndicesMergeScheduler
+== IndicesMergeScheduler
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesMergeScheduler {
   max_thread_count?: <<SpecUtilsStringified>><<<integer>>>
   max_merge_count?: <<SpecUtilsStringified>><<<integer>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesNumericFielddata]]
-=== IndicesNumericFielddata
+== IndicesNumericFielddata
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesNumericFielddata {
   format: <<IndicesNumericFielddataFormat>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesNumericFielddataFormat]]
-=== IndicesNumericFielddataFormat
+== IndicesNumericFielddataFormat
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IndicesNumericFielddataFormat = 'array' | 'disabled'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesQueries]]
-=== IndicesQueries
+== IndicesQueries
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesQueries {
   cache?: <<IndicesCacheQueries>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesRetentionLease]]
-=== IndicesRetentionLease
+== IndicesRetentionLease
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesRetentionLease {
   period: <<Duration>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSearchIdle]]
-=== IndicesSearchIdle
+== IndicesSearchIdle
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSearchIdle {
   after?: <<Duration>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSegmentSortMissing]]
-=== IndicesSegmentSortMissing
+== IndicesSegmentSortMissing
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IndicesSegmentSortMissing = '_last' | '_first'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSegmentSortMode]]
-=== IndicesSegmentSortMode
+== IndicesSegmentSortMode
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IndicesSegmentSortMode = 'min' | 'MIN' | 'max' | 'MAX'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSegmentSortOrder]]
-=== IndicesSegmentSortOrder
+== IndicesSegmentSortOrder
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IndicesSegmentSortOrder = 'asc' | 'ASC' | 'desc' | 'DESC'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSettingsAnalyze]]
-=== IndicesSettingsAnalyze
+== IndicesSettingsAnalyze
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSettingsAnalyze {
   max_token_count?: <<SpecUtilsStringified>><<<integer>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSettingsHighlight]]
-=== IndicesSettingsHighlight
+== IndicesSettingsHighlight
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSettingsHighlight {
   max_analyzed_offset?: <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSettingsQueryString]]
-=== IndicesSettingsQueryString
+== IndicesSettingsQueryString
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSettingsQueryString {
   lenient: <<SpecUtilsStringified>><boolean>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSettingsSearch]]
-=== IndicesSettingsSearch
+== IndicesSettingsSearch
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSettingsSearch {
   idle?: <<IndicesSearchIdle>>
   slowlog?: <<IndicesSlowlogSettings>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSettingsSimilarity]]
-=== IndicesSettingsSimilarity
+== IndicesSettingsSimilarity
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IndicesSettingsSimilarity = IndicesSettingsSimilarityBm25 | <<IndicesSettingsSimilarityBoolean>> | <<IndicesSettingsSimilarityDfi>> | <<IndicesSettingsSimilarityDfr>> | <<IndicesSettingsSimilarityIb>> | <<IndicesSettingsSimilarityLmd>> | <<IndicesSettingsSimilarityLmj>> | <<IndicesSettingsSimilarityScripted>>
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSettingsSimilarityBm25]]
-=== IndicesSettingsSimilarityBm25
+== IndicesSettingsSimilarityBm25
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSettingsSimilarityBm25 {
   type: 'BM25'
   b?: <<double>>
   discount_overlaps?: boolean
   k1?: <<double>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSettingsSimilarityBoolean]]
-=== IndicesSettingsSimilarityBoolean
+== IndicesSettingsSimilarityBoolean
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSettingsSimilarityBoolean {
   type: 'boolean'
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSettingsSimilarityDfi]]
-=== IndicesSettingsSimilarityDfi
+== IndicesSettingsSimilarityDfi
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSettingsSimilarityDfi {
   type: 'DFI'
   independence_measure: <<DFIIndependenceMeasure>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSettingsSimilarityDfr]]
-=== IndicesSettingsSimilarityDfr
+== IndicesSettingsSimilarityDfr
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSettingsSimilarityDfr {
   type: 'DFR'
   after_effect: <<DFRAfterEffect>>
   basic_model: <<DFRBasicModel>>
   normalization: <<Normalization>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSettingsSimilarityIb]]
-=== IndicesSettingsSimilarityIb
+== IndicesSettingsSimilarityIb
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSettingsSimilarityIb {
   type: 'IB'
   distribution: <<IBDistribution>>
   lambda: <<IBLambda>>
   normalization: <<Normalization>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSettingsSimilarityLmd]]
-=== IndicesSettingsSimilarityLmd
+== IndicesSettingsSimilarityLmd
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSettingsSimilarityLmd {
   type: 'LMDirichlet'
   mu?: <<double>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSettingsSimilarityLmj]]
-=== IndicesSettingsSimilarityLmj
+== IndicesSettingsSimilarityLmj
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSettingsSimilarityLmj {
   type: 'LMJelinekMercer'
   lambda?: <<double>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSettingsSimilarityScripted]]
-=== IndicesSettingsSimilarityScripted
+== IndicesSettingsSimilarityScripted
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSettingsSimilarityScripted {
   type: 'scripted'
   script: <<Script>> | string
   weight_script?: <<Script>> | string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSlowlogSettings]]
-=== IndicesSlowlogSettings
+== IndicesSlowlogSettings
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSlowlogSettings {
   level?: string
   source?: <<integer>>
   reformat?: boolean
   threshold?: <<IndicesSlowlogTresholds>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSlowlogTresholdLevels]]
-=== IndicesSlowlogTresholdLevels
+== IndicesSlowlogTresholdLevels
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSlowlogTresholdLevels {
   warn?: <<Duration>>
   info?: <<Duration>>
   debug?: <<Duration>>
   trace?: <<Duration>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSlowlogTresholds]]
-=== IndicesSlowlogTresholds
+== IndicesSlowlogTresholds
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSlowlogTresholds {
   query?: <<IndicesSlowlogTresholdLevels>>
   fetch?: <<IndicesSlowlogTresholdLevels>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesSoftDeletes]]
-=== IndicesSoftDeletes
+== IndicesSoftDeletes
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSoftDeletes {
   pass:[/**] @property enabled Indicates whether soft deletes are enabled on the index. */
   enabled?: boolean
   pass:[/**] @property retention_lease The maximum period to retain a shard history retention lease before it is considered expired. Shard history retention leases ensure that soft deletes are retained during merges on the Lucene index. If a soft delete is merged away before it can be replicated to a follower the following process will fail due to incomplete history on the leader. */
   retention_lease?: <<IndicesRetentionLease>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesStorage]]
-=== IndicesStorage
+== IndicesStorage
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesStorage {
   type: <<IndicesStorageType>>
   pass:[/**] @property allow_mmap You can restrict the use of the mmapfs and the related hybridfs store type via the setting node.store.allow_mmap. This is a boolean setting indicating whether or not memory-mapping is allowed. The default is to allow it. This setting is useful, for example, if you are in an environment where you can not control the ability to create a lot of memory maps so you need disable the ability to use memory-mapping. */
   allow_mmap?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesStorageType]]
-=== IndicesStorageType
+== IndicesStorageType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IndicesStorageType = 'fs' | 'niofs' | 'mmapfs' | 'hybridfs' | string
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesTemplateMapping]]
-=== IndicesTemplateMapping
+== IndicesTemplateMapping
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesTemplateMapping {
   aliases: Record<<<IndexName>>, <<IndicesAlias>>>
   index_patterns: <<Name>>[]
@@ -1511,19 +1130,14 @@ interface IndicesTemplateMapping {
   settings: Record<string, any>
   version?: <<VersionNumber>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesTranslog]]
-=== IndicesTranslog
+== IndicesTranslog
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesTranslog {
   pass:[/**] @property sync_interval How often the translog is fsynced to disk and committed, regardless of write operations. Values less than 100ms are not allowed. */
   sync_interval?: <<Duration>>
@@ -1533,40 +1147,28 @@ interface IndicesTranslog {
   flush_threshold_size?: <<ByteSize>>
   retention?: <<IndicesTranslogRetention>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesTranslogDurability]]
-=== IndicesTranslogDurability
+== IndicesTranslogDurability
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IndicesTranslogDurability = 'request' | 'REQUEST' | 'async' | 'ASYNC'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IndicesTranslogRetention]]
-=== IndicesTranslogRetention
+== IndicesTranslogRetention
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesTranslogRetention {
   pass:[/**] @property size This controls the total size of translog files to keep for each shard. Keeping more translog files increases the chance of performing an operation based sync when recovering a replica. If the translog files are not sufficient, replica recovery will fall back to a file based sync. This setting is ignored, and should not be set, if soft deletes are enabled. Soft deletes are enabled by default in indices created in Elasticsearch versions 7.0.0 and later. */
   size?: <<ByteSize>>
   pass:[/**] @property age This controls the maximum duration for which translog files are kept by each shard. Keeping more translog files increases the chance of performing an operation based sync when recovering replicas. If the translog files are not sufficient, replica recovery will fall back to a file based sync. This setting is ignored, and should not be set, if soft deletes are enabled. Soft deletes are enabled by default in indices created in Elasticsearch versions 7.0.0 and later. */
   age?: <<Duration>>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

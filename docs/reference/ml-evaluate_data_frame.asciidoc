@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.evaluateDataFrame]]
-=== client.ml.evaluateDataFrame
+== client.ml.evaluateDataFrame
 
 Evaluate data frame analytics. The API packages together commonly used evaluation metrics for various types of machine learning features. This has been designed for use on indexes created by data frame analytics. Evaluation requires both a ground truth field and an analytics result field to be present.
 
 {ref}/evaluate-dfanalytics.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,36 +47,28 @@ Evaluate data frame analytics. The API packages together commonly used evaluatio
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlEvaluateDataFrameRequest extends <<RequestBase>> {
   evaluation: <<MlDataframeEvaluationContainer>>
   index: <<IndexName>>
   query?: <<QueryDslQueryContainer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlEvaluateDataFrameResponse {
   classification?: MlEvaluateDataFrameDataframeClassificationSummary
   outlier_detection?: MlEvaluateDataFrameDataframeOutlierDetectionSummary
   regression?: MlEvaluateDataFrameDataframeRegressionSummary
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

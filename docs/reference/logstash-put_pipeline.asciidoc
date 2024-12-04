@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.logstash.putPipeline]]
-=== client.logstash.putPipeline
+== client.logstash.putPipeline
 
 Creates or updates a pipeline used for Logstash Central Management.
 
 {ref}/logstash-api-put-pipeline.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,23 @@ Creates or updates a pipeline used for Logstash Central Management.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface LogstashPutPipelineRequest extends <<RequestBase>> {
   id: <<Id>>
   pipeline?: <<LogstashPipeline>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type LogstashPutPipelineResponse = boolean
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.license.getBasicStatus]]
-=== client.license.getBasicStatus
+== client.license.getBasicStatus
 
 Retrieves information about the status of the basic license.
 
 {ref}/get-basic-status.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,22 @@ Retrieves information about the status of the basic license.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface LicenseGetBasicStatusRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface LicenseGetBasicStatusRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface LicenseGetBasicStatusResponse {
   eligible_to_start_basic: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.nodes.stats]]
-=== client.nodes.stats
+== client.nodes.stats
 
 Returns cluster nodes statistics.
 
 {ref}/cluster-nodes-stats.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Returns cluster nodes statistics.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesStatsRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   metric?: <<Metrics>>
@@ -64,20 +67,14 @@ interface NodesStatsRequest extends <<RequestBase>> {
   include_unloaded_segments?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type NodesStatsResponse = NodesStatsResponseBase
 
-[pass]
-++++
-</pre>
-++++
+----
+

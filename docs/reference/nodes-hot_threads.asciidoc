@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.nodes.hotThreads]]
-=== client.nodes.hotThreads
+== client.nodes.hotThreads
 
 This API yields a breakdown of the hot threads on each selected node in the cluster. The output is plain text with a breakdown of each node’s top hot threads.
 
 {ref}/cluster-nodes-hot-threads.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ This API yields a breakdown of the hot threads on each selected node in the clus
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesHotThreadsRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   ignore_idle_threads?: boolean
@@ -60,21 +63,14 @@ interface NodesHotThreadsRequest extends <<RequestBase>> {
   sort?: <<ThreadType>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
-interface NodesHotThreadsResponse {
-}
+[source,ts,subs=+macros]
+----
+interface NodesHotThreadsResponse {}
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.textStructure.findStructure]]
-=== client.textStructure.findStructure
+== client.textStructure.findStructure
 
 Finds the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch.
 
 {ref}/find-structure.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Finds the structure of a text file. The text file must contain data that is suit
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
   charset?: string
   column_names?: string
@@ -67,17 +70,13 @@ interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
   text_files?: TJsonDocument[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface TextStructureFindStructureResponse {
   charset: string
   has_header_row?: boolean
@@ -103,7 +102,5 @@ interface TextStructureFindStructureResponse {
   ingest_pipeline: <<IngestPipelineConfig>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

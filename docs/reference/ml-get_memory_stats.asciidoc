@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.getMemoryStats]]
-=== client.ml.getMemoryStats
+== client.ml.getMemoryStats
 
 Get machine learning memory usage info. Get information about how machine learning jobs and trained models are using memory, on each node, both within the JVM heap, and natively, outside of the JVM.
 
 {ref}/get-ml-memory.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get machine learning memory usage info. Get information about how machine learni
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlGetMemoryStatsRequest extends <<RequestBase>> {
   node_id?: <<Id>>
   human?: boolean
@@ -55,24 +58,18 @@ interface MlGetMemoryStatsRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlGetMemoryStatsResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
   nodes: Record<<<Id>>, MlGetMemoryStatsMemory>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

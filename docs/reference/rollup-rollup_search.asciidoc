@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.rollup.rollupSearch]]
-=== client.rollup.rollupSearch
+== client.rollup.rollupSearch
 
 Enables searching rolled-up data using the standard Query DSL.
 
 {ref}/rollup-search.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Enables searching rolled-up data using the standard Query DSL.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface RollupRollupSearchRequest extends <<RequestBase>> {
   index: <<Indices>>
   rest_total_hits_as_int?: boolean
@@ -59,17 +62,13 @@ interface RollupRollupSearchRequest extends <<RequestBase>> {
   size?: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface RollupRollupSearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> {
   took: <<long>>
   timed_out: boolean
@@ -79,7 +78,5 @@ interface RollupRollupSearchResponse<TDocument = unknown, TAggregations = Record
   aggregations?: TAggregations
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

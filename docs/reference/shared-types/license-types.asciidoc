@@ -1,6 +1,6 @@
 [[reference-shared-types-license-types]]
 
-== `License`
+== `License` types
 
 ////////
 ===========================================================================================================================
@@ -26,17 +26,21 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[LicenseLicense]]
-=== LicenseLicense
+== LicenseLicense
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface LicenseLicense {
   expiry_date_in_millis: <<EpochTime>><<<UnitMillis>>>
   issue_date_in_millis: <<EpochTime>><<<UnitMillis>>>
@@ -49,35 +53,23 @@ interface LicenseLicense {
   type: <<LicenseLicenseType>>
   uid: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[LicenseLicenseStatus]]
-=== LicenseLicenseStatus
+== LicenseLicenseStatus
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type LicenseLicenseStatus = 'active' | 'valid' | 'invalid' | 'expired'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[LicenseLicenseType]]
-=== LicenseLicenseType
+== LicenseLicenseType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type LicenseLicenseType = 'missing' | 'trial' | 'basic' | 'standard' | 'dev' | 'silver' | 'gold' | 'platinum' | 'enterprise'
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.updateDatafeed]]
-=== client.ml.updateDatafeed
+== client.ml.updateDatafeed
 
 Update a datafeed. You must stop and start the datafeed for the changes to be applied. When Elasticsearch security features are enabled, your datafeed remembers which roles the user who updated it had at the time of the update and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead.
 
 {ref}/ml-update-datafeed.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Update a datafeed. You must stop and start the datafeed for the changes to be ap
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlUpdateDatafeedRequest extends <<RequestBase>> {
   datafeed_id: <<Id>>
   allow_no_indices?: boolean
@@ -71,17 +74,13 @@ interface MlUpdateDatafeedRequest extends <<RequestBase>> {
   scroll_size?: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlUpdateDatafeedResponse {
   authorization?: <<MlDatafeedAuthorization>>
   aggregations?: Record<string, <<AggregationsAggregationContainer>>>
@@ -100,7 +99,5 @@ interface MlUpdateDatafeedResponse {
   scroll_size: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

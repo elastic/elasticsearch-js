@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ingest.getPipeline]]
-=== client.ingest.getPipeline
+== client.ingest.getPipeline
 
 Returns information about one or more ingest pipelines. This API returns a local reference of the pipeline.
 
 {ref}/get-pipeline-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Returns information about one or more ingest pipelines. This API returns a local
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestGetPipelineRequest extends <<RequestBase>> {
   id?: <<Id>>
   master_timeout?: <<Duration>>
   summary?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IngestGetPipelineResponse = Record<string, <<IngestPipeline>>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

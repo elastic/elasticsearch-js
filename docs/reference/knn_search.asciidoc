@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.knnSearch]]
-=== client.knnSearch
+== client.knnSearch
 
 Run a knn search. NOTE: The kNN search API has been replaced by the `knn` option in the search API. Perform a k-nearest neighbor (kNN) search on a dense_vector field and return the matching documents. Given a query vector, the API finds the k closest vectors and returns those documents as search hits. Elasticsearch uses the HNSW algorithm to support efficient kNN search. Like most kNN algorithms, HNSW is an approximate method that sacrifices result accuracy for improved search speed. This means the results returned are not always the true k closest neighbors. The kNN search API supports restricting the search using a filter. The search will return the top k documents that also match the filter query.
 
 {ref}/search-search.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Run a knn search. NOTE: The kNN search API has been replaced by the `knn` option
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface KnnSearchRequest extends <<RequestBase>> {
   index: <<Indices>>
   routing?: <<Routing>>
@@ -59,17 +62,13 @@ interface KnnSearchRequest extends <<RequestBase>> {
   knn: <<KnnSearchQuery>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface KnnSearchResponse<TDocument = unknown> {
   took: <<long>>
   timed_out: boolean
@@ -79,7 +78,5 @@ interface KnnSearchResponse<TDocument = unknown> {
   max_score?: <<double>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

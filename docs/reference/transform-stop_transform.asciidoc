@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.transform.stopTransform]]
-=== client.transform.stopTransform
+== client.transform.stopTransform
 
 Stop transforms. Stops one or more transforms.
 
 {ref}/stop-transform.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Stop transforms. Stops one or more transforms.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformStopTransformRequest extends <<RequestBase>> {
   transform_id: <<Name>>
   allow_no_match?: boolean
@@ -57,20 +60,14 @@ interface TransformStopTransformRequest extends <<RequestBase>> {
   wait_for_completion?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type TransformStopTransformResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

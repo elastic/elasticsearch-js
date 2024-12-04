@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.transform.getTransform]]
-=== client.transform.getTransform
+== client.transform.getTransform
 
 Get transforms. Retrieves configuration information for transforms.
 
 {ref}/get-transform.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get transforms. Retrieves configuration information for transforms.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformGetTransformRequest extends <<RequestBase>> {
   transform_id?: <<Names>>
   allow_no_match?: boolean
@@ -56,23 +59,17 @@ interface TransformGetTransformRequest extends <<RequestBase>> {
   exclude_generated?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface TransformGetTransformResponse {
   count: <<long>>
   transforms: TransformGetTransformTransformSummary[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

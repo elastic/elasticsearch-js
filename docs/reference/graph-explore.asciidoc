@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.graph.explore]]
-=== client.graph.explore
+== client.graph.explore
 
 Extracts and summarizes information about the documents and terms in an Elasticsearch data stream or index.
 
 {ref}/graph-explore-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Extracts and summarizes information about the documents and terms in an Elastics
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface GraphExploreRequest extends <<RequestBase>> {
   index: <<Indices>>
   routing?: <<Routing>>
@@ -58,17 +61,13 @@ interface GraphExploreRequest extends <<RequestBase>> {
   vertices?: <<GraphVertexDefinition>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface GraphExploreResponse {
   connections: <<GraphConnection>>[]
   failures: <<ShardFailure>>[]
@@ -77,7 +76,5 @@ interface GraphExploreResponse {
   vertices: <<GraphVertex>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

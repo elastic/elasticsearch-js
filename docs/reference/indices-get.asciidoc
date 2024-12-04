@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.get]]
-=== client.indices.get
+== client.indices.get
 
 Get index information. Returns information about one or more indices. For data streams, the API returns information about the stream’s backing indices.
 
 {ref}/indices-get-index.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get index information. Returns information about one or more indices. For data s
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesGetRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -60,20 +63,14 @@ interface IndicesGetRequest extends <<RequestBase>> {
   features?: IndicesGetFeatures
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesGetResponse = Record<<<IndexName>>, <<IndicesIndexState>>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

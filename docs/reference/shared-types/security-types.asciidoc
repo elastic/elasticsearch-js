@@ -1,6 +1,6 @@
 [[reference-shared-types-security-types]]
 
-== `Security`
+== `Security` types
 
 ////////
 ===========================================================================================================================
@@ -26,36 +26,35 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[SecurityAccess]]
-=== SecurityAccess
+== SecurityAccess
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityAccess {
   pass:[/**] @property replication A list of indices permission entries for cross-cluster replication. */
   replication?: <<SecurityReplicationAccess>>[]
   pass:[/**] @property search A list of indices permission entries for cross-cluster search. */
   search?: <<SecuritySearchAccess>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityApiKey]]
-=== SecurityApiKey
+== SecurityApiKey
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityApiKey {
   pass:[/**] @property creation Creation time for the API key in milliseconds. */
   creation?: <<long>>
@@ -83,35 +82,25 @@ interface SecurityApiKey {
   limited_by?: Record<string, <<SecurityRoleDescriptor>>>[]
   _sort?: <<SortResults>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityApplicationGlobalUserPrivileges]]
-=== SecurityApplicationGlobalUserPrivileges
+== SecurityApplicationGlobalUserPrivileges
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityApplicationGlobalUserPrivileges {
   manage: <<SecurityManageUserPrivileges>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityApplicationPrivileges]]
-=== SecurityApplicationPrivileges
+== SecurityApplicationPrivileges
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityApplicationPrivileges {
   pass:[/**] @property application The name of the application to which this entry applies. */
   application: string
@@ -120,163 +109,113 @@ interface SecurityApplicationPrivileges {
   pass:[/**] @property resources A list resources to which the privileges are applied. */
   resources: string[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityBulkError]]
-=== SecurityBulkError
+== SecurityBulkError
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityBulkError {
   pass:[/**] @property count The number of errors */
   count: <<integer>>
   pass:[/**] @property details Details about the errors, keyed by role name */
   details: Record<string, <<ErrorCause>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityClusterNode]]
-=== SecurityClusterNode
+== SecurityClusterNode
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityClusterNode {
   name: <<Name>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityClusterPrivilege]]
-=== SecurityClusterPrivilege
+== SecurityClusterPrivilege
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'cross_cluster_replication' | 'cross_cluster_search' | 'delegate_pki' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_autoscaling' | 'manage_behavioral_analytics' | 'manage_ccr' | 'manage_data_frame_transforms' | 'manage_data_stream_global_retention' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_inference' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_search_application' | 'manage_search_query_rules' | 'manage_search_synonyms' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_data_frame_transforms' | 'monitor_data_stream_global_retention' | 'monitor_enrich' | 'monitor_inference' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'none' | 'post_behavioral_analytics_event' | 'read_ccr' | 'read_fleet_secrets' | 'read_ilm' | 'read_pipeline' | 'read_security' | 'read_slm' | 'transport_client' | 'write_connector_secrets' | 'write_fleet_secrets' | string
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityCreatedStatus]]
-=== SecurityCreatedStatus
+== SecurityCreatedStatus
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityCreatedStatus {
   created: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityFieldRule]]
-=== SecurityFieldRule
+== SecurityFieldRule
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityFieldRule {
   username?: <<Names>>
   dn?: <<Names>>
   groups?: <<Names>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityFieldSecurity]]
-=== SecurityFieldSecurity
+== SecurityFieldSecurity
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityFieldSecurity {
   except?: <<Fields>>
   grant?: <<Fields>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityGlobalPrivilege]]
-=== SecurityGlobalPrivilege
+== SecurityGlobalPrivilege
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityGlobalPrivilege {
   application: <<SecurityApplicationGlobalUserPrivileges>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityGrantType]]
-=== SecurityGrantType
+== SecurityGrantType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type SecurityGrantType = 'password' | 'access_token'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityIndexPrivilege]]
-=== SecurityIndexPrivilege
+== SecurityIndexPrivilege
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type SecurityIndexPrivilege = 'all' | 'auto_configure' | 'create' | 'create_doc' | 'create_index' | 'cross_cluster_replication' | 'cross_cluster_replication_internal' | 'delete' | 'delete_index' | 'index' | 'maintenance' | 'manage' | 'manage_data_stream_lifecycle' | 'manage_follow_index' | 'manage_ilm' | 'manage_leader_index' | 'monitor' | 'none' | 'read' | 'read_cross_cluster' | 'view_index_metadata' | 'write' | string
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityIndicesPrivileges]]
-=== SecurityIndicesPrivileges
+== SecurityIndicesPrivileges
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityIndicesPrivileges {
   pass:[/**] @property field_security The document fields that the owners of the role have read access to. */
   field_security?: <<SecurityFieldSecurity>>
@@ -289,66 +228,46 @@ interface SecurityIndicesPrivileges {
   pass:[/**] @property allow_restricted_indices Set to `true` if using wildcard or regular expressions for patterns that cover restricted indices. Implicitly, restricted indices have limited privileges that can cause pattern tests to fail. If restricted indices are explicitly included in the `names` list, Elasticsearch checks privileges against these indices regardless of the value set for `allow_restricted_indices`. */
   allow_restricted_indices?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityIndicesPrivilegesQuery]]
-=== SecurityIndicesPrivilegesQuery
+== SecurityIndicesPrivilegesQuery
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type SecurityIndicesPrivilegesQuery = string | <<QueryDslQueryContainer>> | <<SecurityRoleTemplateQuery>>
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityManageUserPrivileges]]
-=== SecurityManageUserPrivileges
+== SecurityManageUserPrivileges
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityManageUserPrivileges {
   applications: string[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityRealmInfo]]
-=== SecurityRealmInfo
+== SecurityRealmInfo
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityRealmInfo {
   name: <<Name>>
   type: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityRemoteIndicesPrivileges]]
-=== SecurityRemoteIndicesPrivileges
+== SecurityRemoteIndicesPrivileges
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityRemoteIndicesPrivileges {
   pass:[/**] @property clusters A list of cluster aliases to which the permissions in this entry apply. */
   clusters: <<Names>>
@@ -363,36 +282,26 @@ interface SecurityRemoteIndicesPrivileges {
   pass:[/**] @property allow_restricted_indices Set to `true` if using wildcard or regular expressions for patterns that cover restricted indices. Implicitly, restricted indices have limited privileges that can cause pattern tests to fail. If restricted indices are explicitly included in the `names` list, Elasticsearch checks privileges against these indices regardless of the value set for `allow_restricted_indices`. */
   allow_restricted_indices?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityReplicationAccess]]
-=== SecurityReplicationAccess
+== SecurityReplicationAccess
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityReplicationAccess {
   pass:[/**] @property names A list of indices (or index name patterns) to which the permissions in this entry apply. */
   names: <<IndexName>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityRoleDescriptor]]
-=== SecurityRoleDescriptor
+== SecurityRoleDescriptor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityRoleDescriptor {
   pass:[/**] @property cluster A list of cluster privileges. These privileges define the cluster level actions that API keys are able to execute. */
   cluster?: <<SecurityClusterPrivilege>>[]
@@ -412,19 +321,14 @@ interface SecurityRoleDescriptor {
   description?: string
   transient_metadata?: Record<string, any>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityRoleDescriptorRead]]
-=== SecurityRoleDescriptorRead
+== SecurityRoleDescriptorRead
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityRoleDescriptorRead {
   pass:[/**] @property cluster A list of cluster privileges. These privileges define the cluster level actions that API keys are able to execute. */
   cluster: <<SecurityClusterPrivilege>>[]
@@ -444,19 +348,14 @@ interface SecurityRoleDescriptorRead {
   description?: string
   transient_metadata?: Record<string, any>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityRoleMapping]]
-=== SecurityRoleMapping
+== SecurityRoleMapping
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityRoleMapping {
   enabled: boolean
   metadata: <<Metadata>>
@@ -464,86 +363,61 @@ interface SecurityRoleMapping {
   role_templates?: <<SecurityRoleTemplate>>[]
   rules: <<SecurityRoleMappingRule>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityRoleMappingRule]]
-=== SecurityRoleMappingRule
+== SecurityRoleMappingRule
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityRoleMappingRule {
   any?: <<SecurityRoleMappingRule>>[]
   all?: <<SecurityRoleMappingRule>>[]
   field?: <<SecurityFieldRule>>
   except?: <<SecurityRoleMappingRule>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityRoleTemplate]]
-=== SecurityRoleTemplate
+== SecurityRoleTemplate
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityRoleTemplate {
   format?: <<SecurityTemplateFormat>>
   template: <<Script>> | string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityRoleTemplateInlineQuery]]
-=== SecurityRoleTemplateInlineQuery
+== SecurityRoleTemplateInlineQuery
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type SecurityRoleTemplateInlineQuery = string | <<QueryDslQueryContainer>>
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityRoleTemplateQuery]]
-=== SecurityRoleTemplateQuery
+== SecurityRoleTemplateQuery
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityRoleTemplateQuery {
   pass:[/**] @property template When you create a role, you can specify a query that defines the document level security permissions. You can optionally use Mustache templates in the role query to insert the username of the current authenticated user into the role. Like other places in Elasticsearch that support templating or scripting, you can specify inline, stored, or file-based templates and define custom parameters. You access the details for the current authenticated user through the _user parameter. */
   template?: <<SecurityRoleTemplateScript>> | <<SecurityRoleTemplateInlineQuery>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityRoleTemplateScript]]
-=== SecurityRoleTemplateScript
+== SecurityRoleTemplateScript
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityRoleTemplateScript {
   source?: <<SecurityRoleTemplateInlineQuery>>
   pass:[/**] @property id The `id` for a stored script. */
@@ -554,19 +428,14 @@ interface SecurityRoleTemplateScript {
   lang?: <<ScriptLanguage>>
   options?: Record<string, string>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecuritySearchAccess]]
-=== SecuritySearchAccess
+== SecuritySearchAccess
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecuritySearchAccess {
   pass:[/**] @property field_security The document fields that the owners of the role have read access to. */
   field_security?: <<SecurityFieldSecurity>>
@@ -577,33 +446,23 @@ interface SecuritySearchAccess {
   pass:[/**] @property allow_restricted_indices Set to `true` if using wildcard or regular expressions for patterns that cover restricted indices. Implicitly, restricted indices have limited privileges that can cause pattern tests to fail. If restricted indices are explicitly included in the `names` list, Elasticsearch checks privileges against these indices regardless of the value set for `allow_restricted_indices`. */
   allow_restricted_indices?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityTemplateFormat]]
-=== SecurityTemplateFormat
+== SecurityTemplateFormat
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type SecurityTemplateFormat = 'string' | 'json'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityUser]]
-=== SecurityUser
+== SecurityUser
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityUser {
   email?: string | null
   full_name?: <<Name>> | null
@@ -613,19 +472,14 @@ interface SecurityUser {
   enabled: boolean
   profile_uid?: <<SecurityUserProfileId>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityUserIndicesPrivileges]]
-=== SecurityUserIndicesPrivileges
+== SecurityUserIndicesPrivileges
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityUserIndicesPrivileges {
   pass:[/**] @property field_security The document fields that the owners of the role have read access to. */
   field_security?: <<SecurityFieldSecurity>>[]
@@ -638,19 +492,14 @@ interface SecurityUserIndicesPrivileges {
   pass:[/**] @property allow_restricted_indices Set to `true` if using wildcard or regular expressions for patterns that cover restricted indices. Implicitly, restricted indices have limited privileges that can cause pattern tests to fail. If restricted indices are explicitly included in the `names` list, Elasticsearch checks privileges against these indices regardless of the value set for `allow_restricted_indices`. */
   allow_restricted_indices: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityUserProfile]]
-=== SecurityUserProfile
+== SecurityUserProfile
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityUserProfile {
   uid: <<SecurityUserProfileId>>
   user: <<SecurityUserProfileUser>>
@@ -658,50 +507,35 @@ interface SecurityUserProfile {
   labels: Record<string, any>
   enabled?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityUserProfileHitMetadata]]
-=== SecurityUserProfileHitMetadata
+== SecurityUserProfileHitMetadata
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityUserProfileHitMetadata {
   _primary_term: <<long>>
   _seq_no: <<SequenceNumber>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityUserProfileId]]
-=== SecurityUserProfileId
+== SecurityUserProfileId
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type SecurityUserProfileId = string
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityUserProfileUser]]
-=== SecurityUserProfileUser
+== SecurityUserProfileUser
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityUserProfileUser {
   email?: string | null
   full_name?: <<Name>> | null
@@ -710,24 +544,17 @@ interface SecurityUserProfileUser {
   roles: string[]
   username: <<Username>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[SecurityUserProfileWithMetadata]]
-=== SecurityUserProfileWithMetadata
+== SecurityUserProfileWithMetadata
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityUserProfileWithMetadata extends <<SecurityUserProfile>> {
   last_synchronized: <<long>>
   _doc: <<SecurityUserProfileHitMetadata>>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.synonyms.putSynonymRule]]
-=== client.synonyms.putSynonymRule
+== client.synonyms.putSynonymRule
 
 Creates or updates a synonym rule in a synonym set
 
 {ref}/put-synonym-rule.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Creates or updates a synonym rule in a synonym set
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SynonymsPutSynonymRuleRequest extends <<RequestBase>> {
   set_id: <<Id>>
   rule_id: <<Id>>
   synonyms: <<SynonymsSynonymString>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type SynonymsPutSynonymRuleResponse = <<SynonymsSynonymsUpdateResult>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

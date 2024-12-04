@@ -24,15 +24,20 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.transform.getNodeStats]]
-=== client.transform.getNodeStats
+== client.transform.getNodeStats
 
 Retrieves transform usage information for transform nodes.
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

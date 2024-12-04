@@ -1,6 +1,6 @@
 [[reference-shared-types-shutdown-types]]
 
-== `Shutdown`
+== `Shutdown` types
 
 ////////
 ===========================================================================================================================
@@ -26,19 +26,21 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[ShutdownType]]
-=== ShutdownType
+== ShutdownType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type ShutdownType = 'restart' | 'remove' | 'replace'
-[pass]
-++++
-</pre>
-++++
+----
+

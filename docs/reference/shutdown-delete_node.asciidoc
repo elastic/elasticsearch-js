@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.shutdown.deleteNode]]
-=== client.shutdown.deleteNode
+== client.shutdown.deleteNode
 
 Removes a node from the shutdown list. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentati
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ShutdownDeleteNodeRequest extends <<RequestBase>> {
   node_id: <<NodeId>>
   master_timeout?: <<TimeUnit>>
   timeout?: <<TimeUnit>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type ShutdownDeleteNodeResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

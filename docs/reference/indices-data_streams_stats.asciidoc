@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.dataStreamsStats]]
-=== client.indices.dataStreamsStats
+== client.indices.dataStreamsStats
 
 Get data stream stats. Retrieves statistics for one or more data streams.
 
 {ref}/data-streams.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,28 +47,22 @@ Get data stream stats. Retrieves statistics for one or more data streams.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDataStreamsStatsRequest extends <<RequestBase>> {
   name?: <<IndexName>>
   expand_wildcards?: <<ExpandWildcards>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesDataStreamsStatsResponse {
   _shards: <<ShardStatistics>>
   backing_indices: <<integer>>
@@ -73,7 +72,5 @@ interface IndicesDataStreamsStatsResponse {
   total_store_size_bytes: <<long>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

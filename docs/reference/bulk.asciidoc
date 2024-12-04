@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.bulk]]
-=== client.bulk
+== client.bulk
 
 Bulk index or delete documents. Performs multiple indexing or delete operations in a single API call. This reduces overhead and can greatly increase indexing speed.
 
 {ref}/docs-bulk.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Bulk index or delete documents. Performs multiple indexing or delete operations 
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <<RequestBase>> {
   index?: <<IndexName>>
   pipeline?: string
@@ -62,17 +65,13 @@ interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <
   operations?: (<<BulkOperationContainer>> | <<BulkUpdateAction>><TDocument, TPartialDocument> | TDocument)[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface BulkResponse {
   errors: boolean
   items: Partial<Record<<<BulkOperationType>>, <<BulkResponseItem>>>>[]
@@ -80,7 +79,5 @@ interface BulkResponse {
   ingest_took?: <<long>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

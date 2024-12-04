@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.shutdown.putNode]]
-=== client.shutdown.putNode
+== client.shutdown.putNode
 
 Adds a node to be shut down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentati
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ShutdownPutNodeRequest extends <<RequestBase>> {
   node_id: <<NodeId>>
   master_timeout?: <<TimeUnit>>
@@ -58,20 +61,14 @@ interface ShutdownPutNodeRequest extends <<RequestBase>> {
   target_node_name?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type ShutdownPutNodeResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

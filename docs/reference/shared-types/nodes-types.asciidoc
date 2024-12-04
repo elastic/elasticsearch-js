@@ -1,6 +1,6 @@
 [[reference-shared-types-nodes-types]]
 
-== `Nodes`
+== `Nodes` types
 
 ////////
 ===========================================================================================================================
@@ -26,17 +26,21 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[NodesAdaptiveSelection]]
-=== NodesAdaptiveSelection
+== NodesAdaptiveSelection
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesAdaptiveSelection {
   pass:[/**] @property avg_queue_size The exponentially weighted moving average queue size of search requests on the keyed node. */
   avg_queue_size?: <<long>>
@@ -53,19 +57,14 @@ interface NodesAdaptiveSelection {
   pass:[/**] @property rank The rank of this node; used for shard selection when routing search requests. */
   rank?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesBreaker]]
-=== NodesBreaker
+== NodesBreaker
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesBreaker {
   pass:[/**] @property estimated_size Estimated memory used for the operation. */
   estimated_size?: string
@@ -80,19 +79,14 @@ interface NodesBreaker {
   pass:[/**] @property tripped Total number of times the circuit breaker has been triggered and prevented an out of memory error. */
   tripped?: <<float>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesCgroup]]
-=== NodesCgroup
+== NodesCgroup
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesCgroup {
   pass:[/**] @property cpuacct Contains statistics about `cpuacct` control group for the node. */
   cpuacct?: <<NodesCpuAcct>>
@@ -101,19 +95,14 @@ interface NodesCgroup {
   pass:[/**] @property memory Contains statistics about the memory control group for the node. */
   memory?: <<NodesCgroupMemory>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesCgroupCpu]]
-=== NodesCgroupCpu
+== NodesCgroupCpu
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesCgroupCpu {
   pass:[/**] @property control_group The `cpu` control group to which the Elasticsearch process belongs. */
   control_group?: string
@@ -124,19 +113,14 @@ interface NodesCgroupCpu {
   pass:[/**] @property stat Contains CPU statistics for the node. */
   stat?: <<NodesCgroupCpuStat>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesCgroupCpuStat]]
-=== NodesCgroupCpuStat
+== NodesCgroupCpuStat
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesCgroupCpuStat {
   pass:[/**] @property number_of_elapsed_periods The number of reporting periods (as specified by `cfs_period_micros`) that have elapsed. */
   number_of_elapsed_periods?: <<long>>
@@ -145,19 +129,14 @@ interface NodesCgroupCpuStat {
   pass:[/**] @property time_throttled_nanos The total amount of time, in nanoseconds, for which all tasks in the same cgroup as the Elasticsearch process have been throttled. */
   time_throttled_nanos?: <<DurationValue>><<<UnitNanos>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesCgroupMemory]]
-=== NodesCgroupMemory
+== NodesCgroupMemory
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesCgroupMemory {
   pass:[/**] @property control_group The `memory` control group to which the Elasticsearch process belongs. */
   control_group?: string
@@ -166,19 +145,14 @@ interface NodesCgroupMemory {
   pass:[/**] @property usage_in_bytes The total current memory usage by processes in the cgroup, in bytes, by all tasks in the same cgroup as the Elasticsearch process. This value is stored as a string for consistency with `limit_in_bytes`. */
   usage_in_bytes?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesClient]]
-=== NodesClient
+== NodesClient
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesClient {
   pass:[/**] @property id Unique ID for the HTTP client. */
   id?: <<long>>
@@ -203,35 +177,25 @@ interface NodesClient {
   pass:[/**] @property x_opaque_id Value from the client’s `x-opaque-id` HTTP header. If unavailable, this property is not included in the response. */
   x_opaque_id?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesClusterAppliedStats]]
-=== NodesClusterAppliedStats
+== NodesClusterAppliedStats
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesClusterAppliedStats {
   recordings?: <<NodesRecording>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesClusterStateQueue]]
-=== NodesClusterStateQueue
+== NodesClusterStateQueue
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesClusterStateQueue {
   pass:[/**] @property total Total number of cluster states in queue. */
   total?: <<long>>
@@ -240,19 +204,14 @@ interface NodesClusterStateQueue {
   pass:[/**] @property committed Number of committed cluster states in queue. */
   committed?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesClusterStateUpdate]]
-=== NodesClusterStateUpdate
+== NodesClusterStateUpdate
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesClusterStateUpdate {
   pass:[/**] @property count The number of cluster state update attempts that did not change the cluster state since the node started. */
   count: <<long>>
@@ -285,38 +244,28 @@ interface NodesClusterStateUpdate {
   pass:[/**] @property notification_time_millis The cumulative amount of time, in milliseconds, spent notifying listeners of a no-op cluster state update since the node started. */
   notification_time_millis?: <<DurationValue>><<<UnitMillis>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesContext]]
-=== NodesContext
+== NodesContext
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesContext {
   context?: string
   compilations?: <<long>>
   cache_evictions?: <<long>>
   compilation_limit_triggered?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesCpu]]
-=== NodesCpu
+== NodesCpu
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesCpu {
   percent?: <<integer>>
   sys?: <<Duration>>
@@ -327,38 +276,28 @@ interface NodesCpu {
   user_in_millis?: <<DurationValue>><<<UnitMillis>>>
   load_average?: Record<string, <<double>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesCpuAcct]]
-=== NodesCpuAcct
+== NodesCpuAcct
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesCpuAcct {
   pass:[/**] @property control_group The `cpuacct` control group to which the Elasticsearch process belongs. */
   control_group?: string
   pass:[/**] @property usage_nanos The total CPU time, in nanoseconds, consumed by all tasks in the same cgroup as the Elasticsearch process. */
   usage_nanos?: <<DurationValue>><<<UnitNanos>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesDataPathStats]]
-=== NodesDataPathStats
+== NodesDataPathStats
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesDataPathStats {
   pass:[/**] @property available Total amount of disk space available to this Java virtual machine on this file store. */
   available?: string
@@ -386,19 +325,14 @@ interface NodesDataPathStats {
   pass:[/**] @property type Type of the file store (ex: ext4). */
   type?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesDiscovery]]
-=== NodesDiscovery
+== NodesDiscovery
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesDiscovery {
   pass:[/**] @property cluster_state_queue Contains statistics for the cluster state queue of the node. */
   cluster_state_queue?: <<NodesClusterStateQueue>>
@@ -409,38 +343,28 @@ interface NodesDiscovery {
   serialized_cluster_states?: <<NodesSerializedClusterState>>
   cluster_applier_stats?: <<NodesClusterAppliedStats>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesExtendedMemoryStats]]
-=== NodesExtendedMemoryStats
+== NodesExtendedMemoryStats
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesExtendedMemoryStats extends <<NodesMemoryStats>> {
   pass:[/**] @property free_percent <<Percentage>> of free memory. */
   free_percent?: <<integer>>
   pass:[/**] @property used_percent <<Percentage>> of used memory. */
   used_percent?: <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesFileSystem]]
-=== NodesFileSystem
+== NodesFileSystem
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesFileSystem {
   pass:[/**] @property data List of all file stores. */
   data?: <<NodesDataPathStats>>[]
@@ -451,19 +375,14 @@ interface NodesFileSystem {
   pass:[/**] @property io_stats Contains I/O statistics for the node. */
   io_stats?: <<NodesIoStats>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesFileSystemTotal]]
-=== NodesFileSystemTotal
+== NodesFileSystemTotal
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesFileSystemTotal {
   pass:[/**] @property available Total disk space available to this Java virtual machine on all file stores. Depending on OS or process level restrictions, this might appear less than `free`. This is the actual amount of free disk space the Elasticsearch node can utilise. */
   available?: string
@@ -478,36 +397,26 @@ interface NodesFileSystemTotal {
   pass:[/**] @property total_in_bytes Total size of all file stores in bytes. */
   total_in_bytes?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesGarbageCollector]]
-=== NodesGarbageCollector
+== NodesGarbageCollector
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesGarbageCollector {
   pass:[/**] @property collectors Contains statistics about JVM garbage collectors for the node. */
   collectors?: Record<string, <<NodesGarbageCollectorTotal>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesGarbageCollectorTotal]]
-=== NodesGarbageCollectorTotal
+== NodesGarbageCollectorTotal
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesGarbageCollectorTotal {
   pass:[/**] @property collection_count Total number of JVM garbage collectors that collect objects. */
   collection_count?: <<long>>
@@ -516,19 +425,14 @@ interface NodesGarbageCollectorTotal {
   pass:[/**] @property collection_time_in_millis Total time, in milliseconds, spent by JVM collecting objects. */
   collection_time_in_millis?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesHttp]]
-=== NodesHttp
+== NodesHttp
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesHttp {
   pass:[/**] @property current_open Current number of open HTTP connections for the node. */
   current_open?: <<integer>>
@@ -539,90 +443,65 @@ interface NodesHttp {
   pass:[/**] @property routes Detailed HTTP stats broken down by route */
   routes: Record<string, <<NodesHttpRoute>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesHttpRoute]]
-=== NodesHttpRoute
+== NodesHttpRoute
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesHttpRoute {
   requests: <<NodesHttpRouteRequests>>
   responses: <<NodesHttpRouteResponses>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesHttpRouteRequests]]
-=== NodesHttpRouteRequests
+== NodesHttpRouteRequests
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesHttpRouteRequests {
   count: <<long>>
   total_size_in_bytes: <<long>>
   size_histogram: <<NodesSizeHttpHistogram>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesHttpRouteResponses]]
-=== NodesHttpRouteResponses
+== NodesHttpRouteResponses
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesHttpRouteResponses {
   count: <<long>>
   total_size_in_bytes: <<long>>
   handling_time_histogram: <<NodesTimeHttpHistogram>>[]
   size_histogram: <<NodesSizeHttpHistogram>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesIndexingPressure]]
-=== NodesIndexingPressure
+== NodesIndexingPressure
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesIndexingPressure {
   pass:[/**] @property memory Contains statistics for memory consumption from indexing load. */
   memory?: <<NodesIndexingPressureMemory>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesIndexingPressureMemory]]
-=== NodesIndexingPressureMemory
+== NodesIndexingPressureMemory
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesIndexingPressureMemory {
   pass:[/**] @property limit Configured memory limit for the indexing requests. Replica requests have an automatic limit that is 1.5x this value. */
   limit?: <<ByteSize>>
@@ -633,38 +512,28 @@ interface NodesIndexingPressureMemory {
   pass:[/**] @property total Contains statistics for the cumulative indexing load since the node started. */
   total?: <<NodesPressureMemory>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesIngest]]
-=== NodesIngest
+== NodesIngest
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesIngest {
   pass:[/**] @property pipelines Contains statistics about ingest pipelines for the node. */
   pipelines?: Record<string, <<NodesIngestStats>>>
   pass:[/**] @property total Contains statistics about ingest operations for the node. */
   total?: <<NodesIngestTotal>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesIngestStats]]
-=== NodesIngestStats
+== NodesIngestStats
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesIngestStats {
   pass:[/**] @property count Total number of documents ingested during the lifetime of this node. */
   count: <<long>>
@@ -681,19 +550,14 @@ interface NodesIngestStats {
   pass:[/**] @property produced_as_first_pipeline_in_bytes Total number of bytes of all documents produced by the pipeline. This field is only present on pipelines which are the first to process a document. Thus, it is not present on pipelines which only serve as a final pipeline after a default pipeline, a pipeline run after a reroute processor, or pipelines in pipeline processors. In situations where there are subsequent pipelines, the value represents the size of the document after all pipelines have run. */
   produced_as_first_pipeline_in_bytes: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesIngestTotal]]
-=== NodesIngestTotal
+== NodesIngestTotal
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesIngestTotal {
   pass:[/**] @property count Total number of documents ingested during the lifetime of this node. */
   count: <<long>>
@@ -704,19 +568,14 @@ interface NodesIngestTotal {
   pass:[/**] @property time_in_millis Total time, in milliseconds, spent preprocessing ingest documents during the lifetime of this node. */
   time_in_millis: <<DurationValue>><<<UnitMillis>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesIoStatDevice]]
-=== NodesIoStatDevice
+== NodesIoStatDevice
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesIoStatDevice {
   pass:[/**] @property device_name The Linux device name. */
   device_name?: string
@@ -731,38 +590,28 @@ interface NodesIoStatDevice {
   pass:[/**] @property write_operations The total number of write operations for the device completed since starting Elasticsearch. */
   write_operations?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesIoStats]]
-=== NodesIoStats
+== NodesIoStats
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesIoStats {
   pass:[/**] @property devices Array of disk metrics for each device that is backing an Elasticsearch data path. These disk metrics are probed periodically and averages between the last probe and the current probe are computed. */
   devices?: <<NodesIoStatDevice>>[]
   pass:[/**] @property total The sum of the disk metrics for all devices that back an Elasticsearch data path. */
   total?: <<NodesIoStatDevice>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesJvm]]
-=== NodesJvm
+== NodesJvm
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesJvm {
   pass:[/**] @property buffer_pools Contains statistics about JVM buffer pools for the node. */
   buffer_pools?: Record<string, <<NodesNodeBufferPool>>>
@@ -781,19 +630,14 @@ interface NodesJvm {
   pass:[/**] @property uptime_in_millis JVM uptime in milliseconds. */
   uptime_in_millis?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesJvmClasses]]
-=== NodesJvmClasses
+== NodesJvmClasses
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesJvmClasses {
   pass:[/**] @property current_loaded_count Number of classes currently loaded by JVM. */
   current_loaded_count?: <<long>>
@@ -802,19 +646,14 @@ interface NodesJvmClasses {
   pass:[/**] @property total_unloaded_count Total number of classes unloaded since the JVM started. */
   total_unloaded_count?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesJvmMemoryStats]]
-=== NodesJvmMemoryStats
+== NodesJvmMemoryStats
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesJvmMemoryStats {
   pass:[/**] @property heap_used_in_bytes Memory, in bytes, currently in use by the heap. */
   heap_used_in_bytes?: <<long>>
@@ -831,55 +670,40 @@ interface NodesJvmMemoryStats {
   pass:[/**] @property pools Contains statistics about heap memory usage for the node. */
   pools?: Record<string, <<NodesPool>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesJvmThreads]]
-=== NodesJvmThreads
+== NodesJvmThreads
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesJvmThreads {
   pass:[/**] @property count Number of active threads in use by JVM. */
   count?: <<long>>
   pass:[/**] @property peak_count Highest number of threads used by JVM. */
   peak_count?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesKeyedProcessor]]
-=== NodesKeyedProcessor
+== NodesKeyedProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesKeyedProcessor {
   stats?: <<NodesProcessor>>
   type?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesMemoryStats]]
-=== NodesMemoryStats
+== NodesMemoryStats
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesMemoryStats {
   pass:[/**] @property adjusted_total_in_bytes If the amount of physical memory has been overridden using the `es`.`total_memory_bytes` system property then this reports the overridden value in bytes. Otherwise it reports the same value as `total_in_bytes`. */
   adjusted_total_in_bytes?: <<long>>
@@ -896,19 +720,14 @@ interface NodesMemoryStats {
   pass:[/**] @property used_in_bytes Amount of used physical memory in bytes. */
   used_in_bytes?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesNodeBufferPool]]
-=== NodesNodeBufferPool
+== NodesNodeBufferPool
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesNodeBufferPool {
   pass:[/**] @property count Number of buffer pools. */
   count?: <<long>>
@@ -921,67 +740,47 @@ interface NodesNodeBufferPool {
   pass:[/**] @property used_in_bytes Size of buffer pools in bytes. */
   used_in_bytes?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesNodeReloadError]]
-=== NodesNodeReloadError
+== NodesNodeReloadError
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesNodeReloadError {
   name: <<Name>>
   reload_exception?: <<ErrorCause>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesNodeReloadResult]]
-=== NodesNodeReloadResult
+== NodesNodeReloadResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type NodesNodeReloadResult = <<NodesStats>> | <<NodesNodeReloadError>>
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesNodesResponseBase]]
-=== NodesNodesResponseBase
+== NodesNodesResponseBase
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesNodesResponseBase {
   pass:[/**] @property _nodes Contains statistics about the number of nodes selected by the request’s node filters. */
   _nodes?: <<NodeStatistics>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesOperatingSystem]]
-=== NodesOperatingSystem
+== NodesOperatingSystem
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesOperatingSystem {
   cpu?: <<NodesCpu>>
   mem?: <<NodesExtendedMemoryStats>>
@@ -989,19 +788,14 @@ interface NodesOperatingSystem {
   cgroup?: <<NodesCgroup>>
   timestamp?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesPool]]
-=== NodesPool
+== NodesPool
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesPool {
   pass:[/**] @property used_in_bytes Memory, in bytes, used by the heap. */
   used_in_bytes?: <<long>>
@@ -1012,19 +806,14 @@ interface NodesPool {
   pass:[/**] @property peak_max_in_bytes Largest amount of memory, in bytes, historically used by the heap. */
   peak_max_in_bytes?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesPressureMemory]]
-=== NodesPressureMemory
+== NodesPressureMemory
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesPressureMemory {
   pass:[/**] @property all Memory consumed by indexing requests in the coordinating, primary, or replica stage. */
   all?: <<ByteSize>>
@@ -1053,19 +842,14 @@ interface NodesPressureMemory {
   pass:[/**] @property replica_rejections Number of indexing requests rejected in the replica stage. */
   replica_rejections?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesProcess]]
-=== NodesProcess
+== NodesProcess
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesProcess {
   pass:[/**] @property cpu Contains CPU statistics for the node. */
   cpu?: <<NodesCpu>>
@@ -1078,19 +862,14 @@ interface NodesProcess {
   pass:[/**] @property timestamp Last time the statistics were refreshed. Recorded in milliseconds since the Unix Epoch. */
   timestamp?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesProcessor]]
-=== NodesProcessor
+== NodesProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesProcessor {
   pass:[/**] @property count Number of documents transformed by the processor. */
   count?: <<long>>
@@ -1101,19 +880,14 @@ interface NodesProcessor {
   pass:[/**] @property time_in_millis Time, in milliseconds, spent by the processor transforming documents. */
   time_in_millis?: <<DurationValue>><<<UnitMillis>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesPublishedClusterStates]]
-=== NodesPublishedClusterStates
+== NodesPublishedClusterStates
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesPublishedClusterStates {
   pass:[/**] @property full_states Number of published cluster states. */
   full_states?: <<long>>
@@ -1122,38 +896,28 @@ interface NodesPublishedClusterStates {
   pass:[/**] @property compatible_diffs Number of compatible differences between published cluster states. */
   compatible_diffs?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesRecording]]
-=== NodesRecording
+== NodesRecording
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesRecording {
   name?: string
   cumulative_execution_count?: <<long>>
   cumulative_execution_time?: <<Duration>>
   cumulative_execution_time_millis?: <<DurationValue>><<<UnitMillis>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesRepositoryLocation]]
-=== NodesRepositoryLocation
+== NodesRepositoryLocation
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesRepositoryLocation {
   base_path: string
   pass:[/**] @property container Container name (Azure) */
@@ -1161,19 +925,14 @@ interface NodesRepositoryLocation {
   pass:[/**] @property bucket Bucket name (GCP, S3) */
   bucket?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesRepositoryMeteringInformation]]
-=== NodesRepositoryMeteringInformation
+== NodesRepositoryMeteringInformation
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesRepositoryMeteringInformation {
   pass:[/**] @property repository_name Repository name. */
   repository_name: <<Name>>
@@ -1194,19 +953,14 @@ interface NodesRepositoryMeteringInformation {
   pass:[/**] @property request_counts An object with the number of request performed against the repository grouped by request type. */
   request_counts: <<NodesRequestCounts>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesRequestCounts]]
-=== NodesRequestCounts
+== NodesRequestCounts
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesRequestCounts {
   pass:[/**] @property GetBlobProperties Number of Get Blob Properties requests (Azure) */
   GetBlobProperties?: <<long>>
@@ -1231,19 +985,14 @@ interface NodesRequestCounts {
   pass:[/**] @property PutMultipartObject Number of Multipart requests, including CreateMultipartUpload, UploadPart and CompleteMultipartUpload requests (S3) */
   PutMultipartObject?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesScriptCache]]
-=== NodesScriptCache
+== NodesScriptCache
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesScriptCache {
   pass:[/**] @property cache_evictions Total number of times the script cache has evicted old data. */
   cache_evictions?: <<long>>
@@ -1253,19 +1002,14 @@ interface NodesScriptCache {
   compilations?: <<long>>
   context?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesScripting]]
-=== NodesScripting
+== NodesScripting
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesScripting {
   pass:[/**] @property cache_evictions Total number of times the script cache has evicted old data. */
   cache_evictions?: <<long>>
@@ -1277,37 +1021,27 @@ interface NodesScripting {
   compilation_limit_triggered?: <<long>>
   contexts?: <<NodesContext>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesSerializedClusterState]]
-=== NodesSerializedClusterState
+== NodesSerializedClusterState
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesSerializedClusterState {
   pass:[/**] @property full_states Number of published cluster states. */
   full_states?: <<NodesSerializedClusterStateDetail>>
   diffs?: <<NodesSerializedClusterStateDetail>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesSerializedClusterStateDetail]]
-=== NodesSerializedClusterStateDetail
+== NodesSerializedClusterStateDetail
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesSerializedClusterStateDetail {
   count?: <<long>>
   uncompressed_size?: string
@@ -1315,37 +1049,27 @@ interface NodesSerializedClusterStateDetail {
   compressed_size?: string
   compressed_size_in_bytes?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesSizeHttpHistogram]]
-=== NodesSizeHttpHistogram
+== NodesSizeHttpHistogram
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesSizeHttpHistogram {
   count: <<long>>
   ge_bytes?: <<long>>
   lt_bytes?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesStats]]
-=== NodesStats
+== NodesStats
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesStats {
   pass:[/**] @property adaptive_selection Statistics about adaptive replica selection. */
   adaptive_selection?: Record<string, <<NodesAdaptiveSelection>>>
@@ -1390,19 +1114,14 @@ interface NodesStats {
   pass:[/**] @property indices <<Indices>> stats about size, document count, indexing and deletion times, search times, field cache size, merges and flushes. */
   indices?: IndicesStatsShardStats
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesThreadCount]]
-=== NodesThreadCount
+== NodesThreadCount
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesThreadCount {
   pass:[/**] @property active Number of active threads in the thread pool. */
   active?: <<long>>
@@ -1417,37 +1136,27 @@ interface NodesThreadCount {
   pass:[/**] @property threads Number of threads in the thread pool. */
   threads?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesTimeHttpHistogram]]
-=== NodesTimeHttpHistogram
+== NodesTimeHttpHistogram
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesTimeHttpHistogram {
   count: <<long>>
   ge_millis?: <<long>>
   lt_millis?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesTransport]]
-=== NodesTransport
+== NodesTransport
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesTransport {
   pass:[/**] @property inbound_handling_time_histogram The distribution of the time spent handling each inbound message on a transport thread, represented as a histogram. */
   inbound_handling_time_histogram?: <<NodesTransportHistogram>>[]
@@ -1470,19 +1179,14 @@ interface NodesTransport {
   pass:[/**] @property total_outbound_connections The cumulative number of outbound transport connections that this node has opened since it started. Each transport connection may comprise multiple TCP connections but is only counted once in this statistic. Transport connections are typically <<long>>-lived so this statistic should remain constant in a stable cluster. */
   total_outbound_connections?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[NodesTransportHistogram]]
-=== NodesTransportHistogram
+== NodesTransportHistogram
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface NodesTransportHistogram {
   pass:[/**] @property count The number of times a transport thread took a period of time within the bounds of this bucket to handle an inbound message. */
   count?: <<long>>
@@ -1491,7 +1195,5 @@ interface NodesTransportHistogram {
   pass:[/**] @property ge_millis The inclusive lower bound of the bucket in milliseconds. May be omitted on the first bucket if this bucket has no lower bound. */
   ge_millis?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

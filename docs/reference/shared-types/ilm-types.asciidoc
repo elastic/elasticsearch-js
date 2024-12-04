@@ -1,6 +1,6 @@
 [[reference-shared-types-ilm-types]]
 
-== `Ilm`
+== `Ilm` types
 
 ////////
 ===========================================================================================================================
@@ -26,17 +26,21 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[IlmActions]]
-=== IlmActions
+== IlmActions
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmActions {
   pass:[/**] @property allocate Phases allowed: warm, cold. */
   allocate?: <<IlmAllocateAction>>
@@ -65,19 +69,14 @@ interface IlmActions {
   pass:[/**] @property wait_for_snapshot Phases allowed: delete. */
   wait_for_snapshot?: <<IlmWaitForSnapshotAction>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IlmAllocateAction]]
-=== IlmAllocateAction
+== IlmAllocateAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmAllocateAction {
   number_of_replicas?: <<integer>>
   total_shards_per_node?: <<integer>>
@@ -85,102 +84,72 @@ interface IlmAllocateAction {
   exclude?: Record<string, string>
   require?: Record<string, string>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IlmDeleteAction]]
-=== IlmDeleteAction
+== IlmDeleteAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmDeleteAction {
   delete_searchable_snapshot?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IlmDownsampleAction]]
-=== IlmDownsampleAction
+== IlmDownsampleAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmDownsampleAction {
   fixed_interval: <<DurationLarge>>
   wait_timeout?: <<Duration>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IlmForceMergeAction]]
-=== IlmForceMergeAction
+== IlmForceMergeAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmForceMergeAction {
   max_num_segments: <<integer>>
   index_codec?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IlmMigrateAction]]
-=== IlmMigrateAction
+== IlmMigrateAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmMigrateAction {
   enabled?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IlmPhase]]
-=== IlmPhase
+== IlmPhase
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmPhase {
   actions?: <<IlmActions>>
   min_age?: <<Duration>> | <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IlmPhases]]
-=== IlmPhases
+== IlmPhases
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmPhases {
   cold?: <<IlmPhase>>
   delete?: <<IlmPhase>>
@@ -188,36 +157,26 @@ interface IlmPhases {
   hot?: <<IlmPhase>>
   warm?: <<IlmPhase>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IlmPolicy]]
-=== IlmPolicy
+== IlmPolicy
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmPolicy {
   phases: <<IlmPhases>>
   _meta?: <<Metadata>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IlmRolloverAction]]
-=== IlmRolloverAction
+== IlmRolloverAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmRolloverAction {
   max_size?: <<ByteSize>>
   max_primary_shard_size?: <<ByteSize>>
@@ -230,74 +189,52 @@ interface IlmRolloverAction {
   min_docs?: <<long>>
   min_primary_shard_docs?: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IlmSearchableSnapshotAction]]
-=== IlmSearchableSnapshotAction
+== IlmSearchableSnapshotAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmSearchableSnapshotAction {
   snapshot_repository: string
   force_merge_index?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IlmSetPriorityAction]]
-=== IlmSetPriorityAction
+== IlmSetPriorityAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmSetPriorityAction {
   priority?: <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IlmShrinkAction]]
-=== IlmShrinkAction
+== IlmShrinkAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmShrinkAction {
   number_of_shards?: <<integer>>
   max_primary_shard_size?: <<ByteSize>>
   allow_write_after_shrink?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IlmWaitForSnapshotAction]]
-=== IlmWaitForSnapshotAction
+== IlmWaitForSnapshotAction
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmWaitForSnapshotAction {
   policy: string
 }
-[pass]
-++++
-</pre>
-++++
+----
+

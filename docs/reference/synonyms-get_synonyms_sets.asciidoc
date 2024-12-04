@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.synonyms.getSynonymsSets]]
-=== client.synonyms.getSynonymsSets
+== client.synonyms.getSynonymsSets
 
 Retrieves a summary of all defined synonym sets
 
 {ref}/list-synonyms-sets.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Retrieves a summary of all defined synonym sets
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SynonymsGetSynonymsSetsRequest extends <<RequestBase>> {
   from?: <<integer>>
   size?: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SynonymsGetSynonymsSetsResponse {
   count: <<integer>>
   results: SynonymsGetSynonymsSetsSynonymsSetItem[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

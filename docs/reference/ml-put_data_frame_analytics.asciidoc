@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.putDataFrameAnalytics]]
-=== client.ml.putDataFrameAnalytics
+== client.ml.putDataFrameAnalytics
 
 Create a data frame analytics job. This API creates a data frame analytics job that performs an analysis on the source indices and stores the outcome in a destination index.
 
 {ref}/put-dfanalytics.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Create a data frame analytics job. This API creates a data frame analytics job t
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlPutDataFrameAnalyticsRequest extends <<RequestBase>> {
   id: <<Id>>
   allow_lazy_start?: boolean
@@ -62,17 +65,13 @@ interface MlPutDataFrameAnalyticsRequest extends <<RequestBase>> {
   version?: <<VersionString>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlPutDataFrameAnalyticsResponse {
   authorization?: <<MlDataframeAnalyticsAuthorization>>
   allow_lazy_start: boolean
@@ -88,7 +87,5 @@ interface MlPutDataFrameAnalyticsResponse {
   version: <<VersionString>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

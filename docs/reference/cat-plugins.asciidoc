@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cat.plugins]]
-=== client.cat.plugins
+== client.cat.plugins
 
 Returns a list of plugins running on each node of a cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
 
 {ref}/cat-plugins.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,29 +47,20 @@ Returns a list of plugins running on each node of a cluster. IMPORTANT: cat APIs
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface CatPluginsRequest extends <<CatCatRequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface CatPluginsRequest extends <<CatCatRequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatPluginsResponse = CatPluginsPluginsRecord[]
 
-[pass]
-++++
-</pre>
-++++
+----
+

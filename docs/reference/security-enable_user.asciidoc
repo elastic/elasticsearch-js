@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.enableUser]]
-=== client.security.enableUser
+== client.security.enableUser
 
 Enable users. Enable users in the native realm.
 
 {ref}/security-api-enable-user.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,23 @@ Enable users. Enable users in the native realm.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityEnableUserRequest extends <<RequestBase>> {
   username: <<Username>>
   refresh?: <<Refresh>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
-interface SecurityEnableUserResponse {
-}
+[source,ts,subs=+macros]
+----
+interface SecurityEnableUserResponse {}
 
-[pass]
-++++
-</pre>
-++++
+----
+

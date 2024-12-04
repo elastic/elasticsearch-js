@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cat.allocation]]
-=== client.cat.allocation
+== client.cat.allocation
 
 Provides a snapshot of the number of shards allocated to each data node and their disk space. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
 
 {ref}/cat-allocation.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,23 @@ Provides a snapshot of the number of shards allocated to each data node and thei
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface CatAllocationRequest extends <<CatCatRequestBase>> {
   node_id?: <<NodeIds>>
   bytes?: <<Bytes>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type CatAllocationResponse = CatAllocationAllocationRecord[]
 
-[pass]
-++++
-</pre>
-++++
+----
+

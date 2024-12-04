@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.danglingIndices.deleteDanglingIndex]]
-=== client.danglingIndices.deleteDanglingIndex
+== client.danglingIndices.deleteDanglingIndex
 
 Delete a dangling index. If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling. For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
 
 {ref}/modules-gateway-dangling-indices.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Delete a dangling index. If Elasticsearch encounters index data that is absent f
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface DanglingIndicesDeleteDanglingIndexRequest extends <<RequestBase>> {
   index_uuid: <<Uuid>>
   accept_data_loss: boolean
@@ -55,20 +58,14 @@ interface DanglingIndicesDeleteDanglingIndexRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type DanglingIndicesDeleteDanglingIndexResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

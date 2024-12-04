@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.queryUser]]
-=== client.security.queryUser
+== client.security.queryUser
 
 Find users with a query. Get information for users in a paginated manner. You can optionally filter the results with a query.
 
 {ref}/security-api-query-user.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Find users with a query. Get information for users in a paginated manner. You ca
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityQueryUserRequest extends <<RequestBase>> {
   with_profile_uid?: boolean
   query?: SecurityQueryUserUserQueryContainer
@@ -57,24 +60,18 @@ interface SecurityQueryUserRequest extends <<RequestBase>> {
   search_after?: <<SortResults>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityQueryUserResponse {
   total: <<integer>>
   count: <<integer>>
   users: SecurityQueryUserQueryUser[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

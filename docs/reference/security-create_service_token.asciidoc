@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.createServiceToken]]
-=== client.security.createServiceToken
+== client.security.createServiceToken
 
 Create a service account token. Create a service accounts token for access without requiring basic authentication.
 
 {ref}/security-api-create-service-token.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Create a service account token. Create a service accounts token for access witho
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityCreateServiceTokenRequest extends <<RequestBase>> {
   namespace: <<Namespace>>
   service: <<Service>>
@@ -55,23 +58,17 @@ interface SecurityCreateServiceTokenRequest extends <<RequestBase>> {
   refresh?: <<Refresh>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityCreateServiceTokenResponse {
   created: boolean
   token: SecurityCreateServiceTokenToken
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

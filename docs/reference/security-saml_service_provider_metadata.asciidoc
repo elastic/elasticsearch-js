@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.samlServiceProviderMetadata]]
-=== client.security.samlServiceProviderMetadata
+== client.security.samlServiceProviderMetadata
 
 Create SAML service provider metadata. Generate SAML metadata for a SAML 2.0 Service Provider.
 
 {ref}/security-api-saml-sp-metadata.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Create SAML service provider metadata. Generate SAML metadata for a SAML 2.0 Ser
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecuritySamlServiceProviderMetadataRequest extends <<RequestBase>> {
   realm_name: <<Name>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecuritySamlServiceProviderMetadataResponse {
   metadata: string
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

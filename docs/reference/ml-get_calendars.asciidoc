@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.getCalendars]]
-=== client.ml.getCalendars
+== client.ml.getCalendars
 
 Get calendar configuration info.
 
 {ref}/ml-get-calendar.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get calendar configuration info.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlGetCalendarsRequest extends <<RequestBase>> {
   calendar_id?: <<Id>>
   from?: <<integer>>
@@ -55,23 +58,17 @@ interface MlGetCalendarsRequest extends <<RequestBase>> {
   page?: <<MlPage>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlGetCalendarsResponse {
   calendars: MlGetCalendarsCalendar[]
   count: <<long>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

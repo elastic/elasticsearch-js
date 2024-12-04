@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.monitoring.bulk]]
-=== client.monitoring.bulk
+== client.monitoring.bulk
 
 Used by the monitoring features to send monitoring data.
 
 {ref}/monitor-elasticsearch-cluster.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Used by the monitoring features to send monitoring data.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <<RequestBase>> {
   type?: string
   system_id: string
@@ -56,17 +59,13 @@ interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = unknown>
   operations?: (<<BulkOperationContainer>> | <<BulkUpdateAction>><TDocument, TPartialDocument> | TDocument)[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MonitoringBulkResponse {
   error?: <<ErrorCause>>
   errors: boolean
@@ -74,7 +73,5 @@ interface MonitoringBulkResponse {
   took: <<long>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

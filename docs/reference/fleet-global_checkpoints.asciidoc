@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.fleet.globalCheckpoints]]
-=== client.fleet.globalCheckpoints
+== client.fleet.globalCheckpoints
 
 Returns the current global checkpoints for an index. This API is design for internal use by the fleet server project.
 
 {ref}/get-global-checkpoints.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Returns the current global checkpoints for an index. This API is design for inte
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface FleetGlobalCheckpointsRequest extends <<RequestBase>> {
   index: <<IndexName>> | <<IndexAlias>>
   wait_for_advance?: boolean
@@ -56,23 +59,17 @@ interface FleetGlobalCheckpointsRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface FleetGlobalCheckpointsResponse {
   global_checkpoints: <<FleetCheckpoint>>[]
   timed_out: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

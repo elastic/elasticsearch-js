@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.bulkUpdateApiKeys]]
-=== client.security.bulkUpdateApiKeys
+== client.security.bulkUpdateApiKeys
 
 Updates the attributes of multiple existing API keys.
 
 {ref}/security-api-bulk-update-api-keys.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

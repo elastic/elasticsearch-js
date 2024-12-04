@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.esql.asyncQuery]]
-=== client.esql.asyncQuery
+== client.esql.asyncQuery
 
 Executes an ESQL request asynchronously
 
 {ref}/esql-async-query-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

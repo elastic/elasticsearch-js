@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.watcher.queryWatches]]
-=== client.watcher.queryWatches
+== client.watcher.queryWatches
 
 Retrieves stored watches.
 
 {ref}/watcher-api-query-watches.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Retrieves stored watches.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherQueryWatchesRequest extends <<RequestBase>> {
   from?: <<integer>>
   size?: <<integer>>
@@ -56,23 +59,17 @@ interface WatcherQueryWatchesRequest extends <<RequestBase>> {
   search_after?: <<SortResults>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface WatcherQueryWatchesResponse {
   count: <<integer>>
   watches: <<WatcherQueryWatch>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

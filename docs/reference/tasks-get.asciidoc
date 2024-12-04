@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.tasks.get]]
-=== client.tasks.get
+== client.tasks.get
 
 Get task information. Returns information about the tasks currently executing in the cluster.
 
 {ref}/tasks.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,29 +47,23 @@ Get task information. Returns information about the tasks currently executing in
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TasksGetRequest extends <<RequestBase>> {
   task_id: <<Id>>
   timeout?: <<Duration>>
   wait_for_completion?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface TasksGetResponse {
   completed: boolean
   task: <<TasksTaskInfo>>
@@ -72,7 +71,5 @@ interface TasksGetResponse {
   error?: <<ErrorCause>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.rollup.stopJob]]
-=== client.rollup.stopJob
+== client.rollup.stopJob
 
 Stops an existing, started rollup job.
 
 {ref}/rollup-stop-job.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Stops an existing, started rollup job.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface RollupStopJobRequest extends <<RequestBase>> {
   id: <<Id>>
   timeout?: <<Duration>>
   wait_for_completion?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface RollupStopJobResponse {
   stopped: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

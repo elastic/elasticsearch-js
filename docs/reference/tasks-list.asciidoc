@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.tasks.list]]
-=== client.tasks.list
+== client.tasks.list
 
 The task management API returns information about tasks currently executing on one or more nodes in the cluster.
 
 {ref}/tasks.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ The task management API returns information about tasks currently executing on o
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TasksListRequest extends <<RequestBase>> {
   actions?: string | string[]
   detailed?: boolean
@@ -59,20 +62,14 @@ interface TasksListRequest extends <<RequestBase>> {
   wait_for_completion?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type TasksListResponse = <<TasksTaskListResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.clearCachedServiceTokens]]
-=== client.security.clearCachedServiceTokens
+== client.security.clearCachedServiceTokens
 
 Clear service account token caches. Evict a subset of all entries from the service account token caches.
 
 {ref}/security-api-clear-service-token-caches.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,36 +47,28 @@ Clear service account token caches. Evict a subset of all entries from the servi
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityClearCachedServiceTokensRequest extends <<RequestBase>> {
   namespace: <<Namespace>>
   service: <<Service>>
   name: <<Names>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityClearCachedServiceTokensResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
   nodes: Record<string, <<SecurityClusterNode>>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

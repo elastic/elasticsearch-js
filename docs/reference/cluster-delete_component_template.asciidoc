@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cluster.deleteComponentTemplate]]
-=== client.cluster.deleteComponentTemplate
+== client.cluster.deleteComponentTemplate
 
 Delete component templates. Deletes component templates. Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
 
 {ref}/indices-component-template.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Delete component templates. Deletes component templates. Component templates are
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ClusterDeleteComponentTemplateRequest extends <<RequestBase>> {
   name: <<Names>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type ClusterDeleteComponentTemplateResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

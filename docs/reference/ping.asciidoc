@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ping]]
-=== client.ping
+== client.ping
 
 Ping the cluster. Returns whether the cluster is running.
 
 {ref}/index.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,29 +47,20 @@ Ping the cluster. Returns whether the cluster is running.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface PingRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface PingRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type PingResponse = boolean
 
-[pass]
-++++
-</pre>
-++++
+----
+

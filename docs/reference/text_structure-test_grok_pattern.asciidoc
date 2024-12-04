@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.textStructure.testGrokPattern]]
-=== client.textStructure.testGrokPattern
+== client.textStructure.testGrokPattern
 
 Tests a Grok pattern on some text.
 
 {ref}/test-grok-pattern.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Tests a Grok pattern on some text.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TextStructureTestGrokPatternRequest extends <<RequestBase>> {
   ecs_compatibility?: string
   grok_pattern: <<GrokPattern>>
   text: string[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface TextStructureTestGrokPatternResponse {
   matches: TextStructureTestGrokPatternMatchedText[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

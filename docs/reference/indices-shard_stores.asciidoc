@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.shardStores]]
-=== client.indices.shardStores
+== client.indices.shardStores
 
 Retrieves store information about replica shards in one or more indices. For data streams, the API retrieves store information for the stream’s backing indices.
 
 {ref}/indices-shards-stores.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Retrieves store information about replica shards in one or more indices. For dat
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesShardStoresRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -56,22 +59,16 @@ interface IndicesShardStoresRequest extends <<RequestBase>> {
   status?: IndicesShardStoresShardStoreStatus | IndicesShardStoresShardStoreStatus[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesShardStoresResponse {
   indices: Record<<<IndexName>>, IndicesShardStoresIndicesShardStores>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

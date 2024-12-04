@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ilm.migrateToDataTiers]]
-=== client.ilm.migrateToDataTiers
+== client.ilm.migrateToDataTiers
 
 Switches the indices, ILM policies, and legacy, composable and component templates from using custom node attributes and attribute-based allocation filters to using data tiers, and optionally deletes one legacy index template.+ Using node roles enables ILM to automatically move the indices between data tiers.
 
 {ref}/ilm-migrate-to-data-tiers.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,29 +47,23 @@ Switches the indices, ILM policies, and legacy, composable and component templat
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmMigrateToDataTiersRequest extends <<RequestBase>> {
   dry_run?: boolean
   legacy_template_to_delete?: string
   node_attribute?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IlmMigrateToDataTiersResponse {
   dry_run: boolean
   removed_legacy_template: string
@@ -75,7 +74,5 @@ interface IlmMigrateToDataTiersResponse {
   migrated_component_templates: string[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

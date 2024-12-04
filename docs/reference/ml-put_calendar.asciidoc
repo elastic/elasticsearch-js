@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.putCalendar]]
-=== client.ml.putCalendar
+== client.ml.putCalendar
 
 Create a calendar.
 
 {ref}/ml-put-calendar.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,36 +47,28 @@ Create a calendar.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlPutCalendarRequest extends <<RequestBase>> {
   calendar_id: <<Id>>
   job_ids?: <<Id>>[]
   description?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlPutCalendarResponse {
   calendar_id: <<Id>>
   description?: string
   job_ids: <<Ids>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

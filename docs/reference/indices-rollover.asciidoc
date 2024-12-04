@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.rollover]]
-=== client.indices.rollover
+== client.indices.rollover
 
 Roll over to a new index. Creates a new index for a data stream or index alias.
 
 {ref}/indices-rollover-index.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Roll over to a new index. Creates a new index for a data stream or index alias.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesRolloverRequest extends <<RequestBase>> {
   alias: <<IndexAlias>>
   new_index?: <<IndexName>>
@@ -61,17 +64,13 @@ interface IndicesRolloverRequest extends <<RequestBase>> {
   settings?: Record<string, any>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesRolloverResponse {
   acknowledged: boolean
   conditions: Record<string, boolean>
@@ -82,7 +81,5 @@ interface IndicesRolloverResponse {
   shards_acknowledged: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

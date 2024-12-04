@@ -1,6 +1,6 @@
 [[reference-shared-types-async-search-types]]
 
-== `AsyncSearch`
+== `AsyncSearch` types
 
 ////////
 ===========================================================================================================================
@@ -26,17 +26,21 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[AsyncSearchAsyncSearch]]
-=== AsyncSearchAsyncSearch
+== AsyncSearchAsyncSearch
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface AsyncSearchAsyncSearch<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> {
   pass:[/**] @property aggregations Partial aggregations results, coming from the shards that have already completed the execution of the query. */
   aggregations?: TAggregations
@@ -56,35 +60,25 @@ interface AsyncSearchAsyncSearch<TDocument = unknown, TAggregations = Record<<<A
   timed_out: boolean
   took: <<long>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[AsyncSearchAsyncSearchDocumentResponseBase]]
-=== AsyncSearchAsyncSearchDocumentResponseBase
+== AsyncSearchAsyncSearchDocumentResponseBase
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface AsyncSearchAsyncSearchDocumentResponseBase<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> extends <<AsyncSearchAsyncSearchResponseBase>> {
   response: <<AsyncSearchAsyncSearch>><TDocument, TAggregations>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[AsyncSearchAsyncSearchResponseBase]]
-=== AsyncSearchAsyncSearchResponseBase
+== AsyncSearchAsyncSearchResponseBase
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface AsyncSearchAsyncSearchResponseBase {
   id?: <<Id>>
   pass:[/**] @property is_partial When the query is no longer running, this property indicates whether the search failed or was successfully completed on all shards. While the query is running, `is_partial` is always set to `true`. */
@@ -100,7 +94,5 @@ interface AsyncSearchAsyncSearchResponseBase {
   completion_time?: <<DateTime>>
   completion_time_in_millis?: <<EpochTime>><<<UnitMillis>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

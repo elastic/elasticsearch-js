@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.slm.putLifecycle]]
-=== client.slm.putLifecycle
+== client.slm.putLifecycle
 
 Creates or updates a snapshot lifecycle policy.
 
 {ref}/slm-api-put-policy.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Creates or updates a snapshot lifecycle policy.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SlmPutLifecycleRequest extends <<RequestBase>> {
   policy_id: <<Name>>
   master_timeout?: <<Duration>>
@@ -59,20 +62,14 @@ interface SlmPutLifecycleRequest extends <<RequestBase>> {
   schedule?: <<WatcherCronExpression>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type SlmPutLifecycleResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

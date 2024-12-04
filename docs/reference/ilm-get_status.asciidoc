@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ilm.getStatus]]
-=== client.ilm.getStatus
+== client.ilm.getStatus
 
 Retrieves the current index lifecycle management (ILM) status.
 
 {ref}/ilm-get-status.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,22 @@ Retrieves the current index lifecycle management (ILM) status.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface IlmGetStatusRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface IlmGetStatusRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmGetStatusResponse {
   operation_mode: <<LifecycleOperationMode>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

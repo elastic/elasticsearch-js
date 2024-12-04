@@ -24,15 +24,20 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.connector.syncJobClaim]]
-=== client.connector.syncJobClaim
+== client.connector.syncJobClaim
 
 Claims a connector sync job.
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

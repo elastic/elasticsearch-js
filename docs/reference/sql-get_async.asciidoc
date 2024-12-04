@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.sql.getAsync]]
-=== client.sql.getAsync
+== client.sql.getAsync
 
 Returns the current status and available results for an async SQL search or stored synchronous SQL search
 
 {ref}/get-async-sql-search-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Returns the current status and available results for an async SQL search or stor
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SqlGetAsyncRequest extends <<RequestBase>> {
   id: <<Id>>
   delimiter?: string
@@ -56,17 +59,13 @@ interface SqlGetAsyncRequest extends <<RequestBase>> {
   wait_for_completion_timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SqlGetAsyncResponse {
   id: <<Id>>
   is_running: boolean
@@ -76,7 +75,5 @@ interface SqlGetAsyncResponse {
   rows: SqlRow[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

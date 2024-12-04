@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.searchShards]]
-=== client.searchShards
+== client.searchShards
 
 Get the search shards. Get the indices and shards that a search request would be run against. This information can be useful for working out issues or planning optimizations with routing and shard preferences. When filtered aliases are used, the filter is returned as part of the indices section.
 
 {ref}/search-shards.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get the search shards. Get the indices and shards that a search request would be
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SearchShardsRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -58,24 +61,18 @@ interface SearchShardsRequest extends <<RequestBase>> {
   routing?: <<Routing>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SearchShardsResponse {
   nodes: Record<<<NodeId>>, <<SearchShardsSearchShardsNodeAttributes>>>
   shards: <<NodeShard>>[][]
   indices: Record<<<IndexName>>, <<SearchShardsShardStoreIndex>>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

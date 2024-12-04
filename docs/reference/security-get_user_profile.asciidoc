@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.getUserProfile]]
-=== client.security.getUserProfile
+== client.security.getUserProfile
 
 Get a user profile. Get a user's profile using the unique profile ID.
 
 {ref}/security-api-get-user-profile.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Get a user profile. Get a user's profile using the unique profile ID.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityGetUserProfileRequest extends <<RequestBase>> {
   uid: <<SecurityUserProfileId>> | <<SecurityUserProfileId>>[]
   data?: string | string[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityGetUserProfileResponse {
   profiles: <<SecurityUserProfileWithMetadata>>[]
   errors?: SecurityGetUserProfileGetUserProfileErrors
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

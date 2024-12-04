@@ -24,15 +24,20 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.inference.streamInference]]
-=== client.inference.streamInference
+== client.inference.streamInference
 
 Perform streaming inference
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

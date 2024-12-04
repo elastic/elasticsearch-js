@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cluster.pendingTasks]]
-=== client.cluster.pendingTasks
+== client.cluster.pendingTasks
 
 Returns cluster-level changes (such as create index, update mapping, allocate or fail shard) that have not yet been executed. NOTE: This API returns a list of any pending updates to the cluster state. These are distinct from the tasks reported by the Task Management API which include periodic tasks and tasks initiated by the user, such as node stats, search queries, or create index requests. However, if a user-initiated task such as a create index command causes a cluster state update, the activity of this task might be reported by both task api and pending cluster tasks API.
 
 {ref}/cluster-pending.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,25 @@ Returns cluster-level changes (such as create index, update mapping, allocate or
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ClusterPendingTasksRequest extends <<RequestBase>> {
   local?: boolean
   master_timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ClusterPendingTasksResponse {
   tasks: ClusterPendingTasksPendingTask[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

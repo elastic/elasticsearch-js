@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cat.tasks]]
-=== client.cat.tasks
+== client.cat.tasks
 
 Returns information about tasks currently executing in the cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the task management API.
 
 {ref}/tasks.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Returns information about tasks currently executing in the cluster. IMPORTANT: c
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface CatTasksRequest extends <<CatCatRequestBase>> {
   actions?: string[]
   detailed?: boolean
@@ -55,20 +58,14 @@ interface CatTasksRequest extends <<CatCatRequestBase>> {
   parent_task_id?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type CatTasksResponse = CatTasksTasksRecord[]
 
-[pass]
-++++
-</pre>
-++++
+----
+

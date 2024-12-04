@@ -1,6 +1,6 @@
 [[reference-shared-types-transform-types]]
 
-== `Transform`
+== `Transform` types
 
 ////////
 ===========================================================================================================================
@@ -26,55 +26,49 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[TransformDestination]]
-=== TransformDestination
+== TransformDestination
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformDestination {
   pass:[/**] @property index The destination index for the transform. The mappings of the destination index are deduced based on the source fields when possible. If alternate mappings are required, use the create index API prior to starting the transform. */
   index?: <<IndexName>>
   pass:[/**] @property pipeline The unique identifier for an ingest pipeline. */
   pipeline?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TransformLatest]]
-=== TransformLatest
+== TransformLatest
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformLatest {
   pass:[/**] @property sort Specifies the date field that is used to identify the latest documents. */
   sort: <<Field>>
   pass:[/**] @property unique_key Specifies an array of one or more fields that are used to group the data. */
   unique_key: <<Field>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TransformPivot]]
-=== TransformPivot
+== TransformPivot
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformPivot {
   pass:[/**] @property aggregations Defines how to aggregate the grouped data. The following aggregations are currently supported: average, bucket script, bucket selector, cardinality, filter, geo bounds, geo centroid, geo line, max, median absolute deviation, min, missing, percentiles, rare terms, scripted metric, stats, sum, terms, top metrics, value count, weighted average. */
   aggregations?: Record<string, <<AggregationsAggregationContainer>>>
@@ -83,74 +77,54 @@ interface TransformPivot {
   pass:[/**] @property group_by Defines how to group the data. More than one grouping can be defined per pivot. The following groupings are currently supported: date histogram, geotile grid, histogram, terms. */
   group_by?: Record<string, <<TransformPivotGroupByContainer>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TransformPivotGroupByContainer]]
-=== TransformPivotGroupByContainer
+== TransformPivotGroupByContainer
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformPivotGroupByContainer {
   date_histogram?: <<AggregationsDateHistogramAggregation>>
   geotile_grid?: <<AggregationsGeoTileGridAggregation>>
   histogram?: <<AggregationsHistogramAggregation>>
   terms?: <<AggregationsTermsAggregation>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TransformRetentionPolicy]]
-=== TransformRetentionPolicy
+== TransformRetentionPolicy
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformRetentionPolicy {
   pass:[/**] @property field The date field that is used to calculate the age of the document. */
   field: <<Field>>
   pass:[/**] @property max_age Specifies the maximum age of a document in the destination index. Documents that are older than the configured value are removed from the destination index. */
   max_age: <<Duration>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TransformRetentionPolicyContainer]]
-=== TransformRetentionPolicyContainer
+== TransformRetentionPolicyContainer
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformRetentionPolicyContainer {
   pass:[/**] @property time Specifies that the transform uses a time field to set the retention policy. */
   time?: <<TransformRetentionPolicy>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TransformSettings]]
-=== TransformSettings
+== TransformSettings
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformSettings {
   pass:[/**] @property align_checkpoints Specifies whether the transform checkpoint ranges should be optimized for performance. Such optimization can align checkpoint ranges with the date histogram interval when date histogram is specified as a group source in the transform config. As a result, less document updates in the destination index will be performed thus improving overall performance. */
   align_checkpoints?: boolean
@@ -165,19 +139,14 @@ interface TransformSettings {
   pass:[/**] @property unattended If `true`, the transform runs in unattended mode. In unattended mode, the transform retries indefinitely in case of an error which means the transform never fails. Setting the number of retries other than infinite fails in validation. */
   unattended?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TransformSource]]
-=== TransformSource
+== TransformSource
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformSource {
   pass:[/**] @property index The source indices for the transform. It can be a single index, an index pattern (for example, `"my-index-*""`), an array of indices (for example, `["my-index-000001", "my-index-000002"]`), or an array of index patterns (for example, `["my-index-*", "my-other-index-*"]`. For remote indices use the syntax `"remote_name:index_name"`. If any indices are in remote clusters then the master node and at least one transform node must have the `remote_cluster_client` node role. */
   index: <<Indices>>
@@ -186,43 +155,31 @@ interface TransformSource {
   pass:[/**] @property runtime_mappings Definitions of search-time runtime fields that can be used by the transform. For search runtime fields all data nodes, including remote nodes, must be 7.12 or later. */
   runtime_mappings?: <<MappingRuntimeFields>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TransformSyncContainer]]
-=== TransformSyncContainer
+== TransformSyncContainer
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformSyncContainer {
   pass:[/**] @property time Specifies that the transform uses a time field to synchronize the source and destination indices. */
   time?: <<TransformTimeSync>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TransformTimeSync]]
-=== TransformTimeSync
+== TransformTimeSync
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformTimeSync {
   pass:[/**] @property delay The time delay between the current time and the latest input data time. */
   delay?: <<Duration>>
   pass:[/**] @property field The date field that is used to identify new documents in the source. In general, it’s a good idea to use a field that contains the ingest timestamp. If you use a different field, you might need to set the delay such that it accounts for data transmission delays. */
   field: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

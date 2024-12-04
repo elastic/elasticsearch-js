@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.mget]]
-=== client.mget
+== client.mget
 
 Get multiple documents. Get multiple JSON documents by ID from one or more indices. If you specify an index in the request URI, you only need to specify the document IDs in the request body. To ensure fast responses, this multi get (mget) API responds with partial results if one or more shards fail.
 
 {ref}/docs-multi-get.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get multiple documents. Get multiple JSON documents by ID from one or more indic
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MgetRequest extends <<RequestBase>> {
   index?: <<IndexName>>
   force_synthetic_source?: boolean
@@ -63,22 +66,16 @@ interface MgetRequest extends <<RequestBase>> {
   ids?: <<Ids>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MgetResponse<TDocument = unknown> {
   docs: <<MgetResponseItem>><TDocument>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

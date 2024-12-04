@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.enrich.stats]]
-=== client.enrich.stats
+== client.enrich.stats
 
 Get enrich stats. Returns enrich coordinator statistics and information about enrich policies that are currently executing.
 
 {ref}/enrich-stats-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,24 @@ Get enrich stats. Returns enrich coordinator statistics and information about en
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface EnrichStatsRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface EnrichStatsRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EnrichStatsResponse {
   coordinator_stats: EnrichStatsCoordinatorStats[]
   executing_policies: EnrichStatsExecutingPolicy[]
   cache_stats?: EnrichStatsCacheStats[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.license.getTrialStatus]]
-=== client.license.getTrialStatus
+== client.license.getTrialStatus
 
 Retrieves information about the status of the trial license.
 
 {ref}/get-trial-status.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,22 @@ Retrieves information about the status of the trial license.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface LicenseGetTrialStatusRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface LicenseGetTrialStatusRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface LicenseGetTrialStatusResponse {
   eligible_to_start_trial: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

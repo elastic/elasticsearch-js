@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ilm.removePolicy]]
-=== client.ilm.removePolicy
+== client.ilm.removePolicy
 
 Removes the assigned lifecycle policy and stops managing the specified index
 
 {ref}/ilm-remove-policy.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,25 @@ Removes the assigned lifecycle policy and stops managing the specified index
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmRemovePolicyRequest extends <<RequestBase>> {
   index: <<IndexName>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IlmRemovePolicyResponse {
   failed_indexes: <<IndexName>>[]
   has_failures: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

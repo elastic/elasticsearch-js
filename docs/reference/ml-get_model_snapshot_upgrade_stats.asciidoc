@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.getModelSnapshotUpgradeStats]]
-=== client.ml.getModelSnapshotUpgradeStats
+== client.ml.getModelSnapshotUpgradeStats
 
 Get anomaly detection job model snapshot upgrade usage info.
 
 {ref}/ml-get-job-model-snapshot-upgrade-stats.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,35 +47,27 @@ Get anomaly detection job model snapshot upgrade usage info.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlGetModelSnapshotUpgradeStatsRequest extends <<RequestBase>> {
   job_id: <<Id>>
   snapshot_id: <<Id>>
   allow_no_match?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlGetModelSnapshotUpgradeStatsResponse {
   count: <<long>>
   model_snapshot_upgrades: <<MlModelSnapshotUpgrade>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

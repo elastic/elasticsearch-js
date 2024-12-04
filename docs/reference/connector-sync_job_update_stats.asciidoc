@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.connector.syncJobUpdateStats]]
-=== client.connector.syncJobUpdateStats
+== client.connector.syncJobUpdateStats
 
 Updates the stats fields in the connector sync job document.
 
 {ref}/set-connector-sync-job-stats-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cat.master]]
-=== client.cat.master
+== client.cat.master
 
 Returns information about the master node, including the ID, bound IP address, and name. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
 
 {ref}/cat-master.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,29 +47,20 @@ Returns information about the master node, including the ID, bound IP address, a
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface CatMasterRequest extends <<CatCatRequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface CatMasterRequest extends <<CatCatRequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatMasterResponse = CatMasterMasterRecord[]
 
-[pass]
-++++
-</pre>
-++++
+----
+

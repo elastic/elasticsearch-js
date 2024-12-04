@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.validateQuery]]
-=== client.indices.validateQuery
+== client.indices.validateQuery
 
 Validate a query. Validates a query without running it.
 
 {ref}/search-validate.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Validate a query. Validates a query without running it.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesValidateQueryRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -65,17 +68,13 @@ interface IndicesValidateQueryRequest extends <<RequestBase>> {
   query?: <<QueryDslQueryContainer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesValidateQueryResponse {
   explanations?: IndicesValidateQueryIndicesValidationExplanation[]
   _shards?: <<ShardStatistics>>
@@ -83,7 +82,5 @@ interface IndicesValidateQueryResponse {
   error?: string
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

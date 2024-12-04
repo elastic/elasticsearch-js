@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.samlAuthenticate]]
-=== client.security.samlAuthenticate
+== client.security.samlAuthenticate
 
 Authenticate SAML. Submits a SAML response message to Elasticsearch for consumption.
 
 {ref}/security-api-saml-authenticate.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,29 +47,23 @@ Authenticate SAML. Submits a SAML response message to Elasticsearch for consumpt
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecuritySamlAuthenticateRequest extends <<RequestBase>> {
   content: string
   ids: <<Ids>>
   realm?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecuritySamlAuthenticateResponse {
   access_token: string
   username: string
@@ -73,7 +72,5 @@ interface SecuritySamlAuthenticateResponse {
   realm: string
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

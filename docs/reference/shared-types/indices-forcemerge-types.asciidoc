@@ -1,6 +1,6 @@
 [[reference-shared-types-indices-forcemerge-types]]
 
-== `Indices`
+== `Indices` types
 
 ////////
 ===========================================================================================================================
@@ -26,22 +26,24 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[IndicesForceMergeResponseBody]]
-=== IndicesForceMergeResponseBody
+== IndicesForceMergeResponseBody
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesForcemergeForceMergeResponseBody extends <<ShardsOperationResponseBase>> {
   pass:[/**] @property task task contains a task id returned when wait_for_completion=false, you can use the task_id to get the status of the task at _tasks/<task_id> */
   task?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.transform.updateTransform]]
-=== client.transform.updateTransform
+== client.transform.updateTransform
 
 Update a transform. Updates certain properties of a transform. All updated properties except `description` do not take effect until after the transform starts the next checkpoint, thus there is data consistency in each checkpoint. To use this API, you must have `read` and `view_index_metadata` privileges for the source indices. You must also have `index` and `read` privileges for the destination index. When Elasticsearch security features are enabled, the transform remembers which roles the user who updated it had at the time of update and runs with those privileges.
 
 {ref}/update-transform.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Update a transform. Updates certain properties of a transform. All updated prope
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformUpdateTransformRequest extends <<RequestBase>> {
   transform_id: <<Id>>
   defer_validation?: boolean
@@ -62,17 +65,13 @@ interface TransformUpdateTransformRequest extends <<RequestBase>> {
   retention_policy?: <<TransformRetentionPolicyContainer>> | null
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface TransformUpdateTransformResponse {
   authorization?: <<MlTransformAuthorization>>
   create_time: <<long>>
@@ -90,7 +89,5 @@ interface TransformUpdateTransformResponse {
   _meta?: <<Metadata>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

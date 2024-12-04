@@ -1,6 +1,6 @@
 [[reference-shared-types-query-rules-types]]
 
-== `QueryRules`
+== `QueryRules` types
 
 ////////
 ===========================================================================================================================
@@ -26,17 +26,21 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[QueryRulesQueryRule]]
-=== QueryRulesQueryRule
+== QueryRulesQueryRule
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface QueryRulesQueryRule {
   rule_id: <<Id>>
   type: <<QueryRulesQueryRuleType>>
@@ -44,89 +48,62 @@ interface QueryRulesQueryRule {
   actions: <<QueryRulesQueryRuleActions>>
   priority?: <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[QueryRulesQueryRuleActions]]
-=== QueryRulesQueryRuleActions
+== QueryRulesQueryRuleActions
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface QueryRulesQueryRuleActions {
   ids?: <<Id>>[]
   docs?: <<QueryDslPinnedDoc>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[QueryRulesQueryRuleCriteria]]
-=== QueryRulesQueryRuleCriteria
+== QueryRulesQueryRuleCriteria
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface QueryRulesQueryRuleCriteria {
   type: <<QueryRulesQueryRuleCriteriaType>>
   metadata?: string
   values?: any[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[QueryRulesQueryRuleCriteriaType]]
-=== QueryRulesQueryRuleCriteriaType
+== QueryRulesQueryRuleCriteriaType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type QueryRulesQueryRuleCriteriaType = 'global' | 'exact' | 'exact_fuzzy' | 'fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte' | 'always'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[QueryRulesQueryRuleType]]
-=== QueryRulesQueryRuleType
+== QueryRulesQueryRuleType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type QueryRulesQueryRuleType = 'pinned' | 'exclude'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[QueryRulesQueryRuleset]]
-=== QueryRulesQueryRuleset
+== QueryRulesQueryRuleset
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface QueryRulesQueryRuleset {
   pass:[/**] @property ruleset_id Query Ruleset unique identifier */
   ruleset_id: <<Id>>
   pass:[/**] @property rules Rules associated with the query ruleset */
   rules: <<QueryRulesQueryRule>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
+

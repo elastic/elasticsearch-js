@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.getTrainedModelsStats]]
-=== client.ml.getTrainedModelsStats
+== client.ml.getTrainedModelsStats
 
 Get trained models usage info. You can get usage information for multiple trained models in a single API request by using a list of model IDs or a wildcard expression.
 
 {ref}/get-trained-models-stats.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get trained models usage info. You can get usage information for multiple traine
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlGetTrainedModelsStatsRequest extends <<RequestBase>> {
   model_id?: <<Ids>>
   allow_no_match?: boolean
@@ -55,23 +58,17 @@ interface MlGetTrainedModelsStatsRequest extends <<RequestBase>> {
   size?: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlGetTrainedModelsStatsResponse {
   count: <<integer>>
   trained_model_stats: <<MlTrainedModelStats>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

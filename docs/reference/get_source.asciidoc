@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.getSource]]
-=== client.getSource
+== client.getSource
 
 Get a document's source. Returns the source of a document.
 
 {ref}/docs-get.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get a document's source. Returns the source of a document.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface GetSourceRequest extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
@@ -63,20 +66,14 @@ interface GetSourceRequest extends <<RequestBase>> {
   version_type?: <<VersionType>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type GetSourceResponse<TDocument = unknown> = TDocument
 
-[pass]
-++++
-</pre>
-++++
+----
+

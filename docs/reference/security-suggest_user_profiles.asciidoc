@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.suggestUserProfiles]]
-=== client.security.suggestUserProfiles
+== client.security.suggestUserProfiles
 
 Suggest a user profile. Get suggestions for user profiles that match specified search criteria.
 
 {ref}/security-api-suggest-user-profile.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Suggest a user profile. Get suggestions for user profiles that match specified s
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecuritySuggestUserProfilesRequest extends <<RequestBase>> {
   name?: string
   size?: <<long>>
@@ -55,24 +58,18 @@ interface SecuritySuggestUserProfilesRequest extends <<RequestBase>> {
   hint?: SecuritySuggestUserProfilesHint
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecuritySuggestUserProfilesResponse {
   total: SecuritySuggestUserProfilesTotalUserProfiles
   took: <<long>>
   profiles: <<SecurityUserProfile>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

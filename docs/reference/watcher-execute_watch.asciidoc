@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.watcher.executeWatch]]
-=== client.watcher.executeWatch
+== client.watcher.executeWatch
 
 This API can be used to force execution of the watch outside of its triggering logic or to simulate the watch execution for debugging purposes. For testing and debugging purposes, you also have fine-grained control on how the watch runs. You can execute the watch without executing all of its actions or alternatively by simulating them. You can also force execution by ignoring the watch condition and control whether a watch record would be written to the watch history after execution.
 
 {ref}/watcher-api-execute-watch.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ This API can be used to force execution of the watch outside of its triggering l
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherExecuteWatchRequest extends <<RequestBase>> {
   id?: <<Id>>
   debug?: boolean
@@ -60,23 +63,17 @@ interface WatcherExecuteWatchRequest extends <<RequestBase>> {
   watch?: <<WatcherWatch>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface WatcherExecuteWatchResponse {
   _id: <<Id>>
   watch_record: WatcherExecuteWatchWatchRecord
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

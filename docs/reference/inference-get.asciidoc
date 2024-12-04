@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.inference.get]]
-=== client.inference.get
+== client.inference.get
 
 Get an inference endpoint
 
 {ref}/get-inference-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,25 @@ Get an inference endpoint
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface InferenceGetRequest extends <<RequestBase>> {
   task_type?: <<InferenceTaskType>>
   inference_id?: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface InferenceGetResponse {
   endpoints: <<InferenceInferenceEndpointInfo>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

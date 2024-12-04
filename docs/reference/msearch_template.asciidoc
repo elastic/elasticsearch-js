@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.msearchTemplate]]
-=== client.msearchTemplate
+== client.msearchTemplate
 
 Run multiple templated searches.
 
 {ref}/search-multi-search.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Run multiple templated searches.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MsearchTemplateRequest extends <<RequestBase>> {
   index?: <<Indices>>
   ccs_minimize_roundtrips?: boolean
@@ -58,20 +61,14 @@ interface MsearchTemplateRequest extends <<RequestBase>> {
   search_templates?: <<MsearchTemplateRequestItem>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = <<MsearchMultiSearchResult>><TDocument, TAggregations>
 
-[pass]
-++++
-</pre>
-++++
+----
+

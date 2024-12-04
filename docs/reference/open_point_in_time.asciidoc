@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.openPointInTime]]
-=== client.openPointInTime
+== client.openPointInTime
 
 Open a point in time. A search request by default runs against the most recent visible data of the target indices, which is called point in time. Elasticsearch pit (point in time) is a lightweight view into the state of the data as it existed when initiated. In some cases, it’s preferred to perform multiple search requests using the same point in time. For example, if refreshes happen between `search_after` requests, then the results of those requests might not be consistent as changes happening between searches are only visible to the more recent point in time. A point in time must be opened explicitly before being used in search requests. The `keep_alive` parameter tells Elasticsearch how long it should persist.
 
 {ref}/point-in-time-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Open a point in time. A search request by default runs against the most recent v
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface OpenPointInTimeRequest extends <<RequestBase>> {
   index: <<Indices>>
   keep_alive: <<Duration>>
@@ -58,23 +61,17 @@ interface OpenPointInTimeRequest extends <<RequestBase>> {
   index_filter?: <<QueryDslQueryContainer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface OpenPointInTimeResponse {
   _shards: <<ShardStatistics>>
   id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

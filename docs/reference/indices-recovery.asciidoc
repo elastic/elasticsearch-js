@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.recovery]]
-=== client.indices.recovery
+== client.indices.recovery
 
 Returns information about ongoing and completed shard recoveries for one or more indices. For data streams, the API returns information for the stream’s backing indices.
 
 {ref}/indices-recovery.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Returns information about ongoing and completed shard recoveries for one or more
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesRecoveryRequest extends <<RequestBase>> {
   index?: <<Indices>>
   active_only?: boolean
   detailed?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesRecoveryResponse = Record<<<IndexName>>, IndicesRecoveryRecoveryStatus>
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ccr.forgetFollower]]
-=== client.ccr.forgetFollower
+== client.ccr.forgetFollower
 
 Removes the follower retention leases from the leader.
 
 {ref}/ccr-post-forget-follower.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Removes the follower retention leases from the leader.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface CcrForgetFollowerRequest extends <<RequestBase>> {
   index: <<IndexName>>
   follower_cluster?: string
@@ -56,22 +59,16 @@ interface CcrForgetFollowerRequest extends <<RequestBase>> {
   leader_remote_cluster?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface CcrForgetFollowerResponse {
   _shards: <<ShardStatistics>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

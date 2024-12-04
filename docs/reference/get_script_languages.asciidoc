@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.getScriptLanguages]]
-=== client.getScriptLanguages
+== client.getScriptLanguages
 
 Get script languages. Get a list of available script types, languages, and contexts.
 
 {ref}/modules-scripting.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,23 @@ Get script languages. Get a list of available script types, languages, and conte
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface GetScriptLanguagesRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface GetScriptLanguagesRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface GetScriptLanguagesResponse {
   language_contexts: <<GetScriptLanguagesLanguageContext>>[]
   types_allowed: string[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

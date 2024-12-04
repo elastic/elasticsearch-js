@@ -1,6 +1,6 @@
 [[reference-shared-types-cat-types]]
 
-== `Cat`
+== `Cat` types
 
 ////////
 ===========================================================================================================================
@@ -26,160 +26,111 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[CatCatAnomalyDetectorColumn]]
-=== CatCatAnomalyDetectorColumn
+== CatCatAnomalyDetectorColumn
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatCatAnomalyDetectorColumn = 'assignment_explanation' | 'ae' | 'buckets.count' | 'bc' | 'bucketsCount' | 'buckets.time.exp_avg' | 'btea' | 'bucketsTimeExpAvg' | 'buckets.time.exp_avg_hour' | 'bteah' | 'bucketsTimeExpAvgHour' | 'buckets.time.max' | 'btmax' | 'bucketsTimeMax' | 'buckets.time.min' | 'btmin' | 'bucketsTimeMin' | 'buckets.time.total' | 'btt' | 'bucketsTimeTotal' | 'data.buckets' | 'db' | 'dataBuckets' | 'data.earliest_record' | 'der' | 'dataEarliestRecord' | 'data.empty_buckets' | 'deb' | 'dataEmptyBuckets' | 'data.input_bytes' | 'dib' | 'dataInputBytes' | 'data.input_fields' | 'dif' | 'dataInputFields' | 'data.input_records' | 'dir' | 'dataInputRecords' | 'data.invalid_dates' | 'did' | 'dataInvalidDates' | 'data.last' | 'dl' | 'dataLast' | 'data.last_empty_bucket' | 'dleb' | 'dataLastEmptyBucket' | 'data.last_sparse_bucket' | 'dlsb' | 'dataLastSparseBucket' | 'data.latest_record' | 'dlr' | 'dataLatestRecord' | 'data.missing_fields' | 'dmf' | 'dataMissingFields' | 'data.out_of_order_timestamps' | 'doot' | 'dataOutOfOrderTimestamps' | 'data.processed_fields' | 'dpf' | 'dataProcessedFields' | 'data.processed_records' | 'dpr' | 'dataProcessedRecords' | 'data.sparse_buckets' | 'dsb' | 'dataSparseBuckets' | 'forecasts.memory.avg' | 'fmavg' | 'forecastsMemoryAvg' | 'forecasts.memory.max' | 'fmmax' | 'forecastsMemoryMax' | 'forecasts.memory.min' | 'fmmin' | 'forecastsMemoryMin' | 'forecasts.memory.total' | 'fmt' | 'forecastsMemoryTotal' | 'forecasts.records.avg' | 'fravg' | 'forecastsRecordsAvg' | 'forecasts.records.max' | 'frmax' | 'forecastsRecordsMax' | 'forecasts.records.min' | 'frmin' | 'forecastsRecordsMin' | 'forecasts.records.total' | 'frt' | 'forecastsRecordsTotal' | 'forecasts.time.avg' | 'ftavg' | 'forecastsTimeAvg' | 'forecasts.time.max' | 'ftmax' | 'forecastsTimeMax' | 'forecasts.time.min' | 'ftmin' | 'forecastsTimeMin' | 'forecasts.time.total' | 'ftt' | 'forecastsTimeTotal' | 'forecasts.total' | 'ft' | 'forecastsTotal' | 'id' | 'model.bucket_allocation_failures' | 'mbaf' | 'modelBucketAllocationFailures' | 'model.by_fields' | 'mbf' | 'modelByFields' | 'model.bytes' | 'mb' | 'modelBytes' | 'model.bytes_exceeded' | 'mbe' | 'modelBytesExceeded' | 'model.categorization_status' | 'mcs' | 'modelCategorizationStatus' | 'model.categorized_doc_count' | 'mcdc' | 'modelCategorizedDocCount' | 'model.dead_category_count' | 'mdcc' | 'modelDeadCategoryCount' | 'model.failed_category_count' | 'mdcc' | 'modelFailedCategoryCount' | 'model.frequent_category_count' | 'mfcc' | 'modelFrequentCategoryCount' | 'model.log_time' | 'mlt' | 'modelLogTime' | 'model.memory_limit' | 'mml' | 'modelMemoryLimit' | 'model.memory_status' | 'mms' | 'modelMemoryStatus' | 'model.over_fields' | 'mof' | 'modelOverFields' | 'model.partition_fields' | 'mpf' | 'modelPartitionFields' | 'model.rare_category_count' | 'mrcc' | 'modelRareCategoryCount' | 'model.timestamp' | 'mt' | 'modelTimestamp' | 'model.total_category_count' | 'mtcc' | 'modelTotalCategoryCount' | 'node.address' | 'na' | 'nodeAddress' | 'node.ephemeral_id' | 'ne' | 'nodeEphemeralId' | 'node.id' | 'ni' | 'nodeId' | 'node.name' | 'nn' | 'nodeName' | 'opened_time' | 'ot' | 'state' | 's'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[CatCatAnonalyDetectorColumns]]
-=== CatCatAnonalyDetectorColumns
+== CatCatAnonalyDetectorColumns
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatCatAnonalyDetectorColumns = <<CatCatAnomalyDetectorColumn>> | <<CatCatAnomalyDetectorColumn>>[]
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[CatCatDatafeedColumn]]
-=== CatCatDatafeedColumn
+== CatCatDatafeedColumn
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatCatDatafeedColumn = 'ae' | 'assignment_explanation' | 'bc' | 'buckets.count' | 'bucketsCount' | 'id' | 'na' | 'node.address' | 'nodeAddress' | 'ne' | 'node.ephemeral_id' | 'nodeEphemeralId' | 'ni' | 'node.id' | 'nodeId' | 'nn' | 'node.name' | 'nodeName' | 'sba' | 'search.bucket_avg' | 'searchBucketAvg' | 'sc' | 'search.count' | 'searchCount' | 'seah' | 'search.exp_avg_hour' | 'searchExpAvgHour' | 'st' | 'search.time' | 'searchTime' | 's' | 'state'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[CatCatDatafeedColumns]]
-=== CatCatDatafeedColumns
+== CatCatDatafeedColumns
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatCatDatafeedColumns = <<CatCatDatafeedColumn>> | <<CatCatDatafeedColumn>>[]
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[CatCatDfaColumn]]
-=== CatCatDfaColumn
+== CatCatDfaColumn
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatCatDfaColumn = 'assignment_explanation' | 'ae' | 'create_time' | 'ct' | 'createTime' | 'description' | 'd' | 'dest_index' | 'di' | 'destIndex' | 'failure_reason' | 'fr' | 'failureReason' | 'id' | 'model_memory_limit' | 'mml' | 'modelMemoryLimit' | 'node.address' | 'na' | 'nodeAddress' | 'node.ephemeral_id' | 'ne' | 'nodeEphemeralId' | 'node.id' | 'ni' | 'nodeId' | 'node.name' | 'nn' | 'nodeName' | 'progress' | 'p' | 'source_index' | 'si' | 'sourceIndex' | 'state' | 's' | 'type' | 't' | 'version' | 'v'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[CatCatDfaColumns]]
-=== CatCatDfaColumns
+== CatCatDfaColumns
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatCatDfaColumns = <<CatCatDfaColumn>> | <<CatCatDfaColumn>>[]
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[CatCatRequestBase]]
-=== CatCatRequestBase
+== CatCatRequestBase
 
-[pass]
-++++
-<pre>
-++++
-interface CatCatRequestBase extends <<RequestBase>>, <<SpecUtilsCommonCatQueryParameters>> {
-}
-[pass]
-++++
-</pre>
-++++
+[source,ts,subs=+macros]
+----
+interface CatCatRequestBase extends <<RequestBase>>, <<SpecUtilsCommonCatQueryParameters>> {}
+----
 
 [discrete]
 [[CatCatTrainedModelsColumn]]
-=== CatCatTrainedModelsColumn
+== CatCatTrainedModelsColumn
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatCatTrainedModelsColumn = 'create_time' | 'ct' | 'created_by' | 'c' | 'createdBy' | 'data_frame_analytics_id' | 'df' | 'dataFrameAnalytics' | 'dfid' | 'description' | 'd' | 'heap_size' | 'hs' | 'modelHeapSize' | 'id' | 'ingest.count' | 'ic' | 'ingestCount' | 'ingest.current' | 'icurr' | 'ingestCurrent' | 'ingest.failed' | 'if' | 'ingestFailed' | 'ingest.pipelines' | 'ip' | 'ingestPipelines' | 'ingest.time' | 'it' | 'ingestTime' | 'license' | 'l' | 'operations' | 'o' | 'modelOperations' | 'version' | 'v'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[CatCatTrainedModelsColumns]]
-=== CatCatTrainedModelsColumns
+== CatCatTrainedModelsColumns
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatCatTrainedModelsColumns = <<CatCatTrainedModelsColumn>> | <<CatCatTrainedModelsColumn>>[]
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[CatCatTransformColumn]]
-=== CatCatTransformColumn
+== CatCatTransformColumn
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatCatTransformColumn = 'changes_last_detection_time' | 'cldt' | 'checkpoint' | 'cp' | 'checkpoint_duration_time_exp_avg' | 'cdtea' | 'checkpointTimeExpAvg' | 'checkpoint_progress' | 'c' | 'checkpointProgress' | 'create_time' | 'ct' | 'createTime' | 'delete_time' | 'dtime' | 'description' | 'd' | 'dest_index' | 'di' | 'destIndex' | 'documents_deleted' | 'docd' | 'documents_indexed' | 'doci' | 'docs_per_second' | 'dps' | 'documents_processed' | 'docp' | 'frequency' | 'f' | 'id' | 'index_failure' | 'if' | 'index_time' | 'itime' | 'index_total' | 'it' | 'indexed_documents_exp_avg' | 'idea' | 'last_search_time' | 'lst' | 'lastSearchTime' | 'max_page_search_size' | 'mpsz' | 'pages_processed' | 'pp' | 'pipeline' | 'p' | 'processed_documents_exp_avg' | 'pdea' | 'processing_time' | 'pt' | 'reason' | 'r' | 'search_failure' | 'sf' | 'search_time' | 'stime' | 'search_total' | 'st' | 'source_index' | 'si' | 'sourceIndex' | 'state' | 's' | 'transform_type' | 'tt' | 'trigger_count' | 'tc' | 'version' | 'v'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[CatCatTransformColumns]]
-=== CatCatTransformColumns
+== CatCatTransformColumns
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatCatTransformColumns = <<CatCatTransformColumn>> | <<CatCatTransformColumn>>[]
-[pass]
-++++
-</pre>
-++++
+----
+

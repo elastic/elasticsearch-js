@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.updateByQuery]]
-=== client.updateByQuery
+== client.updateByQuery
 
 Update documents. Updates documents that match the specified query. If no query is specified, performs an update on every document in the data stream or index without modifying the source, which is useful for picking up mapping changes.
 
 {ref}/docs-update-by-query.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Update documents. Updates documents that match the specified query. If no query 
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface UpdateByQueryRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -86,17 +89,13 @@ interface UpdateByQueryRequest extends <<RequestBase>> {
   conflicts?: <<Conflicts>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface UpdateByQueryResponse {
   batches?: <<long>>
   failures?: <<BulkIndexByScrollFailure>>[]
@@ -116,7 +115,5 @@ interface UpdateByQueryResponse {
   throttled_until_millis?: <<DurationValue>><<<UnitMillis>>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

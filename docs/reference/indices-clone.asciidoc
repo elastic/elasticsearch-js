@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.clone]]
-=== client.indices.clone
+== client.indices.clone
 
 Clones an existing index.
 
 {ref}/indices-clone-index.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Clones an existing index.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesCloneRequest extends <<RequestBase>> {
   index: <<IndexName>>
   target: <<Name>>
@@ -58,24 +61,18 @@ interface IndicesCloneRequest extends <<RequestBase>> {
   settings?: Record<string, any>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesCloneResponse {
   acknowledged: boolean
   index: <<IndexName>>
   shards_acknowledged: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

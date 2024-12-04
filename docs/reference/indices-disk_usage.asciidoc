@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.diskUsage]]
-=== client.indices.diskUsage
+== client.indices.diskUsage
 
 Analyzes the disk usage of each field of an index or data stream.
 
 {ref}/indices-disk-usage.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Analyzes the disk usage of each field of an index or data stream.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDiskUsageRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -57,20 +60,14 @@ interface IndicesDiskUsageRequest extends <<RequestBase>> {
   run_expensive_tasks?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesDiskUsageResponse = any
 
-[pass]
-++++
-</pre>
-++++
+----
+

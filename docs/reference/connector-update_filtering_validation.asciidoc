@@ -24,15 +24,20 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.connector.updateFilteringValidation]]
-=== client.connector.updateFilteringValidation
+== client.connector.updateFilteringValidation
 
 Update the connector draft filtering validation. Update the draft filtering validation info for a connector.
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -40,33 +45,25 @@ Update the connector draft filtering validation. Update the draft filtering vali
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ConnectorUpdateFilteringValidationRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   validation: <<ConnectorFilteringRulesValidation>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ConnectorUpdateFilteringValidationResponse {
   result: <<Result>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

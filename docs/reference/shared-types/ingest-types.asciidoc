@@ -1,6 +1,6 @@
 [[reference-shared-types-ingest-types]]
 
-== `Ingest`
+== `Ingest` types
 
 ////////
 ===========================================================================================================================
@@ -26,17 +26,21 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[IngestAppendProcessor]]
-=== IngestAppendProcessor
+== IngestAppendProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestAppendProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to be appended to. Supports template snippets. */
   field: <<Field>>
@@ -45,19 +49,14 @@ interface IngestAppendProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property allow_duplicates If `false`, the processor does not append values already present in the field. */
   allow_duplicates?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestAttachmentProcessor]]
-=== IngestAttachmentProcessor
+== IngestAttachmentProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestAttachmentProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to get the base64 encoded field from. */
   field: <<Field>>
@@ -76,19 +75,14 @@ interface IngestAttachmentProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property resource_name <<Field>> containing the name of the resource to decode. If specified, the processor passes this resource name to the underlying Tika library to enable Resource <<Name>> Based Detection. */
   resource_name?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestBytesProcessor]]
-=== IngestBytesProcessor
+== IngestBytesProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestBytesProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to convert. */
   field: <<Field>>
@@ -97,19 +91,14 @@ interface IngestBytesProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field The field to assign the converted value to. By default, the field is updated in-place. */
   target_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestCircleProcessor]]
-=== IngestCircleProcessor
+== IngestCircleProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestCircleProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property error_distance The difference between the resulting inscribed distance from center to side and the circle’s radius (measured in meters for `geo_shape`, unit-less for `shape`). */
   error_distance: <<double>>
@@ -122,19 +111,14 @@ interface IngestCircleProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field The field to assign the polygon shape to By default, the field is updated in-place. */
   target_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestCommunityIDProcessor]]
-=== IngestCommunityIDProcessor
+== IngestCommunityIDProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestCommunityIDProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property source_ip <<Field>> containing the source IP address. */
   source_ip?: <<Field>>
@@ -159,19 +143,14 @@ interface IngestCommunityIDProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property ignore_missing If true and any required fields are missing, the processor quietly exits without modifying the document. */
   ignore_missing?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestConvertProcessor]]
-=== IngestConvertProcessor
+== IngestConvertProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestConvertProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field whose value is to be converted. */
   field: <<Field>>
@@ -182,33 +161,23 @@ interface IngestConvertProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property type The type to convert the existing value to. */
   type: <<IngestConvertType>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestConvertType]]
-=== IngestConvertType
+== IngestConvertType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IngestConvertType = '<<integer>>' | '<<long>>' | '<<double>>' | '<<float>>' | 'boolean' | 'ip' | 'string' | 'auto'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestCsvProcessor]]
-=== IngestCsvProcessor
+== IngestCsvProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestCsvProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property empty_value Value used to fill empty fields. Empty fields are skipped if this is not provided. An empty field is one with no value (2 consecutive separators) or empty quotes (`""`). */
   empty_value?: any
@@ -225,38 +194,28 @@ interface IngestCsvProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property trim Trim whitespaces in unquoted fields. */
   trim?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestDatabaseConfiguration]]
-=== IngestDatabaseConfiguration
+== IngestDatabaseConfiguration
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestDatabaseConfiguration {
   pass:[/**] @property name The provider-assigned name of the IP geolocation database to download. */
   name: <<Name>>
   pass:[/**] @property maxmind The configuration necessary to identify which IP geolocation provider to use to download the database, as well as any provider-specific configuration necessary for such downloading. At present, the only supported provider is maxmind, and the maxmind provider requires that an account_id (string) is configured. */
   maxmind: <<IngestMaxmind>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestDateIndexNameProcessor]]
-=== IngestDateIndexNameProcessor
+== IngestDateIndexNameProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestDateIndexNameProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property date_formats An array of the expected date formats for parsing dates / timestamps in the document being preprocessed. Can be a java time pattern or one of the following formats: ISO8601, UNIX, UNIX_MS, or TAI64N. */
   date_formats: string[]
@@ -273,19 +232,14 @@ interface IngestDateIndexNameProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property timezone The timezone to use when parsing the date and when date math index supports resolves expressions into concrete index names. */
   timezone?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestDateProcessor]]
-=== IngestDateProcessor
+== IngestDateProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestDateProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to get the date from. */
   field: <<Field>>
@@ -300,19 +254,14 @@ interface IngestDateProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property output_format The format to use when writing the date to target_field. Must be a valid java time pattern. */
   output_format?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestDissectProcessor]]
-=== IngestDissectProcessor
+== IngestDissectProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestDissectProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property append_separator The character(s) that separate the appended fields. */
   append_separator?: string
@@ -323,19 +272,14 @@ interface IngestDissectProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property pattern The pattern to apply to the field. */
   pattern: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestDotExpanderProcessor]]
-=== IngestDotExpanderProcessor
+== IngestDotExpanderProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestDotExpanderProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to expand into an object field. If set to `*`, all top-level fields will be expanded. */
   field: <<Field>>
@@ -344,34 +288,23 @@ interface IngestDotExpanderProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property path The field that contains the field to expand. Only required if the field to expand is part another object field, because the `field` option can only understand leaf fields. */
   path?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestDropProcessor]]
-=== IngestDropProcessor
+== IngestDropProcessor
 
-[pass]
-++++
-<pre>
-++++
-interface IngestDropProcessor extends <<IngestProcessorBase>> {
-}
-[pass]
-++++
-</pre>
-++++
+[source,ts,subs=+macros]
+----
+interface IngestDropProcessor extends <<IngestProcessorBase>> {}
+----
 
 [discrete]
 [[IngestEnrichProcessor]]
-=== IngestEnrichProcessor
+== IngestEnrichProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestEnrichProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field in the input document that matches the policies match_field used to retrieve the enrichment data. Supports template snippets. */
   field: <<Field>>
@@ -388,50 +321,35 @@ interface IngestEnrichProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field <<Field>> added to incoming documents to contain enrich data. This field contains both the `match_field` and `enrich_fields` specified in the enrich policy. Supports template snippets. */
   target_field: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestFailProcessor]]
-=== IngestFailProcessor
+== IngestFailProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestFailProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property message The error message thrown by the processor. Supports template snippets. */
   message: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestFingerprintDigest]]
-=== IngestFingerprintDigest
+== IngestFingerprintDigest
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IngestFingerprintDigest = 'MD5' | 'SHA-1' | 'SHA-256' | 'SHA-512' | 'MurmurHash3'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestFingerprintProcessor]]
-=== IngestFingerprintProcessor
+== IngestFingerprintProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestFingerprintProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property fields Array of fields to include in the fingerprint. For objects, the processor hashes both the field key and value. For other fields, the processor hashes only the field value. */
   fields: <<Fields>>
@@ -444,19 +362,14 @@ interface IngestFingerprintProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property ignore_missing If true, the processor ignores any missing fields. If all fields are missing, the processor silently exits without modifying the document. */
   ignore_missing?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestForeachProcessor]]
-=== IngestForeachProcessor
+== IngestForeachProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestForeachProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field <<Field>> containing array or object values. */
   field: <<Field>>
@@ -465,19 +378,14 @@ interface IngestForeachProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property processor Ingest processor to run on each element. */
   processor: <<IngestProcessorContainer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestGeoGridProcessor]]
-=== IngestGeoGridProcessor
+== IngestGeoGridProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestGeoGridProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to interpret as a geo-tile.= The field format is determined by the `tile_type`. */
   field: string
@@ -498,47 +406,32 @@ interface IngestGeoGridProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_format Which format to save the generated polygon in. */
   target_format?: <<IngestGeoGridTargetFormat>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestGeoGridTargetFormat]]
-=== IngestGeoGridTargetFormat
+== IngestGeoGridTargetFormat
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IngestGeoGridTargetFormat = 'geojson' | 'wkt'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestGeoGridTileType]]
-=== IngestGeoGridTileType
+== IngestGeoGridTileType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IngestGeoGridTileType = 'geotile' | 'geohex' | 'geohash'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestGeoIpProcessor]]
-=== IngestGeoIpProcessor
+== IngestGeoIpProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestGeoIpProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property database_file The database filename referring to a database the module ships with (GeoLite2-City.mmdb, GeoLite2-Country.mmdb, or GeoLite2-ASN.mmdb) or a custom database in the ingest-geoip config directory. */
   database_file?: string
@@ -555,19 +448,14 @@ interface IngestGeoIpProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property download_database_on_pipeline_creation If `true` (and if `ingest.geoip.downloader.eager.download` is `false`), the missing database is downloaded when the pipeline is created. Else, the download is triggered by when the pipeline is used as the `default_pipeline` or `final_pipeline` in an index. */
   download_database_on_pipeline_creation?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestGrokProcessor]]
-=== IngestGrokProcessor
+== IngestGrokProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestGrokProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property ecs_compatibility Must be disabled or v1. If v1, the processor uses patterns with Elastic Common Schema (ECS) field names. */
   ecs_compatibility?: string
@@ -582,19 +470,14 @@ interface IngestGrokProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property trace_match When `true`, `_ingest._grok_match_index` will be inserted into your matched document’s metadata with the index into the pattern found in `patterns` that matched. */
   trace_match?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestGsubProcessor]]
-=== IngestGsubProcessor
+== IngestGsubProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestGsubProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to apply the replacement to. */
   field: <<Field>>
@@ -607,19 +490,14 @@ interface IngestGsubProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field The field to assign the converted value to By default, the `field` is updated in-place. */
   target_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestHtmlStripProcessor]]
-=== IngestHtmlStripProcessor
+== IngestHtmlStripProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestHtmlStripProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The string-valued field to remove HTML tags from. */
   field: <<Field>>
@@ -628,38 +506,28 @@ interface IngestHtmlStripProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field The field to assign the converted value to By default, the `field` is updated in-place. */
   target_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestInferenceConfig]]
-=== IngestInferenceConfig
+== IngestInferenceConfig
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestInferenceConfig {
   pass:[/**] @property regression Regression configuration for inference. */
   regression?: <<IngestInferenceConfigRegression>>
   pass:[/**] @property classification Classification configuration for inference. */
   classification?: <<IngestInferenceConfigClassification>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestInferenceConfigClassification]]
-=== IngestInferenceConfigClassification
+== IngestInferenceConfigClassification
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestInferenceConfigClassification {
   pass:[/**] @property num_top_classes Specifies the number of top class predictions to return. */
   num_top_classes?: <<integer>>
@@ -672,38 +540,28 @@ interface IngestInferenceConfigClassification {
   pass:[/**] @property prediction_field_type Specifies the type of the predicted field to write. Valid values are: `string`, `number`, `boolean`. */
   prediction_field_type?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestInferenceConfigRegression]]
-=== IngestInferenceConfigRegression
+== IngestInferenceConfigRegression
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestInferenceConfigRegression {
   pass:[/**] @property results_field The field that is added to incoming documents to contain the inference prediction. */
   results_field?: <<Field>>
   pass:[/**] @property num_top_feature_importance_values Specifies the maximum number of feature importance values per document. */
   num_top_feature_importance_values?: <<integer>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestInferenceProcessor]]
-=== IngestInferenceProcessor
+== IngestInferenceProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestInferenceProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property model_id The ID or alias for the trained model, or the ID of the deployment. */
   model_id: <<Id>>
@@ -714,19 +572,14 @@ interface IngestInferenceProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property inference_config Contains the inference type and its options. */
   inference_config?: <<IngestInferenceConfig>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestIpLocationProcessor]]
-=== IngestIpLocationProcessor
+== IngestIpLocationProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestIpLocationProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property database_file The database filename referring to a database the module ships with (GeoLite2-City.mmdb, GeoLite2-Country.mmdb, or GeoLite2-ASN.mmdb) or a custom database in the ingest-geoip config directory. */
   database_file?: string
@@ -743,19 +596,14 @@ interface IngestIpLocationProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property download_database_on_pipeline_creation If `true` (and if `ingest.geoip.downloader.eager.download` is `false`), the missing database is downloaded when the pipeline is created. Else, the download is triggered by when the pipeline is used as the `default_pipeline` or `final_pipeline` in an index. */
   download_database_on_pipeline_creation?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestJoinProcessor]]
-=== IngestJoinProcessor
+== IngestJoinProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestJoinProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field <<Field>> containing array values to join. */
   field: <<Field>>
@@ -764,19 +612,14 @@ interface IngestJoinProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field The field to assign the joined value to. By default, the field is updated in-place. */
   target_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestJsonProcessor]]
-=== IngestJsonProcessor
+== IngestJsonProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestJsonProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property add_to_root Flag that forces the parsed JSON to be added at the top level of the document. `target_field` must not be set when this option is chosen. */
   add_to_root?: boolean
@@ -789,33 +632,23 @@ interface IngestJsonProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field The field that the converted structured object will be written into. Any existing content in this field will be overwritten. */
   target_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestJsonProcessorConflictStrategy]]
-=== IngestJsonProcessorConflictStrategy
+== IngestJsonProcessorConflictStrategy
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IngestJsonProcessorConflictStrategy = 'replace' | 'merge'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestKeyValueProcessor]]
-=== IngestKeyValueProcessor
+== IngestKeyValueProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestKeyValueProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property exclude_keys List of keys to exclude from document. */
   exclude_keys?: string[]
@@ -840,19 +673,14 @@ interface IngestKeyValueProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property value_split Regex pattern to use for splitting the key from the value within a key-value pair. */
   value_split: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestLowercaseProcessor]]
-=== IngestLowercaseProcessor
+== IngestLowercaseProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestLowercaseProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to make lowercase. */
   field: <<Field>>
@@ -861,35 +689,25 @@ interface IngestLowercaseProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field The field to assign the converted value to. By default, the field is updated in-place. */
   target_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestMaxmind]]
-=== IngestMaxmind
+== IngestMaxmind
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestMaxmind {
   account_id: <<Id>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestNetworkDirectionProcessor]]
-=== IngestNetworkDirectionProcessor
+== IngestNetworkDirectionProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestNetworkDirectionProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property source_ip <<Field>> containing the source IP address. */
   source_ip?: <<Field>>
@@ -904,19 +722,14 @@ interface IngestNetworkDirectionProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property ignore_missing If true and any required fields are missing, the processor quietly exits without modifying the document. */
   ignore_missing?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestPipeline]]
-=== IngestPipeline
+== IngestPipeline
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestPipeline {
   pass:[/**] @property description Description of the ingest pipeline. */
   description?: string
@@ -931,19 +744,14 @@ interface IngestPipeline {
   pass:[/**] @property _meta Arbitrary metadata about the ingest pipeline. This map is not automatically generated by Elasticsearch. */
   _meta?: <<Metadata>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestPipelineConfig]]
-=== IngestPipelineConfig
+== IngestPipelineConfig
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestPipelineConfig {
   pass:[/**] @property description Description of the ingest pipeline. */
   description?: string
@@ -952,38 +760,28 @@ interface IngestPipelineConfig {
   pass:[/**] @property processors Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified. */
   processors: <<IngestProcessorContainer>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestPipelineProcessor]]
-=== IngestPipelineProcessor
+== IngestPipelineProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestPipelineProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property name The name of the pipeline to execute. Supports template snippets. */
   name: <<Name>>
   pass:[/**] @property ignore_missing_pipeline Whether to ignore missing pipelines instead of failing. */
   ignore_missing_pipeline?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestProcessorBase]]
-=== IngestProcessorBase
+== IngestProcessorBase
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestProcessorBase {
   pass:[/**] @property description Description of the processor. Useful for describing the purpose of the processor or its configuration. */
   description?: string
@@ -996,19 +794,14 @@ interface IngestProcessorBase {
   pass:[/**] @property tag Identifier for the processor. Useful for debugging and metrics. */
   tag?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestProcessorContainer]]
-=== IngestProcessorContainer
+== IngestProcessorContainer
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestProcessorContainer {
   pass:[/**] @property append Appends one or more values to an existing array if the field already exists and it is an array. Converts a scalar to an array and appends one or more values to it if the field exists and it is a scalar. Creates an array containing the provided values if the field doesn’t exist. Accepts a single value or an array of values. */
   append?: <<IngestAppendProcessor>>
@@ -1101,19 +894,14 @@ interface IngestProcessorContainer {
   pass:[/**] @property user_agent The `user_agent` processor extracts details from the user agent string a browser sends with its web requests. This processor adds this information by default under the `user_agent` field. */
   user_agent?: <<IngestUserAgentProcessor>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestRedactProcessor]]
-=== IngestRedactProcessor
+== IngestRedactProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestRedactProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to be redacted */
   field: <<Field>>
@@ -1131,19 +919,14 @@ interface IngestRedactProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property trace_redact If `true` then ingest metadata `_ingest._redact._is_redacted` is set to `true` if the document has been redacted */
   trace_redact?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestRegisteredDomainProcessor]]
-=== IngestRegisteredDomainProcessor
+== IngestRegisteredDomainProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestRegisteredDomainProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field <<Field>> containing the source FQDN. */
   field: <<Field>>
@@ -1152,19 +935,14 @@ interface IngestRegisteredDomainProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property ignore_missing If true and any required fields are missing, the processor quietly exits without modifying the document. */
   ignore_missing?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestRemoveProcessor]]
-=== IngestRemoveProcessor
+== IngestRemoveProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestRemoveProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field <<Fields>> to be removed. Supports template snippets. */
   field: <<Fields>>
@@ -1173,19 +951,14 @@ interface IngestRemoveProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property ignore_missing If `true` and `field` does not exist or is `null`, the processor quietly exits without modifying the document. */
   ignore_missing?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestRenameProcessor]]
-=== IngestRenameProcessor
+== IngestRenameProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestRenameProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to be renamed. Supports template snippets. */
   field: <<Field>>
@@ -1194,19 +967,14 @@ interface IngestRenameProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field The new name of the field. Supports template snippets. */
   target_field: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestRerouteProcessor]]
-=== IngestRerouteProcessor
+== IngestRerouteProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestRerouteProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property destination A static value for the target. Can’t be set when the dataset or namespace option is set. */
   destination?: string
@@ -1215,19 +983,14 @@ interface IngestRerouteProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property namespace <<Field>> references or a static value for the namespace part of the data stream name. See the criteria for index names for allowed characters. Must be no longer than 100 characters. Supports field references with a mustache-like syntax (denoted as {{<<double>>}} or {{{triple}}} curly braces). When resolving field references, the processor replaces invalid characters with _. Uses the <namespace> part of the index name as a fallback if all field references resolve to a null, missing, or non-string value. default {{data_stream.namespace}} */
   namespace?: string | string[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestScriptProcessor]]
-=== IngestScriptProcessor
+== IngestScriptProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestScriptProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property id ID of a stored script. If no `source` is specified, this parameter is required. */
   id?: <<Id>>
@@ -1238,19 +1001,14 @@ interface IngestScriptProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property source Inline script. If no `id` is specified, this parameter is required. */
   source?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestSetProcessor]]
-=== IngestSetProcessor
+== IngestSetProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestSetProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property copy_from The origin field which will be copied to `field`, cannot set `value` simultaneously. Supported data types are `boolean`, `number`, `array`, `object`, `string`, `date`, etc. */
   copy_from?: <<Field>>
@@ -1265,52 +1023,37 @@ interface IngestSetProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property value The value to be set for the field. Supports template snippets. May specify only one of `value` or `copy_from`. */
   value?: any
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestSetSecurityUserProcessor]]
-=== IngestSetSecurityUserProcessor
+== IngestSetSecurityUserProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestSetSecurityUserProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to store the user information into. */
   field: <<Field>>
   pass:[/**] @property properties Controls what user related properties are added to the field. */
   properties?: string[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestShapeType]]
-=== IngestShapeType
+== IngestShapeType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IngestShapeType = 'geo_shape' | 'shape'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestSortProcessor]]
-=== IngestSortProcessor
+== IngestSortProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestSortProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to be sorted. */
   field: <<Field>>
@@ -1319,19 +1062,14 @@ interface IngestSortProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field The field to assign the sorted value to. By default, the field is updated in-place. */
   target_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestSplitProcessor]]
-=== IngestSplitProcessor
+== IngestSplitProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestSplitProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to split. */
   field: <<Field>>
@@ -1344,34 +1082,23 @@ interface IngestSplitProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field The field to assign the split value to. By default, the field is updated in-place. */
   target_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestTerminateProcessor]]
-=== IngestTerminateProcessor
+== IngestTerminateProcessor
 
-[pass]
-++++
-<pre>
-++++
-interface IngestTerminateProcessor extends <<IngestProcessorBase>> {
-}
-[pass]
-++++
-</pre>
-++++
+[source,ts,subs=+macros]
+----
+interface IngestTerminateProcessor extends <<IngestProcessorBase>> {}
+----
 
 [discrete]
 [[IngestTrimProcessor]]
-=== IngestTrimProcessor
+== IngestTrimProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestTrimProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The string-valued field to trim whitespace from. */
   field: <<Field>>
@@ -1380,19 +1107,14 @@ interface IngestTrimProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field The field to assign the trimmed value to. By default, the field is updated in-place. */
   target_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestUppercaseProcessor]]
-=== IngestUppercaseProcessor
+== IngestUppercaseProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestUppercaseProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to make uppercase. */
   field: <<Field>>
@@ -1401,19 +1123,14 @@ interface IngestUppercaseProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field The field to assign the converted value to. By default, the field is updated in-place. */
   target_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestUriPartsProcessor]]
-=== IngestUriPartsProcessor
+== IngestUriPartsProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestUriPartsProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field <<Field>> containing the URI string. */
   field: <<Field>>
@@ -1426,19 +1143,14 @@ interface IngestUriPartsProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field Output field for the URI object. */
   target_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestUrlDecodeProcessor]]
-=== IngestUrlDecodeProcessor
+== IngestUrlDecodeProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestUrlDecodeProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field to decode. */
   field: <<Field>>
@@ -1447,19 +1159,14 @@ interface IngestUrlDecodeProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property target_field The field to assign the converted value to. By default, the field is updated in-place. */
   target_field?: <<Field>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestUserAgentProcessor]]
-=== IngestUserAgentProcessor
+== IngestUserAgentProcessor
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestUserAgentProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property field The field containing the user agent string. */
   field: <<Field>>
@@ -1474,21 +1181,14 @@ interface IngestUserAgentProcessor extends <<IngestProcessorBase>> {
   pass:[/**] @property extract_device_type Extracts device type from the user agent string on a best-effort basis. */
   extract_device_type?: boolean
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[IngestUserAgentProperty]]
-=== IngestUserAgentProperty
+== IngestUserAgentProperty
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type IngestUserAgentProperty = 'name' | 'os' | 'device' | 'original' | 'version'
-[pass]
-++++
-</pre>
-++++
+----
+

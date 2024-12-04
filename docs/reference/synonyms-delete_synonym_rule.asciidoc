@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.synonyms.deleteSynonymRule]]
-=== client.synonyms.deleteSynonymRule
+== client.synonyms.deleteSynonymRule
 
 Deletes a synonym rule in a synonym set
 
 {ref}/delete-synonym-rule.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,23 @@ Deletes a synonym rule in a synonym set
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SynonymsDeleteSynonymRuleRequest extends <<RequestBase>> {
   set_id: <<Id>>
   rule_id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type SynonymsDeleteSynonymRuleResponse = <<SynonymsSynonymsUpdateResult>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

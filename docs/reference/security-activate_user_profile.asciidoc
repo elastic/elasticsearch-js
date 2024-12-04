@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.activateUserProfile]]
-=== client.security.activateUserProfile
+== client.security.activateUserProfile
 
 Activate a user profile. Create or update a user profile on behalf of another user.
 
 {ref}/security-api-activate-user-profile.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Activate a user profile. Create or update a user profile on behalf of another us
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityActivateUserProfileRequest extends <<RequestBase>> {
   access_token?: string
   grant_type: <<SecurityGrantType>>
@@ -55,20 +58,14 @@ interface SecurityActivateUserProfileRequest extends <<RequestBase>> {
   username?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type SecurityActivateUserProfileResponse = <<SecurityUserProfileWithMetadata>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

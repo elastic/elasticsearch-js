@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.open]]
-=== client.indices.open
+== client.indices.open
 
 Opens a closed index. For data streams, the API opens any closed backing indices.
 
 {ref}/indices-open-close.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Opens a closed index. For data streams, the API opens any closed backing indices
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesOpenRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -58,23 +61,17 @@ interface IndicesOpenRequest extends <<RequestBase>> {
   wait_for_active_shards?: <<WaitForActiveShards>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesOpenResponse {
   acknowledged: boolean
   shards_acknowledged: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

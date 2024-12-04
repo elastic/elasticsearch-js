@@ -1,6 +1,6 @@
 [[reference-shared-types-tasks-types]]
 
-== `Tasks`
+== `Tasks` types
 
 ////////
 ===========================================================================================================================
@@ -26,31 +26,30 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[TasksGroupBy]]
-=== TasksGroupBy
+== TasksGroupBy
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type TasksGroupBy = 'nodes' | 'parents' | 'none'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TasksNodeTasks]]
-=== TasksNodeTasks
+== TasksNodeTasks
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TasksNodeTasks {
   name?: <<NodeId>>
   transport_address?: <<TransportAddress>>
@@ -60,35 +59,25 @@ interface TasksNodeTasks {
   attributes?: Record<string, string>
   tasks: Record<<<TaskId>>, <<TasksTaskInfo>>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TasksParentTaskInfo]]
-=== TasksParentTaskInfo
+== TasksParentTaskInfo
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TasksParentTaskInfo extends <<TasksTaskInfo>> {
   children?: <<TasksTaskInfo>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TasksTaskInfo]]
-=== TasksTaskInfo
+== TasksTaskInfo
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TasksTaskInfo {
   action: string
   cancelled?: boolean
@@ -105,33 +94,23 @@ interface TasksTaskInfo {
   type: string
   parent_task_id?: <<TaskId>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TasksTaskInfos]]
-=== TasksTaskInfos
+== TasksTaskInfos
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type TasksTaskInfos = <<TasksTaskInfo>>[] | Record<string, <<TasksParentTaskInfo>>>
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[TasksTaskListResponseBase]]
-=== TasksTaskListResponseBase
+== TasksTaskListResponseBase
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TasksTaskListResponseBase {
   node_failures?: <<ErrorCause>>[]
   task_failures?: <<TaskFailure>>[]
@@ -140,7 +119,5 @@ interface TasksTaskListResponseBase {
   pass:[/**] @property tasks Either a flat list of tasks if `group_by` was set to `none`, or grouped by parents if `group_by` was set to `parents`. */
   tasks?: <<TasksTaskInfos>>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

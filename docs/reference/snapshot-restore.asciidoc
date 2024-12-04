@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.snapshot.restore]]
-=== client.snapshot.restore
+== client.snapshot.restore
 
 Restores a snapshot.
 
 {ref}/modules-snapshots.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Restores a snapshot.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SnapshotRestoreRequest extends <<RequestBase>> {
   repository: <<Name>>
   snapshot: <<Name>>
@@ -65,23 +68,17 @@ interface SnapshotRestoreRequest extends <<RequestBase>> {
   rename_replacement?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SnapshotRestoreResponse {
   accepted?: boolean
   snapshot?: SnapshotRestoreSnapshotRestore
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

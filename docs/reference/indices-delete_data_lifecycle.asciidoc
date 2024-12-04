@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.deleteDataLifecycle]]
-=== client.indices.deleteDataLifecycle
+== client.indices.deleteDataLifecycle
 
 Delete data stream lifecycles. Removes the data stream lifecycle from a data stream, rendering it not managed by the data stream lifecycle.
 
 {ref}/data-streams-delete-lifecycle.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Delete data stream lifecycles. Removes the data stream lifecycle from a data str
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDeleteDataLifecycleRequest extends <<RequestBase>> {
   name: <<DataStreamNames>>
   expand_wildcards?: <<ExpandWildcards>>
@@ -55,20 +58,14 @@ interface IndicesDeleteDataLifecycleRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesDeleteDataLifecycleResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

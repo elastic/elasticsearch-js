@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ingest.simulate]]
-=== client.ingest.simulate
+== client.ingest.simulate
 
 Executes an ingest pipeline against a set of provided documents.
 
 {ref}/simulate-pipeline-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Executes an ingest pipeline against a set of provided documents.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IngestSimulateRequest extends <<RequestBase>> {
   id?: <<Id>>
   verbose?: boolean
@@ -55,22 +58,16 @@ interface IngestSimulateRequest extends <<RequestBase>> {
   pipeline?: <<IngestPipeline>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IngestSimulateResponse {
   docs: IngestSimulateSimulateDocumentResult[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

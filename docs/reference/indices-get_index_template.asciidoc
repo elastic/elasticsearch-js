@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.getIndexTemplate]]
-=== client.indices.getIndexTemplate
+== client.indices.getIndexTemplate
 
 Get index templates. Returns information about one or more index templates.
 
 {ref}/indices-get-template.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get index templates. Returns information about one or more index templates.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesGetIndexTemplateRequest extends <<RequestBase>> {
   name?: <<Name>>
   local?: boolean
@@ -56,22 +59,16 @@ interface IndicesGetIndexTemplateRequest extends <<RequestBase>> {
   include_defaults?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesGetIndexTemplateResponse {
   index_templates: IndicesGetIndexTemplateIndexTemplateItem[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

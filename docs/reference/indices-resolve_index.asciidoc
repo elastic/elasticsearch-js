@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.resolveIndex]]
-=== client.indices.resolveIndex
+== client.indices.resolveIndex
 
 Resolves the specified name(s) and/or index patterns for indices, aliases, and data streams. Multiple patterns and remote clusters are supported.
 
 {ref}/indices-resolve-index-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Resolves the specified name(s) and/or index patterns for indices, aliases, and d
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesResolveIndexRequest extends <<RequestBase>> {
   name: <<Names>>
   expand_wildcards?: <<ExpandWildcards>>
@@ -55,24 +58,18 @@ interface IndicesResolveIndexRequest extends <<RequestBase>> {
   allow_no_indices?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesResolveIndexResponse {
   indices: IndicesResolveIndexResolveIndexItem[]
   aliases: IndicesResolveIndexResolveIndexAliasItem[]
   data_streams: IndicesResolveIndexResolveIndexDataStreamsItem[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

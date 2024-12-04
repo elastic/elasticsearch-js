@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.update]]
-=== client.update
+== client.update
 
 Update a document. Updates a document by running a script or passing a partial document.
 
 {ref}/docs-update.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Update a document. Updates a document by running a script or passing a partial d
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
@@ -71,20 +74,14 @@ interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> extends
   upsert?: TDocument
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type UpdateResponse<TDocument = unknown> = <<UpdateUpdateWriteResponseBase>><TDocument>
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cat.aliases]]
-=== client.cat.aliases
+== client.cat.aliases
 
 Get aliases. Retrieves the cluster’s index aliases, including filter and routing information. The API does not return data stream aliases. CAT APIs are only intended for human consumption using the command line or the Kibana console. They are not intended for use by applications. For application consumption, use the aliases API.
 
 {ref}/cat-alias.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,23 @@ Get aliases. Retrieves the cluster’s index aliases, including filter and routi
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface CatAliasesRequest extends <<CatCatRequestBase>> {
   name?: <<Names>>
   expand_wildcards?: <<ExpandWildcards>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type CatAliasesResponse = CatAliasesAliasesRecord[]
 
-[pass]
-++++
-</pre>
-++++
+----
+

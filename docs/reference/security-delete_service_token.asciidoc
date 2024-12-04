@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.deleteServiceToken]]
-=== client.security.deleteServiceToken
+== client.security.deleteServiceToken
 
 Delete service account tokens. Delete service account tokens for a service in a specified namespace.
 
 {ref}/security-api-delete-service-token.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Delete service account tokens. Delete service account tokens for a service in a 
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityDeleteServiceTokenRequest extends <<RequestBase>> {
   namespace: <<Namespace>>
   service: <<Service>>
@@ -55,22 +58,16 @@ interface SecurityDeleteServiceTokenRequest extends <<RequestBase>> {
   refresh?: <<Refresh>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityDeleteServiceTokenResponse {
   found: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

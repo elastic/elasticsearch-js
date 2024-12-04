@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.eql.search]]
-=== client.eql.search
+== client.eql.search
 
 Returns results matching a query expressed in Event Query Language (EQL)
 
 {ref}/eql-search-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Returns results matching a query expressed in Event Query Language (EQL)
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EqlSearchRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -69,20 +72,14 @@ interface EqlSearchRequest extends <<RequestBase>> {
   runtime_mappings?: <<MappingRuntimeFields>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type EqlSearchResponse<TEvent = unknown> = <<EqlEqlSearchResponseBase>><TEvent>
 
-[pass]
-++++
-</pre>
-++++
+----
+

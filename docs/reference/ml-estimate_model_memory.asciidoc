@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.estimateModelMemory]]
-=== client.ml.estimateModelMemory
+== client.ml.estimateModelMemory
 
 Estimate job model memory usage. Makes an estimation of the memory usage for an anomaly detection job model. It is based on analysis configuration details for the job and cardinality estimates for the fields it references.
 
 {ref}/ml-apis.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Estimate job model memory usage. Makes an estimation of the memory usage for an 
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlEstimateModelMemoryRequest extends <<RequestBase>> {
   analysis_config?: <<MlAnalysisConfig>>
   max_bucket_cardinality?: Record<<<Field>>, <<long>>>
   overall_cardinality?: Record<<<Field>>, <<long>>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlEstimateModelMemoryResponse {
   model_memory_estimate: string
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

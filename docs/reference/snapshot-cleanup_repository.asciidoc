@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.snapshot.cleanupRepository]]
-=== client.snapshot.cleanupRepository
+== client.snapshot.cleanupRepository
 
 Triggers the review of a snapshot repository’s contents and deletes any stale data not referenced by existing snapshots.
 
 {ref}/clean-up-snapshot-repo-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Triggers the review of a snapshot repository’s contents and deletes any stale 
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SnapshotCleanupRepositoryRequest extends <<RequestBase>> {
   name: <<Name>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SnapshotCleanupRepositoryResponse {
   results: SnapshotCleanupRepositoryCleanupRepositoryResults
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

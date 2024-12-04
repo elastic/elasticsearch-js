@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.searchTemplate]]
-=== client.searchTemplate
+== client.searchTemplate
 
 Run a search with a search template.
 
 {ref}/search-template.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Run a search with a search template.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SearchTemplateRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -68,17 +71,13 @@ interface SearchTemplateRequest extends <<RequestBase>> {
   source?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SearchTemplateResponse<TDocument = unknown> {
   took: <<long>>
   timed_out: boolean
@@ -96,7 +95,5 @@ interface SearchTemplateResponse<TDocument = unknown> {
   terminated_early?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

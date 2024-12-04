@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.inferTrainedModel]]
-=== client.ml.inferTrainedModel
+== client.ml.inferTrainedModel
 
 Evaluate a trained model.
 
 {ref}/infer-trained-model.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Evaluate a trained model.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlInferTrainedModelRequest extends <<RequestBase>> {
   model_id: <<Id>>
   timeout?: <<Duration>>
@@ -55,22 +58,16 @@ interface MlInferTrainedModelRequest extends <<RequestBase>> {
   inference_config?: <<MlInferenceConfigUpdateContainer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlInferTrainedModelResponse {
   inference_results: <<MlInferenceResponseResult>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

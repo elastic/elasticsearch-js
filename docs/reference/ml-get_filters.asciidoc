@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.getFilters]]
-=== client.ml.getFilters
+== client.ml.getFilters
 
 Get filters. You can get a single filter or all filters.
 
 {ref}/ml-get-filter.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,35 +47,27 @@ Get filters. You can get a single filter or all filters.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlGetFiltersRequest extends <<RequestBase>> {
   filter_id?: <<Ids>>
   from?: <<integer>>
   size?: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlGetFiltersResponse {
   count: <<long>>
   filters: <<MlFilter>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

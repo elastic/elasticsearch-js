@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.deleteDataStream]]
-=== client.indices.deleteDataStream
+== client.indices.deleteDataStream
 
 Delete data streams. Deletes one or more data streams and their backing indices.
 
 {ref}/data-streams.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Delete data streams. Deletes one or more data streams and their backing indices.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesDeleteDataStreamRequest extends <<RequestBase>> {
   name: <<DataStreamNames>>
   master_timeout?: <<Duration>>
   expand_wildcards?: <<ExpandWildcards>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesDeleteDataStreamResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

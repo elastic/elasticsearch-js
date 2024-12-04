@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.transform.getTransformStats]]
-=== client.transform.getTransformStats
+== client.transform.getTransformStats
 
 Get transform stats. Retrieves usage information for transforms.
 
 {ref}/get-transform-stats.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get transform stats. Retrieves usage information for transforms.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface TransformGetTransformStatsRequest extends <<RequestBase>> {
   transform_id: <<Names>>
   allow_no_match?: boolean
@@ -56,23 +59,17 @@ interface TransformGetTransformStatsRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface TransformGetTransformStatsResponse {
   count: <<long>>
   transforms: TransformGetTransformStatsTransformStats[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -1,6 +1,6 @@
 [[reference-shared-types-eql-types]]
 
-== `Eql`
+== `Eql` types
 
 ////////
 ===========================================================================================================================
@@ -26,17 +26,21 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[EqlEqlHits]]
-=== EqlEqlHits
+== EqlEqlHits
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EqlEqlHits<TEvent = unknown> {
   pass:[/**] @property total <<Metadata>> about the number of matching events or sequences. */
   total?: <<SearchTotalHits>>
@@ -45,19 +49,14 @@ interface EqlEqlHits<TEvent = unknown> {
   pass:[/**] @property sequences Contains event sequences matching the query. Each object represents a matching sequence. This parameter is only returned for EQL queries containing a sequence. */
   sequences?: <<EqlHitsSequence>><TEvent>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[EqlEqlSearchResponseBase]]
-=== EqlEqlSearchResponseBase
+== EqlEqlSearchResponseBase
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EqlEqlSearchResponseBase<TEvent = unknown> {
   pass:[/**] @property id Identifier for the search. */
   id?: <<Id>>
@@ -72,19 +71,14 @@ interface EqlEqlSearchResponseBase<TEvent = unknown> {
   pass:[/**] @property hits Contains matching events and sequences. Also contains related metadata. */
   hits: <<EqlEqlHits>><TEvent>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[EqlHitsEvent]]
-=== EqlHitsEvent
+== EqlHitsEvent
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EqlHitsEvent<TEvent = unknown> {
   pass:[/**] @property _index <<Name>> of the index containing the event. */
   _index: <<IndexName>>
@@ -96,26 +90,19 @@ interface EqlHitsEvent<TEvent = unknown> {
   missing?: boolean
   fields?: Record<<<Field>>, any[]>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[EqlHitsSequence]]
-=== EqlHitsSequence
+== EqlHitsSequence
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EqlHitsSequence<TEvent = unknown> {
   pass:[/**] @property events Contains events matching the query. Each object represents a matching event. */
   events: <<EqlHitsEvent>><TEvent>[]
   pass:[/**] @property join_keys Shared field values used to constrain matches in the sequence. These are defined using the by keyword in the EQL query syntax. */
   join_keys?: any[]
 }
-[pass]
-++++
-</pre>
-++++
+----
+

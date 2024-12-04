@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.slm.executeLifecycle]]
-=== client.slm.executeLifecycle
+== client.slm.executeLifecycle
 
 Immediately creates a snapshot according to the lifecycle policy, without waiting for the scheduled time.
 
 {ref}/slm-api-execute-lifecycle.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Immediately creates a snapshot according to the lifecycle policy, without waitin
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SlmExecuteLifecycleRequest extends <<RequestBase>> {
   policy_id: <<Name>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SlmExecuteLifecycleResponse {
   snapshot_name: <<Name>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

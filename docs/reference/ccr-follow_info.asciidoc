@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ccr.followInfo]]
-=== client.ccr.followInfo
+== client.ccr.followInfo
 
 Retrieves information about all follower indices, including parameters and status for each follower index
 
 {ref}/ccr-get-follow-info.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,32 +47,24 @@ Retrieves information about all follower indices, including parameters and statu
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface CcrFollowInfoRequest extends <<RequestBase>> {
   index: <<Indices>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface CcrFollowInfoResponse {
   follower_indices: CcrFollowInfoFollowerIndex[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

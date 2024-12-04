@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.getUserPrivileges]]
-=== client.security.getUserPrivileges
+== client.security.getUserPrivileges
 
 Get user privileges.
 
 {ref}/security-api-get-user-privileges.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,29 +47,23 @@ Get user privileges.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityGetUserPrivilegesRequest extends <<RequestBase>> {
   application?: <<Name>>
   priviledge?: <<Name>>
   username?: <<Name>> | null
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityGetUserPrivilegesResponse {
   applications: <<SecurityApplicationPrivileges>>[]
   cluster: string[]
@@ -73,7 +72,5 @@ interface SecurityGetUserPrivilegesResponse {
   run_as: string[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

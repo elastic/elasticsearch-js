@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.logstash.getPipeline]]
-=== client.logstash.getPipeline
+== client.logstash.getPipeline
 
 Retrieves pipelines used for Logstash Central Management.
 
 {ref}/logstash-api-get-pipeline.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,30 +47,22 @@ Retrieves pipelines used for Logstash Central Management.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface LogstashGetPipelineRequest extends <<RequestBase>> {
   id?: <<Ids>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type LogstashGetPipelineResponse = Record<<<Id>>, <<LogstashPipeline>>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

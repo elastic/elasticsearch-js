@@ -24,15 +24,20 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.fleet.search]]
-=== client.fleet.search
+== client.fleet.search
 
 The purpose of the fleet search api is to provide a search api where the search will only be executed after provided checkpoint has been processed and is visible for searches inside of Elasticsearch.
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -40,12 +45,10 @@ The purpose of the fleet search api is to provide a search api where the search 
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface FleetSearchRequest extends <<RequestBase>> {
   index: <<IndexName>> | <<IndexAlias>>
   allow_no_indices?: boolean
@@ -113,17 +116,13 @@ interface FleetSearchRequest extends <<RequestBase>> {
   stats?: string[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface FleetSearchResponse<TDocument = unknown> {
   took: <<long>>
   timed_out: boolean
@@ -141,7 +140,5 @@ interface FleetSearchResponse<TDocument = unknown> {
   terminated_early?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

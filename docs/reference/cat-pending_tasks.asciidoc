@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cat.pendingTasks]]
-=== client.cat.pendingTasks
+== client.cat.pendingTasks
 
 Returns cluster-level changes that have not yet been executed. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the pending cluster tasks API.
 
 {ref}/cat-pending-tasks.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,29 +47,20 @@ Returns cluster-level changes that have not yet been executed. IMPORTANT: cat AP
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface CatPendingTasksRequest extends <<CatCatRequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface CatPendingTasksRequest extends <<CatCatRequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatPendingTasksResponse = CatPendingTasksPendingTasksRecord[]
 
-[pass]
-++++
-</pre>
-++++
+----
+

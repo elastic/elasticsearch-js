@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.esql.asyncQueryGet]]
-=== client.esql.asyncQueryGet
+== client.esql.asyncQueryGet
 
 Retrieves the results of a previously submitted async query request given its ID.
 
 {ref}/esql-async-query-get-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

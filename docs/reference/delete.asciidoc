@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.delete]]
-=== client.delete
+== client.delete
 
 Delete a document. Removes a JSON document from the specified index.
 
 {ref}/docs-delete.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Delete a document. Removes a JSON document from the specified index.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface DeleteRequest extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
@@ -61,20 +64,14 @@ interface DeleteRequest extends <<RequestBase>> {
   wait_for_active_shards?: <<WaitForActiveShards>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type DeleteResponse = <<WriteResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.getDataStream]]
-=== client.indices.getDataStream
+== client.indices.getDataStream
 
 Get data streams. Retrieves information about one or more data streams.
 
 {ref}/data-streams.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get data streams. Retrieves information about one or more data streams.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesGetDataStreamRequest extends <<RequestBase>> {
   name?: <<DataStreamNames>>
   expand_wildcards?: <<ExpandWildcards>>
@@ -56,22 +59,16 @@ interface IndicesGetDataStreamRequest extends <<RequestBase>> {
   verbose?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesGetDataStreamResponse {
   data_streams: <<IndicesDataStream>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

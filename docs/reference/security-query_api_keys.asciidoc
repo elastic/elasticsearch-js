@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.queryApiKeys]]
-=== client.security.queryApiKeys
+== client.security.queryApiKeys
 
 Find API keys with a query. Get a paginated list of API keys and their information. You can optionally filter the results with a query.
 
 {ref}/security-api-query-api-key.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Find API keys with a query. Get a paginated list of API keys and their informati
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityQueryApiKeysRequest extends <<RequestBase>> {
   with_limited_by?: boolean
   with_profile_uid?: boolean
@@ -62,17 +65,13 @@ interface SecurityQueryApiKeysRequest extends <<RequestBase>> {
   search_after?: <<SortResults>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityQueryApiKeysResponse {
   total: <<integer>>
   count: <<integer>>
@@ -80,7 +79,5 @@ interface SecurityQueryApiKeysResponse {
   aggregations?: Record<<<AggregateName>>, SecurityQueryApiKeysApiKeyAggregate>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

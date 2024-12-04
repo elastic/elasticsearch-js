@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.shrink]]
-=== client.indices.shrink
+== client.indices.shrink
 
 Shrinks an existing index into a new index with fewer primary shards.
 
 {ref}/indices-shrink-index.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Shrinks an existing index into a new index with fewer primary shards.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesShrinkRequest extends <<RequestBase>> {
   index: <<IndexName>>
   target: <<IndexName>>
@@ -58,24 +61,18 @@ interface IndicesShrinkRequest extends <<RequestBase>> {
   settings?: Record<string, any>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesShrinkResponse {
   acknowledged: boolean
   shards_acknowledged: boolean
   index: <<IndexName>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

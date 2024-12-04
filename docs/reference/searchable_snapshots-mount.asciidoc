@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.searchableSnapshots.mount]]
-=== client.searchableSnapshots.mount
+== client.searchableSnapshots.mount
 
 Mount a snapshot as a searchable index.
 
 {ref}/searchable-snapshots-api-mount-snapshot.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Mount a snapshot as a searchable index.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SearchableSnapshotsMountRequest extends <<RequestBase>> {
   repository: <<Name>>
   snapshot: <<Name>>
@@ -60,22 +63,16 @@ interface SearchableSnapshotsMountRequest extends <<RequestBase>> {
   ignore_index_settings?: string[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SearchableSnapshotsMountResponse {
   snapshot: SearchableSnapshotsMountMountedSnapshot
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

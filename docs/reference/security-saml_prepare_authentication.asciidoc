@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.samlPrepareAuthentication]]
-=== client.security.samlPrepareAuthentication
+== client.security.samlPrepareAuthentication
 
 Prepare SAML authentication. Creates a SAML authentication request (`<AuthnRequest>`) as a URL string, based on the configuration of the respective SAML realm in Elasticsearch.
 
 {ref}/security-api-saml-prepare-authentication.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,36 +47,28 @@ Prepare SAML authentication. Creates a SAML authentication request (`<AuthnReque
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecuritySamlPrepareAuthenticationRequest extends <<RequestBase>> {
   acs?: string
   realm?: string
   relay_state?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecuritySamlPrepareAuthenticationResponse {
   id: <<Id>>
   realm: string
   redirect: string
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -1,6 +1,6 @@
 [[reference-shared-types-cluster-types]]
 
-== `Cluster`
+== `Cluster` types
 
 ////////
 ===========================================================================================================================
@@ -26,52 +26,46 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[ClusterComponentTemplate]]
-=== ClusterComponentTemplate
+== ClusterComponentTemplate
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ClusterComponentTemplate {
   name: <<Name>>
   component_template: <<ClusterComponentTemplateNode>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[ClusterComponentTemplateNode]]
-=== ClusterComponentTemplateNode
+== ClusterComponentTemplateNode
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ClusterComponentTemplateNode {
   template: <<ClusterComponentTemplateSummary>>
   version?: <<VersionNumber>>
   _meta?: <<Metadata>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[ClusterComponentTemplateSummary]]
-=== ClusterComponentTemplateSummary
+== ClusterComponentTemplateSummary
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ClusterComponentTemplateSummary {
   _meta?: <<Metadata>>
   version?: <<VersionNumber>>
@@ -80,7 +74,5 @@ interface ClusterComponentTemplateSummary {
   aliases?: Record<string, <<IndicesAliasDefinition>>>
   lifecycle?: <<IndicesDataStreamLifecycleWithRollover>>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.getModelSnapshots]]
-=== client.ml.getModelSnapshots
+== client.ml.getModelSnapshots
 
 Get model snapshots info.
 
 {ref}/ml-get-snapshot.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get model snapshots info.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlGetModelSnapshotsRequest extends <<RequestBase>> {
   job_id: <<Id>>
   snapshot_id?: <<Id>>
@@ -60,23 +63,17 @@ interface MlGetModelSnapshotsRequest extends <<RequestBase>> {
   start?: <<DateTime>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlGetModelSnapshotsResponse {
   count: <<long>>
   model_snapshots: <<MlModelSnapshot>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

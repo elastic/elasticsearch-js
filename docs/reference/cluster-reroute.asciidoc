@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cluster.reroute]]
-=== client.cluster.reroute
+== client.cluster.reroute
 
 Allows to manually change the allocation of individual shards in the cluster.
 
 {ref}/cluster-reroute.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Allows to manually change the allocation of individual shards in the cluster.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ClusterRerouteRequest extends <<RequestBase>> {
   dry_run?: boolean
   explain?: boolean
@@ -58,24 +61,18 @@ interface ClusterRerouteRequest extends <<RequestBase>> {
   commands?: ClusterRerouteCommand[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ClusterRerouteResponse {
   acknowledged: boolean
   explanations?: ClusterRerouteRerouteExplanation[]
   state?: any
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

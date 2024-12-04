@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.queryRules.test]]
-=== client.queryRules.test
+== client.queryRules.test
 
 Creates or updates a query ruleset.
 
 {ref}/test-query-ruleset.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Creates or updates a query ruleset.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface QueryRulesTestRequest extends <<RequestBase>> {
   ruleset_id: <<Id>>
   match_criteria: Record<string, any>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface QueryRulesTestResponse {
   total_matched_rules: <<integer>>
   matched_rules: QueryRulesTestQueryRulesetMatchedRule[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

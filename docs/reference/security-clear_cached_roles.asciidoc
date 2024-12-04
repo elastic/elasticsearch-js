@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.clearCachedRoles]]
-=== client.security.clearCachedRoles
+== client.security.clearCachedRoles
 
 Clear the roles cache. Evict roles from the native role cache.
 
 {ref}/security-api-clear-role-cache.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Clear the roles cache. Evict roles from the native role cache.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityClearCachedRolesRequest extends <<RequestBase>> {
   name: <<Names>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityClearCachedRolesResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
   nodes: Record<string, <<SecurityClusterNode>>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

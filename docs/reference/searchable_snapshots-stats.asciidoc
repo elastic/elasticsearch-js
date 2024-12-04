@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.searchableSnapshots.stats]]
-=== client.searchableSnapshots.stats
+== client.searchableSnapshots.stats
 
 Retrieve shard-level statistics about searchable snapshots.
 
 {ref}/searchable-snapshots-apis.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Retrieve shard-level statistics about searchable snapshots.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SearchableSnapshotsStatsRequest extends <<RequestBase>> {
   index?: <<Indices>>
   level?: <<SearchableSnapshotsStatsLevel>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SearchableSnapshotsStatsResponse {
   stats: any
   total: any
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

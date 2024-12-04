@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.putAlias]]
-=== client.indices.putAlias
+== client.indices.putAlias
 
 Create or update an alias. Adds a data stream or index to an alias.
 
 {ref}/indices-aliases.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Create or update an alias. Adds a data stream or index to an alias.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesPutAliasRequest extends <<RequestBase>> {
   index: <<Indices>>
   name: <<Name>>
@@ -60,20 +63,14 @@ interface IndicesPutAliasRequest extends <<RequestBase>> {
   search_routing?: <<Routing>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesPutAliasResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

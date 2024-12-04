@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.features.getFeatures]]
-=== client.features.getFeatures
+== client.features.getFeatures
 
 Gets a list of features which can be included in snapshots using the feature_states field when creating a snapshot
 
 {ref}/get-features-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,22 @@ Gets a list of features which can be included in snapshots using the feature_sta
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface FeaturesGetFeaturesRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface FeaturesGetFeaturesRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface FeaturesGetFeaturesResponse {
   features: <<FeaturesFeature>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

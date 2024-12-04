@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.forecast]]
-=== client.ml.forecast
+== client.ml.forecast
 
 Predict future behavior of a time series. Forecasts are not supported for jobs that perform population analysis; an error occurs if you try to create a forecast for a job that has an `over_field_name` in its configuration. Forcasts predict future behavior based on historical data.
 
 {ref}/ml-forecast.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Predict future behavior of a time series. Forecasts are not supported for jobs t
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlForecastRequest extends <<RequestBase>> {
   job_id: <<Id>>
   duration?: <<Duration>>
@@ -55,23 +58,17 @@ interface MlForecastRequest extends <<RequestBase>> {
   max_model_memory?: string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlForecastResponse {
   acknowledged: boolean
   forecast_id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

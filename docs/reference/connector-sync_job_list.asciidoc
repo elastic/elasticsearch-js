@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.connector.syncJobList]]
-=== client.connector.syncJobList
+== client.connector.syncJobList
 
 Get all connector sync jobs. Get information about all stored connector sync jobs listed by their creation date in ascending order.
 
 {ref}/list-connector-sync-jobs-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get all connector sync jobs. Get information about all stored connector sync job
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ConnectorSyncJobListRequest extends <<RequestBase>> {
   from?: <<integer>>
   size?: <<integer>>
@@ -56,23 +59,17 @@ interface ConnectorSyncJobListRequest extends <<RequestBase>> {
   job_type?: <<ConnectorSyncJobType>> | <<ConnectorSyncJobType>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ConnectorSyncJobListResponse {
   count: <<long>>
   results: <<ConnectorConnectorSyncJob>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.snapshot.get]]
-=== client.snapshot.get
+== client.snapshot.get
 
 Returns information about a snapshot.
 
 {ref}/modules-snapshots.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Returns information about a snapshot.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SnapshotGetRequest extends <<RequestBase>> {
   repository: <<Name>>
   snapshot: <<Names>>
@@ -66,17 +69,13 @@ interface SnapshotGetRequest extends <<RequestBase>> {
   slm_policy_filter?: <<Name>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SnapshotGetResponse {
   responses?: SnapshotGetSnapshotResponseItem[]
   snapshots?: <<SnapshotSnapshotInfo>>[]
@@ -84,7 +83,5 @@ interface SnapshotGetResponse {
   remaining: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

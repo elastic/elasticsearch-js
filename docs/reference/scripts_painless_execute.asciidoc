@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.scriptsPainlessExecute]]
-=== client.scriptsPainlessExecute
+== client.scriptsPainlessExecute
 
 Run a script. Runs a script and returns a result.
 
 {painless}/painless-execute-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Run a script. Runs a script and returns a result.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ScriptsPainlessExecuteRequest extends <<RequestBase>> {
   context?: string
   context_setup?: <<ScriptsPainlessExecutePainlessContextSetup>>
   script?: <<Script>> | string
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ScriptsPainlessExecuteResponse<TResult = unknown> {
   result: TResult
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

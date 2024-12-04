@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.deleteRole]]
-=== client.security.deleteRole
+== client.security.deleteRole
 
 Delete roles. Delete roles in the native realm.
 
 {ref}/security-api-delete-role.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,25 @@ Delete roles. Delete roles in the native realm.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityDeleteRoleRequest extends <<RequestBase>> {
   name: <<Name>>
   refresh?: <<Refresh>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityDeleteRoleResponse {
   found: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

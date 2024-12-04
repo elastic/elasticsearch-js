@@ -1,6 +1,6 @@
 [[reference-shared-types-autoscaling-types]]
 
-== `Autoscaling`
+== `Autoscaling` types
 
 ////////
 ===========================================================================================================================
@@ -26,23 +26,25 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[AutoscalingAutoscalingPolicy]]
-=== AutoscalingAutoscalingPolicy
+== AutoscalingAutoscalingPolicy
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface AutoscalingAutoscalingPolicy {
   roles: string[]
   pass:[/**] @property deciders Decider settings. */
   deciders: Record<string, any>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

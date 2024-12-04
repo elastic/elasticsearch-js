@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.updateByQueryRethrottle]]
-=== client.updateByQueryRethrottle
+== client.updateByQueryRethrottle
 
 Throttle an update by query operation. Change the number of requests per second for a particular update by query operation. Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
 
 {ref}/docs-update-by-query.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,25 @@ Throttle an update by query operation. Change the number of requests per second 
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface UpdateByQueryRethrottleRequest extends <<RequestBase>> {
   task_id: <<Id>>
   requests_per_second?: <<float>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface UpdateByQueryRethrottleResponse {
   nodes: Record<string, <<UpdateByQueryRethrottleUpdateByQueryRethrottleNode>>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

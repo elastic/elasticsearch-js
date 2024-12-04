@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.info]]
-=== client.info
+== client.info
 
 Get cluster info. Returns basic information about the cluster.
 
 {ref}/index.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,26 +47,19 @@ Get cluster info. Returns basic information about the cluster.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface InfoRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface InfoRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface InfoResponse {
   cluster_name: <<Name>>
   cluster_uuid: <<Uuid>>
@@ -70,7 +68,5 @@ interface InfoResponse {
   version: <<ElasticsearchVersionInfo>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

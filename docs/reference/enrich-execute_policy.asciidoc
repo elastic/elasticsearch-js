@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.enrich.executePolicy]]
-=== client.enrich.executePolicy
+== client.enrich.executePolicy
 
 Creates the enrich index for an existing enrich policy.
 
 {ref}/execute-enrich-policy-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,34 +47,26 @@ Creates the enrich index for an existing enrich policy.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface EnrichExecutePolicyRequest extends <<RequestBase>> {
   name: <<Name>>
   wait_for_completion?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface EnrichExecutePolicyResponse {
   status?: EnrichExecutePolicyExecuteEnrichPolicyStatus
   task_id?: <<TaskId>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

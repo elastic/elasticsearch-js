@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.existsAlias]]
-=== client.indices.existsAlias
+== client.indices.existsAlias
 
 Check aliases. Checks if one or more data stream or index aliases exist.
 
 {ref}/indices-aliases.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Check aliases. Checks if one or more data stream or index aliases exist.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesExistsAliasRequest extends <<RequestBase>> {
   name: <<Names>>
   index?: <<Indices>>
@@ -57,20 +60,14 @@ interface IndicesExistsAliasRequest extends <<RequestBase>> {
   local?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesExistsAliasResponse = boolean
 
-[pass]
-++++
-</pre>
-++++
+----
+

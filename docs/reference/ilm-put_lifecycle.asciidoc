@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ilm.putLifecycle]]
-=== client.ilm.putLifecycle
+== client.ilm.putLifecycle
 
 Creates a lifecycle policy. If the specified policy exists, the policy is replaced and the policy version is incremented.
 
 {ref}/ilm-put-lifecycle.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Creates a lifecycle policy. If the specified policy exists, the policy is replac
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IlmPutLifecycleRequest extends <<RequestBase>> {
   name: <<Name>>
   master_timeout?: <<Duration>>
@@ -55,20 +58,14 @@ interface IlmPutLifecycleRequest extends <<RequestBase>> {
   policy?: <<IlmPolicy>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IlmPutLifecycleResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

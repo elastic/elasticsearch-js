@@ -1,6 +1,6 @@
 [[reference-shared-types-inference-types]]
 
-== `Inference`
+== `Inference` types
 
 ////////
 ===========================================================================================================================
@@ -26,77 +26,61 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[InferenceCompletionResult]]
-=== InferenceCompletionResult
+== InferenceCompletionResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface InferenceCompletionResult {
   result: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceDeleteInferenceEndpointResult]]
-=== InferenceDeleteInferenceEndpointResult
+== InferenceDeleteInferenceEndpointResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface InferenceDeleteInferenceEndpointResult extends <<AcknowledgedResponseBase>> {
   pipelines: string[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceDenseByteVector]]
-=== InferenceDenseByteVector
+== InferenceDenseByteVector
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type InferenceDenseByteVector = <<byte>>[]
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceDenseVector]]
-=== InferenceDenseVector
+== InferenceDenseVector
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type InferenceDenseVector = <<float>>[]
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceInferenceEndpoint]]
-=== InferenceInferenceEndpoint
+== InferenceInferenceEndpoint
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface InferenceInferenceEndpoint {
   pass:[/**] @property service The service type */
   service: string
@@ -105,38 +89,28 @@ interface InferenceInferenceEndpoint {
   pass:[/**] @property task_settings Task settings specific to the service and task type */
   task_settings?: <<InferenceTaskSettings>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceInferenceEndpointInfo]]
-=== InferenceInferenceEndpointInfo
+== InferenceInferenceEndpointInfo
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface InferenceInferenceEndpointInfo extends <<InferenceInferenceEndpoint>> {
   pass:[/**] @property inference_id The inference <<Id>> */
   inference_id: string
   pass:[/**] @property task_type The task type */
   task_type: <<InferenceTaskType>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceInferenceResult]]
-=== InferenceInferenceResult
+== InferenceInferenceResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface InferenceInferenceResult {
   text_embedding_bytes?: <<InferenceTextEmbeddingByteResult>>[]
   text_embedding?: <<InferenceTextEmbeddingResult>>[]
@@ -144,129 +118,87 @@ interface InferenceInferenceResult {
   completion?: <<InferenceCompletionResult>>[]
   rerank?: <<InferenceRankedDocument>>[]
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceRankedDocument]]
-=== InferenceRankedDocument
+== InferenceRankedDocument
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface InferenceRankedDocument {
   index: <<integer>>
   score: <<float>>
   text?: string
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceServiceSettings]]
-=== InferenceServiceSettings
+== InferenceServiceSettings
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type InferenceServiceSettings = any
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceSparseEmbeddingResult]]
-=== InferenceSparseEmbeddingResult
+== InferenceSparseEmbeddingResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface InferenceSparseEmbeddingResult {
   embedding: <<InferenceSparseVector>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceSparseVector]]
-=== InferenceSparseVector
+== InferenceSparseVector
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type InferenceSparseVector = Record<string, <<float>>>
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceTaskSettings]]
-=== InferenceTaskSettings
+== InferenceTaskSettings
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type InferenceTaskSettings = any
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceTaskType]]
-=== InferenceTaskType
+== InferenceTaskType
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank' | 'completion'
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceTextEmbeddingByteResult]]
-=== InferenceTextEmbeddingByteResult
+== InferenceTextEmbeddingByteResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface InferenceTextEmbeddingByteResult {
   embedding: <<InferenceDenseByteVector>>
 }
-[pass]
-++++
-</pre>
-++++
+----
 
 [discrete]
 [[InferenceTextEmbeddingResult]]
-=== InferenceTextEmbeddingResult
+== InferenceTextEmbeddingResult
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface InferenceTextEmbeddingResult {
   embedding: <<InferenceDenseVector>>
 }
-[pass]
-++++
-</pre>
-++++
+----
+

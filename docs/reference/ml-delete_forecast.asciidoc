@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.deleteForecast]]
-=== client.ml.deleteForecast
+== client.ml.deleteForecast
 
 Delete forecasts from a job. By default, forecasts are retained for 14 days. You can specify a different retention period with the `expires_in` parameter in the forecast jobs API. The delete forecast API enables you to delete one or more forecasts before they expire.
 
 {ref}/ml-delete-forecast.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Delete forecasts from a job. By default, forecasts are retained for 14 days. You
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlDeleteForecastRequest extends <<RequestBase>> {
   job_id: <<Id>>
   forecast_id?: <<Id>>
@@ -55,20 +58,14 @@ interface MlDeleteForecastRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type MlDeleteForecastResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

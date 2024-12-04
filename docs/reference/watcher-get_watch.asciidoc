@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.watcher.getWatch]]
-=== client.watcher.getWatch
+== client.watcher.getWatch
 
 Retrieves a watch by its ID.
 
 {ref}/watcher-api-get-watch.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,27 +47,21 @@ Retrieves a watch by its ID.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherGetWatchRequest extends <<RequestBase>> {
   id: <<Name>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface WatcherGetWatchResponse {
   found: boolean
   _id: <<Id>>
@@ -73,7 +72,5 @@ interface WatcherGetWatchResponse {
   _version?: <<VersionNumber>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

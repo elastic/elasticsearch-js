@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.features.resetFeatures]]
-=== client.features.resetFeatures
+== client.features.resetFeatures
 
 Resets the internal state of features, usually by deleting system indices
 
 {ref}/modules-snapshots.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,31 +47,22 @@ Resets the internal state of features, usually by deleting system indices
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface FeaturesResetFeaturesRequest extends <<RequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface FeaturesResetFeaturesRequest extends <<RequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface FeaturesResetFeaturesResponse {
   features: <<FeaturesFeature>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

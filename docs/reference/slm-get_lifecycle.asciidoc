@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.slm.getLifecycle]]
-=== client.slm.getLifecycle
+== client.slm.getLifecycle
 
 Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.
 
 {ref}/slm-api-get-policy.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,30 +47,22 @@ Retrieves one or more snapshot lifecycle policy definitions and information abou
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SlmGetLifecycleRequest extends <<RequestBase>> {
   policy_id?: <<Names>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type SlmGetLifecycleResponse = Record<<<Id>>, <<SlmSnapshotLifecycle>>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

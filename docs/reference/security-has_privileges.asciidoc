@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.security.hasPrivileges]]
-=== client.security.hasPrivileges
+== client.security.hasPrivileges
 
 Check user privileges. Determine whether the specified user has a specified list of privileges.
 
 {ref}/security-api-has-privileges.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Check user privileges. Determine whether the specified user has a specified list
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SecurityHasPrivilegesRequest extends <<RequestBase>> {
   user?: <<Name>>
   application?: SecurityHasPrivilegesApplicationPrivilegesCheck[]
@@ -55,17 +58,13 @@ interface SecurityHasPrivilegesRequest extends <<RequestBase>> {
   index?: SecurityHasPrivilegesIndexPrivilegesCheck[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SecurityHasPrivilegesResponse {
   application: SecurityHasPrivilegesApplicationsPrivileges
   cluster: Record<string, boolean>
@@ -74,7 +73,5 @@ interface SecurityHasPrivilegesResponse {
   username: <<Username>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

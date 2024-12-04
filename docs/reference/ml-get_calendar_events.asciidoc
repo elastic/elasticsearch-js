@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.getCalendarEvents]]
-=== client.ml.getCalendarEvents
+== client.ml.getCalendarEvents
 
 Get info about events in calendars.
 
 {ref}/ml-get-calendar-event.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get info about events in calendars.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlGetCalendarEventsRequest extends <<RequestBase>> {
   calendar_id: <<Id>>
   end?: <<DateTime>>
@@ -57,23 +60,17 @@ interface MlGetCalendarEventsRequest extends <<RequestBase>> {
   start?: <<DateTime>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlGetCalendarEventsResponse {
   count: <<long>>
   events: <<MlCalendarEvent>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

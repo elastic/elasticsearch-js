@@ -1,6 +1,6 @@
 [[reference-shared-types-features-types]]
 
-== `Features`
+== `Features` types
 
 ////////
 ===========================================================================================================================
@@ -26,22 +26,24 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
-
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
 
 [discrete]
 [[FeaturesFeature]]
-=== FeaturesFeature
+== FeaturesFeature
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface FeaturesFeature {
   name: string
   description: string
 }
-[pass]
-++++
-</pre>
-++++
+----
+

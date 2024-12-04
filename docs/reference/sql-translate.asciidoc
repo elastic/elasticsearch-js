@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.sql.translate]]
-=== client.sql.translate
+== client.sql.translate
 
 Translates SQL into Elasticsearch queries
 
 {ref}/sql-translate-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Translates SQL into Elasticsearch queries
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SqlTranslateRequest extends <<RequestBase>> {
   fetch_size?: <<integer>>
   filter?: <<QueryDslQueryContainer>>
@@ -55,17 +58,13 @@ interface SqlTranslateRequest extends <<RequestBase>> {
   time_zone?: <<TimeZone>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SqlTranslateResponse {
   aggregations?: Record<string, <<AggregationsAggregationContainer>>>
   size?: <<long>>
@@ -75,7 +74,5 @@ interface SqlTranslateResponse {
   sort?: <<Sort>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

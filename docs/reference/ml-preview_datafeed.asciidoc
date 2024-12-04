@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.previewDatafeed]]
-=== client.ml.previewDatafeed
+== client.ml.previewDatafeed
 
 Preview a datafeed. This API returns the first "page" of search results from a datafeed. You can preview an existing datafeed or provide configuration details for a datafeed and anomaly detection job in the API. The preview shows the structure of the data that will be passed to the anomaly detection engine. IMPORTANT: When Elasticsearch security features are enabled, the preview uses the credentials of the user that called the API. However, when the datafeed starts it uses the roles of the last user that created or updated the datafeed. To get a preview that accurately reflects the behavior of the datafeed, use the appropriate credentials. You can also use secondary authorization headers to supply the credentials.
 
 {ref}/ml-preview-datafeed.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Preview a datafeed. This API returns the first "page" of search results from a d
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlPreviewDatafeedRequest extends <<RequestBase>> {
   datafeed_id?: <<Id>>
   start?: <<DateTime>>
@@ -56,20 +59,14 @@ interface MlPreviewDatafeedRequest extends <<RequestBase>> {
   job_config?: <<MlJobConfig>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type MlPreviewDatafeedResponse<TDocument = unknown> = TDocument[]
 
-[pass]
-++++
-</pre>
-++++
+----
+

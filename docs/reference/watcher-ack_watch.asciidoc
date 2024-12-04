@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.watcher.ackWatch]]
-=== client.watcher.ackWatch
+== client.watcher.ackWatch
 
 Acknowledges a watch, manually throttling the execution of the watch's actions.
 
 {ref}/watcher-api-ack-watch.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,25 @@ Acknowledges a watch, manually throttling the execution of the watch's actions.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface WatcherAckWatchRequest extends <<RequestBase>> {
   watch_id: <<Name>>
   action_id?: <<Names>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface WatcherAckWatchResponse {
   status: <<WatcherWatchStatus>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

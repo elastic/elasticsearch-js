@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cluster.allocationExplain]]
-=== client.cluster.allocationExplain
+== client.cluster.allocationExplain
 
 Provides explanations for shard allocations in the cluster.
 
 {ref}/cluster-allocation-explain.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Provides explanations for shard allocations in the cluster.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ClusterAllocationExplainRequest extends <<RequestBase>> {
   include_disk_info?: boolean
   include_yes_decisions?: boolean
@@ -57,17 +60,13 @@ interface ClusterAllocationExplainRequest extends <<RequestBase>> {
   shard?: <<integer>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ClusterAllocationExplainResponse {
   allocate_explanation?: string
   allocation_delay?: <<Duration>>
@@ -96,7 +95,5 @@ interface ClusterAllocationExplainResponse {
   note?: string
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

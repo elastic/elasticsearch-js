@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.cat.help]]
-=== client.cat.help
+== client.cat.help
 
 Get CAT help. Returns help for the CAT APIs.
 
 {ref}/cat.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,29 +47,20 @@ Get CAT help. Returns help for the CAT APIs.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
-interface CatHelpRequest extends <<CatCatRequestBase>> {
-}
+[source,ts,subs=+macros]
+----
+interface CatHelpRequest extends <<CatCatRequestBase>> {}
 
-[pass]
-++++
-</pre>
-++++
+----
+
 [discrete]
-==== Response
+=== Response
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 type CatHelpResponse = CatHelpHelpRecord[]
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.migration.deprecations]]
-=== client.migration.deprecations
+== client.migration.deprecations
 
 Retrieves information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
 
 {ref}/migration-api-deprecation.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,27 +47,21 @@ Retrieves information about different cluster, node, and index level settings th
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MigrationDeprecationsRequest extends <<RequestBase>> {
   index?: <<IndexName>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MigrationDeprecationsResponse {
   cluster_settings: MigrationDeprecationsDeprecation[]
   index_settings: Record<string, MigrationDeprecationsDeprecation[]>
@@ -70,7 +69,5 @@ interface MigrationDeprecationsResponse {
   ml_settings: MigrationDeprecationsDeprecation[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

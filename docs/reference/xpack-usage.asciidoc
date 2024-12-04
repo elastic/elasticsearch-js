@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.xpack.usage]]
-=== client.xpack.usage
+== client.xpack.usage
 
 This API provides information about which features are currently enabled and available under the current license and some usage statistics.
 
 {ref}/usage-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,27 +47,21 @@ This API provides information about which features are currently enabled and ava
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface XpackUsageRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface XpackUsageResponse {
   aggregate_metric: XpackUsageBase
   analytics: XpackUsageAnalytics
@@ -95,7 +94,5 @@ interface XpackUsageResponse {
   voting_only: XpackUsageBase
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

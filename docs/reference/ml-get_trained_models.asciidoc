@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.getTrainedModels]]
-=== client.ml.getTrainedModels
+== client.ml.getTrainedModels
 
 Get trained model configuration info.
 
 {ref}/get-trained-models.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Get trained model configuration info.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlGetTrainedModelsRequest extends <<RequestBase>> {
   model_id?: <<Ids>>
   allow_no_match?: boolean
@@ -59,23 +62,17 @@ interface MlGetTrainedModelsRequest extends <<RequestBase>> {
   tags?: string | string[]
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlGetTrainedModelsResponse {
   count: <<integer>>
   trained_model_configs: <<MlTrainedModelConfig>>[]
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

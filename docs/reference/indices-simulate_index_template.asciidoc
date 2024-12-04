@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.simulateIndexTemplate]]
-=== client.indices.simulateIndexTemplate
+== client.indices.simulateIndexTemplate
 
 Simulate an index. Returns the index configuration that would be applied to the specified index from an existing index template.
 
 {ref}/indices-simulate-index.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,35 +47,27 @@ Simulate an index. Returns the index configuration that would be applied to the 
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesSimulateIndexTemplateRequest extends <<RequestBase>> {
   name: <<Name>>
   master_timeout?: <<Duration>>
   include_defaults?: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface IndicesSimulateIndexTemplateResponse {
   overlapping?: IndicesSimulateTemplateOverlapping[]
   template: IndicesSimulateTemplateTemplate
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

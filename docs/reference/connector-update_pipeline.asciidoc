@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.connector.updatePipeline]]
-=== client.connector.updatePipeline
+== client.connector.updatePipeline
 
 Update the connector pipeline. When you create a new connector, the configuration of an ingest pipeline is populated with default settings.
 
 {ref}/update-connector-pipeline-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,25 @@ Update the connector pipeline. When you create a new connector, the configuratio
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface ConnectorUpdatePipelineRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   pipeline: <<ConnectorIngestPipelineParams>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface ConnectorUpdatePipelineResponse {
   result: <<Result>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

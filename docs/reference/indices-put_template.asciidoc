@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.indices.putTemplate]]
-=== client.indices.putTemplate
+== client.indices.putTemplate
 
 Create or update an index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
 
 {ref}/indices-templates-v1.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Create or update an index template. Index templates define settings, mappings, a
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface IndicesPutTemplateRequest extends <<RequestBase>> {
   name: <<Name>>
   create?: boolean
@@ -61,20 +64,14 @@ interface IndicesPutTemplateRequest extends <<RequestBase>> {
   version?: <<VersionNumber>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 type IndicesPutTemplateResponse = <<AcknowledgedResponseBase>>
 
-[pass]
-++++
-</pre>
-++++
+----
+

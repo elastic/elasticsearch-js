@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.sql.getAsyncStatus]]
-=== client.sql.getAsyncStatus
+== client.sql.getAsyncStatus
 
 Returns the current status of an async SQL search or a stored synchronous SQL search
 
 {ref}/get-async-sql-search-status-api.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,27 +47,21 @@ Returns the current status of an async SQL search or a stored synchronous SQL se
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SqlGetAsyncStatusRequest extends <<RequestBase>> {
   id: <<Id>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SqlGetAsyncStatusResponse {
   id: string
   is_running: boolean
@@ -72,7 +71,5 @@ interface SqlGetAsyncStatusResponse {
   completion_status?: <<uint>>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.searchableSnapshots.cacheStats]]
-=== client.searchableSnapshots.cacheStats
+== client.searchableSnapshots.cacheStats
 
 Retrieve node-level cache statistics about searchable snapshots.
 
 {ref}/searchable-snapshots-apis.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,33 +47,25 @@ Retrieve node-level cache statistics about searchable snapshots.
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface SearchableSnapshotsCacheStatsRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   master_timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface SearchableSnapshotsCacheStatsResponse {
   nodes: Record<string, SearchableSnapshotsCacheStatsNode>
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+

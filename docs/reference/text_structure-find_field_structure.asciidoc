@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.textStructure.findFieldStructure]]
-=== client.textStructure.findFieldStructure
+== client.textStructure.findFieldStructure
 
 Finds the structure of a text field in an index.
 
 {ref}/find-field-structure.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----

@@ -24,17 +24,22 @@
 ||                                                                                                                       ||
 ===========================================================================================================================
 ////////
+++++
+<style>
+.lang-ts a.xref {
+  text-decoration: underline !important;
+}
+</style>
+++++
 
-[discrete]
 [[client.ml.stopDatafeed]]
-=== client.ml.stopDatafeed
+== client.ml.stopDatafeed
 
 Stop datafeeds. A datafeed that is stopped ceases to retrieve data from Elasticsearch. A datafeed can be started and stopped multiple times throughout its lifecycle.
 
 {ref}/ml-stop-datafeed.html[{es} documentation]
-
 [discrete]
-==== Function signature
+== Function signature
 
 [source,ts]
 ----
@@ -42,12 +47,10 @@ Stop datafeeds. A datafeed that is stopped ceases to retrieve data from Elastics
 ----
 
 [discrete]
-==== Request
+=== Request
 
-[pass]
-++++
-<pre>
-++++
+[source,ts,subs=+macros]
+----
 interface MlStopDatafeedRequest extends <<RequestBase>> {
   datafeed_id: <<Id>>
   allow_no_match?: boolean
@@ -55,22 +58,16 @@ interface MlStopDatafeedRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
 }
 
-[pass]
-++++
-</pre>
-++++
-[discrete]
-==== Response
+----
 
-[pass]
-++++
-<pre>
-++++
+[discrete]
+=== Response
+
+[source,ts,subs=+macros]
+----
 interface MlStopDatafeedResponse {
   stopped: boolean
 }
 
-[pass]
-++++
-</pre>
-++++
+----
+
