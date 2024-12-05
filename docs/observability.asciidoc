@@ -16,6 +16,7 @@ features.
 All of these observability features are documented below.
 
 [discrete]
+[[o11y-otel]]
 ==== OpenTelemetry
 
 The client supports OpenTelemetry's https://opentelemetry.io/docs/zero-code/js/[zero-code

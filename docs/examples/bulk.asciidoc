@@ -1,10 +1,10 @@
 [[bulk_examples]]
 === Bulk
 
-With the {jsclient}/api-reference.html#_bulk[`bulk` API], you can perform multiple index/delete operations in a 
+With the <<client.bulk,`bulk` API>>, you can perform multiple index/delete operations in a
 single API call. The `bulk` API significantly increases indexing speed.
 
-NOTE: You can also use the {jsclient}/client-helpers.html[bulk helper].
+NOTE: You can also use the <<bulk-helper,bulk helper>>.
 
 [source,js]
 ----

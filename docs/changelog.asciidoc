@@ -118,8 +118,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/8.15/release-notes-8.15.
 ===== OpenTelemetry zero-code instrumentation support
 
 For those that use an observability service that supports OpenTelemetry spans, the client will now automatically generate traces for each Elasticsearch request it makes.
-See {jsclient}/observability.html#_opentelemetry[the docs]
-for more information.
+See <<o11y-otel,the docs>> for more information.
 
 [discrete]
 === 8.14.1
@@ -329,7 +328,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/8.9/release-notes-8.9.0.
 [discrete]
 ===== Allow document to be overwritten in `onDocument` iteratee of bulk helper https://github.com/elastic/elasticsearch-js/pull/1732[#1732]
 
-In the {jsclient}/client-helpers.html#bulk-helper[bulk helper], documents could not be modified before being sent to Elasticsearch. It is now possible to {jsclient}/client-helpers.html#_modifying_a_document_before_operation[modify a document] before sending it.
+In the <<bulk-helper,bulk helper>>, documents could not be modified before being sent to Elasticsearch. It is now possible to <<bulk-modify-doc,modify a document>> before sending it.
 
 [discrete]
 ==== Fixes

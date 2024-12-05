@@ -338,6 +338,7 @@ console.log(result)
 ----
 
 [discrete]
+[[bulk-modify-doc]]
 ==== Modifying a document before operation
 
 ~Added~ ~in~ ~`v8.8.2`~
