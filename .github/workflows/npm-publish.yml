@@ -23,13 +23,14 @@ jobs:
       - run: npm install -g npm
       - run: npm install
       - run: npm test
-      - run: npm publish --provenance --access public
+      - run: npm publish --provenance --access public --tag alpha
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: |
+      - name: Publish version on GitHub
+        run: |
           version=$(jq -r .version package.json)
           gh release create \
-            -n "[Changelog](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/$BRANCH_NAME/changelog-client.html)" \
+            -n "This is a 9.0.0 pre-release alpha. Changes may not be stable." \
             --target "$BRANCH_NAME" \
             -t "v$version" \
             "v$version"
