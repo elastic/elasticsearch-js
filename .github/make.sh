@@ -150,7 +150,7 @@ if [[ -z "${BUILDKITE+x}" ]] && [[ -z "${CI+x}" ]] && [[ -z "${GITHUB_ACTIONS+x}
     -u "$(id -u):$(id -g)" \
     --volume "$repo:/usr/src/elasticsearch-js" \
     --volume /usr/src/elasticsearch-js/node_modules \
-    --volume "$(realpath $repo/../elastic-client-generator-js):/usr/src/elastic-client-generator-js" \
+    --volume "$(realpath "$repo/../elastic-client-generator-js"):/usr/src/elastic-client-generator-js" \
     --env "WORKFLOW=$WORKFLOW" \
     --name make-elasticsearch-js \
     --rm \
@@ -159,6 +159,14 @@ if [[ -z "${BUILDKITE+x}" ]] && [[ -z "${CI+x}" ]] && [[ -z "${GITHUB_ACTIONS+x}
       node .buildkite/make.mjs --task $TASK ${TASK_ARGS[*]}"
 else
   echo -e "\033[34;1mINFO: Running in CI mode"
+
+  # determine branch to clone
+  GENERATOR_BRANCH="main"
+  if [[ "$VERSION" == 8.* ]]; then
+    GENERATOR_BRANCH="8.x"
+  fi
+  echo -e "\033[34;1mINFO: Generator branch: $GENERATOR_BRANCH"
+
   docker run \
     --volume "$repo:/usr/src/elasticsearch-js" \
     --volume /usr/src/elasticsearch-js/node_modules \
