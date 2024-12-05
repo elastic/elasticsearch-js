@@ -5,7 +5,7 @@
 ----
 const response = await client.transport.request({
   method: "GET",
-  path: "/_security/settings",
+  path: "/_ingest/ip_location/database/my-database-id",
 });
 console.log(response);
 ----

@@ -35,7 +35,6 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 export default class Graph {
@@ -45,33 +44,25 @@ export default class Graph {
   }
 
   /**
-    * Extracts and summarizes information about the documents and terms in an Elasticsearch data stream or index.
+    * Explore graph analytics. Extract and summarize information about the documents and terms in an Elasticsearch data stream or index. The easiest way to understand the behavior of this API is to use the Graph UI to explore connections. An initial request to the `_explore` API contains a seed query that identifies the documents of interest and specifies the fields that define the vertices and connections you want to include in the graph. Subsequent requests enable you to spider out from one more vertices of interest. You can exclude vertices that have already been returned.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/graph-explore-api.html | Elasticsearch API documentation}
     */
-  async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GraphExploreResponse>
-  async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GraphExploreResponse, unknown>>
-  async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptions): Promise<T.GraphExploreResponse>
-  async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptions): Promise<any> {
+  async explore (this: That, params: T.GraphExploreRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GraphExploreResponse>
+  async explore (this: That, params: T.GraphExploreRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GraphExploreResponse, unknown>>
+  async explore (this: That, params: T.GraphExploreRequest, options?: TransportRequestOptions): Promise<T.GraphExploreResponse>
+  async explore (this: That, params: T.GraphExploreRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['connections', 'controls', 'query', 'vertices']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }

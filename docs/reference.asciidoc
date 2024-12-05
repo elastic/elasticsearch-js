@@ -96,7 +96,8 @@ client.closePointInTime({ id })
 
 [discrete]
 === count
-Returns number of documents matching a query.
+Count search results.
+Get the number of documents matching a query.
 
 {ref}/search-count.html[Endpoint documentation]
 [source,ts]
@@ -1643,8 +1644,6 @@ the indices stats API.
 ** *`wait_for_completion_timeout` (Optional, string | -1 | 0)*: Blocks and waits until the search is completed up to a certain timeout.
 When the async search completes within the timeout, the response won’t include the ID as the results are not stored in the cluster.
 ** *`keep_on_completion` (Optional, boolean)*: If `true`, results are stored for later retrieval when the search completes within the `wait_for_completion_timeout`.
-** *`keep_alive` (Optional, string | -1 | 0)*: Specifies how long the async search needs to be available.
-Ongoing async searches and any saved search results are deleted after this period.
 ** *`allow_no_indices` (Optional, boolean)*: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 ** *`allow_partial_search_results` (Optional, boolean)*: Indicate if an error should be returned if there is a partial search failure or timeout
 ** *`analyzer` (Optional, string)*: The analyzer to use for the query string
@@ -1660,7 +1659,6 @@ A partial reduction is performed every time the coordinating node has received a
 ** *`lenient` (Optional, boolean)*: Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
 ** *`max_concurrent_shard_requests` (Optional, number)*: The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
 ** *`preference` (Optional, string)*: Specify the node or shard the operation should be performed on (default: random)
-** *`pre_filter_shard_size` (Optional, number)*: The default value cannot be changed, which enforces the execution of a pre-filter roundtrip to retrieve statistics from each shard so that the ones that surely don’t hold any document matching the query get skipped.
 ** *`request_cache` (Optional, boolean)*: Specify if request cache should be used for this request or not, defaults to true
 ** *`routing` (Optional, string)*: A list of specific routing values
 ** *`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))*: Search operation type
@@ -1794,7 +1792,8 @@ client.cat.aliases({ ... })
 
 [discrete]
 ==== allocation
-Provides a snapshot of the number of shards allocated to each data node and their disk space.
+Get shard allocation information.
+Get a snapshot of the number of shards allocated to each data node and their disk space.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
 
 {ref}/cat-allocation.html[Endpoint documentation]
@@ -1863,7 +1862,8 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 
 [discrete]
 ==== fielddata
-Returns the amount of heap memory currently used by the field data cache on every data node in the cluster.
+Get field data cache information.
+Get the amount of heap memory currently used by the field data cache on every data node in the cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console.
 They are not intended for use by applications. For application consumption, use the nodes stats API.
 
@@ -1883,7 +1883,7 @@ To retrieve all fields, omit this parameter.
 
 [discrete]
 ==== health
-Returns the health status of a cluster, similar to the cluster health API.
+Get the cluster health status.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console.
 They are not intended for use by applications. For application consumption, use the cluster health API.
 This API is often used to check malfunctioning clusters.
@@ -1958,7 +1958,8 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 
 [discrete]
 ==== master
-Returns information about the master node, including the ID, bound IP address, and name.
+Get master node information.
+Get information about the master node, including the ID, bound IP address, and name.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
 
 {ref}/cat-master.html[Endpoint documentation]
@@ -2107,7 +2108,8 @@ If `false`, the API returns a 404 status code when there are no matches or only 
 
 [discrete]
 ==== nodeattrs
-Returns information about custom node attributes.
+Get node attribute information.
+Get information about custom node attributes.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
 
 {ref}/cat-nodeattrs.html[Endpoint documentation]
@@ -2127,7 +2129,8 @@ node will send requests for further information to each selected node.
 
 [discrete]
 ==== nodes
-Returns information about the nodes in a cluster.
+Get node information.
+Get information about the nodes in a cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
 
 {ref}/cat-nodes.html[Endpoint documentation]
@@ -2146,7 +2149,8 @@ client.cat.nodes({ ... })
 
 [discrete]
 ==== pending_tasks
-Returns cluster-level changes that have not yet been executed.
+Get pending task information.
+Get information about cluster-level changes that have not yet taken effect.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the pending cluster tasks API.
 
 {ref}/cat-pending-tasks.html[Endpoint documentation]
@@ -2166,7 +2170,8 @@ node will send requests for further information to each selected node.
 
 [discrete]
 ==== plugins
-Returns a list of plugins running on each node of a cluster.
+Get plugin information.
+Get a list of plugins running on each node of a cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
 
 {ref}/cat-plugins.html[Endpoint documentation]
@@ -2186,7 +2191,8 @@ node will send requests for further information to each selected node.
 
 [discrete]
 ==== recovery
-Returns information about ongoing and completed shard recoveries.
+Get shard recovery information.
+Get information about ongoing and completed shard recoveries.
 Shard recovery is the process of initializing a shard copy, such as restoring a primary shard from a snapshot or syncing a replica shard from a primary shard. When a shard recovery completes, the recovered shard is available for search and indexing.
 For data streams, the API returns information about the stream’s backing indices.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the index recovery API.
@@ -2209,7 +2215,8 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 
 [discrete]
 ==== repositories
-Returns the snapshot repositories for a cluster.
+Get snapshot repository information.
+Get a list of snapshot repositories for a cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get snapshot repository API.
 
 {ref}/cat-repositories.html[Endpoint documentation]
@@ -2221,7 +2228,8 @@ client.cat.repositories()
 
 [discrete]
 ==== segments
-Returns low-level information about the Lucene segments in index shards.
+Get segment information.
+Get low-level information about the Lucene segments in index shards.
 For data streams, the API returns information about the backing indices.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the index segments API.
 
@@ -2246,7 +2254,8 @@ node will send requests for further information to each selected node.
 
 [discrete]
 ==== shards
-Returns information about the shards in a cluster.
+Get shard information.
+Get information about the shards in a cluster.
 For data streams, the API returns information about the backing indices.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
 
@@ -2267,7 +2276,8 @@ To target all data streams and indices, omit this parameter or use `*` or `_all`
 
 [discrete]
 ==== snapshots
-Returns information about the snapshots stored in one or more repositories.
+Get snapshot information
+Get information about the snapshots stored in one or more repositories.
 A snapshot is a backup of an index or running Elasticsearch cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get snapshot API.
 
@@ -2289,7 +2299,8 @@ If any repository fails during the request, Elasticsearch returns an error.
 
 [discrete]
 ==== tasks
-Returns information about tasks currently executing in the cluster.
+Get task information.
+Get information about tasks currently running in the cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the task management API.
 
 {ref}/tasks.html[Endpoint documentation]
@@ -2309,7 +2320,8 @@ client.cat.tasks({ ... })
 
 [discrete]
 ==== templates
-Returns information about index templates in a cluster.
+Get index template information.
+Get information about the index templates in a cluster.
 You can use index templates to apply index settings and field mappings to new indices at creation.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get index template API.
 
@@ -2332,7 +2344,8 @@ node will send requests for further information to each selected node.
 
 [discrete]
 ==== thread_pool
-Returns thread pool statistics for each node in a cluster.
+Get thread pool statistics.
+Get thread pool statistics for each node in a cluster.
 Returned information includes all built-in thread pools and custom thread pools.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
 
@@ -2356,8 +2369,8 @@ node will send requests for further information to each selected node.
 
 [discrete]
 ==== transforms
-Get transforms.
-Returns configuration and usage information about transforms.
+Get transform information.
+Get configuration and usage information about transforms.
 
 CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
@@ -3622,7 +3635,8 @@ client.enrich.deletePolicy({ name })
 
 [discrete]
 ==== execute_policy
-Creates the enrich index for an existing enrich policy.
+Run an enrich policy.
+Create the enrich index for an existing enrich policy.
 
 {ref}/execute-enrich-policy-api.html[Endpoint documentation]
 [source,ts]
@@ -3691,7 +3705,8 @@ client.enrich.stats()
 === eql
 [discrete]
 ==== delete
-Deletes an async EQL search or a stored synchronous EQL search.
+Delete an async EQL search.
+Delete an async EQL search or a stored synchronous EQL search.
 The API also deletes results for the search.
 
 {ref}/eql-search-api.html[Endpoint documentation]
@@ -3710,7 +3725,8 @@ A search ID is also provided if the request’s `keep_on_completion` parameter i
 
 [discrete]
 ==== get
-Returns the current status and available results for an async EQL search or a stored synchronous EQL search.
+Get async EQL search results.
+Get the current status and available results for an async EQL search or a stored synchronous EQL search.
 
 {ref}/get-async-eql-search-api.html[Endpoint documentation]
 [source,ts]
@@ -3730,7 +3746,8 @@ Defaults to no timeout, meaning the request waits for complete search results.
 
 [discrete]
 ==== get_status
-Returns the current status for an async EQL search or a stored synchronous EQL search without returning results.
+Get the async EQL status.
+Get the current status for an async EQL search or a stored synchronous EQL search without returning results.
 
 {ref}/get-async-eql-status-api.html[Endpoint documentation]
 [source,ts]
@@ -3746,7 +3763,9 @@ client.eql.getStatus({ id })
 
 [discrete]
 ==== search
-Returns results matching a query expressed in Event Query Language (EQL)
+Get EQL search results.
+Returns search results for an Event Query Language (EQL) query.
+EQL assumes each document in a data stream or index corresponds to an event.
 
 {ref}/eql-search-api.html[Endpoint documentation]
 [source,ts]
@@ -3806,7 +3825,8 @@ client.esql.asyncQueryGet()
 
 [discrete]
 ==== query
-Executes an ES|QL request
+Run an ES|QL query.
+Get search results for an ES|QL (Elasticsearch query language) query.
 
 {ref}/esql-rest.html[Endpoint documentation]
 [source,ts]
@@ -3862,7 +3882,9 @@ client.features.resetFeatures()
 === fleet
 [discrete]
 ==== global_checkpoints
-Returns the current global checkpoints for an index. This API is design for internal use by the fleet server project.
+Get global checkpoints.
+Get the current global checkpoints for an index.
+This API is designed for internal use by the Fleet server project.
 
 {ref}/get-global-checkpoints.html[Endpoint documentation]
 [source,ts]
@@ -3886,9 +3908,10 @@ will cause Elasticsearch to immediately return the current global checkpoints.
 
 [discrete]
 ==== msearch
-Executes several [fleet searches](https://www.elastic.co/guide/en/elasticsearch/reference/current/fleet-search.html) with a single API request.
-The API follows the same structure as the [multi search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html) API. However, similar to the fleet search API, it
-supports the wait_for_checkpoints parameter.
+Run multiple Fleet searches.
+Run several Fleet searches with a single API request.
+The API follows the same structure as the multi search API.
+However, similar to the Fleet search API, it supports the `wait_for_checkpoints` parameter.
 [source,ts]
 ----
 client.fleet.msearch({ ... })
@@ -3920,8 +3943,9 @@ which is true by default.
 
 [discrete]
 ==== search
-The purpose of the fleet search api is to provide a search api where the search will only be executed
-after provided checkpoint has been processed and is visible for searches inside of Elasticsearch.
+Run a Fleet search.
+The purpose of the Fleet search API is to provide an API where the search will be run only
+after the provided checkpoint has been processed and is visible for searches inside of Elasticsearch.
 [source,ts]
 ----
 client.fleet.search({ index })
@@ -4024,7 +4048,12 @@ which is true by default.
 === graph
 [discrete]
 ==== explore
-Extracts and summarizes information about the documents and terms in an Elasticsearch data stream or index.
+Explore graph analytics.
+Extract and summarize information about the documents and terms in an Elasticsearch data stream or index.
+The easiest way to understand the behavior of this API is to use the Graph UI to explore connections.
+An initial request to the `_explore` API contains a seed query that identifies the documents of interest and specifies the fields that define the vertices and connections you want to include in the graph.
+Subsequent requests enable you to spider out from one more vertices of interest.
+You can exclude vertices that have already been returned.
 
 {ref}/graph-explore-api.html[Endpoint documentation]
 [source,ts]
@@ -4690,10 +4719,13 @@ If the request can target data streams, this argument determines whether wildcar
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, requests that include a missing data stream or index in the target indices or data streams return an error.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== exists_index_template
-Returns information about whether a particular index template exists.
+Check index templates.
+Check whether index templates exist.
 
 {ref}/index-templates.html[Endpoint documentation]
 [source,ts]
@@ -4887,6 +4919,8 @@ If the request can target data streams, this argument determines whether wildcar
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_data_lifecycle
@@ -5502,7 +5536,8 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 
 [discrete]
 ==== resolve_index
-Resolves the specified name(s) and/or index patterns for indices, aliases, and data streams.
+Resolve indices.
+Resolve the names and/or index patterns for indices, aliases, and data streams.
 Multiple patterns and remote clusters are supported.
 
 {ref}/indices-resolve-index-api.html[Endpoint documentation]
@@ -5938,7 +5973,8 @@ client.inference.streamInference()
 === ingest
 [discrete]
 ==== delete_geoip_database
-Deletes a geoip database configuration.
+Delete GeoIP database configurations.
+Delete one or more IP geolocation database configurations.
 
 {ref}/delete-geoip-database-api.html[Endpoint documentation]
 [source,ts]
@@ -5968,7 +6004,8 @@ client.ingest.deleteIpLocationDatabase()
 
 [discrete]
 ==== delete_pipeline
-Deletes one or more existing ingest pipeline.
+Delete pipelines.
+Delete one or more ingest pipelines.
 
 {ref}/delete-pipeline-api.html[Endpoint documentation]
 [source,ts]
@@ -5989,7 +6026,8 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== geo_ip_stats
-Gets download statistics for GeoIP2 databases used with the geoip processor.
+Get GeoIP statistics.
+Get download statistics for GeoIP2 databases that are used with the GeoIP processor.
 
 {ref}/geoip-processor.html[Endpoint documentation]
 [source,ts]
@@ -6000,7 +6038,8 @@ client.ingest.geoIpStats()
 
 [discrete]
 ==== get_geoip_database
-Returns information about one or more geoip database configurations.
+Get GeoIP database configurations.
+Get information about one or more IP geolocation database configurations.
 
 {ref}/get-geoip-database-api.html[Endpoint documentation]
 [source,ts]
@@ -6031,7 +6070,8 @@ client.ingest.getIpLocationDatabase()
 
 [discrete]
 ==== get_pipeline
-Returns information about one or more ingest pipelines.
+Get pipelines.
+Get information about one or more ingest pipelines.
 This API returns a local reference of the pipeline.
 
 {ref}/get-pipeline-api.html[Endpoint documentation]
@@ -6053,8 +6093,9 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== processor_grok
-Extracts structured fields out of a single text field within a document.
-You choose which field to extract matched fields from, as well as the grok pattern you expect will match.
+Run a grok processor.
+Extract structured fields out of a single text field within a document.
+You must choose which field to extract matched fields from, as well as the grok pattern you expect will match.
 A grok pattern is like a regular expression that supports aliased expressions that can be reused.
 
 {ref}/grok-processor.html[Endpoint documentation]
@@ -6066,7 +6107,8 @@ client.ingest.processorGrok()
 
 [discrete]
 ==== put_geoip_database
-Returns information about one or more geoip database configurations.
+Create or update GeoIP database configurations.
+Create or update IP geolocation database configurations.
 
 {ref}/put-geoip-database-api.html[Endpoint documentation]
 [source,ts]
@@ -6099,7 +6141,7 @@ client.ingest.putIpLocationDatabase()
 
 [discrete]
 ==== put_pipeline
-Creates or updates an ingest pipeline.
+Create or update a pipeline.
 Changes made using this API take effect immediately.
 
 {ref}/ingest.html[Endpoint documentation]
@@ -6126,7 +6168,9 @@ When a deprecated ingest pipeline is referenced as the default or final pipeline
 
 [discrete]
 ==== simulate
-Executes an ingest pipeline against a set of provided documents.
+Simulate a pipeline.
+Run an ingest pipeline against a set of provided documents.
+You can either specify an existing pipeline to use with the provided documents or supply a pipeline definition in the body of the request.
 
 {ref}/simulate-pipeline-api.html[Endpoint documentation]
 [source,ts]
@@ -8599,7 +8643,8 @@ If no response is received before the timeout expires, the request fails and ret
 === query_rules
 [discrete]
 ==== delete_rule
-Deletes a query rule within a query ruleset.
+Delete a query rule.
+Delete a query rule within a query ruleset.
 
 {ref}/delete-query-rule.html[Endpoint documentation]
 [source,ts]
@@ -8616,7 +8661,7 @@ client.queryRules.deleteRule({ ruleset_id, rule_id })
 
 [discrete]
 ==== delete_ruleset
-Deletes a query ruleset.
+Delete a query ruleset.
 
 {ref}/delete-query-ruleset.html[Endpoint documentation]
 [source,ts]
@@ -8632,7 +8677,8 @@ client.queryRules.deleteRuleset({ ruleset_id })
 
 [discrete]
 ==== get_rule
-Returns the details about a query rule within a query ruleset
+Get a query rule.
+Get details about a query rule within a query ruleset.
 
 {ref}/get-query-rule.html[Endpoint documentation]
 [source,ts]
@@ -8649,7 +8695,8 @@ client.queryRules.getRule({ ruleset_id, rule_id })
 
 [discrete]
 ==== get_ruleset
-Returns the details about a query ruleset
+Get a query ruleset.
+Get details about a query ruleset.
 
 {ref}/get-query-ruleset.html[Endpoint documentation]
 [source,ts]
@@ -8665,7 +8712,8 @@ client.queryRules.getRuleset({ ruleset_id })
 
 [discrete]
 ==== list_rulesets
-Returns summarized information about existing query rulesets.
+Get all query rulesets.
+Get summarized information about the query rulesets.
 
 {ref}/list-query-rulesets.html[Endpoint documentation]
 [source,ts]
@@ -8682,7 +8730,8 @@ client.queryRules.listRulesets({ ... })
 
 [discrete]
 ==== put_rule
-Creates or updates a query rule within a query ruleset.
+Create or update a query rule.
+Create or update a query rule within a query ruleset.
 
 {ref}/put-query-rule.html[Endpoint documentation]
 [source,ts]
@@ -8703,7 +8752,7 @@ client.queryRules.putRule({ ruleset_id, rule_id, type, criteria, actions })
 
 [discrete]
 ==== put_ruleset
-Creates or updates a query ruleset.
+Create or update a query ruleset.
 
 {ref}/put-query-ruleset.html[Endpoint documentation]
 [source,ts]
@@ -8720,7 +8769,8 @@ client.queryRules.putRuleset({ ruleset_id, rules })
 
 [discrete]
 ==== test
-Creates or updates a query ruleset.
+Test a query ruleset.
+Evaluate match criteria against a query ruleset to identify the rules that would match that criteria.
 
 {ref}/test-query-ruleset.html[Endpoint documentation]
 [source,ts]
@@ -10984,7 +11034,7 @@ client.snapshot.verifyRepository({ repository })
 === sql
 [discrete]
 ==== clear_cursor
-Clears the SQL cursor
+Clear an SQL search cursor.
 
 {ref}/clear-sql-cursor-api.html[Endpoint documentation]
 [source,ts]
@@ -11000,7 +11050,9 @@ client.sql.clearCursor({ cursor })
 
 [discrete]
 ==== delete_async
-Deletes an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it.
+Delete an async SQL search.
+Delete an async SQL search or a stored synchronous SQL search.
+If the search is still running, the API cancels it.
 
 {ref}/delete-async-sql-search-api.html[Endpoint documentation]
 [source,ts]
@@ -11016,7 +11068,8 @@ client.sql.deleteAsync({ id })
 
 [discrete]
 ==== get_async
-Returns the current status and available results for an async SQL search or stored synchronous SQL search
+Get async SQL search results.
+Get the current status and available results for an async SQL search or stored synchronous SQL search.
 
 {ref}/get-async-sql-search-api.html[Endpoint documentation]
 [source,ts]
@@ -11039,7 +11092,8 @@ meaning the request waits for complete search results.
 
 [discrete]
 ==== get_async_status
-Returns the current status of an async SQL search or a stored synchronous SQL search
+Get the async SQL search status.
+Get the current status of an async SQL search or a stored synchronous SQL search.
 
 {ref}/get-async-sql-search-status-api.html[Endpoint documentation]
 [source,ts]
@@ -11055,7 +11109,8 @@ client.sql.getAsyncStatus({ id })
 
 [discrete]
 ==== query
-Executes a SQL request
+Get SQL search results.
+Run an SQL request.
 
 {ref}/sql-search-api.html[Endpoint documentation]
 [source,ts]
@@ -11090,7 +11145,8 @@ precedence over mapped fields with the same name.
 
 [discrete]
 ==== translate
-Translates SQL into Elasticsearch queries
+Translate SQL into Elasticsearch queries.
+Translate an SQL search into a search API request containing Query DSL.
 
 {ref}/sql-translate-api.html[Endpoint documentation]
 [source,ts]
@@ -11140,7 +11196,7 @@ client.ssl.certificates()
 === synonyms
 [discrete]
 ==== delete_synonym
-Deletes a synonym set
+Delete a synonym set.
 
 {ref}/delete-synonyms-set.html[Endpoint documentation]
 [source,ts]
@@ -11156,7 +11212,8 @@ client.synonyms.deleteSynonym({ id })
 
 [discrete]
 ==== delete_synonym_rule
-Deletes a synonym rule in a synonym set
+Delete a synonym rule.
+Delete a synonym rule from a synonym set.
 
 {ref}/delete-synonym-rule.html[Endpoint documentation]
 [source,ts]
@@ -11173,7 +11230,7 @@ client.synonyms.deleteSynonymRule({ set_id, rule_id })
 
 [discrete]
 ==== get_synonym
-Retrieves a synonym set
+Get a synonym set.
 
 {ref}/get-synonyms-set.html[Endpoint documentation]
 [source,ts]
@@ -11191,7 +11248,8 @@ client.synonyms.getSynonym({ id })
 
 [discrete]
 ==== get_synonym_rule
-Retrieves a synonym rule from a synonym set
+Get a synonym rule.
+Get a synonym rule from a synonym set.
 
 {ref}/get-synonym-rule.html[Endpoint documentation]
 [source,ts]
@@ -11208,7 +11266,8 @@ client.synonyms.getSynonymRule({ set_id, rule_id })
 
 [discrete]
 ==== get_synonyms_sets
-Retrieves a summary of all defined synonym sets
+Get all synonym sets.
+Get a summary of all defined synonym sets.
 
 {ref}/list-synonyms-sets.html[Endpoint documentation]
 [source,ts]
@@ -11225,7 +11284,9 @@ client.synonyms.getSynonymsSets({ ... })
 
 [discrete]
 ==== put_synonym
-Creates or updates a synonym set.
+Create or update a synonym set.
+Synonyms sets are limited to a maximum of 10,000 synonym rules per set.
+If you need to manage more synonym rules, you can create multiple synonym sets.
 
 {ref}/put-synonyms-set.html[Endpoint documentation]
 [source,ts]
@@ -11242,7 +11303,8 @@ client.synonyms.putSynonym({ id, synonyms_set })
 
 [discrete]
 ==== put_synonym_rule
-Creates or updates a synonym rule in a synonym set
+Create or update a synonym rule.
+Create or update a synonym rule in a synonym set.
 
 {ref}/put-synonym-rule.html[Endpoint documentation]
 [source,ts]

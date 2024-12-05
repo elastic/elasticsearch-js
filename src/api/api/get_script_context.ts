@@ -35,17 +35,16 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Get script contexts. Get a list of supported script contexts and their methods.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html | Elasticsearch API documentation}
   */
-export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptContextResponse>
-export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptContextResponse, unknown>>
-export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptions): Promise<T.GetScriptContextResponse>
-export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptContextResponse>
+export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptContextResponse, unknown>>
+export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest, options?: TransportRequestOptions): Promise<T.GetScriptContextResponse>
+export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
   const querystring: Record<string, any> = {}
   const body = undefined
@@ -54,7 +53,7 @@ export default async function GetScriptContextApi (this: That, params?: T.GetScr
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

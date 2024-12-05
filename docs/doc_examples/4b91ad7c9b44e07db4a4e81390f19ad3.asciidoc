@@ -3,9 +3,9 @@
 
 [source, js]
 ----
-const response = await client.inference.streamInference({
-  task_type: "completion",
-  inference_id: "openai-completion",
+const response = await client.transport.request({
+  method: "POST",
+  path: "/_inference/completion/openai-completion/_stream",
   body: {
     input: "What is Elastic?",
   },
