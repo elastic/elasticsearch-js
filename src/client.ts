@@ -383,9 +383,9 @@ export default class Client extends API {
       maxResponseSize: options.maxResponseSize,
       maxCompressedResponseSize: options.maxCompressedResponseSize,
       vendoredHeaders: {
-        jsonContentType: 'application/vnd.elasticsearch+json; compatible-with=8',
-        ndjsonContentType: 'application/vnd.elasticsearch+x-ndjson; compatible-with=8',
-        accept: 'application/vnd.elasticsearch+json; compatible-with=8,text/plain'
+        jsonContentType: 'application/vnd.elasticsearch+json; compatible-with=9',
+        ndjsonContentType: 'application/vnd.elasticsearch+x-ndjson; compatible-with=9',
+        accept: 'application/vnd.elasticsearch+json; compatible-with=9,text/plain'
       },
       redaction: options.redaction
     })

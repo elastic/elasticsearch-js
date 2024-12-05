@@ -910,7 +910,7 @@ export default class Helpers {
 
       function tryBulk (bulkBody: string[], callback: (err: Error | null, bulkBody: string[]) => void): void {
         if (shouldAbort) return callback(null, [])
-        client.bulk(Object.assign({}, bulkOptions, { body: bulkBody }), reqOptions as TransportRequestOptionsWithMeta)
+        client.bulk(Object.assign({}, bulkOptions, { operations: bulkBody }), reqOptions as TransportRequestOptionsWithMeta)
           .then(response => {
             const result = response.body
             const results = zipBulkResults(result.items, bulkBody)
