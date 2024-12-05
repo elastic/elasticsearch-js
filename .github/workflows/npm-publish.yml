@@ -31,8 +31,10 @@ jobs:
           version=$(jq -r .version package.json)
           gh release create \
             -n "This is a 9.0.0 pre-release alpha. Changes may not be stable." \
+            --latest=false \
+            --prerelease \
             --target "$BRANCH_NAME" \
-            -t "v$version" \
+            --title "v$version" \
             "v$version"
         env:
           BRANCH_NAME: ${{ github.event.inputs.branch }}
