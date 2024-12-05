@@ -22,7 +22,7 @@ import { connection } from '../utils'
 import { Client } from '../..'
 import * as T from '../../lib/api/types'
 
-test('Api without body key and top level body', async t => {
+test('Api with top level body', async t => {
   t.plan(2)
 
   const Connection = connection.buildMockConnection({
@@ -50,37 +50,7 @@ test('Api without body key and top level body', async t => {
   t.equal(response.took, 42)
 })
 
-test('Api with body key and top level body', async t => {
-  t.plan(2)
-
-  const Connection = connection.buildMockConnection({
-    onRequest (opts) {
-      // @ts-expect-error
-      t.same(JSON.parse(opts.body), { query: { match_all: {} } })
-      return {
-        statusCode: 200,
-        body: { took: 42 }
-      }
-    }
-  })
-
-  const client = new Client({
-    node: 'http://localhost:9200',
-    Connection
-  })
-
-  const response = await client.search({
-    index: 'test',
-    allow_no_indices: true,
-    body: {
-      query: { match_all: {} }
-    }
-  })
-
-  t.equal(response.took, 42)
-})
-
-test('Api without body key and keyed body', async t => {
+test('Api with keyed body', async t => {
   t.plan(2)
 
   const Connection = connection.buildMockConnection({
@@ -106,95 +76,6 @@ test('Api without body key and keyed body', async t => {
   })
 
   t.equal(response.result, 'created')
-})
-
-test('Api with body key and keyed body', async t => {
-  t.plan(2)
-
-  const Connection = connection.buildMockConnection({
-    onRequest (opts) {
-      // @ts-expect-error
-      t.same(JSON.parse(opts.body), { foo: 'bar' })
-      return {
-        statusCode: 200,
-        body: { result: 'created' }
-      }
-    }
-  })
-
-  const client = new Client({
-    node: 'http://localhost:9200',
-    Connection
-  })
-
-  const response = await client.create({
-    index: 'test',
-    id: '1',
-    body: { foo: 'bar' }
-  })
-
-  t.equal(response.result, 'created')
-})
-
-test('Using the body key should not mutate the body', async t => {
-  t.plan(2)
-
-  const Connection = connection.buildMockConnection({
-    onRequest (opts) {
-      // @ts-expect-error
-      t.same(JSON.parse(opts.body), { query: { match_all: {} }, sort: 'foo' })
-      return {
-        statusCode: 200,
-        body: { took: 42 }
-      }
-    }
-  })
-
-  const client = new Client({
-    node: 'http://localhost:9200',
-    Connection
-  })
-
-  const body = { query: { match_all: {} } }
-  await client.search({
-    index: 'test',
-    sort: 'foo',
-    body
-  })
-
-  t.same(body, { query: { match_all: {} } })
-})
-
-test('Using the body key with a string value', async t => {
-  t.plan(2)
-
-  const Connection = connection.buildMockConnection({
-    onRequest (opts) {
-      // @ts-expect-error
-      t.same(JSON.parse(opts.body), { query: { match_all: {} } })
-      return {
-        statusCode: 200,
-        body: { took: 42 }
-      }
-    }
-  })
-
-  const client = new Client({
-    node: 'http://localhost:9200',
-    Connection
-  })
-
-  try {
-    const body = { query: { match_all: {} } }
-    await client.search({
-      index: 'test',
-      // @ts-expect-error
-      body: JSON.stringify(body)
-    })
-    t.pass('ok!')
-  } catch (err: any) {
-    t.fail(err)
-  }
 })
 
 test('With generic document', async t => {

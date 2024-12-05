@@ -1749,12 +1749,12 @@ test('Flush interval', t => {
       datasource: dataset.slice(),
       flushBytes: 1,
       concurrency: 1,
-      onDocument (doc) {
+      onDocument (_doc) {
         return {
           index: { _index: 'test' }
         }
       },
-      onDrop (doc) {
+      onDrop (_doc) {
         t.fail('This should never be called')
       }
     })
