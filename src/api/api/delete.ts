@@ -35,17 +35,16 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Delete a document. Removes a JSON document from the specified index.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html | Elasticsearch API documentation}
   */
-export default async function DeleteApi (this: That, params: T.DeleteRequest | TB.DeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteResponse>
-export default async function DeleteApi (this: That, params: T.DeleteRequest | TB.DeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteResponse, unknown>>
-export default async function DeleteApi (this: That, params: T.DeleteRequest | TB.DeleteRequest, options?: TransportRequestOptions): Promise<T.DeleteResponse>
-export default async function DeleteApi (this: That, params: T.DeleteRequest | TB.DeleteRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function DeleteApi (this: That, params: T.DeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteResponse>
+export default async function DeleteApi (this: That, params: T.DeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteResponse, unknown>>
+export default async function DeleteApi (this: That, params: T.DeleteRequest, options?: TransportRequestOptions): Promise<T.DeleteResponse>
+export default async function DeleteApi (this: That, params: T.DeleteRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
   const querystring: Record<string, any> = {}
   const body = undefined
@@ -53,7 +52,7 @@ export default async function DeleteApi (this: That, params: T.DeleteRequest | T
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

@@ -35,37 +35,28 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Create or update a script or search template. Creates or updates a stored script or search template.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html | Elasticsearch API documentation}
   */
-export default async function PutScriptApi (this: That, params: T.PutScriptRequest | TB.PutScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.PutScriptResponse>
-export default async function PutScriptApi (this: That, params: T.PutScriptRequest | TB.PutScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.PutScriptResponse, unknown>>
-export default async function PutScriptApi (this: That, params: T.PutScriptRequest | TB.PutScriptRequest, options?: TransportRequestOptions): Promise<T.PutScriptResponse>
-export default async function PutScriptApi (this: That, params: T.PutScriptRequest | TB.PutScriptRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function PutScriptApi (this: That, params: T.PutScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.PutScriptResponse>
+export default async function PutScriptApi (this: That, params: T.PutScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.PutScriptResponse, unknown>>
+export default async function PutScriptApi (this: That, params: T.PutScriptRequest, options?: TransportRequestOptions): Promise<T.PutScriptResponse>
+export default async function PutScriptApi (this: That, params: T.PutScriptRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'context']
   const acceptedBody: string[] = ['script']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
-  }
+  const body: Record<string, any> = {}
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {
-      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

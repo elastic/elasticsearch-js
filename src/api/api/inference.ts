@@ -35,7 +35,6 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 export default class Inference {
@@ -48,10 +47,10 @@ export default class Inference {
     * Delete an inference endpoint
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-inference-api.html | Elasticsearch API documentation}
     */
-  async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteResponse>
-  async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceDeleteResponse, unknown>>
-  async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<T.InferenceDeleteResponse>
-  async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<any> {
+  async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteResponse>
+  async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceDeleteResponse, unknown>>
+  async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<T.InferenceDeleteResponse>
+  async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['task_type', 'inference_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -59,7 +58,7 @@ export default class Inference {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -88,10 +87,10 @@ export default class Inference {
     * Get an inference endpoint
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-inference-api.html | Elasticsearch API documentation}
     */
-  async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetResponse>
-  async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceGetResponse, unknown>>
-  async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptions): Promise<T.InferenceGetResponse>
-  async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptions): Promise<any> {
+  async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetResponse>
+  async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceGetResponse, unknown>>
+  async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptions): Promise<T.InferenceGetResponse>
+  async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['task_type', 'inference_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -100,7 +99,7 @@ export default class Inference {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -132,30 +131,22 @@ export default class Inference {
     * Perform inference on the service
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/post-inference-api.html | Elasticsearch API documentation}
     */
-  async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceInferenceResponse>
-  async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceInferenceResponse, unknown>>
-  async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<T.InferenceInferenceResponse>
-  async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<any> {
+  async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceInferenceResponse>
+  async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceInferenceResponse, unknown>>
+  async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<T.InferenceInferenceResponse>
+  async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['task_type', 'inference_id']
     const acceptedBody: string[] = ['query', 'input', 'task_settings']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -184,15 +175,14 @@ export default class Inference {
     * Create an inference endpoint
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-inference-api.html | Elasticsearch API documentation}
     */
-  async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutResponse>
-  async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutResponse, unknown>>
-  async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptions): Promise<T.InferencePutResponse>
-  async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptions): Promise<any> {
+  async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutResponse>
+  async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutResponse, unknown>>
+  async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptions): Promise<T.InferencePutResponse>
+  async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['task_type', 'inference_id']
     const acceptedBody: string[] = ['inference_config']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+    let body: any
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -200,7 +190,7 @@ export default class Inference {
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -229,10 +219,10 @@ export default class Inference {
     * Perform streaming inference
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/post-stream-inference-api.html | Elasticsearch API documentation}
     */
-  async streamInference (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async streamInference (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async streamInference (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async streamInference (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async streamInference (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async streamInference (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async streamInference (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async streamInference (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['inference_id', 'task_type']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -241,7 +231,7 @@ export default class Inference {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         querystring[key] = params[key]
       }
     }

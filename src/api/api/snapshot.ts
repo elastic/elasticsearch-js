@@ -35,7 +35,6 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 export default class Snapshot {
@@ -48,10 +47,10 @@ export default class Snapshot {
     * Triggers the review of a snapshot repository’s contents and deletes any stale data not referenced by existing snapshots.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clean-up-snapshot-repo-api.html | Elasticsearch API documentation}
     */
-  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCleanupRepositoryResponse>
-  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCleanupRepositoryResponse, unknown>>
-  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCleanupRepositoryResponse>
-  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
+  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCleanupRepositoryResponse>
+  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCleanupRepositoryResponse, unknown>>
+  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCleanupRepositoryResponse>
+  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -59,7 +58,7 @@ export default class Snapshot {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -80,30 +79,22 @@ export default class Snapshot {
     * Clones indices from one snapshot into another snapshot in the same repository.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
     */
-  async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCloneResponse>
-  async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCloneResponse, unknown>>
-  async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptions): Promise<T.SnapshotCloneResponse>
-  async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptions): Promise<any> {
+  async clone (this: That, params: T.SnapshotCloneRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCloneResponse>
+  async clone (this: That, params: T.SnapshotCloneRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCloneResponse, unknown>>
+  async clone (this: That, params: T.SnapshotCloneRequest, options?: TransportRequestOptions): Promise<T.SnapshotCloneResponse>
+  async clone (this: That, params: T.SnapshotCloneRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot', 'target_snapshot']
     const acceptedBody: string[] = ['indices']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -126,30 +117,22 @@ export default class Snapshot {
     * Creates a snapshot in a repository.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
     */
-  async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateResponse>
-  async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateResponse, unknown>>
-  async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptions): Promise<T.SnapshotCreateResponse>
-  async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptions): Promise<any> {
+  async create (this: That, params: T.SnapshotCreateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateResponse>
+  async create (this: That, params: T.SnapshotCreateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateResponse, unknown>>
+  async create (this: That, params: T.SnapshotCreateRequest, options?: TransportRequestOptions): Promise<T.SnapshotCreateResponse>
+  async create (this: That, params: T.SnapshotCreateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
     const acceptedBody: string[] = ['ignore_unavailable', 'include_global_state', 'indices', 'feature_states', 'metadata', 'partial']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -171,15 +154,14 @@ export default class Snapshot {
     * Creates a repository.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
     */
-  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateRepositoryResponse>
-  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateRepositoryResponse, unknown>>
-  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCreateRepositoryResponse>
-  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
+  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateRepositoryResponse>
+  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateRepositoryResponse, unknown>>
+  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCreateRepositoryResponse>
+  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['repository']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+    let body: any
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -187,7 +169,7 @@ export default class Snapshot {
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -208,10 +190,10 @@ export default class Snapshot {
     * Deletes one or more snapshots.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
     */
-  async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteResponse>
-  async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteResponse, unknown>>
-  async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<T.SnapshotDeleteResponse>
-  async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<any> {
+  async delete (this: That, params: T.SnapshotDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteResponse>
+  async delete (this: That, params: T.SnapshotDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteResponse, unknown>>
+  async delete (this: That, params: T.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<T.SnapshotDeleteResponse>
+  async delete (this: That, params: T.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -219,7 +201,7 @@ export default class Snapshot {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -241,10 +223,10 @@ export default class Snapshot {
     * Deletes a repository.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
     */
-  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteRepositoryResponse>
-  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteRepositoryResponse, unknown>>
-  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotDeleteRepositoryResponse>
-  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
+  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteRepositoryResponse>
+  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteRepositoryResponse, unknown>>
+  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotDeleteRepositoryResponse>
+  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -252,7 +234,7 @@ export default class Snapshot {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -273,10 +255,10 @@ export default class Snapshot {
     * Returns information about a snapshot.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
     */
-  async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetResponse>
-  async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetResponse, unknown>>
-  async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetResponse>
-  async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptions): Promise<any> {
+  async get (this: That, params: T.SnapshotGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetResponse>
+  async get (this: That, params: T.SnapshotGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetResponse, unknown>>
+  async get (this: That, params: T.SnapshotGetRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetResponse>
+  async get (this: That, params: T.SnapshotGetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -284,7 +266,7 @@ export default class Snapshot {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -306,10 +288,10 @@ export default class Snapshot {
     * Returns information about a repository.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
     */
-  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetRepositoryResponse>
-  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetRepositoryResponse, unknown>>
-  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetRepositoryResponse>
-  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
+  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetRepositoryResponse>
+  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetRepositoryResponse, unknown>>
+  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetRepositoryResponse>
+  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -318,7 +300,7 @@ export default class Snapshot {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -346,10 +328,10 @@ export default class Snapshot {
     * Analyzes a repository for correctness and performance
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
     */
-  async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async repositoryAnalyze (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async repositoryAnalyze (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async repositoryAnalyze (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async repositoryAnalyze (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -358,7 +340,7 @@ export default class Snapshot {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         querystring[key] = params[key]
       }
     }
@@ -378,10 +360,10 @@ export default class Snapshot {
     * Verifies the integrity of the contents of a snapshot repository
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
     */
-  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest | TB.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRepositoryVerifyIntegrityResponse>
-  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest | TB.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRepositoryVerifyIntegrityResponse, unknown>>
-  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest | TB.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptions): Promise<T.SnapshotRepositoryVerifyIntegrityResponse>
-  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest | TB.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptions): Promise<any> {
+  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRepositoryVerifyIntegrityResponse>
+  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRepositoryVerifyIntegrityResponse, unknown>>
+  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptions): Promise<T.SnapshotRepositoryVerifyIntegrityResponse>
+  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -389,7 +371,7 @@ export default class Snapshot {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -410,30 +392,22 @@ export default class Snapshot {
     * Restores a snapshot.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
     */
-  async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRestoreResponse>
-  async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRestoreResponse, unknown>>
-  async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptions): Promise<T.SnapshotRestoreResponse>
-  async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptions): Promise<any> {
+  async restore (this: That, params: T.SnapshotRestoreRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRestoreResponse>
+  async restore (this: That, params: T.SnapshotRestoreRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRestoreResponse, unknown>>
+  async restore (this: That, params: T.SnapshotRestoreRequest, options?: TransportRequestOptions): Promise<T.SnapshotRestoreResponse>
+  async restore (this: That, params: T.SnapshotRestoreRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
     const acceptedBody: string[] = ['feature_states', 'ignore_index_settings', 'ignore_unavailable', 'include_aliases', 'include_global_state', 'index_settings', 'indices', 'partial', 'rename_pattern', 'rename_replacement']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -455,10 +429,10 @@ export default class Snapshot {
     * Returns information about the status of a snapshot.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
     */
-  async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotStatusResponse>
-  async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotStatusResponse, unknown>>
-  async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptions): Promise<T.SnapshotStatusResponse>
-  async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptions): Promise<any> {
+  async status (this: That, params?: T.SnapshotStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotStatusResponse>
+  async status (this: That, params?: T.SnapshotStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotStatusResponse, unknown>>
+  async status (this: That, params?: T.SnapshotStatusRequest, options?: TransportRequestOptions): Promise<T.SnapshotStatusResponse>
+  async status (this: That, params?: T.SnapshotStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -467,7 +441,7 @@ export default class Snapshot {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -499,10 +473,10 @@ export default class Snapshot {
     * Verifies a repository.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
     */
-  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotVerifyRepositoryResponse>
-  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotVerifyRepositoryResponse, unknown>>
-  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotVerifyRepositoryResponse>
-  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
+  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotVerifyRepositoryResponse>
+  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotVerifyRepositoryResponse, unknown>>
+  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotVerifyRepositoryResponse>
+  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -510,7 +484,7 @@ export default class Snapshot {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }

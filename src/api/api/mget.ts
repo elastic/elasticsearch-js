@@ -35,38 +35,29 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Get multiple documents. Get multiple JSON documents by ID from one or more indices. If you specify an index in the request URI, you only need to specify the document IDs in the request body. To ensure fast responses, this multi get (mget) API responds with partial results if one or more shards fail.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html | Elasticsearch API documentation}
   */
-export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest | TB.MgetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MgetResponse<TDocument>>
-export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest | TB.MgetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MgetResponse<TDocument>, unknown>>
-export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest | TB.MgetRequest, options?: TransportRequestOptions): Promise<T.MgetResponse<TDocument>>
-export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest | TB.MgetRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MgetResponse<TDocument>>
+export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MgetResponse<TDocument>, unknown>>
+export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest, options?: TransportRequestOptions): Promise<T.MgetResponse<TDocument>>
+export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
   const acceptedBody: string[] = ['docs', 'ids']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
-  }
+  const body: Record<string, any> = {}
 
   params = params ?? {}
   for (const key in params) {
     if (acceptedBody.includes(key)) {
-      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

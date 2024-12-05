@@ -35,37 +35,28 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Evaluate ranked search results. Evaluate the quality of ranked search results over a set of typical search queries.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.html | Elasticsearch API documentation}
   */
-export default async function RankEvalApi (this: That, params: T.RankEvalRequest | TB.RankEvalRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RankEvalResponse>
-export default async function RankEvalApi (this: That, params: T.RankEvalRequest | TB.RankEvalRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RankEvalResponse, unknown>>
-export default async function RankEvalApi (this: That, params: T.RankEvalRequest | TB.RankEvalRequest, options?: TransportRequestOptions): Promise<T.RankEvalResponse>
-export default async function RankEvalApi (this: That, params: T.RankEvalRequest | TB.RankEvalRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function RankEvalApi (this: That, params: T.RankEvalRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RankEvalResponse>
+export default async function RankEvalApi (this: That, params: T.RankEvalRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RankEvalResponse, unknown>>
+export default async function RankEvalApi (this: That, params: T.RankEvalRequest, options?: TransportRequestOptions): Promise<T.RankEvalResponse>
+export default async function RankEvalApi (this: That, params: T.RankEvalRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
   const acceptedBody: string[] = ['requests', 'metric']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
-  }
+  const body: Record<string, any> = {}
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {
-      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

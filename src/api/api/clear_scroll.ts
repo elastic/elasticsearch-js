@@ -35,38 +35,29 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Clear a scrolling search. Clear the search context and results for a scrolling search.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-scroll-api.html | Elasticsearch API documentation}
   */
-export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest | TB.ClearScrollRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClearScrollResponse>
-export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest | TB.ClearScrollRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClearScrollResponse, unknown>>
-export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest | TB.ClearScrollRequest, options?: TransportRequestOptions): Promise<T.ClearScrollResponse>
-export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest | TB.ClearScrollRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClearScrollResponse>
+export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClearScrollResponse, unknown>>
+export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest, options?: TransportRequestOptions): Promise<T.ClearScrollResponse>
+export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
   const acceptedBody: string[] = ['scroll_id']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
-  }
+  const body: Record<string, any> = {}
 
   params = params ?? {}
   for (const key in params) {
     if (acceptedBody.includes(key)) {
-      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }
