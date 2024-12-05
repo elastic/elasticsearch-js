@@ -68,7 +68,7 @@ Retrieves the results of a previously submitted async query request given its ID
 [[client.esql.query]]
 == `client.esql.query()`
 
-Executes an ES|QL request
+Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query language) query.
 
 {ref}/esql-rest.html[{es} documentation]
 [discrete]

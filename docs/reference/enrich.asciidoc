@@ -75,7 +75,7 @@ type EnrichDeletePolicyResponse = <<AcknowledgedResponseBase>>
 [[client.enrich.executePolicy]]
 == `client.enrich.executePolicy()`
 
-Creates the enrich index for an existing enrich policy.
+Run an enrich policy. Create the enrich index for an existing enrich policy.
 
 {ref}/execute-enrich-policy-api.html[{es} documentation]
 [discrete]

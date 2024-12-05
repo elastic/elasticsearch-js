@@ -57,32 +57,49 @@ interface SecurityAccess {
 [source,ts,subs=+macros]
 ----
 interface SecurityApiKey {
-  pass:[/**] @property creation Creation time for the API key in milliseconds. */
-  creation?: <<long>>
-  pass:[/**] @property expiration Expiration time for the API key in milliseconds. */
-  expiration?: <<long>>
   pass:[/**] @property id <<Id>> for the API key */
   id: <<Id>>
-  pass:[/**] @property invalidated Invalidation status for the API key. If the key has been invalidated, it has a value of `true`. Otherwise, it is `false`. */
-  invalidated?: boolean
   pass:[/**] @property name <<Name>> of the API key. */
   name: <<Name>>
+  pass:[/**] @property type The type of the API key (e.g. `rest` or `cross_cluster`). */
+  type: <<SecurityApiKeyType>>
+  pass:[/**] @property creation Creation time for the API key in milliseconds. */
+  creation: <<EpochTime>><<<UnitMillis>>>
+  pass:[/**] @property expiration Expiration time for the API key in milliseconds. */
+  expiration?: <<EpochTime>><<<UnitMillis>>>
+  pass:[/**] @property invalidated Invalidation status for the API key. If the key has been invalidated, it has a value of `true`. Otherwise, it is `false`. */
+  invalidated: boolean
+  pass:[/**] @property invalidation If the key has been invalidated, invalidation time in milliseconds. */
+  invalidation?: <<EpochTime>><<<UnitMillis>>>
+  pass:[/**] @property username Principal for which this API key was created */
+  username: <<Username>>
   pass:[/**] @property realm Realm name of the principal for which this API key was created. */
-  realm?: string
+  realm: string
   pass:[/**] @property realm_type Realm type of the principal for which this API key was created */
   realm_type?: string
-  pass:[/**] @property username Principal for which this API key was created */
-  username?: <<Username>>
-  pass:[/**] @property profile_uid The profile uid for the API key owner principal, if requested and if it exists */
-  profile_uid?: string
   pass:[/**] @property metadata <<Metadata>> of the API key */
-  metadata?: <<Metadata>>
+  metadata: <<Metadata>>
   pass:[/**] @property role_descriptors The role descriptors assigned to this API key when it was created or last updated. An empty role descriptor means the API key inherits the owner user’s permissions. */
   role_descriptors?: Record<string, <<SecurityRoleDescriptor>>>
   pass:[/**] @property limited_by The owner user’s permissions associated with the API key. It is a point-in-time snapshot captured at creation and subsequent updates. An API key’s effective permissions are an intersection of its assigned privileges and the owner user’s permissions. */
   limited_by?: Record<string, <<SecurityRoleDescriptor>>>[]
+  pass:[/**] @property access The access granted to cross-cluster API keys. The access is composed of permissions for cross cluster search and cross cluster replication. At least one of them must be specified. When specified, the new access assignment fully replaces the previously assigned access. */
+  access?: <<SecurityAccess>>
+  pass:[/**] @property profile_uid The profile uid for the API key owner principal, if requested and if it exists */
+  profile_uid?: string
+  pass:[/**] @property _sort Sorting values when using the `sort` parameter with the `security.query_api_keys` API. */
   _sort?: <<SortResults>>
 }
+----
+
+
+[discrete]
+[[SecurityApiKeyType]]
+=== SecurityApiKeyType
+
+[source,ts,subs=+macros]
+----
+type SecurityApiKeyType = 'rest' | 'cross_cluster'
 ----
 
 
@@ -148,7 +165,7 @@ interface SecurityClusterNode {
 
 [source,ts,subs=+macros]
 ----
-type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'cross_cluster_replication' | 'cross_cluster_search' | 'delegate_pki' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_autoscaling' | 'manage_behavioral_analytics' | 'manage_ccr' | 'manage_data_frame_transforms' | 'manage_data_stream_global_retention' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_inference' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_search_application' | 'manage_search_query_rules' | 'manage_search_synonyms' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_data_frame_transforms' | 'monitor_data_stream_global_retention' | 'monitor_enrich' | 'monitor_inference' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'none' | 'post_behavioral_analytics_event' | 'read_ccr' | 'read_fleet_secrets' | 'read_ilm' | 'read_pipeline' | 'read_security' | 'read_slm' | 'transport_client' | 'write_connector_secrets' | 'write_fleet_secrets' | string
+type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'cross_cluster_replication' | 'cross_cluster_search' | 'delegate_pki' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_autoscaling' | 'manage_behavioral_analytics' | 'manage_ccr' | 'manage_data_frame_transforms' | 'manage_data_stream_global_retention' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_inference' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_search_application' | 'manage_search_query_rules' | 'manage_search_synonyms' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_data_frame_transforms' | 'monitor_data_stream_global_retention' | 'monitor_enrich' | 'monitor_inference' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_stats' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'none' | 'post_behavioral_analytics_event' | 'read_ccr' | 'read_fleet_secrets' | 'read_ilm' | 'read_pipeline' | 'read_security' | 'read_slm' | 'transport_client' | 'write_connector_secrets' | 'write_fleet_secrets' | string
 ----
 
 
@@ -233,7 +250,7 @@ interface SecurityIndicesPrivileges {
   pass:[/**] @property field_security The document fields that the owners of the role have read access to. */
   field_security?: <<SecurityFieldSecurity>>
   pass:[/**] @property names A list of indices (or index name patterns) to which the permissions in this entry apply. */
-  names: <<Indices>>
+  names: <<IndexName>> | <<IndexName>>[]
   pass:[/**] @property privileges The index level privileges that owners of the role have on the specified indices. */
   privileges: <<SecurityIndexPrivilege>>[]
   pass:[/**] @property query A search query that defines the documents the owners of the role have access to. A document within the specified indices must match this query for it to be accessible by the owners of the role. */
@@ -280,6 +297,31 @@ interface SecurityRealmInfo {
 
 
 [discrete]
+[[SecurityRemoteClusterPrivilege]]
+=== SecurityRemoteClusterPrivilege
+
+[source,ts,subs=+macros]
+----
+type SecurityRemoteClusterPrivilege = 'monitor_enrich' | 'monitor_stats'
+----
+
+
+[discrete]
+[[SecurityRemoteClusterPrivileges]]
+=== SecurityRemoteClusterPrivileges
+
+[source,ts,subs=+macros]
+----
+interface SecurityRemoteClusterPrivileges {
+  pass:[/**] @property clusters A list of cluster aliases to which the permissions in this entry apply. */
+  clusters: <<Names>>
+  pass:[/**] @property privileges The cluster level privileges that owners of the role have on the remote cluster. */
+  privileges: <<SecurityRemoteClusterPrivilege>>[]
+}
+----
+
+
+[discrete]
 [[SecurityRemoteIndicesPrivileges]]
 === SecurityRemoteIndicesPrivileges
 
@@ -291,7 +333,7 @@ interface SecurityRemoteIndicesPrivileges {
   pass:[/**] @property field_security The document fields that the owners of the role have read access to. */
   field_security?: <<SecurityFieldSecurity>>
   pass:[/**] @property names A list of indices (or index name patterns) to which the permissions in this entry apply. */
-  names: <<Indices>>
+  names: <<IndexName>> | <<IndexName>>[]
   pass:[/**] @property privileges The index level privileges that owners of the role have on the specified indices. */
   privileges: <<SecurityIndexPrivilege>>[]
   pass:[/**] @property query A search query that defines the documents the owners of the role have access to. A document within the specified indices must match this query for it to be accessible by the owners of the role. */
@@ -310,8 +352,32 @@ interface SecurityRemoteIndicesPrivileges {
 ----
 interface SecurityReplicationAccess {
   pass:[/**] @property names A list of indices (or index name patterns) to which the permissions in this entry apply. */
-  names: <<IndexName>>[]
+  names: <<IndexName>> | <<IndexName>>[]
+  pass:[/**] @property allow_restricted_indices This needs to be set to true if the patterns in the names field should cover system indices. */
+  allow_restricted_indices?: boolean
 }
+----
+
+
+[discrete]
+[[SecurityRestriction]]
+=== SecurityRestriction
+
+[source,ts,subs=+macros]
+----
+interface SecurityRestriction {
+  workflows: <<SecurityRestrictionWorkflow>>[]
+}
+----
+
+
+[discrete]
+[[SecurityRestrictionWorkflow]]
+=== SecurityRestrictionWorkflow
+
+[source,ts,subs=+macros]
+----
+type SecurityRestrictionWorkflow = 'search_application_query' | string
 ----
 
 
@@ -328,6 +394,10 @@ interface SecurityRoleDescriptor {
   indices?: <<SecurityIndicesPrivileges>>[]
   pass:[/**] @property index A list of indices permissions entries. */
   index?: <<SecurityIndicesPrivileges>>[]
+  pass:[/**] @property remote_indices A list of indices permissions for remote clusters. */
+  remote_indices?: <<SecurityRemoteIndicesPrivileges>>[]
+  pass:[/**] @property remote_cluster A list of cluster permissions for remote clusters. Note - this is limited a subset of the cluster permissions. */
+  remote_cluster?: <<SecurityRemoteClusterPrivileges>>[]
   pass:[/**] @property global An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware. Support for global privileges is currently limited to the management of application privileges. */
   global?: <<SecurityGlobalPrivilege>>[] | <<SecurityGlobalPrivilege>>
   pass:[/**] @property applications A list of application privilege entries */
@@ -338,6 +408,8 @@ interface SecurityRoleDescriptor {
   run_as?: string[]
   pass:[/**] @property description Optional description of the role descriptor */
   description?: string
+  pass:[/**] @property restriction Restriction for when the role descriptor is allowed to be effective. */
+  restriction?: <<SecurityRestriction>>
   transient_metadata?: Record<string, any>
 }
 ----
@@ -356,6 +428,10 @@ interface SecurityRoleDescriptorRead {
   indices: <<SecurityIndicesPrivileges>>[]
   pass:[/**] @property index A list of indices permissions entries. */
   index: <<SecurityIndicesPrivileges>>[]
+  pass:[/**] @property remote_indices A list of indices permissions for remote clusters. */
+  remote_indices?: <<SecurityRemoteIndicesPrivileges>>[]
+  pass:[/**] @property remote_cluster A list of cluster permissions for remote clusters. Note - this is limited a subset of the cluster permissions. */
+  remote_cluster?: <<SecurityRemoteClusterPrivileges>>[]
   pass:[/**] @property global An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware. Support for global privileges is currently limited to the management of application privileges. */
   global?: <<SecurityGlobalPrivilege>>[] | <<SecurityGlobalPrivilege>>
   pass:[/**] @property applications A list of application privilege entries */
@@ -366,6 +442,8 @@ interface SecurityRoleDescriptorRead {
   run_as?: string[]
   pass:[/**] @property description Optional description of the role descriptor */
   description?: string
+  pass:[/**] @property restriction Restriction for when the role descriptor is allowed to be effective. */
+  restriction?: <<SecurityRestriction>>
   transient_metadata?: Record<string, any>
 }
 ----
@@ -467,7 +545,7 @@ interface SecuritySearchAccess {
   pass:[/**] @property field_security The document fields that the owners of the role have read access to. */
   field_security?: <<SecurityFieldSecurity>>
   pass:[/**] @property names A list of indices (or index name patterns) to which the permissions in this entry apply. */
-  names: <<IndexName>>[]
+  names: <<IndexName>> | <<IndexName>>[]
   pass:[/**] @property query A search query that defines the documents the owners of the role have access to. A document within the specified indices must match this query for it to be accessible by the owners of the role. */
   query?: <<SecurityIndicesPrivilegesQuery>>
   pass:[/**] @property allow_restricted_indices Set to `true` if using wildcard or regular expressions for patterns that cover restricted indices. Implicitly, restricted indices have limited privileges that can cause pattern tests to fail. If restricted indices are explicitly included in the `names` list, Elasticsearch checks privileges against these indices regardless of the value set for `allow_restricted_indices`. */
@@ -514,7 +592,7 @@ interface SecurityUserIndicesPrivileges {
   pass:[/**] @property field_security The document fields that the owners of the role have read access to. */
   field_security?: <<SecurityFieldSecurity>>[]
   pass:[/**] @property names A list of indices (or index name patterns) to which the permissions in this entry apply. */
-  names: <<Indices>>
+  names: <<IndexName>> | <<IndexName>>[]
   pass:[/**] @property privileges The index level privileges that owners of the role have on the specified indices. */
   privileges: <<SecurityIndexPrivilege>>[]
   pass:[/**] @property query Search queries that define the documents the user has access to. A document within the specified indices must match these queries for it to be accessible by the owners of the role. */

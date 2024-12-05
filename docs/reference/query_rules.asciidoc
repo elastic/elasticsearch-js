@@ -38,7 +38,7 @@
 [[client.queryRules.deleteRule]]
 == `client.queryRules.deleteRule()`
 
-Deletes a query rule within a query ruleset.
+Delete a query rule. Delete a query rule within a query ruleset.
 
 {ref}/delete-query-rule.html[{es} documentation]
 [discrete]
@@ -76,7 +76,7 @@ type QueryRulesDeleteRuleResponse = <<AcknowledgedResponseBase>>
 [[client.queryRules.deleteRuleset]]
 == `client.queryRules.deleteRuleset()`
 
-Deletes a query ruleset.
+Delete a query ruleset.
 
 {ref}/delete-query-ruleset.html[{es} documentation]
 [discrete]
@@ -113,7 +113,7 @@ type QueryRulesDeleteRulesetResponse = <<AcknowledgedResponseBase>>
 [[client.queryRules.getRule]]
 == `client.queryRules.getRule()`
 
-Returns the details about a query rule within a query ruleset
+Get a query rule. Get details about a query rule within a query ruleset.
 
 {ref}/get-query-rule.html[{es} documentation]
 [discrete]
@@ -151,7 +151,7 @@ type QueryRulesGetRuleResponse = <<QueryRulesQueryRule>>
 [[client.queryRules.getRuleset]]
 == `client.queryRules.getRuleset()`
 
-Returns the details about a query ruleset
+Get a query ruleset. Get details about a query ruleset.
 
 {ref}/get-query-ruleset.html[{es} documentation]
 [discrete]
@@ -188,7 +188,7 @@ type QueryRulesGetRulesetResponse = <<QueryRulesQueryRuleset>>
 [[client.queryRules.listRulesets]]
 == `client.queryRules.listRulesets()`
 
-Returns summarized information about existing query rulesets.
+Get all query rulesets. Get summarized information about the query rulesets.
 
 {ref}/list-query-rulesets.html[{es} documentation]
 [discrete]
@@ -229,7 +229,7 @@ interface QueryRulesListRulesetsResponse {
 [[client.queryRules.putRule]]
 == `client.queryRules.putRule()`
 
-Creates or updates a query rule within a query ruleset.
+Create or update a query rule. Create or update a query rule within a query ruleset.
 
 {ref}/put-query-rule.html[{es} documentation]
 [discrete]
@@ -273,7 +273,7 @@ interface QueryRulesPutRuleResponse {
 [[client.queryRules.putRuleset]]
 == `client.queryRules.putRuleset()`
 
-Creates or updates a query ruleset.
+Create or update a query ruleset.
 
 {ref}/put-query-ruleset.html[{es} documentation]
 [discrete]
@@ -313,7 +313,7 @@ interface QueryRulesPutRulesetResponse {
 [[client.queryRules.test]]
 == `client.queryRules.test()`
 
-Creates or updates a query ruleset.
+Test a query ruleset. Evaluate match criteria against a query ruleset to identify the rules that would match that criteria.
 
 {ref}/test-query-ruleset.html[{es} documentation]
 [discrete]

@@ -38,7 +38,7 @@
 [[client.sql.clearCursor]]
 == `client.sql.clearCursor()`
 
-Clears the SQL cursor
+Clear an SQL search cursor.
 
 {ref}/clear-sql-cursor-api.html[{es} documentation]
 [discrete]
@@ -77,7 +77,7 @@ interface SqlClearCursorResponse {
 [[client.sql.deleteAsync]]
 == `client.sql.deleteAsync()`
 
-Deletes an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it.
+Delete an async SQL search. Delete an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it.
 
 {ref}/delete-async-sql-search-api.html[{es} documentation]
 [discrete]
@@ -114,7 +114,7 @@ type SqlDeleteAsyncResponse = <<AcknowledgedResponseBase>>
 [[client.sql.getAsync]]
 == `client.sql.getAsync()`
 
-Returns the current status and available results for an async SQL search or stored synchronous SQL search
+Get async SQL search results. Get the current status and available results for an async SQL search or stored synchronous SQL search.
 
 {ref}/get-async-sql-search-api.html[{es} documentation]
 [discrete]
@@ -162,7 +162,7 @@ interface SqlGetAsyncResponse {
 [[client.sql.getAsyncStatus]]
 == `client.sql.getAsyncStatus()`
 
-Returns the current status of an async SQL search or a stored synchronous SQL search
+Get the async SQL search status. Get the current status of an async SQL search or a stored synchronous SQL search.
 
 {ref}/get-async-sql-search-status-api.html[{es} documentation]
 [discrete]
@@ -206,7 +206,7 @@ interface SqlGetAsyncStatusResponse {
 [[client.sql.query]]
 == `client.sql.query()`
 
-Executes a SQL request
+Get SQL search results. Run an SQL request.
 
 {ref}/sql-search-api.html[{es} documentation]
 [discrete]
@@ -266,7 +266,7 @@ interface SqlQueryResponse {
 [[client.sql.translate]]
 == `client.sql.translate()`
 
-Translates SQL into Elasticsearch queries
+Translate SQL into Elasticsearch queries. Translate an SQL search into a search API request containing Query DSL.
 
 {ref}/sql-translate-api.html[{es} documentation]
 [discrete]

@@ -56,6 +56,8 @@ Delete an autoscaling policy. NOTE: This feature is designed for indirect use by
 ----
 interface AutoscalingDeleteAutoscalingPolicyRequest extends <<RequestBase>> {
   name: <<Name>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 
 ----
@@ -91,7 +93,9 @@ Get the autoscaling capacity. NOTE: This feature is designed for indirect use by
 
 [source,ts,subs=+macros]
 ----
-interface AutoscalingGetAutoscalingCapacityRequest extends <<RequestBase>> {}
+interface AutoscalingGetAutoscalingCapacityRequest extends <<RequestBase>> {
+  master_timeout?: <<Duration>>
+}
 
 ----
 
@@ -130,6 +134,7 @@ Get an autoscaling policy. NOTE: This feature is designed for indirect use by El
 ----
 interface AutoscalingGetAutoscalingPolicyRequest extends <<RequestBase>> {
   name: <<Name>>
+  master_timeout?: <<Duration>>
 }
 
 ----
@@ -167,6 +172,8 @@ Create or update an autoscaling policy. NOTE: This feature is designed for indir
 ----
 interface AutoscalingPutAutoscalingPolicyRequest extends <<RequestBase>> {
   name: <<Name>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
   policy?: <<AutoscalingAutoscalingPolicy>>
 }
 

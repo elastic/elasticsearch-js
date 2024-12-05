@@ -66,13 +66,24 @@ interface SearchApplicationEventDataStream {
 
 [source,ts,subs=+macros]
 ----
-interface SearchApplicationSearchApplication {
-  pass:[/**] @property name Search Application name. */
+interface SearchApplicationSearchApplication extends <<SearchApplicationSearchApplicationParameters>> {
+  pass:[/**] @property name Search Application name */
   name: <<Name>>
-  pass:[/**] @property indices <<Indices>> that are part of the Search Application. */
-  indices: <<IndexName>>[]
   pass:[/**] @property updated_at_millis Last time the Search Application was updated. */
   updated_at_millis: <<EpochTime>><<<UnitMillis>>>
+}
+----
+
+
+[discrete]
+[[SearchApplicationSearchApplicationParameters]]
+=== SearchApplicationSearchApplicationParameters
+
+[source,ts,subs=+macros]
+----
+interface SearchApplicationSearchApplicationParameters {
+  pass:[/**] @property indices <<Indices>> that are part of the Search Application. */
+  indices: <<IndexName>>[]
   pass:[/**] @property analytics_collection_name Analytics collection associated to the Search Application. */
   analytics_collection_name?: <<Name>>
   pass:[/**] @property template Search template to use on search operations. */

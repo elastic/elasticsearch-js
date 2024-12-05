@@ -166,8 +166,12 @@ interface IndicesDataStreamIndex {
 [source,ts,subs=+macros]
 ----
 interface IndicesDataStreamLifecycle {
+  pass:[/**] @property data_retention If defined, every document added to this data stream will be stored at least for this time frame. Any time after this duration the document could be deleted. When empty, every document in this data stream will be stored indefinitely. */
   data_retention?: <<Duration>>
+  pass:[/**] @property downsampling The downsampling configuration to execute for the managed backing index after rollover. */
   downsampling?: <<IndicesDataStreamLifecycleDownsampling>>
+  pass:[/**] @property enabled If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle that's disabled (enabled: `false`) will have no effect on the data stream. */
+  enabled?: boolean
 }
 ----
 
@@ -212,11 +216,7 @@ interface IndicesDataStreamLifecycleRolloverConditions {
 
 [source,ts,subs=+macros]
 ----
-interface IndicesDataStreamLifecycleWithRollover {
-  pass:[/**] @property data_retention If defined, every document added to this data stream will be stored at least for this time frame. Any time after this duration the document could be deleted. When empty, every document in this data stream will be stored indefinitely. */
-  data_retention?: <<Duration>>
-  pass:[/**] @property downsampling The downsampling configuration to execute for the managed backing index after rollover. */
-  downsampling?: <<IndicesDataStreamLifecycleDownsampling>>
+interface IndicesDataStreamLifecycleWithRollover extends <<IndicesDataStreamLifecycle>> {
   pass:[/**] @property rollover The conditions which will trigger the rollover of a backing index as configured by the cluster setting `cluster.lifecycle.default.rollover`. This property is an implementation detail and it will only be retrieved when the query param `include_defaults` is set to true. The contents of this field are subject to change. */
   rollover?: <<IndicesDataStreamLifecycleRolloverConditions>>
 }
@@ -617,6 +617,10 @@ interface IndicesIndexTemplate {
   allow_auto_create?: boolean
   pass:[/**] @property data_stream If this object is included, the template is used to create data streams and their backing indices. Supports an empty object. Data streams require a matching index template with a `data_stream` object. */
   data_stream?: <<IndicesIndexTemplateDataStreamConfiguration>>
+  pass:[/**] @property deprecated Marks this index template as deprecated. When creating or updating a non-deprecated index template that uses deprecated components, Elasticsearch will emit a deprecation warning. */
+  deprecated?: boolean
+  pass:[/**] @property ignore_missing_component_templates A list of component template names that are allowed to be absent. */
+  ignore_missing_component_templates?: <<Names>>
 }
 ----
 
@@ -822,9 +826,9 @@ interface IndicesMappingLimitSettingsNestedObjects {
 ----
 interface IndicesMappingLimitSettingsTotalFields {
   pass:[/**] @property limit The maximum number of fields in an index. <<Field>> and object mappings, as well as field aliases count towards this limit. The limit is in place to prevent mappings and searches from becoming too large. Higher values can lead to performance degradations and memory issues, especially in clusters with a high load or few resources. */
-  limit?: <<long>>
+  limit?: <<long>> | string
   pass:[/**] @property ignore_dynamic_beyond_limit This setting determines what happens when a dynamically mapped field would exceed the total fields limit. When set to false (the default), the index request of the document that tries to add a dynamic field to the mapping will fail with the message Limit of total fields [X] has been exceeded. When set to true, the index request will not fail. Instead, fields that would exceed the limit are not added to the mapping, similar to dynamic: false. The fields that were not added to the mapping will be added to the _ignored field. */
-  ignore_dynamic_beyond_limit?: boolean
+  ignore_dynamic_beyond_limit?: boolean | string
 }
 ----
 

@@ -38,7 +38,7 @@
 [[client.synonyms.deleteSynonym]]
 == `client.synonyms.deleteSynonym()`
 
-Deletes a synonym set
+Delete a synonym set.
 
 {ref}/delete-synonyms-set.html[{es} documentation]
 [discrete]
@@ -75,7 +75,7 @@ type SynonymsDeleteSynonymResponse = <<AcknowledgedResponseBase>>
 [[client.synonyms.deleteSynonymRule]]
 == `client.synonyms.deleteSynonymRule()`
 
-Deletes a synonym rule in a synonym set
+Delete a synonym rule. Delete a synonym rule from a synonym set.
 
 {ref}/delete-synonym-rule.html[{es} documentation]
 [discrete]
@@ -113,7 +113,7 @@ type SynonymsDeleteSynonymRuleResponse = <<SynonymsSynonymsUpdateResult>>
 [[client.synonyms.getSynonym]]
 == `client.synonyms.getSynonym()`
 
-Retrieves a synonym set
+Get a synonym set.
 
 {ref}/get-synonyms-set.html[{es} documentation]
 [discrete]
@@ -155,7 +155,7 @@ interface SynonymsGetSynonymResponse {
 [[client.synonyms.getSynonymRule]]
 == `client.synonyms.getSynonymRule()`
 
-Retrieves a synonym rule from a synonym set
+Get a synonym rule. Get a synonym rule from a synonym set.
 
 {ref}/get-synonym-rule.html[{es} documentation]
 [discrete]
@@ -193,7 +193,7 @@ type SynonymsGetSynonymRuleResponse = <<SynonymsSynonymRuleRead>>
 [[client.synonyms.getSynonymsSets]]
 == `client.synonyms.getSynonymsSets()`
 
-Retrieves a summary of all defined synonym sets
+Get all synonym sets. Get a summary of all defined synonym sets.
 
 {ref}/list-synonyms-sets.html[{es} documentation]
 [discrete]
@@ -234,7 +234,7 @@ interface SynonymsGetSynonymsSetsResponse {
 [[client.synonyms.putSynonym]]
 == `client.synonyms.putSynonym()`
 
-Creates or updates a synonym set.
+Create or update a synonym set. Synonyms sets are limited to a maximum of 10,000 synonym rules per set. If you need to manage more synonym rules, you can create multiple synonym sets.
 
 {ref}/put-synonyms-set.html[{es} documentation]
 [discrete]
@@ -275,7 +275,7 @@ interface SynonymsPutSynonymResponse {
 [[client.synonyms.putSynonymRule]]
 == `client.synonyms.putSynonymRule()`
 
-Creates or updates a synonym rule in a synonym set
+Create or update a synonym rule. Create or update a synonym rule in a synonym set.
 
 {ref}/put-synonym-rule.html[{es} documentation]
 [discrete]

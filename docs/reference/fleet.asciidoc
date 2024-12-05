@@ -38,7 +38,7 @@
 [[client.fleet.globalCheckpoints]]
 == `client.fleet.globalCheckpoints()`
 
-Returns the current global checkpoints for an index. This API is design for internal use by the fleet server project.
+Get global checkpoints. Get the current global checkpoints for an index. This API is designed for internal use by the Fleet server project.
 
 {ref}/get-global-checkpoints.html[{es} documentation]
 [discrete]
@@ -82,7 +82,7 @@ interface FleetGlobalCheckpointsResponse {
 [[client.fleet.msearch]]
 == `client.fleet.msearch()`
 
-Executes several [fleet searches](https://www.elastic.co/guide/en/elasticsearch/reference/current/fleet-search.html) with a single API request. The API follows the same structure as the [multi search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html) API. However, similar to the fleet search API, it supports the wait_for_checkpoints parameter.
+Run multiple Fleet searches. Run several Fleet searches with a single API request. The API follows the same structure as the multi search API. However, similar to the Fleet search API, it supports the `wait_for_checkpoints` parameter.
 [discrete]
 === Function signature
 
@@ -133,7 +133,7 @@ interface FleetMsearchResponse<TDocument = unknown> {
 [[client.fleet.search]]
 == `client.fleet.search()`
 
-The purpose of the fleet search api is to provide a search api where the search will only be executed after provided checkpoint has been processed and is visible for searches inside of Elasticsearch.
+Run a Fleet search. The purpose of the Fleet search API is to provide an API where the search will be run only after the provided checkpoint has been processed and is visible for searches inside of Elasticsearch.
 [discrete]
 === Function signature
 
@@ -161,7 +161,6 @@ interface FleetSearchRequest extends <<RequestBase>> {
   ignore_unavailable?: boolean
   lenient?: boolean
   max_concurrent_shard_requests?: <<long>>
-  min_compatible_shard_node?: <<VersionString>>
   preference?: string
   pre_filter_shard_size?: <<long>>
   request_cache?: boolean

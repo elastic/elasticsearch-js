@@ -105,7 +105,7 @@ interface SecurityAuthenticateRequest extends <<RequestBase>> {}
 [source,ts,subs=+macros]
 ----
 interface SecurityAuthenticateResponse {
-  api_key?: <<SecurityApiKey>>
+  api_key?: SecurityAuthenticateAuthenticateApiKey
   authentication_realm: <<SecurityRealmInfo>>
   email?: string | null
   full_name?: <<Name>> | null
@@ -1115,8 +1115,9 @@ interface SecurityGetBuiltinPrivilegesRequest extends <<RequestBase>> {}
 [source,ts,subs=+macros]
 ----
 interface SecurityGetBuiltinPrivilegesResponse {
-  cluster: string[]
-  index: <<Indices>>
+  cluster: <<SecurityClusterPrivilege>>[]
+  index: <<IndexName>>[]
+  remote_cluster: <<SecurityRemoteClusterPrivilege>>[]
 }
 
 ----
@@ -1164,7 +1165,7 @@ type SecurityGetPrivilegesResponse = Record<string, Record<string, SecurityPutPr
 [[client.security.getRole]]
 == `client.security.getRole()`
 
-Get roles. Get roles in the native realm. The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The get roles API cannot retrieve roles that are defined in roles files.
+Get roles. Get roles in the native realm.
 
 {ref}/security-api-get-role.html[{es} documentation]
 [discrete]
@@ -1842,6 +1843,7 @@ interface SecurityPutRoleRequest extends <<RequestBase>> {
   global?: Record<string, any>
   indices?: <<SecurityIndicesPrivileges>>[]
   remote_indices?: <<SecurityRemoteIndicesPrivileges>>[]
+  remote_cluster?: <<SecurityRemoteClusterPrivileges>>[]
   metadata?: <<Metadata>>
   run_as?: string[]
   description?: string

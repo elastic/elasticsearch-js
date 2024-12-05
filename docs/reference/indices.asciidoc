@@ -788,7 +788,7 @@ interface IndicesExistsAliasRequest extends <<RequestBase>> {
   allow_no_indices?: boolean
   expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
-  local?: boolean
+  master_timeout?: <<Duration>>
 }
 
 ----
@@ -808,7 +808,7 @@ type IndicesExistsAliasResponse = boolean
 [[client.indices.existsIndexTemplate]]
 == `client.indices.existsIndexTemplate()`
 
-Returns information about whether a particular index template exists.
+Check index templates. Check whether index templates exist.
 
 {ref}/index-templates.html[{es} documentation]
 [discrete]
@@ -1124,7 +1124,7 @@ interface IndicesGetAliasRequest extends <<RequestBase>> {
   allow_no_indices?: boolean
   expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
-  local?: boolean
+  master_timeout?: <<Duration>>
 }
 
 ----
@@ -1668,8 +1668,7 @@ interface IndicesPutDataLifecycleRequest extends <<RequestBase>> {
   expand_wildcards?: <<ExpandWildcards>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
-  data_retention?: <<Duration>>
-  downsampling?: <<IndicesDataStreamLifecycleDownsampling>>
+  lifecycle?: <<IndicesDataStreamLifecycle>>
 }
 
 ----
@@ -2044,7 +2043,7 @@ type IndicesResolveClusterResponse = Record<<<ClusterAlias>>, IndicesResolveClus
 [[client.indices.resolveIndex]]
 == `client.indices.resolveIndex()`
 
-Resolves the specified name(s) and/or index patterns for indices, aliases, and data streams. Multiple patterns and remote clusters are supported.
+Resolve indices. Resolve the names and/or index patterns for indices, aliases, and data streams. Multiple patterns and remote clusters are supported.
 
 {ref}/indices-resolve-index-api.html[{es} documentation]
 [discrete]
@@ -2163,7 +2162,6 @@ interface IndicesSegmentsRequest extends <<RequestBase>> {
   allow_no_indices?: boolean
   expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
-  verbose?: boolean
 }
 
 ----

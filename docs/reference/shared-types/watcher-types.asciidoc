@@ -927,6 +927,7 @@ type WatcherResponseContentType = 'json' | 'yaml' | 'text'
 [source,ts,subs=+macros]
 ----
 interface WatcherScheduleContainer {
+  timezone?: string
   cron?: <<WatcherCronExpression>>
   daily?: <<WatcherDailySchedule>>
   hourly?: <<WatcherHourlySchedule>>

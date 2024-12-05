@@ -38,7 +38,7 @@
 [[client.eql.delete]]
 == `client.eql.delete()`
 
-Deletes an async EQL search or a stored synchronous EQL search. The API also deletes results for the search.
+Delete an async EQL search. Delete an async EQL search or a stored synchronous EQL search. The API also deletes results for the search.
 
 {ref}/eql-search-api.html[{es} documentation]
 [discrete]
@@ -75,7 +75,7 @@ type EqlDeleteResponse = <<AcknowledgedResponseBase>>
 [[client.eql.get]]
 == `client.eql.get()`
 
-Returns the current status and available results for an async EQL search or a stored synchronous EQL search.
+Get async EQL search results. Get the current status and available results for an async EQL search or a stored synchronous EQL search.
 
 {ref}/get-async-eql-search-api.html[{es} documentation]
 [discrete]
@@ -114,7 +114,7 @@ type EqlGetResponse<TEvent = unknown> = <<EqlEqlSearchResponseBase>><TEvent>
 [[client.eql.getStatus]]
 == `client.eql.getStatus()`
 
-Returns the current status for an async EQL search or a stored synchronous EQL search without returning results.
+Get the async EQL status. Get the current status for an async EQL search or a stored synchronous EQL search without returning results.
 
 {ref}/get-async-eql-status-api.html[{es} documentation]
 [discrete]
@@ -158,7 +158,7 @@ interface EqlGetStatusResponse {
 [[client.eql.search]]
 == `client.eql.search()`
 
-Returns results matching a query expressed in Event Query Language (EQL)
+Get EQL search results. Returns search results for an Event Query Language (EQL) query. EQL assumes each document in a data stream or index corresponds to an event.
 
 {ref}/eql-search-api.html[{es} documentation]
 [discrete]
@@ -193,6 +193,7 @@ interface EqlSearchRequest extends <<RequestBase>> {
   fields?: <<QueryDslFieldAndFormat>> | <<Field>> | (<<QueryDslFieldAndFormat>> | <<Field>>)[]
   result_position?: EqlSearchResultPosition
   runtime_mappings?: <<MappingRuntimeFields>>
+  max_samples_per_key?: <<integer>>
 }
 
 ----

@@ -38,7 +38,7 @@
 [[client.count]]
 == `client.count()`
 
-Returns number of documents matching a query.
+Count search results. Get the number of documents matching a query.
 
 {ref}/search-count.html[{es} documentation]
 [discrete]

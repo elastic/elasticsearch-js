@@ -350,6 +350,12 @@ interface MlCalendarEvent {
   end_time: <<DateTime>>
   pass:[/**] @property start_time The timestamp for the beginning of the scheduled event in milliseconds since the epoch or ISO 8601 format. */
   start_time: <<DateTime>>
+  pass:[/**] @property skip_result When true the model will not create results for this calendar period. */
+  skip_result?: boolean
+  pass:[/**] @property skip_model_update When true the model will not be updated for this calendar period. */
+  skip_model_update?: boolean
+  pass:[/**] @property force_time_shift Shift time by this many seconds. For example adjust time for daylight savings changes */
+  force_time_shift?: <<integer>>
 }
 ----
 

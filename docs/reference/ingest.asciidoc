@@ -38,7 +38,7 @@
 [[client.ingest.deleteGeoipDatabase]]
 == `client.ingest.deleteGeoipDatabase()`
 
-Deletes a geoip database configuration.
+Delete GeoIP database configurations. Delete one or more IP geolocation database configurations.
 
 {ref}/delete-geoip-database-api.html[{es} documentation]
 [discrete]
@@ -74,10 +74,25 @@ type IngestDeleteGeoipDatabaseResponse = <<AcknowledgedResponseBase>>
 
 
 [discrete]
+[[client.ingest.deleteIpLocationDatabase]]
+== `client.ingest.deleteIpLocationDatabase()`
+
+Deletes an ip location database configuration
+
+{ref}/delete-ip-location-database-api.html[{es} documentation]
+[discrete]
+=== Function signature
+
+[source,ts]
+----
+(request: IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptions) => Promise<IngestDeleteIpLocationDatabaseResponse>
+----
+
+[discrete]
 [[client.ingest.deletePipeline]]
 == `client.ingest.deletePipeline()`
 
-Deletes one or more existing ingest pipeline.
+Delete pipelines. Delete one or more ingest pipelines.
 
 {ref}/delete-pipeline-api.html[{es} documentation]
 [discrete]
@@ -116,7 +131,7 @@ type IngestDeletePipelineResponse = <<AcknowledgedResponseBase>>
 [[client.ingest.geoIpStats]]
 == `client.ingest.geoIpStats()`
 
-Gets download statistics for GeoIP2 databases used with the geoip processor.
+Get GeoIP statistics. Get download statistics for GeoIP2 databases that are used with the GeoIP processor.
 
 {ref}/geoip-processor.html[{es} documentation]
 [discrete]
@@ -154,7 +169,7 @@ interface IngestGeoIpStatsResponse {
 [[client.ingest.getGeoipDatabase]]
 == `client.ingest.getGeoipDatabase()`
 
-Returns information about one or more geoip database configurations.
+Get GeoIP database configurations. Get information about one or more IP geolocation database configurations.
 
 {ref}/get-geoip-database-api.html[{es} documentation]
 [discrete]
@@ -191,10 +206,25 @@ interface IngestGetGeoipDatabaseResponse {
 
 
 [discrete]
+[[client.ingest.getIpLocationDatabase]]
+== `client.ingest.getIpLocationDatabase()`
+
+Returns the specified ip location database configuration
+
+{ref}/get-ip-location-database-api.html[{es} documentation]
+[discrete]
+=== Function signature
+
+[source,ts]
+----
+(request: IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptions) => Promise<IngestGetIpLocationDatabaseResponse>
+----
+
+[discrete]
 [[client.ingest.getPipeline]]
 == `client.ingest.getPipeline()`
 
-Returns information about one or more ingest pipelines. This API returns a local reference of the pipeline.
+Get pipelines. Get information about one or more ingest pipelines. This API returns a local reference of the pipeline.
 
 {ref}/get-pipeline-api.html[{es} documentation]
 [discrete]
@@ -233,7 +263,7 @@ type IngestGetPipelineResponse = Record<string, <<IngestPipeline>>>
 [[client.ingest.processorGrok]]
 == `client.ingest.processorGrok()`
 
-Extracts structured fields out of a single text field within a document. You choose which field to extract matched fields from, as well as the grok pattern you expect will match. A grok pattern is like a regular expression that supports aliased expressions that can be reused.
+Run a grok processor. Extract structured fields out of a single text field within a document. You must choose which field to extract matched fields from, as well as the grok pattern you expect will match. A grok pattern is like a regular expression that supports aliased expressions that can be reused.
 
 {ref}/grok-processor.html[{es} documentation]
 [discrete]
@@ -270,7 +300,7 @@ interface IngestProcessorGrokResponse {
 [[client.ingest.putGeoipDatabase]]
 == `client.ingest.putGeoipDatabase()`
 
-Returns information about one or more geoip database configurations.
+Create or update GeoIP database configurations. Create or update IP geolocation database configurations.
 
 {ref}/put-geoip-database-api.html[{es} documentation]
 [discrete]
@@ -308,10 +338,25 @@ type IngestPutGeoipDatabaseResponse = <<AcknowledgedResponseBase>>
 
 
 [discrete]
+[[client.ingest.putIpLocationDatabase]]
+== `client.ingest.putIpLocationDatabase()`
+
+Puts the configuration for a ip location database to be downloaded
+
+{ref}/put-ip-location-database-api.html[{es} documentation]
+[discrete]
+=== Function signature
+
+[source,ts]
+----
+(request: IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptions) => Promise<IngestPutIpLocationDatabaseResponse>
+----
+
+[discrete]
 [[client.ingest.putPipeline]]
 == `client.ingest.putPipeline()`
 
-Creates or updates an ingest pipeline. Changes made using this API take effect immediately.
+Create or update a pipeline. Changes made using this API take effect immediately.
 
 {ref}/ingest.html[{es} documentation]
 [discrete]
@@ -357,7 +402,7 @@ type IngestPutPipelineResponse = <<AcknowledgedResponseBase>>
 [[client.ingest.simulate]]
 == `client.ingest.simulate()`
 
-Executes an ingest pipeline against a set of provided documents.
+Simulate a pipeline. Run an ingest pipeline against a set of provided documents. You can either specify an existing pipeline to use with the provided documents or supply a pipeline definition in the body of the request.
 
 {ref}/simulate-pipeline-api.html[{es} documentation]
 [discrete]

@@ -137,6 +137,31 @@ interface HealthReportDiskIndicatorDetails {
 
 
 [discrete]
+[[HealthReportFileSettingsIndicator]]
+==== HealthReportFileSettingsIndicator
+
+[source,ts,subs=+macros]
+----
+interface HealthReportFileSettingsIndicator extends <<HealthReportBaseIndicator>> {
+  details?: <<HealthReportFileSettingsIndicatorDetails>>
+}
+----
+
+
+[discrete]
+[[HealthReportFileSettingsIndicatorDetails]]
+==== HealthReportFileSettingsIndicatorDetails
+
+[source,ts,subs=+macros]
+----
+interface HealthReportFileSettingsIndicatorDetails {
+  failure_streak: <<long>>
+  most_recent_failure: string
+}
+----
+
+
+[discrete]
 [[HealthReportIlmIndicator]]
 ==== HealthReportIlmIndicator
 
@@ -225,6 +250,7 @@ interface HealthReportIndicators {
   ilm?: <<HealthReportIlmIndicator>>
   slm?: <<HealthReportSlmIndicator>>
   shards_capacity?: <<HealthReportShardsCapacityIndicator>>
+  file_settings?: <<HealthReportFileSettingsIndicator>>
 }
 ----
 

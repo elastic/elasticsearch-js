@@ -133,6 +133,7 @@ Get the async search status. Get the status of a previously submitted async sear
 ----
 interface AsyncSearchStatusRequest extends <<RequestBase>> {
   id: <<Id>>
+  keep_alive?: <<Duration>>
 }
 
 ----
@@ -172,7 +173,6 @@ interface AsyncSearchSubmitRequest extends <<RequestBase>> {
   index?: <<Indices>>
   wait_for_completion_timeout?: <<Duration>>
   keep_on_completion?: boolean
-  keep_alive?: <<Duration>>
   allow_no_indices?: boolean
   allow_partial_search_results?: boolean
   analyzer?: string
@@ -186,12 +186,9 @@ interface AsyncSearchSubmitRequest extends <<RequestBase>> {
   ignore_unavailable?: boolean
   lenient?: boolean
   max_concurrent_shard_requests?: <<long>>
-  min_compatible_shard_node?: <<VersionString>>
   preference?: string
-  pre_filter_shard_size?: <<long>>
   request_cache?: boolean
   routing?: <<Routing>>
-  scroll?: <<Duration>>
   search_type?: <<SearchType>>
   suggest_field?: <<Field>>
   suggest_mode?: <<SuggestMode>>
