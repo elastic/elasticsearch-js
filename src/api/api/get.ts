@@ -35,17 +35,16 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Get a document by its ID. Retrieves the document with the specified ID from an index.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html | Elasticsearch API documentation}
   */
-export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest | TB.GetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetResponse<TDocument>>
-export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest | TB.GetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetResponse<TDocument>, unknown>>
-export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest | TB.GetRequest, options?: TransportRequestOptions): Promise<T.GetResponse<TDocument>>
-export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest | TB.GetRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetResponse<TDocument>>
+export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetResponse<TDocument>, unknown>>
+export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest, options?: TransportRequestOptions): Promise<T.GetResponse<TDocument>>
+export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
   const querystring: Record<string, any> = {}
   const body = undefined
@@ -53,7 +52,7 @@ export default async function GetApi<TDocument = unknown> (this: That, params: T
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

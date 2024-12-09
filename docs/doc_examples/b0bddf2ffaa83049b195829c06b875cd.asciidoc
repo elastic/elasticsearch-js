@@ -3,9 +3,9 @@
 
 [source, js]
 ----
-const response = await client.searchApplication.renderQuery({
-  name: "my_search_application",
-  body: null,
+const response = await client.transport.request({
+  method: "POST",
+  path: "/_application/search_application/my_search_application/_render_query",
 });
 console.log(response);
 ----

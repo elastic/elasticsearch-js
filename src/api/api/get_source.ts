@@ -35,17 +35,16 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Get a document's source. Returns the source of a document.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html | Elasticsearch API documentation}
   */
-export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest | TB.GetSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetSourceResponse<TDocument>>
-export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest | TB.GetSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetSourceResponse<TDocument>, unknown>>
-export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest | TB.GetSourceRequest, options?: TransportRequestOptions): Promise<T.GetSourceResponse<TDocument>>
-export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest | TB.GetSourceRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetSourceResponse<TDocument>>
+export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetSourceResponse<TDocument>, unknown>>
+export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest, options?: TransportRequestOptions): Promise<T.GetSourceResponse<TDocument>>
+export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
   const querystring: Record<string, any> = {}
   const body = undefined
@@ -53,7 +52,7 @@ export default async function GetSourceApi<TDocument = unknown> (this: That, par
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

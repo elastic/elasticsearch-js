@@ -35,38 +35,29 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Render a search template. Render a search template as a search request body.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/render-search-template-api.html | Elasticsearch API documentation}
   */
-export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RenderSearchTemplateResponse>
-export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RenderSearchTemplateResponse, unknown>>
-export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<T.RenderSearchTemplateResponse>
-export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RenderSearchTemplateResponse>
+export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RenderSearchTemplateResponse, unknown>>
+export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<T.RenderSearchTemplateResponse>
+export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id']
   const acceptedBody: string[] = ['file', 'params', 'source']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
-  }
+  const body: Record<string, any> = {}
 
   params = params ?? {}
   for (const key in params) {
     if (acceptedBody.includes(key)) {
-      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

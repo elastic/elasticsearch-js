@@ -35,7 +35,6 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 export default class QueryRules {
@@ -45,13 +44,13 @@ export default class QueryRules {
   }
 
   /**
-    * Deletes a query rule within a query ruleset.
+    * Delete a query rule. Delete a query rule within a query ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-query-rule.html | Elasticsearch API documentation}
     */
-  async deleteRule (this: That, params: T.QueryRulesDeleteRuleRequest | TB.QueryRulesDeleteRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesDeleteRuleResponse>
-  async deleteRule (this: That, params: T.QueryRulesDeleteRuleRequest | TB.QueryRulesDeleteRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesDeleteRuleResponse, unknown>>
-  async deleteRule (this: That, params: T.QueryRulesDeleteRuleRequest | TB.QueryRulesDeleteRuleRequest, options?: TransportRequestOptions): Promise<T.QueryRulesDeleteRuleResponse>
-  async deleteRule (this: That, params: T.QueryRulesDeleteRuleRequest | TB.QueryRulesDeleteRuleRequest, options?: TransportRequestOptions): Promise<any> {
+  async deleteRule (this: That, params: T.QueryRulesDeleteRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesDeleteRuleResponse>
+  async deleteRule (this: That, params: T.QueryRulesDeleteRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesDeleteRuleResponse, unknown>>
+  async deleteRule (this: That, params: T.QueryRulesDeleteRuleRequest, options?: TransportRequestOptions): Promise<T.QueryRulesDeleteRuleResponse>
+  async deleteRule (this: That, params: T.QueryRulesDeleteRuleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['ruleset_id', 'rule_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -59,7 +58,7 @@ export default class QueryRules {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -78,13 +77,13 @@ export default class QueryRules {
   }
 
   /**
-    * Deletes a query ruleset.
+    * Delete a query ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-query-ruleset.html | Elasticsearch API documentation}
     */
-  async deleteRuleset (this: That, params: T.QueryRulesDeleteRulesetRequest | TB.QueryRulesDeleteRulesetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesDeleteRulesetResponse>
-  async deleteRuleset (this: That, params: T.QueryRulesDeleteRulesetRequest | TB.QueryRulesDeleteRulesetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesDeleteRulesetResponse, unknown>>
-  async deleteRuleset (this: That, params: T.QueryRulesDeleteRulesetRequest | TB.QueryRulesDeleteRulesetRequest, options?: TransportRequestOptions): Promise<T.QueryRulesDeleteRulesetResponse>
-  async deleteRuleset (this: That, params: T.QueryRulesDeleteRulesetRequest | TB.QueryRulesDeleteRulesetRequest, options?: TransportRequestOptions): Promise<any> {
+  async deleteRuleset (this: That, params: T.QueryRulesDeleteRulesetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesDeleteRulesetResponse>
+  async deleteRuleset (this: That, params: T.QueryRulesDeleteRulesetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesDeleteRulesetResponse, unknown>>
+  async deleteRuleset (this: That, params: T.QueryRulesDeleteRulesetRequest, options?: TransportRequestOptions): Promise<T.QueryRulesDeleteRulesetResponse>
+  async deleteRuleset (this: That, params: T.QueryRulesDeleteRulesetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['ruleset_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -92,7 +91,7 @@ export default class QueryRules {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -110,13 +109,13 @@ export default class QueryRules {
   }
 
   /**
-    * Returns the details about a query rule within a query ruleset
+    * Get a query rule. Get details about a query rule within a query ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-query-rule.html | Elasticsearch API documentation}
     */
-  async getRule (this: That, params: T.QueryRulesGetRuleRequest | TB.QueryRulesGetRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesGetRuleResponse>
-  async getRule (this: That, params: T.QueryRulesGetRuleRequest | TB.QueryRulesGetRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesGetRuleResponse, unknown>>
-  async getRule (this: That, params: T.QueryRulesGetRuleRequest | TB.QueryRulesGetRuleRequest, options?: TransportRequestOptions): Promise<T.QueryRulesGetRuleResponse>
-  async getRule (this: That, params: T.QueryRulesGetRuleRequest | TB.QueryRulesGetRuleRequest, options?: TransportRequestOptions): Promise<any> {
+  async getRule (this: That, params: T.QueryRulesGetRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesGetRuleResponse>
+  async getRule (this: That, params: T.QueryRulesGetRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesGetRuleResponse, unknown>>
+  async getRule (this: That, params: T.QueryRulesGetRuleRequest, options?: TransportRequestOptions): Promise<T.QueryRulesGetRuleResponse>
+  async getRule (this: That, params: T.QueryRulesGetRuleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['ruleset_id', 'rule_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -124,7 +123,7 @@ export default class QueryRules {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -143,13 +142,13 @@ export default class QueryRules {
   }
 
   /**
-    * Returns the details about a query ruleset
+    * Get a query ruleset. Get details about a query ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-query-ruleset.html | Elasticsearch API documentation}
     */
-  async getRuleset (this: That, params: T.QueryRulesGetRulesetRequest | TB.QueryRulesGetRulesetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesGetRulesetResponse>
-  async getRuleset (this: That, params: T.QueryRulesGetRulesetRequest | TB.QueryRulesGetRulesetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesGetRulesetResponse, unknown>>
-  async getRuleset (this: That, params: T.QueryRulesGetRulesetRequest | TB.QueryRulesGetRulesetRequest, options?: TransportRequestOptions): Promise<T.QueryRulesGetRulesetResponse>
-  async getRuleset (this: That, params: T.QueryRulesGetRulesetRequest | TB.QueryRulesGetRulesetRequest, options?: TransportRequestOptions): Promise<any> {
+  async getRuleset (this: That, params: T.QueryRulesGetRulesetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesGetRulesetResponse>
+  async getRuleset (this: That, params: T.QueryRulesGetRulesetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesGetRulesetResponse, unknown>>
+  async getRuleset (this: That, params: T.QueryRulesGetRulesetRequest, options?: TransportRequestOptions): Promise<T.QueryRulesGetRulesetResponse>
+  async getRuleset (this: That, params: T.QueryRulesGetRulesetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['ruleset_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -157,7 +156,7 @@ export default class QueryRules {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -175,13 +174,13 @@ export default class QueryRules {
   }
 
   /**
-    * Returns summarized information about existing query rulesets.
+    * Get all query rulesets. Get summarized information about the query rulesets.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/list-query-rulesets.html | Elasticsearch API documentation}
     */
-  async listRulesets (this: That, params?: T.QueryRulesListRulesetsRequest | TB.QueryRulesListRulesetsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesListRulesetsResponse>
-  async listRulesets (this: That, params?: T.QueryRulesListRulesetsRequest | TB.QueryRulesListRulesetsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesListRulesetsResponse, unknown>>
-  async listRulesets (this: That, params?: T.QueryRulesListRulesetsRequest | TB.QueryRulesListRulesetsRequest, options?: TransportRequestOptions): Promise<T.QueryRulesListRulesetsResponse>
-  async listRulesets (this: That, params?: T.QueryRulesListRulesetsRequest | TB.QueryRulesListRulesetsRequest, options?: TransportRequestOptions): Promise<any> {
+  async listRulesets (this: That, params?: T.QueryRulesListRulesetsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesListRulesetsResponse>
+  async listRulesets (this: That, params?: T.QueryRulesListRulesetsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesListRulesetsResponse, unknown>>
+  async listRulesets (this: That, params?: T.QueryRulesListRulesetsRequest, options?: TransportRequestOptions): Promise<T.QueryRulesListRulesetsResponse>
+  async listRulesets (this: That, params?: T.QueryRulesListRulesetsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -190,7 +189,7 @@ export default class QueryRules {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -205,33 +204,25 @@ export default class QueryRules {
   }
 
   /**
-    * Creates or updates a query rule within a query ruleset.
+    * Create or update a query rule. Create or update a query rule within a query ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-query-rule.html | Elasticsearch API documentation}
     */
-  async putRule (this: That, params: T.QueryRulesPutRuleRequest | TB.QueryRulesPutRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesPutRuleResponse>
-  async putRule (this: That, params: T.QueryRulesPutRuleRequest | TB.QueryRulesPutRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesPutRuleResponse, unknown>>
-  async putRule (this: That, params: T.QueryRulesPutRuleRequest | TB.QueryRulesPutRuleRequest, options?: TransportRequestOptions): Promise<T.QueryRulesPutRuleResponse>
-  async putRule (this: That, params: T.QueryRulesPutRuleRequest | TB.QueryRulesPutRuleRequest, options?: TransportRequestOptions): Promise<any> {
+  async putRule (this: That, params: T.QueryRulesPutRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesPutRuleResponse>
+  async putRule (this: That, params: T.QueryRulesPutRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesPutRuleResponse, unknown>>
+  async putRule (this: That, params: T.QueryRulesPutRuleRequest, options?: TransportRequestOptions): Promise<T.QueryRulesPutRuleResponse>
+  async putRule (this: That, params: T.QueryRulesPutRuleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['ruleset_id', 'rule_id']
     const acceptedBody: string[] = ['type', 'criteria', 'actions', 'priority']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -250,33 +241,25 @@ export default class QueryRules {
   }
 
   /**
-    * Creates or updates a query ruleset.
+    * Create or update a query ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-query-ruleset.html | Elasticsearch API documentation}
     */
-  async putRuleset (this: That, params: T.QueryRulesPutRulesetRequest | TB.QueryRulesPutRulesetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesPutRulesetResponse>
-  async putRuleset (this: That, params: T.QueryRulesPutRulesetRequest | TB.QueryRulesPutRulesetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesPutRulesetResponse, unknown>>
-  async putRuleset (this: That, params: T.QueryRulesPutRulesetRequest | TB.QueryRulesPutRulesetRequest, options?: TransportRequestOptions): Promise<T.QueryRulesPutRulesetResponse>
-  async putRuleset (this: That, params: T.QueryRulesPutRulesetRequest | TB.QueryRulesPutRulesetRequest, options?: TransportRequestOptions): Promise<any> {
+  async putRuleset (this: That, params: T.QueryRulesPutRulesetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesPutRulesetResponse>
+  async putRuleset (this: That, params: T.QueryRulesPutRulesetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesPutRulesetResponse, unknown>>
+  async putRuleset (this: That, params: T.QueryRulesPutRulesetRequest, options?: TransportRequestOptions): Promise<T.QueryRulesPutRulesetResponse>
+  async putRuleset (this: That, params: T.QueryRulesPutRulesetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['ruleset_id']
     const acceptedBody: string[] = ['rules']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -294,33 +277,25 @@ export default class QueryRules {
   }
 
   /**
-    * Creates or updates a query ruleset.
+    * Test a query ruleset. Evaluate match criteria against a query ruleset to identify the rules that would match that criteria.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/test-query-ruleset.html | Elasticsearch API documentation}
     */
-  async test (this: That, params: T.QueryRulesTestRequest | TB.QueryRulesTestRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesTestResponse>
-  async test (this: That, params: T.QueryRulesTestRequest | TB.QueryRulesTestRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesTestResponse, unknown>>
-  async test (this: That, params: T.QueryRulesTestRequest | TB.QueryRulesTestRequest, options?: TransportRequestOptions): Promise<T.QueryRulesTestResponse>
-  async test (this: That, params: T.QueryRulesTestRequest | TB.QueryRulesTestRequest, options?: TransportRequestOptions): Promise<any> {
+  async test (this: That, params: T.QueryRulesTestRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesTestResponse>
+  async test (this: That, params: T.QueryRulesTestRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesTestResponse, unknown>>
+  async test (this: That, params: T.QueryRulesTestRequest, options?: TransportRequestOptions): Promise<T.QueryRulesTestResponse>
+  async test (this: That, params: T.QueryRulesTestRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['ruleset_id']
     const acceptedBody: string[] = ['match_criteria']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }

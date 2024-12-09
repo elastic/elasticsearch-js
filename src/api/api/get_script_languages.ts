@@ -35,17 +35,16 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Get script languages. Get a list of available script types, languages, and contexts.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html | Elasticsearch API documentation}
   */
-export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest | TB.GetScriptLanguagesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptLanguagesResponse>
-export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest | TB.GetScriptLanguagesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptLanguagesResponse, unknown>>
-export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest | TB.GetScriptLanguagesRequest, options?: TransportRequestOptions): Promise<T.GetScriptLanguagesResponse>
-export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest | TB.GetScriptLanguagesRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptLanguagesResponse>
+export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptLanguagesResponse, unknown>>
+export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptions): Promise<T.GetScriptLanguagesResponse>
+export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
   const querystring: Record<string, any> = {}
   const body = undefined
@@ -54,7 +53,7 @@ export default async function GetScriptLanguagesApi (this: That, params?: T.GetS
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

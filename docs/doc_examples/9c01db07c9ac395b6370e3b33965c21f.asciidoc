@@ -3,7 +3,9 @@
 
 [source, js]
 ----
-const response = await client.security.oidcAuthenticate({
+const response = await client.transport.request({
+  method: "POST",
+  path: "/_security/oidc/authenticate",
   body: {
     redirect_uri:
       "https://oidc-kibana.elastic.co:5603/api/security/oidc/callback?code=jtI3Ntt8v3_XvcLzCFGq&state=4dbrihtIAt3wBTwo6DxK-vdk-sSyDBV8Yf0AjdkdT5I",

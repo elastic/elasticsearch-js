@@ -3,10 +3,12 @@
 
 [source, js]
 ----
-const response = await client.esql.asyncQueryGet({
-  id: "FmNJRUZ1YWZCU3dHY1BIOUhaenVSRkEaaXFlZ3h4c1RTWFNocDdnY2FSaERnUTozNDE=",
-  wait_for_completion_timeout: "30s",
-  body: null,
+const response = await client.transport.request({
+  method: "GET",
+  path: "/_query/async/FmNJRUZ1YWZCU3dHY1BIOUhaenVSRkEaaXFlZ3h4c1RTWFNocDdnY2FSaERnUTozNDE&#x3D;",
+  querystring: {
+    wait_for_completion_timeout: "30s",
+  },
 });
 console.log(response);
 ----

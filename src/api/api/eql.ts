@@ -35,7 +35,6 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 export default class Eql {
@@ -45,13 +44,13 @@ export default class Eql {
   }
 
   /**
-    * Deletes an async EQL search or a stored synchronous EQL search. The API also deletes results for the search.
+    * Delete an async EQL search. Delete an async EQL search or a stored synchronous EQL search. The API also deletes results for the search.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/eql-search-api.html | Elasticsearch API documentation}
     */
-  async delete (this: That, params: T.EqlDeleteRequest | TB.EqlDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlDeleteResponse>
-  async delete (this: That, params: T.EqlDeleteRequest | TB.EqlDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlDeleteResponse, unknown>>
-  async delete (this: That, params: T.EqlDeleteRequest | TB.EqlDeleteRequest, options?: TransportRequestOptions): Promise<T.EqlDeleteResponse>
-  async delete (this: That, params: T.EqlDeleteRequest | TB.EqlDeleteRequest, options?: TransportRequestOptions): Promise<any> {
+  async delete (this: That, params: T.EqlDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlDeleteResponse>
+  async delete (this: That, params: T.EqlDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlDeleteResponse, unknown>>
+  async delete (this: That, params: T.EqlDeleteRequest, options?: TransportRequestOptions): Promise<T.EqlDeleteResponse>
+  async delete (this: That, params: T.EqlDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -59,7 +58,7 @@ export default class Eql {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -77,13 +76,13 @@ export default class Eql {
   }
 
   /**
-    * Returns the current status and available results for an async EQL search or a stored synchronous EQL search.
+    * Get async EQL search results. Get the current status and available results for an async EQL search or a stored synchronous EQL search.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-eql-search-api.html | Elasticsearch API documentation}
     */
-  async get<TEvent = unknown> (this: That, params: T.EqlGetRequest | TB.EqlGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetResponse<TEvent>>
-  async get<TEvent = unknown> (this: That, params: T.EqlGetRequest | TB.EqlGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlGetResponse<TEvent>, unknown>>
-  async get<TEvent = unknown> (this: That, params: T.EqlGetRequest | TB.EqlGetRequest, options?: TransportRequestOptions): Promise<T.EqlGetResponse<TEvent>>
-  async get<TEvent = unknown> (this: That, params: T.EqlGetRequest | TB.EqlGetRequest, options?: TransportRequestOptions): Promise<any> {
+  async get<TEvent = unknown> (this: That, params: T.EqlGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetResponse<TEvent>>
+  async get<TEvent = unknown> (this: That, params: T.EqlGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlGetResponse<TEvent>, unknown>>
+  async get<TEvent = unknown> (this: That, params: T.EqlGetRequest, options?: TransportRequestOptions): Promise<T.EqlGetResponse<TEvent>>
+  async get<TEvent = unknown> (this: That, params: T.EqlGetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -91,7 +90,7 @@ export default class Eql {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -109,13 +108,13 @@ export default class Eql {
   }
 
   /**
-    * Returns the current status for an async EQL search or a stored synchronous EQL search without returning results.
+    * Get the async EQL status. Get the current status for an async EQL search or a stored synchronous EQL search without returning results.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-eql-status-api.html | Elasticsearch API documentation}
     */
-  async getStatus (this: That, params: T.EqlGetStatusRequest | TB.EqlGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetStatusResponse>
-  async getStatus (this: That, params: T.EqlGetStatusRequest | TB.EqlGetStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlGetStatusResponse, unknown>>
-  async getStatus (this: That, params: T.EqlGetStatusRequest | TB.EqlGetStatusRequest, options?: TransportRequestOptions): Promise<T.EqlGetStatusResponse>
-  async getStatus (this: That, params: T.EqlGetStatusRequest | TB.EqlGetStatusRequest, options?: TransportRequestOptions): Promise<any> {
+  async getStatus (this: That, params: T.EqlGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetStatusResponse>
+  async getStatus (this: That, params: T.EqlGetStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlGetStatusResponse, unknown>>
+  async getStatus (this: That, params: T.EqlGetStatusRequest, options?: TransportRequestOptions): Promise<T.EqlGetStatusResponse>
+  async getStatus (this: That, params: T.EqlGetStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -123,7 +122,7 @@ export default class Eql {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -141,33 +140,25 @@ export default class Eql {
   }
 
   /**
-    * Returns results matching a query expressed in Event Query Language (EQL)
+    * Get EQL search results. Returns search results for an Event Query Language (EQL) query. EQL assumes each document in a data stream or index corresponds to an event.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/eql-search-api.html | Elasticsearch API documentation}
     */
-  async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest | TB.EqlSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlSearchResponse<TEvent>>
-  async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest | TB.EqlSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlSearchResponse<TEvent>, unknown>>
-  async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest | TB.EqlSearchRequest, options?: TransportRequestOptions): Promise<T.EqlSearchResponse<TEvent>>
-  async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest | TB.EqlSearchRequest, options?: TransportRequestOptions): Promise<any> {
+  async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlSearchResponse<TEvent>>
+  async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlSearchResponse<TEvent>, unknown>>
+  async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest, options?: TransportRequestOptions): Promise<T.EqlSearchResponse<TEvent>>
+  async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['query', 'case_sensitive', 'event_category_field', 'tiebreaker_field', 'timestamp_field', 'fetch_size', 'filter', 'keep_alive', 'keep_on_completion', 'wait_for_completion_timeout', 'size', 'fields', 'result_position', 'runtime_mappings', 'max_samples_per_key']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }

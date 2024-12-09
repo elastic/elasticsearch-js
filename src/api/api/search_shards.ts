@@ -35,17 +35,16 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Get the search shards. Get the indices and shards that a search request would be run against. This information can be useful for working out issues or planning optimizations with routing and shard preferences. When filtered aliases are used, the filter is returned as part of the indices section.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html | Elasticsearch API documentation}
   */
-export default async function SearchShardsApi (this: That, params?: T.SearchShardsRequest | TB.SearchShardsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchShardsResponse>
-export default async function SearchShardsApi (this: That, params?: T.SearchShardsRequest | TB.SearchShardsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchShardsResponse, unknown>>
-export default async function SearchShardsApi (this: That, params?: T.SearchShardsRequest | TB.SearchShardsRequest, options?: TransportRequestOptions): Promise<T.SearchShardsResponse>
-export default async function SearchShardsApi (this: That, params?: T.SearchShardsRequest | TB.SearchShardsRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function SearchShardsApi (this: That, params?: T.SearchShardsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchShardsResponse>
+export default async function SearchShardsApi (this: That, params?: T.SearchShardsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchShardsResponse, unknown>>
+export default async function SearchShardsApi (this: That, params?: T.SearchShardsRequest, options?: TransportRequestOptions): Promise<T.SearchShardsResponse>
+export default async function SearchShardsApi (this: That, params?: T.SearchShardsRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
   const querystring: Record<string, any> = {}
   const body = undefined
@@ -54,7 +53,7 @@ export default async function SearchShardsApi (this: That, params?: T.SearchShar
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

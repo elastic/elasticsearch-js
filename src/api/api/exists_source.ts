@@ -35,17 +35,16 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Check for a document source. Checks if a document's `_source` is stored.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html | Elasticsearch API documentation}
   */
-export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest | TB.ExistsSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExistsSourceResponse>
-export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest | TB.ExistsSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ExistsSourceResponse, unknown>>
-export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest | TB.ExistsSourceRequest, options?: TransportRequestOptions): Promise<T.ExistsSourceResponse>
-export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest | TB.ExistsSourceRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExistsSourceResponse>
+export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ExistsSourceResponse, unknown>>
+export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest, options?: TransportRequestOptions): Promise<T.ExistsSourceResponse>
+export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
   const querystring: Record<string, any> = {}
   const body = undefined
@@ -53,7 +52,7 @@ export default async function ExistsSourceApi (this: That, params: T.ExistsSourc
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

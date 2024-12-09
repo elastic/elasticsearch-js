@@ -35,37 +35,28 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Reindex documents. Copies documents from a source to a destination. The source can be any existing index, alias, or data stream. The destination must differ from the source. For example, you cannot reindex a data stream into itself.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html | Elasticsearch API documentation}
   */
-export default async function ReindexApi (this: That, params: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ReindexResponse>
-export default async function ReindexApi (this: That, params: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ReindexResponse, unknown>>
-export default async function ReindexApi (this: That, params: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptions): Promise<T.ReindexResponse>
-export default async function ReindexApi (this: That, params: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function ReindexApi (this: That, params: T.ReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ReindexResponse>
+export default async function ReindexApi (this: That, params: T.ReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ReindexResponse, unknown>>
+export default async function ReindexApi (this: That, params: T.ReindexRequest, options?: TransportRequestOptions): Promise<T.ReindexResponse>
+export default async function ReindexApi (this: That, params: T.ReindexRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
   const acceptedBody: string[] = ['conflicts', 'dest', 'max_docs', 'script', 'size', 'source']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
-  }
+  const body: Record<string, any> = {}
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {
-      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

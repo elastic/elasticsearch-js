@@ -35,7 +35,6 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 export default class Ilm {
@@ -48,10 +47,10 @@ export default class Ilm {
     * Deletes the specified lifecycle policy definition. You cannot delete policies that are currently in use. If the policy is being used to manage any indices, the request fails and returns an error.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-delete-lifecycle.html | Elasticsearch API documentation}
     */
-  async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest | TB.IlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmDeleteLifecycleResponse>
-  async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest | TB.IlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmDeleteLifecycleResponse, unknown>>
-  async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest | TB.IlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmDeleteLifecycleResponse>
-  async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest | TB.IlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
+  async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmDeleteLifecycleResponse>
+  async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmDeleteLifecycleResponse, unknown>>
+  async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmDeleteLifecycleResponse>
+  async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -59,7 +58,7 @@ export default class Ilm {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -80,10 +79,10 @@ export default class Ilm {
     * Retrieves information about the index’s current lifecycle state, such as the currently executing phase, action, and step. Shows when the index entered each one, the definition of the running phase, and information about any failures.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-explain-lifecycle.html | Elasticsearch API documentation}
     */
-  async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest | TB.IlmExplainLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmExplainLifecycleResponse>
-  async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest | TB.IlmExplainLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmExplainLifecycleResponse, unknown>>
-  async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest | TB.IlmExplainLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmExplainLifecycleResponse>
-  async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest | TB.IlmExplainLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
+  async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmExplainLifecycleResponse>
+  async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmExplainLifecycleResponse, unknown>>
+  async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmExplainLifecycleResponse>
+  async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -91,7 +90,7 @@ export default class Ilm {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -112,10 +111,10 @@ export default class Ilm {
     * Retrieves a lifecycle policy.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-get-lifecycle.html | Elasticsearch API documentation}
     */
-  async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest | TB.IlmGetLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmGetLifecycleResponse>
-  async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest | TB.IlmGetLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmGetLifecycleResponse, unknown>>
-  async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest | TB.IlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmGetLifecycleResponse>
-  async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest | TB.IlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
+  async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmGetLifecycleResponse>
+  async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmGetLifecycleResponse, unknown>>
+  async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmGetLifecycleResponse>
+  async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -124,7 +123,7 @@ export default class Ilm {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -152,10 +151,10 @@ export default class Ilm {
     * Retrieves the current index lifecycle management (ILM) status.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-get-status.html | Elasticsearch API documentation}
     */
-  async getStatus (this: That, params?: T.IlmGetStatusRequest | TB.IlmGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmGetStatusResponse>
-  async getStatus (this: That, params?: T.IlmGetStatusRequest | TB.IlmGetStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmGetStatusResponse, unknown>>
-  async getStatus (this: That, params?: T.IlmGetStatusRequest | TB.IlmGetStatusRequest, options?: TransportRequestOptions): Promise<T.IlmGetStatusResponse>
-  async getStatus (this: That, params?: T.IlmGetStatusRequest | TB.IlmGetStatusRequest, options?: TransportRequestOptions): Promise<any> {
+  async getStatus (this: That, params?: T.IlmGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmGetStatusResponse>
+  async getStatus (this: That, params?: T.IlmGetStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmGetStatusResponse, unknown>>
+  async getStatus (this: That, params?: T.IlmGetStatusRequest, options?: TransportRequestOptions): Promise<T.IlmGetStatusResponse>
+  async getStatus (this: That, params?: T.IlmGetStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -164,7 +163,7 @@ export default class Ilm {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -182,31 +181,23 @@ export default class Ilm {
     * Switches the indices, ILM policies, and legacy, composable and component templates from using custom node attributes and attribute-based allocation filters to using data tiers, and optionally deletes one legacy index template.+ Using node roles enables ILM to automatically move the indices between data tiers.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-migrate-to-data-tiers.html | Elasticsearch API documentation}
     */
-  async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest | TB.IlmMigrateToDataTiersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmMigrateToDataTiersResponse>
-  async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest | TB.IlmMigrateToDataTiersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmMigrateToDataTiersResponse, unknown>>
-  async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest | TB.IlmMigrateToDataTiersRequest, options?: TransportRequestOptions): Promise<T.IlmMigrateToDataTiersResponse>
-  async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest | TB.IlmMigrateToDataTiersRequest, options?: TransportRequestOptions): Promise<any> {
+  async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmMigrateToDataTiersResponse>
+  async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmMigrateToDataTiersResponse, unknown>>
+  async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest, options?: TransportRequestOptions): Promise<T.IlmMigrateToDataTiersResponse>
+  async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['legacy_template_to_delete', 'node_attribute']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -224,30 +215,22 @@ export default class Ilm {
     * Manually moves an index into the specified step and executes that step.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-move-to-step.html | Elasticsearch API documentation}
     */
-  async moveToStep (this: That, params: T.IlmMoveToStepRequest | TB.IlmMoveToStepRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmMoveToStepResponse>
-  async moveToStep (this: That, params: T.IlmMoveToStepRequest | TB.IlmMoveToStepRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmMoveToStepResponse, unknown>>
-  async moveToStep (this: That, params: T.IlmMoveToStepRequest | TB.IlmMoveToStepRequest, options?: TransportRequestOptions): Promise<T.IlmMoveToStepResponse>
-  async moveToStep (this: That, params: T.IlmMoveToStepRequest | TB.IlmMoveToStepRequest, options?: TransportRequestOptions): Promise<any> {
+  async moveToStep (this: That, params: T.IlmMoveToStepRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmMoveToStepResponse>
+  async moveToStep (this: That, params: T.IlmMoveToStepRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmMoveToStepResponse, unknown>>
+  async moveToStep (this: That, params: T.IlmMoveToStepRequest, options?: TransportRequestOptions): Promise<T.IlmMoveToStepResponse>
+  async moveToStep (this: That, params: T.IlmMoveToStepRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['current_step', 'next_step']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -268,30 +251,22 @@ export default class Ilm {
     * Creates a lifecycle policy. If the specified policy exists, the policy is replaced and the policy version is incremented.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-put-lifecycle.html | Elasticsearch API documentation}
     */
-  async putLifecycle (this: That, params: T.IlmPutLifecycleRequest | TB.IlmPutLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmPutLifecycleResponse>
-  async putLifecycle (this: That, params: T.IlmPutLifecycleRequest | TB.IlmPutLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmPutLifecycleResponse, unknown>>
-  async putLifecycle (this: That, params: T.IlmPutLifecycleRequest | TB.IlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmPutLifecycleResponse>
-  async putLifecycle (this: That, params: T.IlmPutLifecycleRequest | TB.IlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
+  async putLifecycle (this: That, params: T.IlmPutLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmPutLifecycleResponse>
+  async putLifecycle (this: That, params: T.IlmPutLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmPutLifecycleResponse, unknown>>
+  async putLifecycle (this: That, params: T.IlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmPutLifecycleResponse>
+  async putLifecycle (this: That, params: T.IlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['policy']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -312,10 +287,10 @@ export default class Ilm {
     * Removes the assigned lifecycle policy and stops managing the specified index
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-remove-policy.html | Elasticsearch API documentation}
     */
-  async removePolicy (this: That, params: T.IlmRemovePolicyRequest | TB.IlmRemovePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmRemovePolicyResponse>
-  async removePolicy (this: That, params: T.IlmRemovePolicyRequest | TB.IlmRemovePolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmRemovePolicyResponse, unknown>>
-  async removePolicy (this: That, params: T.IlmRemovePolicyRequest | TB.IlmRemovePolicyRequest, options?: TransportRequestOptions): Promise<T.IlmRemovePolicyResponse>
-  async removePolicy (this: That, params: T.IlmRemovePolicyRequest | TB.IlmRemovePolicyRequest, options?: TransportRequestOptions): Promise<any> {
+  async removePolicy (this: That, params: T.IlmRemovePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmRemovePolicyResponse>
+  async removePolicy (this: That, params: T.IlmRemovePolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmRemovePolicyResponse, unknown>>
+  async removePolicy (this: That, params: T.IlmRemovePolicyRequest, options?: TransportRequestOptions): Promise<T.IlmRemovePolicyResponse>
+  async removePolicy (this: That, params: T.IlmRemovePolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -323,7 +298,7 @@ export default class Ilm {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -344,10 +319,10 @@ export default class Ilm {
     * Retries executing the policy for an index that is in the ERROR step.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-retry-policy.html | Elasticsearch API documentation}
     */
-  async retry (this: That, params: T.IlmRetryRequest | TB.IlmRetryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmRetryResponse>
-  async retry (this: That, params: T.IlmRetryRequest | TB.IlmRetryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmRetryResponse, unknown>>
-  async retry (this: That, params: T.IlmRetryRequest | TB.IlmRetryRequest, options?: TransportRequestOptions): Promise<T.IlmRetryResponse>
-  async retry (this: That, params: T.IlmRetryRequest | TB.IlmRetryRequest, options?: TransportRequestOptions): Promise<any> {
+  async retry (this: That, params: T.IlmRetryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmRetryResponse>
+  async retry (this: That, params: T.IlmRetryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmRetryResponse, unknown>>
+  async retry (this: That, params: T.IlmRetryRequest, options?: TransportRequestOptions): Promise<T.IlmRetryResponse>
+  async retry (this: That, params: T.IlmRetryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -355,7 +330,7 @@ export default class Ilm {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -376,10 +351,10 @@ export default class Ilm {
     * Start the index lifecycle management (ILM) plugin.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-start.html | Elasticsearch API documentation}
     */
-  async start (this: That, params?: T.IlmStartRequest | TB.IlmStartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmStartResponse>
-  async start (this: That, params?: T.IlmStartRequest | TB.IlmStartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmStartResponse, unknown>>
-  async start (this: That, params?: T.IlmStartRequest | TB.IlmStartRequest, options?: TransportRequestOptions): Promise<T.IlmStartResponse>
-  async start (this: That, params?: T.IlmStartRequest | TB.IlmStartRequest, options?: TransportRequestOptions): Promise<any> {
+  async start (this: That, params?: T.IlmStartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmStartResponse>
+  async start (this: That, params?: T.IlmStartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmStartResponse, unknown>>
+  async start (this: That, params?: T.IlmStartRequest, options?: TransportRequestOptions): Promise<T.IlmStartResponse>
+  async start (this: That, params?: T.IlmStartRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -388,7 +363,7 @@ export default class Ilm {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -406,10 +381,10 @@ export default class Ilm {
     * Halts all lifecycle management operations and stops the index lifecycle management (ILM) plugin
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-stop.html | Elasticsearch API documentation}
     */
-  async stop (this: That, params?: T.IlmStopRequest | TB.IlmStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmStopResponse>
-  async stop (this: That, params?: T.IlmStopRequest | TB.IlmStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmStopResponse, unknown>>
-  async stop (this: That, params?: T.IlmStopRequest | TB.IlmStopRequest, options?: TransportRequestOptions): Promise<T.IlmStopResponse>
-  async stop (this: That, params?: T.IlmStopRequest | TB.IlmStopRequest, options?: TransportRequestOptions): Promise<any> {
+  async stop (this: That, params?: T.IlmStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmStopResponse>
+  async stop (this: That, params?: T.IlmStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmStopResponse, unknown>>
+  async stop (this: That, params?: T.IlmStopRequest, options?: TransportRequestOptions): Promise<T.IlmStopResponse>
+  async stop (this: That, params?: T.IlmStopRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -418,7 +393,7 @@ export default class Ilm {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
