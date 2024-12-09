@@ -35,7 +35,6 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 export default class Shutdown {
@@ -48,10 +47,10 @@ export default class Shutdown {
     * Removes a node from the shutdown list. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/current | Elasticsearch API documentation}
     */
-  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest | TB.ShutdownDeleteNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownDeleteNodeResponse>
-  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest | TB.ShutdownDeleteNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownDeleteNodeResponse, unknown>>
-  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest | TB.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownDeleteNodeResponse>
-  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest | TB.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<any> {
+  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownDeleteNodeResponse>
+  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownDeleteNodeResponse, unknown>>
+  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownDeleteNodeResponse>
+  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -59,7 +58,7 @@ export default class Shutdown {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -80,10 +79,10 @@ export default class Shutdown {
     * Retrieve status of a node or nodes that are currently marked as shutting down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/current | Elasticsearch API documentation}
     */
-  async getNode (this: That, params?: T.ShutdownGetNodeRequest | TB.ShutdownGetNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownGetNodeResponse>
-  async getNode (this: That, params?: T.ShutdownGetNodeRequest | TB.ShutdownGetNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownGetNodeResponse, unknown>>
-  async getNode (this: That, params?: T.ShutdownGetNodeRequest | TB.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownGetNodeResponse>
-  async getNode (this: That, params?: T.ShutdownGetNodeRequest | TB.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<any> {
+  async getNode (this: That, params?: T.ShutdownGetNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownGetNodeResponse>
+  async getNode (this: That, params?: T.ShutdownGetNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownGetNodeResponse, unknown>>
+  async getNode (this: That, params?: T.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownGetNodeResponse>
+  async getNode (this: That, params?: T.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -92,7 +91,7 @@ export default class Shutdown {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -120,30 +119,22 @@ export default class Shutdown {
     * Adds a node to be shut down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/current | Elasticsearch API documentation}
     */
-  async putNode (this: That, params: T.ShutdownPutNodeRequest | TB.ShutdownPutNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownPutNodeResponse>
-  async putNode (this: That, params: T.ShutdownPutNodeRequest | TB.ShutdownPutNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownPutNodeResponse, unknown>>
-  async putNode (this: That, params: T.ShutdownPutNodeRequest | TB.ShutdownPutNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownPutNodeResponse>
-  async putNode (this: That, params: T.ShutdownPutNodeRequest | TB.ShutdownPutNodeRequest, options?: TransportRequestOptions): Promise<any> {
+  async putNode (this: That, params: T.ShutdownPutNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownPutNodeResponse>
+  async putNode (this: That, params: T.ShutdownPutNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownPutNodeResponse, unknown>>
+  async putNode (this: That, params: T.ShutdownPutNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownPutNodeResponse>
+  async putNode (this: That, params: T.ShutdownPutNodeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
     const acceptedBody: string[] = ['type', 'reason', 'allocation_delay', 'target_node_name']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
