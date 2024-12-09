@@ -38,7 +38,7 @@ import * as T from '../types'
 interface That { transport: Transport }
 
 /**
-  * Ping the cluster. Returns whether the cluster is running.
+  * Ping the cluster. Get information about whether the cluster is running.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html | Elasticsearch API documentation}
   */
 export default async function PingApi (this: That, params?: T.PingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.PingResponse>

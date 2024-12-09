@@ -44,7 +44,7 @@ export default class Nodes {
   }
 
   /**
-    * You can use this API to clear the archived repositories metering information in the cluster.
+    * Clear the archived repositories metering. Clear the archived repositories metering information in the cluster.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-repositories-metering-archive-api.html | Elasticsearch API documentation}
     */
   async clearRepositoriesMeteringArchive (this: That, params: T.NodesClearRepositoriesMeteringArchiveRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesClearRepositoriesMeteringArchiveResponse>
@@ -77,7 +77,7 @@ export default class Nodes {
   }
 
   /**
-    * You can use the cluster repositories metering API to retrieve repositories metering information in a cluster. This API exposes monotonically non-decreasing counters and it’s expected that clients would durably store the information needed to compute aggregations over a period of time. Additionally, the information exposed by this API is volatile, meaning that it won’t be present after node restarts.
+    * Get cluster repositories metering. Get repositories metering information for a cluster. This API exposes monotonically non-decreasing counters and it is expected that clients would durably store the information needed to compute aggregations over a period of time. Additionally, the information exposed by this API is volatile, meaning that it will not be present after node restarts.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-repositories-metering-api.html | Elasticsearch API documentation}
     */
   async getRepositoriesMeteringInfo (this: That, params: T.NodesGetRepositoriesMeteringInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesGetRepositoriesMeteringInfoResponse>
@@ -109,7 +109,7 @@ export default class Nodes {
   }
 
   /**
-    * This API yields a breakdown of the hot threads on each selected node in the cluster. The output is plain text with a breakdown of each node’s top hot threads.
+    * Get the hot threads for nodes. Get a breakdown of the hot threads on each selected node in the cluster. The output is plain text with a breakdown of the top hot threads for each node.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html | Elasticsearch API documentation}
     */
   async hotThreads (this: That, params?: T.NodesHotThreadsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesHotThreadsResponse>
@@ -149,7 +149,7 @@ export default class Nodes {
   }
 
   /**
-    * Returns cluster nodes information.
+    * Get node information. By default, the API returns all attributes and core settings for cluster nodes.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-info.html | Elasticsearch API documentation}
     */
   async info (this: That, params?: T.NodesInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesInfoResponse>
@@ -196,7 +196,7 @@ export default class Nodes {
   }
 
   /**
-    * Reloads the keystore on nodes in the cluster.
+    * Reload the keystore on nodes in the cluster. Secure settings are stored in an on-disk keystore. Certain of these settings are reloadable. That is, you can change them on disk and reload them without restarting any nodes in the cluster. When you have updated reloadable secure settings in your keystore, you can use this API to reload those settings on each node. When the Elasticsearch keystore is password protected and not simply obfuscated, you must provide the password for the keystore when you reload the secure settings. Reloading the settings for the whole cluster assumes that the keystores for all nodes are protected with the same password; this method is allowed only when inter-node communications are encrypted. Alternatively, you can reload the secure settings on each node by locally accessing the API and passing the node-specific Elasticsearch keystore password.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings | Elasticsearch API documentation}
     */
   async reloadSecureSettings (this: That, params?: T.NodesReloadSecureSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesReloadSecureSettingsResponse>
@@ -240,7 +240,7 @@ export default class Nodes {
   }
 
   /**
-    * Returns cluster nodes statistics.
+    * Get node statistics. Get statistics for nodes in a cluster. By default, all stats are returned. You can limit the returned information by using metrics.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html | Elasticsearch API documentation}
     */
   async stats (this: That, params?: T.NodesStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesStatsResponse>
@@ -294,7 +294,7 @@ export default class Nodes {
   }
 
   /**
-    * Returns information on the usage of features.
+    * Get feature usage information.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-usage.html | Elasticsearch API documentation}
     */
   async usage (this: That, params?: T.NodesUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesUsageResponse>
