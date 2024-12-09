@@ -35,7 +35,6 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 export default class Simulate {
@@ -48,10 +47,10 @@ export default class Simulate {
     * Simulates running ingest with example documents.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-ingest-api.html | Elasticsearch API documentation}
     */
-  async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async ingest (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async ingest (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async ingest (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async ingest (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -60,7 +59,7 @@ export default class Simulate {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         querystring[key] = params[key]
       }
     }

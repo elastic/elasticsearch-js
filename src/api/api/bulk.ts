@@ -35,22 +35,20 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Bulk index or delete documents. Performs multiple indexing or delete operations in a single API call. This reduces overhead and can greatly increase indexing speed.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html | Elasticsearch API documentation}
   */
-export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument> | TB.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.BulkResponse>
-export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument> | TB.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.BulkResponse, unknown>>
-export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument> | TB.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<T.BulkResponse>
-export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument> | TB.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any> {
+export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.BulkResponse>
+export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.BulkResponse, unknown>>
+export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<T.BulkResponse>
+export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
   const acceptedBody: string[] = ['operations']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  let body: any = params.body ?? undefined
+  let body: any
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {
@@ -58,7 +56,7 @@ export default async function BulkApi<TDocument = unknown, TPartialDocument = un
       body = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

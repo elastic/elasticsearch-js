@@ -35,38 +35,29 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Run a script. Runs a script and returns a result.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html | Elasticsearch API documentation}
   */
-export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest | TB.ScriptsPainlessExecuteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ScriptsPainlessExecuteResponse<TResult>>
-export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest | TB.ScriptsPainlessExecuteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ScriptsPainlessExecuteResponse<TResult>, unknown>>
-export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest | TB.ScriptsPainlessExecuteRequest, options?: TransportRequestOptions): Promise<T.ScriptsPainlessExecuteResponse<TResult>>
-export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest | TB.ScriptsPainlessExecuteRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ScriptsPainlessExecuteResponse<TResult>>
+export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ScriptsPainlessExecuteResponse<TResult>, unknown>>
+export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest, options?: TransportRequestOptions): Promise<T.ScriptsPainlessExecuteResponse<TResult>>
+export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
   const acceptedBody: string[] = ['context', 'context_setup', 'script']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
-  }
+  const body: Record<string, any> = {}
 
   params = params ?? {}
   for (const key in params) {
     if (acceptedBody.includes(key)) {
-      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

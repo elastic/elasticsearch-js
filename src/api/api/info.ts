@@ -35,17 +35,16 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Get cluster info. Returns basic information about the cluster.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html | Elasticsearch API documentation}
   */
-export default async function InfoApi (this: That, params?: T.InfoRequest | TB.InfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InfoResponse>
-export default async function InfoApi (this: That, params?: T.InfoRequest | TB.InfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InfoResponse, unknown>>
-export default async function InfoApi (this: That, params?: T.InfoRequest | TB.InfoRequest, options?: TransportRequestOptions): Promise<T.InfoResponse>
-export default async function InfoApi (this: That, params?: T.InfoRequest | TB.InfoRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function InfoApi (this: That, params?: T.InfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InfoResponse>
+export default async function InfoApi (this: That, params?: T.InfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InfoResponse, unknown>>
+export default async function InfoApi (this: That, params?: T.InfoRequest, options?: TransportRequestOptions): Promise<T.InfoResponse>
+export default async function InfoApi (this: That, params?: T.InfoRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
   const querystring: Record<string, any> = {}
   const body = undefined
@@ -54,7 +53,7 @@ export default async function InfoApi (this: That, params?: T.InfoRequest | TB.I
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

@@ -3,7 +3,9 @@
 
 [source, js]
 ----
-const response = await client.security.bulkUpdateApiKeys({
+const response = await client.transport.request({
+  method: "POST",
+  path: "/_security/api_key/_bulk_update",
   body: {
     ids: ["VuaCfGcBCdbkQm-e5aOx", "H3_AhoIBA9hmeQJdg7ij"],
     role_descriptors: {},

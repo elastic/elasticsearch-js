@@ -35,7 +35,6 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 export default class Enrich {
@@ -48,10 +47,10 @@ export default class Enrich {
     * Delete an enrich policy. Deletes an existing enrich policy and its enrich index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-enrich-policy-api.html | Elasticsearch API documentation}
     */
-  async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest | TB.EnrichDeletePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichDeletePolicyResponse>
-  async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest | TB.EnrichDeletePolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichDeletePolicyResponse, unknown>>
-  async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest | TB.EnrichDeletePolicyRequest, options?: TransportRequestOptions): Promise<T.EnrichDeletePolicyResponse>
-  async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest | TB.EnrichDeletePolicyRequest, options?: TransportRequestOptions): Promise<any> {
+  async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichDeletePolicyResponse>
+  async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichDeletePolicyResponse, unknown>>
+  async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest, options?: TransportRequestOptions): Promise<T.EnrichDeletePolicyResponse>
+  async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -59,7 +58,7 @@ export default class Enrich {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -77,13 +76,13 @@ export default class Enrich {
   }
 
   /**
-    * Creates the enrich index for an existing enrich policy.
+    * Run an enrich policy. Create the enrich index for an existing enrich policy.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/execute-enrich-policy-api.html | Elasticsearch API documentation}
     */
-  async executePolicy (this: That, params: T.EnrichExecutePolicyRequest | TB.EnrichExecutePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichExecutePolicyResponse>
-  async executePolicy (this: That, params: T.EnrichExecutePolicyRequest | TB.EnrichExecutePolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichExecutePolicyResponse, unknown>>
-  async executePolicy (this: That, params: T.EnrichExecutePolicyRequest | TB.EnrichExecutePolicyRequest, options?: TransportRequestOptions): Promise<T.EnrichExecutePolicyResponse>
-  async executePolicy (this: That, params: T.EnrichExecutePolicyRequest | TB.EnrichExecutePolicyRequest, options?: TransportRequestOptions): Promise<any> {
+  async executePolicy (this: That, params: T.EnrichExecutePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichExecutePolicyResponse>
+  async executePolicy (this: That, params: T.EnrichExecutePolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichExecutePolicyResponse, unknown>>
+  async executePolicy (this: That, params: T.EnrichExecutePolicyRequest, options?: TransportRequestOptions): Promise<T.EnrichExecutePolicyResponse>
+  async executePolicy (this: That, params: T.EnrichExecutePolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -91,7 +90,7 @@ export default class Enrich {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -112,10 +111,10 @@ export default class Enrich {
     * Get an enrich policy. Returns information about an enrich policy.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-enrich-policy-api.html | Elasticsearch API documentation}
     */
-  async getPolicy (this: That, params?: T.EnrichGetPolicyRequest | TB.EnrichGetPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichGetPolicyResponse>
-  async getPolicy (this: That, params?: T.EnrichGetPolicyRequest | TB.EnrichGetPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichGetPolicyResponse, unknown>>
-  async getPolicy (this: That, params?: T.EnrichGetPolicyRequest | TB.EnrichGetPolicyRequest, options?: TransportRequestOptions): Promise<T.EnrichGetPolicyResponse>
-  async getPolicy (this: That, params?: T.EnrichGetPolicyRequest | TB.EnrichGetPolicyRequest, options?: TransportRequestOptions): Promise<any> {
+  async getPolicy (this: That, params?: T.EnrichGetPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichGetPolicyResponse>
+  async getPolicy (this: That, params?: T.EnrichGetPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichGetPolicyResponse, unknown>>
+  async getPolicy (this: That, params?: T.EnrichGetPolicyRequest, options?: TransportRequestOptions): Promise<T.EnrichGetPolicyResponse>
+  async getPolicy (this: That, params?: T.EnrichGetPolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -124,7 +123,7 @@ export default class Enrich {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -152,30 +151,22 @@ export default class Enrich {
     * Create an enrich policy. Creates an enrich policy.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-enrich-policy-api.html | Elasticsearch API documentation}
     */
-  async putPolicy (this: That, params: T.EnrichPutPolicyRequest | TB.EnrichPutPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichPutPolicyResponse>
-  async putPolicy (this: That, params: T.EnrichPutPolicyRequest | TB.EnrichPutPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichPutPolicyResponse, unknown>>
-  async putPolicy (this: That, params: T.EnrichPutPolicyRequest | TB.EnrichPutPolicyRequest, options?: TransportRequestOptions): Promise<T.EnrichPutPolicyResponse>
-  async putPolicy (this: That, params: T.EnrichPutPolicyRequest | TB.EnrichPutPolicyRequest, options?: TransportRequestOptions): Promise<any> {
+  async putPolicy (this: That, params: T.EnrichPutPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichPutPolicyResponse>
+  async putPolicy (this: That, params: T.EnrichPutPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichPutPolicyResponse, unknown>>
+  async putPolicy (this: That, params: T.EnrichPutPolicyRequest, options?: TransportRequestOptions): Promise<T.EnrichPutPolicyResponse>
+  async putPolicy (this: That, params: T.EnrichPutPolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['geo_match', 'match', 'range']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -196,10 +187,10 @@ export default class Enrich {
     * Get enrich stats. Returns enrich coordinator statistics and information about enrich policies that are currently executing.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/enrich-stats-api.html | Elasticsearch API documentation}
     */
-  async stats (this: That, params?: T.EnrichStatsRequest | TB.EnrichStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichStatsResponse>
-  async stats (this: That, params?: T.EnrichStatsRequest | TB.EnrichStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichStatsResponse, unknown>>
-  async stats (this: That, params?: T.EnrichStatsRequest | TB.EnrichStatsRequest, options?: TransportRequestOptions): Promise<T.EnrichStatsResponse>
-  async stats (this: That, params?: T.EnrichStatsRequest | TB.EnrichStatsRequest, options?: TransportRequestOptions): Promise<any> {
+  async stats (this: That, params?: T.EnrichStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichStatsResponse>
+  async stats (this: That, params?: T.EnrichStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichStatsResponse, unknown>>
+  async stats (this: That, params?: T.EnrichStatsRequest, options?: TransportRequestOptions): Promise<T.EnrichStatsResponse>
+  async stats (this: That, params?: T.EnrichStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -208,7 +199,7 @@ export default class Enrich {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }

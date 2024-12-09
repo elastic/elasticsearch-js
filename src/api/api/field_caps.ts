@@ -35,38 +35,29 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Get the field capabilities. Get information about the capabilities of fields among multiple indices. For data streams, the API returns field capabilities among the stream’s backing indices. It returns runtime fields like any other field. For example, a runtime field with a type of keyword is returned the same as any other field that belongs to the `keyword` family.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html | Elasticsearch API documentation}
   */
-export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FieldCapsResponse>
-export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FieldCapsResponse, unknown>>
-export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptions): Promise<T.FieldCapsResponse>
-export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FieldCapsResponse>
+export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FieldCapsResponse, unknown>>
+export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest, options?: TransportRequestOptions): Promise<T.FieldCapsResponse>
+export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
   const acceptedBody: string[] = ['fields', 'index_filter', 'runtime_mappings']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
-  }
+  const body: Record<string, any> = {}
 
   params = params ?? {}
   for (const key in params) {
     if (acceptedBody.includes(key)) {
-      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

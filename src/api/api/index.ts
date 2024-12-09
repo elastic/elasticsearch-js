@@ -35,22 +35,20 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Index a document. Adds a JSON document to the specified data stream or index and makes it searchable. If the target is an index and the document already exists, the request updates the document and increments its version.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html | Elasticsearch API documentation}
   */
-export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument> | TB.IndexRequest<TDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndexResponse>
-export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument> | TB.IndexRequest<TDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndexResponse, unknown>>
-export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument> | TB.IndexRequest<TDocument>, options?: TransportRequestOptions): Promise<T.IndexResponse>
-export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument> | TB.IndexRequest<TDocument>, options?: TransportRequestOptions): Promise<any> {
+export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndexResponse>
+export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndexResponse, unknown>>
+export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument>, options?: TransportRequestOptions): Promise<T.IndexResponse>
+export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument>, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
   const acceptedBody: string[] = ['document']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  let body: any = params.body ?? undefined
+  let body: any
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {
@@ -58,7 +56,7 @@ export default async function IndexApi<TDocument = unknown> (this: That, params:
       body = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

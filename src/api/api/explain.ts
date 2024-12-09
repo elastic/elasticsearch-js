@@ -35,37 +35,28 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Explain a document match result. Returns information about why a specific document matches, or doesn’t match, a query.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html | Elasticsearch API documentation}
   */
-export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest | TB.ExplainRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExplainResponse<TDocument>>
-export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest | TB.ExplainRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ExplainResponse<TDocument>, unknown>>
-export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest | TB.ExplainRequest, options?: TransportRequestOptions): Promise<T.ExplainResponse<TDocument>>
-export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest | TB.ExplainRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExplainResponse<TDocument>>
+export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ExplainResponse<TDocument>, unknown>>
+export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest, options?: TransportRequestOptions): Promise<T.ExplainResponse<TDocument>>
+export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
   const acceptedBody: string[] = ['query']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
-  }
+  const body: Record<string, any> = {}
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {
-      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

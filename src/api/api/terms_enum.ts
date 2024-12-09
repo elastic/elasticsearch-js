@@ -35,37 +35,28 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Get terms in an index. Discover terms that match a partial string in an index. This "terms enum" API is designed for low-latency look-ups used in auto-complete scenarios. If the `complete` property in the response is false, the returned terms set may be incomplete and should be treated as approximate. This can occur due to a few reasons, such as a request timeout or a node error. NOTE: The terms enum API may return terms from deleted documents. Deleted documents are initially only marked as deleted. It is not until their segments are merged that documents are actually deleted. Until that happens, the terms enum API will return terms from these documents.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-terms-enum.html | Elasticsearch API documentation}
   */
-export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest | TB.TermsEnumRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TermsEnumResponse>
-export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest | TB.TermsEnumRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TermsEnumResponse, unknown>>
-export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest | TB.TermsEnumRequest, options?: TransportRequestOptions): Promise<T.TermsEnumResponse>
-export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest | TB.TermsEnumRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TermsEnumResponse>
+export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TermsEnumResponse, unknown>>
+export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest, options?: TransportRequestOptions): Promise<T.TermsEnumResponse>
+export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
   const acceptedBody: string[] = ['field', 'size', 'timeout', 'case_insensitive', 'index_filter', 'string', 'search_after']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
-  }
+  const body: Record<string, any> = {}
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {
-      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

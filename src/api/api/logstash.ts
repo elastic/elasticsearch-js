@@ -35,7 +35,6 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 export default class Logstash {
@@ -48,10 +47,10 @@ export default class Logstash {
     * Deletes a pipeline used for Logstash Central Management.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/logstash-api-delete-pipeline.html | Elasticsearch API documentation}
     */
-  async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashDeletePipelineResponse>
-  async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashDeletePipelineResponse, unknown>>
-  async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashDeletePipelineResponse>
-  async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptions): Promise<any> {
+  async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashDeletePipelineResponse>
+  async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashDeletePipelineResponse, unknown>>
+  async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashDeletePipelineResponse>
+  async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -59,7 +58,7 @@ export default class Logstash {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -80,10 +79,10 @@ export default class Logstash {
     * Retrieves pipelines used for Logstash Central Management.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/logstash-api-get-pipeline.html | Elasticsearch API documentation}
     */
-  async getPipeline (this: That, params?: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashGetPipelineResponse>
-  async getPipeline (this: That, params?: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashGetPipelineResponse, unknown>>
-  async getPipeline (this: That, params?: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashGetPipelineResponse>
-  async getPipeline (this: That, params?: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<any> {
+  async getPipeline (this: That, params?: T.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashGetPipelineResponse>
+  async getPipeline (this: That, params?: T.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashGetPipelineResponse, unknown>>
+  async getPipeline (this: That, params?: T.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashGetPipelineResponse>
+  async getPipeline (this: That, params?: T.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -92,7 +91,7 @@ export default class Logstash {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -120,15 +119,14 @@ export default class Logstash {
     * Creates or updates a pipeline used for Logstash Central Management.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/logstash-api-put-pipeline.html | Elasticsearch API documentation}
     */
-  async putPipeline (this: That, params: T.LogstashPutPipelineRequest | TB.LogstashPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashPutPipelineResponse>
-  async putPipeline (this: That, params: T.LogstashPutPipelineRequest | TB.LogstashPutPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashPutPipelineResponse, unknown>>
-  async putPipeline (this: That, params: T.LogstashPutPipelineRequest | TB.LogstashPutPipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashPutPipelineResponse>
-  async putPipeline (this: That, params: T.LogstashPutPipelineRequest | TB.LogstashPutPipelineRequest, options?: TransportRequestOptions): Promise<any> {
+  async putPipeline (this: That, params: T.LogstashPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashPutPipelineResponse>
+  async putPipeline (this: That, params: T.LogstashPutPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashPutPipelineResponse, unknown>>
+  async putPipeline (this: That, params: T.LogstashPutPipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashPutPipelineResponse>
+  async putPipeline (this: That, params: T.LogstashPutPipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['pipeline']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+    let body: any
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -136,7 +134,7 @@ export default class Logstash {
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }

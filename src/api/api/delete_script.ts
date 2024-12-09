@@ -35,17 +35,16 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
   * Delete a script or search template. Deletes a stored script or search template.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html | Elasticsearch API documentation}
   */
-export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteScriptResponse>
-export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteScriptResponse, unknown>>
-export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptions): Promise<T.DeleteScriptResponse>
-export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteScriptResponse>
+export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteScriptResponse, unknown>>
+export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest, options?: TransportRequestOptions): Promise<T.DeleteScriptResponse>
+export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id']
   const querystring: Record<string, any> = {}
   const body = undefined
@@ -53,7 +52,7 @@ export default async function DeleteScriptApi (this: That, params: T.DeleteScrip
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else {
       // @ts-expect-error
       querystring[key] = params[key]
     }

@@ -35,7 +35,6 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 export default class Esql {
@@ -48,10 +47,10 @@ export default class Esql {
     * Executes an ESQL request asynchronously
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-async-query-api.html | Elasticsearch API documentation}
     */
-  async asyncQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async asyncQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async asyncQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async asyncQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async asyncQuery (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async asyncQuery (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async asyncQuery (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async asyncQuery (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -60,7 +59,7 @@ export default class Esql {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         querystring[key] = params[key]
       }
     }
@@ -77,10 +76,10 @@ export default class Esql {
     * Retrieves the results of a previously submitted async query request given its ID.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-async-query-get-api.html | Elasticsearch API documentation}
     */
-  async asyncQueryGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async asyncQueryGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async asyncQueryGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async asyncQueryGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async asyncQueryGet (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async asyncQueryGet (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async asyncQueryGet (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async asyncQueryGet (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -89,7 +88,7 @@ export default class Esql {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         querystring[key] = params[key]
       }
     }
@@ -106,33 +105,25 @@ export default class Esql {
   }
 
   /**
-    * Executes an ES|QL request
+    * Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query language) query.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-rest.html | Elasticsearch API documentation}
     */
-  async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlQueryResponse>
-  async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlQueryResponse, unknown>>
-  async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlQueryResponse>
-  async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptions): Promise<any> {
+  async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlQueryResponse>
+  async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlQueryResponse, unknown>>
+  async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlQueryResponse>
+  async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'profile', 'query', 'tables']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }

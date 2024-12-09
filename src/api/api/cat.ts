@@ -35,7 +35,6 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 export default class Cat {
@@ -48,10 +47,10 @@ export default class Cat {
     * Get aliases. Retrieves the cluster’s index aliases, including filter and routing information. The API does not return data stream aliases. CAT APIs are only intended for human consumption using the command line or the Kibana console. They are not intended for use by applications. For application consumption, use the aliases API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-alias.html | Elasticsearch API documentation}
     */
-  async aliases (this: That, params?: T.CatAliasesRequest | TB.CatAliasesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatAliasesResponse>
-  async aliases (this: That, params?: T.CatAliasesRequest | TB.CatAliasesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatAliasesResponse, unknown>>
-  async aliases (this: That, params?: T.CatAliasesRequest | TB.CatAliasesRequest, options?: TransportRequestOptions): Promise<T.CatAliasesResponse>
-  async aliases (this: That, params?: T.CatAliasesRequest | TB.CatAliasesRequest, options?: TransportRequestOptions): Promise<any> {
+  async aliases (this: That, params?: T.CatAliasesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatAliasesResponse>
+  async aliases (this: That, params?: T.CatAliasesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatAliasesResponse, unknown>>
+  async aliases (this: That, params?: T.CatAliasesRequest, options?: TransportRequestOptions): Promise<T.CatAliasesResponse>
+  async aliases (this: That, params?: T.CatAliasesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -60,7 +59,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -85,13 +84,13 @@ export default class Cat {
   }
 
   /**
-    * Provides a snapshot of the number of shards allocated to each data node and their disk space. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
+    * Get shard allocation information. Get a snapshot of the number of shards allocated to each data node and their disk space. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html | Elasticsearch API documentation}
     */
-  async allocation (this: That, params?: T.CatAllocationRequest | TB.CatAllocationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatAllocationResponse>
-  async allocation (this: That, params?: T.CatAllocationRequest | TB.CatAllocationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatAllocationResponse, unknown>>
-  async allocation (this: That, params?: T.CatAllocationRequest | TB.CatAllocationRequest, options?: TransportRequestOptions): Promise<T.CatAllocationResponse>
-  async allocation (this: That, params?: T.CatAllocationRequest | TB.CatAllocationRequest, options?: TransportRequestOptions): Promise<any> {
+  async allocation (this: That, params?: T.CatAllocationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatAllocationResponse>
+  async allocation (this: That, params?: T.CatAllocationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatAllocationResponse, unknown>>
+  async allocation (this: That, params?: T.CatAllocationRequest, options?: TransportRequestOptions): Promise<T.CatAllocationResponse>
+  async allocation (this: That, params?: T.CatAllocationRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -100,7 +99,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -128,10 +127,10 @@ export default class Cat {
     * Get component templates. Returns information about component templates in a cluster. Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases. CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get component template API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-component-templates.html | Elasticsearch API documentation}
     */
-  async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest | TB.CatComponentTemplatesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatComponentTemplatesResponse>
-  async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest | TB.CatComponentTemplatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatComponentTemplatesResponse, unknown>>
-  async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest | TB.CatComponentTemplatesRequest, options?: TransportRequestOptions): Promise<T.CatComponentTemplatesResponse>
-  async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest | TB.CatComponentTemplatesRequest, options?: TransportRequestOptions): Promise<any> {
+  async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatComponentTemplatesResponse>
+  async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatComponentTemplatesResponse, unknown>>
+  async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest, options?: TransportRequestOptions): Promise<T.CatComponentTemplatesResponse>
+  async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -140,7 +139,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -168,10 +167,10 @@ export default class Cat {
     * Get a document count. Provides quick access to a document count for a data stream, an index, or an entire cluster. The document count only includes live documents, not deleted documents which have not yet been removed by the merge process. CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the count API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-count.html | Elasticsearch API documentation}
     */
-  async count (this: That, params?: T.CatCountRequest | TB.CatCountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatCountResponse>
-  async count (this: That, params?: T.CatCountRequest | TB.CatCountRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatCountResponse, unknown>>
-  async count (this: That, params?: T.CatCountRequest | TB.CatCountRequest, options?: TransportRequestOptions): Promise<T.CatCountResponse>
-  async count (this: That, params?: T.CatCountRequest | TB.CatCountRequest, options?: TransportRequestOptions): Promise<any> {
+  async count (this: That, params?: T.CatCountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatCountResponse>
+  async count (this: That, params?: T.CatCountRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatCountResponse, unknown>>
+  async count (this: That, params?: T.CatCountRequest, options?: TransportRequestOptions): Promise<T.CatCountResponse>
+  async count (this: That, params?: T.CatCountRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -180,7 +179,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -205,13 +204,13 @@ export default class Cat {
   }
 
   /**
-    * Returns the amount of heap memory currently used by the field data cache on every data node in the cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes stats API.
+    * Get field data cache information. Get the amount of heap memory currently used by the field data cache on every data node in the cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes stats API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.html | Elasticsearch API documentation}
     */
-  async fielddata (this: That, params?: T.CatFielddataRequest | TB.CatFielddataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatFielddataResponse>
-  async fielddata (this: That, params?: T.CatFielddataRequest | TB.CatFielddataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatFielddataResponse, unknown>>
-  async fielddata (this: That, params?: T.CatFielddataRequest | TB.CatFielddataRequest, options?: TransportRequestOptions): Promise<T.CatFielddataResponse>
-  async fielddata (this: That, params?: T.CatFielddataRequest | TB.CatFielddataRequest, options?: TransportRequestOptions): Promise<any> {
+  async fielddata (this: That, params?: T.CatFielddataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatFielddataResponse>
+  async fielddata (this: That, params?: T.CatFielddataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatFielddataResponse, unknown>>
+  async fielddata (this: That, params?: T.CatFielddataRequest, options?: TransportRequestOptions): Promise<T.CatFielddataResponse>
+  async fielddata (this: That, params?: T.CatFielddataRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['fields']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -220,7 +219,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -245,13 +244,13 @@ export default class Cat {
   }
 
   /**
-    * Returns the health status of a cluster, similar to the cluster health API. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the cluster health API. This API is often used to check malfunctioning clusters. To help you track cluster health alongside log files and alerting systems, the API returns timestamps in two formats: `HH:MM:SS`, which is human-readable but includes no date information; `Unix epoch time`, which is machine-sortable and includes date information. The latter format is useful for cluster recoveries that take multiple days. You can use the cat health API to verify cluster health across multiple nodes. You also can use the API to track the recovery of a large cluster over a longer period of time.
+    * Get the cluster health status. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the cluster health API. This API is often used to check malfunctioning clusters. To help you track cluster health alongside log files and alerting systems, the API returns timestamps in two formats: `HH:MM:SS`, which is human-readable but includes no date information; `Unix epoch time`, which is machine-sortable and includes date information. The latter format is useful for cluster recoveries that take multiple days. You can use the cat health API to verify cluster health across multiple nodes. You also can use the API to track the recovery of a large cluster over a longer period of time.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html | Elasticsearch API documentation}
     */
-  async health (this: That, params?: T.CatHealthRequest | TB.CatHealthRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatHealthResponse>
-  async health (this: That, params?: T.CatHealthRequest | TB.CatHealthRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatHealthResponse, unknown>>
-  async health (this: That, params?: T.CatHealthRequest | TB.CatHealthRequest, options?: TransportRequestOptions): Promise<T.CatHealthResponse>
-  async health (this: That, params?: T.CatHealthRequest | TB.CatHealthRequest, options?: TransportRequestOptions): Promise<any> {
+  async health (this: That, params?: T.CatHealthRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatHealthResponse>
+  async health (this: That, params?: T.CatHealthRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatHealthResponse, unknown>>
+  async health (this: That, params?: T.CatHealthRequest, options?: TransportRequestOptions): Promise<T.CatHealthResponse>
+  async health (this: That, params?: T.CatHealthRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -260,7 +259,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -278,10 +277,10 @@ export default class Cat {
     * Get CAT help. Returns help for the CAT APIs.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html | Elasticsearch API documentation}
     */
-  async help (this: That, params?: T.CatHelpRequest | TB.CatHelpRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatHelpResponse>
-  async help (this: That, params?: T.CatHelpRequest | TB.CatHelpRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatHelpResponse, unknown>>
-  async help (this: That, params?: T.CatHelpRequest | TB.CatHelpRequest, options?: TransportRequestOptions): Promise<T.CatHelpResponse>
-  async help (this: That, params?: T.CatHelpRequest | TB.CatHelpRequest, options?: TransportRequestOptions): Promise<any> {
+  async help (this: That, params?: T.CatHelpRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatHelpResponse>
+  async help (this: That, params?: T.CatHelpRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatHelpResponse, unknown>>
+  async help (this: That, params?: T.CatHelpRequest, options?: TransportRequestOptions): Promise<T.CatHelpResponse>
+  async help (this: That, params?: T.CatHelpRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -290,7 +289,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -308,10 +307,10 @@ export default class Cat {
     * Get index information. Returns high-level information about indices in a cluster, including backing indices for data streams. Use this request to get the following information for each index in a cluster: - shard count - document count - deleted document count - primary store size - total store size of all shards, including shard replicas These metrics are retrieved directly from Lucene, which Elasticsearch uses internally to power indexing and search. As a result, all document counts include hidden nested documents. To get an accurate count of Elasticsearch documents, use the cat count or count APIs. CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use an index endpoint.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html | Elasticsearch API documentation}
     */
-  async indices (this: That, params?: T.CatIndicesRequest | TB.CatIndicesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatIndicesResponse>
-  async indices (this: That, params?: T.CatIndicesRequest | TB.CatIndicesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatIndicesResponse, unknown>>
-  async indices (this: That, params?: T.CatIndicesRequest | TB.CatIndicesRequest, options?: TransportRequestOptions): Promise<T.CatIndicesResponse>
-  async indices (this: That, params?: T.CatIndicesRequest | TB.CatIndicesRequest, options?: TransportRequestOptions): Promise<any> {
+  async indices (this: That, params?: T.CatIndicesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatIndicesResponse>
+  async indices (this: That, params?: T.CatIndicesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatIndicesResponse, unknown>>
+  async indices (this: That, params?: T.CatIndicesRequest, options?: TransportRequestOptions): Promise<T.CatIndicesResponse>
+  async indices (this: That, params?: T.CatIndicesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -320,7 +319,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -345,13 +344,13 @@ export default class Cat {
   }
 
   /**
-    * Returns information about the master node, including the ID, bound IP address, and name. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
+    * Get master node information. Get information about the master node, including the ID, bound IP address, and name. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-master.html | Elasticsearch API documentation}
     */
-  async master (this: That, params?: T.CatMasterRequest | TB.CatMasterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMasterResponse>
-  async master (this: That, params?: T.CatMasterRequest | TB.CatMasterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMasterResponse, unknown>>
-  async master (this: That, params?: T.CatMasterRequest | TB.CatMasterRequest, options?: TransportRequestOptions): Promise<T.CatMasterResponse>
-  async master (this: That, params?: T.CatMasterRequest | TB.CatMasterRequest, options?: TransportRequestOptions): Promise<any> {
+  async master (this: That, params?: T.CatMasterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMasterResponse>
+  async master (this: That, params?: T.CatMasterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMasterResponse, unknown>>
+  async master (this: That, params?: T.CatMasterRequest, options?: TransportRequestOptions): Promise<T.CatMasterResponse>
+  async master (this: That, params?: T.CatMasterRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -360,7 +359,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -378,10 +377,10 @@ export default class Cat {
     * Get data frame analytics jobs. Returns configuration and usage information about data frame analytics jobs. CAT APIs are only intended for human consumption using the Kibana console or command line. They are not intended for use by applications. For application consumption, use the get data frame analytics jobs statistics API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-dfanalytics.html | Elasticsearch API documentation}
     */
-  async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest | TB.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlDataFrameAnalyticsResponse>
-  async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest | TB.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlDataFrameAnalyticsResponse, unknown>>
-  async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest | TB.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.CatMlDataFrameAnalyticsResponse>
-  async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest | TB.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
+  async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlDataFrameAnalyticsResponse>
+  async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlDataFrameAnalyticsResponse, unknown>>
+  async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.CatMlDataFrameAnalyticsResponse>
+  async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -390,7 +389,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -418,10 +417,10 @@ export default class Cat {
     * Get datafeeds. Returns configuration and usage information about datafeeds. This API returns a maximum of 10,000 datafeeds. If the Elasticsearch security features are enabled, you must have `monitor_ml`, `monitor`, `manage_ml`, or `manage` cluster privileges to use this API. CAT APIs are only intended for human consumption using the Kibana console or command line. They are not intended for use by applications. For application consumption, use the get datafeed statistics API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-datafeeds.html | Elasticsearch API documentation}
     */
-  async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest | TB.CatMlDatafeedsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlDatafeedsResponse>
-  async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest | TB.CatMlDatafeedsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlDatafeedsResponse, unknown>>
-  async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest | TB.CatMlDatafeedsRequest, options?: TransportRequestOptions): Promise<T.CatMlDatafeedsResponse>
-  async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest | TB.CatMlDatafeedsRequest, options?: TransportRequestOptions): Promise<any> {
+  async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlDatafeedsResponse>
+  async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlDatafeedsResponse, unknown>>
+  async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest, options?: TransportRequestOptions): Promise<T.CatMlDatafeedsResponse>
+  async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -430,7 +429,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -458,10 +457,10 @@ export default class Cat {
     * Get anomaly detection jobs. Returns configuration and usage information for anomaly detection jobs. This API returns a maximum of 10,000 jobs. If the Elasticsearch security features are enabled, you must have `monitor_ml`, `monitor`, `manage_ml`, or `manage` cluster privileges to use this API. CAT APIs are only intended for human consumption using the Kibana console or command line. They are not intended for use by applications. For application consumption, use the get anomaly detection job statistics API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-anomaly-detectors.html | Elasticsearch API documentation}
     */
-  async mlJobs (this: That, params?: T.CatMlJobsRequest | TB.CatMlJobsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlJobsResponse>
-  async mlJobs (this: That, params?: T.CatMlJobsRequest | TB.CatMlJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlJobsResponse, unknown>>
-  async mlJobs (this: That, params?: T.CatMlJobsRequest | TB.CatMlJobsRequest, options?: TransportRequestOptions): Promise<T.CatMlJobsResponse>
-  async mlJobs (this: That, params?: T.CatMlJobsRequest | TB.CatMlJobsRequest, options?: TransportRequestOptions): Promise<any> {
+  async mlJobs (this: That, params?: T.CatMlJobsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlJobsResponse>
+  async mlJobs (this: That, params?: T.CatMlJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlJobsResponse, unknown>>
+  async mlJobs (this: That, params?: T.CatMlJobsRequest, options?: TransportRequestOptions): Promise<T.CatMlJobsResponse>
+  async mlJobs (this: That, params?: T.CatMlJobsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -470,7 +469,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -498,10 +497,10 @@ export default class Cat {
     * Get trained models. Returns configuration and usage information about inference trained models. CAT APIs are only intended for human consumption using the Kibana console or command line. They are not intended for use by applications. For application consumption, use the get trained models statistics API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-trained-model.html | Elasticsearch API documentation}
     */
-  async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest | TB.CatMlTrainedModelsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlTrainedModelsResponse>
-  async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest | TB.CatMlTrainedModelsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlTrainedModelsResponse, unknown>>
-  async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest | TB.CatMlTrainedModelsRequest, options?: TransportRequestOptions): Promise<T.CatMlTrainedModelsResponse>
-  async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest | TB.CatMlTrainedModelsRequest, options?: TransportRequestOptions): Promise<any> {
+  async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlTrainedModelsResponse>
+  async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlTrainedModelsResponse, unknown>>
+  async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest, options?: TransportRequestOptions): Promise<T.CatMlTrainedModelsResponse>
+  async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -510,7 +509,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -535,13 +534,13 @@ export default class Cat {
   }
 
   /**
-    * Returns information about custom node attributes. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
+    * Get node attribute information. Get information about custom node attributes. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodeattrs.html | Elasticsearch API documentation}
     */
-  async nodeattrs (this: That, params?: T.CatNodeattrsRequest | TB.CatNodeattrsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatNodeattrsResponse>
-  async nodeattrs (this: That, params?: T.CatNodeattrsRequest | TB.CatNodeattrsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatNodeattrsResponse, unknown>>
-  async nodeattrs (this: That, params?: T.CatNodeattrsRequest | TB.CatNodeattrsRequest, options?: TransportRequestOptions): Promise<T.CatNodeattrsResponse>
-  async nodeattrs (this: That, params?: T.CatNodeattrsRequest | TB.CatNodeattrsRequest, options?: TransportRequestOptions): Promise<any> {
+  async nodeattrs (this: That, params?: T.CatNodeattrsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatNodeattrsResponse>
+  async nodeattrs (this: That, params?: T.CatNodeattrsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatNodeattrsResponse, unknown>>
+  async nodeattrs (this: That, params?: T.CatNodeattrsRequest, options?: TransportRequestOptions): Promise<T.CatNodeattrsResponse>
+  async nodeattrs (this: That, params?: T.CatNodeattrsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -550,7 +549,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -565,13 +564,13 @@ export default class Cat {
   }
 
   /**
-    * Returns information about the nodes in a cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
+    * Get node information. Get information about the nodes in a cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html | Elasticsearch API documentation}
     */
-  async nodes (this: That, params?: T.CatNodesRequest | TB.CatNodesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatNodesResponse>
-  async nodes (this: That, params?: T.CatNodesRequest | TB.CatNodesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatNodesResponse, unknown>>
-  async nodes (this: That, params?: T.CatNodesRequest | TB.CatNodesRequest, options?: TransportRequestOptions): Promise<T.CatNodesResponse>
-  async nodes (this: That, params?: T.CatNodesRequest | TB.CatNodesRequest, options?: TransportRequestOptions): Promise<any> {
+  async nodes (this: That, params?: T.CatNodesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatNodesResponse>
+  async nodes (this: That, params?: T.CatNodesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatNodesResponse, unknown>>
+  async nodes (this: That, params?: T.CatNodesRequest, options?: TransportRequestOptions): Promise<T.CatNodesResponse>
+  async nodes (this: That, params?: T.CatNodesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -580,7 +579,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -595,13 +594,13 @@ export default class Cat {
   }
 
   /**
-    * Returns cluster-level changes that have not yet been executed. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the pending cluster tasks API.
+    * Get pending task information. Get information about cluster-level changes that have not yet taken effect. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the pending cluster tasks API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-pending-tasks.html | Elasticsearch API documentation}
     */
-  async pendingTasks (this: That, params?: T.CatPendingTasksRequest | TB.CatPendingTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatPendingTasksResponse>
-  async pendingTasks (this: That, params?: T.CatPendingTasksRequest | TB.CatPendingTasksRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatPendingTasksResponse, unknown>>
-  async pendingTasks (this: That, params?: T.CatPendingTasksRequest | TB.CatPendingTasksRequest, options?: TransportRequestOptions): Promise<T.CatPendingTasksResponse>
-  async pendingTasks (this: That, params?: T.CatPendingTasksRequest | TB.CatPendingTasksRequest, options?: TransportRequestOptions): Promise<any> {
+  async pendingTasks (this: That, params?: T.CatPendingTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatPendingTasksResponse>
+  async pendingTasks (this: That, params?: T.CatPendingTasksRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatPendingTasksResponse, unknown>>
+  async pendingTasks (this: That, params?: T.CatPendingTasksRequest, options?: TransportRequestOptions): Promise<T.CatPendingTasksResponse>
+  async pendingTasks (this: That, params?: T.CatPendingTasksRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -610,7 +609,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -625,13 +624,13 @@ export default class Cat {
   }
 
   /**
-    * Returns a list of plugins running on each node of a cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
+    * Get plugin information. Get a list of plugins running on each node of a cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html | Elasticsearch API documentation}
     */
-  async plugins (this: That, params?: T.CatPluginsRequest | TB.CatPluginsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatPluginsResponse>
-  async plugins (this: That, params?: T.CatPluginsRequest | TB.CatPluginsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatPluginsResponse, unknown>>
-  async plugins (this: That, params?: T.CatPluginsRequest | TB.CatPluginsRequest, options?: TransportRequestOptions): Promise<T.CatPluginsResponse>
-  async plugins (this: That, params?: T.CatPluginsRequest | TB.CatPluginsRequest, options?: TransportRequestOptions): Promise<any> {
+  async plugins (this: That, params?: T.CatPluginsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatPluginsResponse>
+  async plugins (this: That, params?: T.CatPluginsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatPluginsResponse, unknown>>
+  async plugins (this: That, params?: T.CatPluginsRequest, options?: TransportRequestOptions): Promise<T.CatPluginsResponse>
+  async plugins (this: That, params?: T.CatPluginsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -640,7 +639,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -655,13 +654,13 @@ export default class Cat {
   }
 
   /**
-    * Returns information about ongoing and completed shard recoveries. Shard recovery is the process of initializing a shard copy, such as restoring a primary shard from a snapshot or syncing a replica shard from a primary shard. When a shard recovery completes, the recovered shard is available for search and indexing. For data streams, the API returns information about the stream’s backing indices. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the index recovery API.
+    * Get shard recovery information. Get information about ongoing and completed shard recoveries. Shard recovery is the process of initializing a shard copy, such as restoring a primary shard from a snapshot or syncing a replica shard from a primary shard. When a shard recovery completes, the recovered shard is available for search and indexing. For data streams, the API returns information about the stream’s backing indices. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the index recovery API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-recovery.html | Elasticsearch API documentation}
     */
-  async recovery (this: That, params?: T.CatRecoveryRequest | TB.CatRecoveryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatRecoveryResponse>
-  async recovery (this: That, params?: T.CatRecoveryRequest | TB.CatRecoveryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatRecoveryResponse, unknown>>
-  async recovery (this: That, params?: T.CatRecoveryRequest | TB.CatRecoveryRequest, options?: TransportRequestOptions): Promise<T.CatRecoveryResponse>
-  async recovery (this: That, params?: T.CatRecoveryRequest | TB.CatRecoveryRequest, options?: TransportRequestOptions): Promise<any> {
+  async recovery (this: That, params?: T.CatRecoveryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatRecoveryResponse>
+  async recovery (this: That, params?: T.CatRecoveryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatRecoveryResponse, unknown>>
+  async recovery (this: That, params?: T.CatRecoveryRequest, options?: TransportRequestOptions): Promise<T.CatRecoveryResponse>
+  async recovery (this: That, params?: T.CatRecoveryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -670,7 +669,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -695,13 +694,13 @@ export default class Cat {
   }
 
   /**
-    * Returns the snapshot repositories for a cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get snapshot repository API.
+    * Get snapshot repository information. Get a list of snapshot repositories for a cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get snapshot repository API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-repositories.html | Elasticsearch API documentation}
     */
-  async repositories (this: That, params?: T.CatRepositoriesRequest | TB.CatRepositoriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatRepositoriesResponse>
-  async repositories (this: That, params?: T.CatRepositoriesRequest | TB.CatRepositoriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatRepositoriesResponse, unknown>>
-  async repositories (this: That, params?: T.CatRepositoriesRequest | TB.CatRepositoriesRequest, options?: TransportRequestOptions): Promise<T.CatRepositoriesResponse>
-  async repositories (this: That, params?: T.CatRepositoriesRequest | TB.CatRepositoriesRequest, options?: TransportRequestOptions): Promise<any> {
+  async repositories (this: That, params?: T.CatRepositoriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatRepositoriesResponse>
+  async repositories (this: That, params?: T.CatRepositoriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatRepositoriesResponse, unknown>>
+  async repositories (this: That, params?: T.CatRepositoriesRequest, options?: TransportRequestOptions): Promise<T.CatRepositoriesResponse>
+  async repositories (this: That, params?: T.CatRepositoriesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -710,7 +709,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -725,13 +724,13 @@ export default class Cat {
   }
 
   /**
-    * Returns low-level information about the Lucene segments in index shards. For data streams, the API returns information about the backing indices. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the index segments API.
+    * Get segment information. Get low-level information about the Lucene segments in index shards. For data streams, the API returns information about the backing indices. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the index segments API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html | Elasticsearch API documentation}
     */
-  async segments (this: That, params?: T.CatSegmentsRequest | TB.CatSegmentsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatSegmentsResponse>
-  async segments (this: That, params?: T.CatSegmentsRequest | TB.CatSegmentsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatSegmentsResponse, unknown>>
-  async segments (this: That, params?: T.CatSegmentsRequest | TB.CatSegmentsRequest, options?: TransportRequestOptions): Promise<T.CatSegmentsResponse>
-  async segments (this: That, params?: T.CatSegmentsRequest | TB.CatSegmentsRequest, options?: TransportRequestOptions): Promise<any> {
+  async segments (this: That, params?: T.CatSegmentsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatSegmentsResponse>
+  async segments (this: That, params?: T.CatSegmentsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatSegmentsResponse, unknown>>
+  async segments (this: That, params?: T.CatSegmentsRequest, options?: TransportRequestOptions): Promise<T.CatSegmentsResponse>
+  async segments (this: That, params?: T.CatSegmentsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -740,7 +739,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -765,13 +764,13 @@ export default class Cat {
   }
 
   /**
-    * Returns information about the shards in a cluster. For data streams, the API returns information about the backing indices. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
+    * Get shard information. Get information about the shards in a cluster. For data streams, the API returns information about the backing indices. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-shards.html | Elasticsearch API documentation}
     */
-  async shards (this: That, params?: T.CatShardsRequest | TB.CatShardsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatShardsResponse>
-  async shards (this: That, params?: T.CatShardsRequest | TB.CatShardsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatShardsResponse, unknown>>
-  async shards (this: That, params?: T.CatShardsRequest | TB.CatShardsRequest, options?: TransportRequestOptions): Promise<T.CatShardsResponse>
-  async shards (this: That, params?: T.CatShardsRequest | TB.CatShardsRequest, options?: TransportRequestOptions): Promise<any> {
+  async shards (this: That, params?: T.CatShardsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatShardsResponse>
+  async shards (this: That, params?: T.CatShardsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatShardsResponse, unknown>>
+  async shards (this: That, params?: T.CatShardsRequest, options?: TransportRequestOptions): Promise<T.CatShardsResponse>
+  async shards (this: That, params?: T.CatShardsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -780,7 +779,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -805,13 +804,13 @@ export default class Cat {
   }
 
   /**
-    * Returns information about the snapshots stored in one or more repositories. A snapshot is a backup of an index or running Elasticsearch cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get snapshot API.
+    * Get snapshot information Get information about the snapshots stored in one or more repositories. A snapshot is a backup of an index or running Elasticsearch cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get snapshot API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.html | Elasticsearch API documentation}
     */
-  async snapshots (this: That, params?: T.CatSnapshotsRequest | TB.CatSnapshotsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatSnapshotsResponse>
-  async snapshots (this: That, params?: T.CatSnapshotsRequest | TB.CatSnapshotsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatSnapshotsResponse, unknown>>
-  async snapshots (this: That, params?: T.CatSnapshotsRequest | TB.CatSnapshotsRequest, options?: TransportRequestOptions): Promise<T.CatSnapshotsResponse>
-  async snapshots (this: That, params?: T.CatSnapshotsRequest | TB.CatSnapshotsRequest, options?: TransportRequestOptions): Promise<any> {
+  async snapshots (this: That, params?: T.CatSnapshotsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatSnapshotsResponse>
+  async snapshots (this: That, params?: T.CatSnapshotsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatSnapshotsResponse, unknown>>
+  async snapshots (this: That, params?: T.CatSnapshotsRequest, options?: TransportRequestOptions): Promise<T.CatSnapshotsResponse>
+  async snapshots (this: That, params?: T.CatSnapshotsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -820,7 +819,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -845,13 +844,13 @@ export default class Cat {
   }
 
   /**
-    * Returns information about tasks currently executing in the cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the task management API.
+    * Get task information. Get information about tasks currently running in the cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the task management API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html | Elasticsearch API documentation}
     */
-  async tasks (this: That, params?: T.CatTasksRequest | TB.CatTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTasksResponse>
-  async tasks (this: That, params?: T.CatTasksRequest | TB.CatTasksRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTasksResponse, unknown>>
-  async tasks (this: That, params?: T.CatTasksRequest | TB.CatTasksRequest, options?: TransportRequestOptions): Promise<T.CatTasksResponse>
-  async tasks (this: That, params?: T.CatTasksRequest | TB.CatTasksRequest, options?: TransportRequestOptions): Promise<any> {
+  async tasks (this: That, params?: T.CatTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTasksResponse>
+  async tasks (this: That, params?: T.CatTasksRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTasksResponse, unknown>>
+  async tasks (this: That, params?: T.CatTasksRequest, options?: TransportRequestOptions): Promise<T.CatTasksResponse>
+  async tasks (this: That, params?: T.CatTasksRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -860,7 +859,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -875,13 +874,13 @@ export default class Cat {
   }
 
   /**
-    * Returns information about index templates in a cluster. You can use index templates to apply index settings and field mappings to new indices at creation. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get index template API.
+    * Get index template information. Get information about the index templates in a cluster. You can use index templates to apply index settings and field mappings to new indices at creation. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get index template API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html | Elasticsearch API documentation}
     */
-  async templates (this: That, params?: T.CatTemplatesRequest | TB.CatTemplatesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTemplatesResponse>
-  async templates (this: That, params?: T.CatTemplatesRequest | TB.CatTemplatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTemplatesResponse, unknown>>
-  async templates (this: That, params?: T.CatTemplatesRequest | TB.CatTemplatesRequest, options?: TransportRequestOptions): Promise<T.CatTemplatesResponse>
-  async templates (this: That, params?: T.CatTemplatesRequest | TB.CatTemplatesRequest, options?: TransportRequestOptions): Promise<any> {
+  async templates (this: That, params?: T.CatTemplatesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTemplatesResponse>
+  async templates (this: That, params?: T.CatTemplatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTemplatesResponse, unknown>>
+  async templates (this: That, params?: T.CatTemplatesRequest, options?: TransportRequestOptions): Promise<T.CatTemplatesResponse>
+  async templates (this: That, params?: T.CatTemplatesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -890,7 +889,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -915,13 +914,13 @@ export default class Cat {
   }
 
   /**
-    * Returns thread pool statistics for each node in a cluster. Returned information includes all built-in thread pools and custom thread pools. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
+    * Get thread pool statistics. Get thread pool statistics for each node in a cluster. Returned information includes all built-in thread pools and custom thread pools. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html | Elasticsearch API documentation}
     */
-  async threadPool (this: That, params?: T.CatThreadPoolRequest | TB.CatThreadPoolRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatThreadPoolResponse>
-  async threadPool (this: That, params?: T.CatThreadPoolRequest | TB.CatThreadPoolRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatThreadPoolResponse, unknown>>
-  async threadPool (this: That, params?: T.CatThreadPoolRequest | TB.CatThreadPoolRequest, options?: TransportRequestOptions): Promise<T.CatThreadPoolResponse>
-  async threadPool (this: That, params?: T.CatThreadPoolRequest | TB.CatThreadPoolRequest, options?: TransportRequestOptions): Promise<any> {
+  async threadPool (this: That, params?: T.CatThreadPoolRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatThreadPoolResponse>
+  async threadPool (this: That, params?: T.CatThreadPoolRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatThreadPoolResponse, unknown>>
+  async threadPool (this: That, params?: T.CatThreadPoolRequest, options?: TransportRequestOptions): Promise<T.CatThreadPoolResponse>
+  async threadPool (this: That, params?: T.CatThreadPoolRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['thread_pool_patterns']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -930,7 +929,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -955,13 +954,13 @@ export default class Cat {
   }
 
   /**
-    * Get transforms. Returns configuration and usage information about transforms. CAT APIs are only intended for human consumption using the Kibana console or command line. They are not intended for use by applications. For application consumption, use the get transform statistics API.
+    * Get transform information. Get configuration and usage information about transforms. CAT APIs are only intended for human consumption using the Kibana console or command line. They are not intended for use by applications. For application consumption, use the get transform statistics API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-transforms.html | Elasticsearch API documentation}
     */
-  async transforms (this: That, params?: T.CatTransformsRequest | TB.CatTransformsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTransformsResponse>
-  async transforms (this: That, params?: T.CatTransformsRequest | TB.CatTransformsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTransformsResponse, unknown>>
-  async transforms (this: That, params?: T.CatTransformsRequest | TB.CatTransformsRequest, options?: TransportRequestOptions): Promise<T.CatTransformsResponse>
-  async transforms (this: That, params?: T.CatTransformsRequest | TB.CatTransformsRequest, options?: TransportRequestOptions): Promise<any> {
+  async transforms (this: That, params?: T.CatTransformsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTransformsResponse>
+  async transforms (this: That, params?: T.CatTransformsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTransformsResponse, unknown>>
+  async transforms (this: That, params?: T.CatTransformsRequest, options?: TransportRequestOptions): Promise<T.CatTransformsResponse>
+  async transforms (this: That, params?: T.CatTransformsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -970,7 +969,7 @@ export default class Cat {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }

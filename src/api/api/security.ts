@@ -35,7 +35,6 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 export default class Security {
@@ -48,30 +47,22 @@ export default class Security {
     * Activate a user profile. Create or update a user profile on behalf of another user.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-activate-user-profile.html | Elasticsearch API documentation}
     */
-  async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest | TB.SecurityActivateUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityActivateUserProfileResponse>
-  async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest | TB.SecurityActivateUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityActivateUserProfileResponse, unknown>>
-  async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest | TB.SecurityActivateUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityActivateUserProfileResponse>
-  async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest | TB.SecurityActivateUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
+  async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityActivateUserProfileResponse>
+  async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityActivateUserProfileResponse, unknown>>
+  async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityActivateUserProfileResponse>
+  async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['access_token', 'grant_type', 'password', 'username']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -89,10 +80,10 @@ export default class Security {
     * Authenticate a user. Authenticates a user and returns information about the authenticated user. Include the user information in a [basic auth header](https://en.wikipedia.org/wiki/Basic_access_authentication). A successful call returns a JSON structure that shows user information such as their username, the roles that are assigned to the user, any assigned metadata, and information about the realms that authenticated and authorized the user. If the user cannot be authenticated, this API returns a 401 status code.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-authenticate.html | Elasticsearch API documentation}
     */
-  async authenticate (this: That, params?: T.SecurityAuthenticateRequest | TB.SecurityAuthenticateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityAuthenticateResponse>
-  async authenticate (this: That, params?: T.SecurityAuthenticateRequest | TB.SecurityAuthenticateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityAuthenticateResponse, unknown>>
-  async authenticate (this: That, params?: T.SecurityAuthenticateRequest | TB.SecurityAuthenticateRequest, options?: TransportRequestOptions): Promise<T.SecurityAuthenticateResponse>
-  async authenticate (this: That, params?: T.SecurityAuthenticateRequest | TB.SecurityAuthenticateRequest, options?: TransportRequestOptions): Promise<any> {
+  async authenticate (this: That, params?: T.SecurityAuthenticateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityAuthenticateResponse>
+  async authenticate (this: That, params?: T.SecurityAuthenticateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityAuthenticateResponse, unknown>>
+  async authenticate (this: That, params?: T.SecurityAuthenticateRequest, options?: TransportRequestOptions): Promise<T.SecurityAuthenticateResponse>
+  async authenticate (this: That, params?: T.SecurityAuthenticateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -101,7 +92,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -119,30 +110,22 @@ export default class Security {
     * Bulk delete roles. The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The bulk delete roles API cannot delete roles that are defined in roles files.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-bulk-delete-role.html | Elasticsearch API documentation}
     */
-  async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest | TB.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityBulkDeleteRoleResponse>
-  async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest | TB.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityBulkDeleteRoleResponse, unknown>>
-  async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest | TB.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityBulkDeleteRoleResponse>
-  async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest | TB.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptions): Promise<any> {
+  async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityBulkDeleteRoleResponse>
+  async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityBulkDeleteRoleResponse, unknown>>
+  async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityBulkDeleteRoleResponse>
+  async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['names']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -160,30 +143,22 @@ export default class Security {
     * Bulk create or update roles. The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The bulk create or update roles API cannot update roles that are defined in roles files.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-bulk-put-role.html | Elasticsearch API documentation}
     */
-  async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest | TB.SecurityBulkPutRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityBulkPutRoleResponse>
-  async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest | TB.SecurityBulkPutRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityBulkPutRoleResponse, unknown>>
-  async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest | TB.SecurityBulkPutRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityBulkPutRoleResponse>
-  async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest | TB.SecurityBulkPutRoleRequest, options?: TransportRequestOptions): Promise<any> {
+  async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityBulkPutRoleResponse>
+  async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityBulkPutRoleResponse, unknown>>
+  async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityBulkPutRoleResponse>
+  async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['roles']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -201,10 +176,10 @@ export default class Security {
     * Updates the attributes of multiple existing API keys.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-bulk-update-api-keys.html | Elasticsearch API documentation}
     */
-  async bulkUpdateApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async bulkUpdateApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async bulkUpdateApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async bulkUpdateApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async bulkUpdateApiKeys (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async bulkUpdateApiKeys (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async bulkUpdateApiKeys (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async bulkUpdateApiKeys (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -213,7 +188,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         querystring[key] = params[key]
       }
     }
@@ -230,31 +205,23 @@ export default class Security {
     * Change passwords. Change the passwords of users in the native realm and built-in users.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-change-password.html | Elasticsearch API documentation}
     */
-  async changePassword (this: That, params?: T.SecurityChangePasswordRequest | TB.SecurityChangePasswordRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityChangePasswordResponse>
-  async changePassword (this: That, params?: T.SecurityChangePasswordRequest | TB.SecurityChangePasswordRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityChangePasswordResponse, unknown>>
-  async changePassword (this: That, params?: T.SecurityChangePasswordRequest | TB.SecurityChangePasswordRequest, options?: TransportRequestOptions): Promise<T.SecurityChangePasswordResponse>
-  async changePassword (this: That, params?: T.SecurityChangePasswordRequest | TB.SecurityChangePasswordRequest, options?: TransportRequestOptions): Promise<any> {
+  async changePassword (this: That, params?: T.SecurityChangePasswordRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityChangePasswordResponse>
+  async changePassword (this: That, params?: T.SecurityChangePasswordRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityChangePasswordResponse, unknown>>
+  async changePassword (this: That, params?: T.SecurityChangePasswordRequest, options?: TransportRequestOptions): Promise<T.SecurityChangePasswordResponse>
+  async changePassword (this: That, params?: T.SecurityChangePasswordRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
     const acceptedBody: string[] = ['password', 'password_hash']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -282,10 +249,10 @@ export default class Security {
     * Clear the API key cache. Evict a subset of all entries from the API key cache. The cache is also automatically cleared on state changes of the security index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-clear-api-key-cache.html | Elasticsearch API documentation}
     */
-  async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest | TB.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearApiKeyCacheResponse>
-  async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest | TB.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearApiKeyCacheResponse, unknown>>
-  async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest | TB.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptions): Promise<T.SecurityClearApiKeyCacheResponse>
-  async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest | TB.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptions): Promise<any> {
+  async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearApiKeyCacheResponse>
+  async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearApiKeyCacheResponse, unknown>>
+  async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptions): Promise<T.SecurityClearApiKeyCacheResponse>
+  async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['ids']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -293,7 +260,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -314,10 +281,10 @@ export default class Security {
     * Clear the privileges cache. Evict privileges from the native application privilege cache. The cache is also automatically cleared for applications that have their privileges updated.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-clear-privilege-cache.html | Elasticsearch API documentation}
     */
-  async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest | TB.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedPrivilegesResponse>
-  async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest | TB.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedPrivilegesResponse, unknown>>
-  async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest | TB.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedPrivilegesResponse>
-  async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest | TB.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
+  async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedPrivilegesResponse>
+  async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedPrivilegesResponse, unknown>>
+  async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedPrivilegesResponse>
+  async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['application']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -325,7 +292,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -346,10 +313,10 @@ export default class Security {
     * Clear the user cache. Evict users from the user cache. You can completely clear the cache or evict specific users.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-clear-cache.html | Elasticsearch API documentation}
     */
-  async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest | TB.SecurityClearCachedRealmsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedRealmsResponse>
-  async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest | TB.SecurityClearCachedRealmsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedRealmsResponse, unknown>>
-  async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest | TB.SecurityClearCachedRealmsRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedRealmsResponse>
-  async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest | TB.SecurityClearCachedRealmsRequest, options?: TransportRequestOptions): Promise<any> {
+  async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedRealmsResponse>
+  async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedRealmsResponse, unknown>>
+  async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedRealmsResponse>
+  async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['realms']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -357,7 +324,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -378,10 +345,10 @@ export default class Security {
     * Clear the roles cache. Evict roles from the native role cache.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-clear-role-cache.html | Elasticsearch API documentation}
     */
-  async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest | TB.SecurityClearCachedRolesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedRolesResponse>
-  async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest | TB.SecurityClearCachedRolesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedRolesResponse, unknown>>
-  async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest | TB.SecurityClearCachedRolesRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedRolesResponse>
-  async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest | TB.SecurityClearCachedRolesRequest, options?: TransportRequestOptions): Promise<any> {
+  async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedRolesResponse>
+  async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedRolesResponse, unknown>>
+  async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedRolesResponse>
+  async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -389,7 +356,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -410,10 +377,10 @@ export default class Security {
     * Clear service account token caches. Evict a subset of all entries from the service account token caches.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-clear-service-token-caches.html | Elasticsearch API documentation}
     */
-  async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest | TB.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedServiceTokensResponse>
-  async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest | TB.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedServiceTokensResponse, unknown>>
-  async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest | TB.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedServiceTokensResponse>
-  async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest | TB.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptions): Promise<any> {
+  async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedServiceTokensResponse>
+  async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedServiceTokensResponse, unknown>>
+  async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedServiceTokensResponse>
+  async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service', 'name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -421,7 +388,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -444,31 +411,23 @@ export default class Security {
     * Create an API key. Create an API key for access without requiring basic authentication. A successful request returns a JSON structure that contains the API key, its unique id, and its name. If applicable, it also returns expiration information for the API key in milliseconds. NOTE: By default, API keys never expire. You can specify expiration information when you create the API keys.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-create-api-key.html | Elasticsearch API documentation}
     */
-  async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest | TB.SecurityCreateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateApiKeyResponse>
-  async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest | TB.SecurityCreateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateApiKeyResponse, unknown>>
-  async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest | TB.SecurityCreateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateApiKeyResponse>
-  async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest | TB.SecurityCreateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
+  async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateApiKeyResponse>
+  async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateApiKeyResponse, unknown>>
+  async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateApiKeyResponse>
+  async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['expiration', 'name', 'role_descriptors', 'metadata']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -486,30 +445,22 @@ export default class Security {
     * Create a cross-cluster API key. Create an API key of the `cross_cluster` type for the API key based remote cluster access. A `cross_cluster` API key cannot be used to authenticate through the REST interface. IMPORTANT: To authenticate this request you must use a credential that is not an API key. Even if you use an API key that has the required privilege, the API returns an error. Cross-cluster API keys are created by the Elasticsearch API key service, which is automatically enabled. NOTE: Unlike REST API keys, a cross-cluster API key does not capture permissions of the authenticated user. The API key’s effective permission is exactly as specified with the `access` property. A successful request returns a JSON structure that contains the API key, its unique ID, and its name. If applicable, it also returns expiration information for the API key in milliseconds. By default, API keys never expire. You can specify expiration information when you create the API keys. Cross-cluster API keys can only be updated with the update cross-cluster API key API. Attempting to update them with the update REST API key API or the bulk update REST API keys API will result in an error.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-create-cross-cluster-api-key.html | Elasticsearch API documentation}
     */
-  async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest | TB.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateCrossClusterApiKeyResponse>
-  async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest | TB.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateCrossClusterApiKeyResponse, unknown>>
-  async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest | TB.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateCrossClusterApiKeyResponse>
-  async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest | TB.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
+  async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateCrossClusterApiKeyResponse>
+  async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateCrossClusterApiKeyResponse, unknown>>
+  async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateCrossClusterApiKeyResponse>
+  async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['access', 'expiration', 'metadata', 'name']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -527,10 +478,10 @@ export default class Security {
     * Create a service account token. Create a service accounts token for access without requiring basic authentication.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-create-service-token.html | Elasticsearch API documentation}
     */
-  async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest | TB.SecurityCreateServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateServiceTokenResponse>
-  async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest | TB.SecurityCreateServiceTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateServiceTokenResponse, unknown>>
-  async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest | TB.SecurityCreateServiceTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateServiceTokenResponse>
-  async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest | TB.SecurityCreateServiceTokenRequest, options?: TransportRequestOptions): Promise<any> {
+  async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateServiceTokenResponse>
+  async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateServiceTokenResponse, unknown>>
+  async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateServiceTokenResponse>
+  async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service', 'name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -538,7 +489,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -568,10 +519,10 @@ export default class Security {
     * Delete application privileges.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-delete-privilege.html | Elasticsearch API documentation}
     */
-  async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest | TB.SecurityDeletePrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeletePrivilegesResponse>
-  async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest | TB.SecurityDeletePrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeletePrivilegesResponse, unknown>>
-  async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest | TB.SecurityDeletePrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityDeletePrivilegesResponse>
-  async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest | TB.SecurityDeletePrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
+  async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeletePrivilegesResponse>
+  async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeletePrivilegesResponse, unknown>>
+  async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityDeletePrivilegesResponse>
+  async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['application', 'name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -579,7 +530,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -601,10 +552,10 @@ export default class Security {
     * Delete roles. Delete roles in the native realm.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-delete-role.html | Elasticsearch API documentation}
     */
-  async deleteRole (this: That, params: T.SecurityDeleteRoleRequest | TB.SecurityDeleteRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteRoleResponse>
-  async deleteRole (this: That, params: T.SecurityDeleteRoleRequest | TB.SecurityDeleteRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteRoleResponse, unknown>>
-  async deleteRole (this: That, params: T.SecurityDeleteRoleRequest | TB.SecurityDeleteRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteRoleResponse>
-  async deleteRole (this: That, params: T.SecurityDeleteRoleRequest | TB.SecurityDeleteRoleRequest, options?: TransportRequestOptions): Promise<any> {
+  async deleteRole (this: That, params: T.SecurityDeleteRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteRoleResponse>
+  async deleteRole (this: That, params: T.SecurityDeleteRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteRoleResponse, unknown>>
+  async deleteRole (this: That, params: T.SecurityDeleteRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteRoleResponse>
+  async deleteRole (this: That, params: T.SecurityDeleteRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -612,7 +563,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -633,10 +584,10 @@ export default class Security {
     * Delete role mappings.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-delete-role-mapping.html | Elasticsearch API documentation}
     */
-  async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest | TB.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteRoleMappingResponse>
-  async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest | TB.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteRoleMappingResponse, unknown>>
-  async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest | TB.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteRoleMappingResponse>
-  async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest | TB.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
+  async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteRoleMappingResponse>
+  async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteRoleMappingResponse, unknown>>
+  async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteRoleMappingResponse>
+  async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -644,7 +595,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -665,10 +616,10 @@ export default class Security {
     * Delete service account tokens. Delete service account tokens for a service in a specified namespace.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-delete-service-token.html | Elasticsearch API documentation}
     */
-  async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest | TB.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteServiceTokenResponse>
-  async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest | TB.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteServiceTokenResponse, unknown>>
-  async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest | TB.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteServiceTokenResponse>
-  async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest | TB.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptions): Promise<any> {
+  async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteServiceTokenResponse>
+  async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteServiceTokenResponse, unknown>>
+  async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteServiceTokenResponse>
+  async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service', 'name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -676,7 +627,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -699,10 +650,10 @@ export default class Security {
     * Delete users. Delete users from the native realm.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-delete-user.html | Elasticsearch API documentation}
     */
-  async deleteUser (this: That, params: T.SecurityDeleteUserRequest | TB.SecurityDeleteUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteUserResponse>
-  async deleteUser (this: That, params: T.SecurityDeleteUserRequest | TB.SecurityDeleteUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteUserResponse, unknown>>
-  async deleteUser (this: That, params: T.SecurityDeleteUserRequest | TB.SecurityDeleteUserRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteUserResponse>
-  async deleteUser (this: That, params: T.SecurityDeleteUserRequest | TB.SecurityDeleteUserRequest, options?: TransportRequestOptions): Promise<any> {
+  async deleteUser (this: That, params: T.SecurityDeleteUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteUserResponse>
+  async deleteUser (this: That, params: T.SecurityDeleteUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteUserResponse, unknown>>
+  async deleteUser (this: That, params: T.SecurityDeleteUserRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteUserResponse>
+  async deleteUser (this: That, params: T.SecurityDeleteUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -710,7 +661,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -731,10 +682,10 @@ export default class Security {
     * Disable users. Disable users in the native realm.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-disable-user.html | Elasticsearch API documentation}
     */
-  async disableUser (this: That, params: T.SecurityDisableUserRequest | TB.SecurityDisableUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDisableUserResponse>
-  async disableUser (this: That, params: T.SecurityDisableUserRequest | TB.SecurityDisableUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDisableUserResponse, unknown>>
-  async disableUser (this: That, params: T.SecurityDisableUserRequest | TB.SecurityDisableUserRequest, options?: TransportRequestOptions): Promise<T.SecurityDisableUserResponse>
-  async disableUser (this: That, params: T.SecurityDisableUserRequest | TB.SecurityDisableUserRequest, options?: TransportRequestOptions): Promise<any> {
+  async disableUser (this: That, params: T.SecurityDisableUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDisableUserResponse>
+  async disableUser (this: That, params: T.SecurityDisableUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDisableUserResponse, unknown>>
+  async disableUser (this: That, params: T.SecurityDisableUserRequest, options?: TransportRequestOptions): Promise<T.SecurityDisableUserResponse>
+  async disableUser (this: That, params: T.SecurityDisableUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -742,7 +693,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -763,10 +714,10 @@ export default class Security {
     * Disable a user profile. Disable user profiles so that they are not visible in user profile searches.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-disable-user-profile.html | Elasticsearch API documentation}
     */
-  async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest | TB.SecurityDisableUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDisableUserProfileResponse>
-  async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest | TB.SecurityDisableUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDisableUserProfileResponse, unknown>>
-  async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest | TB.SecurityDisableUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityDisableUserProfileResponse>
-  async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest | TB.SecurityDisableUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
+  async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDisableUserProfileResponse>
+  async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDisableUserProfileResponse, unknown>>
+  async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityDisableUserProfileResponse>
+  async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['uid']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -774,7 +725,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -795,10 +746,10 @@ export default class Security {
     * Enable users. Enable users in the native realm.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-enable-user.html | Elasticsearch API documentation}
     */
-  async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnableUserResponse>
-  async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnableUserResponse, unknown>>
-  async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptions): Promise<T.SecurityEnableUserResponse>
-  async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptions): Promise<any> {
+  async enableUser (this: That, params: T.SecurityEnableUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnableUserResponse>
+  async enableUser (this: That, params: T.SecurityEnableUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnableUserResponse, unknown>>
+  async enableUser (this: That, params: T.SecurityEnableUserRequest, options?: TransportRequestOptions): Promise<T.SecurityEnableUserResponse>
+  async enableUser (this: That, params: T.SecurityEnableUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -806,7 +757,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -827,10 +778,10 @@ export default class Security {
     * Enable a user profile. Enable user profiles to make them visible in user profile searches.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-enable-user-profile.html | Elasticsearch API documentation}
     */
-  async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest | TB.SecurityEnableUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnableUserProfileResponse>
-  async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest | TB.SecurityEnableUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnableUserProfileResponse, unknown>>
-  async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest | TB.SecurityEnableUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityEnableUserProfileResponse>
-  async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest | TB.SecurityEnableUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
+  async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnableUserProfileResponse>
+  async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnableUserProfileResponse, unknown>>
+  async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityEnableUserProfileResponse>
+  async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['uid']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -838,7 +789,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -859,10 +810,10 @@ export default class Security {
     * Enroll Kibana. Enable a Kibana instance to configure itself for communication with a secured Elasticsearch cluster.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-kibana-enrollment.html | Elasticsearch API documentation}
     */
-  async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest | TB.SecurityEnrollKibanaRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnrollKibanaResponse>
-  async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest | TB.SecurityEnrollKibanaRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnrollKibanaResponse, unknown>>
-  async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest | TB.SecurityEnrollKibanaRequest, options?: TransportRequestOptions): Promise<T.SecurityEnrollKibanaResponse>
-  async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest | TB.SecurityEnrollKibanaRequest, options?: TransportRequestOptions): Promise<any> {
+  async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnrollKibanaResponse>
+  async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnrollKibanaResponse, unknown>>
+  async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest, options?: TransportRequestOptions): Promise<T.SecurityEnrollKibanaResponse>
+  async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -871,7 +822,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -889,10 +840,10 @@ export default class Security {
     * Enroll a node. Enroll a new node to allow it to join an existing cluster with security features enabled.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-node-enrollment.html | Elasticsearch API documentation}
     */
-  async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest | TB.SecurityEnrollNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnrollNodeResponse>
-  async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest | TB.SecurityEnrollNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnrollNodeResponse, unknown>>
-  async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest | TB.SecurityEnrollNodeRequest, options?: TransportRequestOptions): Promise<T.SecurityEnrollNodeResponse>
-  async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest | TB.SecurityEnrollNodeRequest, options?: TransportRequestOptions): Promise<any> {
+  async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnrollNodeResponse>
+  async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnrollNodeResponse, unknown>>
+  async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest, options?: TransportRequestOptions): Promise<T.SecurityEnrollNodeResponse>
+  async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -901,7 +852,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -919,10 +870,10 @@ export default class Security {
     * Get API key information. Retrieves information for one or more API keys. NOTE: If you have only the `manage_own_api_key` privilege, this API returns only the API keys that you own. If you have `read_security`, `manage_api_key` or greater privileges (including `manage_security`), this API returns all API keys regardless of ownership.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-api-key.html | Elasticsearch API documentation}
     */
-  async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest | TB.SecurityGetApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetApiKeyResponse>
-  async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest | TB.SecurityGetApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetApiKeyResponse, unknown>>
-  async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest | TB.SecurityGetApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityGetApiKeyResponse>
-  async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest | TB.SecurityGetApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
+  async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetApiKeyResponse>
+  async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetApiKeyResponse, unknown>>
+  async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityGetApiKeyResponse>
+  async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -931,7 +882,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -949,10 +900,10 @@ export default class Security {
     * Get builtin privileges. Get the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-builtin-privileges.html | Elasticsearch API documentation}
     */
-  async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest | TB.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetBuiltinPrivilegesResponse>
-  async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest | TB.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetBuiltinPrivilegesResponse, unknown>>
-  async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest | TB.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetBuiltinPrivilegesResponse>
-  async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest | TB.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
+  async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetBuiltinPrivilegesResponse>
+  async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetBuiltinPrivilegesResponse, unknown>>
+  async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetBuiltinPrivilegesResponse>
+  async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -961,7 +912,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -979,10 +930,10 @@ export default class Security {
     * Get application privileges.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-privileges.html | Elasticsearch API documentation}
     */
-  async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest | TB.SecurityGetPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetPrivilegesResponse>
-  async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest | TB.SecurityGetPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetPrivilegesResponse, unknown>>
-  async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest | TB.SecurityGetPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetPrivilegesResponse>
-  async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest | TB.SecurityGetPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
+  async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetPrivilegesResponse>
+  async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetPrivilegesResponse, unknown>>
+  async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetPrivilegesResponse>
+  async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['application', 'name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -991,7 +942,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1023,10 +974,10 @@ export default class Security {
     * Get roles. Get roles in the native realm.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-role.html | Elasticsearch API documentation}
     */
-  async getRole (this: That, params?: T.SecurityGetRoleRequest | TB.SecurityGetRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetRoleResponse>
-  async getRole (this: That, params?: T.SecurityGetRoleRequest | TB.SecurityGetRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetRoleResponse, unknown>>
-  async getRole (this: That, params?: T.SecurityGetRoleRequest | TB.SecurityGetRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityGetRoleResponse>
-  async getRole (this: That, params?: T.SecurityGetRoleRequest | TB.SecurityGetRoleRequest, options?: TransportRequestOptions): Promise<any> {
+  async getRole (this: That, params?: T.SecurityGetRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetRoleResponse>
+  async getRole (this: That, params?: T.SecurityGetRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetRoleResponse, unknown>>
+  async getRole (this: That, params?: T.SecurityGetRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityGetRoleResponse>
+  async getRole (this: That, params?: T.SecurityGetRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -1035,7 +986,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1063,10 +1014,10 @@ export default class Security {
     * Get role mappings. Role mappings define which roles are assigned to each user. The role mapping APIs are generally the preferred way to manage role mappings rather than using role mapping files. The get role mappings API cannot retrieve role mappings that are defined in role mapping files.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-role-mapping.html | Elasticsearch API documentation}
     */
-  async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest | TB.SecurityGetRoleMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetRoleMappingResponse>
-  async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest | TB.SecurityGetRoleMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetRoleMappingResponse, unknown>>
-  async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest | TB.SecurityGetRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityGetRoleMappingResponse>
-  async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest | TB.SecurityGetRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
+  async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetRoleMappingResponse>
+  async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetRoleMappingResponse, unknown>>
+  async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityGetRoleMappingResponse>
+  async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -1075,7 +1026,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1103,10 +1054,10 @@ export default class Security {
     * Get service accounts. Get a list of service accounts that match the provided path parameters.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-service-accounts.html | Elasticsearch API documentation}
     */
-  async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest | TB.SecurityGetServiceAccountsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetServiceAccountsResponse>
-  async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest | TB.SecurityGetServiceAccountsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetServiceAccountsResponse, unknown>>
-  async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest | TB.SecurityGetServiceAccountsRequest, options?: TransportRequestOptions): Promise<T.SecurityGetServiceAccountsResponse>
-  async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest | TB.SecurityGetServiceAccountsRequest, options?: TransportRequestOptions): Promise<any> {
+  async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetServiceAccountsResponse>
+  async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetServiceAccountsResponse, unknown>>
+  async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest, options?: TransportRequestOptions): Promise<T.SecurityGetServiceAccountsResponse>
+  async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -1115,7 +1066,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1147,10 +1098,10 @@ export default class Security {
     * Get service account credentials.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-service-credentials.html | Elasticsearch API documentation}
     */
-  async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest | TB.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetServiceCredentialsResponse>
-  async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest | TB.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetServiceCredentialsResponse, unknown>>
-  async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest | TB.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptions): Promise<T.SecurityGetServiceCredentialsResponse>
-  async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest | TB.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptions): Promise<any> {
+  async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetServiceCredentialsResponse>
+  async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetServiceCredentialsResponse, unknown>>
+  async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptions): Promise<T.SecurityGetServiceCredentialsResponse>
+  async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -1158,7 +1109,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1180,10 +1131,10 @@ export default class Security {
     * Retrieve settings for the security system indices
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-settings.html | Elasticsearch API documentation}
     */
-  async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -1192,7 +1143,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         querystring[key] = params[key]
       }
     }
@@ -1209,31 +1160,23 @@ export default class Security {
     * Get a token. Create a bearer token for access without requiring basic authentication.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-token.html | Elasticsearch API documentation}
     */
-  async getToken (this: That, params?: T.SecurityGetTokenRequest | TB.SecurityGetTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetTokenResponse>
-  async getToken (this: That, params?: T.SecurityGetTokenRequest | TB.SecurityGetTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetTokenResponse, unknown>>
-  async getToken (this: That, params?: T.SecurityGetTokenRequest | TB.SecurityGetTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityGetTokenResponse>
-  async getToken (this: That, params?: T.SecurityGetTokenRequest | TB.SecurityGetTokenRequest, options?: TransportRequestOptions): Promise<any> {
+  async getToken (this: That, params?: T.SecurityGetTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetTokenResponse>
+  async getToken (this: That, params?: T.SecurityGetTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetTokenResponse, unknown>>
+  async getToken (this: That, params?: T.SecurityGetTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityGetTokenResponse>
+  async getToken (this: That, params?: T.SecurityGetTokenRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['grant_type', 'scope', 'password', 'kerberos_ticket', 'refresh_token', 'username']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1251,10 +1194,10 @@ export default class Security {
     * Get users. Get information about users in the native realm and built-in users.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-user.html | Elasticsearch API documentation}
     */
-  async getUser (this: That, params?: T.SecurityGetUserRequest | TB.SecurityGetUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserResponse>
-  async getUser (this: That, params?: T.SecurityGetUserRequest | TB.SecurityGetUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetUserResponse, unknown>>
-  async getUser (this: That, params?: T.SecurityGetUserRequest | TB.SecurityGetUserRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserResponse>
-  async getUser (this: That, params?: T.SecurityGetUserRequest | TB.SecurityGetUserRequest, options?: TransportRequestOptions): Promise<any> {
+  async getUser (this: That, params?: T.SecurityGetUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserResponse>
+  async getUser (this: That, params?: T.SecurityGetUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetUserResponse, unknown>>
+  async getUser (this: That, params?: T.SecurityGetUserRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserResponse>
+  async getUser (this: That, params?: T.SecurityGetUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -1263,7 +1206,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1291,10 +1234,10 @@ export default class Security {
     * Get user privileges.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-user-privileges.html | Elasticsearch API documentation}
     */
-  async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest | TB.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserPrivilegesResponse>
-  async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest | TB.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetUserPrivilegesResponse, unknown>>
-  async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest | TB.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserPrivilegesResponse>
-  async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest | TB.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
+  async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserPrivilegesResponse>
+  async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetUserPrivilegesResponse, unknown>>
+  async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserPrivilegesResponse>
+  async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -1303,7 +1246,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1321,10 +1264,10 @@ export default class Security {
     * Get a user profile. Get a user's profile using the unique profile ID.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-user-profile.html | Elasticsearch API documentation}
     */
-  async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest | TB.SecurityGetUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserProfileResponse>
-  async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest | TB.SecurityGetUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetUserProfileResponse, unknown>>
-  async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest | TB.SecurityGetUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserProfileResponse>
-  async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest | TB.SecurityGetUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
+  async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserProfileResponse>
+  async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetUserProfileResponse, unknown>>
+  async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserProfileResponse>
+  async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['uid']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -1332,7 +1275,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1353,30 +1296,22 @@ export default class Security {
     * Grant an API key. Create an API key on behalf of another user. This API is similar to the create API keys API, however it creates the API key for a user that is different than the user that runs the API. The caller must have authentication credentials (either an access token, or a username and password) for the user on whose behalf the API key will be created. It is not possible to use this API to create an API key without that user’s credentials. The user, for whom the authentication credentials is provided, can optionally "run as" (impersonate) another user. In this case, the API key will be created on behalf of the impersonated user. This API is intended be used by applications that need to create and manage API keys for end users, but cannot guarantee that those users have permission to create API keys on their own behalf. A successful grant API key API call returns a JSON structure that contains the API key, its unique id, and its name. If applicable, it also returns expiration information for the API key in milliseconds. By default, API keys never expire. You can specify expiration information when you create the API keys.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-grant-api-key.html | Elasticsearch API documentation}
     */
-  async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest | TB.SecurityGrantApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGrantApiKeyResponse>
-  async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest | TB.SecurityGrantApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGrantApiKeyResponse, unknown>>
-  async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest | TB.SecurityGrantApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityGrantApiKeyResponse>
-  async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest | TB.SecurityGrantApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
+  async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGrantApiKeyResponse>
+  async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGrantApiKeyResponse, unknown>>
+  async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityGrantApiKeyResponse>
+  async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['api_key', 'grant_type', 'access_token', 'username', 'password', 'run_as']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1394,31 +1329,23 @@ export default class Security {
     * Check user privileges. Determine whether the specified user has a specified list of privileges.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-has-privileges.html | Elasticsearch API documentation}
     */
-  async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest | TB.SecurityHasPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityHasPrivilegesResponse>
-  async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest | TB.SecurityHasPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityHasPrivilegesResponse, unknown>>
-  async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest | TB.SecurityHasPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityHasPrivilegesResponse>
-  async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest | TB.SecurityHasPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
+  async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityHasPrivilegesResponse>
+  async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityHasPrivilegesResponse, unknown>>
+  async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityHasPrivilegesResponse>
+  async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['user']
     const acceptedBody: string[] = ['application', 'cluster', 'index']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1446,30 +1373,22 @@ export default class Security {
     * Check user profile privileges. Determine whether the users associated with the specified user profile IDs have all the requested privileges.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-has-privileges-user-profile.html | Elasticsearch API documentation}
     */
-  async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest | TB.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityHasPrivilegesUserProfileResponse>
-  async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest | TB.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityHasPrivilegesUserProfileResponse, unknown>>
-  async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest | TB.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityHasPrivilegesUserProfileResponse>
-  async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest | TB.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
+  async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityHasPrivilegesUserProfileResponse>
+  async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityHasPrivilegesUserProfileResponse, unknown>>
+  async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityHasPrivilegesUserProfileResponse>
+  async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['uids', 'privileges']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1487,31 +1406,23 @@ export default class Security {
     * Invalidate API keys. This API invalidates API keys created by the create API key or grant API key APIs. Invalidated API keys fail authentication, but they can still be viewed using the get API key information and query API key information APIs, for at least the configured retention period, until they are automatically deleted. The `manage_api_key` privilege allows deleting any API keys. The `manage_own_api_key` only allows deleting API keys that are owned by the user. In addition, with the `manage_own_api_key` privilege, an invalidation request must be issued in one of the three formats: - Set the parameter `owner=true`. - Or, set both `username` and `realm_name` to match the user’s identity. - Or, if the request is issued by an API key, that is to say an API key invalidates itself, specify its ID in the `ids` field.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-invalidate-api-key.html | Elasticsearch API documentation}
     */
-  async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest | TB.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityInvalidateApiKeyResponse>
-  async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest | TB.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityInvalidateApiKeyResponse, unknown>>
-  async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest | TB.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityInvalidateApiKeyResponse>
-  async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest | TB.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
+  async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityInvalidateApiKeyResponse>
+  async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityInvalidateApiKeyResponse, unknown>>
+  async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityInvalidateApiKeyResponse>
+  async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['id', 'ids', 'name', 'owner', 'realm_name', 'username']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1529,31 +1440,23 @@ export default class Security {
     * Invalidate a token. The access tokens returned by the get token API have a finite period of time for which they are valid. After that time period, they can no longer be used. The time period is defined by the `xpack.security.authc.token.timeout` setting. The refresh tokens returned by the get token API are only valid for 24 hours. They can also be used exactly once. If you want to invalidate one or more access or refresh tokens immediately, use this invalidate token API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-invalidate-token.html | Elasticsearch API documentation}
     */
-  async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest | TB.SecurityInvalidateTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityInvalidateTokenResponse>
-  async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest | TB.SecurityInvalidateTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityInvalidateTokenResponse, unknown>>
-  async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest | TB.SecurityInvalidateTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityInvalidateTokenResponse>
-  async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest | TB.SecurityInvalidateTokenRequest, options?: TransportRequestOptions): Promise<any> {
+  async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityInvalidateTokenResponse>
+  async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityInvalidateTokenResponse, unknown>>
+  async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityInvalidateTokenResponse>
+  async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['token', 'refresh_token', 'realm_name', 'username']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1571,10 +1474,10 @@ export default class Security {
     * Exchanges an OpenID Connection authentication response message for an Elasticsearch access token and refresh token pair
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-oidc-authenticate.html | Elasticsearch API documentation}
     */
-  async oidcAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async oidcAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async oidcAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async oidcAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async oidcAuthenticate (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async oidcAuthenticate (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async oidcAuthenticate (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async oidcAuthenticate (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -1583,7 +1486,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         querystring[key] = params[key]
       }
     }
@@ -1600,10 +1503,10 @@ export default class Security {
     * Invalidates a refresh token and access token that was generated from the OpenID Connect Authenticate API
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-oidc-logout.html | Elasticsearch API documentation}
     */
-  async oidcLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async oidcLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async oidcLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async oidcLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async oidcLogout (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async oidcLogout (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async oidcLogout (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async oidcLogout (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -1612,7 +1515,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         querystring[key] = params[key]
       }
     }
@@ -1629,10 +1532,10 @@ export default class Security {
     * Creates an OAuth 2.0 authentication request as a URL string
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-oidc-prepare-authentication.html | Elasticsearch API documentation}
     */
-  async oidcPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async oidcPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async oidcPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async oidcPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async oidcPrepareAuthentication (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async oidcPrepareAuthentication (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async oidcPrepareAuthentication (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async oidcPrepareAuthentication (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -1641,7 +1544,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         querystring[key] = params[key]
       }
     }
@@ -1658,15 +1561,14 @@ export default class Security {
     * Create or update application privileges.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-put-privileges.html | Elasticsearch API documentation}
     */
-  async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest | TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutPrivilegesResponse>
-  async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest | TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutPrivilegesResponse, unknown>>
-  async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest | TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityPutPrivilegesResponse>
-  async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest | TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
+  async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutPrivilegesResponse>
+  async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutPrivilegesResponse, unknown>>
+  async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityPutPrivilegesResponse>
+  async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['privileges']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+    let body: any
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1674,7 +1576,7 @@ export default class Security {
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1692,30 +1594,22 @@ export default class Security {
     * Create or update roles. The role management APIs are generally the preferred way to manage roles in the native realm, rather than using file-based role management. The create or update roles API cannot update roles that are defined in roles files. File-based role management is not available in Elastic Serverless.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-put-role.html | Elasticsearch API documentation}
     */
-  async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutRoleResponse>
-  async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutRoleResponse, unknown>>
-  async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityPutRoleResponse>
-  async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptions): Promise<any> {
+  async putRole (this: That, params: T.SecurityPutRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutRoleResponse>
+  async putRole (this: That, params: T.SecurityPutRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutRoleResponse, unknown>>
+  async putRole (this: That, params: T.SecurityPutRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityPutRoleResponse>
+  async putRole (this: That, params: T.SecurityPutRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['applications', 'cluster', 'global', 'indices', 'remote_indices', 'remote_cluster', 'metadata', 'run_as', 'description', 'transient_metadata']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1736,30 +1630,22 @@ export default class Security {
     * Create or update role mappings. Role mappings define which roles are assigned to each user. Each mapping has rules that identify users and a list of roles that are granted to those users. The role mapping APIs are generally the preferred way to manage role mappings rather than using role mapping files. The create or update role mappings API cannot update role mappings that are defined in role mapping files. This API does not create roles. Rather, it maps users to existing roles. Roles can be created by using the create or update roles API or roles files.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-put-role-mapping.html | Elasticsearch API documentation}
     */
-  async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest | TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutRoleMappingResponse>
-  async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest | TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutRoleMappingResponse, unknown>>
-  async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest | TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityPutRoleMappingResponse>
-  async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest | TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
+  async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutRoleMappingResponse>
+  async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutRoleMappingResponse, unknown>>
+  async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityPutRoleMappingResponse>
+  async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['enabled', 'metadata', 'roles', 'role_templates', 'rules', 'run_as']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1780,30 +1666,22 @@ export default class Security {
     * Create or update users. A password is required for adding a new user but is optional when updating an existing user. To change a user’s password without updating any other fields, use the change password API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-put-user.html | Elasticsearch API documentation}
     */
-  async putUser (this: That, params: T.SecurityPutUserRequest | TB.SecurityPutUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutUserResponse>
-  async putUser (this: That, params: T.SecurityPutUserRequest | TB.SecurityPutUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutUserResponse, unknown>>
-  async putUser (this: That, params: T.SecurityPutUserRequest | TB.SecurityPutUserRequest, options?: TransportRequestOptions): Promise<T.SecurityPutUserResponse>
-  async putUser (this: That, params: T.SecurityPutUserRequest | TB.SecurityPutUserRequest, options?: TransportRequestOptions): Promise<any> {
+  async putUser (this: That, params: T.SecurityPutUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutUserResponse>
+  async putUser (this: That, params: T.SecurityPutUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutUserResponse, unknown>>
+  async putUser (this: That, params: T.SecurityPutUserRequest, options?: TransportRequestOptions): Promise<T.SecurityPutUserResponse>
+  async putUser (this: That, params: T.SecurityPutUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['username', 'email', 'full_name', 'metadata', 'password', 'password_hash', 'roles', 'enabled']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1824,31 +1702,23 @@ export default class Security {
     * Find API keys with a query. Get a paginated list of API keys and their information. You can optionally filter the results with a query.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-query-api-key.html | Elasticsearch API documentation}
     */
-  async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryApiKeysResponse>
-  async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryApiKeysResponse, unknown>>
-  async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryApiKeysResponse>
-  async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptions): Promise<any> {
+  async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryApiKeysResponse>
+  async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryApiKeysResponse, unknown>>
+  async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryApiKeysResponse>
+  async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['aggregations', 'aggs', 'query', 'from', 'sort', 'size', 'search_after']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1866,31 +1736,23 @@ export default class Security {
     * Find roles with a query. Get roles in a paginated manner. You can optionally filter the results with a query.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-query-role.html | Elasticsearch API documentation}
     */
-  async queryRole (this: That, params?: T.SecurityQueryRoleRequest | TB.SecurityQueryRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryRoleResponse>
-  async queryRole (this: That, params?: T.SecurityQueryRoleRequest | TB.SecurityQueryRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryRoleResponse, unknown>>
-  async queryRole (this: That, params?: T.SecurityQueryRoleRequest | TB.SecurityQueryRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryRoleResponse>
-  async queryRole (this: That, params?: T.SecurityQueryRoleRequest | TB.SecurityQueryRoleRequest, options?: TransportRequestOptions): Promise<any> {
+  async queryRole (this: That, params?: T.SecurityQueryRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryRoleResponse>
+  async queryRole (this: That, params?: T.SecurityQueryRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryRoleResponse, unknown>>
+  async queryRole (this: That, params?: T.SecurityQueryRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryRoleResponse>
+  async queryRole (this: That, params?: T.SecurityQueryRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['query', 'from', 'sort', 'size', 'search_after']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1908,31 +1770,23 @@ export default class Security {
     * Find users with a query. Get information for users in a paginated manner. You can optionally filter the results with a query.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-query-user.html | Elasticsearch API documentation}
     */
-  async queryUser (this: That, params?: T.SecurityQueryUserRequest | TB.SecurityQueryUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryUserResponse>
-  async queryUser (this: That, params?: T.SecurityQueryUserRequest | TB.SecurityQueryUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryUserResponse, unknown>>
-  async queryUser (this: That, params?: T.SecurityQueryUserRequest | TB.SecurityQueryUserRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryUserResponse>
-  async queryUser (this: That, params?: T.SecurityQueryUserRequest | TB.SecurityQueryUserRequest, options?: TransportRequestOptions): Promise<any> {
+  async queryUser (this: That, params?: T.SecurityQueryUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryUserResponse>
+  async queryUser (this: That, params?: T.SecurityQueryUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryUserResponse, unknown>>
+  async queryUser (this: That, params?: T.SecurityQueryUserRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryUserResponse>
+  async queryUser (this: That, params?: T.SecurityQueryUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['query', 'from', 'sort', 'size', 'search_after']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1950,30 +1804,22 @@ export default class Security {
     * Authenticate SAML. Submits a SAML response message to Elasticsearch for consumption.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-authenticate.html | Elasticsearch API documentation}
     */
-  async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest | TB.SecuritySamlAuthenticateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlAuthenticateResponse>
-  async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest | TB.SecuritySamlAuthenticateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlAuthenticateResponse, unknown>>
-  async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest | TB.SecuritySamlAuthenticateRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlAuthenticateResponse>
-  async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest | TB.SecuritySamlAuthenticateRequest, options?: TransportRequestOptions): Promise<any> {
+  async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlAuthenticateResponse>
+  async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlAuthenticateResponse, unknown>>
+  async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlAuthenticateResponse>
+  async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['content', 'ids', 'realm']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1991,30 +1837,22 @@ export default class Security {
     * Logout of SAML completely. Verifies the logout response sent from the SAML IdP.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-complete-logout.html | Elasticsearch API documentation}
     */
-  async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest | TB.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlCompleteLogoutResponse>
-  async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest | TB.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlCompleteLogoutResponse, unknown>>
-  async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest | TB.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlCompleteLogoutResponse>
-  async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest | TB.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptions): Promise<any> {
+  async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlCompleteLogoutResponse>
+  async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlCompleteLogoutResponse, unknown>>
+  async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlCompleteLogoutResponse>
+  async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['realm', 'ids', 'query_string', 'content']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2032,30 +1870,22 @@ export default class Security {
     * Invalidate SAML. Submits a SAML LogoutRequest message to Elasticsearch for consumption.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-invalidate.html | Elasticsearch API documentation}
     */
-  async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest | TB.SecuritySamlInvalidateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlInvalidateResponse>
-  async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest | TB.SecuritySamlInvalidateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlInvalidateResponse, unknown>>
-  async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest | TB.SecuritySamlInvalidateRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlInvalidateResponse>
-  async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest | TB.SecuritySamlInvalidateRequest, options?: TransportRequestOptions): Promise<any> {
+  async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlInvalidateResponse>
+  async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlInvalidateResponse, unknown>>
+  async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlInvalidateResponse>
+  async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['acs', 'query_string', 'realm']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2073,30 +1903,22 @@ export default class Security {
     * Logout of SAML. Submits a request to invalidate an access token and refresh token.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-logout.html | Elasticsearch API documentation}
     */
-  async samlLogout (this: That, params: T.SecuritySamlLogoutRequest | TB.SecuritySamlLogoutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlLogoutResponse>
-  async samlLogout (this: That, params: T.SecuritySamlLogoutRequest | TB.SecuritySamlLogoutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlLogoutResponse, unknown>>
-  async samlLogout (this: That, params: T.SecuritySamlLogoutRequest | TB.SecuritySamlLogoutRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlLogoutResponse>
-  async samlLogout (this: That, params: T.SecuritySamlLogoutRequest | TB.SecuritySamlLogoutRequest, options?: TransportRequestOptions): Promise<any> {
+  async samlLogout (this: That, params: T.SecuritySamlLogoutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlLogoutResponse>
+  async samlLogout (this: That, params: T.SecuritySamlLogoutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlLogoutResponse, unknown>>
+  async samlLogout (this: That, params: T.SecuritySamlLogoutRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlLogoutResponse>
+  async samlLogout (this: That, params: T.SecuritySamlLogoutRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['token', 'refresh_token']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2114,31 +1936,23 @@ export default class Security {
     * Prepare SAML authentication. Creates a SAML authentication request (`<AuthnRequest>`) as a URL string, based on the configuration of the respective SAML realm in Elasticsearch.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-prepare-authentication.html | Elasticsearch API documentation}
     */
-  async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest | TB.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlPrepareAuthenticationResponse>
-  async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest | TB.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlPrepareAuthenticationResponse, unknown>>
-  async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest | TB.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlPrepareAuthenticationResponse>
-  async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest | TB.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptions): Promise<any> {
+  async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlPrepareAuthenticationResponse>
+  async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlPrepareAuthenticationResponse, unknown>>
+  async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlPrepareAuthenticationResponse>
+  async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['acs', 'realm', 'relay_state']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2156,10 +1970,10 @@ export default class Security {
     * Create SAML service provider metadata. Generate SAML metadata for a SAML 2.0 Service Provider.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-sp-metadata.html | Elasticsearch API documentation}
     */
-  async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest | TB.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlServiceProviderMetadataResponse>
-  async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest | TB.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlServiceProviderMetadataResponse, unknown>>
-  async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest | TB.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlServiceProviderMetadataResponse>
-  async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest | TB.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptions): Promise<any> {
+  async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlServiceProviderMetadataResponse>
+  async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlServiceProviderMetadataResponse, unknown>>
+  async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlServiceProviderMetadataResponse>
+  async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['realm_name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -2167,7 +1981,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2188,31 +2002,23 @@ export default class Security {
     * Suggest a user profile. Get suggestions for user profiles that match specified search criteria.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-suggest-user-profile.html | Elasticsearch API documentation}
     */
-  async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest | TB.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySuggestUserProfilesResponse>
-  async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest | TB.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySuggestUserProfilesResponse, unknown>>
-  async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest | TB.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptions): Promise<T.SecuritySuggestUserProfilesResponse>
-  async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest | TB.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptions): Promise<any> {
+  async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySuggestUserProfilesResponse>
+  async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySuggestUserProfilesResponse, unknown>>
+  async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptions): Promise<T.SecuritySuggestUserProfilesResponse>
+  async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['name', 'size', 'data', 'hint']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2230,30 +2036,22 @@ export default class Security {
     * Update an API key. Updates attributes of an existing API key. Users can only update API keys that they created or that were granted to them. Use this API to update API keys created by the create API Key or grant API Key APIs. If you need to apply the same update to many API keys, you can use bulk update API Keys to reduce overhead. It’s not possible to update expired API keys, or API keys that have been invalidated by invalidate API Key. This API supports updates to an API key’s access scope and metadata. The access scope of an API key is derived from the `role_descriptors` you specify in the request, and a snapshot of the owner user’s permissions at the time of the request. The snapshot of the owner’s permissions is updated automatically on every call. If you don’t specify `role_descriptors` in the request, a call to this API might still change the API key’s access scope. This change can occur if the owner user’s permissions have changed since the API key was created or last modified. To update another user’s API key, use the `run_as` feature to submit a request on behalf of another user. IMPORTANT: It’s not possible to use an API key as the authentication credential for this API. To update an API key, the owner user’s credentials are required.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-update-api-key.html | Elasticsearch API documentation}
     */
-  async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest | TB.SecurityUpdateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityUpdateApiKeyResponse>
-  async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest | TB.SecurityUpdateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityUpdateApiKeyResponse, unknown>>
-  async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest | TB.SecurityUpdateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateApiKeyResponse>
-  async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest | TB.SecurityUpdateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
+  async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityUpdateApiKeyResponse>
+  async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityUpdateApiKeyResponse, unknown>>
+  async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateApiKeyResponse>
+  async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['role_descriptors', 'metadata', 'expiration']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2274,30 +2072,22 @@ export default class Security {
     * Update a cross-cluster API key. Update the attributes of an existing cross-cluster API key, which is used for API key based remote cluster access.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-update-cross-cluster-api-key.html | Elasticsearch API documentation}
     */
-  async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest | TB.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityUpdateCrossClusterApiKeyResponse>
-  async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest | TB.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityUpdateCrossClusterApiKeyResponse, unknown>>
-  async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest | TB.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateCrossClusterApiKeyResponse>
-  async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest | TB.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
+  async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityUpdateCrossClusterApiKeyResponse>
+  async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityUpdateCrossClusterApiKeyResponse, unknown>>
+  async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateCrossClusterApiKeyResponse>
+  async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['access', 'expiration', 'metadata']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2318,10 +2108,10 @@ export default class Security {
     * Update settings for the security system index
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-update-settings.html | Elasticsearch API documentation}
     */
-  async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async updateSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async updateSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async updateSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async updateSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -2330,7 +2120,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         querystring[key] = params[key]
       }
     }
@@ -2347,30 +2137,22 @@ export default class Security {
     * Update user profile data. Update specific data for the user profile that is associated with a unique ID.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-update-user-profile-data.html | Elasticsearch API documentation}
     */
-  async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest | TB.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityUpdateUserProfileDataResponse>
-  async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest | TB.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityUpdateUserProfileDataResponse, unknown>>
-  async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest | TB.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateUserProfileDataResponse>
-  async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest | TB.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptions): Promise<any> {
+  async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityUpdateUserProfileDataResponse>
+  async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityUpdateUserProfileDataResponse, unknown>>
+  async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateUserProfileDataResponse>
+  async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['uid']
     const acceptedBody: string[] = ['labels', 'data']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body: Record<string, any> = {}
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else {
         // @ts-expect-error
         querystring[key] = params[key]
       }
