@@ -6674,7 +6674,6 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   index?: Indices
   wait_for_completion_timeout?: Duration
   keep_on_completion?: boolean
-  keep_alive?: Duration
   allow_no_indices?: boolean
   allow_partial_search_results?: boolean
   analyzer?: string
@@ -6690,7 +6689,6 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   max_concurrent_shard_requests?: long
   min_compatible_shard_node?: VersionString
   preference?: string
-  pre_filter_shard_size?: long
   request_cache?: boolean
   routing?: Routing
   search_type?: SearchType
@@ -11021,8 +11019,8 @@ export interface IndicesMappingLimitSettingsNestedObjects {
 }
 
 export interface IndicesMappingLimitSettingsTotalFields {
-  limit?: long
-  ignore_dynamic_beyond_limit?: boolean
+  limit?: long | string
+  ignore_dynamic_beyond_limit?: boolean | string
 }
 
 export interface IndicesMerge {
@@ -13342,10 +13340,12 @@ export interface LogstashPutPipelineRequest extends RequestBase {
 export type LogstashPutPipelineResponse = boolean
 
 export interface MigrationDeprecationsDeprecation {
-  details: string
+  details?: string
   level: MigrationDeprecationsDeprecationLevel
   message: string
   url: string
+  resolve_during_rolling_upgrade: boolean
+  _meta?: Record<string, any>
 }
 
 export type MigrationDeprecationsDeprecationLevel = 'none' | 'info' | 'warning' | 'critical'
@@ -16509,7 +16509,7 @@ export interface NodesInfoNodeInfoPath {
   logs?: string
   home?: string
   repo?: string[]
-  data?: string[]
+  data?: string | string[]
 }
 
 export interface NodesInfoNodeInfoRepositories {
