@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Returns number of documents matching a query.
+  * Count search results. Get the number of documents matching a query.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/search-count.html | Elasticsearch API documentation}
   */
 export default async function CountApi (this: That, params?: T.CountRequest | TB.CountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CountResponse>
