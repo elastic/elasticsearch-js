@@ -705,7 +705,7 @@ export default class Indices {
   }
 
   /**
-    * Returns information about whether a particular index template exists.
+    * Check index templates. Check whether index templates exist.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/index-templates.html | Elasticsearch API documentation}
     */
   async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest | TB.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsIndexTemplateResponse>
@@ -1824,7 +1824,7 @@ export default class Indices {
   }
 
   /**
-    * Resolves the specified name(s) and/or index patterns for indices, aliases, and data streams. Multiple patterns and remote clusters are supported.
+    * Resolve indices. Resolve the names and/or index patterns for indices, aliases, and data streams. Multiple patterns and remote clusters are supported.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/indices-resolve-index-api.html | Elasticsearch API documentation}
     */
   async resolveIndex (this: That, params: T.IndicesResolveIndexRequest | TB.IndicesResolveIndexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesResolveIndexResponse>

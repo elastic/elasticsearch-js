@@ -45,7 +45,7 @@ export default class Eql {
   }
 
   /**
-    * Deletes an async EQL search or a stored synchronous EQL search. The API also deletes results for the search.
+    * Delete an async EQL search. Delete an async EQL search or a stored synchronous EQL search. The API also deletes results for the search.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/eql-search-api.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.EqlDeleteRequest | TB.EqlDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlDeleteResponse>
@@ -77,7 +77,7 @@ export default class Eql {
   }
 
   /**
-    * Returns the current status and available results for an async EQL search or a stored synchronous EQL search.
+    * Get async EQL search results. Get the current status and available results for an async EQL search or a stored synchronous EQL search.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/get-async-eql-search-api.html | Elasticsearch API documentation}
     */
   async get<TEvent = unknown> (this: That, params: T.EqlGetRequest | TB.EqlGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetResponse<TEvent>>
@@ -109,7 +109,7 @@ export default class Eql {
   }
 
   /**
-    * Returns the current status for an async EQL search or a stored synchronous EQL search without returning results.
+    * Get the async EQL status. Get the current status for an async EQL search or a stored synchronous EQL search without returning results.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/get-async-eql-status-api.html | Elasticsearch API documentation}
     */
   async getStatus (this: That, params: T.EqlGetStatusRequest | TB.EqlGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetStatusResponse>
@@ -141,7 +141,7 @@ export default class Eql {
   }
 
   /**
-    * Returns results matching a query expressed in Event Query Language (EQL)
+    * Get EQL search results. Returns search results for an Event Query Language (EQL) query. EQL assumes each document in a data stream or index corresponds to an event.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/eql-search-api.html | Elasticsearch API documentation}
     */
   async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest | TB.EqlSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlSearchResponse<TEvent>>

@@ -13334,10 +13334,12 @@ export interface LogstashPutPipelineRequest extends RequestBase {
 export type LogstashPutPipelineResponse = boolean
 
 export interface MigrationDeprecationsDeprecation {
-  details: string
+  details?: string
   level: MigrationDeprecationsDeprecationLevel
   message: string
   url: string
+  resolve_during_rolling_upgrade: boolean
+  _meta?: Record<string, any>
 }
 
 export type MigrationDeprecationsDeprecationLevel = 'none' | 'info' | 'warning' | 'critical'
@@ -16500,7 +16502,7 @@ export interface NodesInfoNodeInfoPath {
   logs?: string
   home?: string
   repo?: string[]
-  data?: string[]
+  data?: string | string[]
 }
 
 export interface NodesInfoNodeInfoRepositories {
