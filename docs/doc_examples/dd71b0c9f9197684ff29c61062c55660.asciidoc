@@ -3,6 +3,9 @@
 
 [source, js]
 ----
-const response = await client.security.getSettings();
+const response = await client.transport.request({
+  method: "GET",
+  path: "/_security/settings",
+});
 console.log(response);
 ----

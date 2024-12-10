@@ -46,7 +46,7 @@ export default class Rollup {
 
   /**
     * Deletes an existing rollup job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-delete-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/rollup-delete-job.html | Elasticsearch API documentation}
     */
   async deleteJob (this: That, params: T.RollupDeleteJobRequest | TB.RollupDeleteJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupDeleteJobResponse>
   async deleteJob (this: That, params: T.RollupDeleteJobRequest | TB.RollupDeleteJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupDeleteJobResponse, unknown>>
@@ -78,7 +78,7 @@ export default class Rollup {
 
   /**
     * Retrieves the configuration, stats, and status of rollup jobs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/rollup-get-job.html | Elasticsearch API documentation}
     */
   async getJobs (this: That, params?: T.RollupGetJobsRequest | TB.RollupGetJobsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetJobsResponse>
   async getJobs (this: That, params?: T.RollupGetJobsRequest | TB.RollupGetJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetJobsResponse, unknown>>
@@ -118,7 +118,7 @@ export default class Rollup {
 
   /**
     * Returns the capabilities of any rollup jobs that have been configured for a specific index or index pattern.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-rollup-caps.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/rollup-get-rollup-caps.html | Elasticsearch API documentation}
     */
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest | TB.RollupGetRollupCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetRollupCapsResponse>
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest | TB.RollupGetRollupCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetRollupCapsResponse, unknown>>
@@ -158,7 +158,7 @@ export default class Rollup {
 
   /**
     * Returns the rollup capabilities of all jobs inside of a rollup index (for example, the index where rollup data is stored).
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-rollup-index-caps.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/rollup-get-rollup-index-caps.html | Elasticsearch API documentation}
     */
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest | TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetRollupIndexCapsResponse>
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest | TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetRollupIndexCapsResponse, unknown>>
@@ -190,7 +190,7 @@ export default class Rollup {
 
   /**
     * Creates a rollup job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-put-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/rollup-put-job.html | Elasticsearch API documentation}
     */
   async putJob (this: That, params: T.RollupPutJobRequest | TB.RollupPutJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupPutJobResponse>
   async putJob (this: That, params: T.RollupPutJobRequest | TB.RollupPutJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupPutJobResponse, unknown>>
@@ -234,7 +234,7 @@ export default class Rollup {
 
   /**
     * Enables searching rolled-up data using the standard Query DSL.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-search.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/rollup-search.html | Elasticsearch API documentation}
     */
   async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupRollupSearchResponse<TDocument, TAggregations>>
   async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupRollupSearchResponse<TDocument, TAggregations>, unknown>>
@@ -278,7 +278,7 @@ export default class Rollup {
 
   /**
     * Starts an existing, stopped rollup job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-start-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/rollup-start-job.html | Elasticsearch API documentation}
     */
   async startJob (this: That, params: T.RollupStartJobRequest | TB.RollupStartJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupStartJobResponse>
   async startJob (this: That, params: T.RollupStartJobRequest | TB.RollupStartJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupStartJobResponse, unknown>>
@@ -310,7 +310,7 @@ export default class Rollup {
 
   /**
     * Stops an existing, started rollup job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-stop-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/rollup-stop-job.html | Elasticsearch API documentation}
     */
   async stopJob (this: That, params: T.RollupStopJobRequest | TB.RollupStopJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupStopJobResponse>
   async stopJob (this: That, params: T.RollupStopJobRequest | TB.RollupStopJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupStopJobResponse, unknown>>

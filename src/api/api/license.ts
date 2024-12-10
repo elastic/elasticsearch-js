@@ -46,7 +46,7 @@ export default class License {
 
   /**
     * Deletes licensing information for the cluster
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-license.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/delete-license.html | Elasticsearch API documentation}
     */
   async delete (this: That, params?: T.LicenseDeleteRequest | TB.LicenseDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseDeleteResponse>
   async delete (this: That, params?: T.LicenseDeleteRequest | TB.LicenseDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicenseDeleteResponse, unknown>>
@@ -76,7 +76,7 @@ export default class License {
 
   /**
     * Get license information. Returns information about your Elastic license, including its type, its status, when it was issued, and when it expires. For more information about the different types of licenses, refer to [Elastic Stack subscriptions](https://www.elastic.co/subscriptions).
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-license.html | Elasticsearch API documentation}
     */
   async get (this: That, params?: T.LicenseGetRequest | TB.LicenseGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseGetResponse>
   async get (this: That, params?: T.LicenseGetRequest | TB.LicenseGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicenseGetResponse, unknown>>
@@ -106,7 +106,7 @@ export default class License {
 
   /**
     * Retrieves information about the status of the basic license.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-basic-status.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-basic-status.html | Elasticsearch API documentation}
     */
   async getBasicStatus (this: That, params?: T.LicenseGetBasicStatusRequest | TB.LicenseGetBasicStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseGetBasicStatusResponse>
   async getBasicStatus (this: That, params?: T.LicenseGetBasicStatusRequest | TB.LicenseGetBasicStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicenseGetBasicStatusResponse, unknown>>
@@ -136,7 +136,7 @@ export default class License {
 
   /**
     * Retrieves information about the status of the trial license.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-trial-status.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-trial-status.html | Elasticsearch API documentation}
     */
   async getTrialStatus (this: That, params?: T.LicenseGetTrialStatusRequest | TB.LicenseGetTrialStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseGetTrialStatusResponse>
   async getTrialStatus (this: That, params?: T.LicenseGetTrialStatusRequest | TB.LicenseGetTrialStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicenseGetTrialStatusResponse, unknown>>
@@ -166,7 +166,7 @@ export default class License {
 
   /**
     * Updates the license for the cluster.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-license.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/update-license.html | Elasticsearch API documentation}
     */
   async post (this: That, params?: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostResponse>
   async post (this: That, params?: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicensePostResponse, unknown>>
@@ -208,7 +208,7 @@ export default class License {
 
   /**
     * The start basic API enables you to initiate an indefinite basic license, which gives access to all the basic features. If the basic license does not support all of the features that are available with your current license, however, you are notified in the response. You must then re-submit the API request with the acknowledge parameter set to true. To check the status of your basic license, use the following API: [Get basic status](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-basic-status.html).
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/start-basic.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/start-basic.html | Elasticsearch API documentation}
     */
   async postStartBasic (this: That, params?: T.LicensePostStartBasicRequest | TB.LicensePostStartBasicRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostStartBasicResponse>
   async postStartBasic (this: That, params?: T.LicensePostStartBasicRequest | TB.LicensePostStartBasicRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicensePostStartBasicResponse, unknown>>
@@ -238,7 +238,7 @@ export default class License {
 
   /**
     * The start trial API enables you to start a 30-day trial, which gives access to all subscription features.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trial.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/start-trial.html | Elasticsearch API documentation}
     */
   async postStartTrial (this: That, params?: T.LicensePostStartTrialRequest | TB.LicensePostStartTrialRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostStartTrialResponse>
   async postStartTrial (this: That, params?: T.LicensePostStartTrialRequest | TB.LicensePostStartTrialRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicensePostStartTrialResponse, unknown>>

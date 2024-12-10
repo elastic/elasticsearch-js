@@ -3,7 +3,9 @@
 
 [source, js]
 ----
-const response = await client.textStructure.findMessageStructure({
+const response = await client.transport.request({
+  method: "POST",
+  path: "/_text_structure/find_message_structure",
   body: {
     messages: [
       "[2024-03-05T10:52:36,256][INFO ][o.a.l.u.VectorUtilPanamaProvider] [laptop] Java vector incubator API enabled; uses preferredBitSize=128",

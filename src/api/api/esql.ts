@@ -46,7 +46,7 @@ export default class Esql {
 
   /**
     * Executes an ESQL request asynchronously
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-async-query-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/esql-async-query-api.html | Elasticsearch API documentation}
     */
   async asyncQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async asyncQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -75,7 +75,7 @@ export default class Esql {
 
   /**
     * Retrieves the results of a previously submitted async query request given its ID.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-async-query-get-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/esql-async-query-get-api.html | Elasticsearch API documentation}
     */
   async asyncQueryGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async asyncQueryGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -106,8 +106,8 @@ export default class Esql {
   }
 
   /**
-    * Executes an ES|QL request
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-rest.html | Elasticsearch API documentation}
+    * Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query language) query.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/esql-rest.html | Elasticsearch API documentation}
     */
   async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlQueryResponse>
   async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlQueryResponse, unknown>>
