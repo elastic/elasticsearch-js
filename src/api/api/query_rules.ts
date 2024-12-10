@@ -45,7 +45,7 @@ export default class QueryRules {
   }
 
   /**
-    * Deletes a query rule within a query ruleset.
+    * Delete a query rule. Delete a query rule within a query ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/delete-query-rule.html | Elasticsearch API documentation}
     */
   async deleteRule (this: That, params: T.QueryRulesDeleteRuleRequest | TB.QueryRulesDeleteRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesDeleteRuleResponse>
@@ -78,7 +78,7 @@ export default class QueryRules {
   }
 
   /**
-    * Deletes a query ruleset.
+    * Delete a query ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/delete-query-ruleset.html | Elasticsearch API documentation}
     */
   async deleteRuleset (this: That, params: T.QueryRulesDeleteRulesetRequest | TB.QueryRulesDeleteRulesetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesDeleteRulesetResponse>
@@ -110,7 +110,7 @@ export default class QueryRules {
   }
 
   /**
-    * Returns the details about a query rule within a query ruleset
+    * Get a query rule. Get details about a query rule within a query ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/get-query-rule.html | Elasticsearch API documentation}
     */
   async getRule (this: That, params: T.QueryRulesGetRuleRequest | TB.QueryRulesGetRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesGetRuleResponse>
@@ -143,7 +143,7 @@ export default class QueryRules {
   }
 
   /**
-    * Returns the details about a query ruleset
+    * Get a query ruleset. Get details about a query ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/get-query-ruleset.html | Elasticsearch API documentation}
     */
   async getRuleset (this: That, params: T.QueryRulesGetRulesetRequest | TB.QueryRulesGetRulesetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesGetRulesetResponse>
@@ -175,7 +175,7 @@ export default class QueryRules {
   }
 
   /**
-    * Returns summarized information about existing query rulesets.
+    * Get all query rulesets. Get summarized information about the query rulesets.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/list-query-rulesets.html | Elasticsearch API documentation}
     */
   async listRulesets (this: That, params?: T.QueryRulesListRulesetsRequest | TB.QueryRulesListRulesetsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesListRulesetsResponse>
@@ -205,7 +205,7 @@ export default class QueryRules {
   }
 
   /**
-    * Creates or updates a query rule within a query ruleset.
+    * Create or update a query rule. Create or update a query rule within a query ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/put-query-rule.html | Elasticsearch API documentation}
     */
   async putRule (this: That, params: T.QueryRulesPutRuleRequest | TB.QueryRulesPutRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesPutRuleResponse>
@@ -250,7 +250,7 @@ export default class QueryRules {
   }
 
   /**
-    * Creates or updates a query ruleset.
+    * Create or update a query ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/put-query-ruleset.html | Elasticsearch API documentation}
     */
   async putRuleset (this: That, params: T.QueryRulesPutRulesetRequest | TB.QueryRulesPutRulesetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesPutRulesetResponse>
@@ -294,7 +294,7 @@ export default class QueryRules {
   }
 
   /**
-    * Creates or updates a query ruleset.
+    * Test a query ruleset. Evaluate match criteria against a query ruleset to identify the rules that would match that criteria.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/test-query-ruleset.html | Elasticsearch API documentation}
     */
   async test (this: That, params: T.QueryRulesTestRequest | TB.QueryRulesTestRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesTestResponse>

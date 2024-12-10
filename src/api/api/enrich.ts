@@ -77,7 +77,7 @@ export default class Enrich {
   }
 
   /**
-    * Creates the enrich index for an existing enrich policy.
+    * Run an enrich policy. Create the enrich index for an existing enrich policy.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/execute-enrich-policy-api.html | Elasticsearch API documentation}
     */
   async executePolicy (this: That, params: T.EnrichExecutePolicyRequest | TB.EnrichExecutePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichExecutePolicyResponse>

@@ -106,7 +106,7 @@ export default class Esql {
   }
 
   /**
-    * Executes an ES|QL request
+    * Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query language) query.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/esql-rest.html | Elasticsearch API documentation}
     */
   async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlQueryResponse>

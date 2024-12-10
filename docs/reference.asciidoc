@@ -96,7 +96,8 @@ client.closePointInTime({ id })
 
 [discrete]
 === count
-Returns number of documents matching a query.
+Count search results.
+Get the number of documents matching a query.
 
 {ref}/search-count.html[Endpoint documentation]
 [source,ts]
@@ -3563,7 +3564,8 @@ client.enrich.deletePolicy({ name })
 
 [discrete]
 ==== execute_policy
-Creates the enrich index for an existing enrich policy.
+Run an enrich policy.
+Create the enrich index for an existing enrich policy.
 
 {ref}/execute-enrich-policy-api.html[Endpoint documentation]
 [source,ts]
@@ -3632,7 +3634,8 @@ client.enrich.stats()
 === eql
 [discrete]
 ==== delete
-Deletes an async EQL search or a stored synchronous EQL search.
+Delete an async EQL search.
+Delete an async EQL search or a stored synchronous EQL search.
 The API also deletes results for the search.
 
 {ref}/eql-search-api.html[Endpoint documentation]
@@ -3651,7 +3654,8 @@ A search ID is also provided if the request’s `keep_on_completion` parameter i
 
 [discrete]
 ==== get
-Returns the current status and available results for an async EQL search or a stored synchronous EQL search.
+Get async EQL search results.
+Get the current status and available results for an async EQL search or a stored synchronous EQL search.
 
 {ref}/get-async-eql-search-api.html[Endpoint documentation]
 [source,ts]
@@ -3671,7 +3675,8 @@ Defaults to no timeout, meaning the request waits for complete search results.
 
 [discrete]
 ==== get_status
-Returns the current status for an async EQL search or a stored synchronous EQL search without returning results.
+Get the async EQL status.
+Get the current status for an async EQL search or a stored synchronous EQL search without returning results.
 
 {ref}/get-async-eql-status-api.html[Endpoint documentation]
 [source,ts]
@@ -3687,7 +3692,9 @@ client.eql.getStatus({ id })
 
 [discrete]
 ==== search
-Returns results matching a query expressed in Event Query Language (EQL)
+Get EQL search results.
+Returns search results for an Event Query Language (EQL) query.
+EQL assumes each document in a data stream or index corresponds to an event.
 
 {ref}/eql-search-api.html[Endpoint documentation]
 [source,ts]
@@ -3744,7 +3751,8 @@ client.esql.asyncQueryGet()
 
 [discrete]
 ==== query
-Executes an ES|QL request
+Run an ES|QL query.
+Get search results for an ES|QL (Elasticsearch query language) query.
 
 {ref}/esql-rest.html[Endpoint documentation]
 [source,ts]
@@ -3963,7 +3971,12 @@ which is true by default.
 === graph
 [discrete]
 ==== explore
-Extracts and summarizes information about the documents and terms in an Elasticsearch data stream or index.
+Explore graph analytics.
+Extract and summarize information about the documents and terms in an Elasticsearch data stream or index.
+The easiest way to understand the behavior of this API is to use the Graph UI to explore connections.
+An initial request to the `_explore` API contains a seed query that identifies the documents of interest and specifies the fields that define the vertices and connections you want to include in the graph.
+Subsequent requests enable you to spider out from one more vertices of interest.
+You can exclude vertices that have already been returned.
 
 {ref}/graph-explore-api.html[Endpoint documentation]
 [source,ts]
@@ -4633,7 +4646,8 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 
 [discrete]
 ==== exists_index_template
-Returns information about whether a particular index template exists.
+Check index templates.
+Check whether index templates exist.
 
 {ref}/index-templates.html[Endpoint documentation]
 [source,ts]
@@ -5447,7 +5461,8 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 
 [discrete]
 ==== resolve_index
-Resolves the specified name(s) and/or index patterns for indices, aliases, and data streams.
+Resolve indices.
+Resolve the names and/or index patterns for indices, aliases, and data streams.
 Multiple patterns and remote clusters are supported.
 
 {ref}/indices-resolve-index-api.html[Endpoint documentation]
@@ -5884,7 +5899,8 @@ client.inference.streamInference()
 === ingest
 [discrete]
 ==== delete_geoip_database
-Deletes a geoip database configuration.
+Delete GeoIP database configurations.
+Delete one or more IP geolocation database configurations.
 
 {ref}/delete-geoip-database-api.html[Endpoint documentation]
 [source,ts]
@@ -5914,7 +5930,8 @@ client.ingest.deleteIpLocationDatabase()
 
 [discrete]
 ==== delete_pipeline
-Deletes one or more existing ingest pipeline.
+Delete pipelines.
+Delete one or more ingest pipelines.
 
 {ref}/delete-pipeline-api.html[Endpoint documentation]
 [source,ts]
@@ -5935,7 +5952,8 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== geo_ip_stats
-Gets download statistics for GeoIP2 databases used with the geoip processor.
+Get GeoIP statistics.
+Get download statistics for GeoIP2 databases that are used with the GeoIP processor.
 
 {ref}/geoip-processor.html[Endpoint documentation]
 [source,ts]
@@ -5946,7 +5964,8 @@ client.ingest.geoIpStats()
 
 [discrete]
 ==== get_geoip_database
-Returns information about one or more geoip database configurations.
+Get GeoIP database configurations.
+Get information about one or more IP geolocation database configurations.
 
 {ref}/get-geoip-database-api.html[Endpoint documentation]
 [source,ts]
@@ -5977,7 +5996,8 @@ client.ingest.getIpLocationDatabase()
 
 [discrete]
 ==== get_pipeline
-Returns information about one or more ingest pipelines.
+Get pipelines.
+Get information about one or more ingest pipelines.
 This API returns a local reference of the pipeline.
 
 {ref}/get-pipeline-api.html[Endpoint documentation]
@@ -5999,8 +6019,9 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== processor_grok
-Extracts structured fields out of a single text field within a document.
-You choose which field to extract matched fields from, as well as the grok pattern you expect will match.
+Run a grok processor.
+Extract structured fields out of a single text field within a document.
+You must choose which field to extract matched fields from, as well as the grok pattern you expect will match.
 A grok pattern is like a regular expression that supports aliased expressions that can be reused.
 
 {ref}/grok-processor.html[Endpoint documentation]
@@ -6012,7 +6033,8 @@ client.ingest.processorGrok()
 
 [discrete]
 ==== put_geoip_database
-Returns information about one or more geoip database configurations.
+Create or update GeoIP database configurations.
+Create or update IP geolocation database configurations.
 
 {ref}/put-geoip-database-api.html[Endpoint documentation]
 [source,ts]
@@ -6045,7 +6067,7 @@ client.ingest.putIpLocationDatabase()
 
 [discrete]
 ==== put_pipeline
-Creates or updates an ingest pipeline.
+Create or update a pipeline.
 Changes made using this API take effect immediately.
 
 {ref}/ingest.html[Endpoint documentation]
@@ -6072,7 +6094,9 @@ When a deprecated ingest pipeline is referenced as the default or final pipeline
 
 [discrete]
 ==== simulate
-Executes an ingest pipeline against a set of provided documents.
+Simulate a pipeline.
+Run an ingest pipeline against a set of provided documents.
+You can either specify an existing pipeline to use with the provided documents or supply a pipeline definition in the body of the request.
 
 {ref}/simulate-pipeline-api.html[Endpoint documentation]
 [source,ts]
@@ -8545,7 +8569,8 @@ If no response is received before the timeout expires, the request fails and ret
 === query_rules
 [discrete]
 ==== delete_rule
-Deletes a query rule within a query ruleset.
+Delete a query rule.
+Delete a query rule within a query ruleset.
 
 {ref}/delete-query-rule.html[Endpoint documentation]
 [source,ts]
@@ -8562,7 +8587,7 @@ client.queryRules.deleteRule({ ruleset_id, rule_id })
 
 [discrete]
 ==== delete_ruleset
-Deletes a query ruleset.
+Delete a query ruleset.
 
 {ref}/delete-query-ruleset.html[Endpoint documentation]
 [source,ts]
@@ -8578,7 +8603,8 @@ client.queryRules.deleteRuleset({ ruleset_id })
 
 [discrete]
 ==== get_rule
-Returns the details about a query rule within a query ruleset
+Get a query rule.
+Get details about a query rule within a query ruleset.
 
 {ref}/get-query-rule.html[Endpoint documentation]
 [source,ts]
@@ -8595,7 +8621,8 @@ client.queryRules.getRule({ ruleset_id, rule_id })
 
 [discrete]
 ==== get_ruleset
-Returns the details about a query ruleset
+Get a query ruleset.
+Get details about a query ruleset.
 
 {ref}/get-query-ruleset.html[Endpoint documentation]
 [source,ts]
@@ -8611,7 +8638,8 @@ client.queryRules.getRuleset({ ruleset_id })
 
 [discrete]
 ==== list_rulesets
-Returns summarized information about existing query rulesets.
+Get all query rulesets.
+Get summarized information about the query rulesets.
 
 {ref}/list-query-rulesets.html[Endpoint documentation]
 [source,ts]
@@ -8628,7 +8656,8 @@ client.queryRules.listRulesets({ ... })
 
 [discrete]
 ==== put_rule
-Creates or updates a query rule within a query ruleset.
+Create or update a query rule.
+Create or update a query rule within a query ruleset.
 
 {ref}/put-query-rule.html[Endpoint documentation]
 [source,ts]
@@ -8649,7 +8678,7 @@ client.queryRules.putRule({ ruleset_id, rule_id, type, criteria, actions })
 
 [discrete]
 ==== put_ruleset
-Creates or updates a query ruleset.
+Create or update a query ruleset.
 
 {ref}/put-query-ruleset.html[Endpoint documentation]
 [source,ts]
@@ -8666,7 +8695,8 @@ client.queryRules.putRuleset({ ruleset_id, rules })
 
 [discrete]
 ==== test
-Creates or updates a query ruleset.
+Test a query ruleset.
+Evaluate match criteria against a query ruleset to identify the rules that would match that criteria.
 
 {ref}/test-query-ruleset.html[Endpoint documentation]
 [source,ts]
@@ -10931,7 +10961,7 @@ client.snapshot.verifyRepository({ repository })
 === sql
 [discrete]
 ==== clear_cursor
-Clears the SQL cursor
+Clear an SQL search cursor.
 
 {ref}/clear-sql-cursor-api.html[Endpoint documentation]
 [source,ts]
@@ -10947,7 +10977,9 @@ client.sql.clearCursor({ cursor })
 
 [discrete]
 ==== delete_async
-Deletes an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it.
+Delete an async SQL search.
+Delete an async SQL search or a stored synchronous SQL search.
+If the search is still running, the API cancels it.
 
 {ref}/delete-async-sql-search-api.html[Endpoint documentation]
 [source,ts]
@@ -10963,7 +10995,8 @@ client.sql.deleteAsync({ id })
 
 [discrete]
 ==== get_async
-Returns the current status and available results for an async SQL search or stored synchronous SQL search
+Get async SQL search results.
+Get the current status and available results for an async SQL search or stored synchronous SQL search.
 
 {ref}/get-async-sql-search-api.html[Endpoint documentation]
 [source,ts]
@@ -10986,7 +11019,8 @@ meaning the request waits for complete search results.
 
 [discrete]
 ==== get_async_status
-Returns the current status of an async SQL search or a stored synchronous SQL search
+Get the async SQL search status.
+Get the current status of an async SQL search or a stored synchronous SQL search.
 
 {ref}/get-async-sql-search-status-api.html[Endpoint documentation]
 [source,ts]
@@ -11002,7 +11036,8 @@ client.sql.getAsyncStatus({ id })
 
 [discrete]
 ==== query
-Executes a SQL request
+Get SQL search results.
+Run an SQL request.
 
 {ref}/sql-search-api.html[Endpoint documentation]
 [source,ts]
@@ -11037,7 +11072,8 @@ precedence over mapped fields with the same name.
 
 [discrete]
 ==== translate
-Translates SQL into Elasticsearch queries
+Translate SQL into Elasticsearch queries.
+Translate an SQL search into a search API request containing Query DSL.
 
 {ref}/sql-translate-api.html[Endpoint documentation]
 [source,ts]
@@ -11087,7 +11123,7 @@ client.ssl.certificates()
 === synonyms
 [discrete]
 ==== delete_synonym
-Deletes a synonym set
+Delete a synonym set.
 
 {ref}/delete-synonyms-set.html[Endpoint documentation]
 [source,ts]
@@ -11103,7 +11139,8 @@ client.synonyms.deleteSynonym({ id })
 
 [discrete]
 ==== delete_synonym_rule
-Deletes a synonym rule in a synonym set
+Delete a synonym rule.
+Delete a synonym rule from a synonym set.
 
 {ref}/delete-synonym-rule.html[Endpoint documentation]
 [source,ts]
@@ -11120,7 +11157,7 @@ client.synonyms.deleteSynonymRule({ set_id, rule_id })
 
 [discrete]
 ==== get_synonym
-Retrieves a synonym set
+Get a synonym set.
 
 {ref}/get-synonyms-set.html[Endpoint documentation]
 [source,ts]
@@ -11138,7 +11175,8 @@ client.synonyms.getSynonym({ id })
 
 [discrete]
 ==== get_synonym_rule
-Retrieves a synonym rule from a synonym set
+Get a synonym rule.
+Get a synonym rule from a synonym set.
 
 {ref}/get-synonym-rule.html[Endpoint documentation]
 [source,ts]
@@ -11155,7 +11193,8 @@ client.synonyms.getSynonymRule({ set_id, rule_id })
 
 [discrete]
 ==== get_synonyms_sets
-Retrieves a summary of all defined synonym sets
+Get all synonym sets.
+Get a summary of all defined synonym sets.
 
 {ref}/list-synonyms-sets.html[Endpoint documentation]
 [source,ts]
@@ -11172,7 +11211,9 @@ client.synonyms.getSynonymsSets({ ... })
 
 [discrete]
 ==== put_synonym
-Creates or updates a synonym set.
+Create or update a synonym set.
+Synonyms sets are limited to a maximum of 10,000 synonym rules per set.
+If you need to manage more synonym rules, you can create multiple synonym sets.
 
 {ref}/put-synonyms-set.html[Endpoint documentation]
 [source,ts]
@@ -11189,7 +11230,8 @@ client.synonyms.putSynonym({ id, synonyms_set })
 
 [discrete]
 ==== put_synonym_rule
-Creates or updates a synonym rule in a synonym set
+Create or update a synonym rule.
+Create or update a synonym rule in a synonym set.
 
 {ref}/put-synonym-rule.html[Endpoint documentation]
 [source,ts]

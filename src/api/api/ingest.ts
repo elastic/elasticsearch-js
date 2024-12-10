@@ -45,7 +45,7 @@ export default class Ingest {
   }
 
   /**
-    * Deletes a geoip database configuration.
+    * Delete GeoIP database configurations. Delete one or more IP geolocation database configurations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/delete-geoip-database-api.html | Elasticsearch API documentation}
     */
   async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest | TB.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeleteGeoipDatabaseResponse>
@@ -109,7 +109,7 @@ export default class Ingest {
   }
 
   /**
-    * Deletes one or more existing ingest pipeline.
+    * Delete pipelines. Delete one or more ingest pipelines.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/delete-pipeline-api.html | Elasticsearch API documentation}
     */
   async deletePipeline (this: That, params: T.IngestDeletePipelineRequest | TB.IngestDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeletePipelineResponse>
@@ -141,7 +141,7 @@ export default class Ingest {
   }
 
   /**
-    * Gets download statistics for GeoIP2 databases used with the geoip processor.
+    * Get GeoIP statistics. Get download statistics for GeoIP2 databases that are used with the GeoIP processor.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/geoip-processor.html | Elasticsearch API documentation}
     */
   async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest | TB.IngestGeoIpStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGeoIpStatsResponse>
@@ -171,7 +171,7 @@ export default class Ingest {
   }
 
   /**
-    * Returns information about one or more geoip database configurations.
+    * Get GeoIP database configurations. Get information about one or more IP geolocation database configurations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/get-geoip-database-api.html | Elasticsearch API documentation}
     */
   async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest | TB.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetGeoipDatabaseResponse>
@@ -250,7 +250,7 @@ export default class Ingest {
   }
 
   /**
-    * Returns information about one or more ingest pipelines. This API returns a local reference of the pipeline.
+    * Get pipelines. Get information about one or more ingest pipelines. This API returns a local reference of the pipeline.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/get-pipeline-api.html | Elasticsearch API documentation}
     */
   async getPipeline (this: That, params?: T.IngestGetPipelineRequest | TB.IngestGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetPipelineResponse>
@@ -290,7 +290,7 @@ export default class Ingest {
   }
 
   /**
-    * Extracts structured fields out of a single text field within a document. You choose which field to extract matched fields from, as well as the grok pattern you expect will match. A grok pattern is like a regular expression that supports aliased expressions that can be reused.
+    * Run a grok processor. Extract structured fields out of a single text field within a document. You must choose which field to extract matched fields from, as well as the grok pattern you expect will match. A grok pattern is like a regular expression that supports aliased expressions that can be reused.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/grok-processor.html | Elasticsearch API documentation}
     */
   async processorGrok (this: That, params?: T.IngestProcessorGrokRequest | TB.IngestProcessorGrokRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestProcessorGrokResponse>
@@ -320,7 +320,7 @@ export default class Ingest {
   }
 
   /**
-    * Returns information about one or more geoip database configurations.
+    * Create or update GeoIP database configurations. Create or update IP geolocation database configurations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/put-geoip-database-api.html | Elasticsearch API documentation}
     */
   async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest | TB.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutGeoipDatabaseResponse>
@@ -396,7 +396,7 @@ export default class Ingest {
   }
 
   /**
-    * Creates or updates an ingest pipeline. Changes made using this API take effect immediately.
+    * Create or update a pipeline. Changes made using this API take effect immediately.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/ingest.html | Elasticsearch API documentation}
     */
   async putPipeline (this: That, params: T.IngestPutPipelineRequest | TB.IngestPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutPipelineResponse>
@@ -440,7 +440,7 @@ export default class Ingest {
   }
 
   /**
-    * Executes an ingest pipeline against a set of provided documents.
+    * Simulate a pipeline. Run an ingest pipeline against a set of provided documents. You can either specify an existing pipeline to use with the provided documents or supply a pipeline definition in the body of the request.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/simulate-pipeline-api.html | Elasticsearch API documentation}
     */
   async simulate (this: That, params: T.IngestSimulateRequest | TB.IngestSimulateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestSimulateResponse>
