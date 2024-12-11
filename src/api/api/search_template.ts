@@ -40,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Run a search with a search template.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-template.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/search-template.html | Elasticsearch API documentation}
   */
 export default async function SearchTemplateApi<TDocument = unknown> (this: That, params?: T.SearchTemplateRequest | TB.SearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchTemplateResponse<TDocument>>
 export default async function SearchTemplateApi<TDocument = unknown> (this: That, params?: T.SearchTemplateRequest | TB.SearchTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchTemplateResponse<TDocument>, unknown>>

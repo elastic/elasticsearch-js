@@ -10,26 +10,11 @@ const response = await client.ingest.putPipeline({
     {
       attachment: {
         field: "data",
-        remove_binary: false,
+        properties: ["content", "title"],
+        remove_binary: true,
       },
     },
   ],
 });
 console.log(response);
-
-const response1 = await client.index({
-  index: "my-index-000001",
-  id: "my_id",
-  pipeline: "attachment",
-  document: {
-    data: "e1xydGYxXGFuc2kNCkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0DQpccGFyIH0=",
-  },
-});
-console.log(response1);
-
-const response2 = await client.get({
-  index: "my-index-000001",
-  id: "my_id",
-});
-console.log(response2);
 ----

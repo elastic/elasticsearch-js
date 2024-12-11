@@ -45,8 +45,8 @@ export default class Synonyms {
   }
 
   /**
-    * Deletes a synonym set
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-synonyms-set.html | Elasticsearch API documentation}
+    * Delete a synonym set.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/delete-synonyms-set.html | Elasticsearch API documentation}
     */
   async deleteSynonym (this: That, params: T.SynonymsDeleteSynonymRequest | TB.SynonymsDeleteSynonymRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsDeleteSynonymResponse>
   async deleteSynonym (this: That, params: T.SynonymsDeleteSynonymRequest | TB.SynonymsDeleteSynonymRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsDeleteSynonymResponse, unknown>>
@@ -77,8 +77,8 @@ export default class Synonyms {
   }
 
   /**
-    * Deletes a synonym rule in a synonym set
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-synonym-rule.html | Elasticsearch API documentation}
+    * Delete a synonym rule. Delete a synonym rule from a synonym set.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/delete-synonym-rule.html | Elasticsearch API documentation}
     */
   async deleteSynonymRule (this: That, params: T.SynonymsDeleteSynonymRuleRequest | TB.SynonymsDeleteSynonymRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsDeleteSynonymRuleResponse>
   async deleteSynonymRule (this: That, params: T.SynonymsDeleteSynonymRuleRequest | TB.SynonymsDeleteSynonymRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsDeleteSynonymRuleResponse, unknown>>
@@ -110,8 +110,8 @@ export default class Synonyms {
   }
 
   /**
-    * Retrieves a synonym set
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-synonyms-set.html | Elasticsearch API documentation}
+    * Get a synonym set.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-synonyms-set.html | Elasticsearch API documentation}
     */
   async getSynonym (this: That, params: T.SynonymsGetSynonymRequest | TB.SynonymsGetSynonymRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsGetSynonymResponse>
   async getSynonym (this: That, params: T.SynonymsGetSynonymRequest | TB.SynonymsGetSynonymRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsGetSynonymResponse, unknown>>
@@ -142,8 +142,8 @@ export default class Synonyms {
   }
 
   /**
-    * Retrieves a synonym rule from a synonym set
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-synonym-rule.html | Elasticsearch API documentation}
+    * Get a synonym rule. Get a synonym rule from a synonym set.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-synonym-rule.html | Elasticsearch API documentation}
     */
   async getSynonymRule (this: That, params: T.SynonymsGetSynonymRuleRequest | TB.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsGetSynonymRuleResponse>
   async getSynonymRule (this: That, params: T.SynonymsGetSynonymRuleRequest | TB.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsGetSynonymRuleResponse, unknown>>
@@ -175,8 +175,8 @@ export default class Synonyms {
   }
 
   /**
-    * Retrieves a summary of all defined synonym sets
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/list-synonyms-sets.html | Elasticsearch API documentation}
+    * Get all synonym sets. Get a summary of all defined synonym sets.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/list-synonyms-sets.html | Elasticsearch API documentation}
     */
   async getSynonymsSets (this: That, params?: T.SynonymsGetSynonymsSetsRequest | TB.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsGetSynonymsSetsResponse>
   async getSynonymsSets (this: That, params?: T.SynonymsGetSynonymsSetsRequest | TB.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsGetSynonymsSetsResponse, unknown>>
@@ -205,8 +205,8 @@ export default class Synonyms {
   }
 
   /**
-    * Creates or updates a synonym set.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-synonyms-set.html | Elasticsearch API documentation}
+    * Create or update a synonym set. Synonyms sets are limited to a maximum of 10,000 synonym rules per set. If you need to manage more synonym rules, you can create multiple synonym sets.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/put-synonyms-set.html | Elasticsearch API documentation}
     */
   async putSynonym (this: That, params: T.SynonymsPutSynonymRequest | TB.SynonymsPutSynonymRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsPutSynonymResponse>
   async putSynonym (this: That, params: T.SynonymsPutSynonymRequest | TB.SynonymsPutSynonymRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsPutSynonymResponse, unknown>>
@@ -249,8 +249,8 @@ export default class Synonyms {
   }
 
   /**
-    * Creates or updates a synonym rule in a synonym set
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-synonym-rule.html | Elasticsearch API documentation}
+    * Create or update a synonym rule. Create or update a synonym rule in a synonym set.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/put-synonym-rule.html | Elasticsearch API documentation}
     */
   async putSynonymRule (this: That, params: T.SynonymsPutSynonymRuleRequest | TB.SynonymsPutSynonymRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsPutSynonymRuleResponse>
   async putSynonymRule (this: That, params: T.SynonymsPutSynonymRuleRequest | TB.SynonymsPutSynonymRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsPutSynonymRuleResponse, unknown>>

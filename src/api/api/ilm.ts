@@ -46,7 +46,7 @@ export default class Ilm {
 
   /**
     * Deletes the specified lifecycle policy definition. You cannot delete policies that are currently in use. If the policy is being used to manage any indices, the request fails and returns an error.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-delete-lifecycle.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ilm-delete-lifecycle.html | Elasticsearch API documentation}
     */
   async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest | TB.IlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmDeleteLifecycleResponse>
   async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest | TB.IlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmDeleteLifecycleResponse, unknown>>
@@ -78,7 +78,7 @@ export default class Ilm {
 
   /**
     * Retrieves information about the index’s current lifecycle state, such as the currently executing phase, action, and step. Shows when the index entered each one, the definition of the running phase, and information about any failures.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-explain-lifecycle.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ilm-explain-lifecycle.html | Elasticsearch API documentation}
     */
   async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest | TB.IlmExplainLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmExplainLifecycleResponse>
   async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest | TB.IlmExplainLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmExplainLifecycleResponse, unknown>>
@@ -110,7 +110,7 @@ export default class Ilm {
 
   /**
     * Retrieves a lifecycle policy.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-get-lifecycle.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ilm-get-lifecycle.html | Elasticsearch API documentation}
     */
   async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest | TB.IlmGetLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmGetLifecycleResponse>
   async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest | TB.IlmGetLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmGetLifecycleResponse, unknown>>
@@ -150,7 +150,7 @@ export default class Ilm {
 
   /**
     * Retrieves the current index lifecycle management (ILM) status.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-get-status.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ilm-get-status.html | Elasticsearch API documentation}
     */
   async getStatus (this: That, params?: T.IlmGetStatusRequest | TB.IlmGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmGetStatusResponse>
   async getStatus (this: That, params?: T.IlmGetStatusRequest | TB.IlmGetStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmGetStatusResponse, unknown>>
@@ -180,7 +180,7 @@ export default class Ilm {
 
   /**
     * Switches the indices, ILM policies, and legacy, composable and component templates from using custom node attributes and attribute-based allocation filters to using data tiers, and optionally deletes one legacy index template.+ Using node roles enables ILM to automatically move the indices between data tiers.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-migrate-to-data-tiers.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ilm-migrate-to-data-tiers.html | Elasticsearch API documentation}
     */
   async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest | TB.IlmMigrateToDataTiersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmMigrateToDataTiersResponse>
   async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest | TB.IlmMigrateToDataTiersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmMigrateToDataTiersResponse, unknown>>
@@ -222,7 +222,7 @@ export default class Ilm {
 
   /**
     * Manually moves an index into the specified step and executes that step.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-move-to-step.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ilm-move-to-step.html | Elasticsearch API documentation}
     */
   async moveToStep (this: That, params: T.IlmMoveToStepRequest | TB.IlmMoveToStepRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmMoveToStepResponse>
   async moveToStep (this: That, params: T.IlmMoveToStepRequest | TB.IlmMoveToStepRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmMoveToStepResponse, unknown>>
@@ -266,7 +266,7 @@ export default class Ilm {
 
   /**
     * Creates a lifecycle policy. If the specified policy exists, the policy is replaced and the policy version is incremented.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-put-lifecycle.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ilm-put-lifecycle.html | Elasticsearch API documentation}
     */
   async putLifecycle (this: That, params: T.IlmPutLifecycleRequest | TB.IlmPutLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmPutLifecycleResponse>
   async putLifecycle (this: That, params: T.IlmPutLifecycleRequest | TB.IlmPutLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmPutLifecycleResponse, unknown>>
@@ -310,7 +310,7 @@ export default class Ilm {
 
   /**
     * Removes the assigned lifecycle policy and stops managing the specified index
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-remove-policy.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ilm-remove-policy.html | Elasticsearch API documentation}
     */
   async removePolicy (this: That, params: T.IlmRemovePolicyRequest | TB.IlmRemovePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmRemovePolicyResponse>
   async removePolicy (this: That, params: T.IlmRemovePolicyRequest | TB.IlmRemovePolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmRemovePolicyResponse, unknown>>
@@ -342,7 +342,7 @@ export default class Ilm {
 
   /**
     * Retries executing the policy for an index that is in the ERROR step.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-retry-policy.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ilm-retry-policy.html | Elasticsearch API documentation}
     */
   async retry (this: That, params: T.IlmRetryRequest | TB.IlmRetryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmRetryResponse>
   async retry (this: That, params: T.IlmRetryRequest | TB.IlmRetryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmRetryResponse, unknown>>
@@ -374,7 +374,7 @@ export default class Ilm {
 
   /**
     * Start the index lifecycle management (ILM) plugin.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-start.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ilm-start.html | Elasticsearch API documentation}
     */
   async start (this: That, params?: T.IlmStartRequest | TB.IlmStartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmStartResponse>
   async start (this: That, params?: T.IlmStartRequest | TB.IlmStartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmStartResponse, unknown>>
@@ -404,7 +404,7 @@ export default class Ilm {
 
   /**
     * Halts all lifecycle management operations and stops the index lifecycle management (ILM) plugin
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-stop.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ilm-stop.html | Elasticsearch API documentation}
     */
   async stop (this: That, params?: T.IlmStopRequest | TB.IlmStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmStopResponse>
   async stop (this: That, params?: T.IlmStopRequest | TB.IlmStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmStopResponse, unknown>>

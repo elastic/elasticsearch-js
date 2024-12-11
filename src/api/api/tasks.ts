@@ -46,7 +46,7 @@ export default class Tasks {
 
   /**
     * Cancels a task, if it can be cancelled through an API.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/tasks.html | Elasticsearch API documentation}
     */
   async cancel (this: That, params?: T.TasksCancelRequest | TB.TasksCancelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TasksCancelResponse>
   async cancel (this: That, params?: T.TasksCancelRequest | TB.TasksCancelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TasksCancelResponse, unknown>>
@@ -86,7 +86,7 @@ export default class Tasks {
 
   /**
     * Get task information. Returns information about the tasks currently executing in the cluster.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/tasks.html | Elasticsearch API documentation}
     */
   async get (this: That, params: T.TasksGetRequest | TB.TasksGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TasksGetResponse>
   async get (this: That, params: T.TasksGetRequest | TB.TasksGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TasksGetResponse, unknown>>
@@ -118,7 +118,7 @@ export default class Tasks {
 
   /**
     * The task management API returns information about tasks currently executing on one or more nodes in the cluster.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/tasks.html | Elasticsearch API documentation}
     */
   async list (this: That, params?: T.TasksListRequest | TB.TasksListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TasksListResponse>
   async list (this: That, params?: T.TasksListRequest | TB.TasksListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TasksListResponse, unknown>>
