@@ -2,6 +2,17 @@
 == Release notes
 
 [discrete]
+=== 8.16.3
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Improved support for Elasticsearch `v8.16`
+
+Updated TypeScript types based on fixes and improvements to the Elasticsearch specification.
+
+[discrete]
 === 8.16.2
 
 [discrete]
