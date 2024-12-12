@@ -13,6 +13,17 @@
 In 8.0, the top-level `body` parameter that was available on all API functions <<remove-body-key,was deprecated>>. In 9.0 this property is completely removed.
 
 [discrete]
+=== 8.16.3
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Improved support for Elasticsearch `v8.16`
+
+Updated TypeScript types based on fixes and improvements to the Elasticsearch specification.
+
+[discrete]
 === 8.16.2
 
 [discrete]
