@@ -57,6 +57,8 @@
   },
   "devDependencies": {
     "@elastic/request-converter": "8.16.2",
+    "@microsoft/api-extractor": "^7.47.11",
+    "@microsoft/api-extractor-model": "^7.29.8",
     "@sinonjs/fake-timers": "github:sinonjs/fake-timers#0bfffc1",
     "@types/debug": "4.1.12",
     "@types/ms": "0.7.34",
