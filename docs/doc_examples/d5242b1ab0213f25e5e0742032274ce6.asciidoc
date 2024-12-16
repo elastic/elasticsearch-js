@@ -10,9 +10,7 @@ const response = await client.ingest.putPipeline({
     {
       attachment: {
         field: "data",
-        indexed_chars: 11,
-        indexed_chars_field: "max_size",
-        remove_binary: false,
+        remove_binary: true,
       },
     },
   ],
@@ -21,18 +19,17 @@ console.log(response);
 
 const response1 = await client.index({
   index: "my-index-000001",
-  id: "my_id_2",
+  id: "my_id",
   pipeline: "attachment",
   document: {
     data: "e1xydGYxXGFuc2kNCkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0DQpccGFyIH0=",
-    max_size: 5,
   },
 });
 console.log(response1);
 
 const response2 = await client.get({
   index: "my-index-000001",
-  id: "my_id_2",
+  id: "my_id",
 });
 console.log(response2);
 ----

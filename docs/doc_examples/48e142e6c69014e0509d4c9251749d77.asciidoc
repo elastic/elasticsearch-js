@@ -10,7 +10,8 @@ const response = await client.inference.put({
     service: "openai",
     service_settings: {
       api_key: "<api_key>",
-      model_id: "text-embedding-ada-002",
+      model_id: "text-embedding-3-small",
+      dimensions: 128,
     },
   },
 });

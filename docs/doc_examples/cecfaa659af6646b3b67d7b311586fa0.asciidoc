@@ -5,14 +5,18 @@
 ----
 const response = await client.ingest.putPipeline({
   id: "attachment",
-  description: "Extract attachment information",
+  description: "Extract attachment information from arrays",
   processors: [
     {
-      attachment: {
-        field: "data",
-        indexed_chars: 11,
-        indexed_chars_field: "max_size",
-        remove_binary: false,
+      foreach: {
+        field: "attachments",
+        processor: {
+          attachment: {
+            target_field: "_ingest._value.attachment",
+            field: "_ingest._value.data",
+            remove_binary: true,
+          },
+        },
       },
     },
   ],
@@ -24,7 +28,16 @@ const response1 = await client.index({
   id: "my_id",
   pipeline: "attachment",
   document: {
-    data: "e1xydGYxXGFuc2kNCkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0DQpccGFyIH0=",
+    attachments: [
+      {
+        filename: "ipsum.txt",
+        data: "dGhpcyBpcwpqdXN0IHNvbWUgdGV4dAo=",
+      },
+      {
+        filename: "test.txt",
+        data: "VGhpcyBpcyBhIHRlc3QK",
+      },
+    ],
   },
 });
 console.log(response1);
