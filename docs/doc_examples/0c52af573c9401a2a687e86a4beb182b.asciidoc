@@ -10,7 +10,7 @@ const response = await client.ingest.putPipeline({
     {
       attachment: {
         field: "data",
-        remove_binary: false,
+        remove_binary: true,
       },
     },
   ],
