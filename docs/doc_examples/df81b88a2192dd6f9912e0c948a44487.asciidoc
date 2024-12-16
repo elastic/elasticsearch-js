@@ -7,7 +7,7 @@ const response = await client.inference.put({
   task_type: "sparse_embedding",
   inference_id: "elser_embeddings",
   inference_config: {
-    service: "elser",
+    service: "elasticsearch",
     service_settings: {
       num_allocations: 1,
       num_threads: 1,
