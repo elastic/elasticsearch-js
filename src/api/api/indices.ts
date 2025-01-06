@@ -769,7 +769,7 @@ export default class Indices {
   }
 
   /**
-    * Get the status for a data stream lifecycle. Retrieves information about an index or data stream’s current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
+    * Get the status for a data stream lifecycle. Get information about an index or data stream's current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/data-streams-explain-lifecycle.html | Elasticsearch API documentation}
     */
   async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest | TB.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExplainDataLifecycleResponse>
