@@ -4,12 +4,17 @@
 [source, js]
 ----
 const response = await client.search({
-  index: "my-index-000001",
-  query: {
-    multi_match: {
-      query: "brown f",
-      type: "bool_prefix",
-      fields: ["my_field", "my_field._2gram", "my_field._3gram"],
+  index: "kibana_sample_data_ecommerce",
+  size: 0,
+  aggs: {
+    sales_by_category: {
+      terms: {
+        field: "category.keyword",
+        size: 5,
+        order: {
+          _count: "desc",
+        },
+      },
     },
   },
 });

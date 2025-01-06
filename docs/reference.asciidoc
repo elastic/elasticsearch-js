@@ -6090,7 +6090,7 @@ Deletes all job results, model snapshots and forecast data that have exceeded
 their retention days period. Machine learning state documents that are not
 associated with any job are also deleted.
 You can limit the request to a single or set of anomaly detection jobs by
-using a job identifier, a group name, a comma-separated list of jobs, or a
+using a job identifier, a group name, a list of jobs, or a
 wildcard expression. You can delete expired data for all anomaly detection
 jobs by using _all, by specifying * as the <job_id>, or by omitting the
 <job_id>.
@@ -6501,7 +6501,7 @@ This parameter has the `from` and `size` properties.
 ==== get_data_frame_analytics
 Retrieves configuration information for data frame analytics jobs.
 You can get information for multiple data frame analytics jobs in a single
-API request by using a comma-separated list of data frame analytics jobs or a
+API request by using a list of data frame analytics jobs or a
 wildcard expression.
 
 {ref}/get-dfanalytics.html[Endpoint documentation]
@@ -6570,7 +6570,7 @@ there are no matches or only partial matches.
 ==== get_datafeed_stats
 Retrieves usage information for datafeeds.
 You can get statistics for multiple datafeeds in a single API request by
-using a comma-separated list of datafeeds or a wildcard expression. You can
+using a list of datafeeds or a wildcard expression. You can
 get statistics for all datafeeds by using `_all`, by specifying `*` as the
 `<feed_id>`, or by omitting the `<feed_id>`. If the datafeed is stopped, the
 only information you receive is the `datafeed_id` and the `state`.
@@ -6604,7 +6604,7 @@ partial matches. If this parameter is `false`, the request returns a
 ==== get_datafeeds
 Retrieves configuration information for datafeeds.
 You can get information for multiple datafeeds in a single API request by
-using a comma-separated list of datafeeds or a wildcard expression. You can
+using a list of datafeeds or a wildcard expression. You can
 get information for all datafeeds by using `_all`, by specifying `*` as the
 `<feed_id>`, or by omitting the `<feed_id>`.
 This API returns a maximum of 10,000 datafeeds.
@@ -6723,7 +6723,7 @@ code when there are no matches or only partial matches.
 ==== get_jobs
 Retrieves configuration information for anomaly detection jobs.
 You can get information for multiple anomaly detection jobs in a single API
-request by using a group name, a comma-separated list of jobs, or a wildcard
+request by using a group name, a list of jobs, or a wildcard
 expression. You can get information for all anomaly detection jobs by using
 `_all`, by specifying `*` as the `<job_id>`, or by omitting the `<job_id>`.
 
@@ -6954,7 +6954,7 @@ tags are returned.
 [discrete]
 ==== get_trained_models_stats
 Retrieves usage information for trained models. You can get usage information for multiple trained
-models in a single API request by using a comma-separated list of model IDs or a wildcard expression.
+models in a single API request by using a list of model IDs or a wildcard expression.
 
 {ref}/get-trained-models-stats.html[Endpoint documentation]
 [source,ts]
@@ -7063,7 +7063,7 @@ client.ml.postCalendarEvents({ calendar_id, events })
 Sends data to an anomaly detection job for analysis.
 
 IMPORTANT: For each job, data can be accepted from only a single connection at a time.
-It is not currently possible to post data to multiple jobs using wildcards or a comma-separated list.
+It is not currently possible to post data to multiple jobs using wildcards or a list.
 
 {ref}/ml-post-data.html[Endpoint documentation]
 [source,ts]
