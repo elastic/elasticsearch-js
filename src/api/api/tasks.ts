@@ -44,7 +44,7 @@ export default class Tasks {
   }
 
   /**
-    * Cancels a task, if it can be cancelled through an API.
+    * Cancel a task. A task may continue to run for some time after it has been cancelled because it may not be able to safely stop its current activity straight away. It is also possible that Elasticsearch must complete its work on other tasks before it can process the cancellation. The get task information API will continue to list these cancelled tasks until they complete. The cancelled flag in the response indicates that the cancellation command has been processed and the task will stop as soon as possible. To troubleshoot why a cancelled task does not complete promptly, use the get task information API with the `?detailed` parameter to identify the other tasks the system is running. You can also use the node hot threads API to obtain detailed information about the work the system is doing instead of completing the cancelled task.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html | Elasticsearch API documentation}
     */
   async cancel (this: That, params?: T.TasksCancelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TasksCancelResponse>
@@ -84,7 +84,7 @@ export default class Tasks {
   }
 
   /**
-    * Get task information. Returns information about the tasks currently executing in the cluster.
+    * Get task information. Get information about a task currently running in the cluster.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html | Elasticsearch API documentation}
     */
   async get (this: That, params: T.TasksGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TasksGetResponse>
@@ -116,7 +116,7 @@ export default class Tasks {
   }
 
   /**
-    * The task management API returns information about tasks currently executing on one or more nodes in the cluster.
+    * Get all tasks. Get information about the tasks currently running on one or more nodes in the cluster.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html | Elasticsearch API documentation}
     */
   async list (this: That, params?: T.TasksListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TasksListResponse>

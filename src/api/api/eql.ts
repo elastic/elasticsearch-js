@@ -148,7 +148,7 @@ export default class Eql {
   async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest, options?: TransportRequestOptions): Promise<T.EqlSearchResponse<TEvent>>
   async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['query', 'case_sensitive', 'event_category_field', 'tiebreaker_field', 'timestamp_field', 'fetch_size', 'filter', 'keep_alive', 'keep_on_completion', 'wait_for_completion_timeout', 'size', 'fields', 'result_position', 'runtime_mappings', 'max_samples_per_key']
+    const acceptedBody: string[] = ['query', 'case_sensitive', 'event_category_field', 'tiebreaker_field', 'timestamp_field', 'fetch_size', 'filter', 'keep_alive', 'keep_on_completion', 'wait_for_completion_timeout', 'allow_partial_search_results', 'allow_partial_sequence_results', 'size', 'fields', 'result_position', 'runtime_mappings', 'max_samples_per_key']
     const querystring: Record<string, any> = {}
     const body: Record<string, any> = {}
 

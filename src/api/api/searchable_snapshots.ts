@@ -44,7 +44,7 @@ export default class SearchableSnapshots {
   }
 
   /**
-    * Retrieve node-level cache statistics about searchable snapshots.
+    * Get cache statistics. Get statistics about the shared cache for partially mounted indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-apis.html | Elasticsearch API documentation}
     */
   async cacheStats (this: That, params?: T.SearchableSnapshotsCacheStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchableSnapshotsCacheStatsResponse>
@@ -84,7 +84,7 @@ export default class SearchableSnapshots {
   }
 
   /**
-    * Clear the cache of searchable snapshots.
+    * Clear the cache. Clear indices and data streams from the shared cache for partially mounted indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-apis.html | Elasticsearch API documentation}
     */
   async clearCache (this: That, params?: T.SearchableSnapshotsClearCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchableSnapshotsClearCacheResponse>
@@ -124,7 +124,7 @@ export default class SearchableSnapshots {
   }
 
   /**
-    * Mount a snapshot as a searchable index.
+    * Mount a snapshot. Mount a snapshot as a searchable snapshot index. Do not use this API for snapshots managed by index lifecycle management (ILM). Manually mounting ILM-managed snapshots can interfere with ILM processes.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-api-mount-snapshot.html | Elasticsearch API documentation}
     */
   async mount (this: That, params: T.SearchableSnapshotsMountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchableSnapshotsMountResponse>
@@ -161,7 +161,7 @@ export default class SearchableSnapshots {
   }
 
   /**
-    * Retrieve shard-level statistics about searchable snapshots.
+    * Get searchable snapshot statistics.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-apis.html | Elasticsearch API documentation}
     */
   async stats (this: That, params?: T.SearchableSnapshotsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchableSnapshotsStatsResponse>

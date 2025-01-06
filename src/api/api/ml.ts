@@ -1488,7 +1488,7 @@ export default class Ml {
   }
 
   /**
-    * Return ML defaults and limits. Returns defaults and limits used by machine learning. This endpoint is designed to be used by a user interface that needs to fully understand machine learning configurations where some options are not specified, meaning that the defaults should be used. This endpoint may be used to find out what those defaults are. It also provides information about the maximum size of machine learning jobs that could run in the current cluster configuration.
+    * Get machine learning information. Get defaults and limits used by machine learning. This endpoint is designed to be used by a user interface that needs to fully understand machine learning configurations where some options are not specified, meaning that the defaults should be used. This endpoint may be used to find out what those defaults are. It also provides information about the maximum size of machine learning jobs that could run in the current cluster configuration.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-ml-info.html | Elasticsearch API documentation}
     */
   async info (this: That, params?: T.MlInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInfoResponse>
@@ -1791,7 +1791,7 @@ export default class Ml {
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlPutDataFrameAnalyticsResponse>
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['allow_lazy_start', 'analysis', 'analyzed_fields', 'description', 'dest', 'max_num_threads', 'model_memory_limit', 'source', 'headers', 'version']
+    const acceptedBody: string[] = ['allow_lazy_start', 'analysis', 'analyzed_fields', 'description', 'dest', 'max_num_threads', '_meta', 'model_memory_limit', 'source', 'headers', 'version']
     const querystring: Record<string, any> = {}
     const body: Record<string, any> = {}
 
@@ -1827,7 +1827,7 @@ export default class Ml {
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlPutDatafeedResponse>
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', 'headers']
+    const acceptedBody: string[] = ['aggregations', 'aggs', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', 'headers']
     const querystring: Record<string, any> = {}
     const body: Record<string, any> = {}
 
@@ -1898,8 +1898,8 @@ export default class Ml {
   async putJob (this: That, params: T.MlPutJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutJobResponse, unknown>>
   async putJob (this: That, params: T.MlPutJobRequest, options?: TransportRequestOptions): Promise<T.MlPutJobResponse>
   async putJob (this: That, params: T.MlPutJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['allow_lazy_open', 'analysis_config', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'daily_model_snapshot_retention_after_days', 'data_description', 'datafeed_config', 'description', 'groups', 'model_plot_config', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_index_name', 'results_retention_days']
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['allow_lazy_open', 'analysis_config', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'daily_model_snapshot_retention_after_days', 'data_description', 'datafeed_config', 'description', 'job_id', 'groups', 'model_plot_config', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_index_name', 'results_retention_days']
     const querystring: Record<string, any> = {}
     const body: Record<string, any> = {}
 
@@ -2618,7 +2618,7 @@ export default class Ml {
   }
 
   /**
-    * Validates an anomaly detection job.
+    * Validate an anomaly detection job.
     * @see {@link https://www.elastic.co/guide/en/machine-learning/master/ml-jobs.html | Elasticsearch API documentation}
     */
   async validate (this: That, params?: T.MlValidateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateResponse>
@@ -2652,7 +2652,7 @@ export default class Ml {
   }
 
   /**
-    * Validates an anomaly detection detector.
+    * Validate an anomaly detection job.
     * @see {@link https://www.elastic.co/guide/en/machine-learning/master/ml-jobs.html | Elasticsearch API documentation}
     */
   async validateDetector (this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateDetectorResponse>
