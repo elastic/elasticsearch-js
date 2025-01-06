@@ -45,7 +45,7 @@ export default class Watcher {
   }
 
   /**
-    * Acknowledges a watch, manually throttling the execution of the watch's actions.
+    * Acknowledge a watch. Acknowledging a watch enables you to manually throttle the execution of the watch's actions. The acknowledgement state of an action is stored in the `status.actions.<id>.ack.state` structure. IMPORTANT: If the specified watch is currently being executed, this API will return an error The reason for this behavior is to prevent overwriting the watch status from a watch execution.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-ack-watch.html | Elasticsearch API documentation}
     */
   async ackWatch (this: That, params: T.WatcherAckWatchRequest | TB.WatcherAckWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherAckWatchResponse>
@@ -85,7 +85,7 @@ export default class Watcher {
   }
 
   /**
-    * Activates a currently inactive watch.
+    * Activate a watch. A watch can be either active or inactive.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-activate-watch.html | Elasticsearch API documentation}
     */
   async activateWatch (this: That, params: T.WatcherActivateWatchRequest | TB.WatcherActivateWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherActivateWatchResponse>
@@ -117,7 +117,7 @@ export default class Watcher {
   }
 
   /**
-    * Deactivates a currently active watch.
+    * Deactivate a watch. A watch can be either active or inactive.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-deactivate-watch.html | Elasticsearch API documentation}
     */
   async deactivateWatch (this: That, params: T.WatcherDeactivateWatchRequest | TB.WatcherDeactivateWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherDeactivateWatchResponse>
@@ -149,7 +149,7 @@ export default class Watcher {
   }
 
   /**
-    * Removes a watch from Watcher.
+    * Delete a watch. When the watch is removed, the document representing the watch in the `.watches` index is gone and it will never be run again. Deleting a watch does not delete any watch execution records related to this watch from the watch history. IMPORTANT: Deleting a watch must be done by using only this API. Do not delete the watch directly from the `.watches` index using the Elasticsearch delete document API When Elasticsearch security features are enabled, make sure no write privileges are granted to anyone for the `.watches` index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-delete-watch.html | Elasticsearch API documentation}
     */
   async deleteWatch (this: That, params: T.WatcherDeleteWatchRequest | TB.WatcherDeleteWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherDeleteWatchResponse>
@@ -181,7 +181,7 @@ export default class Watcher {
   }
 
   /**
-    * This API can be used to force execution of the watch outside of its triggering logic or to simulate the watch execution for debugging purposes. For testing and debugging purposes, you also have fine-grained control on how the watch runs. You can execute the watch without executing all of its actions or alternatively by simulating them. You can also force execution by ignoring the watch condition and control whether a watch record would be written to the watch history after execution.
+    * Run a watch. This API can be used to force execution of the watch outside of its triggering logic or to simulate the watch execution for debugging purposes. For testing and debugging purposes, you also have fine-grained control on how the watch runs. You can run the watch without running all of its actions or alternatively by simulating them. You can also force execution by ignoring the watch condition and control whether a watch record would be written to the watch history after it runs. You can use the run watch API to run watches that are not yet registered by specifying the watch definition inline. This serves as great tool for testing and debugging your watches prior to adding them to Watcher.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-execute-watch.html | Elasticsearch API documentation}
     */
   async executeWatch (this: That, params?: T.WatcherExecuteWatchRequest | TB.WatcherExecuteWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherExecuteWatchResponse>
@@ -262,7 +262,7 @@ export default class Watcher {
   }
 
   /**
-    * Retrieves a watch by its ID.
+    * Get a watch.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-get-watch.html | Elasticsearch API documentation}
     */
   async getWatch (this: That, params: T.WatcherGetWatchRequest | TB.WatcherGetWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherGetWatchResponse>
@@ -294,7 +294,7 @@ export default class Watcher {
   }
 
   /**
-    * Creates a new watch, or updates an existing one.
+    * Create or update a watch. When a watch is registered, a new document that represents the watch is added to the `.watches` index and its trigger is immediately registered with the relevant trigger engine. Typically for the `schedule` trigger, the scheduler is the trigger engine. IMPORTANT: You must use Kibana or this API to create a watch. Do not add a watch directly to the `.watches` index by using the Elasticsearch index API. If Elasticsearch security features are enabled, do not give users write privileges on the `.watches` index. When you add a watch you can also define its initial active state by setting the *active* parameter. When Elasticsearch security features are enabled, your watch can index or search only on indices for which the user that stored the watch has privileges. If the user is able to read index `a`, but not index `b`, the same will apply when the watch runs.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-put-watch.html | Elasticsearch API documentation}
     */
   async putWatch (this: That, params: T.WatcherPutWatchRequest | TB.WatcherPutWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherPutWatchResponse>
@@ -338,7 +338,7 @@ export default class Watcher {
   }
 
   /**
-    * Retrieves stored watches.
+    * Query watches. Get all registered watches in a paginated manner and optionally filter watches by a query.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-query-watches.html | Elasticsearch API documentation}
     */
   async queryWatches (this: That, params?: T.WatcherQueryWatchesRequest | TB.WatcherQueryWatchesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherQueryWatchesResponse>
@@ -380,7 +380,7 @@ export default class Watcher {
   }
 
   /**
-    * Starts Watcher if it is not already running.
+    * Start the watch service. Start the Watcher service if it is not already running.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-start.html | Elasticsearch API documentation}
     */
   async start (this: That, params?: T.WatcherStartRequest | TB.WatcherStartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherStartResponse>
@@ -410,7 +410,7 @@ export default class Watcher {
   }
 
   /**
-    * Retrieves the current Watcher metrics.
+    * Get Watcher statistics.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-stats.html | Elasticsearch API documentation}
     */
   async stats (this: That, params?: T.WatcherStatsRequest | TB.WatcherStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherStatsResponse>
@@ -450,7 +450,7 @@ export default class Watcher {
   }
 
   /**
-    * Stops Watcher if it is running.
+    * Stop the watch service. Stop the Watcher service if it is running.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-stop.html | Elasticsearch API documentation}
     */
   async stop (this: That, params?: T.WatcherStopRequest | TB.WatcherStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherStopResponse>

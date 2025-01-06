@@ -181,7 +181,7 @@ export default class SearchApplication {
   }
 
   /**
-    * Returns the existing search applications.
+    * Get search applications. Get information about search applications.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/list-search-applications.html | Elasticsearch API documentation}
     */
   async list (this: That, params?: T.SearchApplicationListRequest | TB.SearchApplicationListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationListResponse>
@@ -313,22 +313,34 @@ export default class SearchApplication {
   }
 
   /**
-    * Renders a query for given search application search parameters
+    * Render a search application query. Generate an Elasticsearch query using the specified query parameters and the search template associated with the search application or a default template if none is specified. If a parameter used in the search template is not specified in `params`, the parameter's default value will be used. The API returns the specific Elasticsearch query that would be generated and run by calling the search application search API. You must have `read` privileges on the backing alias of the search application.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/search-application-render-query.html | Elasticsearch API documentation}
     */
-  async renderQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async renderQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async renderQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async renderQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async renderQuery (this: That, params: T.SearchApplicationRenderQueryRequest | TB.SearchApplicationRenderQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationRenderQueryResponse>
+  async renderQuery (this: That, params: T.SearchApplicationRenderQueryRequest | TB.SearchApplicationRenderQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchApplicationRenderQueryResponse, unknown>>
+  async renderQuery (this: That, params: T.SearchApplicationRenderQueryRequest | TB.SearchApplicationRenderQueryRequest, options?: TransportRequestOptions): Promise<T.SearchApplicationRenderQueryResponse>
+  async renderQuery (this: That, params: T.SearchApplicationRenderQueryRequest | TB.SearchApplicationRenderQueryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
+    const acceptedBody: string[] = ['params']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }

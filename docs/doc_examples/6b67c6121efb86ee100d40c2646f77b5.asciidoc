@@ -4,9 +4,11 @@
 [source, js]
 ----
 const response = await client.indices.putSettings({
-  index: "my-index-000001",
+  index: "*",
   settings: {
-    "index.blocks.read_only_allow_delete": null,
+    "index.search.slowlog.include.user": true,
+    "index.search.slowlog.threshold.fetch.warn": "30s",
+    "index.search.slowlog.threshold.query.warn": "30s",
   },
 });
 console.log(response);

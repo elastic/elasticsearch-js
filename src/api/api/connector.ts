@@ -462,22 +462,22 @@ export default class Connector {
   }
 
   /**
-    * Checks in a connector sync job (refreshes 'last_seen').
+    * Check in a connector sync job. Check in a connector sync job and set the `last_seen` field to the current time before updating it in the internal index. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/check-in-connector-sync-job-api.html | Elasticsearch API documentation}
     */
-  async syncJobCheckIn (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async syncJobCheckIn (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async syncJobCheckIn (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async syncJobCheckIn (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest | TB.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobCheckInResponse>
+  async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest | TB.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobCheckInResponse, unknown>>
+  async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest | TB.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobCheckInResponse>
+  async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest | TB.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['connector_sync_job_id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -494,22 +494,34 @@ export default class Connector {
   }
 
   /**
-    * Claims a connector sync job.
+    * Claim a connector sync job. This action updates the job status to `in_progress` and sets the `last_seen` and `started_at` timestamps to the current time. Additionally, it can set the `sync_cursor` property for the sync job. This API is not intended for direct connector management by users. It supports the implementation of services that utilize the connector protocol to communicate with Elasticsearch. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/claim-connector-sync-job-api.html | Elasticsearch API documentation}
     */
-  async syncJobClaim (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async syncJobClaim (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async syncJobClaim (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async syncJobClaim (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest | TB.ConnectorSyncJobClaimRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobClaimResponse>
+  async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest | TB.ConnectorSyncJobClaimRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobClaimResponse, unknown>>
+  async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest | TB.ConnectorSyncJobClaimRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobClaimResponse>
+  async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest | TB.ConnectorSyncJobClaimRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['connector_sync_job_id']
+    const acceptedBody: string[] = ['sync_cursor', 'worker_hostname']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -558,22 +570,34 @@ export default class Connector {
   }
 
   /**
-    * Sets an error for a connector sync job.
+    * Set a connector sync job error. Set the `error` field for a connector sync job and set its `status` to `error`. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/set-connector-sync-job-error-api.html | Elasticsearch API documentation}
     */
-  async syncJobError (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async syncJobError (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async syncJobError (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async syncJobError (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest | TB.ConnectorSyncJobErrorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobErrorResponse>
+  async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest | TB.ConnectorSyncJobErrorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobErrorResponse, unknown>>
+  async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest | TB.ConnectorSyncJobErrorRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobErrorResponse>
+  async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest | TB.ConnectorSyncJobErrorRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['connector_sync_job_id']
+    const acceptedBody: string[] = ['error']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -889,22 +913,34 @@ export default class Connector {
   }
 
   /**
-    * Updates the connector features in the connector document.
+    * Update the connector features. Update the connector features in the connector document. This API can be used to control the following aspects of a connector: * document-level security * incremental syncs * advanced sync rules * basic sync rules Normally, the running connector service automatically manages these features. However, you can use this API to override the default behavior. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/update-connector-features-api.html | Elasticsearch API documentation}
     */
-  async updateFeatures (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async updateFeatures (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async updateFeatures (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async updateFeatures (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest | TB.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFeaturesResponse>
+  async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest | TB.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFeaturesResponse, unknown>>
+  async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest | TB.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateFeaturesResponse>
+  async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest | TB.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['connector_id']
+    const acceptedBody: string[] = ['features']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }

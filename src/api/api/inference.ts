@@ -181,7 +181,7 @@ export default class Inference {
   }
 
   /**
-    * Create an inference endpoint
+    * Create an inference endpoint. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/put-inference-api.html | Elasticsearch API documentation}
     */
   async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutResponse>

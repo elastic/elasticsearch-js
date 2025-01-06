@@ -45,7 +45,7 @@ export default class Logstash {
   }
 
   /**
-    * Deletes a pipeline used for Logstash Central Management.
+    * Delete a Logstash pipeline. Delete a pipeline that is used for Logstash Central Management.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/logstash-api-delete-pipeline.html | Elasticsearch API documentation}
     */
   async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashDeletePipelineResponse>
@@ -77,7 +77,7 @@ export default class Logstash {
   }
 
   /**
-    * Retrieves pipelines used for Logstash Central Management.
+    * Get Logstash pipelines. Get pipelines that are used for Logstash Central Management.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/logstash-api-get-pipeline.html | Elasticsearch API documentation}
     */
   async getPipeline (this: That, params?: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashGetPipelineResponse>
@@ -117,7 +117,7 @@ export default class Logstash {
   }
 
   /**
-    * Creates or updates a pipeline used for Logstash Central Management.
+    * Create or update a Logstash pipeline. Create a pipeline that is used for Logstash Central Management. If the specified pipeline exists, it is replaced.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/logstash-api-put-pipeline.html | Elasticsearch API documentation}
     */
   async putPipeline (this: That, params: T.LogstashPutPipelineRequest | TB.LogstashPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashPutPipelineResponse>
