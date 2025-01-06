@@ -3,11 +3,14 @@
 
 [source, js]
 ----
-const response = await client.indices.putSettings({
-  index: "my-index-000001",
-  settings: {
-    "index.search.slowlog.include.user": true,
-  },
+const response = await client.indices.updateAliases({
+  actions: [
+    {
+      remove_index: {
+        index: "my-index-2099.05.06-000001",
+      },
+    },
+  ],
 });
 console.log(response);
 ----

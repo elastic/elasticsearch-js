@@ -45,7 +45,7 @@ export default class Migration {
   }
 
   /**
-    * Retrieves information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
+    * Get deprecation information. Get information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version. TIP: This APIs is designed for indirect use by the Upgrade Assistant. We strongly recommend you use the Upgrade Assistant.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/migration-api-deprecation.html | Elasticsearch API documentation}
     */
   async deprecations (this: That, params?: T.MigrationDeprecationsRequest | TB.MigrationDeprecationsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MigrationDeprecationsResponse>
@@ -85,7 +85,7 @@ export default class Migration {
   }
 
   /**
-    * Find out whether system features need to be upgraded or not
+    * Get feature migration information. Version upgrades sometimes require changes to how features store configuration information and data in system indices. Check which features need to be migrated and the status of any migrations that are in progress. TIP: This API is designed for indirect use by the Upgrade Assistant. We strongly recommend you use the Upgrade Assistant.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/migration-api-feature-upgrade.html | Elasticsearch API documentation}
     */
   async getFeatureUpgradeStatus (this: That, params?: T.MigrationGetFeatureUpgradeStatusRequest | TB.MigrationGetFeatureUpgradeStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MigrationGetFeatureUpgradeStatusResponse>
@@ -115,7 +115,7 @@ export default class Migration {
   }
 
   /**
-    * Begin upgrades for system features
+    * Start the feature migration. Version upgrades sometimes require changes to how features store configuration information and data in system indices. This API starts the automatic migration process. Some functionality might be temporarily unavailable during the migration process. TIP: The API is designed for indirect use by the Upgrade Assistant. We strongly recommend you use the Upgrade Assistant.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/migration-api-feature-upgrade.html | Elasticsearch API documentation}
     */
   async postFeatureUpgrade (this: That, params?: T.MigrationPostFeatureUpgradeRequest | TB.MigrationPostFeatureUpgradeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MigrationPostFeatureUpgradeResponse>

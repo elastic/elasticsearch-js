@@ -58,6 +58,7 @@ export type BulkOperationType = 'index' | 'create' | 'update' | 'delete'
 
 export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends RequestBase {
   index?: IndexName
+  list_executed_pipelines?: boolean
   pipeline?: string
   refresh?: Refresh
   routing?: Routing
@@ -67,6 +68,7 @@ export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> ex
   timeout?: Duration
   wait_for_active_shards?: WaitForActiveShards
   require_alias?: boolean
+  require_data_stream?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, use 'operations' instead. */
   body?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
 }
@@ -5430,21 +5432,27 @@ export interface MappingDateRangeProperty extends MappingRangePropertyBase {
   type: 'date_range'
 }
 
+export type MappingDenseVectorElementType = 'bit' | 'byte' | 'float'
+
 export interface MappingDenseVectorIndexOptions {
-  type: string
-  m?: integer
-  ef_construction?: integer
   confidence_interval?: float
+  ef_construction?: integer
+  m?: integer
+  type: MappingDenseVectorIndexOptionsType
 }
+
+export type MappingDenseVectorIndexOptionsType = 'flat' | 'hnsw' | 'int4_flat' | 'int4_hnsw' | 'int8_flat' | 'int8_hnsw'
 
 export interface MappingDenseVectorProperty extends MappingPropertyBase {
   type: 'dense_vector'
-  element_type?: string
   dims?: integer
-  similarity?: string
+  element_type?: MappingDenseVectorElementType
   index?: boolean
   index_options?: MappingDenseVectorIndexOptions
+  similarity?: MappingDenseVectorSimilarity
 }
+
+export type MappingDenseVectorSimilarity = 'cosine' | 'dot_product' | 'l2_norm' | 'max_inner_product'
 
 export interface MappingDocValuesPropertyBase extends MappingCorePropertyBase {
   doc_values?: boolean
@@ -5513,7 +5521,7 @@ export interface MappingFieldNamesField {
   enabled: boolean
 }
 
-export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'version' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'semantic_text' | 'sparse_vector' | 'match_only_text' | 'icu_collation_keyword'
+export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'passthrough' | 'version' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'semantic_text' | 'sparse_vector' | 'match_only_text' | 'icu_collation_keyword'
 
 export interface MappingFlattenedProperty extends MappingPropertyBase {
   boost?: double
@@ -5690,6 +5698,13 @@ export interface MappingObjectProperty extends MappingCorePropertyBase {
 
 export type MappingOnScriptError = 'fail' | 'continue'
 
+export interface MappingPassthroughObjectProperty extends MappingCorePropertyBase {
+  type?: 'passthrough'
+  enabled?: boolean
+  priority?: integer
+  time_series_dimension?: boolean
+}
+
 export interface MappingPercolatorProperty extends MappingPropertyBase {
   type: 'percolator'
 }
@@ -5701,7 +5716,7 @@ export interface MappingPointProperty extends MappingDocValuesPropertyBase {
   type: 'point'
 }
 
-export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingSemanticTextProperty | MappingSparseVectorProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty | MappingIcuCollationProperty
+export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingPassthroughObjectProperty | MappingSemanticTextProperty | MappingSparseVectorProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty | MappingIcuCollationProperty
 
 export interface MappingPropertyBase {
   meta?: Record<string, string>
@@ -6929,6 +6944,8 @@ export interface CatAliasesAliasesRecord {
 export interface CatAliasesRequest extends CatCatRequestBase {
   name?: Names
   expand_wildcards?: ExpandWildcards
+  local?: boolean
+  master_timeout?: Duration
 }
 
 export type CatAliasesResponse = CatAliasesAliasesRecord[]
@@ -6972,6 +6989,8 @@ export interface CatAllocationAllocationRecord {
 export interface CatAllocationRequest extends CatCatRequestBase {
   node_id?: NodeIds
   bytes?: Bytes
+  local?: boolean
+  master_timeout?: Duration
 }
 
 export type CatAllocationResponse = CatAllocationAllocationRecord[]
@@ -6988,6 +7007,8 @@ export interface CatComponentTemplatesComponentTemplate {
 
 export interface CatComponentTemplatesRequest extends CatCatRequestBase {
   name?: string
+  local?: boolean
+  master_timeout?: Duration
 }
 
 export type CatComponentTemplatesResponse = CatComponentTemplatesComponentTemplate[]
@@ -7091,14 +7112,11 @@ export interface CatHealthRequest extends CatCatRequestBase {
 
 export type CatHealthResponse = CatHealthHealthRecord[]
 
-export interface CatHelpHelpRecord {
-  endpoint: string
+export interface CatHelpRequest {
 }
 
-export interface CatHelpRequest extends CatCatRequestBase {
+export interface CatHelpResponse {
 }
-
-export type CatHelpResponse = CatHelpHelpRecord[]
 
 export interface CatIndicesIndicesRecord {
   health?: string
@@ -7399,6 +7417,7 @@ export interface CatIndicesRequest extends CatCatRequestBase {
   include_unloaded_segments?: boolean
   pri?: boolean
   time?: TimeUnit
+  master_timeout?: Duration
 }
 
 export type CatIndicesResponse = CatIndicesIndicesRecord[]
@@ -7413,6 +7432,8 @@ export interface CatMasterMasterRecord {
 }
 
 export interface CatMasterRequest extends CatCatRequestBase {
+  local?: boolean
+  master_timeout?: Duration
 }
 
 export type CatMasterResponse = CatMasterMasterRecord[]
@@ -7467,7 +7488,7 @@ export interface CatMlDataFrameAnalyticsRequest extends CatCatRequestBase {
   bytes?: Bytes
   h?: CatCatDfaColumns
   s?: CatCatDfaColumns
-  time?: Duration
+  time?: TimeUnit
 }
 
 export type CatMlDataFrameAnalyticsResponse = CatMlDataFrameAnalyticsDataFrameAnalyticsRecord[]
@@ -7713,6 +7734,7 @@ export interface CatMlTrainedModelsRequest extends CatCatRequestBase {
   s?: CatCatTrainedModelsColumns
   from?: integer
   size?: integer
+  time?: TimeUnit
 }
 
 export type CatMlTrainedModelsResponse = CatMlTrainedModelsTrainedModelsRecord[]
@@ -7780,6 +7802,8 @@ export interface CatNodeattrsNodeAttributesRecord {
 }
 
 export interface CatNodeattrsRequest extends CatCatRequestBase {
+  local?: boolean
+  master_timeout?: Duration
 }
 
 export type CatNodeattrsResponse = CatNodeattrsNodeAttributesRecord[]
@@ -8058,6 +8082,8 @@ export interface CatNodesRequest extends CatCatRequestBase {
   bytes?: Bytes
   full_id?: boolean | string
   include_unloaded_segments?: boolean
+  master_timeout?: Duration
+  time?: TimeUnit
 }
 
 export type CatNodesResponse = CatNodesNodesRecord[]
@@ -8074,6 +8100,9 @@ export interface CatPendingTasksPendingTasksRecord {
 }
 
 export interface CatPendingTasksRequest extends CatCatRequestBase {
+  local?: boolean
+  master_timeout?: Duration
+  time?: TimeUnit
 }
 
 export type CatPendingTasksResponse = CatPendingTasksPendingTasksRecord[]
@@ -8093,6 +8122,9 @@ export interface CatPluginsPluginsRecord {
 }
 
 export interface CatPluginsRequest extends CatCatRequestBase {
+  include_bootstrap?: boolean
+  local?: boolean
+  master_timeout?: Duration
 }
 
 export type CatPluginsResponse = CatPluginsPluginsRecord[]
@@ -8160,6 +8192,7 @@ export interface CatRecoveryRequest extends CatCatRequestBase {
   active_only?: boolean
   bytes?: Bytes
   detailed?: boolean
+  time?: TimeUnit
 }
 
 export type CatRecoveryResponse = CatRecoveryRecoveryRecord[]
@@ -8172,6 +8205,8 @@ export interface CatRepositoriesRepositoriesRecord {
 }
 
 export interface CatRepositoriesRequest extends CatCatRequestBase {
+  local?: boolean
+  master_timeout?: Duration
 }
 
 export type CatRepositoriesResponse = CatRepositoriesRepositoriesRecord[]
@@ -8179,6 +8214,8 @@ export type CatRepositoriesResponse = CatRepositoriesRepositoriesRecord[]
 export interface CatSegmentsRequest extends CatCatRequestBase {
   index?: Indices
   bytes?: Bytes
+  local?: boolean
+  master_timeout?: Duration
 }
 
 export type CatSegmentsResponse = CatSegmentsSegmentsRecord[]
@@ -8228,6 +8265,8 @@ export interface CatSegmentsSegmentsRecord {
 export interface CatShardsRequest extends CatCatRequestBase {
   index?: Indices
   bytes?: Bytes
+  master_timeout?: Duration
+  time?: TimeUnit
 }
 
 export type CatShardsResponse = CatShardsShardsRecord[]
@@ -8450,6 +8489,8 @@ export interface CatShardsShardsRecord {
 export interface CatSnapshotsRequest extends CatCatRequestBase {
   repository?: Names
   ignore_unavailable?: boolean
+  master_timeout?: Duration
+  time?: TimeUnit
 }
 
 export type CatSnapshotsResponse = CatSnapshotsSnapshotsRecord[]
@@ -8491,8 +8532,11 @@ export interface CatSnapshotsSnapshotsRecord {
 export interface CatTasksRequest extends CatCatRequestBase {
   actions?: string[]
   detailed?: boolean
-  node_id?: string[]
+  nodes?: string[]
   parent_task_id?: string
+  time?: TimeUnit
+  timeout?: Duration
+  wait_for_completion?: boolean
 }
 
 export type CatTasksResponse = CatTasksTasksRecord[]
@@ -8534,6 +8578,8 @@ export interface CatTasksTasksRecord {
 
 export interface CatTemplatesRequest extends CatCatRequestBase {
   name?: Name
+  local?: boolean
+  master_timeout?: Duration
 }
 
 export type CatTemplatesResponse = CatTemplatesTemplatesRecord[]
@@ -8555,6 +8601,8 @@ export interface CatTemplatesTemplatesRecord {
 export interface CatThreadPoolRequest extends CatCatRequestBase {
   thread_pool_patterns?: Names
   time?: TimeUnit
+  local?: boolean
+  master_timeout?: Duration
 }
 
 export type CatThreadPoolResponse = CatThreadPoolThreadPoolRecord[]
@@ -8747,18 +8795,20 @@ export interface CcrFollowRequest extends RequestBase {
   wait_for_active_shards?: WaitForActiveShards
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
-    leader_index?: IndexName
+    data_stream_name?: string
+    leader_index: IndexName
     max_outstanding_read_requests?: long
-    max_outstanding_write_requests?: long
-    max_read_request_operation_count?: long
-    max_read_request_size?: string
+    max_outstanding_write_requests?: integer
+    max_read_request_operation_count?: integer
+    max_read_request_size?: ByteSize
     max_retry_delay?: Duration
-    max_write_buffer_count?: long
-    max_write_buffer_size?: string
-    max_write_request_operation_count?: long
-    max_write_request_size?: string
+    max_write_buffer_count?: integer
+    max_write_buffer_size?: ByteSize
+    max_write_request_operation_count?: integer
+    max_write_request_size?: ByteSize
     read_poll_timeout?: Duration
-    remote_cluster?: string
+    remote_cluster: string
+    settings?: IndicesIndexSettings
   }
 }
 
@@ -8777,16 +8827,16 @@ export interface CcrFollowInfoFollowerIndex {
 }
 
 export interface CcrFollowInfoFollowerIndexParameters {
-  max_outstanding_read_requests: integer
-  max_outstanding_write_requests: integer
-  max_read_request_operation_count: integer
-  max_read_request_size: string
-  max_retry_delay: Duration
-  max_write_buffer_count: integer
-  max_write_buffer_size: string
-  max_write_request_operation_count: integer
-  max_write_request_size: string
-  read_poll_timeout: Duration
+  max_outstanding_read_requests?: long
+  max_outstanding_write_requests?: integer
+  max_read_request_operation_count?: integer
+  max_read_request_size?: ByteSize
+  max_retry_delay?: Duration
+  max_write_buffer_count?: integer
+  max_write_buffer_size?: ByteSize
+  max_write_request_operation_count?: integer
+  max_write_request_size?: ByteSize
+  read_poll_timeout?: Duration
 }
 
 export type CcrFollowInfoFollowerIndexStatus = 'active' | 'paused'
@@ -9964,11 +10014,41 @@ export interface ConnectorSyncJobCancelResponse {
   result: Result
 }
 
+export interface ConnectorSyncJobCheckInRequest extends RequestBase {
+  connector_sync_job_id: Id
+}
+
+export interface ConnectorSyncJobCheckInResponse {
+}
+
+export interface ConnectorSyncJobClaimRequest extends RequestBase {
+  connector_sync_job_id: Id
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    sync_cursor?: any
+    worker_hostname: string
+  }
+}
+
+export interface ConnectorSyncJobClaimResponse {
+}
+
 export interface ConnectorSyncJobDeleteRequest extends RequestBase {
   connector_sync_job_id: Id
 }
 
 export type ConnectorSyncJobDeleteResponse = AcknowledgedResponseBase
+
+export interface ConnectorSyncJobErrorRequest extends RequestBase {
+  connector_sync_job_id: Id
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    error: string
+  }
+}
+
+export interface ConnectorSyncJobErrorResponse {
+}
 
 export interface ConnectorSyncJobGetRequest extends RequestBase {
   connector_sync_job_id: Id
@@ -10045,6 +10125,18 @@ export interface ConnectorUpdateErrorRequest extends RequestBase {
 }
 
 export interface ConnectorUpdateErrorResponse {
+  result: Result
+}
+
+export interface ConnectorUpdateFeaturesRequest extends RequestBase {
+  connector_id: Id
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    features: ConnectorConnectorFeatures
+  }
+}
+
+export interface ConnectorUpdateFeaturesResponse {
   result: Result
 }
 
@@ -10294,6 +10386,7 @@ export interface EqlEqlSearchResponseBase<TEvent = unknown> {
   took?: DurationValue<UnitMillis>
   timed_out?: boolean
   hits: EqlEqlHits<TEvent>
+  shard_failures?: ShardFailure[]
 }
 
 export interface EqlHitsEvent<TEvent = unknown> {
@@ -10353,10 +10446,13 @@ export interface EqlSearchRequest extends RequestBase {
     keep_alive?: Duration
     keep_on_completion?: boolean
     wait_for_completion_timeout?: Duration
+    allow_partial_search_results?: boolean
+    allow_partial_sequence_results?: boolean
     size?: uint
     fields?: QueryDslFieldAndFormat | Field | (QueryDslFieldAndFormat | Field)[]
     result_position?: EqlSearchResultPosition
     runtime_mappings?: MappingRuntimeFields
+    max_samples_per_key?: integer
   }
 }
 
@@ -10912,6 +11008,7 @@ export interface IndicesDataStreamIndex {
 export interface IndicesDataStreamLifecycle {
   data_retention?: Duration
   downsampling?: IndicesDataStreamLifecycleDownsampling
+  enabled?: boolean
 }
 
 export interface IndicesDataStreamLifecycleDownsampling {
@@ -10931,9 +11028,7 @@ export interface IndicesDataStreamLifecycleRolloverConditions {
   max_primary_shard_docs?: long
 }
 
-export interface IndicesDataStreamLifecycleWithRollover {
-  data_retention?: Duration
-  downsampling?: IndicesDataStreamLifecycleDownsampling
+export interface IndicesDataStreamLifecycleWithRollover extends IndicesDataStreamLifecycle {
   rollover?: IndicesDataStreamLifecycleRolloverConditions
 }
 
@@ -11803,7 +11898,7 @@ export type IndicesGetAliasResponse = Record<IndexName, IndicesGetAliasIndexAlia
 
 export interface IndicesGetDataLifecycleDataStreamWithLifecycle {
   name: DataStreamName
-  lifecycle?: IndicesDataStreamLifecycle
+  lifecycle?: IndicesDataStreamLifecycleWithRollover
 }
 
 export interface IndicesGetDataLifecycleRequest extends RequestBase {
@@ -11972,11 +12067,8 @@ export interface IndicesPutDataLifecycleRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   master_timeout?: Duration
   timeout?: Duration
-  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
-  body?: {
-    data_retention?: Duration
-    downsampling?: IndicesDataStreamLifecycleDownsampling
-  }
+  /** @deprecated The use of the 'body' key has been deprecated, use 'lifecycle' instead. */
+  body?: IndicesDataStreamLifecycle
 }
 
 export type IndicesPutDataLifecycleResponse = AcknowledgedResponseBase
@@ -12881,7 +12973,16 @@ export interface IngestCsvProcessor extends IngestProcessorBase {
 
 export interface IngestDatabaseConfiguration {
   name: Name
-  maxmind: IngestMaxmind
+  maxmind?: IngestMaxmind
+  ipinfo?: IngestIpinfo
+}
+
+export interface IngestDatabaseConfigurationFull {
+  web?: IngestWeb
+  local?: IngestLocal
+  name: Name
+  maxmind?: IngestMaxmind
+  ipinfo?: IngestIpinfo
 }
 
 export interface IngestDateIndexNameProcessor extends IngestProcessorBase {
@@ -13033,6 +13134,9 @@ export interface IngestIpLocationProcessor extends IngestProcessorBase {
   download_database_on_pipeline_creation?: boolean
 }
 
+export interface IngestIpinfo {
+}
+
 export interface IngestJoinProcessor extends IngestProcessorBase {
   field: Field
   separator: string
@@ -13061,6 +13165,10 @@ export interface IngestKeyValueProcessor extends IngestProcessorBase {
   trim_key?: string
   trim_value?: string
   value_split: string
+}
+
+export interface IngestLocal {
+  type: string
 }
 
 export interface IngestLowercaseProcessor extends IngestProcessorBase {
@@ -13270,6 +13378,9 @@ export interface IngestUserAgentProcessor extends IngestProcessorBase {
 
 export type IngestUserAgentProperty = 'name' | 'os' | 'device' | 'original' | 'version'
 
+export interface IngestWeb {
+}
+
 export interface IngestDeleteGeoipDatabaseRequest extends RequestBase {
   id: Ids
   master_timeout?: Duration
@@ -13277,6 +13388,14 @@ export interface IngestDeleteGeoipDatabaseRequest extends RequestBase {
 }
 
 export type IngestDeleteGeoipDatabaseResponse = AcknowledgedResponseBase
+
+export interface IngestDeleteIpLocationDatabaseRequest extends RequestBase {
+  id: Ids
+  master_timeout?: Duration
+  timeout?: Duration
+}
+
+export type IngestDeleteIpLocationDatabaseResponse = AcknowledgedResponseBase
 
 export interface IngestDeletePipelineRequest extends RequestBase {
   id: Id
@@ -13328,6 +13447,23 @@ export interface IngestGetGeoipDatabaseResponse {
   databases: IngestGetGeoipDatabaseDatabaseConfigurationMetadata[]
 }
 
+export interface IngestGetIpLocationDatabaseDatabaseConfigurationMetadata {
+  id: Id
+  version: VersionNumber
+  modified_date_millis?: EpochTime<UnitMillis>
+  modified_date?: EpochTime<UnitMillis>
+  database: IngestDatabaseConfigurationFull
+}
+
+export interface IngestGetIpLocationDatabaseRequest extends RequestBase {
+  id?: Ids
+  master_timeout?: Duration
+}
+
+export interface IngestGetIpLocationDatabaseResponse {
+  databases: IngestGetIpLocationDatabaseDatabaseConfigurationMetadata[]
+}
+
 export interface IngestGetPipelineRequest extends RequestBase {
   id?: Id
   master_timeout?: Duration
@@ -13355,6 +13491,16 @@ export interface IngestPutGeoipDatabaseRequest extends RequestBase {
 }
 
 export type IngestPutGeoipDatabaseResponse = AcknowledgedResponseBase
+
+export interface IngestPutIpLocationDatabaseRequest extends RequestBase {
+  id: Id
+  master_timeout?: Duration
+  timeout?: Duration
+  /** @deprecated The use of the 'body' key has been deprecated, use 'configuration' instead. */
+  body?: IngestDatabaseConfiguration
+}
+
+export type IngestPutIpLocationDatabaseResponse = AcknowledgedResponseBase
 
 export interface IngestPutPipelineRequest extends RequestBase {
   id: Id
@@ -13539,10 +13685,10 @@ export interface LicensePostStartTrialResponse {
 export interface LogstashPipeline {
   description: string
   last_modified: DateTime
-  pipeline_metadata: LogstashPipelineMetadata
-  username: string
   pipeline: string
+  pipeline_metadata: LogstashPipelineMetadata
   pipeline_settings: LogstashPipelineSettings
+  username: string
 }
 
 export interface LogstashPipelineMetadata {
@@ -13638,6 +13784,12 @@ export interface MigrationPostFeatureUpgradeResponse {
   features: MigrationPostFeatureUpgradeMigrationFeature[]
 }
 
+export interface MlAdaptiveAllocationsSettings {
+  enabled: boolean
+  min_number_of_allocations?: integer
+  max_number_of_allocations?: integer
+}
+
 export interface MlAnalysisConfig {
   bucket_span?: Duration
   categorization_analyzer?: MlCategorizationAnalyzer
@@ -13668,7 +13820,7 @@ export interface MlAnalysisConfigRead {
 
 export interface MlAnalysisLimits {
   categorization_examples_limit?: long
-  model_memory_limit?: string
+  model_memory_limit?: ByteSize
 }
 
 export interface MlAnalysisMemoryLimit {
@@ -13817,6 +13969,14 @@ export interface MlClassificationInferenceOptions {
   top_classes_results_field?: string
 }
 
+export interface MlCommonTokenizationConfig {
+  do_lower_case?: boolean
+  max_sequence_length?: integer
+  span?: integer
+  truncate?: MlTokenizationTruncate
+  with_special_tokens?: boolean
+}
+
 export type MlConditionOperator = 'gt' | 'gte' | 'lt' | 'lte'
 
 export type MlCustomSettings = any
@@ -13906,15 +14066,16 @@ export type MlDatafeedState = 'started' | 'stopped' | 'starting' | 'stopping'
 export interface MlDatafeedStats {
   assignment_explanation?: string
   datafeed_id: Id
-  node?: MlDiscoveryNode
+  node?: MlDiscoveryNodeCompact
   state: MlDatafeedState
-  timing_stats: MlDatafeedTimingStats
+  timing_stats?: MlDatafeedTimingStats
   running_state?: MlDatafeedRunningState
 }
 
 export interface MlDatafeedTimingStats {
   bucket_count: long
   exponential_average_search_time_per_hour_ms: DurationValue<UnitFloatMillis>
+  exponential_average_calculation_context?: MlExponentialAverageCalculationContext
   job_id: Id
   search_count: long
   total_search_time_ms: DurationValue<UnitFloatMillis>
@@ -14106,6 +14267,7 @@ export interface MlDataframeAnalyticsSummary {
   model_memory_limit?: string
   source: MlDataframeAnalyticsSource
   version?: VersionString
+  _meta?: Metadata
 }
 
 export interface MlDataframeEvaluationClassification {
@@ -14211,21 +14373,48 @@ export interface MlDetectorRead {
   use_null?: boolean
 }
 
-export interface MlDiscoveryNode {
-  attributes: Record<string, string>
+export interface MlDetectorUpdate {
+  detector_index: integer
+  description?: string
+  custom_rules?: MlDetectionRule[]
+}
+
+export type MlDiscoveryNode = Partial<Record<Id, MlDiscoveryNodeContent>>
+
+export interface MlDiscoveryNodeCompact {
+  name: Name
   ephemeral_id: Id
   id: Id
-  name: Name
   transport_address: TransportAddress
+  attributes: Record<string, string>
+}
+
+export interface MlDiscoveryNodeContent {
+  name?: Name
+  ephemeral_id: Id
+  transport_address: TransportAddress
+  external_id: string
+  attributes: Record<string, string>
+  roles: string[]
+  version: VersionString
+  min_index_version: integer
+  max_index_version: integer
 }
 
 export type MlExcludeFrequent = 'all' | 'none' | 'by' | 'over'
+
+export interface MlExponentialAverageCalculationContext {
+  incremental_metric_value_ms: DurationValue<UnitFloatMillis>
+  latest_timestamp?: EpochTime<UnitMillis>
+  previous_exponential_average_ms?: DurationValue<UnitFloatMillis>
+}
 
 export interface MlFillMaskInferenceOptions {
   mask_token?: string
   num_top_classes?: integer
   tokenization?: MlTokenizationConfigContainer
   results_field?: string
+  vocabulary: MlVocabulary
 }
 
 export interface MlFillMaskInferenceUpdateOptions {
@@ -14413,7 +14602,7 @@ export interface MlJobStats {
   forecasts_stats: MlJobForecastStatistics
   job_id: string
   model_size_stats: MlModelSizeStats
-  node?: MlDiscoveryNode
+  node?: MlDiscoveryNodeCompact
   open_time?: DateTime
   state: MlJobState
   timing_stats: MlJobTimingStats
@@ -14433,6 +14622,23 @@ export interface MlJobTimingStats {
 
 export type MlMemoryStatus = 'ok' | 'soft_limit' | 'hard_limit'
 
+export interface MlModelPackageConfig {
+  create_time?: EpochTime<UnitMillis>
+  description?: string
+  inference_config?: Record<string, any>
+  metadata?: Metadata
+  minimum_version?: string
+  model_repository?: string
+  model_type?: string
+  packaged_model_id: Id
+  platform_architecture?: string
+  prefix_strings?: MlTrainedModelPrefixStrings
+  size?: ByteSize
+  sha256?: string
+  tags?: string[]
+  vocabulary_file?: string
+}
+
 export interface MlModelPlotConfig {
   annotations_enabled?: boolean
   enabled?: boolean
@@ -14447,6 +14653,7 @@ export interface MlModelSizeStats {
   model_bytes: ByteSize
   model_bytes_exceeded?: ByteSize
   model_bytes_memory_limit?: ByteSize
+  output_memory_allocator_bytes?: ByteSize
   peak_model_bytes?: ByteSize
   assignment_memory_basis?: string
   result_type: string
@@ -14496,20 +14703,11 @@ export interface MlNerInferenceUpdateOptions {
   results_field?: string
 }
 
-export interface MlNlpBertTokenizationConfig {
-  do_lower_case?: boolean
-  with_special_tokens?: boolean
-  max_sequence_length?: integer
-  truncate?: MlTokenizationTruncate
-  span?: integer
+export interface MlNlpBertTokenizationConfig extends MlCommonTokenizationConfig {
 }
 
-export interface MlNlpRobertaTokenizationConfig {
+export interface MlNlpRobertaTokenizationConfig extends MlCommonTokenizationConfig {
   add_prefix_space?: boolean
-  with_special_tokens?: boolean
-  max_sequence_length?: integer
-  truncate?: MlTokenizationTruncate
-  span?: integer
 }
 
 export interface MlNlpTokenizationUpdateOptions {
@@ -14533,7 +14731,7 @@ export interface MlOverallBucket {
   overall_score: double
   result_type: string
   timestamp: EpochTime<UnitMillis>
-  timestamp_string: DateTime
+  timestamp_string?: DateTime
 }
 
 export interface MlOverallBucketJob {
@@ -14621,6 +14819,7 @@ export interface MlTextEmbeddingInferenceOptions {
   embedding_size?: integer
   tokenization?: MlTokenizationConfigContainer
   results_field?: string
+  vocabulary: MlVocabulary
 }
 
 export interface MlTextEmbeddingInferenceUpdateOptions {
@@ -14631,6 +14830,7 @@ export interface MlTextEmbeddingInferenceUpdateOptions {
 export interface MlTextExpansionInferenceOptions {
   tokenization?: MlTokenizationConfigContainer
   results_field?: string
+  vocabulary: MlVocabulary
 }
 
 export interface MlTextExpansionInferenceUpdateOptions {
@@ -14645,6 +14845,7 @@ export interface MlTimingStats {
 
 export interface MlTokenizationConfigContainer {
   bert?: MlNlpBertTokenizationConfig
+  bert_ja?: MlNlpBertTokenizationConfig
   mpnet?: MlNlpBertTokenizationConfig
   roberta?: MlNlpRobertaTokenizationConfig
 }
@@ -14675,27 +14876,31 @@ export interface MlTotalFeatureImportanceStatistics {
 }
 
 export interface MlTrainedModelAssignment {
+  adaptive_allocations?: MlAdaptiveAllocationsSettings | null
   assignment_state: MlDeploymentAssignmentState
   max_assigned_allocations?: integer
+  reason?: string
   routing_table: Record<string, MlTrainedModelAssignmentRoutingTable>
   start_time: DateTime
   task_parameters: MlTrainedModelAssignmentTaskParameters
 }
 
 export interface MlTrainedModelAssignmentRoutingTable {
-  reason: string
+  reason?: string
   routing_state: MlRoutingState
   current_allocations: integer
   target_allocations: integer
 }
 
 export interface MlTrainedModelAssignmentTaskParameters {
-  model_bytes: integer
+  model_bytes: ByteSize
   model_id: Id
   deployment_id: Id
-  cache_size: ByteSize
+  cache_size?: ByteSize
   number_of_allocations: integer
   priority: MlTrainingPriority
+  per_deployment_memory_bytes: ByteSize
+  per_allocation_memory_bytes: ByteSize
   queue_capacity: integer
   threads_per_allocation: integer
 }
@@ -14718,6 +14923,7 @@ export interface MlTrainedModelConfig {
   license_level?: string
   metadata?: MlTrainedModelConfigMetadata
   model_size_bytes?: ByteSize
+  model_package?: MlModelPackageConfig
   location?: MlTrainedModelLocation
   prefix_strings?: MlTrainedModelPrefixStrings
 }
@@ -14740,36 +14946,45 @@ export interface MlTrainedModelDeploymentAllocationStatus {
 }
 
 export interface MlTrainedModelDeploymentNodesStats {
-  average_inference_time_ms: DurationValue<UnitFloatMillis>
-  error_count: integer
-  inference_count: integer
-  last_access: long
-  node: MlDiscoveryNode
-  number_of_allocations: integer
-  number_of_pending_requests: integer
-  rejection_execution_count: integer
+  average_inference_time_ms?: DurationValue<UnitFloatMillis>
+  average_inference_time_ms_last_minute?: DurationValue<UnitFloatMillis>
+  average_inference_time_ms_excluding_cache_hits?: DurationValue<UnitFloatMillis>
+  error_count?: integer
+  inference_count?: long
+  inference_cache_hit_count?: long
+  inference_cache_hit_count_last_minute?: long
+  last_access?: EpochTime<UnitMillis>
+  node?: MlDiscoveryNode
+  number_of_allocations?: integer
+  number_of_pending_requests?: integer
+  peak_throughput_per_minute: long
+  rejection_execution_count?: integer
   routing_state: MlTrainedModelAssignmentRoutingTable
-  start_time: EpochTime<UnitMillis>
-  threads_per_allocation: integer
-  timeout_count: integer
+  start_time?: EpochTime<UnitMillis>
+  threads_per_allocation?: integer
+  throughput_last_minute: integer
+  timeout_count?: integer
 }
 
 export interface MlTrainedModelDeploymentStats {
-  allocation_status: MlTrainedModelDeploymentAllocationStatus
+  adaptive_allocations?: MlAdaptiveAllocationsSettings
+  allocation_status?: MlTrainedModelDeploymentAllocationStatus
   cache_size?: ByteSize
   deployment_id: Id
-  error_count: integer
-  inference_count: integer
+  error_count?: integer
+  inference_count?: integer
   model_id: Id
   nodes: MlTrainedModelDeploymentNodesStats[]
-  number_of_allocations: integer
-  queue_capacity: integer
-  rejected_execution_count: integer
-  reason: string
+  number_of_allocations?: integer
+  peak_throughput_per_minute: long
+  priority: MlTrainingPriority
+  queue_capacity?: integer
+  rejected_execution_count?: integer
+  reason?: string
   start_time: EpochTime<UnitMillis>
-  state: MlDeploymentAssignmentState
-  threads_per_allocation: integer
-  timeout_count: integer
+  state?: MlDeploymentAssignmentState
+  threads_per_allocation?: integer
+  timeout_count?: integer
 }
 
 export interface MlTrainedModelEntities {
@@ -15445,6 +15660,7 @@ export interface MlGetTrainedModelsRequest extends RequestBase {
   exclude_generated?: boolean
   from?: integer
   include?: MlInclude
+  include_model_definition?: boolean
   size?: integer
   tags?: string | string[]
 }
@@ -15498,9 +15714,11 @@ export interface MlInfoDefaults {
 }
 
 export interface MlInfoLimits {
-  max_model_memory_limit?: string
-  effective_max_model_memory_limit: string
-  total_ml_memory: string
+  max_single_ml_node_processors?: integer
+  total_ml_processors?: integer
+  max_model_memory_limit?: ByteSize
+  effective_max_model_memory_limit?: ByteSize
+  total_ml_memory: ByteSize
 }
 
 export interface MlInfoNativeCode {
@@ -15552,21 +15770,24 @@ export interface MlPostDataRequest<TData = unknown> extends RequestBase {
 }
 
 export interface MlPostDataResponse {
-  bucket_count: long
-  earliest_record_timestamp: long
-  empty_bucket_count: long
+  job_id: Id
+  processed_record_count: long
+  processed_field_count: long
   input_bytes: long
   input_field_count: long
-  input_record_count: long
   invalid_date_count: long
-  job_id: Id
-  last_data_time: integer
-  latest_record_timestamp: long
   missing_field_count: long
   out_of_order_timestamp_count: long
-  processed_field_count: long
-  processed_record_count: long
+  empty_bucket_count: long
   sparse_bucket_count: long
+  bucket_count: long
+  earliest_record_timestamp?: EpochTime<UnitMillis>
+  latest_record_timestamp?: EpochTime<UnitMillis>
+  last_data_time?: EpochTime<UnitMillis>
+  latest_empty_bucket_timestamp?: EpochTime<UnitMillis>
+  latest_sparse_bucket_timestamp?: EpochTime<UnitMillis>
+  input_record_count: long
+  log_time?: EpochTime<UnitMillis>
 }
 
 export interface MlPreviewDataFrameAnalyticsDataframePreviewConfig {
@@ -15638,6 +15859,7 @@ export interface MlPutDataFrameAnalyticsRequest extends RequestBase {
     description?: string
     dest: MlDataframeAnalyticsDestination
     max_num_threads?: integer
+    _meta?: Metadata
     model_memory_limit?: string
     source: MlDataframeAnalyticsSource
     headers?: HttpHeaders
@@ -15655,6 +15877,7 @@ export interface MlPutDataFrameAnalyticsResponse {
   dest: MlDataframeAnalyticsDestination
   id: Id
   max_num_threads: integer
+  _meta?: Metadata
   model_memory_limit: string
   source: MlDataframeAnalyticsSource
   version: VersionString
@@ -15669,6 +15892,8 @@ export interface MlPutDatafeedRequest extends RequestBase {
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
+    /** @alias aggregations */
+    aggs?: Record<string, AggregationsAggregationContainer>
     chunking_config?: MlChunkingConfig
     delayed_data_check_config?: MlDelayedDataCheckConfig
     frequency?: Duration
@@ -15722,6 +15947,10 @@ export interface MlPutFilterResponse {
 
 export interface MlPutJobRequest extends RequestBase {
   job_id: Id
+  allow_no_indices?: boolean
+  expand_wildcards?: ExpandWildcards
+  ignore_throttled?: boolean
+  ignore_unavailable?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     allow_lazy_open?: boolean
@@ -15733,6 +15962,7 @@ export interface MlPutJobRequest extends RequestBase {
     data_description: MlDataDescription
     datafeed_config?: MlDatafeedConfig
     description?: string
+    job_id?: Id
     groups?: string[]
     model_plot_config?: MlModelPlotConfig
     model_snapshot_retention_days?: long
@@ -16104,7 +16334,7 @@ export interface MlUpdateJobRequest extends RequestBase {
     renormalization_window_days?: long
     results_retention_days?: long
     groups?: string[]
-    detectors?: MlDetector[]
+    detectors?: MlDetectorUpdate[]
     per_partition_categorization?: MlPerPartitionCategorization
   }
 }
@@ -17482,10 +17712,15 @@ export interface SearchApplicationEventDataStream {
   name: IndexName
 }
 
-export interface SearchApplicationSearchApplication {
+export type SearchApplicationEventType = 'page_view' | 'search' | 'search_click'
+
+export interface SearchApplicationSearchApplication extends SearchApplicationSearchApplicationParameters {
   name: Name
-  indices: IndexName[]
   updated_at_millis: EpochTime<UnitMillis>
+}
+
+export interface SearchApplicationSearchApplicationParameters {
+  indices: IndexName[]
   analytics_collection_name?: Name
   template?: SearchApplicationSearchApplicationTemplate
 }
@@ -17526,21 +17761,27 @@ export interface SearchApplicationListRequest extends RequestBase {
 
 export interface SearchApplicationListResponse {
   count: long
-  results: SearchApplicationListSearchApplicationListItem[]
+  results: SearchApplicationSearchApplication[]
 }
 
-export interface SearchApplicationListSearchApplicationListItem {
-  name: Name
-  indices: IndexName[]
-  updated_at_millis: EpochTime<UnitMillis>
-  analytics_collection_name?: Name
+export interface SearchApplicationPostBehavioralAnalyticsEventRequest extends RequestBase {
+  collection_name: Name
+  event_type: SearchApplicationEventType
+  debug?: boolean
+  /** @deprecated The use of the 'body' key has been deprecated, use 'payload' instead. */
+  body?: any
+}
+
+export interface SearchApplicationPostBehavioralAnalyticsEventResponse {
+  accepted: boolean
+  event?: any
 }
 
 export interface SearchApplicationPutRequest extends RequestBase {
   name: Name
   create?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, use 'search_application' instead. */
-  body?: SearchApplicationSearchApplication
+  body?: SearchApplicationSearchApplicationParameters
 }
 
 export interface SearchApplicationPutResponse {
@@ -17556,6 +17797,17 @@ export interface SearchApplicationPutBehavioralAnalyticsRequest extends RequestB
 }
 
 export type SearchApplicationPutBehavioralAnalyticsResponse = SearchApplicationPutBehavioralAnalyticsAnalyticsAcknowledgeResponseBase
+
+export interface SearchApplicationRenderQueryRequest extends RequestBase {
+  name: Name
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    params?: Record<string, any>
+  }
+}
+
+export interface SearchApplicationRenderQueryResponse {
+}
 
 export interface SearchApplicationSearchRequest extends RequestBase {
   name: Name
@@ -17712,7 +17964,7 @@ export type SecurityIndexPrivilege = 'all' | 'auto_configure' | 'create' | 'crea
 
 export interface SecurityIndicesPrivileges {
   field_security?: SecurityFieldSecurity
-  names: IndexName | IndexName[]
+  names: IndexName[]
   privileges: SecurityIndexPrivilege[]
   query?: SecurityIndicesPrivilegesQuery
   allow_restricted_indices?: boolean
@@ -17739,7 +17991,7 @@ export interface SecurityRemoteClusterPrivileges {
 export interface SecurityRemoteIndicesPrivileges {
   clusters: Names
   field_security?: SecurityFieldSecurity
-  names: IndexName | IndexName[]
+  names: IndexName[]
   privileges: SecurityIndexPrivilege[]
   query?: SecurityIndicesPrivilegesQuery
   allow_restricted_indices?: boolean
@@ -17841,7 +18093,7 @@ export interface SecurityUser {
 
 export interface SecurityUserIndicesPrivileges {
   field_security?: SecurityFieldSecurity[]
-  names: IndexName | IndexName[]
+  names: IndexName[]
   privileges: SecurityIndexPrivilege[]
   query?: SecurityIndicesPrivilegesQuery[]
   allow_restricted_indices: boolean
@@ -18189,7 +18441,7 @@ export interface SecurityGetBuiltinPrivilegesRequest extends RequestBase {
 
 export interface SecurityGetBuiltinPrivilegesResponse {
   cluster: SecurityClusterPrivilege[]
-  index: Indices
+  index: IndexName[]
   remote_cluster: SecurityRemoteClusterPrivilege[]
 }
 
@@ -18457,6 +18709,53 @@ export interface SecurityInvalidateTokenResponse {
   error_details?: ErrorCause[]
   invalidated_tokens: long
   previously_invalidated_tokens: long
+}
+
+export interface SecurityOidcAuthenticateRequest extends RequestBase {
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    nonce: string
+    realm?: string
+    redirect_uri: string
+    state: string
+  }
+}
+
+export interface SecurityOidcAuthenticateResponse {
+  access_token: string
+  expires_in: integer
+  refresh_token: string
+  type: string
+}
+
+export interface SecurityOidcLogoutRequest extends RequestBase {
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    access_token: string
+    refresh_token?: string
+  }
+}
+
+export interface SecurityOidcLogoutResponse {
+  redirect: string
+}
+
+export interface SecurityOidcPrepareAuthenticationRequest extends RequestBase {
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    iss?: string
+    login_hint?: string
+    nonce?: string
+    realm?: string
+    state?: string
+  }
+}
+
+export interface SecurityOidcPrepareAuthenticationResponse {
+  nonce: string
+  realm: string
+  redirect: string
+  state: string
 }
 
 export interface SecurityPutPrivilegesActions {
@@ -19686,16 +19985,96 @@ export interface TasksListRequest extends RequestBase {
 
 export type TasksListResponse = TasksTaskListResponseBase
 
-export interface TextStructureFindStructureFieldStat {
+export type TextStructureEcsCompatibilityType = 'disabled' | 'v1'
+
+export interface TextStructureFieldStat {
   count: integer
   cardinality: integer
-  top_hits: TextStructureFindStructureTopHit[]
+  top_hits: TextStructureTopHit[]
   mean_value?: integer
   median_value?: integer
   max_value?: integer
   min_value?: integer
   earliest?: string
   latest?: string
+}
+
+export type TextStructureFormatType = 'delimited' | 'ndjson' | 'semi_structured_text' | 'xml'
+
+export interface TextStructureTopHit {
+  count: long
+  value: any
+}
+
+export interface TextStructureFindFieldStructureRequest extends RequestBase {
+  column_names?: string
+  delimiter?: string
+  documents_to_sample?: uint
+  ecs_compatibility?: TextStructureEcsCompatibilityType
+  explain?: boolean
+  field: Field
+  format?: TextStructureFormatType
+  grok_pattern?: GrokPattern
+  index: IndexName
+  quote?: string
+  should_trim_fields?: boolean
+  timeout?: Duration
+  timestamp_field?: Field
+  timestamp_format?: string
+}
+
+export interface TextStructureFindFieldStructureResponse {
+  charset: string
+  ecs_compatibility?: TextStructureEcsCompatibilityType
+  field_stats: Record<Field, TextStructureFieldStat>
+  format: TextStructureFormatType
+  grok_pattern?: GrokPattern
+  java_timestamp_formats?: string[]
+  joda_timestamp_formats?: string[]
+  ingest_pipeline: IngestPipelineConfig
+  mappings: MappingTypeMapping
+  multiline_start_pattern?: string
+  need_client_timezone: boolean
+  num_lines_analyzed: integer
+  num_messages_analyzed: integer
+  sample_start: string
+  timestamp_field?: Field
+}
+
+export interface TextStructureFindMessageStructureRequest extends RequestBase {
+  column_names?: string
+  delimiter?: string
+  ecs_compatibility?: TextStructureEcsCompatibilityType
+  explain?: boolean
+  format?: TextStructureFormatType
+  grok_pattern?: GrokPattern
+  quote?: string
+  should_trim_fields?: boolean
+  timeout?: Duration
+  timestamp_field?: Field
+  timestamp_format?: string
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    messages: string[]
+  }
+}
+
+export interface TextStructureFindMessageStructureResponse {
+  charset: string
+  ecs_compatibility?: TextStructureEcsCompatibilityType
+  field_stats: Record<Field, TextStructureFieldStat>
+  format: TextStructureFormatType
+  grok_pattern?: GrokPattern
+  java_timestamp_formats?: string[]
+  joda_timestamp_formats?: string[]
+  ingest_pipeline: IngestPipelineConfig
+  mappings: MappingTypeMapping
+  multiline_start_pattern?: string
+  need_client_timezone: boolean
+  num_lines_analyzed: integer
+  num_messages_analyzed: integer
+  sample_start: string
+  timestamp_field?: Field
 }
 
 export interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
@@ -19723,7 +20102,7 @@ export interface TextStructureFindStructureResponse {
   has_header_row?: boolean
   has_byte_order_marker: boolean
   format: string
-  field_stats: Record<Field, TextStructureFindStructureFieldStat>
+  field_stats: Record<Field, TextStructureFieldStat>
   sample_start: string
   num_messages_analyzed: integer
   mappings: MappingTypeMapping
@@ -19741,11 +20120,6 @@ export interface TextStructureFindStructureResponse {
   timestamp_field?: Field
   should_trim_fields?: boolean
   ingest_pipeline: IngestPipelineConfig
-}
-
-export interface TextStructureFindStructureTopHit {
-  count: long
-  value: any
 }
 
 export interface TextStructureTestGrokPatternMatchedField {
@@ -21272,8 +21646,6 @@ export interface SpecUtilsCommonCatQueryParameters {
   format?: string
   h?: Names
   help?: boolean
-  local?: boolean
-  master_timeout?: Duration
   s?: Names
   v?: boolean
 }

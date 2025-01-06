@@ -45,7 +45,7 @@ export default class License {
   }
 
   /**
-    * Deletes licensing information for the cluster
+    * Delete the license. When the license expires, your subscription level reverts to Basic. If the operator privileges feature is enabled, only operator users can use this API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/delete-license.html | Elasticsearch API documentation}
     */
   async delete (this: That, params?: T.LicenseDeleteRequest | TB.LicenseDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseDeleteResponse>
@@ -75,7 +75,7 @@ export default class License {
   }
 
   /**
-    * Get license information. Returns information about your Elastic license, including its type, its status, when it was issued, and when it expires. For more information about the different types of licenses, refer to [Elastic Stack subscriptions](https://www.elastic.co/subscriptions).
+    * Get license information. Get information about your Elastic license including its type, its status, when it was issued, and when it expires. NOTE: If the master node is generating a new cluster state, the get license API may return a `404 Not Found` response. If you receive an unexpected 404 response after cluster startup, wait a short period and retry the request.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-license.html | Elasticsearch API documentation}
     */
   async get (this: That, params?: T.LicenseGetRequest | TB.LicenseGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseGetResponse>
@@ -105,7 +105,7 @@ export default class License {
   }
 
   /**
-    * Retrieves information about the status of the basic license.
+    * Get the basic license status.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-basic-status.html | Elasticsearch API documentation}
     */
   async getBasicStatus (this: That, params?: T.LicenseGetBasicStatusRequest | TB.LicenseGetBasicStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseGetBasicStatusResponse>
@@ -135,7 +135,7 @@ export default class License {
   }
 
   /**
-    * Retrieves information about the status of the trial license.
+    * Get the trial status.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-trial-status.html | Elasticsearch API documentation}
     */
   async getTrialStatus (this: That, params?: T.LicenseGetTrialStatusRequest | TB.LicenseGetTrialStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseGetTrialStatusResponse>
@@ -165,7 +165,7 @@ export default class License {
   }
 
   /**
-    * Updates the license for the cluster.
+    * Update the license. You can update your license at runtime without shutting down your nodes. License updates take effect immediately. If the license you are installing does not support all of the features that were available with your previous license, however, you are notified in the response. You must then re-submit the API request with the acknowledge parameter set to true. NOTE: If Elasticsearch security features are enabled and you are installing a gold or higher license, you must enable TLS on the transport networking layer before you install the license. If the operator privileges feature is enabled, only operator users can use this API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/update-license.html | Elasticsearch API documentation}
     */
   async post (this: That, params?: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostResponse>
@@ -207,7 +207,7 @@ export default class License {
   }
 
   /**
-    * The start basic API enables you to initiate an indefinite basic license, which gives access to all the basic features. If the basic license does not support all of the features that are available with your current license, however, you are notified in the response. You must then re-submit the API request with the acknowledge parameter set to true. To check the status of your basic license, use the following API: [Get basic status](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-basic-status.html).
+    * Start a basic license. Start an indefinite basic license, which gives access to all the basic features. NOTE: In order to start a basic license, you must not currently have a basic license. If the basic license does not support all of the features that are available with your current license, however, you are notified in the response. You must then re-submit the API request with the `acknowledge` parameter set to `true`. To check the status of your basic license, use the get basic license API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/start-basic.html | Elasticsearch API documentation}
     */
   async postStartBasic (this: That, params?: T.LicensePostStartBasicRequest | TB.LicensePostStartBasicRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostStartBasicResponse>
@@ -237,7 +237,7 @@ export default class License {
   }
 
   /**
-    * The start trial API enables you to start a 30-day trial, which gives access to all subscription features.
+    * Start a trial. Start a 30-day trial, which gives access to all subscription features. NOTE: You are allowed to start a trial only if your cluster has not already activated a trial for the current major product version. For example, if you have already activated a trial for v8.0, you cannot start a new trial until v9.0. You can, however, request an extended trial at https://www.elastic.co/trialextension. To check the status of your trial, use the get trial status API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/start-trial.html | Elasticsearch API documentation}
     */
   async postStartTrial (this: That, params?: T.LicensePostStartTrialRequest | TB.LicensePostStartTrialRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostStartTrialResponse>
