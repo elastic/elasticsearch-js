@@ -76,22 +76,22 @@ export default class Ingest {
   }
 
   /**
-    * Deletes an ip location database configuration
+    * Delete IP geolocation database configurations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-ip-location-database-api.html | Elasticsearch API documentation}
     */
-  async deleteIpLocationDatabase (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async deleteIpLocationDatabase (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async deleteIpLocationDatabase (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async deleteIpLocationDatabase (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeleteIpLocationDatabaseResponse>
+  async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestDeleteIpLocationDatabaseResponse, unknown>>
+  async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestDeleteIpLocationDatabaseResponse>
+  async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -210,13 +210,13 @@ export default class Ingest {
   }
 
   /**
-    * Returns the specified ip location database configuration
+    * Get IP geolocation database configurations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-ip-location-database-api.html | Elasticsearch API documentation}
     */
-  async getIpLocationDatabase (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getIpLocationDatabase (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getIpLocationDatabase (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getIpLocationDatabase (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetIpLocationDatabaseResponse>
+  async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGetIpLocationDatabaseResponse, unknown>>
+  async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestGetIpLocationDatabaseResponse>
+  async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -226,6 +226,7 @@ export default class Ingest {
       if (acceptedPath.includes(key)) {
         continue
       } else {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -319,7 +320,7 @@ export default class Ingest {
   }
 
   /**
-    * Create or update GeoIP database configurations. Create or update IP geolocation database configurations.
+    * Create or update a GeoIP database configuration. Refer to the create or update IP geolocation database configuration API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-geoip-database-api.html | Elasticsearch API documentation}
     */
   async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutGeoipDatabaseResponse>
@@ -355,22 +356,26 @@ export default class Ingest {
   }
 
   /**
-    * Puts the configuration for a ip location database to be downloaded
+    * Create or update an IP geolocation database configuration.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-ip-location-database-api.html | Elasticsearch API documentation}
     */
-  async putIpLocationDatabase (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putIpLocationDatabase (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putIpLocationDatabase (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putIpLocationDatabase (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutIpLocationDatabaseResponse>
+  async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestPutIpLocationDatabaseResponse, unknown>>
+  async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestPutIpLocationDatabaseResponse>
+  async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
+    const acceptedBody: string[] = ['configuration']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    let body: any
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }

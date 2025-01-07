@@ -4,16 +4,16 @@
 [source, js]
 ----
 const response = await client.indices.create({
-  index: "semantic-embeddings",
+  index: "test-index",
   mappings: {
     properties: {
-      semantic_text: {
+      infer_field: {
         type: "semantic_text",
-        inference_id: "my-elser-endpoint",
+        inference_id: ".elser-2-elasticsearch",
       },
-      content: {
+      source_field: {
         type: "text",
-        copy_to: "semantic_text",
+        copy_to: "infer_field",
       },
     },
   },
