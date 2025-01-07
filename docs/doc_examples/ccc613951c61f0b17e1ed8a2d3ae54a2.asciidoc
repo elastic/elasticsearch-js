@@ -3,7 +3,9 @@
 
 [source, js]
 ----
-const response = await client.simulate.ingest({
+const response = await client.transport.request({
+  method: "POST",
+  path: "/_ingest/_simulate",
   body: {
     docs: [
       {

@@ -3,11 +3,9 @@
 
 [source, js]
 ----
-const response = await client.indices.putSettings({
-  index: "my-index-000001",
-  settings: {
-    "index.indexing.slowlog.include.user": true,
-  },
+const response = await client.transport.request({
+  method: "DELETE",
+  path: "/_ingest/ip_location/database/example-database-id",
 });
 console.log(response);
 ----
