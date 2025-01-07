@@ -42,6 +42,7 @@ client.bulk({ ... })
 * *Request (object):*
 ** *`index` (Optional, string)*: Name of the data stream, index, or index alias to perform bulk actions on.
 ** *`operations` (Optional, { index, create, update, delete } | { detect_noop, doc, doc_as_upsert, script, scripted_upsert, _source, upsert } | object[])*
+** *`list_executed_pipelines` (Optional, boolean)*: If `true`, the response will include the ingest pipelines that were executed for each index or create.
 ** *`pipeline` (Optional, string)*: ID of the pipeline to use to preprocess incoming documents.
 If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request.
 If a final pipeline is configured it will always run, regardless of the value of this parameter.
@@ -55,6 +56,7 @@ Valid values: `true`, `false`, `wait_for`.
 ** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: The number of shard copies that must be active before proceeding with the operation.
 Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
 ** *`require_alias` (Optional, boolean)*: If `true`, the request’s actions must target an index alias.
+** *`require_data_stream` (Optional, boolean)*: If `true`, the request's actions must target a data stream (existing or to-be-created).
 
 [discrete]
 === clear_scroll
@@ -531,7 +533,24 @@ client.getSource({ id, index })
 
 [discrete]
 === health_report
-Returns the health of the cluster.
+Get the cluster health.
+Get a report with the health status of an Elasticsearch cluster.
+The report contains a list of indicators that compose Elasticsearch functionality.
+
+Each indicator has a health status of: green, unknown, yellow or red.
+The indicator will provide an explanation and metadata describing the reason for its current health status.
+
+The cluster’s status is controlled by the worst indicator status.
+
+In the event that an indicator’s status is non-green, a list of impacts may be present in the indicator result which detail the functionalities that are negatively affected by the health issue.
+Each impact carries with it a severity level, an area of the system that is affected, and a simple description of the impact on the system.
+
+Some health indicators can determine the root cause of a health problem and prescribe a set of steps that can be performed in order to improve the health of the system.
+The root cause and remediation steps are encapsulated in a diagnosis.
+A diagnosis contains a cause detailing a root cause analysis, an action containing a brief description of the steps to take to fix the problem, the list of affected resources (if applicable), and a detailed step-by-step troubleshooting guide to fix the diagnosed problem.
+
+NOTE: The health indicators perform root cause analysis of non-green health statuses. This can be computationally expensive when called frequently.
+When setting up automated polling of the API for health status, set verbose to false to disable the more expensive analysis logic.
 
 {ref}/health-api.html[Endpoint documentation]
 [source,ts]
@@ -825,7 +844,7 @@ If `true`, the point in time will contain all the shards that are available at t
 [discrete]
 === ping
 Ping the cluster.
-Returns whether the cluster is running.
+Get information about whether the cluster is running.
 
 {ref}/index.html[Endpoint documentation]
 [source,ts]
@@ -2587,7 +2606,11 @@ client.ccr.unfollow({ index })
 === cluster
 [discrete]
 ==== allocation_explain
-Provides explanations for shard allocations in the cluster.
+Explain the shard allocations.
+Get explanations for shard allocations in the cluster.
+For unassigned shards, it provides an explanation for why the shard is unassigned.
+For assigned shards, it provides an explanation for why the shard is remaining on its current node and has not moved or rebalanced to another node.
+This API can be very useful when attempting to diagnose why a shard is unassigned or why a shard continues to remain on its current node when you might expect otherwise.
 
 {ref}/cluster-allocation-explain.html[Endpoint documentation]
 [source,ts]
@@ -2630,7 +2653,8 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== delete_voting_config_exclusions
-Clears cluster voting config exclusions.
+Clear cluster voting config exclusions.
+Remove master-eligible nodes from the voting configuration exclusion list.
 
 {ref}/voting-config-exclusions.html[Endpoint documentation]
 [source,ts]
@@ -2698,7 +2722,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== get_settings
-Returns cluster-wide settings.
+Get cluster-wide settings.
 By default, it returns only settings that have been explicitly defined.
 
 {ref}/cluster-get-settings.html[Endpoint documentation]
@@ -2720,8 +2744,16 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== health
-The cluster health API returns a simple status on the health of the cluster. You can also use the API to get the health status of only specified data streams and indices. For data streams, the API retrieves the health status of the stream’s backing indices.
-The cluster health status is: green, yellow or red. On the shard level, a red status indicates that the specific shard is not allocated in the cluster, yellow means that the primary shard is allocated but replicas are not, and green means that all shards are allocated. The index level status is controlled by the worst shard status. The cluster status is controlled by the worst index status.
+Get the cluster health status.
+You can also use the API to get the health status of only specified data streams and indices.
+For data streams, the API retrieves the health status of the stream’s backing indices.
+
+The cluster health status is: green, yellow or red.
+On the shard level, a red status indicates that the specific shard is not allocated in the cluster. Yellow means that the primary shard is allocated but replicas are not. Green means that all shards are allocated.
+The index level status is controlled by the worst shard status.
+
+One of the main benefits of the API is the ability to wait until the cluster reaches a certain high watermark health level.
+The cluster status is controlled by the worst index status.
 
 {ref}/cluster-health.html[Endpoint documentation]
 [source,ts]
@@ -2765,9 +2797,11 @@ client.cluster.info({ target })
 
 [discrete]
 ==== pending_tasks
-Returns cluster-level changes (such as create index, update mapping, allocate or fail shard) that have not yet been executed.
+Get the pending cluster tasks.
+Get information about cluster-level changes (such as create index, update mapping, allocate or fail shard) that have not yet taken effect.
+
 NOTE: This API returns a list of any pending updates to the cluster state.
-These are distinct from the tasks reported by the Task Management API which include periodic tasks and tasks initiated by the user, such as node stats, search queries, or create index requests.
+These are distinct from the tasks reported by the task management API which include periodic tasks and tasks initiated by the user, such as node stats, search queries, or create index requests.
 However, if a user-initiated task such as a create index command causes a cluster state update, the activity of this task might be reported by both task api and pending cluster tasks API.
 
 {ref}/cluster-pending.html[Endpoint documentation]
@@ -2787,7 +2821,24 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== post_voting_config_exclusions
-Updates the cluster voting config exclusions by node ids or node names.
+Update voting configuration exclusions.
+Update the cluster voting config exclusions by node IDs or node names.
+By default, if there are more than three master-eligible nodes in the cluster and you remove fewer than half of the master-eligible nodes in the cluster at once, the voting configuration automatically shrinks.
+If you want to shrink the voting configuration to contain fewer than three nodes or to remove half or more of the master-eligible nodes in the cluster at once, use this API to remove departing nodes from the voting configuration manually.
+The API adds an entry for each specified node to the cluster’s voting configuration exclusions list.
+It then waits until the cluster has reconfigured its voting configuration to exclude the specified nodes.
+
+Clusters should have no voting configuration exclusions in normal operation.
+Once the excluded nodes have stopped, clear the voting configuration exclusions with `DELETE /_cluster/voting_config_exclusions`.
+This API waits for the nodes to be fully removed from the cluster before it returns.
+If your cluster has voting configuration exclusions for nodes that you no longer intend to remove, use `DELETE /_cluster/voting_config_exclusions?wait_for_removal=false` to clear the voting configuration exclusions without waiting for the nodes to leave the cluster.
+
+A response to `POST /_cluster/voting_config_exclusions` with an HTTP status code of 200 OK guarantees that the node has been removed from the voting configuration and will not be reinstated until the voting configuration exclusions are cleared by calling `DELETE /_cluster/voting_config_exclusions`.
+If the call to `POST /_cluster/voting_config_exclusions` fails or returns a response with an HTTP status code other than 200 OK then the node may not have been removed from the voting configuration.
+In that case, you may safely retry the call.
+
+NOTE: Voting exclusions are required only when you remove at least half of the master-eligible nodes from a cluster in a short time period.
+They are not required when removing master-ineligible nodes or when removing fewer than half of the master-eligible nodes.
 
 {ref}/voting-config-exclusions.html[Endpoint documentation]
 [source,ts]
@@ -2858,7 +2909,24 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== put_settings
-Updates the cluster settings.
+Update the cluster settings.
+Configure and update dynamic settings on a running cluster.
+You can also configure dynamic settings locally on an unstarted or shut down node in `elasticsearch.yml`.
+
+Updates made with this API can be persistent, which apply across cluster restarts, or transient, which reset after a cluster restart.
+You can also reset transient or persistent settings by assigning them a null value.
+
+If you configure the same setting using multiple methods, Elasticsearch applies the settings in following order of precedence: 1) Transient setting; 2) Persistent setting; 3) `elasticsearch.yml` setting; 4) Default setting value.
+For example, you can apply a transient setting to override a persistent setting or `elasticsearch.yml` setting.
+However, a change to an `elasticsearch.yml` setting will not override a defined transient or persistent setting.
+
+TIP: In Elastic Cloud, use the user settings feature to configure all cluster settings. This method automatically rejects unsafe settings that could break your cluster.
+If you run Elasticsearch on your own hardware, use this API to configure dynamic cluster settings.
+Only use `elasticsearch.yml` for static cluster settings and node settings.
+The API doesn’t require a restart and ensures a setting’s value is the same on all nodes.
+
+WARNING: Transient cluster settings are no longer recommended. Use persistent cluster settings instead.
+If a cluster becomes unstable, transient settings can clear unexpectedly, resulting in a potentially undesired cluster configuration.
 
 {ref}/cluster-update-settings.html[Endpoint documentation]
 [source,ts]
@@ -2878,9 +2946,9 @@ client.cluster.putSettings({ ... })
 
 [discrete]
 ==== remote_info
-The cluster remote info API allows you to retrieve all of the configured
-remote cluster information. It returns connection and endpoint information
-keyed by the configured remote cluster alias.
+Get remote cluster information.
+Get all of the configured remote cluster information.
+This API returns connection and endpoint information keyed by the configured remote cluster alias.
 
 {ref}/cluster-remote-info.html[Endpoint documentation]
 [source,ts]
@@ -2891,7 +2959,20 @@ client.cluster.remoteInfo()
 
 [discrete]
 ==== reroute
-Allows to manually change the allocation of individual shards in the cluster.
+Reroute the cluster.
+Manually change the allocation of individual shards in the cluster.
+For example, a shard can be moved from one node to another explicitly, an allocation can be canceled, and an unassigned shard can be explicitly allocated to a specific node.
+
+It is important to note that after processing any reroute commands Elasticsearch will perform rebalancing as normal (respecting the values of settings such as `cluster.routing.rebalance.enable`) in order to remain in a balanced state.
+For example, if the requested allocation includes moving a shard from node1 to node2 then this may cause a shard to be moved from node2 back to node1 to even things out.
+
+The cluster can be set to disable allocations using the `cluster.routing.allocation.enable` setting.
+If allocations are disabled then the only allocations that will be performed are explicit ones given using the reroute command, and consequent allocations due to rebalancing.
+
+The cluster will attempt to allocate a shard a maximum of `index.allocation.max_retries` times in a row (defaults to `5`), before giving up and leaving the shard unallocated.
+This scenario can be caused by structural problems such as having an analyzer which refers to a stopwords file which doesn’t exist on all nodes.
+
+Once the problem has been corrected, allocation can be manually retried by calling the reroute API with the `?retry_failed` URI query parameter, which will attempt a single retry round for these shards.
 
 {ref}/cluster-reroute.html[Endpoint documentation]
 [source,ts]
@@ -2904,8 +2985,9 @@ client.cluster.reroute({ ... })
 
 * *Request (object):*
 ** *`commands` (Optional, { cancel, move, allocate_replica, allocate_stale_primary, allocate_empty_primary }[])*: Defines the commands to perform.
-** *`dry_run` (Optional, boolean)*: If true, then the request simulates the operation only and returns the resulting state.
-** *`explain` (Optional, boolean)*: If true, then the response contains an explanation of why the commands can or cannot be executed.
+** *`dry_run` (Optional, boolean)*: If true, then the request simulates the operation.
+It will calculate the result of applying the commands to the current cluster state and return the resulting cluster state after the commands (and rebalancing) have been applied; it will not actually perform the requested changes.
+** *`explain` (Optional, boolean)*: If true, then the response contains an explanation of why the commands can or cannot run.
 ** *`metric` (Optional, string | string[])*: Limits the information returned to the specified metrics.
 ** *`retry_failed` (Optional, boolean)*: If true, then retries allocation of shards that are blocked due to too many subsequent allocation failures.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
@@ -2913,7 +2995,25 @@ client.cluster.reroute({ ... })
 
 [discrete]
 ==== state
-Returns a comprehensive information about the state of the cluster.
+Get the cluster state.
+Get comprehensive information about the state of the cluster.
+
+The cluster state is an internal data structure which keeps track of a variety of information needed by every node, including the identity and attributes of the other nodes in the cluster; cluster-wide settings; index metadata, including the mapping and settings for each index; the location and status of every shard copy in the cluster.
+
+The elected master node ensures that every node in the cluster has a copy of the same cluster state.
+This API lets you retrieve a representation of this internal state for debugging or diagnostic purposes.
+You may need to consult the Elasticsearch source code to determine the precise meaning of the response.
+
+By default the API will route requests to the elected master node since this node is the authoritative source of cluster states.
+You can also retrieve the cluster state held on the node handling the API request by adding the `?local=true` query parameter.
+
+Elasticsearch may need to expend significant effort to compute a response to this API in larger clusters, and the response may comprise a very large quantity of data.
+If you use this API repeatedly, your cluster may become unstable.
+
+WARNING: The response is a representation of an internal data structure.
+Its format is not subject to the same compatibility guarantees as other more stable APIs and may change from version to version.
+Do not query this API using external monitoring tools.
+Instead, obtain the information you require using other more stable cluster APIs.
 
 {ref}/cluster-state.html[Endpoint documentation]
 [source,ts]
@@ -2938,8 +3038,8 @@ client.cluster.state({ ... })
 
 [discrete]
 ==== stats
-Returns cluster statistics.
-It returns basic index metrics (shard numbers, store size, memory usage) and information about the current nodes that form the cluster (number, roles, os, jvm versions, memory usage, cpu and installed plugins).
+Get cluster statistics.
+Get basic index metrics (shard numbers, store size, memory usage) and information about the current nodes that form the cluster (number, roles, os, jvm versions, memory usage, cpu and installed plugins).
 
 {ref}/cluster-stats.html[Endpoint documentation]
 [source,ts]
@@ -4002,7 +4102,8 @@ Defaults to no timeout.
 === ilm
 [discrete]
 ==== delete_lifecycle
-Deletes the specified lifecycle policy definition. You cannot delete policies that are currently in use. If the policy is being used to manage any indices, the request fails and returns an error.
+Delete a lifecycle policy.
+You cannot delete policies that are currently in use. If the policy is being used to manage any indices, the request fails and returns an error.
 
 {ref}/ilm-delete-lifecycle.html[Endpoint documentation]
 [source,ts]
@@ -4020,7 +4121,11 @@ client.ilm.deleteLifecycle({ policy })
 
 [discrete]
 ==== explain_lifecycle
-Retrieves information about the index’s current lifecycle state, such as the currently executing phase, action, and step. Shows when the index entered each one, the definition of the running phase, and information about any failures.
+Explain the lifecycle state.
+Get the current lifecycle status for one or more indices.
+For data streams, the API retrieves the current lifecycle status for the stream's backing indices.
+
+The response indicates when the index entered each lifecycle state, provides the definition of the running phase, and information about any failures.
 
 {ref}/ilm-explain-lifecycle.html[Endpoint documentation]
 [source,ts]
@@ -4041,7 +4146,7 @@ To target all data streams and indices, use `*` or `_all`.
 
 [discrete]
 ==== get_lifecycle
-Retrieves a lifecycle policy.
+Get lifecycle policies.
 
 {ref}/ilm-get-lifecycle.html[Endpoint documentation]
 [source,ts]
@@ -4059,7 +4164,8 @@ client.ilm.getLifecycle({ ... })
 
 [discrete]
 ==== get_status
-Retrieves the current index lifecycle management (ILM) status.
+Get the ILM status.
+Get the current index lifecycle management status.
 
 {ref}/ilm-get-status.html[Endpoint documentation]
 [source,ts]
@@ -4070,9 +4176,20 @@ client.ilm.getStatus()
 
 [discrete]
 ==== migrate_to_data_tiers
-Switches the indices, ILM policies, and legacy, composable and component templates from using custom node attributes and
-attribute-based allocation filters to using data tiers, and optionally deletes one legacy index template.+
+Migrate to data tiers routing.
+Switch the indices, ILM policies, and legacy, composable, and component templates from using custom node attributes and attribute-based allocation filters to using data tiers.
+Optionally, delete one legacy index template.
 Using node roles enables ILM to automatically move the indices between data tiers.
+
+Migrating away from custom node attributes routing can be manually performed.
+This API provides an automated way of performing three out of the four manual steps listed in the migration guide:
+
+1. Stop setting the custom hot attribute on new indices.
+2. Remove custom allocation settings from existing ILM policies.
+3. Replace custom allocation settings from existing indices with the corresponding tier preference.
+
+ILM must be stopped before performing the migration.
+Use the stop ILM and get ILM status APIs to wait until the reported operation mode is `STOPPED`.
 
 {ref}/ilm-migrate-to-data-tiers.html[Endpoint documentation]
 [source,ts]
@@ -4091,7 +4208,20 @@ This provides a way to retrieve the indices and ILM policies that need to be mig
 
 [discrete]
 ==== move_to_step
-Manually moves an index into the specified step and executes that step.
+Move to a lifecycle step.
+Manually move an index into a specific step in the lifecycle policy and run that step.
+
+WARNING: This operation can result in the loss of data. Manually moving an index into a specific step runs that step even if it has already been performed. This is a potentially destructive action and this should be considered an expert level API.
+
+You must specify both the current step and the step to be executed in the body of the request.
+The request will fail if the current step does not match the step currently running for the index
+This is to prevent the index from being moved from an unexpected step into the next step.
+
+When specifying the target (`next_step`) to which the index will be moved, either the name or both the action and name fields are optional.
+If only the phase is specified, the index will move to the first step of the first action in the target phase.
+If the phase and action are specified, the index will move to the first step of the specified action in the specified phase.
+Only actions specified in the ILM policy are considered valid.
+An index cannot move to a step that is not part of its policy.
 
 {ref}/ilm-move-to-step.html[Endpoint documentation]
 [source,ts]
@@ -4109,7 +4239,10 @@ client.ilm.moveToStep({ index, current_step, next_step })
 
 [discrete]
 ==== put_lifecycle
-Creates a lifecycle policy. If the specified policy exists, the policy is replaced and the policy version is incremented.
+Create or update a lifecycle policy.
+If the specified policy exists, it is replaced and the policy version is incremented.
+
+NOTE: Only the latest version of the policy is stored, you cannot revert to previous versions.
 
 {ref}/ilm-put-lifecycle.html[Endpoint documentation]
 [source,ts]
@@ -4127,7 +4260,9 @@ client.ilm.putLifecycle({ policy })
 
 [discrete]
 ==== remove_policy
-Removes the assigned lifecycle policy and stops managing the specified index
+Remove policies from an index.
+Remove the assigned lifecycle policies from an index or a data stream's backing indices.
+It also stops managing the indices.
 
 {ref}/ilm-remove-policy.html[Endpoint documentation]
 [source,ts]
@@ -4143,7 +4278,10 @@ client.ilm.removePolicy({ index })
 
 [discrete]
 ==== retry
-Retries executing the policy for an index that is in the ERROR step.
+Retry a policy.
+Retry running the lifecycle policy for an index that is in the ERROR step.
+The API sets the policy back to the step where the error occurred and runs the step.
+Use the explain lifecycle state API to determine whether an index is in the ERROR step.
 
 {ref}/ilm-retry-policy.html[Endpoint documentation]
 [source,ts]
@@ -4159,7 +4297,10 @@ client.ilm.retry({ index })
 
 [discrete]
 ==== start
-Start the index lifecycle management (ILM) plugin.
+Start the ILM plugin.
+Start the index lifecycle management plugin if it is currently stopped.
+ILM is started automatically when the cluster is formed.
+Restarting ILM is necessary only when it has been stopped using the stop ILM API.
 
 {ref}/ilm-start.html[Endpoint documentation]
 [source,ts]
@@ -4176,7 +4317,12 @@ client.ilm.start({ ... })
 
 [discrete]
 ==== stop
-Halts all lifecycle management operations and stops the index lifecycle management (ILM) plugin
+Stop the ILM plugin.
+Halt all lifecycle management operations and stop the index lifecycle management plugin.
+This is useful when you are performing maintenance on the cluster and need to prevent ILM from performing any actions on your indices.
+
+The API returns as soon as the stop request has been acknowledged, but the plugin might continue to run until in-progress operations complete and the plugin can be safely stopped.
+Use the get ILM status API to check whether ILM is running.
 
 {ref}/ilm-stop.html[Endpoint documentation]
 [source,ts]
@@ -4685,7 +4831,7 @@ client.indices.existsTemplate({ name })
 [discrete]
 ==== explain_data_lifecycle
 Get the status for a data stream lifecycle.
-Retrieves information about an index or data stream’s current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
+Get information about an index or data stream's current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
 
 {ref}/data-streams-explain-lifecycle.html[Endpoint documentation]
 [source,ts]
@@ -5919,14 +6065,22 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== delete_ip_location_database
-Deletes an ip location database configuration
+Deletes an IP location database configuration.
 
 {ref}/delete-ip-location-database-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.ingest.deleteIpLocationDatabase()
+client.ingest.deleteIpLocationDatabase({ id })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`id` (string | string[])*: A list of IP location database configurations to delete
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== delete_pipeline
@@ -5985,14 +6139,23 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== get_ip_location_database
-Returns the specified ip location database configuration
+Returns information about one or more IP location database configurations.
 
 {ref}/get-ip-location-database-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.ingest.getIpLocationDatabase()
+client.ingest.getIpLocationDatabase({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`id` (Optional, string | string[])*: List of database configuration IDs to retrieve.
+Wildcard (`*`) expressions are supported.
+To get all database configurations, omit this parameter or use `*`.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_pipeline
@@ -6056,14 +6219,23 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== put_ip_location_database
-Puts the configuration for a ip location database to be downloaded
+Returns information about one or more IP location database configurations.
 
 {ref}/put-ip-location-database-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.ingest.putIpLocationDatabase()
+client.ingest.putIpLocationDatabase({ id })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`id` (string)*: ID of the database configuration to create or update.
+** *`configuration` (Optional, { name, maxmind, ipinfo })*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== put_pipeline
@@ -6458,7 +6630,7 @@ Deletes all job results, model snapshots and forecast data that have exceeded
 their retention days period. Machine learning state documents that are not
 associated with any job are also deleted.
 You can limit the request to a single or set of anomaly detection jobs by
-using a job identifier, a group name, a comma-separated list of jobs, or a
+using a job identifier, a group name, a list of jobs, or a
 wildcard expression. You can delete expired data for all anomaly detection
 jobs by using _all, by specifying * as the <job_id>, or by omitting the
 <job_id>.
@@ -6869,7 +7041,7 @@ This parameter has the `from` and `size` properties.
 ==== get_data_frame_analytics
 Get data frame analytics job configuration info.
 You can get information for multiple data frame analytics jobs in a single
-API request by using a comma-separated list of data frame analytics jobs or a
+API request by using a list of data frame analytics jobs or a
 wildcard expression.
 
 {ref}/get-dfanalytics.html[Endpoint documentation]
@@ -6938,7 +7110,7 @@ there are no matches or only partial matches.
 ==== get_datafeed_stats
 Get datafeeds usage info.
 You can get statistics for multiple datafeeds in a single API request by
-using a comma-separated list of datafeeds or a wildcard expression. You can
+using a list of datafeeds or a wildcard expression. You can
 get statistics for all datafeeds by using `_all`, by specifying `*` as the
 `<feed_id>`, or by omitting the `<feed_id>`. If the datafeed is stopped, the
 only information you receive is the `datafeed_id` and the `state`.
@@ -6972,7 +7144,7 @@ partial matches. If this parameter is `false`, the request returns a
 ==== get_datafeeds
 Get datafeeds configuration info.
 You can get information for multiple datafeeds in a single API request by
-using a comma-separated list of datafeeds or a wildcard expression. You can
+using a list of datafeeds or a wildcard expression. You can
 get information for all datafeeds by using `_all`, by specifying `*` as the
 `<feed_id>`, or by omitting the `<feed_id>`.
 This API returns a maximum of 10,000 datafeeds.
@@ -7091,7 +7263,7 @@ code when there are no matches or only partial matches.
 ==== get_jobs
 Get anomaly detection jobs configuration info.
 You can get information for multiple anomaly detection jobs in a single API
-request by using a group name, a comma-separated list of jobs, or a wildcard
+request by using a group name, a list of jobs, or a wildcard
 expression. You can get information for all anomaly detection jobs by using
 `_all`, by specifying `*` as the `<job_id>`, or by omitting the `<job_id>`.
 
@@ -7317,6 +7489,7 @@ be retrieved and then added to another cluster.
 ** *`from` (Optional, number)*: Skips the specified number of models.
 ** *`include` (Optional, Enum("definition" | "feature_importance_baseline" | "hyperparameters" | "total_feature_importance" | "definition_status"))*: A comma delimited string of optional fields to include in the response
 body.
+** *`include_model_definition` (Optional, boolean)*: parameter is deprecated! Use [include=definition] instead
 ** *`size` (Optional, number)*: Specifies the maximum number of models to obtain.
 ** *`tags` (Optional, string | string[])*: A comma delimited string of tags. A trained model can have many tags, or
 none. When supplied, only trained models that contain all the supplied
@@ -7326,7 +7499,7 @@ tags are returned.
 ==== get_trained_models_stats
 Get trained models usage info.
 You can get usage information for multiple trained
-models in a single API request by using a comma-separated list of model IDs or a wildcard expression.
+models in a single API request by using a list of model IDs or a wildcard expression.
 
 {ref}/get-trained-models-stats.html[Endpoint documentation]
 [source,ts]
@@ -7435,7 +7608,7 @@ client.ml.postCalendarEvents({ calendar_id, events })
 Send data to an anomaly detection job for analysis.
 
 IMPORTANT: For each job, data can be accepted from only a single connection at a time.
-It is not currently possible to post data to multiple jobs using wildcards or a comma-separated list.
+It is not currently possible to post data to multiple jobs using wildcards or a list.
 
 {ref}/ml-post-data.html[Endpoint documentation]
 [source,ts]
@@ -7606,6 +7779,7 @@ model the values as `0-14 = 0`, `15-24 = 1`, `25-34 = 2`, and so on.
 threads may decrease the time necessary to complete the analysis at the
 cost of using more CPU. Note that the process may use additional threads
 for operational functionality other than the analysis itself.
+** *`_meta` (Optional, Record<string, User-defined value>)*
 ** *`model_memory_limit` (Optional, string)*: The approximate maximum amount of memory resources that are permitted for
 analytical processing. If your `elasticsearch.yml` file contains an
 `xpack.ml.max_model_memory_limit` setting, an error occurs when you try
@@ -7736,6 +7910,18 @@ client.ml.putJob({ job_id, analysis_config, data_description })
 ** *`renormalization_window_days` (Optional, number)*: Advanced configuration option. The period over which adjustments to the score are applied, as new data is seen. The default value is the longer of 30 days or 100 bucket spans.
 ** *`results_index_name` (Optional, string)*: A text string that affects the name of the machine learning results index. By default, the job generates an index named `.ml-anomalies-shared`.
 ** *`results_retention_days` (Optional, number)*: Advanced configuration option. The period of time (in days) that results are retained. Age is calculated relative to the timestamp of the latest bucket result. If this property has a non-null value, once per day at 00:30 (server time), results that are the specified number of days older than the latest bucket result are deleted from Elasticsearch. The default value is null, which means all results are retained. Annotations generated by the system also count as results for retention purposes; they are deleted after the same number of days as results. Annotations added by users are retained forever.
+** *`allow_no_indices` (Optional, boolean)*: If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the
+`_all` string or when no indices are specified.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
+whether wildcard expressions match hidden data streams. Supports a list of values. Valid values are:
+
+* `all`: Match any data stream or index, including hidden ones.
+* `closed`: Match closed, non-hidden indices. Also matches any non-hidden data stream. Data streams cannot be closed.
+* `hidden`: Match hidden data streams and hidden indices. Must be combined with `open`, `closed`, or both.
+* `none`: Wildcard patterns are not accepted.
+* `open`: Match open, non-hidden indices. Also matches any non-hidden data stream.
+** *`ignore_throttled` (Optional, boolean)*: If `true`, concrete, expanded or aliased indices are ignored when frozen.
+** *`ignore_unavailable` (Optional, boolean)*: If `true`, unavailable indices (missing or closed) are ignored.
 
 [discrete]
 ==== put_trained_model
@@ -8311,7 +8497,7 @@ bucket result. If this property has a non-null value, once per day at
 than the latest bucket result are deleted from Elasticsearch. The default
 value is null, which means all results are retained.
 ** *`groups` (Optional, string[])*: A list of job groups. A job can belong to no groups or many.
-** *`detectors` (Optional, { by_field_name, custom_rules, detector_description, detector_index, exclude_frequent, field_name, function, over_field_name, partition_field_name, use_null }[])*: An array of detector update objects.
+** *`detectors` (Optional, { detector_index, description, custom_rules }[])*: An array of detector update objects.
 ** *`per_partition_categorization` (Optional, { enabled, stop_on_warn })*: Settings related to how categorization interacts with partition fields.
 
 [discrete]
@@ -8413,7 +8599,8 @@ client.monitoring.bulk({ system_id, system_api_version, interval })
 === nodes
 [discrete]
 ==== clear_repositories_metering_archive
-You can use this API to clear the archived repositories metering information in the cluster.
+Clear the archived repositories metering.
+Clear the archived repositories metering information in the cluster.
 
 {ref}/clear-repositories-metering-archive-api.html[Endpoint documentation]
 [source,ts]
@@ -8431,10 +8618,10 @@ All the nodes selective options are explained [here](https://www.elastic.co/guid
 
 [discrete]
 ==== get_repositories_metering_info
-You can use the cluster repositories metering API to retrieve repositories metering information in a cluster.
-This API exposes monotonically non-decreasing counters and it’s expected that clients would durably store the
-information needed to compute aggregations over a period of time. Additionally, the information exposed by this
-API is volatile, meaning that it won’t be present after node restarts.
+Get cluster repositories metering.
+Get repositories metering information for a cluster.
+This API exposes monotonically non-decreasing counters and it is expected that clients would durably store the information needed to compute aggregations over a period of time.
+Additionally, the information exposed by this API is volatile, meaning that it will not be present after node restarts.
 
 {ref}/get-repositories-metering-api.html[Endpoint documentation]
 [source,ts]
@@ -8451,8 +8638,9 @@ All the nodes selective options are explained [here](https://www.elastic.co/guid
 
 [discrete]
 ==== hot_threads
-This API yields a breakdown of the hot threads on each selected node in the cluster.
-The output is plain text with a breakdown of each node’s top hot threads.
+Get the hot threads for nodes.
+Get a breakdown of the hot threads on each selected node in the cluster.
+The output is plain text with a breakdown of the top hot threads for each node.
 
 {ref}/cluster-nodes-hot-threads.html[Endpoint documentation]
 [source,ts]
@@ -8480,7 +8668,8 @@ before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== info
-Returns cluster nodes information.
+Get node information.
+By default, the API returns all attributes and core settings for cluster nodes.
 
 {ref}/cluster-nodes-info.html[Endpoint documentation]
 [source,ts]
@@ -8500,7 +8689,15 @@ client.nodes.info({ ... })
 
 [discrete]
 ==== reload_secure_settings
-Reloads the keystore on nodes in the cluster.
+Reload the keystore on nodes in the cluster.
+
+Secure settings are stored in an on-disk keystore. Certain of these settings are reloadable.
+That is, you can change them on disk and reload them without restarting any nodes in the cluster.
+When you have updated reloadable secure settings in your keystore, you can use this API to reload those settings on each node.
+
+When the Elasticsearch keystore is password protected and not simply obfuscated, you must provide the password for the keystore when you reload the secure settings.
+Reloading the settings for the whole cluster assumes that the keystores for all nodes are protected with the same password; this method is allowed only when inter-node communications are encrypted.
+Alternatively, you can reload the secure settings on each node by locally accessing the API and passing the node-specific Elasticsearch keystore password.
 
 {ref}/secure-settings.html[Endpoint documentation]
 [source,ts]
@@ -8519,7 +8716,9 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== stats
-Returns cluster nodes statistics.
+Get node statistics.
+Get statistics for nodes in a cluster.
+By default, all stats are returned. You can limit the returned information by using metrics.
 
 {ref}/cluster-nodes-stats.html[Endpoint documentation]
 [source,ts]
@@ -8547,7 +8746,7 @@ client.nodes.stats({ ... })
 
 [discrete]
 ==== usage
-Returns information on the usage of features.
+Get feature usage information.
 
 {ref}/cluster-nodes-usage.html[Endpoint documentation]
 [source,ts]

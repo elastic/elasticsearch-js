@@ -14,6 +14,7 @@ const response = await client.indices.putSettings({
     "index.search.slowlog.threshold.fetch.info": "800ms",
     "index.search.slowlog.threshold.fetch.debug": "500ms",
     "index.search.slowlog.threshold.fetch.trace": "200ms",
+    "index.search.slowlog.include.user": true,
   },
 });
 console.log(response);
