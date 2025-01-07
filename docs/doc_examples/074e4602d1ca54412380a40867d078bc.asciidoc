@@ -11,6 +11,8 @@ const response = await client.indices.putSettings({
     "index.indexing.slowlog.threshold.index.debug": "2s",
     "index.indexing.slowlog.threshold.index.trace": "500ms",
     "index.indexing.slowlog.source": "1000",
+    "index.indexing.slowlog.reformat": true,
+    "index.indexing.slowlog.include.user": true,
   },
 });
 console.log(response);

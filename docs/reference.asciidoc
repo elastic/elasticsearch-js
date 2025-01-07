@@ -42,6 +42,7 @@ client.bulk({ ... })
 * *Request (object):*
 ** *`index` (Optional, string)*: Name of the data stream, index, or index alias to perform bulk actions on.
 ** *`operations` (Optional, { index, create, update, delete } | { detect_noop, doc, doc_as_upsert, script, scripted_upsert, _source, upsert } | object[])*
+** *`list_executed_pipelines` (Optional, boolean)*: If `true`, the response will include the ingest pipelines that were executed for each index or create.
 ** *`pipeline` (Optional, string)*: ID of the pipeline to use to preprocess incoming documents.
 If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request.
 If a final pipeline is configured it will always run, regardless of the value of this parameter.
@@ -55,6 +56,7 @@ Valid values: `true`, `false`, `wait_for`.
 ** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: The number of shard copies that must be active before proceeding with the operation.
 Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
 ** *`require_alias` (Optional, boolean)*: If `true`, the request’s actions must target an index alias.
+** *`require_data_stream` (Optional, boolean)*: If `true`, the request's actions must target a data stream (existing or to-be-created).
 
 [discrete]
 === clear_scroll
@@ -1809,6 +1811,11 @@ client.cat.aliases({ ... })
 * *Request (object):*
 ** *`name` (Optional, string | string[])*: A list of aliases to retrieve. Supports wildcards (`*`).  To retrieve all aliases, omit this parameter or use `*` or `_all`.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
+local cluster state. If `false` the list of selected nodes are computed
+from the cluster state of the master node. In both cases the coordinating
+node will send requests for further information to each selected node.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== allocation
@@ -1827,6 +1834,11 @@ client.cat.allocation({ ... })
 * *Request (object):*
 ** *`node_id` (Optional, string | string[])*: List of node identifiers or names used to limit the returned information.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
+** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
+local cluster state. If `false` the list of selected nodes are computed
+from the cluster state of the master node. In both cases the coordinating
+node will send requests for further information to each selected node.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== component_templates
@@ -1848,6 +1860,11 @@ client.cat.componentTemplates({ ... })
 
 * *Request (object):*
 ** *`name` (Optional, string)*: The name of the component template. Accepts wildcard expressions. If omitted, all component templates are returned.
+** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
+local cluster state. If `false` the list of selected nodes are computed
+from the cluster state of the master node. In both cases the coordinating
+node will send requests for further information to each selected node.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== count
@@ -1965,6 +1982,7 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 ** *`include_unloaded_segments` (Optional, boolean)*: If true, the response includes information from segments that are not loaded into memory.
 ** *`pri` (Optional, boolean)*: If true, the response only includes information from primary shards.
 ** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== master
@@ -1974,9 +1992,18 @@ IMPORTANT: cat APIs are only intended for human consumption using the command li
 {ref}/cat-master.html[Endpoint documentation]
 [source,ts]
 ----
-client.cat.master()
+client.cat.master({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
+local cluster state. If `false` the list of selected nodes are computed
+from the cluster state of the master node. In both cases the coordinating
+node will send requests for further information to each selected node.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== ml_data_frame_analytics
@@ -2003,7 +2030,7 @@ client.cat.mlDataFrameAnalytics({ ... })
 ** *`h` (Optional, Enum("assignment_explanation" | "create_time" | "description" | "dest_index" | "failure_reason" | "id" | "model_memory_limit" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "progress" | "source_index" | "state" | "type" | "version") | Enum("assignment_explanation" | "create_time" | "description" | "dest_index" | "failure_reason" | "id" | "model_memory_limit" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "progress" | "source_index" | "state" | "type" | "version")[])*: List of column names to display.
 ** *`s` (Optional, Enum("assignment_explanation" | "create_time" | "description" | "dest_index" | "failure_reason" | "id" | "model_memory_limit" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "progress" | "source_index" | "state" | "type" | "version") | Enum("assignment_explanation" | "create_time" | "description" | "dest_index" | "failure_reason" | "id" | "model_memory_limit" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "progress" | "source_index" | "state" | "type" | "version")[])*: List of column names or column aliases used to sort the
 response.
-** *`time` (Optional, string | -1 | 0)*: Unit used to display time values.
+** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
 [discrete]
 ==== ml_datafeeds
@@ -2106,6 +2133,7 @@ If `false`, the API returns a 404 status code when there are no matches or only 
 ** *`s` (Optional, Enum("create_time" | "created_by" | "data_frame_analytics_id" | "description" | "heap_size" | "id" | "ingest.count" | "ingest.current" | "ingest.failed" | "ingest.pipelines" | "ingest.time" | "license" | "operations" | "version") | Enum("create_time" | "created_by" | "data_frame_analytics_id" | "description" | "heap_size" | "id" | "ingest.count" | "ingest.current" | "ingest.failed" | "ingest.pipelines" | "ingest.time" | "license" | "operations" | "version")[])*: A list of column names or aliases used to sort the response.
 ** *`from` (Optional, number)*: Skips the specified number of transforms.
 ** *`size` (Optional, number)*: The maximum number of transforms to display.
+** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
 [discrete]
 ==== nodeattrs
@@ -2115,9 +2143,18 @@ IMPORTANT: cat APIs are only intended for human consumption using the command li
 {ref}/cat-nodeattrs.html[Endpoint documentation]
 [source,ts]
 ----
-client.cat.nodeattrs()
+client.cat.nodeattrs({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
+local cluster state. If `false` the list of selected nodes are computed
+from the cluster state of the master node. In both cases the coordinating
+node will send requests for further information to each selected node.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== nodes
@@ -2137,6 +2174,8 @@ client.cat.nodes({ ... })
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`full_id` (Optional, boolean | string)*: If `true`, return the full node ID. If `false`, return the shortened node ID.
 ** *`include_unloaded_segments` (Optional, boolean)*: If true, the response includes information from segments that are not loaded into memory.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
 [discrete]
 ==== pending_tasks
@@ -2146,9 +2185,19 @@ IMPORTANT: cat APIs are only intended for human consumption using the command li
 {ref}/cat-pending-tasks.html[Endpoint documentation]
 [source,ts]
 ----
-client.cat.pendingTasks()
+client.cat.pendingTasks({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
+local cluster state. If `false` the list of selected nodes are computed
+from the cluster state of the master node. In both cases the coordinating
+node will send requests for further information to each selected node.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
 [discrete]
 ==== plugins
@@ -2158,9 +2207,19 @@ IMPORTANT: cat APIs are only intended for human consumption using the command li
 {ref}/cat-plugins.html[Endpoint documentation]
 [source,ts]
 ----
-client.cat.plugins()
+client.cat.plugins({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`include_bootstrap` (Optional, boolean)*: Include bootstrap plugins in the response
+** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
+local cluster state. If `false` the list of selected nodes are computed
+from the cluster state of the master node. In both cases the coordinating
+node will send requests for further information to each selected node.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== recovery
@@ -2184,6 +2243,7 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 ** *`active_only` (Optional, boolean)*: If `true`, the response only includes ongoing shard recoveries.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`detailed` (Optional, boolean)*: If `true`, the response includes detailed information about shard recoveries.
+** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
 [discrete]
 ==== repositories
@@ -2193,9 +2253,18 @@ IMPORTANT: cat APIs are only intended for human consumption using the command li
 {ref}/cat-repositories.html[Endpoint documentation]
 [source,ts]
 ----
-client.cat.repositories()
+client.cat.repositories({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
+local cluster state. If `false` the list of selected nodes are computed
+from the cluster state of the master node. In both cases the coordinating
+node will send requests for further information to each selected node.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== segments
@@ -2217,6 +2286,11 @@ client.cat.segments({ ... })
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
+** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
+local cluster state. If `false` the list of selected nodes are computed
+from the cluster state of the master node. In both cases the coordinating
+node will send requests for further information to each selected node.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== shards
@@ -2238,6 +2312,8 @@ client.cat.shards({ ... })
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
 [discrete]
 ==== snapshots
@@ -2260,6 +2336,8 @@ Accepts wildcard expressions.
 `_all` returns all repositories.
 If any repository fails during the request, Elasticsearch returns an error.
 ** *`ignore_unavailable` (Optional, boolean)*: If `true`, the response does not include information from unavailable snapshots.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
 [discrete]
 ==== tasks
@@ -2278,8 +2356,12 @@ client.cat.tasks({ ... })
 * *Request (object):*
 ** *`actions` (Optional, string[])*: The task action names, which are used to limit the response.
 ** *`detailed` (Optional, boolean)*: If `true`, the response includes detailed information about shard recoveries.
-** *`node_id` (Optional, string[])*: Unique node identifiers, which are used to limit the response.
+** *`nodes` (Optional, string[])*: Unique node identifiers, which are used to limit the response.
 ** *`parent_task_id` (Optional, string)*: The parent task identifier, which is used to limit the response.
+** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`wait_for_completion` (Optional, boolean)*: If `true`, the request blocks until the task has completed.
 
 [discrete]
 ==== templates
@@ -2299,6 +2381,11 @@ client.cat.templates({ ... })
 * *Request (object):*
 ** *`name` (Optional, string)*: The name of the template to return.
 Accepts wildcard expressions. If omitted, all templates are returned.
+** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
+local cluster state. If `false` the list of selected nodes are computed
+from the cluster state of the master node. In both cases the coordinating
+node will send requests for further information to each selected node.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== thread_pool
@@ -2319,6 +2406,11 @@ client.cat.threadPool({ ... })
 ** *`thread_pool_patterns` (Optional, string | string[])*: A list of thread pool names used to limit the request.
 Accepts wildcard expressions.
 ** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
+** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
+local cluster state. If `false` the list of selected nodes are computed
+from the cluster state of the master node. In both cases the coordinating
+node will send requests for further information to each selected node.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== transforms
@@ -2354,7 +2446,8 @@ If `false`, the request returns a 404 status code when there are no matches or o
 === ccr
 [discrete]
 ==== delete_auto_follow_pattern
-Deletes auto-follow patterns.
+Delete auto-follow patterns.
+Delete a collection of cross-cluster replication auto-follow patterns.
 
 {ref}/ccr-delete-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
@@ -2370,36 +2463,50 @@ client.ccr.deleteAutoFollowPattern({ name })
 
 [discrete]
 ==== follow
-Creates a new follower index configured to follow the referenced leader index.
+Create a follower.
+Create a cross-cluster replication follower index that follows a specific leader index.
+When the API returns, the follower index exists and cross-cluster replication starts replicating operations from the leader index to the follower index.
 
 {ref}/ccr-put-follow.html[Endpoint documentation]
 [source,ts]
 ----
-client.ccr.follow({ index })
+client.ccr.follow({ index, leader_index, remote_cluster })
 ----
 
 [discrete]
 ==== Arguments
 
 * *Request (object):*
-** *`index` (string)*: The name of the follower index
-** *`leader_index` (Optional, string)*
-** *`max_outstanding_read_requests` (Optional, number)*
-** *`max_outstanding_write_requests` (Optional, number)*
-** *`max_read_request_operation_count` (Optional, number)*
-** *`max_read_request_size` (Optional, string)*
-** *`max_retry_delay` (Optional, string | -1 | 0)*
-** *`max_write_buffer_count` (Optional, number)*
-** *`max_write_buffer_size` (Optional, string)*
-** *`max_write_request_operation_count` (Optional, number)*
-** *`max_write_request_size` (Optional, string)*
-** *`read_poll_timeout` (Optional, string | -1 | 0)*
-** *`remote_cluster` (Optional, string)*
-** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
+** *`index` (string)*: The name of the follower index.
+** *`leader_index` (string)*: The name of the index in the leader cluster to follow.
+** *`remote_cluster` (string)*: The remote cluster containing the leader index.
+** *`data_stream_name` (Optional, string)*: If the leader index is part of a data stream, the name to which the local data stream for the followed index should be renamed.
+** *`max_outstanding_read_requests` (Optional, number)*: The maximum number of outstanding reads requests from the remote cluster.
+** *`max_outstanding_write_requests` (Optional, number)*: The maximum number of outstanding write requests on the follower.
+** *`max_read_request_operation_count` (Optional, number)*: The maximum number of operations to pull per read from the remote cluster.
+** *`max_read_request_size` (Optional, number | string)*: The maximum size in bytes of per read of a batch of operations pulled from the remote cluster.
+** *`max_retry_delay` (Optional, string | -1 | 0)*: The maximum time to wait before retrying an operation that failed exceptionally. An exponential backoff strategy is employed when
+retrying.
+** *`max_write_buffer_count` (Optional, number)*: The maximum number of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will be
+deferred until the number of queued operations goes below the limit.
+** *`max_write_buffer_size` (Optional, number | string)*: The maximum total bytes of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will
+be deferred until the total bytes of queued operations goes below the limit.
+** *`max_write_request_operation_count` (Optional, number)*: The maximum number of operations per bulk write request executed on the follower.
+** *`max_write_request_size` (Optional, number | string)*: The maximum total bytes of operations per bulk write request executed on the follower.
+** *`read_poll_timeout` (Optional, string | -1 | 0)*: The maximum time to wait for new operations on the remote cluster when the follower index is synchronized with the leader index.
+When the timeout has elapsed, the poll for operations will return to the follower so that it can update some statistics.
+Then the follower will immediately attempt to read from the leader again.
+** *`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })*: Settings to override from the leader index.
+** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: Specifies the number of shards to wait on being active before responding. This defaults to waiting on none of the shards to be
+active.
+A shard must be restored from the leader index before being active. Restoring a follower shard requires transferring all the
+remote Lucene segment files to the follower index.
 
 [discrete]
 ==== follow_info
-Retrieves information about all follower indices, including parameters and status for each follower index
+Get follower information.
+Get information about all cross-cluster replication follower indices.
+For example, the results include follower index names, leader index names, replication options, and whether the follower indices are active or paused.
 
 {ref}/ccr-get-follow-info.html[Endpoint documentation]
 [source,ts]
@@ -2415,7 +2522,9 @@ client.ccr.followInfo({ index })
 
 [discrete]
 ==== follow_stats
-Retrieves follower stats. return shard-level stats about the following tasks associated with each shard for the specified indices.
+Get follower stats.
+Get cross-cluster replication follower stats.
+The API returns shard-level stats about the "following tasks" associated with each shard for the specified indices.
 
 {ref}/ccr-get-follow-stats.html[Endpoint documentation]
 [source,ts]
@@ -2431,7 +2540,18 @@ client.ccr.followStats({ index })
 
 [discrete]
 ==== forget_follower
-Removes the follower retention leases from the leader.
+Forget a follower.
+Remove the cross-cluster replication follower retention leases from the leader.
+
+A following index takes out retention leases on its leader index.
+These leases are used to increase the likelihood that the shards of the leader index retain the history of operations that the shards of the following index need to run replication.
+When a follower index is converted to a regular index by the unfollow API (either by directly calling the API or by index lifecycle management tasks), these leases are removed.
+However, removal of the leases can fail, for example when the remote cluster containing the leader index is unavailable.
+While the leases will eventually expire on their own, their extended existence can cause the leader index to hold more history than necessary and prevent index lifecycle management from performing some operations on the leader index.
+This API exists to enable manually removing the leases when the unfollow API is unable to do so.
+
+NOTE: This API does not stop replication by a following index. If you use this API with a follower index that is still actively following, the following index will add back retention leases on the leader.
+The only purpose of this API is to handle the case of failure to remove the following retention leases after the unfollow API is invoked.
 
 {ref}/ccr-post-forget-follower.html[Endpoint documentation]
 [source,ts]
@@ -2451,7 +2571,8 @@ client.ccr.forgetFollower({ index })
 
 [discrete]
 ==== get_auto_follow_pattern
-Gets configured auto-follow patterns. Returns the specified auto-follow pattern collection.
+Get auto-follow patterns.
+Get cross-cluster replication auto-follow patterns.
 
 {ref}/ccr-get-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
@@ -2467,7 +2588,14 @@ client.ccr.getAutoFollowPattern({ ... })
 
 [discrete]
 ==== pause_auto_follow_pattern
-Pauses an auto-follow pattern
+Pause an auto-follow pattern.
+Pause a cross-cluster replication auto-follow pattern.
+When the API returns, the auto-follow pattern is inactive.
+New indices that are created on the remote cluster and match the auto-follow patterns are ignored.
+
+You can resume auto-following with the resume auto-follow pattern API.
+When it resumes, the auto-follow pattern is active again and automatically configures follower indices for newly created indices on the remote cluster that match its patterns.
+Remote indices that were created while the pattern was paused will also be followed, unless they have been deleted or closed in the interim.
 
 {ref}/ccr-pause-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
@@ -2483,7 +2611,11 @@ client.ccr.pauseAutoFollowPattern({ name })
 
 [discrete]
 ==== pause_follow
-Pauses a follower index. The follower index will not fetch any additional operations from the leader index.
+Pause a follower.
+Pause a cross-cluster replication follower index.
+The follower index will not fetch any additional operations from the leader index.
+You can resume following with the resume follower API.
+You can pause and resume a follower index to change the configuration of the following task.
 
 {ref}/ccr-post-pause-follow.html[Endpoint documentation]
 [source,ts]
@@ -2499,7 +2631,13 @@ client.ccr.pauseFollow({ index })
 
 [discrete]
 ==== put_auto_follow_pattern
-Creates a new named collection of auto-follow patterns against a specified remote cluster. Newly created indices on the remote cluster matching any of the specified patterns will be automatically configured as follower indices.
+Create or update auto-follow patterns.
+Create a collection of cross-cluster replication auto-follow patterns for a remote cluster.
+Newly created indices on the remote cluster that match any of the patterns are automatically configured as follower indices.
+Indices on the remote cluster that were created before the auto-follow pattern was created will not be auto-followed even if they match the pattern.
+
+This API can also be used to update auto-follow patterns.
+NOTE: Follower indices that were configured automatically before updating an auto-follow pattern will remain unchanged even if they do not match against the new patterns.
 
 {ref}/ccr-put-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
@@ -2530,7 +2668,10 @@ client.ccr.putAutoFollowPattern({ name, remote_cluster })
 
 [discrete]
 ==== resume_auto_follow_pattern
-Resumes an auto-follow pattern that has been paused
+Resume an auto-follow pattern.
+Resume a cross-cluster replication auto-follow pattern that was paused.
+The auto-follow pattern will resume configuring following indices for newly created indices that match its patterns on the remote cluster.
+Remote indices created while the pattern was paused will also be followed unless they have been deleted or closed in the interim.
 
 {ref}/ccr-resume-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
@@ -2546,7 +2687,11 @@ client.ccr.resumeAutoFollowPattern({ name })
 
 [discrete]
 ==== resume_follow
-Resumes a follower index that has been paused
+Resume a follower.
+Resume a cross-cluster replication follower index that was paused.
+The follower index could have been paused with the pause follower API.
+Alternatively it could be paused due to replication that cannot be retried due to failures during following tasks.
+When this API returns, the follower index will resume fetching operations from the leader index.
 
 {ref}/ccr-post-resume-follow.html[Endpoint documentation]
 [source,ts]
@@ -2572,7 +2717,8 @@ client.ccr.resumeFollow({ index })
 
 [discrete]
 ==== stats
-Gets all stats related to cross-cluster replication.
+Get cross-cluster replication stats.
+This API returns stats about auto-following and the same shard-level stats as the get follower stats API.
 
 {ref}/ccr-get-stats.html[Endpoint documentation]
 [source,ts]
@@ -2583,7 +2729,12 @@ client.ccr.stats()
 
 [discrete]
 ==== unfollow
-Stops the following task associated with a follower index and removes index metadata and settings associated with cross-cluster replication.
+Unfollow an index.
+Convert a cross-cluster replication follower index to a regular index.
+The API stops the following task associated with a follower index and removes index metadata and settings associated with cross-cluster replication.
+The follower index must be paused and closed before you call the unfollow API.
+
+NOTE: Currently cross-cluster replication does not support converting an existing regular index to a follower index. Converting a follower index to a regular index is an irreversible operation.
 
 {ref}/ccr-post-unfollow.html[Endpoint documentation]
 [source,ts]
@@ -3203,23 +3354,48 @@ client.connector.syncJobCancel({ connector_sync_job_id })
 
 [discrete]
 ==== sync_job_check_in
-Checks in a connector sync job (refreshes 'last_seen').
+Check in a connector sync job.
+Check in a connector sync job and set the `last_seen` field to the current time before updating it in the internal index.
+
+To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
+This service runs automatically on Elastic Cloud for Elastic managed connectors.
 
 {ref}/check-in-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.connector.syncJobCheckIn()
+client.connector.syncJobCheckIn({ connector_sync_job_id })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_sync_job_id` (string)*: The unique identifier of the connector sync job to be checked in.
 
 [discrete]
 ==== sync_job_claim
-Claims a connector sync job.
+Claim a connector sync job.
+This action updates the job status to `in_progress` and sets the `last_seen` and `started_at` timestamps to the current time.
+Additionally, it can set the `sync_cursor` property for the sync job.
+
+This API is not intended for direct connector management by users.
+It supports the implementation of services that utilize the connector protocol to communicate with Elasticsearch.
+
+To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
+This service runs automatically on Elastic Cloud for Elastic managed connectors.
 [source,ts]
 ----
-client.connector.syncJobClaim()
+client.connector.syncJobClaim({ connector_sync_job_id, worker_hostname })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_sync_job_id` (string)*: The unique identifier of the connector sync job.
+** *`worker_hostname` (string)*: The host name of the current system that will run the job.
+** *`sync_cursor` (Optional, User-defined value)*: The cursor object from the last incremental sync job.
+This should reference the `sync_cursor` field in the connector state for which the job runs.
 
 [discrete]
 ==== sync_job_delete
@@ -3242,14 +3418,24 @@ client.connector.syncJobDelete({ connector_sync_job_id })
 
 [discrete]
 ==== sync_job_error
-Sets an error for a connector sync job.
+Set a connector sync job error.
+Set the `error` field for a connector sync job and set its `status` to `error`.
+
+To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
+This service runs automatically on Elastic Cloud for Elastic managed connectors.
 
 {ref}/set-connector-sync-job-error-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.connector.syncJobError()
+client.connector.syncJobError({ connector_sync_job_id, error })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_sync_job_id` (string)*: The unique identifier for the connector sync job.
+** *`error` (string)*: The error for the connector sync job error field.
 
 [discrete]
 ==== sync_job_get
@@ -3404,14 +3590,33 @@ client.connector.updateError({ connector_id, error })
 
 [discrete]
 ==== update_features
-Updates the connector features in the connector document.
+Update the connector features.
+Update the connector features in the connector document.
+This API can be used to control the following aspects of a connector:
+
+* document-level security
+* incremental syncs
+* advanced sync rules
+* basic sync rules
+
+Normally, the running connector service automatically manages these features.
+However, you can use this API to override the default behavior.
+
+To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
+This service runs automatically on Elastic Cloud for Elastic managed connectors.
 
 {ref}/update-connector-features-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.connector.updateFeatures()
+client.connector.updateFeatures({ connector_id, features })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated.
+** *`features` ({ document_level_security, incremental_sync, native_connector_api_keys, sync_rules })*
 
 [discrete]
 ==== update_filtering
@@ -3812,10 +4017,15 @@ client.eql.search({ index, query })
 ** *`keep_alive` (Optional, string | -1 | 0)*
 ** *`keep_on_completion` (Optional, boolean)*
 ** *`wait_for_completion_timeout` (Optional, string | -1 | 0)*
+** *`allow_partial_search_results` (Optional, boolean)*
+** *`allow_partial_sequence_results` (Optional, boolean)*
 ** *`size` (Optional, number)*: For basic queries, the maximum number of matching events to return. Defaults to 10
 ** *`fields` (Optional, { field, format, include_unmapped } | { field, format, include_unmapped }[])*: Array of wildcard (*) patterns. The response returns values for field names matching these patterns in the fields property of each hit.
 ** *`result_position` (Optional, Enum("tail" | "head"))*
 ** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*
+** *`max_samples_per_key` (Optional, number)*: By default, the response of a sample query contains up to `10` samples, with one sample per unique set of join keys. Use the `size`
+parameter to get a smaller or larger set of samples. To retrieve more than one sample per set of join keys, use the
+`max_samples_per_key` parameter. Pipes are not supported for sample queries.
 ** *`allow_no_indices` (Optional, boolean)*
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*
 ** *`ignore_unavailable` (Optional, boolean)*: If true, missing or closed indices are not included in the response.
@@ -3879,7 +4089,16 @@ Defaults to `false`. If `true` then the response will include an extra section u
 === features
 [discrete]
 ==== get_features
-Gets a list of features which can be included in snapshots using the feature_states field when creating a snapshot
+Get the features.
+Get a list of features that can be included in snapshots using the `feature_states` field when creating a snapshot.
+You can use this API to determine which feature states to include when taking a snapshot.
+By default, all feature states are included in a snapshot if that snapshot includes the global state, or none if it does not.
+
+A feature state includes one or more system indices necessary for a given feature to function.
+In order to ensure data integrity, all system indices that comprise a feature state are snapshotted and restored together.
+
+The features listed by this API are a combination of built-in features and features defined by plugins.
+In order for a feature state to be listed in this API and recognized as a valid feature state by the create snapshot API, the plugin that defines that feature must be installed on the master node.
 
 {ref}/get-features-api.html[Endpoint documentation]
 [source,ts]
@@ -3890,7 +4109,23 @@ client.features.getFeatures()
 
 [discrete]
 ==== reset_features
-Resets the internal state of features, usually by deleting system indices
+Reset the features.
+Clear all of the state information stored in system indices by Elasticsearch features, including the security and machine learning indices.
+
+WARNING: Intended for development and testing use only. Do not reset features on a production cluster.
+
+Return a cluster to the same state as a new installation by resetting the feature state for all Elasticsearch features.
+This deletes all state information stored in system indices.
+
+The response code is HTTP 200 if the state is successfully reset for all features.
+It is HTTP 500 if the reset operation failed for any feature.
+
+Note that select features might provide a way to reset particular system indices.
+Using this API resets all features, both those that are built-in and implemented as plugins.
+
+To list the features that will be affected, use the get features API.
+
+IMPORTANT: The features installed on the node you submit this request to are the features that will be reset. Run on the master node if you have any doubts about which plugins are installed on individual nodes.
 
 {ref}/modules-snapshots.html[Endpoint documentation]
 [source,ts]
@@ -4097,7 +4332,8 @@ Defaults to no timeout.
 === ilm
 [discrete]
 ==== delete_lifecycle
-Deletes the specified lifecycle policy definition. You cannot delete policies that are currently in use. If the policy is being used to manage any indices, the request fails and returns an error.
+Delete a lifecycle policy.
+You cannot delete policies that are currently in use. If the policy is being used to manage any indices, the request fails and returns an error.
 
 {ref}/ilm-delete-lifecycle.html[Endpoint documentation]
 [source,ts]
@@ -4115,7 +4351,11 @@ client.ilm.deleteLifecycle({ policy })
 
 [discrete]
 ==== explain_lifecycle
-Retrieves information about the index’s current lifecycle state, such as the currently executing phase, action, and step. Shows when the index entered each one, the definition of the running phase, and information about any failures.
+Explain the lifecycle state.
+Get the current lifecycle status for one or more indices.
+For data streams, the API retrieves the current lifecycle status for the stream's backing indices.
+
+The response indicates when the index entered each lifecycle state, provides the definition of the running phase, and information about any failures.
 
 {ref}/ilm-explain-lifecycle.html[Endpoint documentation]
 [source,ts]
@@ -4136,7 +4376,7 @@ To target all data streams and indices, use `*` or `_all`.
 
 [discrete]
 ==== get_lifecycle
-Retrieves a lifecycle policy.
+Get lifecycle policies.
 
 {ref}/ilm-get-lifecycle.html[Endpoint documentation]
 [source,ts]
@@ -4154,7 +4394,8 @@ client.ilm.getLifecycle({ ... })
 
 [discrete]
 ==== get_status
-Retrieves the current index lifecycle management (ILM) status.
+Get the ILM status.
+Get the current index lifecycle management status.
 
 {ref}/ilm-get-status.html[Endpoint documentation]
 [source,ts]
@@ -4165,9 +4406,20 @@ client.ilm.getStatus()
 
 [discrete]
 ==== migrate_to_data_tiers
-Switches the indices, ILM policies, and legacy, composable and component templates from using custom node attributes and
-attribute-based allocation filters to using data tiers, and optionally deletes one legacy index template.+
+Migrate to data tiers routing.
+Switch the indices, ILM policies, and legacy, composable, and component templates from using custom node attributes and attribute-based allocation filters to using data tiers.
+Optionally, delete one legacy index template.
 Using node roles enables ILM to automatically move the indices between data tiers.
+
+Migrating away from custom node attributes routing can be manually performed.
+This API provides an automated way of performing three out of the four manual steps listed in the migration guide:
+
+1. Stop setting the custom hot attribute on new indices.
+2. Remove custom allocation settings from existing ILM policies.
+3. Replace custom allocation settings from existing indices with the corresponding tier preference.
+
+ILM must be stopped before performing the migration.
+Use the stop ILM and get ILM status APIs to wait until the reported operation mode is `STOPPED`.
 
 {ref}/ilm-migrate-to-data-tiers.html[Endpoint documentation]
 [source,ts]
@@ -4186,7 +4438,20 @@ This provides a way to retrieve the indices and ILM policies that need to be mig
 
 [discrete]
 ==== move_to_step
-Manually moves an index into the specified step and executes that step.
+Move to a lifecycle step.
+Manually move an index into a specific step in the lifecycle policy and run that step.
+
+WARNING: This operation can result in the loss of data. Manually moving an index into a specific step runs that step even if it has already been performed. This is a potentially destructive action and this should be considered an expert level API.
+
+You must specify both the current step and the step to be executed in the body of the request.
+The request will fail if the current step does not match the step currently running for the index
+This is to prevent the index from being moved from an unexpected step into the next step.
+
+When specifying the target (`next_step`) to which the index will be moved, either the name or both the action and name fields are optional.
+If only the phase is specified, the index will move to the first step of the first action in the target phase.
+If the phase and action are specified, the index will move to the first step of the specified action in the specified phase.
+Only actions specified in the ILM policy are considered valid.
+An index cannot move to a step that is not part of its policy.
 
 {ref}/ilm-move-to-step.html[Endpoint documentation]
 [source,ts]
@@ -4204,7 +4469,10 @@ client.ilm.moveToStep({ index, current_step, next_step })
 
 [discrete]
 ==== put_lifecycle
-Creates a lifecycle policy. If the specified policy exists, the policy is replaced and the policy version is incremented.
+Create or update a lifecycle policy.
+If the specified policy exists, it is replaced and the policy version is incremented.
+
+NOTE: Only the latest version of the policy is stored, you cannot revert to previous versions.
 
 {ref}/ilm-put-lifecycle.html[Endpoint documentation]
 [source,ts]
@@ -4222,7 +4490,9 @@ client.ilm.putLifecycle({ policy })
 
 [discrete]
 ==== remove_policy
-Removes the assigned lifecycle policy and stops managing the specified index
+Remove policies from an index.
+Remove the assigned lifecycle policies from an index or a data stream's backing indices.
+It also stops managing the indices.
 
 {ref}/ilm-remove-policy.html[Endpoint documentation]
 [source,ts]
@@ -4238,7 +4508,10 @@ client.ilm.removePolicy({ index })
 
 [discrete]
 ==== retry
-Retries executing the policy for an index that is in the ERROR step.
+Retry a policy.
+Retry running the lifecycle policy for an index that is in the ERROR step.
+The API sets the policy back to the step where the error occurred and runs the step.
+Use the explain lifecycle state API to determine whether an index is in the ERROR step.
 
 {ref}/ilm-retry-policy.html[Endpoint documentation]
 [source,ts]
@@ -4254,7 +4527,10 @@ client.ilm.retry({ index })
 
 [discrete]
 ==== start
-Start the index lifecycle management (ILM) plugin.
+Start the ILM plugin.
+Start the index lifecycle management plugin if it is currently stopped.
+ILM is started automatically when the cluster is formed.
+Restarting ILM is necessary only when it has been stopped using the stop ILM API.
 
 {ref}/ilm-start.html[Endpoint documentation]
 [source,ts]
@@ -4271,7 +4547,12 @@ client.ilm.start({ ... })
 
 [discrete]
 ==== stop
-Halts all lifecycle management operations and stops the index lifecycle management (ILM) plugin
+Stop the ILM plugin.
+Halt all lifecycle management operations and stop the index lifecycle management plugin.
+This is useful when you are performing maintenance on the cluster and need to prevent ILM from performing any actions on your indices.
+
+The API returns as soon as the stop request has been acknowledged, but the plugin might continue to run until in-progress operations complete and the plugin can be safely stopped.
+Use the get ILM status API to check whether ILM is running.
 
 {ref}/ilm-stop.html[Endpoint documentation]
 [source,ts]
@@ -4345,8 +4626,9 @@ If an array of strings is provided, it is analyzed as a multi-value field.
 
 [discrete]
 ==== clear_cache
-Clears the caches of one or more indices.
-For data streams, the API clears the caches of the stream’s backing indices.
+Clear the cache.
+Clear the cache of one or more indices.
+For data streams, the API clears the caches of the stream's backing indices.
 
 {ref}/indices-clearcache.html[Endpoint documentation]
 [source,ts]
@@ -4376,7 +4658,29 @@ Use the `fields` parameter to clear the cache of specific fields only.
 
 [discrete]
 ==== clone
-Clones an existing index.
+Clone an index.
+Clone an existing index into a new index.
+Each original primary shard is cloned into a new primary shard in the new index.
+
+IMPORTANT: Elasticsearch does not apply index templates to the resulting index.
+The API also does not copy index metadata from the original index.
+Index metadata includes aliases, index lifecycle management phase definitions, and cross-cluster replication (CCR) follower information.
+For example, if you clone a CCR follower index, the resulting clone will not be a follower index.
+
+The clone API copies most index settings from the source index to the resulting index, with the exception of `index.number_of_replicas` and `index.auto_expand_replicas`.
+To set the number of replicas in the resulting index, configure these settings in the clone request.
+
+Cloning works as follows:
+
+* First, it creates a new target index with the same definition as the source index.
+* Then it hard-links segments from the source index into the target index. If the file system does not support hard-linking, all segments are copied into the new index, which is a much more time consuming process.
+* Finally, it recovers the target index as though it were a closed index which had just been re-opened.
+
+IMPORTANT: Indices can only be cloned if they meet the following requirements:
+
+* The target index must not exist.
+* The source index must have the same number of primary shards as the target index.
+* The node handling the clone process must have sufficient free disk space to accommodate a second copy of the existing index.
 
 {ref}/indices-clone-index.html[Endpoint documentation]
 [source,ts]
@@ -4401,7 +4705,24 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 [discrete]
 ==== close
-Closes an index.
+Close an index.
+A closed index is blocked for read or write operations and does not allow all operations that opened indices allow.
+It is not possible to index documents or to search for documents in a closed index.
+Closed indices do not have to maintain internal data structures for indexing or searching documents, which results in a smaller overhead on the cluster.
+
+When opening or closing an index, the master node is responsible for restarting the index shards to reflect the new state of the index.
+The shards will then go through the normal recovery process.
+The data of opened and closed indices is automatically replicated by the cluster to ensure that enough shard copies are safely kept around at all times.
+
+You can open and close multiple indices.
+An error is thrown if the request explicitly refers to a missing index.
+This behaviour can be turned off using the `ignore_unavailable=true` parameter.
+
+By default, you must explicitly name the indices you are opening or closing.
+To open or close indices with `_all`, `*`, or other wildcard expressions, change the` action.destructive_requires_name` setting to `false`. This setting can also be changed with the cluster update settings API.
+
+Closed indices consume a significant amount of disk-space which can cause problems in managed environments.
+Closing indices can be turned off with the cluster settings API by setting `cluster.indices.close.enable` to `false`.
 
 {ref}/indices-close.html[Endpoint documentation]
 [source,ts]
@@ -4641,7 +4962,10 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== disk_usage
-Analyzes the disk usage of each field of an index or data stream.
+Analyze the index disk usage.
+Analyze the disk usage of each field of an index or data stream.
+This API might not support indices created in previous Elasticsearch versions.
+The result of a small index can be inaccurate as some parts of an index might not be analyzed by the API.
 
 {ref}/indices-disk-usage.html[Endpoint documentation]
 [source,ts]
@@ -4669,7 +4993,14 @@ To use the API, this parameter must be set to `true`.
 
 [discrete]
 ==== downsample
-Aggregates a time series (TSDS) index and stores pre-computed statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`) for each metric field grouped by a configured time interval.
+Downsample an index.
+Aggregate a time series (TSDS) index and store pre-computed statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`) for each metric field grouped by a configured time interval.
+For example, a TSDS index that contains metrics sampled every 10 seconds can be downsampled to an hourly index.
+All documents within an hour interval are summarized and stored as a single document in the downsample index.
+
+NOTE: Only indices in a time series data stream are supported.
+Neither field nor document level security can be defined on the source index.
+The source index must be read only (`index.blocks.write: true`).
 
 {ref}/indices-downsample-data-stream.html[Endpoint documentation]
 [source,ts]
@@ -4780,7 +5111,7 @@ client.indices.existsTemplate({ name })
 [discrete]
 ==== explain_data_lifecycle
 Get the status for a data stream lifecycle.
-Retrieves information about an index or data stream’s current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
+Get information about an index or data stream's current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
 
 {ref}/data-streams-explain-lifecycle.html[Endpoint documentation]
 [source,ts]
@@ -4798,7 +5129,10 @@ client.indices.explainDataLifecycle({ index })
 
 [discrete]
 ==== field_usage_stats
-Returns field usage information for each shard and field of an index.
+Get field usage stats.
+Get field usage information for each shard and field of an index.
+Field usage statistics are automatically captured when queries are running on a cluster.
+A shard-level search request that accesses a given field, even if multiple times during that request, is counted as a single use.
 
 {ref}/field-usage-stats.html[Endpoint documentation]
 [source,ts]
@@ -4828,7 +5162,17 @@ Set to all or any positive integer up to the total number of shards in the index
 
 [discrete]
 ==== flush
-Flushes one or more data streams or indices.
+Flush data streams or indices.
+Flushing a data stream or index is the process of making sure that any data that is currently only stored in the transaction log is also permanently stored in the Lucene index.
+When restarting, Elasticsearch replays any unflushed operations from the transaction log into the Lucene index to bring it back into the state that it was in before the restart.
+Elasticsearch automatically triggers flushes as needed, using heuristics that trade off the size of the unflushed transaction log against the cost of performing each flush.
+
+After each operation has been flushed it is permanently stored in the Lucene index.
+This may mean that there is no need to maintain an additional copy of it in the transaction log.
+The transaction log is made up of multiple files, called generations, and Elasticsearch will delete any generation files when they are no longer needed, freeing up disk space.
+
+It is also possible to trigger a flush on one or more indices using the flush API, although it is rare for users to need to call this API directly.
+If you call the flush API after indexing some documents then a successful response indicates that Elasticsearch has flushed all the documents that were indexed before the flush API was called.
 
 {ref}/indices-flush.html[Endpoint documentation]
 [source,ts]
@@ -4856,7 +5200,19 @@ If `false`, Elasticsearch returns an error if you request a flush when another f
 
 [discrete]
 ==== forcemerge
-Performs the force merge operation on one or more indices.
+Force a merge.
+Perform the force merge operation on the shards of one or more indices.
+For data streams, the API forces a merge on the shards of the stream's backing indices.
+
+Merging reduces the number of segments in each shard by merging some of them together and also frees up the space used by deleted documents.
+Merging normally happens automatically, but sometimes it is useful to trigger a merge manually.
+
+WARNING: We recommend force merging only a read-only index (meaning the index is no longer receiving writes).
+When documents are updated or deleted, the old version is not immediately removed but instead soft-deleted and marked with a "tombstone".
+These soft-deleted documents are automatically cleaned up during regular segment merges.
+But force merge can cause very large (greater than 5 GB) segments to be produced, which are not eligible for regular merges.
+So the number of soft-deleted documents can then grow rapidly, resulting in higher disk usage and worse search performance.
+If you regularly force merge an index receiving writes, this can also make snapshots more expensive, since the new documents can't be backed up incrementally.
 
 {ref}/indices-forcemerge.html[Endpoint documentation]
 [source,ts]
@@ -5207,7 +5563,17 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 [discrete]
 ==== promote_data_stream
-Promotes a data stream from a replicated data stream managed by CCR to a regular data stream
+Promote a data stream.
+Promote a data stream from a replicated data stream managed by cross-cluster replication (CCR) to a regular data stream.
+
+With CCR auto following, a data stream from a remote cluster can be replicated to the local cluster.
+These data streams can't be rolled over in the local cluster.
+These replicated data streams roll over only if the upstream data stream rolls over.
+In the event that the remote cluster is no longer available, the data stream in the local cluster can be promoted to a regular data stream, which allows these data streams to be rolled over in the local cluster.
+
+NOTE: When promoting a data stream, ensure the local cluster has a data stream enabled index template that matches the data stream.
+If this is missing, the data stream will not be able to roll over until a matching index template is created.
+This will affect the lifecycle management of the data stream and interfere with the data stream size and retention.
 
 {ref}/data-streams.html[Endpoint documentation]
 [source,ts]
@@ -5279,11 +5645,7 @@ client.indices.putDataLifecycle({ name })
 ** *`name` (string | string[])*: List of data streams used to limit the request.
 Supports wildcards (`*`).
 To target all data streams use `*` or `_all`.
-** *`data_retention` (Optional, string | -1 | 0)*: If defined, every document added to this data stream will be stored at least for this time frame.
-Any time after this duration the document could be deleted.
-When empty, every document in this data stream will be stored indefinitely.
-** *`downsampling` (Optional, { rounds })*: If defined, every backing index will execute the configured downsampling configuration after the backing
-index is not the data stream write index anymore.
+** *`lifecycle` (Optional, { data_retention, downsampling, enabled })*
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of data stream that wildcard patterns can match.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `hidden`, `open`, `closed`, `none`.
@@ -5367,7 +5729,7 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 ** *`numeric_detection` (Optional, boolean)*: Automatically map strings into numeric data types for all fields.
-** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { positive_score_impact, type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, element_type, dims, similarity, index, index_options } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, subobjects, type } | { type, meta, inference_id } | { type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } | { coerce, ignore_malformed, ignore_z_value, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type } | { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)*: Mapping for a field. For new fields, this mapping can include:
+** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { positive_score_impact, type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, dims, element_type, index, index_options, similarity } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, subobjects, type } | { type, enabled, priority, time_series_dimension } | { type, meta, inference_id } | { type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } | { coerce, ignore_malformed, ignore_z_value, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type } | { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)*: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
@@ -5430,6 +5792,16 @@ error.
 ==== put_template
 Create or update an index template.
 Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
+Elasticsearch applies templates to new indices based on an index pattern that matches the index name.
+
+IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
+
+Composable templates always take precedence over legacy templates.
+If no composable template matches a new index, matching legacy templates are applied according to their order.
+
+Index templates are only applied during index creation.
+Changes to index templates do not affect existing indices.
+Settings and mappings specified in create index API requests override any settings or mappings specified in an index template.
 
 {ref}/indices-templates-v1.html[Endpoint documentation]
 [source,ts]
@@ -5461,8 +5833,27 @@ received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== recovery
-Returns information about ongoing and completed shard recoveries for one or more indices.
-For data streams, the API returns information for the stream’s backing indices.
+Get index recovery information.
+Get information about ongoing and completed shard recoveries for one or more indices.
+For data streams, the API returns information for the stream's backing indices.
+
+Shard recovery is the process of initializing a shard copy, such as restoring a primary shard from a snapshot or creating a replica shard from a primary shard.
+When a shard recovery completes, the recovered shard is available for search and indexing.
+
+Recovery automatically occurs during the following processes:
+
+* When creating an index for the first time.
+* When a node rejoins the cluster and starts up any missing primary shard copies using the data that it holds in its data path.
+* Creation of new replica shard copies from the primary.
+* Relocation of a shard copy to a different node in the same cluster.
+* A snapshot restore operation.
+* A clone, shrink, or split operation.
+
+You can determine the cause of a shard recovery using the recovery or cat recovery APIs.
+
+The index recovery API reports information about completed recoveries only for shard copies that currently exist in the cluster.
+It only reports the last recovery for each shard copy and does not report historical information about earlier recoveries, nor does it report information about the recoveries of shard copies that no longer exist.
+This means that if a shard copy completes a recovery and then Elasticsearch relocates it onto a different node then the information about the original recovery will not be shown in the recovery API.
 
 {ref}/indices-recovery.html[Endpoint documentation]
 [source,ts]
@@ -5509,7 +5900,20 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 
 [discrete]
 ==== reload_search_analyzers
-Reloads an index's search analyzers and their resources.
+Reload search analyzers.
+Reload an index's search analyzers and their resources.
+For data streams, the API reloads search analyzers and resources for the stream's backing indices.
+
+IMPORTANT: After reloading the search analyzers you should clear the request cache to make sure it doesn't contain responses derived from the previous versions of the analyzer.
+
+You can use the reload search analyzers API to pick up changes to synonym files used in the `synonym_graph` or `synonym` token filter of a search analyzer.
+To be eligible, the token filter must have an `updateable` flag of `true` and only be used in search analyzers.
+
+NOTE: This API does not perform a reload for each shard of an index.
+Instead, it performs a reload for each node containing index shards.
+As a result, the total shard count returned by the API can differ from the number of index shards.
+Because reloading affects every node with an index shard, it is important to update the synonym file on every data node in the cluster--including nodes that don't contain a shard replica--before using this API.
+This ensures the synonym file is updated everywhere in the cluster in case shards are relocated in the future.
 
 {ref}/indices-reload-analyzers.html[Endpoint documentation]
 [source,ts]
@@ -5528,9 +5932,22 @@ client.indices.reloadSearchAnalyzers({ index })
 
 [discrete]
 ==== resolve_cluster
-Resolves the specified index expressions to return information about each cluster, including
-the local cluster, if included.
+Resolve the cluster.
+Resolve the specified index expressions to return information about each cluster, including the local cluster, if included.
 Multiple patterns and remote clusters are supported.
+
+This endpoint is useful before doing a cross-cluster search in order to determine which remote clusters should be included in a search.
+
+You use the same index expression with this endpoint as you would for cross-cluster search.
+Index and cluster exclusions are also supported with this endpoint.
+
+For each cluster in the index expression, information is returned about:
+
+* Whether the querying ("local") cluster is currently connected to each remote cluster in the index expression scope.
+* Whether each remote cluster is configured with `skip_unavailable` as `true` or `false`.
+* Whether there are any indices, aliases, or data streams on that cluster that match the index expression.
+* Whether the search is likely to have errors returned when you do the cross-cluster search (including any authorization errors if you do not have permission to query the index).
+* Cluster version information, including the Elasticsearch server version.
 
 {ref}/indices-resolve-cluster-api.html[Endpoint documentation]
 [source,ts]
@@ -5621,8 +6038,9 @@ Set to all or any positive integer up to the total number of shards in the index
 
 [discrete]
 ==== segments
-Returns low-level information about the Lucene segments in index shards.
-For data streams, the API returns information about the stream’s backing indices.
+Get index segments.
+Get low-level information about the Lucene segments in index shards.
+For data streams, the API returns information about the stream's backing indices.
 
 {ref}/indices-segments.html[Endpoint documentation]
 [source,ts]
@@ -5648,8 +6066,18 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 
 [discrete]
 ==== shard_stores
-Retrieves store information about replica shards in one or more indices.
-For data streams, the API retrieves store information for the stream’s backing indices.
+Get index shard stores.
+Get store information about replica shards in one or more indices.
+For data streams, the API retrieves store information for the stream's backing indices.
+
+The index shard stores API returns the following information:
+
+* The node on which each replica shard exists.
+* The allocation ID for each replica shard.
+* A unique ID for each replica shard.
+* Any errors encountered while opening the shard index or from an earlier failure.
+
+By default, the API returns store information only for primary shards that are unassigned or have one or more unassigned replica shards.
 
 {ref}/indices-shards-stores.html[Endpoint documentation]
 [source,ts]
@@ -5672,7 +6100,38 @@ this argument determines whether wildcard expressions match hidden data streams.
 
 [discrete]
 ==== shrink
-Shrinks an existing index into a new index with fewer primary shards.
+Shrink an index.
+Shrink an index into a new index with fewer primary shards.
+
+Before you can shrink an index:
+
+* The index must be read-only.
+* A copy of every shard in the index must reside on the same node.
+* The index must have a green health status.
+
+To make shard allocation easier, we recommend you also remove the index's replica shards.
+You can later re-add replica shards as part of the shrink operation.
+
+The requested number of primary shards in the target index must be a factor of the number of shards in the source index.
+For example an index with 8 primary shards can be shrunk into 4, 2 or 1 primary shards or an index with 15 primary shards can be shrunk into 5, 3 or 1.
+If the number of shards in the index is a prime number it can only be shrunk into a single primary shard
+ Before shrinking, a (primary or replica) copy of every shard in the index must be present on the same node.
+
+The current write index on a data stream cannot be shrunk. In order to shrink the current write index, the data stream must first be rolled over so that a new write index is created and then the previous write index can be shrunk.
+
+A shrink operation:
+
+* Creates a new target index with the same definition as the source index, but with a smaller number of primary shards.
+* Hard-links segments from the source index into the target index. If the file system does not support hard-linking, then all segments are copied into the new index, which is a much more time consuming process. Also if using multiple data paths, shards on different data paths require a full copy of segment files if they are not on the same disk since hardlinks do not work across disks.
+* Recovers the target index as though it were a closed index which had just been re-opened. Recovers shards to the `.routing.allocation.initial_recovery._id` index setting.
+
+IMPORTANT: Indices can only be shrunk if they satisfy the following requirements:
+
+* The target index must not exist.
+* The source index must have more primary shards than the target index.
+* The number of primary shards in the target index must be a factor of the number of primary shards in the source index. The source index must have more primary shards than the target index.
+* The index must not contain more than 2,147,483,519 documents in total across all shards that will be shrunk into a single shard on the target index as this is the maximum number of docs that can fit into a single shard.
+* The node handling the shrink process must have sufficient free disk space to accommodate a second copy of the existing index.
 
 {ref}/indices-shrink-index.html[Endpoint documentation]
 [source,ts]
@@ -5762,7 +6221,30 @@ that uses deprecated components, Elasticsearch will emit a deprecation warning.
 
 [discrete]
 ==== split
-Splits an existing index into a new index with more primary shards.
+Split an index.
+Split an index into a new index with more primary shards.
+* Before you can split an index:
+
+* The index must be read-only.
+* The cluster health status must be green.
+
+The number of times the index can be split (and the number of shards that each original shard can be split into) is determined by the `index.number_of_routing_shards` setting.
+The number of routing shards specifies the hashing space that is used internally to distribute documents across shards with consistent hashing.
+For instance, a 5 shard index with `number_of_routing_shards` set to 30 (5 x 2 x 3) could be split by a factor of 2 or 3.
+
+A split operation:
+
+* Creates a new target index with the same definition as the source index, but with a larger number of primary shards.
+* Hard-links segments from the source index into the target index. If the file system doesn't support hard-linking, all segments are copied into the new index, which is a much more time consuming process.
+* Hashes all documents again, after low level files are created, to delete documents that belong to a different shard.
+* Recovers the target index as though it were a closed index which had just been re-opened.
+
+IMPORTANT: Indices can only be split if they satisfy the following requirements:
+
+* The target index must not exist.
+* The source index must have fewer primary shards than the target index.
+* The number of primary shards in the target index must be a multiple of the number of primary shards in the source index.
+* The node handling the split process must have sufficient free disk space to accommodate a second copy of the existing index.
 
 {ref}/indices-split-index.html[Endpoint documentation]
 [source,ts]
@@ -5787,8 +6269,17 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 [discrete]
 ==== stats
-Returns statistics for one or more indices.
-For data streams, the API retrieves statistics for the stream’s backing indices.
+Get index statistics.
+For data streams, the API retrieves statistics for the stream's backing indices.
+
+By default, the returned statistics are index-level with `primaries` and `total` aggregations.
+`primaries` are the values for only the primary shards.
+`total` are the accumulated values for both primary and replica shards.
+
+To get shard-level statistics, set the `level` parameter to `shards`.
+
+NOTE: When moving to another node, the shard-level statistics for a shard are cleared.
+Although the shard is no longer part of the node, that node retains any node-level statistics to which the shard contributed.
 
 {ref}/indices-stats.html[Endpoint documentation]
 [source,ts]
@@ -5816,7 +6307,8 @@ such as `open,hidden`.
 
 [discrete]
 ==== unfreeze
-Unfreezes an index.
+Unfreeze an index.
+When a frozen index is unfrozen, the index goes through the normal recovery process and becomes writeable again.
 
 {ref}/unfreeze-index-api.html[Endpoint documentation]
 [source,ts]
@@ -5965,7 +6457,16 @@ Not required for other tasks.
 
 [discrete]
 ==== put
-Create an inference endpoint
+Create an inference endpoint.
+When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
+IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face.
+For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models.
+However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
 
 {ref}/put-inference-api.html[Endpoint documentation]
 [source,ts]
@@ -6014,14 +6515,25 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== delete_ip_location_database
-Deletes an ip location database configuration
+Delete IP geolocation database configurations.
 
 {ref}/delete-ip-location-database-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.ingest.deleteIpLocationDatabase()
+client.ingest.deleteIpLocationDatabase({ id })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`id` (string | string[])*: A list of IP location database configurations.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+A value of `-1` indicates that the request should never time out.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
+A value of `-1` indicates that the request should never time out.
 
 [discrete]
 ==== delete_pipeline
@@ -6080,14 +6592,24 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== get_ip_location_database
-Returns the specified ip location database configuration
+Get IP geolocation database configurations.
 
 {ref}/get-ip-location-database-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.ingest.getIpLocationDatabase()
+client.ingest.getIpLocationDatabase({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`id` (Optional, string | string[])*: List of database configuration IDs to retrieve.
+Wildcard (`*`) expressions are supported.
+To get all database configurations, omit this parameter or use `*`.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+A value of `-1` indicates that the request should never time out.
 
 [discrete]
 ==== get_pipeline
@@ -6128,8 +6650,8 @@ client.ingest.processorGrok()
 
 [discrete]
 ==== put_geoip_database
-Create or update GeoIP database configurations.
-Create or update IP geolocation database configurations.
+Create or update a GeoIP database configuration.
+Refer to the create or update IP geolocation database configuration API.
 
 {ref}/put-geoip-database-api.html[Endpoint documentation]
 [source,ts]
@@ -6151,14 +6673,26 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== put_ip_location_database
-Puts the configuration for a ip location database to be downloaded
+Create or update an IP geolocation database configuration.
 
 {ref}/put-ip-location-database-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.ingest.putIpLocationDatabase()
+client.ingest.putIpLocationDatabase({ id })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`id` (string)*: The database configuration identifier.
+** *`configuration` (Optional, { name, maxmind, ipinfo })*
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+A value of `-1` indicates that the request should never time out.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+If no response is received before the timeout expires, the cluster metadata update still applies but the response indicates that it was not completely acknowledged.
+A value of `-1` indicates that the request should never time out.
 
 [discrete]
 ==== put_pipeline
@@ -6215,7 +6749,10 @@ If you specify both this and the request path parameter, the API only uses the r
 === license
 [discrete]
 ==== delete
-Deletes licensing information for the cluster
+Delete the license.
+When the license expires, your subscription level reverts to Basic.
+
+If the operator privileges feature is enabled, only operator users can use this API.
 
 {ref}/delete-license.html[Endpoint documentation]
 [source,ts]
@@ -6227,8 +6764,10 @@ client.license.delete()
 [discrete]
 ==== get
 Get license information.
-Returns information about your Elastic license, including its type, its status, when it was issued, and when it expires.
-For more information about the different types of licenses, refer to [Elastic Stack subscriptions](https://www.elastic.co/subscriptions).
+Get information about your Elastic license including its type, its status, when it was issued, and when it expires.
+
+NOTE: If the master node is generating a new cluster state, the get license API may return a `404 Not Found` response.
+If you receive an unexpected 404 response after cluster startup, wait a short period and retry the request.
 
 {ref}/get-license.html[Endpoint documentation]
 [source,ts]
@@ -6246,7 +6785,7 @@ This parameter is deprecated and will always be set to true in 8.x.
 
 [discrete]
 ==== get_basic_status
-Retrieves information about the status of the basic license.
+Get the basic license status.
 
 {ref}/get-basic-status.html[Endpoint documentation]
 [source,ts]
@@ -6257,7 +6796,7 @@ client.license.getBasicStatus()
 
 [discrete]
 ==== get_trial_status
-Retrieves information about the status of the trial license.
+Get the trial status.
 
 {ref}/get-trial-status.html[Endpoint documentation]
 [source,ts]
@@ -6268,7 +6807,14 @@ client.license.getTrialStatus()
 
 [discrete]
 ==== post
-Updates the license for the cluster.
+Update the license.
+You can update your license at runtime without shutting down your nodes.
+License updates take effect immediately.
+If the license you are installing does not support all of the features that were available with your previous license, however, you are notified in the response.
+You must then re-submit the API request with the acknowledge parameter set to true.
+
+NOTE: If Elasticsearch security features are enabled and you are installing a gold or higher license, you must enable TLS on the transport networking layer before you install the license.
+If the operator privileges feature is enabled, only operator users can use this API.
 
 {ref}/update-license.html[Endpoint documentation]
 [source,ts]
@@ -6286,8 +6832,15 @@ client.license.post({ ... })
 
 [discrete]
 ==== post_start_basic
-The start basic API enables you to initiate an indefinite basic license, which gives access to all the basic features. If the basic license does not support all of the features that are available with your current license, however, you are notified in the response. You must then re-submit the API request with the acknowledge parameter set to true.
-To check the status of your basic license, use the following API: [Get basic status](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-basic-status.html).
+Start a basic license.
+Start an indefinite basic license, which gives access to all the basic features.
+
+NOTE: In order to start a basic license, you must not currently have a basic license.
+
+If the basic license does not support all of the features that are available with your current license, however, you are notified in the response.
+You must then re-submit the API request with the `acknowledge` parameter set to `true`.
+
+To check the status of your basic license, use the get basic license API.
 
 {ref}/start-basic.html[Endpoint documentation]
 [source,ts]
@@ -6303,7 +6856,13 @@ client.license.postStartBasic({ ... })
 
 [discrete]
 ==== post_start_trial
-The start trial API enables you to start a 30-day trial, which gives access to all subscription features.
+Start a trial.
+Start a 30-day trial, which gives access to all subscription features.
+
+NOTE: You are allowed to start a trial only if your cluster has not already activated a trial for the current major product version.
+For example, if you have already activated a trial for v8.0, you cannot start a new trial until v9.0. You can, however, request an extended trial at https://www.elastic.co/trialextension.
+
+To check the status of your trial, use the get trial status API.
 
 {ref}/start-trial.html[Endpoint documentation]
 [source,ts]
@@ -6322,7 +6881,9 @@ client.license.postStartTrial({ ... })
 === logstash
 [discrete]
 ==== delete_pipeline
-Deletes a pipeline used for Logstash Central Management.
+Delete a Logstash pipeline.
+
+Delete a pipeline that is used for Logstash Central Management.
 
 {ref}/logstash-api-delete-pipeline.html[Endpoint documentation]
 [source,ts]
@@ -6334,11 +6895,13 @@ client.logstash.deletePipeline({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Identifier for the pipeline.
+** *`id` (string)*: An identifier for the pipeline.
 
 [discrete]
 ==== get_pipeline
-Retrieves pipelines used for Logstash Central Management.
+Get Logstash pipelines.
+
+Get pipelines that are used for Logstash Central Management.
 
 {ref}/logstash-api-get-pipeline.html[Endpoint documentation]
 [source,ts]
@@ -6350,11 +6913,14 @@ client.logstash.getPipeline({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (Optional, string | string[])*: List of pipeline identifiers.
+** *`id` (Optional, string | string[])*: A list of pipeline identifiers.
 
 [discrete]
 ==== put_pipeline
-Creates or updates a pipeline used for Logstash Central Management.
+Create or update a Logstash pipeline.
+
+Create a pipeline that is used for Logstash Central Management.
+If the specified pipeline exists, it is replaced.
 
 {ref}/logstash-api-put-pipeline.html[Endpoint documentation]
 [source,ts]
@@ -6366,14 +6932,17 @@ client.logstash.putPipeline({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Identifier for the pipeline.
+** *`id` (string)*: An identifier for the pipeline.
 ** *`pipeline` (Optional, { description, on_failure, processors, version, deprecated, _meta })*
 
 [discrete]
 === migration
 [discrete]
 ==== deprecations
-Retrieves information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
+Get deprecation information.
+Get information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
+
+TIP: This APIs is designed for indirect use by the Upgrade Assistant. We strongly recommend you use the Upgrade Assistant.
 
 {ref}/migration-api-deprecation.html[Endpoint documentation]
 [source,ts]
@@ -6389,7 +6958,12 @@ client.migration.deprecations({ ... })
 
 [discrete]
 ==== get_feature_upgrade_status
-Find out whether system features need to be upgraded or not
+Get feature migration information.
+Version upgrades sometimes require changes to how features store configuration information and data in system indices.
+Check which features need to be migrated and the status of any migrations that are in progress.
+
+TIP: This API is designed for indirect use by the Upgrade Assistant.
+We strongly recommend you use the Upgrade Assistant.
 
 {ref}/migration-api-feature-upgrade.html[Endpoint documentation]
 [source,ts]
@@ -6400,7 +6974,13 @@ client.migration.getFeatureUpgradeStatus()
 
 [discrete]
 ==== post_feature_upgrade
-Begin upgrades for system features
+Start the feature migration.
+Version upgrades sometimes require changes to how features store configuration information and data in system indices.
+This API starts the automatic migration process.
+
+Some functionality might be temporarily unavailable during the migration process.
+
+TIP: The API is designed for indirect use by the Upgrade Assistant. We strongly recommend you use the Upgrade Assistant.
 
 {ref}/migration-api-feature-upgrade.html[Endpoint documentation]
 [source,ts]
@@ -6553,7 +7133,7 @@ Deletes all job results, model snapshots and forecast data that have exceeded
 their retention days period. Machine learning state documents that are not
 associated with any job are also deleted.
 You can limit the request to a single or set of anomaly detection jobs by
-using a job identifier, a group name, a comma-separated list of jobs, or a
+using a job identifier, a group name, a list of jobs, or a
 wildcard expression. You can delete expired data for all anomaly detection
 jobs by using _all, by specifying * as the <job_id>, or by omitting the
 <job_id>.
@@ -6964,7 +7544,7 @@ This parameter has the `from` and `size` properties.
 ==== get_data_frame_analytics
 Get data frame analytics job configuration info.
 You can get information for multiple data frame analytics jobs in a single
-API request by using a comma-separated list of data frame analytics jobs or a
+API request by using a list of data frame analytics jobs or a
 wildcard expression.
 
 {ref}/get-dfanalytics.html[Endpoint documentation]
@@ -7033,7 +7613,7 @@ there are no matches or only partial matches.
 ==== get_datafeed_stats
 Get datafeeds usage info.
 You can get statistics for multiple datafeeds in a single API request by
-using a comma-separated list of datafeeds or a wildcard expression. You can
+using a list of datafeeds or a wildcard expression. You can
 get statistics for all datafeeds by using `_all`, by specifying `*` as the
 `<feed_id>`, or by omitting the `<feed_id>`. If the datafeed is stopped, the
 only information you receive is the `datafeed_id` and the `state`.
@@ -7067,7 +7647,7 @@ partial matches. If this parameter is `false`, the request returns a
 ==== get_datafeeds
 Get datafeeds configuration info.
 You can get information for multiple datafeeds in a single API request by
-using a comma-separated list of datafeeds or a wildcard expression. You can
+using a list of datafeeds or a wildcard expression. You can
 get information for all datafeeds by using `_all`, by specifying `*` as the
 `<feed_id>`, or by omitting the `<feed_id>`.
 This API returns a maximum of 10,000 datafeeds.
@@ -7186,7 +7766,7 @@ code when there are no matches or only partial matches.
 ==== get_jobs
 Get anomaly detection jobs configuration info.
 You can get information for multiple anomaly detection jobs in a single API
-request by using a group name, a comma-separated list of jobs, or a wildcard
+request by using a group name, a list of jobs, or a wildcard
 expression. You can get information for all anomaly detection jobs by using
 `_all`, by specifying `*` as the `<job_id>`, or by omitting the `<job_id>`.
 
@@ -7412,6 +7992,7 @@ be retrieved and then added to another cluster.
 ** *`from` (Optional, number)*: Skips the specified number of models.
 ** *`include` (Optional, Enum("definition" | "feature_importance_baseline" | "hyperparameters" | "total_feature_importance" | "definition_status"))*: A comma delimited string of optional fields to include in the response
 body.
+** *`include_model_definition` (Optional, boolean)*: parameter is deprecated! Use [include=definition] instead
 ** *`size` (Optional, number)*: Specifies the maximum number of models to obtain.
 ** *`tags` (Optional, string | string[])*: A comma delimited string of tags. A trained model can have many tags, or
 none. When supplied, only trained models that contain all the supplied
@@ -7421,7 +8002,7 @@ tags are returned.
 ==== get_trained_models_stats
 Get trained models usage info.
 You can get usage information for multiple trained
-models in a single API request by using a comma-separated list of model IDs or a wildcard expression.
+models in a single API request by using a list of model IDs or a wildcard expression.
 
 {ref}/get-trained-models-stats.html[Endpoint documentation]
 [source,ts]
@@ -7469,8 +8050,8 @@ Currently, for NLP models, only a single value is allowed.
 
 [discrete]
 ==== info
-Return ML defaults and limits.
-Returns defaults and limits used by machine learning.
+Get machine learning information.
+Get defaults and limits used by machine learning.
 This endpoint is designed to be used by a user interface that needs to fully
 understand machine learning configurations where some options are not
 specified, meaning that the defaults should be used. This endpoint may be
@@ -7530,7 +8111,7 @@ client.ml.postCalendarEvents({ calendar_id, events })
 Send data to an anomaly detection job for analysis.
 
 IMPORTANT: For each job, data can be accepted from only a single connection at a time.
-It is not currently possible to post data to multiple jobs using wildcards or a comma-separated list.
+It is not currently possible to post data to multiple jobs using wildcards or a list.
 
 {ref}/ml-post-data.html[Endpoint documentation]
 [source,ts]
@@ -7701,6 +8282,7 @@ model the values as `0-14 = 0`, `15-24 = 1`, `25-34 = 2`, and so on.
 threads may decrease the time necessary to complete the analysis at the
 cost of using more CPU. Note that the process may use additional threads
 for operational functionality other than the analysis itself.
+** *`_meta` (Optional, Record<string, User-defined value>)*
 ** *`model_memory_limit` (Optional, string)*: The approximate maximum amount of memory resources that are permitted for
 analytical processing. If your `elasticsearch.yml` file contains an
 `xpack.ml.max_model_memory_limit` setting, an error occurs when you try
@@ -7831,6 +8413,18 @@ client.ml.putJob({ job_id, analysis_config, data_description })
 ** *`renormalization_window_days` (Optional, number)*: Advanced configuration option. The period over which adjustments to the score are applied, as new data is seen. The default value is the longer of 30 days or 100 bucket spans.
 ** *`results_index_name` (Optional, string)*: A text string that affects the name of the machine learning results index. By default, the job generates an index named `.ml-anomalies-shared`.
 ** *`results_retention_days` (Optional, number)*: Advanced configuration option. The period of time (in days) that results are retained. Age is calculated relative to the timestamp of the latest bucket result. If this property has a non-null value, once per day at 00:30 (server time), results that are the specified number of days older than the latest bucket result are deleted from Elasticsearch. The default value is null, which means all results are retained. Annotations generated by the system also count as results for retention purposes; they are deleted after the same number of days as results. Annotations added by users are retained forever.
+** *`allow_no_indices` (Optional, boolean)*: If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the
+`_all` string or when no indices are specified.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
+whether wildcard expressions match hidden data streams. Supports a list of values. Valid values are:
+
+* `all`: Match any data stream or index, including hidden ones.
+* `closed`: Match closed, non-hidden indices. Also matches any non-hidden data stream. Data streams cannot be closed.
+* `hidden`: Match hidden data streams and hidden indices. Must be combined with `open`, `closed`, or both.
+* `none`: Wildcard patterns are not accepted.
+* `open`: Match open, non-hidden indices. Also matches any non-hidden data stream.
+** *`ignore_throttled` (Optional, boolean)*: If `true`, concrete, expanded or aliased indices are ignored when frozen.
+** *`ignore_unavailable` (Optional, boolean)*: If `true`, unavailable indices (missing or closed) are ignored.
 
 [discrete]
 ==== put_trained_model
@@ -8406,7 +9000,7 @@ bucket result. If this property has a non-null value, once per day at
 than the latest bucket result are deleted from Elasticsearch. The default
 value is null, which means all results are retained.
 ** *`groups` (Optional, string[])*: A list of job groups. A job can belong to no groups or many.
-** *`detectors` (Optional, { by_field_name, custom_rules, detector_description, detector_index, exclude_frequent, field_name, function, over_field_name, partition_field_name, use_null }[])*: An array of detector update objects.
+** *`detectors` (Optional, { detector_index, description, custom_rules }[])*: An array of detector update objects.
 ** *`per_partition_categorization` (Optional, { enabled, stop_on_warn })*: Settings related to how categorization interacts with partition fields.
 
 [discrete]
@@ -8481,28 +9075,6 @@ client.ml.upgradeJobSnapshot({ job_id, snapshot_id })
 ** *`wait_for_completion` (Optional, boolean)*: When true, the API won’t respond until the upgrade is complete.
 Otherwise, it responds as soon as the upgrade task is assigned to a node.
 ** *`timeout` (Optional, string | -1 | 0)*: Controls the time to wait for the request to complete.
-
-[discrete]
-=== monitoring
-[discrete]
-==== bulk
-Used by the monitoring features to send monitoring data.
-
-{ref}/monitor-elasticsearch-cluster.html[Endpoint documentation]
-[source,ts]
-----
-client.monitoring.bulk({ system_id, system_api_version, interval })
-----
-
-[discrete]
-==== Arguments
-
-* *Request (object):*
-** *`system_id` (string)*: Identifier of the monitored system
-** *`system_api_version` (string)*
-** *`interval` (string | -1 | 0)*: Collection interval (e.g., '10s' or '10000ms') of the payload
-** *`type` (Optional, string)*: Default document type for items which don't provide one
-** *`operations` (Optional, { index, create, update, delete } | { detect_noop, doc, doc_as_upsert, script, scripted_upsert, _source, upsert } | object[])*
 
 [discrete]
 === nodes
@@ -8823,7 +9395,30 @@ client.queryRules.test({ ruleset_id, match_criteria })
 === rollup
 [discrete]
 ==== delete_job
-Deletes an existing rollup job.
+Delete a rollup job.
+
+A job must be stopped before it can be deleted.
+If you attempt to delete a started job, an error occurs.
+Similarly, if you attempt to delete a nonexistent job, an exception occurs.
+
+IMPORTANT: When you delete a job, you remove only the process that is actively monitoring and rolling up data.
+The API does not delete any previously rolled up data.
+This is by design; a user may wish to roll up a static data set.
+Because the data set is static, after it has been fully rolled up there is no need to keep the indexing rollup job around (as there will be no new data).
+Thus the job can be deleted, leaving behind the rolled up data for analysis.
+If you wish to also remove the rollup data and the rollup index contains the data for only a single job, you can delete the whole rollup index.
+If the rollup index stores data from several jobs, you must issue a delete-by-query that targets the rollup job's identifier in the rollup index. For example:
+
+```
+POST my_rollup_index/_delete_by_query
+{
+  "query": {
+    "term": {
+      "_rollup.id": "the_rollup_job_id"
+    }
+  }
+}
+```
 
 {ref}/rollup-delete-job.html[Endpoint documentation]
 [source,ts]
@@ -8839,7 +9434,12 @@ client.rollup.deleteJob({ id })
 
 [discrete]
 ==== get_jobs
-Retrieves the configuration, stats, and status of rollup jobs.
+Get rollup job information.
+Get the configuration, stats, and status of rollup jobs.
+
+NOTE: This API returns only active (both `STARTED` and `STOPPED`) jobs.
+If a job was created, ran for a while, then was deleted, the API does not return any details about it.
+For details about a historical rollup job, the rollup capabilities API may be more useful.
 
 {ref}/rollup-get-job.html[Endpoint documentation]
 [source,ts]
@@ -8856,7 +9456,15 @@ If it is `_all` or omitted, the API returns all rollup jobs.
 
 [discrete]
 ==== get_rollup_caps
-Returns the capabilities of any rollup jobs that have been configured for a specific index or index pattern.
+Get the rollup job capabilities.
+Get the capabilities of any rollup jobs that have been configured for a specific index or index pattern.
+
+This API is useful because a rollup job is often configured to rollup only a subset of fields from the source index.
+Furthermore, only certain aggregations can be configured for various fields, leading to a limited subset of functionality depending on that configuration.
+This API enables you to inspect an index and determine:
+
+1. Does this index have associated rollup data somewhere in the cluster?
+2. If yes to the first question, what fields were rolled up, what aggregations can be performed, and where does the data live?
 
 {ref}/rollup-get-rollup-caps.html[Endpoint documentation]
 [source,ts]
@@ -8873,7 +9481,12 @@ client.rollup.getRollupCaps({ ... })
 
 [discrete]
 ==== get_rollup_index_caps
-Returns the rollup capabilities of all jobs inside of a rollup index (for example, the index where rollup data is stored).
+Get the rollup index capabilities.
+Get the rollup capabilities of all jobs inside of a rollup index.
+A single rollup index may store the data for multiple rollup jobs and may have a variety of capabilities depending on those jobs. This API enables you to determine:
+
+* What jobs are stored in an index (or indices specified via a pattern)?
+* What target indices were rolled up, what fields were used in those rollups, and what aggregations can be performed on each job?
 
 {ref}/rollup-get-rollup-index-caps.html[Endpoint documentation]
 [source,ts]
@@ -8890,7 +9503,15 @@ Wildcard (`*`) expressions are supported.
 
 [discrete]
 ==== put_job
-Creates a rollup job.
+Create a rollup job.
+
+WARNING: From 8.15.0, calling this API in a cluster with no rollup usage will fail with a message about the deprecation and planned removal of rollup features. A cluster needs to contain either a rollup job or a rollup index in order for this API to be allowed to run.
+
+The rollup job configuration contains all the details about how the job should run, when it indexes documents, and what future queries will be able to run against the rollup index.
+
+There are three main sections to the job configuration: the logistical details about the job (for example, the cron schedule), the fields that are used for grouping, and what metrics to collect for each group.
+
+Jobs are created in a `STOPPED` state. You can start them with the start rollup jobs API.
 
 {ref}/rollup-put-job.html[Endpoint documentation]
 [source,ts]
@@ -8931,7 +9552,9 @@ on a per-field basis and for each field you configure which metric should be col
 
 [discrete]
 ==== rollup_search
-Enables searching rolled-up data using the standard Query DSL.
+Search rolled-up data.
+The rollup search endpoint is needed because, internally, rolled-up documents utilize a different document structure than the original data.
+It rewrites standard Query DSL into a format that matches the rollup documents then takes the response and rewrites it back to what a client would expect given the original query.
 
 {ref}/rollup-search.html[Endpoint documentation]
 [source,ts]
@@ -8952,7 +9575,9 @@ client.rollup.rollupSearch({ index })
 
 [discrete]
 ==== start_job
-Starts an existing, stopped rollup job.
+Start rollup jobs.
+If you try to start a job that does not exist, an exception occurs.
+If you try to start a job that is already started, nothing happens.
 
 {ref}/rollup-start-job.html[Endpoint documentation]
 [source,ts]
@@ -8968,7 +9593,9 @@ client.rollup.startJob({ id })
 
 [discrete]
 ==== stop_job
-Stops an existing, started rollup job.
+Stop rollup jobs.
+If you try to stop a job that does not exist, an exception occurs.
+If you try to stop a job that is already stopped, nothing happens.
 
 {ref}/rollup-stop-job.html[Endpoint documentation]
 [source,ts]
@@ -9056,7 +9683,8 @@ client.searchApplication.getBehavioralAnalytics({ ... })
 
 [discrete]
 ==== list
-Returns the existing search applications.
+Get search applications.
+Get information about search applications.
 
 {ref}/list-search-applications.html[Endpoint documentation]
 [source,ts]
@@ -9074,14 +9702,22 @@ client.searchApplication.list({ ... })
 
 [discrete]
 ==== post_behavioral_analytics_event
-Creates a behavioral analytics event for existing collection.
+Create a behavioral analytics collection event.
 
-http://todo.com/tbd[Endpoint documentation]
+{ref}/post-analytics-collection-event.html[Endpoint documentation]
 [source,ts]
 ----
-client.searchApplication.postBehavioralAnalyticsEvent()
+client.searchApplication.postBehavioralAnalyticsEvent({ collection_name, event_type })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`collection_name` (string)*: The name of the behavioral analytics collection.
+** *`event_type` (Enum("page_view" | "search" | "search_click"))*: The analytics event type.
+** *`payload` (Optional, User-defined value)*
+** *`debug` (Optional, boolean)*: Whether the response type has to include more details
 
 [discrete]
 ==== put
@@ -9098,7 +9734,7 @@ client.searchApplication.put({ name })
 
 * *Request (object):*
 ** *`name` (string)*: The name of the search application to be created or updated.
-** *`search_application` (Optional, { name, indices, updated_at_millis, analytics_collection_name, template })*
+** *`search_application` (Optional, { indices, analytics_collection_name, template })*
 ** *`create` (Optional, boolean)*: If `true`, this request cannot replace or update existing Search Applications.
 
 [discrete]
@@ -9119,14 +9755,25 @@ client.searchApplication.putBehavioralAnalytics({ name })
 
 [discrete]
 ==== render_query
-Renders a query for given search application search parameters
+Render a search application query.
+Generate an Elasticsearch query using the specified query parameters and the search template associated with the search application or a default template if none is specified.
+If a parameter used in the search template is not specified in `params`, the parameter's default value will be used.
+The API returns the specific Elasticsearch query that would be generated and run by calling the search application search API.
+
+You must have `read` privileges on the backing alias of the search application.
 
 {ref}/search-application-render-query.html[Endpoint documentation]
 [source,ts]
 ----
-client.searchApplication.renderQuery()
+client.searchApplication.renderQuery({ name })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`name` (string)*: The name of the search application to render teh query for.
+** *`params` (Optional, Record<string, User-defined value>)*
 
 [discrete]
 ==== search
@@ -9152,7 +9799,8 @@ client.searchApplication.search({ name })
 === searchable_snapshots
 [discrete]
 ==== cache_stats
-Retrieve node-level cache statistics about searchable snapshots.
+Get cache statistics.
+Get statistics about the shared cache for partially mounted indices.
 
 {ref}/searchable-snapshots-apis.html[Endpoint documentation]
 [source,ts]
@@ -9169,7 +9817,8 @@ client.searchableSnapshots.cacheStats({ ... })
 
 [discrete]
 ==== clear_cache
-Clear the cache of searchable snapshots.
+Clear the cache.
+Clear indices and data streams from the shared cache for partially mounted indices.
 
 {ref}/searchable-snapshots-apis.html[Endpoint documentation]
 [source,ts]
@@ -9190,7 +9839,10 @@ client.searchableSnapshots.clearCache({ ... })
 
 [discrete]
 ==== mount
-Mount a snapshot as a searchable index.
+Mount a snapshot.
+Mount a snapshot as a searchable snapshot index.
+Do not use this API for snapshots managed by index lifecycle management (ILM).
+Manually mounting ILM-managed snapshots can interfere with ILM processes.
 
 {ref}/searchable-snapshots-api-mount-snapshot.html[Endpoint documentation]
 [source,ts]
@@ -9214,7 +9866,7 @@ client.searchableSnapshots.mount({ repository, snapshot, index })
 
 [discrete]
 ==== stats
-Retrieve shard-level statistics about searchable snapshots.
+Get searchable snapshot statistics.
 
 {ref}/searchable-snapshots-apis.html[Endpoint documentation]
 [source,ts]
@@ -10108,36 +10760,86 @@ client.security.invalidateToken({ ... })
 
 [discrete]
 ==== oidc_authenticate
-Exchanges an OpenID Connection authentication response message for an Elasticsearch access token and refresh token pair
+Authenticate OpenID Connect.
+Exchange an OpenID Connect authentication response message for an Elasticsearch internal access token and refresh token that can be subsequently used for authentication.
+
+Elasticsearch exposes all the necessary OpenID Connect related functionality with the OpenID Connect APIs.
+These APIs are used internally by Kibana in order to provide OpenID Connect based authentication, but can also be used by other, custom web applications or other clients.
 
 {ref}/security-api-oidc-authenticate.html[Endpoint documentation]
 [source,ts]
 ----
-client.security.oidcAuthenticate()
+client.security.oidcAuthenticate({ nonce, redirect_uri, state })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`nonce` (string)*: Associate a client session with an ID token and mitigate replay attacks.
+This value needs to be the same as the one that was provided to the `/_security/oidc/prepare` API or the one that was generated by Elasticsearch and included in the response to that call.
+** *`redirect_uri` (string)*: The URL to which the OpenID Connect Provider redirected the User Agent in response to an authentication request after a successful authentication.
+This URL must be provided as-is (URL encoded), taken from the body of the response or as the value of a location header in the response from the OpenID Connect Provider.
+** *`state` (string)*: Maintain state between the authentication request and the response.
+This value needs to be the same as the one that was provided to the `/_security/oidc/prepare` API or the one that was generated by Elasticsearch and included in the response to that call.
+** *`realm` (Optional, string)*: The name of the OpenID Connect realm.
+This property is useful in cases where multiple realms are defined.
 
 [discrete]
 ==== oidc_logout
-Invalidates a refresh token and access token that was generated from the OpenID Connect Authenticate API
+Logout of OpenID Connect.
+Invalidate an access token and a refresh token that were generated as a response to the `/_security/oidc/authenticate` API.
+
+If the OpenID Connect authentication realm in Elasticsearch is accordingly configured, the response to this call will contain a URI pointing to the end session endpoint of the OpenID Connect Provider in order to perform single logout.
+
+Elasticsearch exposes all the necessary OpenID Connect related functionality with the OpenID Connect APIs.
+These APIs are used internally by Kibana in order to provide OpenID Connect based authentication, but can also be used by other, custom web applications or other clients.
 
 {ref}/security-api-oidc-logout.html[Endpoint documentation]
 [source,ts]
 ----
-client.security.oidcLogout()
+client.security.oidcLogout({ access_token })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`access_token` (string)*: The access token to be invalidated.
+** *`refresh_token` (Optional, string)*: The refresh token to be invalidated.
 
 [discrete]
 ==== oidc_prepare_authentication
-Creates an OAuth 2.0 authentication request as a URL string
+Prepare OpenID connect authentication.
+Create an oAuth 2.0 authentication request as a URL string based on the configuration of the OpenID Connect authentication realm in Elasticsearch.
+
+The response of this API is a URL pointing to the Authorization Endpoint of the configured OpenID Connect Provider, which can be used to redirect the browser of the user in order to continue the authentication process.
+
+Elasticsearch exposes all the necessary OpenID Connect related functionality with the OpenID Connect APIs.
+These APIs are used internally by Kibana in order to provide OpenID Connect based authentication, but can also be used by other, custom web applications or other clients.
 
 {ref}/security-api-oidc-prepare-authentication.html[Endpoint documentation]
 [source,ts]
 ----
-client.security.oidcPrepareAuthentication()
+client.security.oidcPrepareAuthentication({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`iss` (Optional, string)*: In the case of a third party initiated single sign on, this is the issuer identifier for the OP that the RP is to send the authentication request to.
+It cannot be specified when *realm* is specified.
+One of *realm* or *iss* is required.
+** *`login_hint` (Optional, string)*: In the case of a third party initiated single sign on, it is a string value that is included in the authentication request as the *login_hint* parameter.
+This parameter is not valid when *realm* is specified.
+** *`nonce` (Optional, string)*: The value used to associate a client session with an ID token and to mitigate replay attacks.
+If the caller of the API does not provide a value, Elasticsearch will generate one with sufficient entropy and return it in the response.
+** *`realm` (Optional, string)*: The name of the OpenID Connect realm in Elasticsearch the configuration of which should be used in order to generate the authentication request.
+It cannot be specified when *iss* is specified.
+One of *realm* or *iss* is required.
+** *`state` (Optional, string)*: The value used to maintain state between the authentication request and the response, typically used as a Cross-Site Request Forgery mitigation.
+If the caller of the API does not provide a value, Elasticsearch will generate one with sufficient entropy and return it in the response.
 
 [discrete]
 ==== put_privileges
@@ -10608,7 +11310,15 @@ visible to search, if 'false' do nothing with refreshes.
 === shutdown
 [discrete]
 ==== delete_node
-Removes a node from the shutdown list. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+Cancel node shutdown preparations.
+Remove a node from the shutdown list so it can resume normal operations.
+You must explicitly clear the shutdown request when a node rejoins the cluster or when a node has permanently left the cluster.
+Shutdown requests are never removed automatically by Elasticsearch.
+
+NOTE: This feature is designed for indirect use by Elastic Cloud, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes.
+Direct use is not supported.
+
+If the operator privileges feature is enabled, you must be an operator to use this API.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current[Endpoint documentation]
 [source,ts]
@@ -10626,7 +11336,14 @@ client.shutdown.deleteNode({ node_id })
 
 [discrete]
 ==== get_node
-Retrieve status of a node or nodes that are currently marked as shutting down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+Get the shutdown status.
+
+Get information about nodes that are ready to be shut down, have shut down preparations still in progress, or have stalled.
+The API returns status information for each part of the shut down process.
+
+NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
+
+If the operator privileges feature is enabled, you must be an operator to use this API.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current[Endpoint documentation]
 [source,ts]
@@ -10644,7 +11361,20 @@ client.shutdown.getNode({ ... })
 
 [discrete]
 ==== put_node
-Adds a node to be shut down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+Prepare a node to be shut down.
+
+NOTE: This feature is designed for indirect use by Elastic Cloud, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
+
+If the operator privileges feature is enabled, you must be an operator to use this API.
+
+The API migrates ongoing tasks and index shards to other nodes as needed to prepare a node to be restarted or shut down and removed from the cluster.
+This ensures that Elasticsearch can be stopped safely with minimal disruption to the cluster.
+
+You must specify the type of shutdown: `restart`, `remove`, or `replace`.
+If a node is already being prepared for shutdown, you can use this API to change the shutdown type.
+
+IMPORTANT: This API does NOT terminate the Elasticsearch process.
+Monitor the node shutdown status to determine when it is safe to stop Elasticsearch.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current[Endpoint documentation]
 [source,ts]
@@ -10694,7 +11424,9 @@ client.simulate.ingest()
 === slm
 [discrete]
 ==== delete_lifecycle
-Deletes an existing snapshot lifecycle policy.
+Delete a policy.
+Delete a snapshot lifecycle policy definition.
+This operation prevents any future snapshots from being taken but does not cancel in-progress snapshots or remove previously-taken snapshots.
 
 {ref}/slm-api-delete-policy.html[Endpoint documentation]
 [source,ts]
@@ -10710,7 +11442,9 @@ client.slm.deleteLifecycle({ policy_id })
 
 [discrete]
 ==== execute_lifecycle
-Immediately creates a snapshot according to the lifecycle policy, without waiting for the scheduled time.
+Run a policy.
+Immediately create a snapshot according to the snapshot lifecycle policy without waiting for the scheduled time.
+The snapshot policy is normally applied according to its schedule, but you might want to manually run a policy before performing an upgrade or other maintenance.
 
 {ref}/slm-api-execute-lifecycle.html[Endpoint documentation]
 [source,ts]
@@ -10726,7 +11460,9 @@ client.slm.executeLifecycle({ policy_id })
 
 [discrete]
 ==== execute_retention
-Deletes any snapshots that are expired according to the policy's retention rules.
+Run a retention policy.
+Manually apply the retention policy to force immediate removal of snapshots that are expired according to the snapshot lifecycle policy retention rules.
+The retention policy is normally applied according to its schedule.
 
 {ref}/slm-api-execute-retention.html[Endpoint documentation]
 [source,ts]
@@ -10737,7 +11473,8 @@ client.slm.executeRetention()
 
 [discrete]
 ==== get_lifecycle
-Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.
+Get policy information.
+Get snapshot lifecycle policy definitions and information about the latest snapshot attempts.
 
 {ref}/slm-api-get-policy.html[Endpoint documentation]
 [source,ts]
@@ -10753,7 +11490,8 @@ client.slm.getLifecycle({ ... })
 
 [discrete]
 ==== get_stats
-Returns global and policy-level statistics about actions taken by snapshot lifecycle management.
+Get snapshot lifecycle management statistics.
+Get global and policy-level statistics about actions taken by snapshot lifecycle management.
 
 {ref}/slm-api-get-stats.html[Endpoint documentation]
 [source,ts]
@@ -10764,7 +11502,7 @@ client.slm.getStats()
 
 [discrete]
 ==== get_status
-Retrieves the status of snapshot lifecycle management (SLM).
+Get the snapshot lifecycle management status.
 
 {ref}/slm-api-get-status.html[Endpoint documentation]
 [source,ts]
@@ -10775,7 +11513,10 @@ client.slm.getStatus()
 
 [discrete]
 ==== put_lifecycle
-Creates or updates a snapshot lifecycle policy.
+Create or update a policy.
+Create or update a snapshot lifecycle policy.
+If the policy already exists, this request increments the policy version.
+Only the latest version of a policy is stored.
 
 {ref}/slm-api-put-policy.html[Endpoint documentation]
 [source,ts]
@@ -10787,7 +11528,7 @@ client.slm.putLifecycle({ policy_id })
 ==== Arguments
 
 * *Request (object):*
-** *`policy_id` (string)*: ID for the snapshot lifecycle policy you want to create or update.
+** *`policy_id` (string)*: The identifier for the snapshot lifecycle policy you want to create or update.
 ** *`config` (Optional, { ignore_unavailable, indices, include_global_state, feature_states, metadata, partial })*: Configuration for each snapshot created by the policy.
 ** *`name` (Optional, string)*: Name automatically assigned to each snapshot created by the policy. Date math is supported. To prevent conflicting snapshot names, a UUID is automatically appended to each snapshot name.
 ** *`repository` (Optional, string)*: Repository used to store snapshots created by this policy. This repository must exist prior to the policy’s creation. You can create a repository using the snapshot repository API.
@@ -10798,7 +11539,9 @@ client.slm.putLifecycle({ policy_id })
 
 [discrete]
 ==== start
-Turns on snapshot lifecycle management (SLM).
+Start snapshot lifecycle management.
+Snapshot lifecycle management (SLM) starts automatically when a cluster is formed.
+Manually starting SLM is necessary only if it has been stopped using the stop SLM API.
 
 {ref}/slm-api-start.html[Endpoint documentation]
 [source,ts]
@@ -10809,7 +11552,14 @@ client.slm.start()
 
 [discrete]
 ==== stop
-Turns off snapshot lifecycle management (SLM).
+Stop snapshot lifecycle management.
+Stop all snapshot lifecycle management (SLM) operations and the SLM plugin.
+This API is useful when you are performing maintenance on a cluster and need to prevent SLM from performing any actions on your data streams or indices.
+Stopping SLM does not stop any snapshots that are in progress.
+You can manually trigger snapshots with the run snapshot lifecycle policy API even if SLM is stopped.
+
+The API returns a response as soon as the request is acknowledged, but the plugin might continue to run until in-progress operations complete and it can be safely stopped.
+Use the get snapshot lifecycle management status API to see if SLM is running.
 
 {ref}/slm-api-stop.html[Endpoint documentation]
 [source,ts]
@@ -10822,7 +11572,8 @@ client.slm.stop()
 === snapshot
 [discrete]
 ==== cleanup_repository
-Triggers the review of a snapshot repository’s contents and deletes any stale data not referenced by existing snapshots.
+Clean up the snapshot repository.
+Trigger the review of the contents of a snapshot repository and delete any stale data not referenced by existing snapshots.
 
 {ref}/clean-up-snapshot-repo-api.html[Endpoint documentation]
 [source,ts]
@@ -10840,7 +11591,8 @@ client.snapshot.cleanupRepository({ repository })
 
 [discrete]
 ==== clone
-Clones indices from one snapshot into another snapshot in the same repository.
+Clone a snapshot.
+Clone part of all of a snapshot into another snapshot in the same repository.
 
 {ref}/modules-snapshots.html[Endpoint documentation]
 [source,ts]
@@ -10861,7 +11613,8 @@ client.snapshot.clone({ repository, snapshot, target_snapshot, indices })
 
 [discrete]
 ==== create
-Creates a snapshot in a repository.
+Create a snapshot.
+Take a snapshot of a cluster or of data streams and indices.
 
 {ref}/modules-snapshots.html[Endpoint documentation]
 [source,ts]
@@ -10886,7 +11639,10 @@ client.snapshot.create({ repository, snapshot })
 
 [discrete]
 ==== create_repository
-Creates a repository.
+Create or update a snapshot repository.
+IMPORTANT: If you are migrating searchable snapshots, the repository name must be identical in the source and destination clusters.
+To register a snapshot repository, the cluster's global metadata must be writeable.
+Ensure there are no cluster blocks (for example, `cluster.blocks.read_only` and `clsuter.blocks.read_only_allow_delete` settings) that prevent write access.
 
 {ref}/modules-snapshots.html[Endpoint documentation]
 [source,ts]
@@ -10905,7 +11661,7 @@ client.snapshot.createRepository({ repository })
 
 [discrete]
 ==== delete
-Deletes one or more snapshots.
+Delete snapshots.
 
 {ref}/modules-snapshots.html[Endpoint documentation]
 [source,ts]
@@ -10923,7 +11679,9 @@ client.snapshot.delete({ repository, snapshot })
 
 [discrete]
 ==== delete_repository
-Deletes a repository.
+Delete snapshot repositories.
+When a repository is unregistered, Elasticsearch removes only the reference to the location where the repository is storing the snapshots.
+The snapshots themselves are left untouched and in place.
 
 {ref}/modules-snapshots.html[Endpoint documentation]
 [source,ts]
@@ -10941,7 +11699,7 @@ client.snapshot.deleteRepository({ repository })
 
 [discrete]
 ==== get
-Returns information about a snapshot.
+Get snapshot information.
 
 {ref}/modules-snapshots.html[Endpoint documentation]
 [source,ts]
@@ -10973,7 +11731,7 @@ client.snapshot.get({ repository, snapshot })
 
 [discrete]
 ==== get_repository
-Returns information about a repository.
+Get snapshot repository information.
 
 {ref}/modules-snapshots.html[Endpoint documentation]
 [source,ts]
@@ -11002,7 +11760,24 @@ client.snapshot.repositoryAnalyze()
 
 [discrete]
 ==== restore
-Restores a snapshot.
+Restore a snapshot.
+Restore a snapshot of a cluster or data streams and indices.
+
+You can restore a snapshot only to a running cluster with an elected master node.
+The snapshot repository must be registered and available to the cluster.
+The snapshot and cluster versions must be compatible.
+
+To restore a snapshot, the cluster's global metadata must be writable. Ensure there are't any cluster blocks that prevent writes. The restore operation ignores index blocks.
+
+Before you restore a data stream, ensure the cluster contains a matching index template with data streams enabled. To check, use the index management feature in Kibana or the get index template API:
+
+```
+GET _index_template/*?filter_path=index_templates.name,index_templates.index_template.index_patterns,index_templates.index_template.data_stream
+```
+
+If no such template exists, you can create one or restore a cluster state that contains one. Without a matching index template, a data stream can't roll over or create backing indices.
+
+If your snapshot contains data from App Search or Workplace Search, you must restore the Enterprise Search encryption key before you restore the snapshot.
 
 {ref}/modules-snapshots.html[Endpoint documentation]
 [source,ts]
@@ -11031,7 +11806,17 @@ client.snapshot.restore({ repository, snapshot })
 
 [discrete]
 ==== status
-Returns information about the status of a snapshot.
+Get the snapshot status.
+Get a detailed description of the current state for each shard participating in the snapshot.
+Note that this API should be used only to obtain detailed shard-level information for ongoing snapshots.
+If this detail is not needed or you want to obtain information about one or more existing snapshots, use the get snapshot API.
+
+WARNING: Using the API to return the status of any snapshots other than currently running snapshots can be expensive.
+The API requires a read from the repository for each shard in each snapshot.
+For example, if you have 100 snapshots with 1,000 shards each, an API request that includes all snapshots will require 100,000 reads (100 snapshots x 1,000 shards).
+
+Depending on the latency of your storage, such requests can take an extremely long time to return results.
+These requests can also tax machine resources and, when using cloud storage, incur high processing costs.
 
 {ref}/modules-snapshots.html[Endpoint documentation]
 [source,ts]
@@ -11050,7 +11835,8 @@ client.snapshot.status({ ... })
 
 [discrete]
 ==== verify_repository
-Verifies a repository.
+Verify a snapshot repository.
+Check for common misconfigurations in a snapshot repository.
 
 {ref}/modules-snapshots.html[Endpoint documentation]
 [source,ts]
@@ -11360,7 +12146,14 @@ client.synonyms.putSynonymRule({ set_id, rule_id, synonyms })
 === tasks
 [discrete]
 ==== cancel
-Cancels a task, if it can be cancelled through an API.
+Cancel a task.
+A task may continue to run for some time after it has been cancelled because it may not be able to safely stop its current activity straight away.
+It is also possible that Elasticsearch must complete its work on other tasks before it can process the cancellation.
+The get task information API will continue to list these cancelled tasks until they complete.
+The cancelled flag in the response indicates that the cancellation command has been processed and the task will stop as soon as possible.
+
+To troubleshoot why a cancelled task does not complete promptly, use the get task information API with the `?detailed` parameter to identify the other tasks the system is running.
+You can also use the node hot threads API to obtain detailed information about the work the system is doing instead of completing the cancelled task.
 
 {ref}/tasks.html[Endpoint documentation]
 [source,ts]
@@ -11381,7 +12174,7 @@ client.tasks.cancel({ ... })
 [discrete]
 ==== get
 Get task information.
-Returns information about the tasks currently executing in the cluster.
+Get information about a task currently running in the cluster.
 
 {ref}/tasks.html[Endpoint documentation]
 [source,ts]
@@ -11400,7 +12193,8 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== list
-The task management API returns information about tasks currently executing on one or more nodes in the cluster.
+Get all tasks.
+Get information about the tasks currently running on one or more nodes in the cluster.
 
 {ref}/tasks.html[Endpoint documentation]
 [source,ts]
@@ -11414,6 +12208,7 @@ client.tasks.list({ ... })
 * *Request (object):*
 ** *`actions` (Optional, string | string[])*: List or wildcard expression of actions used to limit the request.
 ** *`detailed` (Optional, boolean)*: If `true`, the response includes detailed information about shard recoveries.
+This information is useful to distinguish tasks from each other but is more costly to run.
 ** *`group_by` (Optional, Enum("nodes" | "parents" | "none"))*: Key used to group tasks in the response.
 ** *`nodes` (Optional, string | string[])*: List of node IDs or names used to limit returned information.
 ** *`parent_task_id` (Optional, string)*: Parent task ID used to limit returned information. To return all tasks, omit this parameter or use a value of `-1`.
@@ -11425,29 +12220,222 @@ client.tasks.list({ ... })
 === text_structure
 [discrete]
 ==== find_field_structure
-Finds the structure of a text field in an index.
+Find the structure of a text field.
+Find the structure of a text field in an Elasticsearch index.
 
 {ref}/find-field-structure.html[Endpoint documentation]
 [source,ts]
 ----
-client.textStructure.findFieldStructure()
+client.textStructure.findFieldStructure({ field, index })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`field` (string)*: The field that should be analyzed.
+** *`index` (string)*: The name of the index that contains the analyzed field.
+** *`column_names` (Optional, string)*: If `format` is set to `delimited`, you can specify the column names in a list.
+If this parameter is not specified, the structure finder uses the column names from the header row of the text.
+If the text does not have a header row, columns are named "column1", "column2", "column3", for example.
+** *`delimiter` (Optional, string)*: If you have set `format` to `delimited`, you can specify the character used to delimit the values in each row.
+Only a single character is supported; the delimiter cannot have multiple characters.
+By default, the API considers the following possibilities: comma, tab, semi-colon, and pipe (`|`).
+In this default scenario, all rows must have the same number of fields for the delimited format to be detected.
+If you specify a delimiter, up to 10% of the rows can have a different number of columns than the first row.
+** *`documents_to_sample` (Optional, number)*: The number of documents to include in the structural analysis.
+The minimum value is 2.
+** *`ecs_compatibility` (Optional, Enum("disabled" | "v1"))*: The mode of compatibility with ECS compliant Grok patterns.
+Use this parameter to specify whether to use ECS Grok patterns instead of legacy ones when the structure finder creates a Grok pattern.
+This setting primarily has an impact when a whole message Grok pattern such as `%{CATALINALOG}` matches the input.
+If the structure finder identifies a common structure but has no idea of the meaning then generic field names such as `path`, `ipaddress`, `field1`, and `field2` are used in the `grok_pattern` output.
+The intention in that situation is that a user who knows the meanings will rename the fields before using them.
+** *`explain` (Optional, boolean)*: If true, the response includes a field named `explanation`, which is an array of strings that indicate how the structure finder produced its result.
+** *`format` (Optional, Enum("delimited" | "ndjson" | "semi_structured_text" | "xml"))*: The high level structure of the text.
+By default, the API chooses the format.
+In this default scenario, all rows must have the same number of fields for a delimited format to be detected.
+If the format is set to delimited and the delimiter is not set, however, the API tolerates up to 5% of rows that have a different number of columns than the first row.
+** *`grok_pattern` (Optional, string)*: If the format is `semi_structured_text`, you can specify a Grok pattern that is used to extract fields from every message in the text.
+The name of the timestamp field in the Grok pattern must match what is specified in the `timestamp_field` parameter.
+If that parameter is not specified, the name of the timestamp field in the Grok pattern must match "timestamp".
+If `grok_pattern` is not specified, the structure finder creates a Grok pattern.
+** *`quote` (Optional, string)*: If the format is `delimited`, you can specify the character used to quote the values in each row if they contain newlines or the delimiter character.
+Only a single character is supported.
+If this parameter is not specified, the default value is a double quote (`"`).
+If your delimited text format does not use quoting, a workaround is to set this argument to a character that does not appear anywhere in the sample.
+** *`should_trim_fields` (Optional, boolean)*: If the format is `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them.
+If this parameter is not specified and the delimiter is pipe (`|`), the default value is true.
+Otherwise, the default value is false.
+** *`timeout` (Optional, string | -1 | 0)*: The maximum amount of time that the structure analysis can take.
+If the analysis is still running when the timeout expires, it will be stopped.
+** *`timestamp_field` (Optional, string)*: The name of the field that contains the primary timestamp of each record in the text.
+In particular, if the text was ingested into an index, this is the field that would be used to populate the `@timestamp` field.
+
+If the format is `semi_structured_text`, this field must match the name of the appropriate extraction in the `grok_pattern`.
+Therefore, for semi-structured text, it is best not to specify this parameter unless `grok_pattern` is also specified.
+
+For structured text, if you specify this parameter, the field must exist within the text.
+
+If this parameter is not specified, the structure finder makes a decision about which field (if any) is the primary timestamp field.
+For structured text, it is not compulsory to have a timestamp in the text.
+** *`timestamp_format` (Optional, string)*: The Java time format of the timestamp field in the text.
+Only a subset of Java time format letter groups are supported:
+
+* `a`
+* `d`
+* `dd`
+* `EEE`
+* `EEEE`
+* `H`
+* `HH`
+* `h`
+* `M`
+* `MM`
+* `MMM`
+* `MMMM`
+* `mm`
+* `ss`
+* `XX`
+* `XXX`
+* `yy`
+* `yyyy`
+* `zzz`
+
+Additionally `S` letter groups (fractional seconds) of length one to nine are supported providing they occur after `ss` and are separated from the `ss` by a period (`.`), comma (`,`), or colon (`:`).
+Spacing and punctuation is also permitted with the exception a question mark (`?`), newline, and carriage return, together with literal text enclosed in single quotes.
+For example, `MM/dd HH.mm.ss,SSSSSS 'in' yyyy` is a valid override format.
+
+One valuable use case for this parameter is when the format is semi-structured text, there are multiple timestamp formats in the text, and you know which format corresponds to the primary timestamp, but you do not want to specify the full `grok_pattern`.
+Another is when the timestamp format is one that the structure finder does not consider by default.
+
+If this parameter is not specified, the structure finder chooses the best format from a built-in set.
+
+If the special value `null` is specified, the structure finder will not look for a primary timestamp in the text.
+When the format is semi-structured text, this will result in the structure finder treating the text as single-line messages.
 
 [discrete]
 ==== find_message_structure
-Finds the structure of a list of messages. The messages must contain data that is suitable to be ingested into Elasticsearch.
+Find the structure of text messages.
+Find the structure of a list of text messages.
+The messages must contain data that is suitable to be ingested into Elasticsearch.
+
+This API provides a starting point for ingesting data into Elasticsearch in a format that is suitable for subsequent use with other Elastic Stack functionality.
+Use this API rather than the find text structure API if your input text has already been split up into separate messages by some other process.
+The response from the API contains:
+
+* Sample messages.
+* Statistics that reveal the most common values for all fields detected within the text and basic numeric statistics for numeric fields.
+* Information about the structure of the text, which is useful when you write ingest configurations to index it or similarly formatted text.
+Appropriate mappings for an Elasticsearch index, which you could use to ingest the text.
+
+All this information can be calculated by the structure finder with no guidance.
+However, you can optionally override some of the decisions about the text structure by specifying one or more query parameters.
 
 {ref}/find-message-structure.html[Endpoint documentation]
 [source,ts]
 ----
-client.textStructure.findMessageStructure()
+client.textStructure.findMessageStructure({ messages })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`messages` (string[])*: The list of messages you want to analyze.
+** *`column_names` (Optional, string)*: If the format is `delimited`, you can specify the column names in a list.
+If this parameter is not specified, the structure finder uses the column names from the header row of the text.
+If the text does not have a header role, columns are named "column1", "column2", "column3", for example.
+** *`delimiter` (Optional, string)*: If you the format is `delimited`, you can specify the character used to delimit the values in each row.
+Only a single character is supported; the delimiter cannot have multiple characters.
+By default, the API considers the following possibilities: comma, tab, semi-colon, and pipe (`|`).
+In this default scenario, all rows must have the same number of fields for the delimited format to be detected.
+If you specify a delimiter, up to 10% of the rows can have a different number of columns than the first row.
+** *`ecs_compatibility` (Optional, Enum("disabled" | "v1"))*: The mode of compatibility with ECS compliant Grok patterns.
+Use this parameter to specify whether to use ECS Grok patterns instead of legacy ones when the structure finder creates a Grok pattern.
+This setting primarily has an impact when a whole message Grok pattern such as `%{CATALINALOG}` matches the input.
+If the structure finder identifies a common structure but has no idea of meaning then generic field names such as `path`, `ipaddress`, `field1`, and `field2` are used in the `grok_pattern` output, with the intention that a user who knows the meanings rename these fields before using it.
+** *`explain` (Optional, boolean)*: If this parameter is set to true, the response includes a field named `explanation`, which is an array of strings that indicate how the structure finder produced its result.
+** *`format` (Optional, Enum("delimited" | "ndjson" | "semi_structured_text" | "xml"))*: The high level structure of the text.
+By default, the API chooses the format.
+In this default scenario, all rows must have the same number of fields for a delimited format to be detected.
+If the format is `delimited` and the delimiter is not set, however, the API tolerates up to 5% of rows that have a different number of columns than the first row.
+** *`grok_pattern` (Optional, string)*: If the format is `semi_structured_text`, you can specify a Grok pattern that is used to extract fields from every message in the text.
+The name of the timestamp field in the Grok pattern must match what is specified in the `timestamp_field` parameter.
+If that parameter is not specified, the name of the timestamp field in the Grok pattern must match "timestamp".
+If `grok_pattern` is not specified, the structure finder creates a Grok pattern.
+** *`quote` (Optional, string)*: If the format is `delimited`, you can specify the character used to quote the values in each row if they contain newlines or the delimiter character.
+Only a single character is supported.
+If this parameter is not specified, the default value is a double quote (`"`).
+If your delimited text format does not use quoting, a workaround is to set this argument to a character that does not appear anywhere in the sample.
+** *`should_trim_fields` (Optional, boolean)*: If the format is `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them.
+If this parameter is not specified and the delimiter is pipe (`|`), the default value is true.
+Otherwise, the default value is false.
+** *`timeout` (Optional, string | -1 | 0)*: The maximum amount of time that the structure analysis can take.
+If the analysis is still running when the timeout expires, it will be stopped.
+** *`timestamp_field` (Optional, string)*: The name of the field that contains the primary timestamp of each record in the text.
+In particular, if the text was ingested into an index, this is the field that would be used to populate the `@timestamp` field.
+
+If the format is `semi_structured_text`, this field must match the name of the appropriate extraction in the `grok_pattern`.
+Therefore, for semi-structured text, it is best not to specify this parameter unless `grok_pattern` is also specified.
+
+For structured text, if you specify this parameter, the field must exist within the text.
+
+If this parameter is not specified, the structure finder makes a decision about which field (if any) is the primary timestamp field.
+For structured text, it is not compulsory to have a timestamp in the text.
+** *`timestamp_format` (Optional, string)*: The Java time format of the timestamp field in the text.
+Only a subset of Java time format letter groups are supported:
+
+* `a`
+* `d`
+* `dd`
+* `EEE`
+* `EEEE`
+* `H`
+* `HH`
+* `h`
+* `M`
+* `MM`
+* `MMM`
+* `MMMM`
+* `mm`
+* `ss`
+* `XX`
+* `XXX`
+* `yy`
+* `yyyy`
+* `zzz`
+
+Additionally `S` letter groups (fractional seconds) of length one to nine are supported providing they occur after `ss` and are separated from the `ss` by a period (`.`), comma (`,`), or colon (`:`).
+Spacing and punctuation is also permitted with the exception a question mark (`?`), newline, and carriage return, together with literal text enclosed in single quotes.
+For example, `MM/dd HH.mm.ss,SSSSSS 'in' yyyy` is a valid override format.
+
+One valuable use case for this parameter is when the format is semi-structured text, there are multiple timestamp formats in the text, and you know which format corresponds to the primary timestamp, but you do not want to specify the full `grok_pattern`.
+Another is when the timestamp format is one that the structure finder does not consider by default.
+
+If this parameter is not specified, the structure finder chooses the best format from a built-in set.
+
+If the special value `null` is specified, the structure finder will not look for a primary timestamp in the text.
+When the format is semi-structured text, this will result in the structure finder treating the text as single-line messages.
 
 [discrete]
 ==== find_structure
-Finds the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch.
+Find the structure of a text file.
+The text file must contain data that is suitable to be ingested into Elasticsearch.
+
+This API provides a starting point for ingesting data into Elasticsearch in a format that is suitable for subsequent use with other Elastic Stack functionality.
+Unlike other Elasticsearch endpoints, the data that is posted to this endpoint does not need to be UTF-8 encoded and in JSON format.
+It must, however, be text; binary text formats are not currently supported.
+The size is limited to the Elasticsearch HTTP receive buffer size, which defaults to 100 Mb.
+
+The response from the API contains:
+
+* A couple of messages from the beginning of the text.
+* Statistics that reveal the most common values for all fields detected within the text and basic numeric statistics for numeric fields.
+* Information about the structure of the text, which is useful when you write ingest configurations to index it or similarly formatted text.
+* Appropriate mappings for an Elasticsearch index, which you could use to ingest the text.
+
+All this information can be calculated by the structure finder with no guidance.
+However, you can optionally override some of the decisions about the text structure by specifying one or more query parameters.
 
 {ref}/find-structure.html[Endpoint documentation]
 [source,ts]
@@ -11461,10 +12449,11 @@ client.textStructure.findStructure({ ... })
 * *Request (object):*
 ** *`text_files` (Optional, TJsonDocument[])*
 ** *`charset` (Optional, string)*: The text’s character set. It must be a character set that is supported by the JVM that Elasticsearch uses. For example, UTF-8, UTF-16LE, windows-1252, or EUC-JP. If this parameter is not specified, the structure finder chooses an appropriate character set.
-** *`column_names` (Optional, string)*: If you have set format to delimited, you can specify the column names in a list. If this parameter is not specified, the structure finder uses the column names from the header row of the text. If the text does not have a header role, columns are named "column1", "column2", "column3", etc.
+** *`column_names` (Optional, string)*: If you have set format to delimited, you can specify the column names in a list. If this parameter is not specified, the structure finder uses the column names from the header row of the text. If the text does not have a header role, columns are named "column1", "column2", "column3", for example.
 ** *`delimiter` (Optional, string)*: If you have set format to delimited, you can specify the character used to delimit the values in each row. Only a single character is supported; the delimiter cannot have multiple characters. By default, the API considers the following possibilities: comma, tab, semi-colon, and pipe (|). In this default scenario, all rows must have the same number of fields for the delimited format to be detected. If you specify a delimiter, up to 10% of the rows can have a different number of columns than the first row.
 ** *`ecs_compatibility` (Optional, string)*: The mode of compatibility with ECS compliant Grok patterns (disabled or v1, default: disabled).
 ** *`explain` (Optional, boolean)*: If this parameter is set to true, the response includes a field named explanation, which is an array of strings that indicate how the structure finder produced its result.
+If the structure finder produces unexpected results for some text, use this query parameter to help you determine why the returned structure was chosen.
 ** *`format` (Optional, string)*: The high level structure of the text. Valid values are ndjson, xml, delimited, and semi_structured_text. By default, the API chooses the format. In this default scenario, all rows must have the same number of fields for a delimited format to be detected. If the format is set to delimited and the delimiter is not set, however, the API tolerates up to 5% of rows that have a different number of columns than the first row.
 ** *`grok_pattern` (Optional, string)*: If you have set format to semi_structured_text, you can specify a Grok pattern that is used to extract fields from every message in the text. The name of the timestamp field in the Grok pattern must match what is specified in the timestamp_field parameter. If that parameter is not specified, the name of the timestamp field in the Grok pattern must match "timestamp". If grok_pattern is not specified, the structure finder creates a Grok pattern.
 ** *`has_header_row` (Optional, boolean)*: If you have set format to delimited, you can use this parameter to indicate whether the column names are in the first row of the text. If this parameter is not specified, the structure finder guesses based on the similarity of the first row of the text to other rows.
@@ -11472,13 +12461,15 @@ client.textStructure.findStructure({ ... })
 ** *`lines_to_sample` (Optional, number)*: The number of lines to include in the structural analysis, starting from the beginning of the text. The minimum is 2; If the value of this parameter is greater than the number of lines in the text, the analysis proceeds (as long as there are at least two lines in the text) for all of the lines.
 ** *`quote` (Optional, string)*: If you have set format to delimited, you can specify the character used to quote the values in each row if they contain newlines or the delimiter character. Only a single character is supported. If this parameter is not specified, the default value is a double quote ("). If your delimited text format does not use quoting, a workaround is to set this argument to a character that does not appear anywhere in the sample.
 ** *`should_trim_fields` (Optional, boolean)*: If you have set format to delimited, you can specify whether values between delimiters should have whitespace trimmed from them. If this parameter is not specified and the delimiter is pipe (|), the default value is true. Otherwise, the default value is false.
-** *`timeout` (Optional, string | -1 | 0)*: Sets the maximum amount of time that the structure analysis make take. If the analysis is still running when the timeout expires then it will be aborted.
+** *`timeout` (Optional, string | -1 | 0)*: Sets the maximum amount of time that the structure analysis can take. If the analysis is still running when the timeout expires then it will be stopped.
 ** *`timestamp_field` (Optional, string)*: Optional parameter to specify the timestamp field in the file
 ** *`timestamp_format` (Optional, string)*: The Java time format of the timestamp field in the text.
 
 [discrete]
 ==== test_grok_pattern
-Tests a Grok pattern on some text.
+Test a Grok pattern.
+Test a Grok pattern on one or more lines of text.
+The API indicates whether the lines match the pattern together with the offsets and lengths of the matched substrings.
 
 {ref}/test-grok-pattern.html[Endpoint documentation]
 [source,ts]
@@ -11844,12 +12835,20 @@ timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== upgrade_transforms
-Upgrades all transforms.
-This API identifies transforms that have a legacy configuration format and upgrades them to the latest version. It
-also cleans up the internal data structures that store the transform state and checkpoints. The upgrade does not
-affect the source and destination indices. The upgrade also does not affect the roles that transforms use when
-Elasticsearch security features are enabled; the role used to read source data and write to the destination index
-remains unchanged.
+Upgrade all transforms.
+Transforms are compatible across minor versions and between supported major versions.
+However, over time, the format of transform configuration information may change.
+This API identifies transforms that have a legacy configuration format and upgrades them to the latest version.
+It also cleans up the internal data structures that store the transform state and checkpoints.
+The upgrade does not affect the source and destination indices.
+The upgrade also does not affect the roles that transforms use when Elasticsearch security features are enabled; the role used to read source data and write to the destination index remains unchanged.
+
+If a transform upgrade step fails, the upgrade stops and an error is returned about the underlying issue.
+Resolve the issue then re-run the process again.
+A summary is returned when the upgrade is finished.
+
+To ensure continuous transforms remain running during a major version upgrade of the cluster – for example, from 7.16 to 8.0 – it is recommended to upgrade transforms before upgrading the cluster.
+You may want to perform a recent cluster backup prior to the upgrade.
 
 {ref}/upgrade-transforms.html[Endpoint documentation]
 [source,ts]
@@ -11869,7 +12868,13 @@ returns an error.
 === watcher
 [discrete]
 ==== ack_watch
-Acknowledges a watch, manually throttling the execution of the watch's actions.
+Acknowledge a watch.
+Acknowledging a watch enables you to manually throttle the execution of the watch's actions.
+
+The acknowledgement state of an action is stored in the `status.actions.<id>.ack.state` structure.
+
+IMPORTANT: If the specified watch is currently being executed, this API will return an error
+The reason for this behavior is to prevent overwriting the watch status from a watch execution.
 
 {ref}/watcher-api-ack-watch.html[Endpoint documentation]
 [source,ts]
@@ -11886,7 +12891,8 @@ client.watcher.ackWatch({ watch_id })
 
 [discrete]
 ==== activate_watch
-Activates a currently inactive watch.
+Activate a watch.
+A watch can be either active or inactive.
 
 {ref}/watcher-api-activate-watch.html[Endpoint documentation]
 [source,ts]
@@ -11902,7 +12908,8 @@ client.watcher.activateWatch({ watch_id })
 
 [discrete]
 ==== deactivate_watch
-Deactivates a currently active watch.
+Deactivate a watch.
+A watch can be either active or inactive.
 
 {ref}/watcher-api-deactivate-watch.html[Endpoint documentation]
 [source,ts]
@@ -11918,7 +12925,14 @@ client.watcher.deactivateWatch({ watch_id })
 
 [discrete]
 ==== delete_watch
-Removes a watch from Watcher.
+Delete a watch.
+When the watch is removed, the document representing the watch in the `.watches` index is gone and it will never be run again.
+
+Deleting a watch does not delete any watch execution records related to this watch from the watch history.
+
+IMPORTANT: Deleting a watch must be done by using only this API.
+Do not delete the watch directly from the `.watches` index using the Elasticsearch delete document API
+When Elasticsearch security features are enabled, make sure no write privileges are granted to anyone for the `.watches` index.
 
 {ref}/watcher-api-delete-watch.html[Endpoint documentation]
 [source,ts]
@@ -11934,8 +12948,15 @@ client.watcher.deleteWatch({ id })
 
 [discrete]
 ==== execute_watch
+Run a watch.
 This API can be used to force execution of the watch outside of its triggering logic or to simulate the watch execution for debugging purposes.
-For testing and debugging purposes, you also have fine-grained control on how the watch runs. You can execute the watch without executing all of its actions or alternatively by simulating them. You can also force execution by ignoring the watch condition and control whether a watch record would be written to the watch history after execution.
+
+For testing and debugging purposes, you also have fine-grained control on how the watch runs.
+You can run the watch without running all of its actions or alternatively by simulating them.
+You can also force execution by ignoring the watch condition and control whether a watch record would be written to the watch history after it runs.
+
+You can use the run watch API to run watches that are not yet registered by specifying the watch definition inline.
+This serves as great tool for testing and debugging your watches prior to adding them to Watcher.
 
 {ref}/watcher-api-execute-watch.html[Endpoint documentation]
 [source,ts]
@@ -11970,7 +12991,7 @@ client.watcher.getSettings()
 
 [discrete]
 ==== get_watch
-Retrieves a watch by its ID.
+Get a watch.
 
 {ref}/watcher-api-get-watch.html[Endpoint documentation]
 [source,ts]
@@ -11986,7 +13007,18 @@ client.watcher.getWatch({ id })
 
 [discrete]
 ==== put_watch
-Creates a new watch, or updates an existing one.
+Create or update a watch.
+When a watch is registered, a new document that represents the watch is added to the `.watches` index and its trigger is immediately registered with the relevant trigger engine.
+Typically for the `schedule` trigger, the scheduler is the trigger engine.
+
+IMPORTANT: You must use Kibana or this API to create a watch.
+Do not add a watch directly to the `.watches` index by using the Elasticsearch index API.
+If Elasticsearch security features are enabled, do not give users write privileges on the `.watches` index.
+
+When you add a watch you can also define its initial active state by setting the *active* parameter.
+
+When Elasticsearch security features are enabled, your watch can index or search only on indices for which the user that stored the watch has privileges.
+If the user is able to read index `a`, but not index `b`, the same will apply when the watch runs.
 
 {ref}/watcher-api-put-watch.html[Endpoint documentation]
 [source,ts]
@@ -12013,7 +13045,8 @@ client.watcher.putWatch({ id })
 
 [discrete]
 ==== query_watches
-Retrieves stored watches.
+Query watches.
+Get all registered watches in a paginated manner and optionally filter watches by a query.
 
 {ref}/watcher-api-query-watches.html[Endpoint documentation]
 [source,ts]
@@ -12033,7 +13066,8 @@ client.watcher.queryWatches({ ... })
 
 [discrete]
 ==== start
-Starts Watcher if it is not already running.
+Start the watch service.
+Start the Watcher service if it is not already running.
 
 {ref}/watcher-api-start.html[Endpoint documentation]
 [source,ts]
@@ -12044,7 +13078,7 @@ client.watcher.start()
 
 [discrete]
 ==== stats
-Retrieves the current Watcher metrics.
+Get Watcher statistics.
 
 {ref}/watcher-api-stats.html[Endpoint documentation]
 [source,ts]
@@ -12061,7 +13095,8 @@ client.watcher.stats({ ... })
 
 [discrete]
 ==== stop
-Stops Watcher if it is running.
+Stop the watch service.
+Stop the Watcher service if it is running.
 
 {ref}/watcher-api-stop.html[Endpoint documentation]
 [source,ts]
@@ -12085,7 +13120,12 @@ client.watcher.updateSettings()
 === xpack
 [discrete]
 ==== info
-Provides general information about the installed X-Pack features.
+Get information.
+The information provided by the API includes:
+
+* Build information including the build number and timestamp.
+* License information about the currently installed license.
+* Feature information for the features that are currently enabled and available under the current license.
 
 {ref}/info-api.html[Endpoint documentation]
 [source,ts]
@@ -12103,7 +13143,9 @@ client.xpack.info({ ... })
 
 [discrete]
 ==== usage
-This API provides information about which features are currently enabled and available under the current license and some usage statistics.
+Get usage information.
+Get information about the features that are currently enabled and available under the current license.
+The API also provides some usage statistics.
 
 {ref}/usage-api.html[Endpoint documentation]
 [source,ts]

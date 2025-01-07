@@ -45,7 +45,7 @@ export default class Slm {
   }
 
   /**
-    * Deletes an existing snapshot lifecycle policy.
+    * Delete a policy. Delete a snapshot lifecycle policy definition. This operation prevents any future snapshots from being taken but does not cancel in-progress snapshots or remove previously-taken snapshots.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/slm-api-delete-policy.html | Elasticsearch API documentation}
     */
   async deleteLifecycle (this: That, params: T.SlmDeleteLifecycleRequest | TB.SlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmDeleteLifecycleResponse>
@@ -77,7 +77,7 @@ export default class Slm {
   }
 
   /**
-    * Immediately creates a snapshot according to the lifecycle policy, without waiting for the scheduled time.
+    * Run a policy. Immediately create a snapshot according to the snapshot lifecycle policy without waiting for the scheduled time. The snapshot policy is normally applied according to its schedule, but you might want to manually run a policy before performing an upgrade or other maintenance.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/slm-api-execute-lifecycle.html | Elasticsearch API documentation}
     */
   async executeLifecycle (this: That, params: T.SlmExecuteLifecycleRequest | TB.SlmExecuteLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmExecuteLifecycleResponse>
@@ -109,7 +109,7 @@ export default class Slm {
   }
 
   /**
-    * Deletes any snapshots that are expired according to the policy's retention rules.
+    * Run a retention policy. Manually apply the retention policy to force immediate removal of snapshots that are expired according to the snapshot lifecycle policy retention rules. The retention policy is normally applied according to its schedule.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/slm-api-execute-retention.html | Elasticsearch API documentation}
     */
   async executeRetention (this: That, params?: T.SlmExecuteRetentionRequest | TB.SlmExecuteRetentionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmExecuteRetentionResponse>
@@ -139,7 +139,7 @@ export default class Slm {
   }
 
   /**
-    * Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.
+    * Get policy information. Get snapshot lifecycle policy definitions and information about the latest snapshot attempts.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/slm-api-get-policy.html | Elasticsearch API documentation}
     */
   async getLifecycle (this: That, params?: T.SlmGetLifecycleRequest | TB.SlmGetLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmGetLifecycleResponse>
@@ -179,7 +179,7 @@ export default class Slm {
   }
 
   /**
-    * Returns global and policy-level statistics about actions taken by snapshot lifecycle management.
+    * Get snapshot lifecycle management statistics. Get global and policy-level statistics about actions taken by snapshot lifecycle management.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/slm-api-get-stats.html | Elasticsearch API documentation}
     */
   async getStats (this: That, params?: T.SlmGetStatsRequest | TB.SlmGetStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmGetStatsResponse>
@@ -209,7 +209,7 @@ export default class Slm {
   }
 
   /**
-    * Retrieves the status of snapshot lifecycle management (SLM).
+    * Get the snapshot lifecycle management status.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/slm-api-get-status.html | Elasticsearch API documentation}
     */
   async getStatus (this: That, params?: T.SlmGetStatusRequest | TB.SlmGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmGetStatusResponse>
@@ -239,7 +239,7 @@ export default class Slm {
   }
 
   /**
-    * Creates or updates a snapshot lifecycle policy.
+    * Create or update a policy. Create or update a snapshot lifecycle policy. If the policy already exists, this request increments the policy version. Only the latest version of a policy is stored.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/slm-api-put-policy.html | Elasticsearch API documentation}
     */
   async putLifecycle (this: That, params: T.SlmPutLifecycleRequest | TB.SlmPutLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmPutLifecycleResponse>
@@ -283,7 +283,7 @@ export default class Slm {
   }
 
   /**
-    * Turns on snapshot lifecycle management (SLM).
+    * Start snapshot lifecycle management. Snapshot lifecycle management (SLM) starts automatically when a cluster is formed. Manually starting SLM is necessary only if it has been stopped using the stop SLM API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/slm-api-start.html | Elasticsearch API documentation}
     */
   async start (this: That, params?: T.SlmStartRequest | TB.SlmStartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmStartResponse>
@@ -313,7 +313,7 @@ export default class Slm {
   }
 
   /**
-    * Turns off snapshot lifecycle management (SLM).
+    * Stop snapshot lifecycle management. Stop all snapshot lifecycle management (SLM) operations and the SLM plugin. This API is useful when you are performing maintenance on a cluster and need to prevent SLM from performing any actions on your data streams or indices. Stopping SLM does not stop any snapshots that are in progress. You can manually trigger snapshots with the run snapshot lifecycle policy API even if SLM is stopped. The API returns a response as soon as the request is acknowledged, but the plugin might continue to run until in-progress operations complete and it can be safely stopped. Use the get snapshot lifecycle management status API to see if SLM is running.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/slm-api-stop.html | Elasticsearch API documentation}
     */
   async stop (this: That, params?: T.SlmStopRequest | TB.SlmStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmStopResponse>

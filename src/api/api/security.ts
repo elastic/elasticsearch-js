@@ -1568,22 +1568,34 @@ export default class Security {
   }
 
   /**
-    * Exchanges an OpenID Connection authentication response message for an Elasticsearch access token and refresh token pair
+    * Authenticate OpenID Connect. Exchange an OpenID Connect authentication response message for an Elasticsearch internal access token and refresh token that can be subsequently used for authentication. Elasticsearch exposes all the necessary OpenID Connect related functionality with the OpenID Connect APIs. These APIs are used internally by Kibana in order to provide OpenID Connect based authentication, but can also be used by other, custom web applications or other clients.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/security-api-oidc-authenticate.html | Elasticsearch API documentation}
     */
-  async oidcAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async oidcAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async oidcAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async oidcAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async oidcAuthenticate (this: That, params: T.SecurityOidcAuthenticateRequest | TB.SecurityOidcAuthenticateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityOidcAuthenticateResponse>
+  async oidcAuthenticate (this: That, params: T.SecurityOidcAuthenticateRequest | TB.SecurityOidcAuthenticateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityOidcAuthenticateResponse, unknown>>
+  async oidcAuthenticate (this: That, params: T.SecurityOidcAuthenticateRequest | TB.SecurityOidcAuthenticateRequest, options?: TransportRequestOptions): Promise<T.SecurityOidcAuthenticateResponse>
+  async oidcAuthenticate (this: That, params: T.SecurityOidcAuthenticateRequest | TB.SecurityOidcAuthenticateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['nonce', 'realm', 'redirect_uri', 'state']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1597,22 +1609,34 @@ export default class Security {
   }
 
   /**
-    * Invalidates a refresh token and access token that was generated from the OpenID Connect Authenticate API
+    * Logout of OpenID Connect. Invalidate an access token and a refresh token that were generated as a response to the `/_security/oidc/authenticate` API. If the OpenID Connect authentication realm in Elasticsearch is accordingly configured, the response to this call will contain a URI pointing to the end session endpoint of the OpenID Connect Provider in order to perform single logout. Elasticsearch exposes all the necessary OpenID Connect related functionality with the OpenID Connect APIs. These APIs are used internally by Kibana in order to provide OpenID Connect based authentication, but can also be used by other, custom web applications or other clients.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/security-api-oidc-logout.html | Elasticsearch API documentation}
     */
-  async oidcLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async oidcLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async oidcLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async oidcLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async oidcLogout (this: That, params: T.SecurityOidcLogoutRequest | TB.SecurityOidcLogoutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityOidcLogoutResponse>
+  async oidcLogout (this: That, params: T.SecurityOidcLogoutRequest | TB.SecurityOidcLogoutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityOidcLogoutResponse, unknown>>
+  async oidcLogout (this: That, params: T.SecurityOidcLogoutRequest | TB.SecurityOidcLogoutRequest, options?: TransportRequestOptions): Promise<T.SecurityOidcLogoutResponse>
+  async oidcLogout (this: That, params: T.SecurityOidcLogoutRequest | TB.SecurityOidcLogoutRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['access_token', 'refresh_token']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1626,22 +1650,35 @@ export default class Security {
   }
 
   /**
-    * Creates an OAuth 2.0 authentication request as a URL string
+    * Prepare OpenID connect authentication. Create an oAuth 2.0 authentication request as a URL string based on the configuration of the OpenID Connect authentication realm in Elasticsearch. The response of this API is a URL pointing to the Authorization Endpoint of the configured OpenID Connect Provider, which can be used to redirect the browser of the user in order to continue the authentication process. Elasticsearch exposes all the necessary OpenID Connect related functionality with the OpenID Connect APIs. These APIs are used internally by Kibana in order to provide OpenID Connect based authentication, but can also be used by other, custom web applications or other clients.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/security-api-oidc-prepare-authentication.html | Elasticsearch API documentation}
     */
-  async oidcPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async oidcPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async oidcPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async oidcPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async oidcPrepareAuthentication (this: That, params?: T.SecurityOidcPrepareAuthenticationRequest | TB.SecurityOidcPrepareAuthenticationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityOidcPrepareAuthenticationResponse>
+  async oidcPrepareAuthentication (this: That, params?: T.SecurityOidcPrepareAuthenticationRequest | TB.SecurityOidcPrepareAuthenticationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityOidcPrepareAuthenticationResponse, unknown>>
+  async oidcPrepareAuthentication (this: That, params?: T.SecurityOidcPrepareAuthenticationRequest | TB.SecurityOidcPrepareAuthenticationRequest, options?: TransportRequestOptions): Promise<T.SecurityOidcPrepareAuthenticationResponse>
+  async oidcPrepareAuthentication (this: That, params?: T.SecurityOidcPrepareAuthenticationRequest | TB.SecurityOidcPrepareAuthenticationRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['iss', 'login_hint', 'nonce', 'realm', 'state']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
