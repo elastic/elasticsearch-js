@@ -20,19 +20,46 @@ import ts from 'typescript'
 import path from 'node:path'
 import minimist from 'minimist'
 
-const clientProps = ['diagnostic', 'connectionPool', 'transport', 'serializer', 'child', 'close']
-/**
- * Returns true if the interface type is a `Client`, otherwise false
- * @remarks Uses `clientProps` as a duck-typing way to identify `Client` instances. There's probably a better way, but this is probably accurate enough.
- */
-function classIsClient(type: ts.InterfaceType) {
-  const typeProps = type.getProperties().map(prop => prop.escapedName.toString())
+const apis = [
+  'asyncSearch',
+  'autoscaling',
+  'bulk',
+  'capabilities',
+  'cat',
+  'ccr',
+  'clearScroll',
+  'closePointInTime',
+  'cluster',
+  'connector',
+  'count',
+  'create',
+  'danglingIndices',
+  'delete',
+  'deleteByQuery',
+  'deleteByQueryRethrottle',
+  'deleteScript',
+  'enrich',
+  'eql',
+  'esql',
+  'exists',
+  'existsSource',
+  'explain',
+  'features',
+  'fieldCaps',
+]
 
-  let hasClientProps = true
-  clientProps.forEach(prop => {
-    if (!typeProps.includes(prop)) hasClientProps = false
-  })
-  return hasClientProps
+/**
+ * Detects whether a node is a `Client` instance identifier
+ * @remarks Uses duck-typing by checking that several Elasticsearch APIs exist as members on the identifier
+ */
+function isClient(node: ts.Identifier) {
+  const type = checker.getTypeAtLocation(node)
+  const properties = type.getProperties().map(prop => prop.escapedName.toString())
+
+  for (const api of apis) {
+    if (!properties.includes(api)) return false
+  }
+  return true
 }
 
 /**
@@ -41,11 +68,9 @@ function classIsClient(type: ts.InterfaceType) {
 function isClientExpression(node: ts.CallExpression): boolean {
   let flag = false
   function visitIdentifiers(node: ts.Node) {
-    if (ts.isIdentifier(node)) {
-      const type = checker.getTypeAtLocation(node)
-      if (type.isClass() && classIsClient(type)) {
-        flag = true
-      }
+    if (ts.isIdentifier(node) && isClient(node)) {
+      flag = true
+      return
     }
     ts.forEachChild(node, visitIdentifiers)
   }
@@ -75,26 +100,6 @@ function collectClientCallExpressions(node: ts.SourceFile): ts.CallExpression[] 
 
   return clientExpressions
 }
-
-// function getObjectLiteralExpression(node: ts.Node) {
-//   if (ts.isObjectLiteralExpression(node)) {
-//     return node
-//   } else if (ts.isIdentifier(node)) {
-//     // traverse up to assignment
-//     // @ts-expect-error
-//     let antecedent = node.flowNode.antecedent
-//     let parentNode = null
-//     while (true) {
-//       if (antecedent.node != null) {
-//         parentNode = antecedent.node
-//         antecedent = antecedent.antecedent
-//       } else {
-//         break
-//       }
-//     }
-//     return parentNode
-//   }
-// }
 
 function fixBodyProp(sourceFile: ts.SourceFile, node: ts.Node) {
   if (ts.isObjectLiteralExpression(node)) {
@@ -141,24 +146,27 @@ function lookForBodyProp(sourceFile: ts.SourceFile, node: ts.CallExpression) {
 // build TS project from provided file names
 const args = minimist(process.argv.slice(2))
 const cwd = process.cwd()
-const files = args._.map(filename => path.join(cwd, filename))
+const files = args._.map(file => path.join(cwd, file))
 const program = ts.createProgram(files, {})
 const checker = program.getTypeChecker()
 
 let processed = 0
 program.getSourceFiles().forEach(sourceFile => {
-  if (sourceFile.fileName.includes('/node_modules/')) return
+  if (program.isSourceFileFromExternalLibrary(sourceFile)) return
+  const { fileName } = sourceFile
 
   try {
     // get all `Client` call expressions
     const exprs = collectClientCallExpressions(sourceFile)
-    console.log(`found ${exprs.length} expressions in ${sourceFile.fileName}`)
+    if (exprs.length > 0) {
+      console.log(`found ${exprs.length} Client expressions in ${fileName}`)
+    }
     // for each call expression, get the first function argument, determine if it's an object and whether it has a `body` key
     exprs.forEach(expr => lookForBodyProp(sourceFile, expr))
   } catch (e) {
     // continue
-    console.error(`Could not process ${sourceFile.fileName}: ${e}`)
+    console.error(`Could not process ${fileName}: ${e}`)
   }
   processed++
 })
-console.log(`Done processing ${processed} files`)
+console.log(`Done scanning ${processed} files`)
