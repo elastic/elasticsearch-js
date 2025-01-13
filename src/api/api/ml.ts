@@ -1945,7 +1945,7 @@ export default class Ml {
   }
 
   /**
-    * Create a data frame analytics job. This API creates a data frame analytics job that performs an analysis on the source indices and stores the outcome in a destination index.
+    * Create a data frame analytics job. This API creates a data frame analytics job that performs an analysis on the source indices and stores the outcome in a destination index. By default, the query used in the source configuration is `{"match_all": {}}`. If the destination index does not exist, it is created automatically when you start the job. If you supply only a subset of the regression or classification parameters, hyperparameter optimization occurs. It determines a value for each of the undefined parameters.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/put-dfanalytics.html | Elasticsearch API documentation}
     */
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest | TB.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutDataFrameAnalyticsResponse>
@@ -1989,7 +1989,7 @@ export default class Ml {
   }
 
   /**
-    * Create a datafeed. Datafeeds retrieve data from Elasticsearch for analysis by an anomaly detection job. You can associate only one datafeed with each anomaly detection job. The datafeed contains a query that runs at a defined interval (`frequency`). If you are concerned about delayed data, you can add a delay (`query_delay') at each interval. When Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead. You must use Kibana, this API, or the create anomaly detection jobs API to create a datafeed. Do not add a datafeed directly to the `.ml-config` index. Do not give users `write` privileges on the `.ml-config` index.
+    * Create a datafeed. Datafeeds retrieve data from Elasticsearch for analysis by an anomaly detection job. You can associate only one datafeed with each anomaly detection job. The datafeed contains a query that runs at a defined interval (`frequency`). If you are concerned about delayed data, you can add a delay (`query_delay') at each interval. By default, the datafeed uses the following query: `{"match_all": {"boost": 1}}`. When Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead. You must use Kibana, this API, or the create anomaly detection jobs API to create a datafeed. Do not add a datafeed directly to the `.ml-config` index. Do not give users `write` privileges on the `.ml-config` index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ml-put-datafeed.html | Elasticsearch API documentation}
     */
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutDatafeedResponse>
@@ -2077,7 +2077,7 @@ export default class Ml {
   }
 
   /**
-    * Create an anomaly detection job. If you include a `datafeed_config`, you must have read index privileges on the source index.
+    * Create an anomaly detection job. If you include a `datafeed_config`, you must have read index privileges on the source index. If you include a `datafeed_config` but do not provide a query, the datafeed uses `{"match_all": {"boost": 1}}`.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ml-put-job.html | Elasticsearch API documentation}
     */
   async putJob (this: That, params: T.MlPutJobRequest | TB.MlPutJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutJobResponse>
@@ -2908,7 +2908,7 @@ export default class Ml {
   }
 
   /**
-    * Validates an anomaly detection job.
+    * Validate an anomaly detection job.
     * @see {@link https://www.elastic.co/guide/en/machine-learning/8.x/ml-jobs.html | Elasticsearch API documentation}
     */
   async validate (this: That, params?: T.MlValidateRequest | TB.MlValidateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateResponse>

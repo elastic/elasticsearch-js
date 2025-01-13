@@ -10082,6 +10082,22 @@ export interface ConnectorSyncJobPostResponse {
   id: Id
 }
 
+export interface ConnectorSyncJobUpdateStatsRequest extends RequestBase {
+  connector_sync_job_id: Id
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    deleted_document_count: long
+    indexed_document_count: long
+    indexed_document_volume: long
+    last_seen?: Duration
+    metadata?: Metadata
+    total_document_count?: integer
+  }
+}
+
+export interface ConnectorSyncJobUpdateStatsResponse {
+}
+
 export interface ConnectorUpdateActiveFilteringRequest extends RequestBase {
   connector_id: Id
 }
@@ -11912,6 +11928,22 @@ export interface IndicesGetDataLifecycleResponse {
   data_streams: IndicesGetDataLifecycleDataStreamWithLifecycle[]
 }
 
+export interface IndicesGetDataLifecycleStatsDataStreamStats {
+  backing_indices_in_error: integer
+  backing_indices_in_total: integer
+  name: DataStreamName
+}
+
+export interface IndicesGetDataLifecycleStatsRequest extends RequestBase {
+}
+
+export interface IndicesGetDataLifecycleStatsResponse {
+  data_stream_count: integer
+  data_streams: IndicesGetDataLifecycleStatsDataStreamStats[]
+  last_run_duration_in_millis?: DurationValue<UnitMillis>
+  time_between_starts_in_millis?: DurationValue<UnitMillis>
+}
+
 export interface IndicesGetDataStreamRequest extends RequestBase {
   name?: DataStreamNames
   expand_wildcards?: ExpandWildcards
@@ -13011,6 +13043,24 @@ export interface IngestDissectProcessor extends IngestProcessorBase {
   pattern: string
 }
 
+export interface IngestDocument {
+  _id?: Id
+  _index?: IndexName
+  _source: any
+}
+
+export interface IngestDocumentSimulationKeys {
+  _id: Id
+  _index: IndexName
+  _ingest: IngestIngest
+  _routing?: string
+  _source: Record<string, any>
+  _version?: SpecUtilsStringified<VersionNumber>
+  _version_type?: VersionType
+}
+export type IngestDocumentSimulation = IngestDocumentSimulationKeys
+& { [property: string]: string | Id | IndexName | IngestIngest | Record<string, any> | SpecUtilsStringified<VersionNumber> | VersionType }
+
 export interface IngestDotExpanderProcessor extends IngestProcessorBase {
   field: Field
   override?: boolean
@@ -13124,6 +13174,12 @@ export interface IngestInferenceProcessor extends IngestProcessorBase {
   inference_config?: IngestInferenceConfig
 }
 
+export interface IngestIngest {
+  _redact?: IngestRedact
+  timestamp: DateTime
+  pipeline?: Name
+}
+
 export interface IngestIpLocationProcessor extends IngestProcessorBase {
   database_file?: string
   field: Field
@@ -13210,6 +13266,16 @@ export interface IngestPipelineProcessor extends IngestProcessorBase {
   ignore_missing_pipeline?: boolean
 }
 
+export interface IngestPipelineSimulation {
+  doc?: IngestDocumentSimulation
+  tag?: string
+  processor_type?: string
+  status?: WatcherActionStatusOptions
+  description?: string
+  ignored_error?: ErrorCause
+  error?: ErrorCause
+}
+
 export interface IngestProcessorBase {
   description?: string
   if?: string
@@ -13264,6 +13330,10 @@ export interface IngestProcessorContainer {
   urldecode?: IngestUrlDecodeProcessor
   uri_parts?: IngestUriPartsProcessor
   user_agent?: IngestUserAgentProcessor
+}
+
+export interface IngestRedact {
+  _is_redacted: boolean
 }
 
 export interface IngestRedactProcessor extends IngestProcessorBase {
@@ -13323,6 +13393,12 @@ export interface IngestSetSecurityUserProcessor extends IngestProcessorBase {
 }
 
 export type IngestShapeType = 'geo_shape' | 'shape'
+
+export interface IngestSimulateDocumentResult {
+  doc?: IngestDocumentSimulation
+  error?: ErrorCause
+  processor_results?: IngestPipelineSimulation[]
+}
 
 export interface IngestSortProcessor extends IngestProcessorBase {
   field: Field
@@ -13520,62 +13596,18 @@ export interface IngestPutPipelineRequest extends RequestBase {
 
 export type IngestPutPipelineResponse = AcknowledgedResponseBase
 
-export interface IngestSimulateDocument {
-  _id?: Id
-  _index?: IndexName
-  _source: any
-}
-
-export interface IngestSimulateDocumentSimulationKeys {
-  _id: Id
-  _index: IndexName
-  _ingest: IngestSimulateIngest
-  _routing?: string
-  _source: Record<string, any>
-  _version?: SpecUtilsStringified<VersionNumber>
-  _version_type?: VersionType
-}
-export type IngestSimulateDocumentSimulation = IngestSimulateDocumentSimulationKeys
-& { [property: string]: string | Id | IndexName | IngestSimulateIngest | Record<string, any> | SpecUtilsStringified<VersionNumber> | VersionType }
-
-export interface IngestSimulateIngest {
-  _redact?: IngestSimulateRedact
-  timestamp: DateTime
-  pipeline?: Name
-}
-
-export interface IngestSimulatePipelineSimulation {
-  doc?: IngestSimulateDocumentSimulation
-  tag?: string
-  processor_type?: string
-  status?: WatcherActionStatusOptions
-  description?: string
-  ignored_error?: ErrorCause
-  error?: ErrorCause
-}
-
-export interface IngestSimulateRedact {
-  _is_redacted: boolean
-}
-
 export interface IngestSimulateRequest extends RequestBase {
   id?: Id
   verbose?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
-    docs: IngestSimulateDocument[]
+    docs: IngestDocument[]
     pipeline?: IngestPipeline
   }
 }
 
 export interface IngestSimulateResponse {
-  docs: IngestSimulateSimulateDocumentResult[]
-}
-
-export interface IngestSimulateSimulateDocumentResult {
-  doc?: IngestSimulateDocumentSimulation
-  error?: ErrorCause
-  processor_results?: IngestSimulatePipelineSimulation[]
+  docs: IngestSimulateDocumentResult[]
 }
 
 export interface LicenseLicense {
@@ -18196,6 +18228,22 @@ export interface SecurityBulkPutRoleResponse {
   errors?: SecurityBulkError
 }
 
+export interface SecurityBulkUpdateApiKeysRequest extends RequestBase {
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    expiration?: Duration
+    ids: string | string[]
+    metadata?: Metadata
+    role_descriptors?: Record<string, SecurityRoleDescriptor>
+  }
+}
+
+export interface SecurityBulkUpdateApiKeysResponse {
+  errors?: SecurityBulkError
+  noops: string[]
+  updated: string[]
+}
+
 export interface SecurityChangePasswordRequest extends RequestBase {
   username?: Username
   refresh?: Refresh
@@ -18314,6 +18362,40 @@ export interface SecurityCreateServiceTokenResponse {
 export interface SecurityCreateServiceTokenToken {
   name: Name
   value: string
+}
+
+export interface SecurityDelegatePkiAuthentication {
+  username: string
+  roles: string[]
+  full_name: string | null
+  email: string | null
+  token?: Record<string, string>
+  metadata: Metadata
+  enabled: boolean
+  authentication_realm: SecurityDelegatePkiAuthenticationRealm
+  lookup_realm: SecurityDelegatePkiAuthenticationRealm
+  authentication_type: string
+  api_key?: Record<string, string>
+}
+
+export interface SecurityDelegatePkiAuthenticationRealm {
+  name: string
+  type: string
+  domain?: string
+}
+
+export interface SecurityDelegatePkiRequest extends RequestBase {
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    x509_certificate_chain: string[]
+  }
+}
+
+export interface SecurityDelegatePkiResponse {
+  access_token: string
+  expires_in: long
+  type: string
+  authentication?: SecurityDelegatePkiAuthentication
 }
 
 export interface SecurityDeletePrivilegesFoundStatus {
@@ -19177,6 +19259,23 @@ export interface ShutdownPutNodeRequest extends RequestBase {
 
 export type ShutdownPutNodeResponse = AcknowledgedResponseBase
 
+export interface SimulateIngestRequest extends RequestBase {
+  index?: IndexName
+  pipeline?: PipelineName
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    docs: IngestDocument[]
+    component_template_substitutions?: Record<string, ClusterComponentTemplateNode>
+    index_template_subtitutions?: Record<string, IndicesIndexTemplate>
+    mapping_addition?: MappingTypeMapping
+    pipeline_substitutions?: Record<string, IngestPipeline>
+  }
+}
+
+export interface SimulateIngestResponse {
+  docs: IngestSimulateDocumentResult[]
+}
+
 export interface SlmConfiguration {
   ignore_unavailable?: boolean
   indices?: Indices
@@ -19244,12 +19343,16 @@ export interface SlmStatistics {
 
 export interface SlmDeleteLifecycleRequest extends RequestBase {
   policy_id: Name
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export type SlmDeleteLifecycleResponse = AcknowledgedResponseBase
 
 export interface SlmExecuteLifecycleRequest extends RequestBase {
   policy_id: Name
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export interface SlmExecuteLifecycleResponse {
@@ -19257,17 +19360,23 @@ export interface SlmExecuteLifecycleResponse {
 }
 
 export interface SlmExecuteRetentionRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export type SlmExecuteRetentionResponse = AcknowledgedResponseBase
 
 export interface SlmGetLifecycleRequest extends RequestBase {
   policy_id?: Names
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export type SlmGetLifecycleResponse = Record<Id, SlmSnapshotLifecycle>
 
 export interface SlmGetStatsRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export interface SlmGetStatsResponse {
@@ -19284,6 +19393,8 @@ export interface SlmGetStatsResponse {
 }
 
 export interface SlmGetStatusRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export interface SlmGetStatusResponse {
@@ -19307,11 +19418,15 @@ export interface SlmPutLifecycleRequest extends RequestBase {
 export type SlmPutLifecycleResponse = AcknowledgedResponseBase
 
 export interface SlmStartRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export type SlmStartResponse = AcknowledgedResponseBase
 
 export interface SlmStopRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export type SlmStopResponse = AcknowledgedResponseBase
@@ -19744,11 +19859,11 @@ export interface SqlGetAsyncStatusRequest extends RequestBase {
 }
 
 export interface SqlGetAsyncStatusResponse {
+  expiration_time_in_millis: EpochTime<UnitMillis>
   id: string
   is_running: boolean
   is_partial: boolean
   start_time_in_millis: EpochTime<UnitMillis>
-  expiration_time_in_millis: EpochTime<UnitMillis>
   completion_status?: uint
 }
 
@@ -19756,31 +19871,32 @@ export interface SqlQueryRequest extends RequestBase {
   format?: SqlQuerySqlFormat
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
+    allow_partial_search_results?: boolean
     catalog?: string
     columnar?: boolean
     cursor?: string
     fetch_size?: integer
-    filter?: QueryDslQueryContainer
-    query?: string
-    request_timeout?: Duration
-    page_timeout?: Duration
-    time_zone?: TimeZone
     field_multi_value_leniency?: boolean
-    runtime_mappings?: MappingRuntimeFields
-    wait_for_completion_timeout?: Duration
-    params?: Record<string, any>
+    filter?: QueryDslQueryContainer
+    index_using_frozen?: boolean
     keep_alive?: Duration
     keep_on_completion?: boolean
-    index_using_frozen?: boolean
+    page_timeout?: Duration
+    params?: Record<string, any>
+    query?: string
+    request_timeout?: Duration
+    runtime_mappings?: MappingRuntimeFields
+    time_zone?: TimeZone
+    wait_for_completion_timeout?: Duration
   }
 }
 
 export interface SqlQueryResponse {
+  columns?: SqlColumn[]
+  cursor?: string
   id?: Id
   is_running?: boolean
   is_partial?: boolean
-  columns?: SqlColumn[]
-  cursor?: string
   rows: SqlRow[]
 }
 
@@ -21020,6 +21136,14 @@ export interface WatcherExecuteWatchWatchRecord {
   status?: WatcherWatchStatus
 }
 
+export interface WatcherGetSettingsRequest extends RequestBase {
+  master_timeout?: Duration
+}
+
+export interface WatcherGetSettingsResponse {
+  index: IndicesIndexSettings
+}
+
 export interface WatcherGetWatchRequest extends RequestBase {
   id: Name
 }
@@ -21046,7 +21170,8 @@ export interface WatcherPutWatchRequest extends RequestBase {
     condition?: WatcherConditionContainer
     input?: WatcherInputContainer
     metadata?: Metadata
-    throttle_period?: string
+    throttle_period?: Duration
+    throttle_period_in_millis?: DurationValue<UnitMillis>
     transform?: TransformContainer
     trigger?: WatcherTriggerContainer
   }
@@ -21119,9 +21244,24 @@ export interface WatcherStatsWatcherNodeStats {
 export type WatcherStatsWatcherState = 'stopped' | 'starting' | 'started' | 'stopping'
 
 export interface WatcherStopRequest extends RequestBase {
+  master_timeout?: Duration
 }
 
 export type WatcherStopResponse = AcknowledgedResponseBase
+
+export interface WatcherUpdateSettingsRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    'index.auto_expand_replicas'?: string
+    'index.number_of_replicas'?: integer
+  }
+}
+
+export interface WatcherUpdateSettingsResponse {
+  acknowledged: boolean
+}
 
 export interface XpackInfoBuildInformation {
   date: DateTime

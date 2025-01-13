@@ -45,7 +45,7 @@ export default class QueryRules {
   }
 
   /**
-    * Delete a query rule. Delete a query rule within a query ruleset.
+    * Delete a query rule. Delete a query rule within a query ruleset. This is a destructive action that is only recoverable by re-adding the same rule with the create or update query rule API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/delete-query-rule.html | Elasticsearch API documentation}
     */
   async deleteRule (this: That, params: T.QueryRulesDeleteRuleRequest | TB.QueryRulesDeleteRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesDeleteRuleResponse>
@@ -78,7 +78,7 @@ export default class QueryRules {
   }
 
   /**
-    * Delete a query ruleset.
+    * Delete a query ruleset. Remove a query ruleset and its associated data. This is a destructive action that is not recoverable.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/delete-query-ruleset.html | Elasticsearch API documentation}
     */
   async deleteRuleset (this: That, params: T.QueryRulesDeleteRulesetRequest | TB.QueryRulesDeleteRulesetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesDeleteRulesetResponse>
@@ -205,7 +205,7 @@ export default class QueryRules {
   }
 
   /**
-    * Create or update a query rule. Create or update a query rule within a query ruleset.
+    * Create or update a query rule. Create or update a query rule within a query ruleset. IMPORTANT: Due to limitations within pinned queries, you can only pin documents using ids or docs, but cannot use both in single rule. It is advised to use one or the other in query rulesets, to avoid errors. Additionally, pinned queries have a maximum limit of 100 pinned hits. If multiple matching rules pin more than 100 documents, only the first 100 documents are pinned in the order they are specified in the ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/put-query-rule.html | Elasticsearch API documentation}
     */
   async putRule (this: That, params: T.QueryRulesPutRuleRequest | TB.QueryRulesPutRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesPutRuleResponse>
@@ -250,7 +250,7 @@ export default class QueryRules {
   }
 
   /**
-    * Create or update a query ruleset.
+    * Create or update a query ruleset. There is a limit of 100 rules per ruleset. This limit can be increased by using the `xpack.applications.rules.max_rules_per_ruleset` cluster setting. IMPORTANT: Due to limitations within pinned queries, you can only select documents using `ids` or `docs`, but cannot use both in single rule. It is advised to use one or the other in query rulesets, to avoid errors. Additionally, pinned queries have a maximum limit of 100 pinned hits. If multiple matching rules pin more than 100 documents, only the first 100 documents are pinned in the order they are specified in the ruleset.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/put-query-ruleset.html | Elasticsearch API documentation}
     */
   async putRuleset (this: That, params: T.QueryRulesPutRulesetRequest | TB.QueryRulesPutRulesetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesPutRulesetResponse>

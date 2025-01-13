@@ -86,7 +86,7 @@ export default class Sql {
   }
 
   /**
-    * Delete an async SQL search. Delete an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it.
+    * Delete an async SQL search. Delete an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it. If the Elasticsearch security features are enabled, only the following users can use this API to delete a search: * Users with the `cancel_task` cluster privilege. * The user who first submitted the search.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/delete-async-sql-search-api.html | Elasticsearch API documentation}
     */
   async deleteAsync (this: That, params: T.SqlDeleteAsyncRequest | TB.SqlDeleteAsyncRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlDeleteAsyncResponse>
@@ -118,7 +118,7 @@ export default class Sql {
   }
 
   /**
-    * Get async SQL search results. Get the current status and available results for an async SQL search or stored synchronous SQL search.
+    * Get async SQL search results. Get the current status and available results for an async SQL search or stored synchronous SQL search. If the Elasticsearch security features are enabled, only the user who first submitted the SQL search can retrieve the search using this API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-async-sql-search-api.html | Elasticsearch API documentation}
     */
   async getAsync (this: That, params: T.SqlGetAsyncRequest | TB.SqlGetAsyncRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlGetAsyncResponse>
@@ -190,7 +190,7 @@ export default class Sql {
   async query (this: That, params?: T.SqlQueryRequest | TB.SqlQueryRequest, options?: TransportRequestOptions): Promise<T.SqlQueryResponse>
   async query (this: That, params?: T.SqlQueryRequest | TB.SqlQueryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['catalog', 'columnar', 'cursor', 'fetch_size', 'filter', 'query', 'request_timeout', 'page_timeout', 'time_zone', 'field_multi_value_leniency', 'runtime_mappings', 'wait_for_completion_timeout', 'params', 'keep_alive', 'keep_on_completion', 'index_using_frozen']
+    const acceptedBody: string[] = ['allow_partial_search_results', 'catalog', 'columnar', 'cursor', 'fetch_size', 'field_multi_value_leniency', 'filter', 'index_using_frozen', 'keep_alive', 'keep_on_completion', 'page_timeout', 'params', 'query', 'request_timeout', 'runtime_mappings', 'time_zone', 'wait_for_completion_timeout']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -224,7 +224,7 @@ export default class Sql {
   }
 
   /**
-    * Translate SQL into Elasticsearch queries. Translate an SQL search into a search API request containing Query DSL.
+    * Translate SQL into Elasticsearch queries. Translate an SQL search into a search API request containing Query DSL. It accepts the same request body parameters as the SQL search API, excluding `cursor`.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/sql-translate-api.html | Elasticsearch API documentation}
     */
   async translate (this: That, params: T.SqlTranslateRequest | TB.SqlTranslateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlTranslateResponse>
