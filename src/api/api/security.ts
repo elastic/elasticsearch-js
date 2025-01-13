@@ -198,22 +198,34 @@ export default class Security {
   }
 
   /**
-    * Updates the attributes of multiple existing API keys.
+    * Bulk update API keys. Update the attributes for multiple API keys. IMPORTANT: It is not possible to use an API key as the authentication credential for this API. To update API keys, the owner user's credentials are required. This API is similar to the update API key API but enables you to apply the same update to multiple API keys in one API call. This operation can greatly improve performance over making individual updates. It is not possible to update expired or invalidated API keys. This API supports updates to API key access scope, metadata and expiration. The access scope of each API key is derived from the `role_descriptors` you specify in the request and a snapshot of the owner user's permissions at the time of the request. The snapshot of the owner's permissions is updated automatically on every call. IMPORTANT: If you don't specify `role_descriptors` in the request, a call to this API might still change an API key's access scope. This change can occur if the owner user's permissions have changed since the API key was created or last modified. A successful request returns a JSON structure that contains the IDs of all updated API keys, the IDs of API keys that already had the requested changes and did not require an update, and error details for any failed update.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/security-api-bulk-update-api-keys.html | Elasticsearch API documentation}
     */
-  async bulkUpdateApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async bulkUpdateApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async bulkUpdateApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async bulkUpdateApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async bulkUpdateApiKeys (this: That, params: T.SecurityBulkUpdateApiKeysRequest | TB.SecurityBulkUpdateApiKeysRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityBulkUpdateApiKeysResponse>
+  async bulkUpdateApiKeys (this: That, params: T.SecurityBulkUpdateApiKeysRequest | TB.SecurityBulkUpdateApiKeysRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityBulkUpdateApiKeysResponse, unknown>>
+  async bulkUpdateApiKeys (this: That, params: T.SecurityBulkUpdateApiKeysRequest | TB.SecurityBulkUpdateApiKeysRequest, options?: TransportRequestOptions): Promise<T.SecurityBulkUpdateApiKeysResponse>
+  async bulkUpdateApiKeys (this: That, params: T.SecurityBulkUpdateApiKeysRequest | TB.SecurityBulkUpdateApiKeysRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['expiration', 'ids', 'metadata', 'role_descriptors']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -560,6 +572,47 @@ export default class Security {
         service: params.service,
         name: params.name
       }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Delegate PKI authentication. This API implements the exchange of an X509Certificate chain for an Elasticsearch access token. The certificate chain is validated, according to RFC 5280, by sequentially considering the trust configuration of every installed PKI realm that has `delegation.enabled` set to `true`. A successfully trusted client certificate is also subject to the validation of the subject distinguished name according to thw `username_pattern` of the respective realm. This API is called by smart and trusted proxies, such as Kibana, which terminate the user's TLS session but still want to authenticate the user by using a PKI realm—-as if the user connected directly to Elasticsearch. IMPORTANT: The association between the subject public key in the target certificate and the corresponding private key is not validated. This is part of the TLS authentication process and it is delegated to the proxy that calls this API. The proxy is trusted to have performed the TLS authentication and this API translates that authentication into an Elasticsearch access token.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/security-api-delegate-pki-authentication.html | Elasticsearch API documentation}
+    */
+  async delegatePki (this: That, params: T.SecurityDelegatePkiRequest | TB.SecurityDelegatePkiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDelegatePkiResponse>
+  async delegatePki (this: That, params: T.SecurityDelegatePkiRequest | TB.SecurityDelegatePkiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDelegatePkiResponse, unknown>>
+  async delegatePki (this: That, params: T.SecurityDelegatePkiRequest | TB.SecurityDelegatePkiRequest, options?: TransportRequestOptions): Promise<T.SecurityDelegatePkiResponse>
+  async delegatePki (this: That, params: T.SecurityDelegatePkiRequest | TB.SecurityDelegatePkiRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['x509_certificate_chain']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = '/_security/delegate_pki'
+    const meta: TransportRequestMetadata = {
+      name: 'security.delegate_pki'
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
