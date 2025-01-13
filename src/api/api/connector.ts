@@ -717,22 +717,34 @@ export default class Connector {
   }
 
   /**
-    * Updates the stats fields in the connector sync job document.
+    * Set the connector sync job stats. Stats include: `deleted_document_count`, `indexed_document_count`, `indexed_document_volume`, and `total_document_count`. You can also update `last_seen`. This API is mainly used by the connector service for updating sync job information. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/set-connector-sync-job-stats-api.html | Elasticsearch API documentation}
     */
-  async syncJobUpdateStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async syncJobUpdateStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async syncJobUpdateStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async syncJobUpdateStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest | TB.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobUpdateStatsResponse>
+  async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest | TB.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobUpdateStatsResponse, unknown>>
+  async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest | TB.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobUpdateStatsResponse>
+  async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest | TB.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['connector_sync_job_id']
+    const acceptedBody: string[] = ['deleted_document_count', 'indexed_document_count', 'indexed_document_volume', 'last_seen', 'metadata', 'total_document_count']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
