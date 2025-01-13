@@ -17,13 +17,10 @@
       ]
     },
     {
-      "matchPackageNames": [
-        "node"
-      ],
       "matchManagers": [
         "dockerfile"
       ],
-      "enabled": false
+      "pinDigests": false
     }
   ]
 }
