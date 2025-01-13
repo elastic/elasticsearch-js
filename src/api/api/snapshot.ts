@@ -77,7 +77,7 @@ export default class Snapshot {
 
   /**
     * Clone a snapshot. Clone part of all of a snapshot into another snapshot in the same repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clone-snapshot-api.html | Elasticsearch API documentation}
     */
   async clone (this: That, params: T.SnapshotCloneRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCloneResponse>
   async clone (this: That, params: T.SnapshotCloneRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCloneResponse, unknown>>
@@ -115,14 +115,14 @@ export default class Snapshot {
 
   /**
     * Create a snapshot. Take a snapshot of a cluster or of data streams and indices.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/create-snapshot-api.html | Elasticsearch API documentation}
     */
   async create (this: That, params: T.SnapshotCreateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateResponse>
   async create (this: That, params: T.SnapshotCreateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateResponse, unknown>>
   async create (this: That, params: T.SnapshotCreateRequest, options?: TransportRequestOptions): Promise<T.SnapshotCreateResponse>
   async create (this: That, params: T.SnapshotCreateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedBody: string[] = ['ignore_unavailable', 'include_global_state', 'indices', 'feature_states', 'metadata', 'partial']
+    const acceptedBody: string[] = ['expand_wildcards', 'feature_states', 'ignore_unavailable', 'include_global_state', 'indices', 'metadata', 'partial']
     const querystring: Record<string, any> = {}
     const body: Record<string, any> = {}
 
@@ -151,8 +151,8 @@ export default class Snapshot {
   }
 
   /**
-    * Create or update a snapshot repository. IMPORTANT: If you are migrating searchable snapshots, the repository name must be identical in the source and destination clusters. To register a snapshot repository, the cluster's global metadata must be writeable. Ensure there are no cluster blocks (for example, `cluster.blocks.read_only` and `clsuter.blocks.read_only_allow_delete` settings) that prevent write access.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * Create or update a snapshot repository. IMPORTANT: If you are migrating searchable snapshots, the repository name must be identical in the source and destination clusters. To register a snapshot repository, the cluster's global metadata must be writeable. Ensure there are no cluster blocks (for example, `cluster.blocks.read_only` and `clsuter.blocks.read_only_allow_delete` settings) that prevent write access. Several options for this API can be specified using a query parameter or a request body parameter. If both parameters are specified, only the query parameter is used.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-snapshot-repo-api.html | Elasticsearch API documentation}
     */
   async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateRepositoryResponse>
   async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateRepositoryResponse, unknown>>
@@ -188,7 +188,7 @@ export default class Snapshot {
 
   /**
     * Delete snapshots.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-snapshot-api.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.SnapshotDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteResponse>
   async delete (this: That, params: T.SnapshotDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteResponse, unknown>>
@@ -221,7 +221,7 @@ export default class Snapshot {
 
   /**
     * Delete snapshot repositories. When a repository is unregistered, Elasticsearch removes only the reference to the location where the repository is storing the snapshots. The snapshots themselves are left untouched and in place.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-snapshot-repo-api.html | Elasticsearch API documentation}
     */
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteRepositoryResponse>
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteRepositoryResponse, unknown>>
@@ -252,8 +252,8 @@ export default class Snapshot {
   }
 
   /**
-    * Get snapshot information.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * Get snapshot information. NOTE: The `after` parameter and `next` field enable you to iterate through snapshots with some consistency guarantees regarding concurrent creation or deletion of snapshots. It is guaranteed that any snapshot that exists at the beginning of the iteration and is not concurrently deleted will be seen during the iteration. Snapshots concurrently created may be seen during an iteration.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-snapshot-api.html | Elasticsearch API documentation}
     */
   async get (this: That, params: T.SnapshotGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetResponse>
   async get (this: That, params: T.SnapshotGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetResponse, unknown>>
@@ -286,7 +286,7 @@ export default class Snapshot {
 
   /**
     * Get snapshot repository information.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-snapshot-repo-api.html | Elasticsearch API documentation}
     */
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetRepositoryResponse>
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetRepositoryResponse, unknown>>
@@ -357,8 +357,8 @@ export default class Snapshot {
   }
 
   /**
-    * Verify the repository integrity. Verify the integrity of the contents of a snapshot repository. This API enables you to perform a comprehensive check of the contents of a repository, looking for any anomalies in its data or metadata which might prevent you from restoring snapshots from the repository or which might cause future snapshot create or delete operations to fail. If you suspect the integrity of the contents of one of your snapshot repositories, cease all write activity to this repository immediately, set its `read_only` option to `true`, and use this API to verify its integrity. Until you do so: * It may not be possible to restore some snapshots from this repository. * Searchable snapshots may report errors when searched or may have unassigned shards. * Taking snapshots into this repository may fail or may appear to succeed but have created a snapshot which cannot be restored. * Deleting snapshots from this repository may fail or may appear to succeed but leave the underlying data on disk. * Continuing to write to the repository while it is in an invalid state may causing additional damage to its contents. If the API finds any problems with the integrity of the contents of your repository, Elasticsearch will not be able to repair the damage. The only way to bring the repository back into a fully working state after its contents have been damaged is by restoring its contents from a repository backup which was taken before the damage occurred. You must also identify what caused the damage and take action to prevent it from happening again. If you cannot restore a repository backup, register a new repository and use this for all future snapshot operations. In some cases it may be possible to recover some of the contents of a damaged repository, either by restoring as many of its snapshots as needed and taking new snapshots of the restored data, or by using the reindex API to copy data from any searchable snapshots mounted from the damaged repository. Avoid all operations which write to the repository while the verify repository integrity API is running. If something changes the repository contents while an integrity verification is running then Elasticsearch may incorrectly report having detected some anomalies in its contents due to the concurrent writes. It may also incorrectly fail to report some anomalies that the concurrent writes prevented it from detecting. NOTE: This API is intended for exploratory use by humans. You should expect the request parameters and the response format to vary in future versions. NOTE: This API may not work correctly in a mixed-version cluster.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * Verify the repository integrity. Verify the integrity of the contents of a snapshot repository. This API enables you to perform a comprehensive check of the contents of a repository, looking for any anomalies in its data or metadata which might prevent you from restoring snapshots from the repository or which might cause future snapshot create or delete operations to fail. If you suspect the integrity of the contents of one of your snapshot repositories, cease all write activity to this repository immediately, set its `read_only` option to `true`, and use this API to verify its integrity. Until you do so: * It may not be possible to restore some snapshots from this repository. * Searchable snapshots may report errors when searched or may have unassigned shards. * Taking snapshots into this repository may fail or may appear to succeed but have created a snapshot which cannot be restored. * Deleting snapshots from this repository may fail or may appear to succeed but leave the underlying data on disk. * Continuing to write to the repository while it is in an invalid state may causing additional damage to its contents. If the API finds any problems with the integrity of the contents of your repository, Elasticsearch will not be able to repair the damage. The only way to bring the repository back into a fully working state after its contents have been damaged is by restoring its contents from a repository backup which was taken before the damage occurred. You must also identify what caused the damage and take action to prevent it from happening again. If you cannot restore a repository backup, register a new repository and use this for all future snapshot operations. In some cases it may be possible to recover some of the contents of a damaged repository, either by restoring as many of its snapshots as needed and taking new snapshots of the restored data, or by using the reindex API to copy data from any searchable snapshots mounted from the damaged repository. Avoid all operations which write to the repository while the verify repository integrity API is running. If something changes the repository contents while an integrity verification is running then Elasticsearch may incorrectly report having detected some anomalies in its contents due to the concurrent writes. It may also incorrectly fail to report some anomalies that the concurrent writes prevented it from detecting. NOTE: This API is intended for exploratory use by humans. You should expect the request parameters and the response format to vary in future versions. NOTE: This API may not work correctly in a mixed-version cluster. The default values for the parameters of this API are designed to limit the impact of the integrity verification on other activities in your cluster. For instance, by default it will only use at most half of the `snapshot_meta` threads to verify the integrity of each snapshot, allowing other snapshot operations to use the other half of this thread pool. If you modify these parameters to speed up the verification process, you risk disrupting other snapshot-related operations in your cluster. For large repositories, consider setting up a separate single-node Elasticsearch cluster just for running the integrity verification API. The response exposes implementation details of the analysis which may change from version to version. The response body format is therefore not considered stable and may be different in newer versions.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/verify-repo-integrity-api.html | Elasticsearch API documentation}
     */
   async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRepositoryVerifyIntegrityResponse>
   async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRepositoryVerifyIntegrityResponse, unknown>>
@@ -390,7 +390,7 @@ export default class Snapshot {
 
   /**
     * Restore a snapshot. Restore a snapshot of a cluster or data streams and indices. You can restore a snapshot only to a running cluster with an elected master node. The snapshot repository must be registered and available to the cluster. The snapshot and cluster versions must be compatible. To restore a snapshot, the cluster's global metadata must be writable. Ensure there are't any cluster blocks that prevent writes. The restore operation ignores index blocks. Before you restore a data stream, ensure the cluster contains a matching index template with data streams enabled. To check, use the index management feature in Kibana or the get index template API: ``` GET _index_template/*?filter_path=index_templates.name,index_templates.index_template.index_patterns,index_templates.index_template.data_stream ``` If no such template exists, you can create one or restore a cluster state that contains one. Without a matching index template, a data stream can't roll over or create backing indices. If your snapshot contains data from App Search or Workplace Search, you must restore the Enterprise Search encryption key before you restore the snapshot.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/restore-snapshot-api.html | Elasticsearch API documentation}
     */
   async restore (this: That, params: T.SnapshotRestoreRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRestoreResponse>
   async restore (this: That, params: T.SnapshotRestoreRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRestoreResponse, unknown>>
@@ -426,8 +426,8 @@ export default class Snapshot {
   }
 
   /**
-    * Get the snapshot status. Get a detailed description of the current state for each shard participating in the snapshot. Note that this API should be used only to obtain detailed shard-level information for ongoing snapshots. If this detail is not needed or you want to obtain information about one or more existing snapshots, use the get snapshot API. WARNING: Using the API to return the status of any snapshots other than currently running snapshots can be expensive. The API requires a read from the repository for each shard in each snapshot. For example, if you have 100 snapshots with 1,000 shards each, an API request that includes all snapshots will require 100,000 reads (100 snapshots x 1,000 shards). Depending on the latency of your storage, such requests can take an extremely long time to return results. These requests can also tax machine resources and, when using cloud storage, incur high processing costs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * Get the snapshot status. Get a detailed description of the current state for each shard participating in the snapshot. Note that this API should be used only to obtain detailed shard-level information for ongoing snapshots. If this detail is not needed or you want to obtain information about one or more existing snapshots, use the get snapshot API. If you omit the `<snapshot>` request path parameter, the request retrieves information only for currently running snapshots. This usage is preferred. If needed, you can specify `<repository>` and `<snapshot>` to retrieve information for specific snapshots, even if they're not currently running. WARNING: Using the API to return the status of any snapshots other than currently running snapshots can be expensive. The API requires a read from the repository for each shard in each snapshot. For example, if you have 100 snapshots with 1,000 shards each, an API request that includes all snapshots will require 100,000 reads (100 snapshots x 1,000 shards). Depending on the latency of your storage, such requests can take an extremely long time to return results. These requests can also tax machine resources and, when using cloud storage, incur high processing costs.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-snapshot-status-api.html | Elasticsearch API documentation}
     */
   async status (this: That, params?: T.SnapshotStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotStatusResponse>
   async status (this: That, params?: T.SnapshotStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotStatusResponse, unknown>>
@@ -471,7 +471,7 @@ export default class Snapshot {
 
   /**
     * Verify a snapshot repository. Check for common misconfigurations in a snapshot repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/verify-snapshot-repo-api.html | Elasticsearch API documentation}
     */
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotVerifyRepositoryResponse>
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotVerifyRepositoryResponse, unknown>>

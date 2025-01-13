@@ -77,7 +77,7 @@ export default class Indices {
   }
 
   /**
-    * Get tokens from text analysis. The analyze API performs [analysis](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis.html) on a text string and returns the resulting tokens.
+    * Get tokens from text analysis. The analyze API performs analysis on a text string and returns the resulting tokens. Generating excessive amount of tokens may cause a node to run out of memory. The `index.analyze.max_token_count` setting enables you to limit the number of tokens that can be produced. If more than this limit of tokens gets generated, an error occurs. The `_analyze` endpoint without a specified index will always use `10000` as its limit.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html | Elasticsearch API documentation}
     */
   async analyze (this: That, params?: T.IndicesAnalyzeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesAnalyzeResponse>
@@ -121,7 +121,7 @@ export default class Indices {
   }
 
   /**
-    * Clear the cache. Clear the cache of one or more indices. For data streams, the API clears the caches of the stream's backing indices.
+    * Clear the cache. Clear the cache of one or more indices. For data streams, the API clears the caches of the stream's backing indices. By default, the clear cache API clears all caches. To clear only specific caches, use the `fielddata`, `query`, or `request` parameters. To clear the cache only of specific fields, use the `fields` parameter.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html | Elasticsearch API documentation}
     */
   async clearCache (this: That, params?: T.IndicesClearCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesClearCacheResponse>
@@ -161,7 +161,7 @@ export default class Indices {
   }
 
   /**
-    * Clone an index. Clone an existing index into a new index. Each original primary shard is cloned into a new primary shard in the new index. IMPORTANT: Elasticsearch does not apply index templates to the resulting index. The API also does not copy index metadata from the original index. Index metadata includes aliases, index lifecycle management phase definitions, and cross-cluster replication (CCR) follower information. For example, if you clone a CCR follower index, the resulting clone will not be a follower index. The clone API copies most index settings from the source index to the resulting index, with the exception of `index.number_of_replicas` and `index.auto_expand_replicas`. To set the number of replicas in the resulting index, configure these settings in the clone request. Cloning works as follows: * First, it creates a new target index with the same definition as the source index. * Then it hard-links segments from the source index into the target index. If the file system does not support hard-linking, all segments are copied into the new index, which is a much more time consuming process. * Finally, it recovers the target index as though it were a closed index which had just been re-opened. IMPORTANT: Indices can only be cloned if they meet the following requirements: * The target index must not exist. * The source index must have the same number of primary shards as the target index. * The node handling the clone process must have sufficient free disk space to accommodate a second copy of the existing index.
+    * Clone an index. Clone an existing index into a new index. Each original primary shard is cloned into a new primary shard in the new index. IMPORTANT: Elasticsearch does not apply index templates to the resulting index. The API also does not copy index metadata from the original index. Index metadata includes aliases, index lifecycle management phase definitions, and cross-cluster replication (CCR) follower information. For example, if you clone a CCR follower index, the resulting clone will not be a follower index. The clone API copies most index settings from the source index to the resulting index, with the exception of `index.number_of_replicas` and `index.auto_expand_replicas`. To set the number of replicas in the resulting index, configure these settings in the clone request. Cloning works as follows: * First, it creates a new target index with the same definition as the source index. * Then it hard-links segments from the source index into the target index. If the file system does not support hard-linking, all segments are copied into the new index, which is a much more time consuming process. * Finally, it recovers the target index as though it were a closed index which had just been re-opened. IMPORTANT: Indices can only be cloned if they meet the following requirements: * The index must be marked as read-only and have a cluster health status of green. * The target index must not exist. * The source index must have the same number of primary shards as the target index. * The node handling the clone process must have sufficient free disk space to accommodate a second copy of the existing index. The current write index on a data stream cannot be cloned. In order to clone the current write index, the data stream must first be rolled over so that a new write index is created and then the previous write index can be cloned. NOTE: Mappings cannot be specified in the `_clone` request. The mappings of the source index will be used for the target index. **Monitor the cloning process** The cloning process can be monitored with the cat recovery API or the cluster health API can be used to wait until all primary shards have been allocated by setting the `wait_for_status` parameter to `yellow`. The `_clone` API returns as soon as the target index has been added to the cluster state, before any shards have been allocated. At this point, all shards are in the state unassigned. If, for any reason, the target index can't be allocated, its primary shard will remain unassigned until it can be allocated on that node. Once the primary shard is allocated, it moves to state initializing, and the clone process begins. When the clone operation completes, the shard will become active. At that point, Elasticsearch will try to allocate any replicas and may decide to relocate the primary shard to another node. **Wait for active shards** Because the clone operation creates a new index to clone the shards to, the wait for active shards setting on index creation applies to the clone index action as well.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clone-index.html | Elasticsearch API documentation}
     */
   async clone (this: That, params: T.IndicesCloneRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCloneResponse>
@@ -230,7 +230,7 @@ export default class Indices {
   }
 
   /**
-    * Create an index. Creates a new index.
+    * Create an index. You can use the create index API to add a new index to an Elasticsearch cluster. When creating an index, you can specify the following: * Settings for the index. * Mappings for fields in the index. * Index aliases **Wait for active shards** By default, index creation will only return a response to the client when the primary copies of each shard have been started, or the request times out. The index creation response will indicate what happened. For example, `acknowledged` indicates whether the index was successfully created in the cluster, `while shards_acknowledged` indicates whether the requisite number of shard copies were started for each shard in the index before timing out. Note that it is still possible for either `acknowledged` or `shards_acknowledged` to be `false`, but for the index creation to be successful. These values simply indicate whether the operation completed before the timeout. If `acknowledged` is false, the request timed out before the cluster state was updated with the newly created index, but it probably will be created sometime soon. If `shards_acknowledged` is false, then the request timed out before the requisite number of shards were started (by default just the primaries), even if the cluster state was successfully updated to reflect the newly created index (that is to say, `acknowledged` is `true`). You can change the default of only waiting for the primary shards to start through the index setting `index.write.wait_for_active_shards`. Note that changing this setting will also affect the `wait_for_active_shards` value on all subsequent write operations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html | Elasticsearch API documentation}
     */
   async create (this: That, params: T.IndicesCreateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateResponse>
@@ -338,7 +338,7 @@ export default class Indices {
   }
 
   /**
-    * Delete indices. Deletes one or more indices.
+    * Delete indices. Deleting an index deletes its documents, shards, and metadata. It does not delete related Kibana components, such as data views, visualizations, or dashboards. You cannot delete the current write index of a data stream. To delete the index, you must roll over the data stream so a new write index is created. You can then use the delete index API to delete the previous write index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.IndicesDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteResponse>
@@ -371,7 +371,7 @@ export default class Indices {
 
   /**
     * Delete an alias. Removes a data stream or index from an alias.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-alias.html | Elasticsearch API documentation}
     */
   async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteAliasResponse>
   async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteAliasResponse, unknown>>
@@ -506,7 +506,7 @@ export default class Indices {
   }
 
   /**
-    * Deletes a legacy index template.
+    * Delete a legacy index template.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-template-v1.html | Elasticsearch API documentation}
     */
   async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteTemplateResponse>
@@ -538,7 +538,7 @@ export default class Indices {
   }
 
   /**
-    * Analyze the index disk usage. Analyze the disk usage of each field of an index or data stream. This API might not support indices created in previous Elasticsearch versions. The result of a small index can be inaccurate as some parts of an index might not be analyzed by the API.
+    * Analyze the index disk usage. Analyze the disk usage of each field of an index or data stream. This API might not support indices created in previous Elasticsearch versions. The result of a small index can be inaccurate as some parts of an index might not be analyzed by the API. NOTE: The total size of fields of the analyzed shards of the index in the response is usually smaller than the index `store_size` value because some small metadata files are ignored and some parts of data files might not be scanned by the API. Since stored fields are stored together in a compressed format, the sizes of stored fields are also estimates and can be inaccurate. The stored size of the `_id` field is likely underestimated while the `_source` field is overestimated.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-disk-usage.html | Elasticsearch API documentation}
     */
   async diskUsage (this: That, params: T.IndicesDiskUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDiskUsageResponse>
@@ -607,7 +607,7 @@ export default class Indices {
   }
 
   /**
-    * Check indices. Checks if one or more indices, index aliases, or data streams exist.
+    * Check indices. Check if one or more indices, index aliases, or data streams exist.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html | Elasticsearch API documentation}
     */
   async exists (this: That, params: T.IndicesExistsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsResponse>
@@ -711,7 +711,7 @@ export default class Indices {
   }
 
   /**
-    * Check existence of index templates. Returns information about whether a particular index template exists.
+    * Check existence of index templates. Get information about whether index templates exist. Index templates define settings, mappings, and aliases that can be applied automatically to new indices. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-template-exists-v1.html | Elasticsearch API documentation}
     */
   async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsTemplateResponse>
@@ -775,7 +775,7 @@ export default class Indices {
   }
 
   /**
-    * Get field usage stats. Get field usage information for each shard and field of an index. Field usage statistics are automatically captured when queries are running on a cluster. A shard-level search request that accesses a given field, even if multiple times during that request, is counted as a single use.
+    * Get field usage stats. Get field usage information for each shard and field of an index. Field usage statistics are automatically captured when queries are running on a cluster. A shard-level search request that accesses a given field, even if multiple times during that request, is counted as a single use. The response body reports the per-shard usage count of the data structures that back the fields in the index. A given request will increment each count by a maximum value of 1, even if the request accesses the same field multiple times.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/field-usage-stats.html | Elasticsearch API documentation}
     */
   async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesFieldUsageStatsResponse>
@@ -847,7 +847,7 @@ export default class Indices {
   }
 
   /**
-    * Force a merge. Perform the force merge operation on the shards of one or more indices. For data streams, the API forces a merge on the shards of the stream's backing indices. Merging reduces the number of segments in each shard by merging some of them together and also frees up the space used by deleted documents. Merging normally happens automatically, but sometimes it is useful to trigger a merge manually. WARNING: We recommend force merging only a read-only index (meaning the index is no longer receiving writes). When documents are updated or deleted, the old version is not immediately removed but instead soft-deleted and marked with a "tombstone". These soft-deleted documents are automatically cleaned up during regular segment merges. But force merge can cause very large (greater than 5 GB) segments to be produced, which are not eligible for regular merges. So the number of soft-deleted documents can then grow rapidly, resulting in higher disk usage and worse search performance. If you regularly force merge an index receiving writes, this can also make snapshots more expensive, since the new documents can't be backed up incrementally.
+    * Force a merge. Perform the force merge operation on the shards of one or more indices. For data streams, the API forces a merge on the shards of the stream's backing indices. Merging reduces the number of segments in each shard by merging some of them together and also frees up the space used by deleted documents. Merging normally happens automatically, but sometimes it is useful to trigger a merge manually. WARNING: We recommend force merging only a read-only index (meaning the index is no longer receiving writes). When documents are updated or deleted, the old version is not immediately removed but instead soft-deleted and marked with a "tombstone". These soft-deleted documents are automatically cleaned up during regular segment merges. But force merge can cause very large (greater than 5 GB) segments to be produced, which are not eligible for regular merges. So the number of soft-deleted documents can then grow rapidly, resulting in higher disk usage and worse search performance. If you regularly force merge an index receiving writes, this can also make snapshots more expensive, since the new documents can't be backed up incrementally. **Blocks during a force merge** Calls to this API block until the merge is complete (unless request contains `wait_for_completion=false`). If the client connection is lost before completion then the force merge process will continue in the background. Any new requests to force merge the same indices will also block until the ongoing force merge is complete. **Running force merge asynchronously** If the request contains `wait_for_completion=false`, Elasticsearch performs some preflight checks, launches the request, and returns a task you can use to get the status of the task. However, you can not cancel this task as the force merge task is not cancelable. Elasticsearch creates a record of this task as a document at `_tasks/<task_id>`. When you are done with a task, you should delete the task document so Elasticsearch can reclaim the space. **Force merging multiple indices** You can force merge multiple indices with a single request by targeting: * One or more data streams that contain multiple backing indices * Multiple indices * One or more aliases * All data streams and indices in a cluster Each targeted shard is force-merged separately using the force_merge threadpool. By default each node only has a single `force_merge` thread which means that the shards on that node are force-merged one at a time. If you expand the `force_merge` threadpool on a node then it will force merge its shards in parallel Force merge makes the storage for the shard being merged temporarily increase, as it may require free space up to triple its size in case `max_num_segments parameter` is set to `1`, to rewrite all segments into a new one. **Data streams and time-based indices** Force-merging is useful for managing a data stream's older backing indices and other time-based indices, particularly after a rollover. In these cases, each index only receives indexing traffic for a certain period of time. Once an index receive no more writes, its shards can be force-merged to a single segment. This can be a good idea because single-segment shards can sometimes use simpler and more efficient data structures to perform searches. For example: ``` POST /.ds-my-data-stream-2099.03.07-000001/_forcemerge?max_num_segments=1 ```
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html | Elasticsearch API documentation}
     */
   async forcemerge (this: That, params?: T.IndicesForcemergeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesForcemergeResponse>
@@ -887,7 +887,7 @@ export default class Indices {
   }
 
   /**
-    * Get index information. Returns information about one or more indices. For data streams, the API returns information about the stream’s backing indices.
+    * Get index information. Get information about one or more indices. For data streams, the API returns information about the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html | Elasticsearch API documentation}
     */
   async get (this: That, params: T.IndicesGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetResponse>
@@ -920,7 +920,6 @@ export default class Indices {
 
   /**
     * Get aliases. Retrieves information for one or more data stream or index aliases.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html | Elasticsearch API documentation}
     */
   async getAlias (this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetAliasResponse>
   async getAlias (this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetAliasResponse, unknown>>
@@ -998,6 +997,36 @@ export default class Indices {
   }
 
   /**
+    * Get data stream lifecycle stats. Get statistics about the data streams that are managed by a data stream lifecycle.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams-get-lifecycle-stats.html | Elasticsearch API documentation}
+    */
+  async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataLifecycleStatsResponse>
+  async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataLifecycleStatsResponse, unknown>>
+  async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataLifecycleStatsResponse>
+  async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = '/_lifecycle/stats'
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_data_lifecycle_stats'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Get data streams. Retrieves information about one or more data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
     */
@@ -1038,7 +1067,7 @@ export default class Indices {
   }
 
   /**
-    * Get mapping definitions. Retrieves mapping definitions for one or more fields. For data streams, the API retrieves field mappings for the stream’s backing indices.
+    * Get mapping definitions. Retrieves mapping definitions for one or more fields. For data streams, the API retrieves field mappings for the stream’s backing indices. This API is useful if you don't need a complete mapping or if an index mapping contains a large number of fields.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html | Elasticsearch API documentation}
     */
   async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetFieldMappingResponse>
@@ -1078,7 +1107,7 @@ export default class Indices {
   }
 
   /**
-    * Get index templates. Returns information about one or more index templates.
+    * Get index templates. Get information about one or more index templates.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-template.html | Elasticsearch API documentation}
     */
   async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetIndexTemplateResponse>
@@ -1118,7 +1147,7 @@ export default class Indices {
   }
 
   /**
-    * Get mapping definitions. Retrieves mapping definitions for one or more indices. For data streams, the API retrieves mappings for the stream’s backing indices.
+    * Get mapping definitions. For data streams, the API retrieves mappings for the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html | Elasticsearch API documentation}
     */
   async getMapping (this: That, params?: T.IndicesGetMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetMappingResponse>
@@ -1158,7 +1187,7 @@ export default class Indices {
   }
 
   /**
-    * Get index settings. Returns setting information for one or more indices. For data streams, returns setting information for the stream’s backing indices.
+    * Get index settings. Get setting information for one or more indices. For data streams, it returns setting information for the stream's backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-settings.html | Elasticsearch API documentation}
     */
   async getSettings (this: That, params?: T.IndicesGetSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSettingsResponse>
@@ -1205,7 +1234,7 @@ export default class Indices {
   }
 
   /**
-    * Get index templates. Retrieves information about one or more index templates.
+    * Get index templates. Get information about one or more index templates. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-template-v1.html | Elasticsearch API documentation}
     */
   async getTemplate (this: That, params?: T.IndicesGetTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetTemplateResponse>
@@ -1310,7 +1339,7 @@ export default class Indices {
   }
 
   /**
-    * Opens a closed index. For data streams, the API opens any closed backing indices.
+    * Open a closed index. For data streams, the API opens any closed backing indices. A closed index is blocked for read/write operations and does not allow all operations that opened indices allow. It is not possible to index documents or to search for documents in a closed index. This allows closed indices to not have to maintain internal data structures for indexing or searching documents, resulting in a smaller overhead on the cluster. When opening or closing an index, the master is responsible for restarting the index shards to reflect the new state of the index. The shards will then go through the normal recovery process. The data of opened or closed indices is automatically replicated by the cluster to ensure that enough shard copies are safely kept around at all times. You can open and close multiple indices. An error is thrown if the request explicitly refers to a missing index. This behavior can be turned off by using the `ignore_unavailable=true` parameter. By default, you must explicitly name the indices you are opening or closing. To open or close indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`. This setting can also be changed with the cluster update settings API. Closed indices consume a significant amount of disk-space which can cause problems in managed environments. Closing indices can be turned off with the cluster settings API by setting `cluster.indices.close.enable` to `false`. Because opening or closing an index allocates its shards, the `wait_for_active_shards` setting on index creation applies to the `_open` and `_close` index actions as well.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html | Elasticsearch API documentation}
     */
   async open (this: That, params: T.IndicesOpenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesOpenResponse>
@@ -1454,7 +1483,7 @@ export default class Indices {
   }
 
   /**
-    * Create or update an index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
+    * Create or update an index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices. Elasticsearch applies templates to new indices based on an wildcard pattern that matches the index name. Index templates are applied during data stream or index creation. For data streams, these settings and mappings are applied when the stream's backing indices are created. Settings and mappings specified in a create index API request override any settings or mappings specified in an index template. Changes to index templates do not affect existing indices, including the existing backing indices of a data stream. You can use C-style `/* *\/` block comments in index templates. You can include comments anywhere in the request body, except before the opening curly bracket. **Multiple matching templates** If multiple index templates match the name of a new index or data stream, the template with the highest priority is used. Multiple templates with overlapping index patterns at the same priority are not allowed and an error will be thrown when attempting to create a template matching an existing index template at identical priorities. **Composing aliases, mappings, and settings** When multiple component templates are specified in the `composed_of` field for an index template, they are merged in the order specified, meaning that later component templates override earlier component templates. Any mappings, settings, or aliases from the parent index template are merged in next. Finally, any configuration on the index request itself is merged. Mapping definitions are merged recursively, which means that later mapping components can introduce new field mappings and update the mapping configuration. If a field mapping is already contained in an earlier component, its definition will be completely overwritten by the later one. This recursive merging strategy applies not only to field mappings, but also root options like `dynamic_templates` and `meta`. If an earlier component contains a `dynamic_templates` block, then by default new `dynamic_templates` entries are appended onto the end. If an entry already exists with the same key, then it is overwritten by the new definition.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-template.html | Elasticsearch API documentation}
     */
   async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutIndexTemplateResponse>
@@ -1490,7 +1519,7 @@ export default class Indices {
   }
 
   /**
-    * Update field mappings. Adds new fields to an existing data stream or index. You can also use this API to change the search settings of existing fields. For data streams, these changes are applied to all backing indices by default.
+    * Update field mappings. Add new fields to an existing data stream or index. You can also use this API to change the search settings of existing fields and add new properties to existing object fields. For data streams, these changes are applied to all backing indices by default. **Add multi-fields to an existing field** Multi-fields let you index the same field in different ways. You can use this API to update the fields mapping parameter and enable multi-fields for an existing field. WARNING: If an index (or data stream) contains documents when you add a multi-field, those documents will not have values for the new multi-field. You can populate the new multi-field with the update by query API. **Change supported mapping parameters for an existing field** The documentation for each mapping parameter indicates whether you can update it for an existing field using this API. For example, you can use the update mapping API to update the `ignore_above` parameter. **Change the mapping of an existing field** Except for supported mapping parameters, you can't change the mapping or field type of an existing field. Changing an existing field could invalidate data that's already indexed. If you need to change the mapping of a field in a data stream's backing indices, refer to documentation about modifying data streams. If you need to change the mapping of a field in other indices, create a new index with the correct mapping and reindex your data into that index. **Rename a field** Renaming a field would invalidate data already indexed under the old field name. Instead, add an alias field to create an alternate field name.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html | Elasticsearch API documentation}
     */
   async putMapping (this: That, params: T.IndicesPutMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutMappingResponse>
@@ -1526,7 +1555,7 @@ export default class Indices {
   }
 
   /**
-    * Update index settings. Changes dynamic index settings in real time. For data streams, index setting changes are applied to all backing indices by default.
+    * Update index settings. Changes dynamic index settings in real time. For data streams, index setting changes are applied to all backing indices by default. To revert a setting to the default value, use a null value. The list of per-index settings that can be updated dynamically on live indices can be found in index module documentation. To preserve existing settings from being updated, set the `preserve_existing` parameter to `true`. NOTE: You can only define new analyzers on closed indices. To add an analyzer, you must close the index, define the analyzer, and reopen the index. You cannot close the write index of a data stream. To update the analyzer for a data stream's write index and future backing indices, update the analyzer in the index template used by the stream. Then roll over the data stream to apply the new analyzer to the stream's write index and future backing indices. This affects searches and any new data added to the stream after the rollover. However, it does not affect the data stream's backing indices or their existing data. To change the analyzer for existing backing indices, you must create a new data stream and reindex your data into it.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-settings.html | Elasticsearch API documentation}
     */
   async putSettings (this: That, params: T.IndicesPutSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutSettingsResponse>
@@ -1569,7 +1598,7 @@ export default class Indices {
   }
 
   /**
-    * Create or update an index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices. Elasticsearch applies templates to new indices based on an index pattern that matches the index name. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8. Composable templates always take precedence over legacy templates. If no composable template matches a new index, matching legacy templates are applied according to their order. Index templates are only applied during index creation. Changes to index templates do not affect existing indices. Settings and mappings specified in create index API requests override any settings or mappings specified in an index template.
+    * Create or update an index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices. Elasticsearch applies templates to new indices based on an index pattern that matches the index name. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8. Composable templates always take precedence over legacy templates. If no composable template matches a new index, matching legacy templates are applied according to their order. Index templates are only applied during index creation. Changes to index templates do not affect existing indices. Settings and mappings specified in create index API requests override any settings or mappings specified in an index template. You can use C-style `/* *\/` block comments in index templates. You can include comments anywhere in the request body, except before the opening curly bracket. **Indices matching multiple templates** Multiple index templates can potentially match an index, in this case, both the settings and mappings are merged into the final configuration of the index. The order of the merging can be controlled using the order parameter, with lower order being applied first, and higher orders overriding them. NOTE: Multiple matching templates with the same order value will result in a non-deterministic merging order.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates-v1.html | Elasticsearch API documentation}
     */
   async putTemplate (this: That, params: T.IndicesPutTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutTemplateResponse>
@@ -1605,7 +1634,7 @@ export default class Indices {
   }
 
   /**
-    * Get index recovery information. Get information about ongoing and completed shard recoveries for one or more indices. For data streams, the API returns information for the stream's backing indices. Shard recovery is the process of initializing a shard copy, such as restoring a primary shard from a snapshot or creating a replica shard from a primary shard. When a shard recovery completes, the recovered shard is available for search and indexing. Recovery automatically occurs during the following processes: * When creating an index for the first time. * When a node rejoins the cluster and starts up any missing primary shard copies using the data that it holds in its data path. * Creation of new replica shard copies from the primary. * Relocation of a shard copy to a different node in the same cluster. * A snapshot restore operation. * A clone, shrink, or split operation. You can determine the cause of a shard recovery using the recovery or cat recovery APIs. The index recovery API reports information about completed recoveries only for shard copies that currently exist in the cluster. It only reports the last recovery for each shard copy and does not report historical information about earlier recoveries, nor does it report information about the recoveries of shard copies that no longer exist. This means that if a shard copy completes a recovery and then Elasticsearch relocates it onto a different node then the information about the original recovery will not be shown in the recovery API.
+    * Get index recovery information. Get information about ongoing and completed shard recoveries for one or more indices. For data streams, the API returns information for the stream's backing indices. All recoveries, whether ongoing or complete, are kept in the cluster state and may be reported on at any time. Shard recovery is the process of initializing a shard copy, such as restoring a primary shard from a snapshot or creating a replica shard from a primary shard. When a shard recovery completes, the recovered shard is available for search and indexing. Recovery automatically occurs during the following processes: * When creating an index for the first time. * When a node rejoins the cluster and starts up any missing primary shard copies using the data that it holds in its data path. * Creation of new replica shard copies from the primary. * Relocation of a shard copy to a different node in the same cluster. * A snapshot restore operation. * A clone, shrink, or split operation. You can determine the cause of a shard recovery using the recovery or cat recovery APIs. The index recovery API reports information about completed recoveries only for shard copies that currently exist in the cluster. It only reports the last recovery for each shard copy and does not report historical information about earlier recoveries, nor does it report information about the recoveries of shard copies that no longer exist. This means that if a shard copy completes a recovery and then Elasticsearch relocates it onto a different node then the information about the original recovery will not be shown in the recovery API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-recovery.html | Elasticsearch API documentation}
     */
   async recovery (this: That, params?: T.IndicesRecoveryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRecoveryResponse>
@@ -1645,7 +1674,7 @@ export default class Indices {
   }
 
   /**
-    * Refresh an index. A refresh makes recent operations performed on one or more indices available for search. For data streams, the API runs the refresh operation on the stream’s backing indices.
+    * Refresh an index. A refresh makes recent operations performed on one or more indices available for search. For data streams, the API runs the refresh operation on the stream’s backing indices. By default, Elasticsearch periodically refreshes indices every second, but only on indices that have received one search request or more in the last 30 seconds. You can change this default interval with the `index.refresh_interval` setting. Refresh requests are synchronous and do not return a response until the refresh operation completes. Refreshes are resource-intensive. To ensure good cluster performance, it's recommended to wait for Elasticsearch's periodic refresh rather than performing an explicit refresh when possible. If your application workflow indexes documents and then runs a search to retrieve the indexed document, it's recommended to use the index API's `refresh=wait_for` query parameter option. This option ensures the indexing operation waits for a periodic refresh before running the search.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-refresh.html | Elasticsearch API documentation}
     */
   async refresh (this: That, params?: T.IndicesRefreshRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRefreshResponse>
@@ -1717,7 +1746,7 @@ export default class Indices {
   }
 
   /**
-    * Resolve the cluster. Resolve the specified index expressions to return information about each cluster, including the local cluster, if included. Multiple patterns and remote clusters are supported. This endpoint is useful before doing a cross-cluster search in order to determine which remote clusters should be included in a search. You use the same index expression with this endpoint as you would for cross-cluster search. Index and cluster exclusions are also supported with this endpoint. For each cluster in the index expression, information is returned about: * Whether the querying ("local") cluster is currently connected to each remote cluster in the index expression scope. * Whether each remote cluster is configured with `skip_unavailable` as `true` or `false`. * Whether there are any indices, aliases, or data streams on that cluster that match the index expression. * Whether the search is likely to have errors returned when you do the cross-cluster search (including any authorization errors if you do not have permission to query the index). * Cluster version information, including the Elasticsearch server version.
+    * Resolve the cluster. Resolve the specified index expressions to return information about each cluster, including the local cluster, if included. Multiple patterns and remote clusters are supported. This endpoint is useful before doing a cross-cluster search in order to determine which remote clusters should be included in a search. You use the same index expression with this endpoint as you would for cross-cluster search. Index and cluster exclusions are also supported with this endpoint. For each cluster in the index expression, information is returned about: * Whether the querying ("local") cluster is currently connected to each remote cluster in the index expression scope. * Whether each remote cluster is configured with `skip_unavailable` as `true` or `false`. * Whether there are any indices, aliases, or data streams on that cluster that match the index expression. * Whether the search is likely to have errors returned when you do the cross-cluster search (including any authorization errors if you do not have permission to query the index). * Cluster version information, including the Elasticsearch server version. For example, `GET /_resolve/cluster/my-index-*,cluster*:my-index-*` returns information about the local cluster and all remotely configured clusters that start with the alias `cluster*`. Each cluster returns information about whether it has any indices, aliases or data streams that match `my-index-*`. **Advantages of using this endpoint before a cross-cluster search** You may want to exclude a cluster or index from a search when: * A remote cluster is not currently connected and is configured with `skip_unavailable=false`. Running a cross-cluster search under those conditions will cause the entire search to fail. * A cluster has no matching indices, aliases or data streams for the index expression (or your user does not have permissions to search them). For example, suppose your index expression is `logs*,remote1:logs*` and the remote1 cluster has no indices, aliases or data streams that match `logs*`. In that case, that cluster will return no results from that cluster if you include it in a cross-cluster search. * The index expression (combined with any query parameters you specify) will likely cause an exception to be thrown when you do the search. In these cases, the "error" field in the `_resolve/cluster` response will be present. (This is also where security/permission errors will be shown.) * A remote cluster is an older version that does not support the feature you want to use in your search.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-resolve-cluster-api.html | Elasticsearch API documentation}
     */
   async resolveCluster (this: That, params: T.IndicesResolveClusterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesResolveClusterResponse>
@@ -1781,7 +1810,7 @@ export default class Indices {
   }
 
   /**
-    * Roll over to a new index. Creates a new index for a data stream or index alias.
+    * Roll over to a new index. TIP: It is recommended to use the index lifecycle rollover action to automate rollovers. The rollover API creates a new index for a data stream or index alias. The API behavior depends on the rollover target. **Roll over a data stream** If you roll over a data stream, the API creates a new write index for the stream. The stream's previous write index becomes a regular backing index. A rollover also increments the data stream's generation. **Roll over an index alias with a write index** TIP: Prior to Elasticsearch 7.9, you'd typically use an index alias with a write index to manage time series data. Data streams replace this functionality, require less maintenance, and automatically integrate with data tiers. If an index alias points to multiple indices, one of the indices must be a write index. The rollover API creates a new write index for the alias with `is_write_index` set to `true`. The API also `sets is_write_index` to `false` for the previous write index. **Roll over an index alias with one index** If you roll over an index alias that points to only one index, the API creates a new index for the alias and removes the original index from the alias. NOTE: A rollover creates a new index and is subject to the `wait_for_active_shards` setting. **Increment index names for an alias** When you roll over an index alias, you can specify a name for the new index. If you don't specify a name and the current index ends with `-` and a number, such as `my-index-000001` or `my-index-3`, the new index name increments that number. For example, if you roll over an alias with a current index of `my-index-000001`, the rollover creates a new index named `my-index-000002`. This number is always six characters and zero-padded, regardless of the previous index's name. If you use an index alias for time series data, you can use date math in the index name to track the rollover date. For example, you can create an alias that points to an index named `<my-index-{now/d}-000001>`. If you create the index on May 6, 2099, the index's name is `my-index-2099.05.06-000001`. If you roll over the alias on May 7, 2099, the new index's name is `my-index-2099.05.07-000002`.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html | Elasticsearch API documentation}
     */
   async rollover (this: That, params: T.IndicesRolloverRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRolloverResponse>
@@ -1942,7 +1971,7 @@ export default class Indices {
   }
 
   /**
-    * Simulate an index. Returns the index configuration that would be applied to the specified index from an existing index template.
+    * Simulate an index. Get the index configuration that would be applied to the specified index from an existing index template.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-simulate-index.html | Elasticsearch API documentation}
     */
   async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSimulateIndexTemplateResponse>
@@ -1974,7 +2003,7 @@ export default class Indices {
   }
 
   /**
-    * Simulate an index template. Returns the index configuration that would be applied by a particular index template.
+    * Simulate an index template. Get the index configuration that would be applied by a particular index template.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-simulate-template.html | Elasticsearch API documentation}
     */
   async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSimulateTemplateResponse>
@@ -2018,7 +2047,7 @@ export default class Indices {
   }
 
   /**
-    * Split an index. Split an index into a new index with more primary shards. * Before you can split an index: * The index must be read-only. * The cluster health status must be green. The number of times the index can be split (and the number of shards that each original shard can be split into) is determined by the `index.number_of_routing_shards` setting. The number of routing shards specifies the hashing space that is used internally to distribute documents across shards with consistent hashing. For instance, a 5 shard index with `number_of_routing_shards` set to 30 (5 x 2 x 3) could be split by a factor of 2 or 3. A split operation: * Creates a new target index with the same definition as the source index, but with a larger number of primary shards. * Hard-links segments from the source index into the target index. If the file system doesn't support hard-linking, all segments are copied into the new index, which is a much more time consuming process. * Hashes all documents again, after low level files are created, to delete documents that belong to a different shard. * Recovers the target index as though it were a closed index which had just been re-opened. IMPORTANT: Indices can only be split if they satisfy the following requirements: * The target index must not exist. * The source index must have fewer primary shards than the target index. * The number of primary shards in the target index must be a multiple of the number of primary shards in the source index. * The node handling the split process must have sufficient free disk space to accommodate a second copy of the existing index.
+    * Split an index. Split an index into a new index with more primary shards. * Before you can split an index: * The index must be read-only. * The cluster health status must be green. You can do make an index read-only with the following request using the add index block API: ``` PUT /my_source_index/_block/write ``` The current write index on a data stream cannot be split. In order to split the current write index, the data stream must first be rolled over so that a new write index is created and then the previous write index can be split. The number of times the index can be split (and the number of shards that each original shard can be split into) is determined by the `index.number_of_routing_shards` setting. The number of routing shards specifies the hashing space that is used internally to distribute documents across shards with consistent hashing. For instance, a 5 shard index with `number_of_routing_shards` set to 30 (5 x 2 x 3) could be split by a factor of 2 or 3. A split operation: * Creates a new target index with the same definition as the source index, but with a larger number of primary shards. * Hard-links segments from the source index into the target index. If the file system doesn't support hard-linking, all segments are copied into the new index, which is a much more time consuming process. * Hashes all documents again, after low level files are created, to delete documents that belong to a different shard. * Recovers the target index as though it were a closed index which had just been re-opened. IMPORTANT: Indices can only be split if they satisfy the following requirements: * The target index must not exist. * The source index must have fewer primary shards than the target index. * The number of primary shards in the target index must be a multiple of the number of primary shards in the source index. * The node handling the split process must have sufficient free disk space to accommodate a second copy of the existing index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-split-index.html | Elasticsearch API documentation}
     */
   async split (this: That, params: T.IndicesSplitRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSplitResponse>
