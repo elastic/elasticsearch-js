@@ -211,22 +211,27 @@ export default class SearchApplication {
   }
 
   /**
-    * Creates a behavioral analytics event for existing collection.
-    * @see {@link http://todo.com/tbd | Elasticsearch API documentation}
+    * Create a behavioral analytics collection event.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/post-analytics-collection-event.html | Elasticsearch API documentation}
     */
-  async postBehavioralAnalyticsEvent (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async postBehavioralAnalyticsEvent (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async postBehavioralAnalyticsEvent (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async postBehavioralAnalyticsEvent (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async postBehavioralAnalyticsEvent (this: That, params: T.SearchApplicationPostBehavioralAnalyticsEventRequest | TB.SearchApplicationPostBehavioralAnalyticsEventRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationPostBehavioralAnalyticsEventResponse>
+  async postBehavioralAnalyticsEvent (this: That, params: T.SearchApplicationPostBehavioralAnalyticsEventRequest | TB.SearchApplicationPostBehavioralAnalyticsEventRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchApplicationPostBehavioralAnalyticsEventResponse, unknown>>
+  async postBehavioralAnalyticsEvent (this: That, params: T.SearchApplicationPostBehavioralAnalyticsEventRequest | TB.SearchApplicationPostBehavioralAnalyticsEventRequest, options?: TransportRequestOptions): Promise<T.SearchApplicationPostBehavioralAnalyticsEventResponse>
+  async postBehavioralAnalyticsEvent (this: That, params: T.SearchApplicationPostBehavioralAnalyticsEventRequest | TB.SearchApplicationPostBehavioralAnalyticsEventRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['collection_name', 'event_type']
+    const acceptedBody: string[] = ['payload']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    let body: any = params.body ?? undefined
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }

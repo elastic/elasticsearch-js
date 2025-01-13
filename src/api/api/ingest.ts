@@ -77,7 +77,7 @@ export default class Ingest {
   }
 
   /**
-    * Deletes an IP location database configuration.
+    * Delete IP geolocation database configurations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/delete-ip-location-database-api.html | Elasticsearch API documentation}
     */
   async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest | TB.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeleteIpLocationDatabaseResponse>
@@ -211,7 +211,7 @@ export default class Ingest {
   }
 
   /**
-    * Returns information about one or more IP location database configurations.
+    * Get IP geolocation database configurations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/get-ip-location-database-api.html | Elasticsearch API documentation}
     */
   async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest | TB.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetIpLocationDatabaseResponse>
@@ -321,7 +321,7 @@ export default class Ingest {
   }
 
   /**
-    * Create or update GeoIP database configurations. Create or update IP geolocation database configurations.
+    * Create or update a GeoIP database configuration. Refer to the create or update IP geolocation database configuration API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/put-geoip-database-api.html | Elasticsearch API documentation}
     */
   async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest | TB.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutGeoipDatabaseResponse>
@@ -365,7 +365,7 @@ export default class Ingest {
   }
 
   /**
-    * Returns information about one or more IP location database configurations.
+    * Create or update an IP geolocation database configuration.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/put-ip-location-database-api.html | Elasticsearch API documentation}
     */
   async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest | TB.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutIpLocationDatabaseResponse>

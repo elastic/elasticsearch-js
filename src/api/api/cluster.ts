@@ -87,7 +87,7 @@ export default class Cluster {
   }
 
   /**
-    * Delete component templates. Deletes component templates. Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
+    * Delete component templates. Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/indices-component-template.html | Elasticsearch API documentation}
     */
   async deleteComponentTemplate (this: That, params: T.ClusterDeleteComponentTemplateRequest | TB.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterDeleteComponentTemplateResponse>
@@ -181,7 +181,7 @@ export default class Cluster {
   }
 
   /**
-    * Get component templates. Retrieves information about component templates.
+    * Get component templates. Get information about component templates.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/indices-component-template.html | Elasticsearch API documentation}
     */
   async getComponentTemplate (this: That, params?: T.ClusterGetComponentTemplateRequest | TB.ClusterGetComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterGetComponentTemplateResponse>
@@ -383,7 +383,7 @@ export default class Cluster {
   }
 
   /**
-    * Create or update a component template. Creates or updates a component template. Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases. An index template can be composed of multiple component templates. To use a component template, specify it in an index template’s `composed_of` list. Component templates are only applied to new data streams and indices as part of a matching index template. Settings and mappings specified directly in the index template or the create index request override any settings or mappings specified in a component template. Component templates are only used during index creation. For data streams, this includes data stream creation and the creation of a stream’s backing indices. Changes to component templates do not affect existing indices, including a stream’s backing indices. You can use C-style `/* *\/` block comments in component templates. You can include comments anywhere in the request body except before the opening curly bracket.
+    * Create or update a component template. Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases. An index template can be composed of multiple component templates. To use a component template, specify it in an index template’s `composed_of` list. Component templates are only applied to new data streams and indices as part of a matching index template. Settings and mappings specified directly in the index template or the create index request override any settings or mappings specified in a component template. Component templates are only used during index creation. For data streams, this includes data stream creation and the creation of a stream’s backing indices. Changes to component templates do not affect existing indices, including a stream’s backing indices. You can use C-style `/* *\/` block comments in component templates. You can include comments anywhere in the request body except before the opening curly bracket. **Applying component templates** You cannot directly apply a component template to a data stream or index. To be applied, a component template must be included in an index template's `composed_of` list.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/indices-component-template.html | Elasticsearch API documentation}
     */
   async putComponentTemplate (this: That, params: T.ClusterPutComponentTemplateRequest | TB.ClusterPutComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterPutComponentTemplateResponse>

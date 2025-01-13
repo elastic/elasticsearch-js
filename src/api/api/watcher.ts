@@ -45,7 +45,7 @@ export default class Watcher {
   }
 
   /**
-    * Acknowledge a watch. Acknowledging a watch enables you to manually throttle the execution of the watch's actions. The acknowledgement state of an action is stored in the `status.actions.<id>.ack.state` structure. IMPORTANT: If the specified watch is currently being executed, this API will return an error The reason for this behavior is to prevent overwriting the watch status from a watch execution.
+    * Acknowledge a watch. Acknowledging a watch enables you to manually throttle the execution of the watch's actions. The acknowledgement state of an action is stored in the `status.actions.<id>.ack.state` structure. IMPORTANT: If the specified watch is currently being executed, this API will return an error The reason for this behavior is to prevent overwriting the watch status from a watch execution. Acknowledging an action throttles further executions of that action until its `ack.state` is reset to `awaits_successful_execution`. This happens when the condition of the watch is not met (the condition evaluates to false).
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-ack-watch.html | Elasticsearch API documentation}
     */
   async ackWatch (this: That, params: T.WatcherAckWatchRequest | TB.WatcherAckWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherAckWatchResponse>
@@ -181,7 +181,7 @@ export default class Watcher {
   }
 
   /**
-    * Run a watch. This API can be used to force execution of the watch outside of its triggering logic or to simulate the watch execution for debugging purposes. For testing and debugging purposes, you also have fine-grained control on how the watch runs. You can run the watch without running all of its actions or alternatively by simulating them. You can also force execution by ignoring the watch condition and control whether a watch record would be written to the watch history after it runs. You can use the run watch API to run watches that are not yet registered by specifying the watch definition inline. This serves as great tool for testing and debugging your watches prior to adding them to Watcher.
+    * Run a watch. This API can be used to force execution of the watch outside of its triggering logic or to simulate the watch execution for debugging purposes. For testing and debugging purposes, you also have fine-grained control on how the watch runs. You can run the watch without running all of its actions or alternatively by simulating them. You can also force execution by ignoring the watch condition and control whether a watch record would be written to the watch history after it runs. You can use the run watch API to run watches that are not yet registered by specifying the watch definition inline. This serves as great tool for testing and debugging your watches prior to adding them to Watcher. When Elasticsearch security features are enabled on your cluster, watches are run with the privileges of the user that stored the watches. If your user is allowed to read index `a`, but not index `b`, then the exact same set of rules will apply during execution of a watch. When using the run watch API, the authorization data of the user that called the API will be used as a base, instead of the information who stored the watch.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-execute-watch.html | Elasticsearch API documentation}
     */
   async executeWatch (this: That, params?: T.WatcherExecuteWatchRequest | TB.WatcherExecuteWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherExecuteWatchResponse>
@@ -233,13 +233,13 @@ export default class Watcher {
   }
 
   /**
-    * Retrieve settings for the watcher system index
+    * Get Watcher index settings. Get settings for the Watcher internal index (`.watches`). Only a subset of settings are shown, for example `index.auto_expand_replicas` and `index.number_of_replicas`.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-get-settings.html | Elasticsearch API documentation}
     */
-  async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getSettings (this: That, params?: T.WatcherGetSettingsRequest | TB.WatcherGetSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherGetSettingsResponse>
+  async getSettings (this: That, params?: T.WatcherGetSettingsRequest | TB.WatcherGetSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherGetSettingsResponse, unknown>>
+  async getSettings (this: That, params?: T.WatcherGetSettingsRequest | TB.WatcherGetSettingsRequest, options?: TransportRequestOptions): Promise<T.WatcherGetSettingsResponse>
+  async getSettings (this: That, params?: T.WatcherGetSettingsRequest | TB.WatcherGetSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -249,6 +249,7 @@ export default class Watcher {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -302,7 +303,7 @@ export default class Watcher {
   async putWatch (this: That, params: T.WatcherPutWatchRequest | TB.WatcherPutWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherPutWatchResponse>
   async putWatch (this: That, params: T.WatcherPutWatchRequest | TB.WatcherPutWatchRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['actions', 'condition', 'input', 'metadata', 'throttle_period', 'transform', 'trigger']
+    const acceptedBody: string[] = ['actions', 'condition', 'input', 'metadata', 'throttle_period', 'throttle_period_in_millis', 'transform', 'trigger']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -338,7 +339,7 @@ export default class Watcher {
   }
 
   /**
-    * Query watches. Get all registered watches in a paginated manner and optionally filter watches by a query.
+    * Query watches. Get all registered watches in a paginated manner and optionally filter watches by a query. Note that only the `_id` and `metadata.*` fields are queryable or sortable.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-query-watches.html | Elasticsearch API documentation}
     */
   async queryWatches (this: That, params?: T.WatcherQueryWatchesRequest | TB.WatcherQueryWatchesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherQueryWatchesResponse>
@@ -410,7 +411,7 @@ export default class Watcher {
   }
 
   /**
-    * Get Watcher statistics.
+    * Get Watcher statistics. This API always returns basic metrics. You retrieve more metrics by using the metric parameter.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-stats.html | Elasticsearch API documentation}
     */
   async stats (this: That, params?: T.WatcherStatsRequest | TB.WatcherStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherStatsResponse>
@@ -480,22 +481,35 @@ export default class Watcher {
   }
 
   /**
-    * Update settings for the watcher system index
+    * Update Watcher index settings. Update settings for the Watcher internal index (`.watches`). Only a subset of settings can be modified. This includes `index.auto_expand_replicas` and `index.number_of_replicas`.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-update-settings.html | Elasticsearch API documentation}
     */
-  async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async updateSettings (this: That, params?: T.WatcherUpdateSettingsRequest | TB.WatcherUpdateSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherUpdateSettingsResponse>
+  async updateSettings (this: That, params?: T.WatcherUpdateSettingsRequest | TB.WatcherUpdateSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherUpdateSettingsResponse, unknown>>
+  async updateSettings (this: That, params?: T.WatcherUpdateSettingsRequest | TB.WatcherUpdateSettingsRequest, options?: TransportRequestOptions): Promise<T.WatcherUpdateSettingsResponse>
+  async updateSettings (this: That, params?: T.WatcherUpdateSettingsRequest | TB.WatcherUpdateSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['index.auto_expand_replicas', 'index.number_of_replicas']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }

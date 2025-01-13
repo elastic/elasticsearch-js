@@ -45,7 +45,7 @@ export default class Logstash {
   }
 
   /**
-    * Delete a Logstash pipeline. Delete a pipeline that is used for Logstash Central Management.
+    * Delete a Logstash pipeline. Delete a pipeline that is used for Logstash Central Management. If the request succeeds, you receive an empty response with an appropriate status code.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/logstash-api-delete-pipeline.html | Elasticsearch API documentation}
     */
   async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashDeletePipelineResponse>

@@ -45,22 +45,34 @@ export default class Simulate {
   }
 
   /**
-    * Simulates running ingest with example documents.
+    * Simulate data ingestion. Run ingest pipelines against a set of provided documents, optionally with substitute pipeline definitions, to simulate ingesting data into an index. This API is meant to be used for troubleshooting or pipeline development, as it does not actually index any data into Elasticsearch. The API runs the default and final pipeline for that index against a set of documents provided in the body of the request. If a pipeline contains a reroute processor, it follows that reroute processor to the new index, running that index's pipelines as well the same way that a non-simulated ingest would. No data is indexed into Elasticsearch. Instead, the transformed document is returned, along with the list of pipelines that have been run and the name of the index where the document would have been indexed if this were not a simulation. The transformed document is validated against the mappings that would apply to this index, and any validation error is reported in the result. This API differs from the simulate pipeline API in that you specify a single pipeline for that API, and it runs only that one pipeline. The simulate pipeline API is more useful for developing a single pipeline, while the simulate ingest API is more useful for troubleshooting the interaction of the various pipelines that get applied when ingesting into an index. By default, the pipeline definitions that are currently in the system are used. However, you can supply substitute pipeline definitions in the body of the request. These will be used in place of the pipeline definitions that are already in the system. This can be used to replace existing pipeline definitions or to create new ones. The pipeline substitutions are used only within this request.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/simulate-ingest-api.html | Elasticsearch API documentation}
     */
-  async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async ingest (this: That, params: T.SimulateIngestRequest | TB.SimulateIngestRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SimulateIngestResponse>
+  async ingest (this: That, params: T.SimulateIngestRequest | TB.SimulateIngestRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SimulateIngestResponse, unknown>>
+  async ingest (this: That, params: T.SimulateIngestRequest | TB.SimulateIngestRequest, options?: TransportRequestOptions): Promise<T.SimulateIngestResponse>
+  async ingest (this: That, params: T.SimulateIngestRequest | TB.SimulateIngestRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
+    const acceptedBody: string[] = ['docs', 'component_template_substitutions', 'index_template_subtitutions', 'mapping_addition', 'pipeline_substitutions']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
