@@ -609,9 +609,9 @@ Set to all or any positive integer up to the total number of shards in the index
 [discrete]
 === info
 Get cluster info.
-Returns basic information about the cluster.
+Get basic build, version, and cluster information.
 
-{ref}/index.html[Endpoint documentation]
+{ref}/rest-api-root.html[Endpoint documentation]
 [source,ts]
 ----
 client.info()
@@ -1269,6 +1269,7 @@ Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`local` (Optional, boolean)*: If `true`, the request retrieves information from the local node only.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 ** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on.
 Random by default.
 ** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
@@ -2468,6 +2469,7 @@ client.ccr.deleteAutoFollowPattern({ name })
 
 * *Request (object):*
 ** *`name` (string)*: The name of the auto follow pattern.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== follow
@@ -2505,6 +2507,7 @@ be deferred until the total bytes of queued operations goes below the limit.
 When the timeout has elapsed, the poll for operations will return to the follower so that it can update some statistics.
 Then the follower will immediately attempt to read from the leader again.
 ** *`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })*: Settings to override from the leader index.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 ** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: Specifies the number of shards to wait on being active before responding. This defaults to waiting on none of the shards to be
 active.
 A shard must be restored from the leader index before being active. Restoring a follower shard requires transferring all the
@@ -2527,6 +2530,7 @@ client.ccr.followInfo({ index })
 
 * *Request (object):*
 ** *`index` (string | string[])*: A list of index patterns; use `_all` to perform the operation on all indices
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== follow_stats
@@ -2545,6 +2549,7 @@ client.ccr.followStats({ index })
 
 * *Request (object):*
 ** *`index` (string | string[])*: A list of index patterns; use `_all` to perform the operation on all indices
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== forget_follower
@@ -2576,6 +2581,7 @@ client.ccr.forgetFollower({ index })
 ** *`follower_index` (Optional, string)*
 ** *`follower_index_uuid` (Optional, string)*
 ** *`leader_remote_cluster` (Optional, string)*
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_auto_follow_pattern
@@ -2593,6 +2599,7 @@ client.ccr.getAutoFollowPattern({ ... })
 
 * *Request (object):*
 ** *`name` (Optional, string)*: Specifies the auto-follow pattern collection that you want to retrieve. If you do not specify a name, the API returns information for all collections.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== pause_auto_follow_pattern
@@ -2616,6 +2623,7 @@ client.ccr.pauseAutoFollowPattern({ name })
 
 * *Request (object):*
 ** *`name` (string)*: The name of the auto follow pattern that should pause discovering new indices to follow.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== pause_follow
@@ -2636,6 +2644,7 @@ client.ccr.pauseFollow({ index })
 
 * *Request (object):*
 ** *`index` (string)*: The name of the follower index that should pause following its leader index.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== put_auto_follow_pattern
@@ -2673,6 +2682,7 @@ client.ccr.putAutoFollowPattern({ name, remote_cluster })
 ** *`max_write_buffer_size` (Optional, number | string)*: The maximum total bytes of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will be deferred until the total bytes of queued operations goes below the limit.
 ** *`max_write_request_operation_count` (Optional, number)*: The maximum number of operations per bulk write request executed on the follower.
 ** *`max_write_request_size` (Optional, number | string)*: The maximum total bytes of operations per bulk write request executed on the follower.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== resume_auto_follow_pattern
@@ -2692,6 +2702,7 @@ client.ccr.resumeAutoFollowPattern({ name })
 
 * *Request (object):*
 ** *`name` (string)*: The name of the auto follow pattern to resume discovering new indices to follow.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== resume_follow
@@ -2722,6 +2733,7 @@ client.ccr.resumeFollow({ index })
 ** *`max_write_request_operation_count` (Optional, number)*
 ** *`max_write_request_size` (Optional, string)*
 ** *`read_poll_timeout` (Optional, string | -1 | 0)*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== stats
@@ -2731,9 +2743,15 @@ This API returns stats about auto-following and the same shard-level stats as th
 {ref}/ccr-get-stats.html[Endpoint documentation]
 [source,ts]
 ----
-client.ccr.stats()
+client.ccr.stats({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== unfollow
@@ -2755,6 +2773,7 @@ client.ccr.unfollow({ index })
 
 * *Request (object):*
 ** *`index` (string)*: The name of the follower index that should be turned into a regular index.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 === cluster
@@ -2782,11 +2801,11 @@ client.cluster.allocationExplain({ ... })
 ** *`shard` (Optional, number)*: Specifies the ID of the shard that you would like an explanation for.
 ** *`include_disk_info` (Optional, boolean)*: If true, returns information about disk usage and shard sizes.
 ** *`include_yes_decisions` (Optional, boolean)*: If true, returns YES decisions in explanation.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== delete_component_template
 Delete component templates.
-Deletes component templates.
 Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
 
 {ref}/indices-component-template.html[Endpoint documentation]
@@ -2820,6 +2839,7 @@ client.cluster.deleteVotingConfigExclusions({ ... })
 ==== Arguments
 
 * *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 ** *`wait_for_removal` (Optional, boolean)*: Specifies whether to wait for all excluded nodes to be removed from the
 cluster before clearing the voting configuration exclusions list.
 Defaults to true, meaning that all excluded nodes must be removed from
@@ -2853,7 +2873,7 @@ Defaults to false, which means information is retrieved from the master node.
 [discrete]
 ==== get_component_template
 Get component templates.
-Retrieves information about component templates.
+Get information about component templates.
 
 {ref}/indices-component-template.html[Endpoint documentation]
 [source,ts]
@@ -3008,6 +3028,7 @@ client.cluster.postVotingConfigExclusions({ ... })
 voting configuration. If specified, you may not also specify node_ids.
 ** *`node_ids` (Optional, string | string[])*: A list of the persistent ids of the nodes to exclude
 from the voting configuration. If specified, you may not also specify node_names.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 ** *`timeout` (Optional, string | -1 | 0)*: When adding a voting configuration exclusion, the API waits for the
 specified nodes to be excluded from the voting configuration before
 returning. If the timeout expires before the appropriate condition
@@ -3016,7 +3037,6 @@ is satisfied, the request fails and returns an error.
 [discrete]
 ==== put_component_template
 Create or update a component template.
-Creates or updates a component template.
 Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
 
 An index template can be composed of multiple component templates.
@@ -3031,6 +3051,11 @@ Changes to component templates do not affect existing indices, including a strea
 
 You can use C-style `/* *\/` block comments in component templates.
 You can include comments anywhere in the request body except before the opening curly bracket.
+
+**Applying component templates**
+
+You cannot directly apply a component template to a data stream or index.
+To be applied, a component template must be included in an index template's `composed_of` list.
 
 {ref}/indices-component-template.html[Endpoint documentation]
 [source,ts]
@@ -3052,7 +3077,7 @@ If you don’t use Elastic Agent and want to disable all built-in component and 
 This number isn't automatically generated or incremented by Elasticsearch.
 To unset a version, replace the template without specifying a version.
 ** *`_meta` (Optional, Record<string, User-defined value>)*: Optional user metadata about the component template.
-May have any contents. This map is not automatically generated by Elasticsearch.
+It may have any contents. This map is not automatically generated by Elasticsearch.
 This information is stored in the cluster state, so keeping it short is preferable.
 To unset `_meta`, replace the template without specifying this information.
 ** *`deprecated` (Optional, boolean)*: Marks this index template as deprecated. When creating or updating a non-deprecated index template
@@ -3505,14 +3530,31 @@ client.connector.syncJobPost({ id })
 
 [discrete]
 ==== sync_job_update_stats
-Updates the stats fields in the connector sync job document.
+Set the connector sync job stats.
+Stats include: `deleted_document_count`, `indexed_document_count`, `indexed_document_volume`, and `total_document_count`.
+You can also update `last_seen`.
+This API is mainly used by the connector service for updating sync job information.
+
+To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
+This service runs automatically on Elastic Cloud for Elastic managed connectors.
 
 {ref}/set-connector-sync-job-stats-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.connector.syncJobUpdateStats()
+client.connector.syncJobUpdateStats({ connector_sync_job_id, deleted_document_count, indexed_document_count, indexed_document_volume })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_sync_job_id` (string)*: The unique identifier of the connector sync job.
+** *`deleted_document_count` (number)*: The number of documents the sync job deleted.
+** *`indexed_document_count` (number)*: The number of documents the sync job indexed.
+** *`indexed_document_volume` (number)*: The total size of the data (in MiB) the sync job indexed.
+** *`last_seen` (Optional, string | -1 | 0)*: The timestamp to use in the `last_seen` property for the connector sync job.
+** *`metadata` (Optional, Record<string, User-defined value>)*: The connector-specific metadata.
+** *`total_document_count` (Optional, number)*: The total number of documents in the target index after the sync job finished.
 
 [discrete]
 ==== update_active_filtering
@@ -3793,11 +3835,10 @@ client.connector.updateStatus({ connector_id, status })
 [discrete]
 ==== delete_dangling_index
 Delete a dangling index.
-
 If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
 For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
 
-{ref}/modules-gateway-dangling-indices.html[Endpoint documentation]
+{ref}/dangling-index-delete.html[Endpoint documentation]
 [source,ts]
 ----
 client.danglingIndices.deleteDanglingIndex({ index_uuid, accept_data_loss })
@@ -3819,7 +3860,7 @@ Import a dangling index.
 If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
 For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
 
-{ref}/modules-gateway-dangling-indices.html[Endpoint documentation]
+{ref}/dangling-index-import.html[Endpoint documentation]
 [source,ts]
 ----
 client.danglingIndices.importDanglingIndex({ index_uuid, accept_data_loss })
@@ -3844,7 +3885,7 @@ For example, this can happen if you delete more than `cluster.indices.tombstones
 
 Use this API to list dangling indices, which you can then import or delete.
 
-{ref}/modules-gateway-dangling-indices.html[Endpoint documentation]
+{ref}/dangling-indices-list.html[Endpoint documentation]
 [source,ts]
 ----
 client.danglingIndices.listDanglingIndices()
@@ -3869,6 +3910,7 @@ client.enrich.deletePolicy({ name })
 
 * *Request (object):*
 ** *`name` (string)*: Enrich policy to delete.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== execute_policy
@@ -3886,6 +3928,7 @@ client.enrich.executePolicy({ name })
 
 * *Request (object):*
 ** *`name` (string)*: Enrich policy to execute.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 ** *`wait_for_completion` (Optional, boolean)*: If `true`, the request blocks other enrich policy execution requests until complete.
 
 [discrete]
@@ -3905,6 +3948,7 @@ client.enrich.getPolicy({ ... })
 * *Request (object):*
 ** *`name` (Optional, string | string[])*: List of enrich policy names used to limit the request.
 To return information for all enrich policies, omit this parameter.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== put_policy
@@ -3925,6 +3969,7 @@ client.enrich.putPolicy({ name })
 ** *`geo_match` (Optional, { enrich_fields, indices, match_field, query, name, elasticsearch_version })*: Matches enrich data to incoming documents based on a `geo_shape` query.
 ** *`match` (Optional, { enrich_fields, indices, match_field, query, name, elasticsearch_version })*: Matches enrich data to incoming documents based on a `term` query.
 ** *`range` (Optional, { enrich_fields, indices, match_field, query, name, elasticsearch_version })*: Matches a number, date, or IP address in incoming documents to a range in the enrich index based on a `term` query.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== stats
@@ -3934,9 +3979,14 @@ Returns enrich coordinator statistics and information about enrich policies that
 {ref}/enrich-stats-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.enrich.stats()
+client.enrich.stats({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 === eql
@@ -4111,9 +4161,14 @@ In order for a feature state to be listed in this API and recognized as a valid 
 {ref}/get-features-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.features.getFeatures()
+client.features.getFeatures({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== reset_features
@@ -4138,9 +4193,14 @@ IMPORTANT: The features installed on the node you submit this request to are the
 {ref}/modules-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
-client.features.resetFeatures()
+client.features.resetFeatures({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 === fleet
@@ -4383,7 +4443,6 @@ To target all data streams and indices, use `*` or `_all`.
 ** *`only_errors` (Optional, boolean)*: Filters the returned indices to only indices that are managed by ILM and are in an error state, either due to an encountering an error while executing the policy, or attempting to use a policy that does not exist.
 ** *`only_managed` (Optional, boolean)*: Filters the returned indices to only indices that are managed by ILM.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_lifecycle
@@ -4475,8 +4534,8 @@ client.ilm.moveToStep({ index, current_step, next_step })
 
 * *Request (object):*
 ** *`index` (string)*: The name of the index whose lifecycle step is to change
-** *`current_step` ({ action, name, phase })*
-** *`next_step` ({ action, name, phase })*
+** *`current_step` ({ action, name, phase })*: The step that the index is expected to be in.
+** *`next_step` ({ action, name, phase })*: The step that you want to run.
 
 [discrete]
 ==== put_lifecycle
@@ -4553,8 +4612,8 @@ client.ilm.start({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`master_timeout` (Optional, string | -1 | 0)*
-** *`timeout` (Optional, string | -1 | 0)*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== stop
@@ -4575,8 +4634,8 @@ client.ilm.stop({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`master_timeout` (Optional, string | -1 | 0)*
-** *`timeout` (Optional, string | -1 | 0)*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 === indices
@@ -4606,7 +4665,12 @@ client.indices.addBlock({ index, block })
 [discrete]
 ==== analyze
 Get tokens from text analysis.
-The analyze API performs [analysis](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis.html) on a text string and returns the resulting tokens.
+The analyze API performs analysis on a text string and returns the resulting tokens.
+
+Generating excessive amount of tokens may cause a node to run out of memory.
+The `index.analyze.max_token_count` setting enables you to limit the number of tokens that can be produced.
+If more than this limit of tokens gets generated, an error occurs.
+The `_analyze` endpoint without a specified index will always use `10000` as its limit.
 
 {ref}/indices-analyze.html[Endpoint documentation]
 [source,ts]
@@ -4640,6 +4704,10 @@ If an array of strings is provided, it is analyzed as a multi-value field.
 Clear the cache.
 Clear the cache of one or more indices.
 For data streams, the API clears the caches of the stream's backing indices.
+
+By default, the clear cache API clears all caches.
+To clear only specific caches, use the `fielddata`, `query`, or `request` parameters.
+To clear the cache only of specific fields, use the `fields` parameter.
 
 {ref}/indices-clearcache.html[Endpoint documentation]
 [source,ts]
@@ -4689,9 +4757,31 @@ Cloning works as follows:
 
 IMPORTANT: Indices can only be cloned if they meet the following requirements:
 
+* The index must be marked as read-only and have a cluster health status of green.
 * The target index must not exist.
 * The source index must have the same number of primary shards as the target index.
 * The node handling the clone process must have sufficient free disk space to accommodate a second copy of the existing index.
+
+The current write index on a data stream cannot be cloned.
+In order to clone the current write index, the data stream must first be rolled over so that a new write index is created and then the previous write index can be cloned.
+
+NOTE: Mappings cannot be specified in the `_clone` request. The mappings of the source index will be used for the target index.
+
+**Monitor the cloning process**
+
+The cloning process can be monitored with the cat recovery API or the cluster health API can be used to wait until all primary shards have been allocated by setting the `wait_for_status` parameter to `yellow`.
+
+The `_clone` API returns as soon as the target index has been added to the cluster state, before any shards have been allocated.
+At this point, all shards are in the state unassigned.
+If, for any reason, the target index can't be allocated, its primary shard will remain unassigned until it can be allocated on that node.
+
+Once the primary shard is allocated, it moves to state initializing, and the clone process begins.
+When the clone operation completes, the shard will become active.
+At that point, Elasticsearch will try to allocate any replicas and may decide to relocate the primary shard to another node.
+
+**Wait for active shards**
+
+Because the clone operation creates a new index to clone the shards to, the wait for active shards setting on index creation applies to the clone index action as well.
 
 {ref}/indices-clone-index.html[Endpoint documentation]
 [source,ts]
@@ -4763,7 +4853,25 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 [discrete]
 ==== create
 Create an index.
-Creates a new index.
+You can use the create index API to add a new index to an Elasticsearch cluster.
+When creating an index, you can specify the following:
+
+* Settings for the index.
+* Mappings for fields in the index.
+* Index aliases
+
+**Wait for active shards**
+
+By default, index creation will only return a response to the client when the primary copies of each shard have been started, or the request times out.
+The index creation response will indicate what happened.
+For example, `acknowledged` indicates whether the index was successfully created in the cluster, `while shards_acknowledged` indicates whether the requisite number of shard copies were started for each shard in the index before timing out.
+Note that it is still possible for either `acknowledged` or `shards_acknowledged` to be `false`, but for the index creation to be successful.
+These values simply indicate whether the operation completed before the timeout.
+If `acknowledged` is false, the request timed out before the cluster state was updated with the newly created index, but it probably will be created sometime soon.
+If `shards_acknowledged` is false, then the request timed out before the requisite number of shards were started (by default just the primaries), even if the cluster state was successfully updated to reflect the newly created index (that is to say, `acknowledged` is `true`).
+
+You can change the default of only waiting for the primary shards to start through the index setting `index.write.wait_for_active_shards`.
+Note that changing this setting will also affect the `wait_for_active_shards` value on all subsequent write operations.
 
 {ref}/indices-create-index.html[Endpoint documentation]
 [source,ts]
@@ -4838,7 +4946,12 @@ Supports a list of values, such as `open,hidden`.
 [discrete]
 ==== delete
 Delete indices.
-Deletes one or more indices.
+Deleting an index deletes its documents, shards, and metadata.
+It does not delete related Kibana components, such as data views, visualizations, or dashboards.
+
+You cannot delete the current write index of a data stream.
+To delete the index, you must roll over the data stream so a new write index is created.
+You can then use the delete index API to delete the previous write index.
 
 {ref}/indices-delete-index.html[Endpoint documentation]
 [source,ts]
@@ -4871,7 +4984,7 @@ If no response is received before the timeout expires, the request fails and ret
 Delete an alias.
 Removes a data stream or index from an alias.
 
-{ref}/indices-aliases.html[Endpoint documentation]
+{ref}/indices-delete-alias.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.deleteAlias({ index, name })
@@ -4952,7 +5065,7 @@ client.indices.deleteIndexTemplate({ name })
 
 [discrete]
 ==== delete_template
-Deletes a legacy index template.
+Delete a legacy index template.
 
 {ref}/indices-delete-template-v1.html[Endpoint documentation]
 [source,ts]
@@ -4977,6 +5090,10 @@ Analyze the index disk usage.
 Analyze the disk usage of each field of an index or data stream.
 This API might not support indices created in previous Elasticsearch versions.
 The result of a small index can be inaccurate as some parts of an index might not be analyzed by the API.
+
+NOTE: The total size of fields of the analyzed shards of the index in the response is usually smaller than the index `store_size` value because some small metadata files are ignored and some parts of data files might not be scanned by the API.
+Since stored fields are stored together in a compressed format, the sizes of stored fields are also estimates and can be inaccurate.
+The stored size of the `_id` field is likely underestimated while the `_source` field is overestimated.
 
 {ref}/indices-disk-usage.html[Endpoint documentation]
 [source,ts]
@@ -5030,7 +5147,7 @@ client.indices.downsample({ index, target_index })
 [discrete]
 ==== exists
 Check indices.
-Checks if one or more indices, index aliases, or data streams exist.
+Check if one or more indices, index aliases, or data streams exist.
 
 {ref}/indices-exists.html[Endpoint documentation]
 [source,ts]
@@ -5103,7 +5220,10 @@ client.indices.existsIndexTemplate({ name })
 [discrete]
 ==== exists_template
 Check existence of index templates.
-Returns information about whether a particular index template exists.
+Get information about whether index templates exist.
+Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
+
+IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
 
 {ref}/indices-template-exists-v1.html[Endpoint documentation]
 [source,ts]
@@ -5115,10 +5235,13 @@ client.indices.existsTemplate({ name })
 ==== Arguments
 
 * *Request (object):*
-** *`name` (string | string[])*: The comma separated names of the index templates
-** *`flat_settings` (Optional, boolean)*: Return settings in flat format (default: false)
-** *`local` (Optional, boolean)*: Return local information, do not retrieve the state from master node (default: false)
-** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
+** *`name` (string | string[])*: A list of index template names used to limit the request.
+Wildcard (`*`) expressions are supported.
+** *`flat_settings` (Optional, boolean)*: Indicates whether to use a flat format for the response.
+** *`local` (Optional, boolean)*: Indicates whether to get information from the local node only.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for the master node.
+If the master node is not available before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
 
 [discrete]
 ==== explain_data_lifecycle
@@ -5146,6 +5269,9 @@ Get field usage information for each shard and field of an index.
 Field usage statistics are automatically captured when queries are running on a cluster.
 A shard-level search request that accesses a given field, even if multiple times during that request, is counted as a single use.
 
+The response body reports the per-shard usage count of the data structures that back the fields in the index.
+A given request will increment each count by a maximum value of 1, even if the request accesses the same field multiple times.
+
 {ref}/field-usage-stats.html[Endpoint documentation]
 [source,ts]
 ----
@@ -5165,10 +5291,6 @@ If the request can target data streams, this argument determines whether wildcar
 Supports a list of values, such as `open,hidden`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `true`, missing or closed indices are not included in the response.
 ** *`fields` (Optional, string | string[])*: List or wildcard expressions of fields to include in the statistics.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
-If no response is received before the timeout expires, the request fails and returns an error.
-** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response.
-If no response is received before the timeout expires, the request fails and returns an error.
 ** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: The number of shard copies that must be active before proceeding with the operation.
 Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
 
@@ -5226,6 +5348,46 @@ But force merge can cause very large (greater than 5 GB) segments to be produced
 So the number of soft-deleted documents can then grow rapidly, resulting in higher disk usage and worse search performance.
 If you regularly force merge an index receiving writes, this can also make snapshots more expensive, since the new documents can't be backed up incrementally.
 
+**Blocks during a force merge**
+
+Calls to this API block until the merge is complete (unless request contains `wait_for_completion=false`).
+If the client connection is lost before completion then the force merge process will continue in the background.
+Any new requests to force merge the same indices will also block until the ongoing force merge is complete.
+
+**Running force merge asynchronously**
+
+If the request contains `wait_for_completion=false`, Elasticsearch performs some preflight checks, launches the request, and returns a task you can use to get the status of the task.
+However, you can not cancel this task as the force merge task is not cancelable.
+Elasticsearch creates a record of this task as a document at `_tasks/<task_id>`.
+When you are done with a task, you should delete the task document so Elasticsearch can reclaim the space.
+
+**Force merging multiple indices**
+
+You can force merge multiple indices with a single request by targeting:
+
+* One or more data streams that contain multiple backing indices
+* Multiple indices
+* One or more aliases
+* All data streams and indices in a cluster
+
+Each targeted shard is force-merged separately using the force_merge threadpool.
+By default each node only has a single `force_merge` thread which means that the shards on that node are force-merged one at a time.
+If you expand the `force_merge` threadpool on a node then it will force merge its shards in parallel
+
+Force merge makes the storage for the shard being merged temporarily increase, as it may require free space up to triple its size in case `max_num_segments parameter` is set to `1`, to rewrite all segments into a new one.
+
+**Data streams and time-based indices**
+
+Force-merging is useful for managing a data stream's older backing indices and other time-based indices, particularly after a rollover.
+In these cases, each index only receives indexing traffic for a certain period of time.
+Once an index receive no more writes, its shards can be force-merged to a single segment.
+This can be a good idea because single-segment shards can sometimes use simpler and more efficient data structures to perform searches.
+For example:
+
+```
+POST /.ds-my-data-stream-2099.03.07-000001/_forcemerge?max_num_segments=1
+```
+
 {ref}/indices-forcemerge.html[Endpoint documentation]
 [source,ts]
 ----
@@ -5248,7 +5410,7 @@ client.indices.forcemerge({ ... })
 [discrete]
 ==== get
 Get index information.
-Returns information about one or more indices. For data streams, the API returns information about the
+Get information about one or more indices. For data streams, the API returns information about the
 stream’s backing indices.
 
 {ref}/indices-get-index.html[Endpoint documentation]
@@ -5280,8 +5442,6 @@ such as open,hidden.
 ==== get_alias
 Get aliases.
 Retrieves information for one or more data stream or index aliases.
-
-{ref}/indices-aliases.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.getAlias({ ... })
@@ -5332,6 +5492,18 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
+==== get_data_lifecycle_stats
+Get data stream lifecycle stats.
+Get statistics about the data streams that are managed by a data stream lifecycle.
+
+{ref}/data-streams-get-lifecycle-stats.html[Endpoint documentation]
+[source,ts]
+----
+client.indices.getDataLifecycleStats()
+----
+
+
+[discrete]
 ==== get_data_stream
 Get data streams.
 Retrieves information about one or more data streams.
@@ -5360,6 +5532,8 @@ Get mapping definitions.
 Retrieves mapping definitions for one or more fields.
 For data streams, the API retrieves field mappings for the stream’s backing indices.
 
+This API is useful if you don't need a complete mapping or if an index mapping contains a large number of fields.
+
 {ref}/indices-get-field-mapping.html[Endpoint documentation]
 [source,ts]
 ----
@@ -5371,6 +5545,7 @@ client.indices.getFieldMapping({ fields })
 
 * *Request (object):*
 ** *`fields` (string | string[])*: List or wildcard expression of fields used to limit returned information.
+Supports wildcards (`*`).
 ** *`index` (Optional, string | string[])*: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
@@ -5387,7 +5562,7 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 [discrete]
 ==== get_index_template
 Get index templates.
-Returns information about one or more index templates.
+Get information about one or more index templates.
 
 {ref}/indices-get-template.html[Endpoint documentation]
 [source,ts]
@@ -5408,7 +5583,6 @@ client.indices.getIndexTemplate({ ... })
 [discrete]
 ==== get_mapping
 Get mapping definitions.
-Retrieves mapping definitions for one or more indices.
 For data streams, the API retrieves mappings for the stream’s backing indices.
 
 {ref}/indices-get-mapping.html[Endpoint documentation]
@@ -5438,8 +5612,8 @@ If no response is received before the timeout expires, the request fails and ret
 [discrete]
 ==== get_settings
 Get index settings.
-Returns setting information for one or more indices. For data streams,
-returns setting information for the stream’s backing indices.
+Get setting information for one or more indices.
+For data streams, it returns setting information for the stream's backing indices.
 
 {ref}/indices-get-settings.html[Endpoint documentation]
 [source,ts]
@@ -5475,7 +5649,9 @@ error.
 [discrete]
 ==== get_template
 Get index templates.
-Retrieves information about one or more index templates.
+Get information about one or more index templates.
+
+IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
 
 {ref}/indices-get-template-v1.html[Endpoint documentation]
 [source,ts]
@@ -5542,8 +5718,29 @@ client.indices.modifyDataStream({ actions })
 
 [discrete]
 ==== open
-Opens a closed index.
+Open a closed index.
 For data streams, the API opens any closed backing indices.
+
+A closed index is blocked for read/write operations and does not allow all operations that opened indices allow.
+It is not possible to index documents or to search for documents in a closed index.
+This allows closed indices to not have to maintain internal data structures for indexing or searching documents, resulting in a smaller overhead on the cluster.
+
+When opening or closing an index, the master is responsible for restarting the index shards to reflect the new state of the index.
+The shards will then go through the normal recovery process.
+The data of opened or closed indices is automatically replicated by the cluster to ensure that enough shard copies are safely kept around at all times.
+
+You can open and close multiple indices.
+An error is thrown if the request explicitly refers to a missing index.
+This behavior can be turned off by using the `ignore_unavailable=true` parameter.
+
+By default, you must explicitly name the indices you are opening or closing.
+To open or close indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`.
+This setting can also be changed with the cluster update settings API.
+
+Closed indices consume a significant amount of disk-space which can cause problems in managed environments.
+Closing indices can be turned off with the cluster settings API by setting `cluster.indices.close.enable` to `false`.
+
+Because opening or closing an index allocates its shards, the `wait_for_active_shards` setting on index creation applies to the `_open` and `_close` index actions as well.
 
 {ref}/indices-open-close.html[Endpoint documentation]
 [source,ts]
@@ -5673,6 +5870,32 @@ If no response is received before the timeout expires, the request fails and ret
 Create or update an index template.
 Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
 
+Elasticsearch applies templates to new indices based on an wildcard pattern that matches the index name.
+Index templates are applied during data stream or index creation.
+For data streams, these settings and mappings are applied when the stream's backing indices are created.
+Settings and mappings specified in a create index API request override any settings or mappings specified in an index template.
+Changes to index templates do not affect existing indices, including the existing backing indices of a data stream.
+
+You can use C-style `/* *\/` block comments in index templates.
+You can include comments anywhere in the request body, except before the opening curly bracket.
+
+**Multiple matching templates**
+
+If multiple index templates match the name of a new index or data stream, the template with the highest priority is used.
+
+Multiple templates with overlapping index patterns at the same priority are not allowed and an error will be thrown when attempting to create a template matching an existing index template at identical priorities.
+
+**Composing aliases, mappings, and settings**
+
+When multiple component templates are specified in the `composed_of` field for an index template, they are merged in the order specified, meaning that later component templates override earlier component templates.
+Any mappings, settings, or aliases from the parent index template are merged in next.
+Finally, any configuration on the index request itself is merged.
+Mapping definitions are merged recursively, which means that later mapping components can introduce new field mappings and update the mapping configuration.
+If a field mapping is already contained in an earlier component, its definition will be completely overwritten by the later one.
+This recursive merging strategy applies not only to field mappings, but also root options like `dynamic_templates` and `meta`.
+If an earlier component contains a `dynamic_templates` block, then by default new `dynamic_templates` entries are appended onto the end.
+If an entry already exists with the same key, then it is overwritten by the new definition.
+
 {ref}/indices-put-template.html[Endpoint documentation]
 [source,ts]
 ----
@@ -5698,9 +5921,13 @@ If no priority is specified the template is treated as though it is of priority 
 This number is not automatically generated by Elasticsearch.
 ** *`version` (Optional, number)*: Version number used to manage index templates externally.
 This number is not automatically generated by Elasticsearch.
+External systems can use these version numbers to simplify template management.
+To unset a version, replace the template without specifying one.
 ** *`_meta` (Optional, Record<string, User-defined value>)*: Optional user metadata about the index template.
-May have any contents.
-This map is not automatically generated by Elasticsearch.
+It may have any contents.
+It is not automatically generated or used by Elasticsearch.
+This user-defined object is stored in the cluster state, so keeping it short is preferable
+To unset the metadata, replace the template without specifying it.
 ** *`allow_auto_create` (Optional, boolean)*: This setting overrides the value of the `action.auto_create_index` cluster setting.
 If set to `true` in a template, then indices can be automatically created using that template even if auto-creation of indices is disabled via `actions.auto_create_index`.
 If set to `false`, then indices or data streams matching the template must always be explicitly created, and may never be automatically created.
@@ -5716,9 +5943,34 @@ If no response is received before the timeout expires, the request fails and ret
 [discrete]
 ==== put_mapping
 Update field mappings.
-Adds new fields to an existing data stream or index.
-You can also use this API to change the search settings of existing fields.
+Add new fields to an existing data stream or index.
+You can also use this API to change the search settings of existing fields and add new properties to existing object fields.
 For data streams, these changes are applied to all backing indices by default.
+
+**Add multi-fields to an existing field**
+
+Multi-fields let you index the same field in different ways.
+You can use this API to update the fields mapping parameter and enable multi-fields for an existing field.
+WARNING: If an index (or data stream) contains documents when you add a multi-field, those documents will not have values for the new multi-field.
+You can populate the new multi-field with the update by query API.
+
+**Change supported mapping parameters for an existing field**
+
+The documentation for each mapping parameter indicates whether you can update it for an existing field using this API.
+For example, you can use the update mapping API to update the `ignore_above` parameter.
+
+**Change the mapping of an existing field**
+
+Except for supported mapping parameters, you can't change the mapping or field type of an existing field.
+Changing an existing field could invalidate data that's already indexed.
+
+If you need to change the mapping of a field in a data stream's backing indices, refer to documentation about modifying data streams.
+If you need to change the mapping of a field in other indices, create a new index with the correct mapping and reindex your data into that index.
+
+**Rename a field**
+
+Renaming a field would invalidate data already indexed under the old field name.
+Instead, add an alias field to create an alternate field name.
 
 {ref}/indices-put-mapping.html[Endpoint documentation]
 [source,ts]
@@ -5766,8 +6018,21 @@ If no response is received before the timeout expires, the request fails and ret
 [discrete]
 ==== put_settings
 Update index settings.
-Changes dynamic index settings in real time. For data streams, index setting
-changes are applied to all backing indices by default.
+Changes dynamic index settings in real time.
+For data streams, index setting changes are applied to all backing indices by default.
+
+To revert a setting to the default value, use a null value.
+The list of per-index settings that can be updated dynamically on live indices can be found in index module documentation.
+To preserve existing settings from being updated, set the `preserve_existing` parameter to `true`.
+
+NOTE: You can only define new analyzers on closed indices.
+To add an analyzer, you must close the index, define the analyzer, and reopen the index.
+You cannot close the write index of a data stream.
+To update the analyzer for a data stream's write index and future backing indices, update the analyzer in the index template used by the stream.
+Then roll over the data stream to apply the new analyzer to the stream's write index and future backing indices.
+This affects searches and any new data added to the stream after the rollover.
+However, it does not affect the data stream's backing indices or their existing data.
+To change the analyzer for existing backing indices, you must create a new data stream and reindex your data into it.
 
 {ref}/indices-update-settings.html[Endpoint documentation]
 [source,ts]
@@ -5816,6 +6081,15 @@ Index templates are only applied during index creation.
 Changes to index templates do not affect existing indices.
 Settings and mappings specified in create index API requests override any settings or mappings specified in an index template.
 
+You can use C-style `/* *\/` block comments in index templates.
+You can include comments anywhere in the request body, except before the opening curly bracket.
+
+**Indices matching multiple templates**
+
+Multiple index templates can potentially match an index, in this case, both the settings and mappings are merged into the final configuration of the index.
+The order of the merging can be controlled using the order parameter, with lower order being applied first, and higher orders overriding them.
+NOTE: Multiple matching templates with the same order value will result in a non-deterministic merging order.
+
 {ref}/indices-templates-v1.html[Endpoint documentation]
 [source,ts]
 ----
@@ -5839,6 +6113,7 @@ Templates with lower 'order' values are merged first. Templates with higher
 ** *`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })*: Configuration options for the index.
 ** *`version` (Optional, number)*: Version number used to manage index templates externally. This number
 is not automatically generated by Elasticsearch.
+To unset a version, replace the template without specifying one.
 ** *`create` (Optional, boolean)*: If true, this request cannot replace or update existing index templates.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is
 received before the timeout expires, the request fails and returns an error.
@@ -5849,6 +6124,8 @@ received before the timeout expires, the request fails and returns an error.
 Get index recovery information.
 Get information about ongoing and completed shard recoveries for one or more indices.
 For data streams, the API returns information for the stream's backing indices.
+
+All recoveries, whether ongoing or complete, are kept in the cluster state and may be reported on at any time.
 
 Shard recovery is the process of initializing a shard copy, such as restoring a primary shard from a snapshot or creating a replica shard from a primary shard.
 When a shard recovery completes, the recovered shard is available for search and indexing.
@@ -5889,6 +6166,17 @@ To target all data streams and indices, omit this parameter or use `*` or `_all`
 Refresh an index.
 A refresh makes recent operations performed on one or more indices available for search.
 For data streams, the API runs the refresh operation on the stream’s backing indices.
+
+By default, Elasticsearch periodically refreshes indices every second, but only on indices that have received one search request or more in the last 30 seconds.
+You can change this default interval with the `index.refresh_interval` setting.
+
+Refresh requests are synchronous and do not return a response until the refresh operation completes.
+
+Refreshes are resource-intensive.
+To ensure good cluster performance, it's recommended to wait for Elasticsearch's periodic refresh rather than performing an explicit refresh when possible.
+
+If your application workflow indexes documents and then runs a search to retrieve the indexed document, it's recommended to use the index API's `refresh=wait_for` query parameter option.
+This option ensures the indexing operation waits for a periodic refresh before running the search.
 
 {ref}/indices-refresh.html[Endpoint documentation]
 [source,ts]
@@ -5962,6 +6250,18 @@ For each cluster in the index expression, information is returned about:
 * Whether the search is likely to have errors returned when you do the cross-cluster search (including any authorization errors if you do not have permission to query the index).
 * Cluster version information, including the Elasticsearch server version.
 
+For example, `GET /_resolve/cluster/my-index-*,cluster*:my-index-*` returns information about the local cluster and all remotely configured clusters that start with the alias `cluster*`.
+Each cluster returns information about whether it has any indices, aliases or data streams that match `my-index-*`.
+
+**Advantages of using this endpoint before a cross-cluster search**
+
+You may want to exclude a cluster or index from a search when:
+
+* A remote cluster is not currently connected and is configured with `skip_unavailable=false`. Running a cross-cluster search under those conditions will cause the entire search to fail.
+* A cluster has no matching indices, aliases or data streams for the index expression (or your user does not have permissions to search them). For example, suppose your index expression is `logs*,remote1:logs*` and the remote1 cluster has no indices, aliases or data streams that match `logs*`. In that case, that cluster will return no results from that cluster if you include it in a cross-cluster search.
+* The index expression (combined with any query parameters you specify) will likely cause an exception to be thrown when you do the search. In these cases, the "error" field in the `_resolve/cluster` response will be present. (This is also where security/permission errors will be shown.)
+* A remote cluster is an older version that does not support the feature you want to use in your search.
+
 {ref}/indices-resolve-cluster-api.html[Endpoint documentation]
 [source,ts]
 ----
@@ -6014,7 +6314,43 @@ For example, a request targeting `foo*,bar*` returns an error if an index starts
 [discrete]
 ==== rollover
 Roll over to a new index.
-Creates a new index for a data stream or index alias.
+TIP: It is recommended to use the index lifecycle rollover action to automate rollovers.
+
+The rollover API creates a new index for a data stream or index alias.
+The API behavior depends on the rollover target.
+
+**Roll over a data stream**
+
+If you roll over a data stream, the API creates a new write index for the stream.
+The stream's previous write index becomes a regular backing index.
+A rollover also increments the data stream's generation.
+
+**Roll over an index alias with a write index**
+
+TIP: Prior to Elasticsearch 7.9, you'd typically use an index alias with a write index to manage time series data.
+Data streams replace this functionality, require less maintenance, and automatically integrate with data tiers.
+
+If an index alias points to multiple indices, one of the indices must be a write index.
+The rollover API creates a new write index for the alias with `is_write_index` set to `true`.
+The API also `sets is_write_index` to `false` for the previous write index.
+
+**Roll over an index alias with one index**
+
+If you roll over an index alias that points to only one index, the API creates a new index for the alias and removes the original index from the alias.
+
+NOTE: A rollover creates a new index and is subject to the `wait_for_active_shards` setting.
+
+**Increment index names for an alias**
+
+When you roll over an index alias, you can specify a name for the new index.
+If you don't specify a name and the current index ends with `-` and a number, such as `my-index-000001` or `my-index-3`, the new index name increments that number.
+For example, if you roll over an alias with a current index of `my-index-000001`, the rollover creates a new index named `my-index-000002`.
+This number is always six characters and zero-padded, regardless of the previous index's name.
+
+If you use an index alias for time series data, you can use date math in the index name to track the rollover date.
+For example, you can create an alias that points to an index named `<my-index-{now/d}-000001>`.
+If you create the index on May 6, 2099, the index's name is `my-index-2099.05.06-000001`.
+If you roll over the alias on May 7, 2099, the new index's name is `my-index-2099.05.07-000002`.
 
 {ref}/indices-rollover-index.html[Endpoint documentation]
 [source,ts]
@@ -6170,7 +6506,7 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 [discrete]
 ==== simulate_index_template
 Simulate an index.
-Returns the index configuration that would be applied to the specified index from an existing index template.
+Get the index configuration that would be applied to the specified index from an existing index template.
 
 {ref}/indices-simulate-index.html[Endpoint documentation]
 [source,ts]
@@ -6189,7 +6525,7 @@ client.indices.simulateIndexTemplate({ name })
 [discrete]
 ==== simulate_template
 Simulate an index template.
-Returns the index configuration that would be applied by a particular index template.
+Get the index configuration that would be applied by a particular index template.
 
 {ref}/indices-simulate-template.html[Endpoint documentation]
 [source,ts]
@@ -6239,6 +6575,15 @@ Split an index into a new index with more primary shards.
 
 * The index must be read-only.
 * The cluster health status must be green.
+
+You can do make an index read-only with the following request using the add index block API:
+
+```
+PUT /my_source_index/_block/write
+```
+
+The current write index on a data stream cannot be split.
+In order to split the current write index, the data stream must first be rolled over so that a new write index is created and then the previous write index can be split.
 
 The number of times the index can be split (and the number of shards that each original shard can be split into) is determined by the `index.number_of_routing_shards` setting.
 The number of routing shards specifies the hashing space that is used internally to distribute documents across shards with consistent hashing.
@@ -6599,8 +6944,6 @@ client.ingest.getGeoipDatabase({ ... })
 ** *`id` (Optional, string | string[])*: List of database configuration IDs to retrieve.
 Wildcard (`*`) expressions are supported.
 To get all database configurations, omit this parameter or use `*`.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
-If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_ip_location_database
@@ -6769,9 +7112,15 @@ If the operator privileges feature is enabled, only operator users can use this 
 {ref}/delete-license.html[Endpoint documentation]
 [source,ts]
 ----
-client.license.delete()
+client.license.delete({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get
@@ -6841,6 +7190,8 @@ client.license.post({ ... })
 ** *`license` (Optional, { expiry_date_in_millis, issue_date_in_millis, start_date_in_millis, issued_to, issuer, max_nodes, max_resource_units, signature, type, uid })*
 ** *`licenses` (Optional, { expiry_date_in_millis, issue_date_in_millis, start_date_in_millis, issued_to, issuer, max_nodes, max_resource_units, signature, type, uid }[])*: A sequence of one or more JSON documents containing the license information.
 ** *`acknowledge` (Optional, boolean)*: Specifies whether you acknowledge the license changes.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== post_start_basic
@@ -6865,6 +7216,8 @@ client.license.postStartBasic({ ... })
 
 * *Request (object):*
 ** *`acknowledge` (Optional, boolean)*: whether the user has acknowledged acknowledge messages (default: false)
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== post_start_trial
@@ -6888,14 +7241,15 @@ client.license.postStartTrial({ ... })
 * *Request (object):*
 ** *`acknowledge` (Optional, boolean)*: whether the user has acknowledged acknowledge messages (default: false)
 ** *`type_query_string` (Optional, string)*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 === logstash
 [discrete]
 ==== delete_pipeline
 Delete a Logstash pipeline.
-
 Delete a pipeline that is used for Logstash Central Management.
+If the request succeeds, you receive an empty response with an appropriate status code.
 
 {ref}/logstash-api-delete-pipeline.html[Endpoint documentation]
 [source,ts]
@@ -6912,7 +7266,6 @@ client.logstash.deletePipeline({ id })
 [discrete]
 ==== get_pipeline
 Get Logstash pipelines.
-
 Get pipelines that are used for Logstash Central Management.
 
 {ref}/logstash-api-get-pipeline.html[Endpoint documentation]
@@ -6954,7 +7307,8 @@ client.logstash.putPipeline({ id })
 Get deprecation information.
 Get information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
 
-TIP: This APIs is designed for indirect use by the Upgrade Assistant. We strongly recommend you use the Upgrade Assistant.
+TIP: This APIs is designed for indirect use by the Upgrade Assistant.
+You are strongly recommended to use the Upgrade Assistant.
 
 {ref}/migration-api-deprecation.html[Endpoint documentation]
 [source,ts]
@@ -6975,9 +7329,9 @@ Version upgrades sometimes require changes to how features store configuration i
 Check which features need to be migrated and the status of any migrations that are in progress.
 
 TIP: This API is designed for indirect use by the Upgrade Assistant.
-We strongly recommend you use the Upgrade Assistant.
+You are strongly recommended to use the Upgrade Assistant.
 
-{ref}/migration-api-feature-upgrade.html[Endpoint documentation]
+{ref}/feature-migration-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.migration.getFeatureUpgradeStatus()
@@ -6994,7 +7348,7 @@ Some functionality might be temporarily unavailable during the migration process
 
 TIP: The API is designed for indirect use by the Upgrade Assistant. We strongly recommend you use the Upgrade Assistant.
 
-{ref}/migration-api-feature-upgrade.html[Endpoint documentation]
+{ref}/feature-migration-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.migration.postFeatureUpgrade()
@@ -7280,6 +7634,7 @@ client.ml.deleteTrainedModel({ model_id })
 * *Request (object):*
 ** *`model_id` (string)*: The unique identifier of the trained model.
 ** *`force` (Optional, boolean)*: Forcefully deletes a trained model that is referenced by ingest pipelines or has a started deployment.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== delete_trained_model_alias
@@ -7827,8 +8182,6 @@ client.ml.getMemoryStats({ ... })
 * *Request (object):*
 ** *`node_id` (Optional, string)*: The names of particular nodes in the cluster to target. For example, `nodeId1,nodeId2` or
 `ml:true`
-** *`human` (Optional, boolean)*: Specify this query parameter to include the fields with units in the response. Otherwise only
-the `_in_bytes` sizes are returned in the response.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout
 expires, the request fails and returns an error.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request
@@ -8234,6 +8587,11 @@ client.ml.putCalendarJob({ calendar_id, job_id })
 Create a data frame analytics job.
 This API creates a data frame analytics job that performs an analysis on the
 source indices and stores the outcome in a destination index.
+By default, the query used in the source configuration is `{"match_all": {}}`.
+
+If the destination index does not exist, it is created automatically when you start the job.
+
+If you supply only a subset of the regression or classification parameters, hyperparameter optimization occurs. It determines a value for each of the undefined parameters.
 
 {ref}/put-dfanalytics.html[Endpoint documentation]
 [source,ts]
@@ -8309,7 +8667,9 @@ Create a datafeed.
 Datafeeds retrieve data from Elasticsearch for analysis by an anomaly detection job.
 You can associate only one datafeed with each anomaly detection job.
 The datafeed contains a query that runs at a defined interval (`frequency`).
-If you are concerned about delayed data, you can add a delay (`query_delay`) at each interval.
+If you are concerned about delayed data, you can add a delay (`query_delay') at each interval.
+By default, the datafeed uses the following query: `{"match_all": {"boost": 1}}`.
+
 When Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had
 at the time of creation and runs the query using those same roles. If you provide secondary authorization headers,
 those credentials are used instead.
@@ -8398,6 +8758,7 @@ Up to 10000 items are allowed in each filter.
 ==== put_job
 Create an anomaly detection job.
 If you include a `datafeed_config`, you must have read index privileges on the source index.
+If you include a `datafeed_config` but do not provide a query, the datafeed uses `{"match_all": {"boost": 1}}`.
 
 {ref}/ml-put-job.html[Endpoint documentation]
 [source,ts]
@@ -9106,8 +9467,7 @@ client.nodes.clearRepositoriesMeteringArchive({ node_id, max_archive_version })
 
 * *Request (object):*
 ** *`node_id` (string | string[])*: List of node IDs or names used to limit returned information.
-All the nodes selective options are explained [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster.html#cluster-nodes).
-** *`max_archive_version` (number)*: Specifies the maximum [archive_version](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-repositories-metering-api.html#get-repositories-metering-api-response-body) to be cleared from the archive.
+** *`max_archive_version` (number)*: Specifies the maximum `archive_version` to be cleared from the archive.
 
 [discrete]
 ==== get_repositories_metering_info
@@ -9150,9 +9510,6 @@ client.nodes.hotThreads({ ... })
 a task from an empty queue) are filtered out.
 ** *`interval` (Optional, string | -1 | 0)*: The interval to do the second sampling of threads.
 ** *`snapshots` (Optional, number)*: Number of samples of thread stacktrace.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response
-is received before the timeout expires, the request fails and
-returns an error.
 ** *`threads` (Optional, number)*: Specifies the number of hot threads to provide information for.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received
 before the timeout expires, the request fails and returns an error.
@@ -9177,7 +9534,6 @@ client.nodes.info({ ... })
 ** *`node_id` (Optional, string | string[])*: List of node IDs or names used to limit returned information.
 ** *`metric` (Optional, string | string[])*: Limits the information returned to the specific metrics. Supports a list, such as http,ingest.
 ** *`flat_settings` (Optional, boolean)*: If true, returns settings in flat format.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
@@ -9232,7 +9588,6 @@ client.nodes.stats({ ... })
 ** *`groups` (Optional, boolean)*: List of search groups to include in the search statistics.
 ** *`include_segment_file_sizes` (Optional, boolean)*: If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested).
 ** *`level` (Optional, Enum("cluster" | "indices" | "shards"))*: Indicates whether statistics are aggregated at the cluster, index, or shard level.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 ** *`types` (Optional, string[])*: A list of document types for the indexing index metric.
 ** *`include_unloaded_segments` (Optional, boolean)*: If `true`, the response includes information from segments that are not loaded into memory.
@@ -9263,6 +9618,7 @@ If no response is received before the timeout expires, the request fails and ret
 ==== delete_rule
 Delete a query rule.
 Delete a query rule within a query ruleset.
+This is a destructive action that is only recoverable by re-adding the same rule with the create or update query rule API.
 
 {ref}/delete-query-rule.html[Endpoint documentation]
 [source,ts]
@@ -9280,6 +9636,8 @@ client.queryRules.deleteRule({ ruleset_id, rule_id })
 [discrete]
 ==== delete_ruleset
 Delete a query ruleset.
+Remove a query ruleset and its associated data.
+This is a destructive action that is not recoverable.
 
 {ref}/delete-query-ruleset.html[Endpoint documentation]
 [source,ts]
@@ -9343,13 +9701,18 @@ client.queryRules.listRulesets({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`from` (Optional, number)*: Starting offset (default: 0)
-** *`size` (Optional, number)*: specifies a max number of results to get
+** *`from` (Optional, number)*: The offset from the first result to fetch.
+** *`size` (Optional, number)*: The maximum number of results to retrieve.
 
 [discrete]
 ==== put_rule
 Create or update a query rule.
 Create or update a query rule within a query ruleset.
+
+IMPORTANT: Due to limitations within pinned queries, you can only pin documents using ids or docs, but cannot use both in single rule.
+It is advised to use one or the other in query rulesets, to avoid errors.
+Additionally, pinned queries have a maximum limit of 100 pinned hits.
+If multiple matching rules pin more than 100 documents, only the first 100 documents are pinned in the order they are specified in the ruleset.
 
 {ref}/put-query-rule.html[Endpoint documentation]
 [source,ts]
@@ -9361,16 +9724,25 @@ client.queryRules.putRule({ ruleset_id, rule_id, type, criteria, actions })
 ==== Arguments
 
 * *Request (object):*
-** *`ruleset_id` (string)*: The unique identifier of the query ruleset containing the rule to be created or updated
-** *`rule_id` (string)*: The unique identifier of the query rule within the specified ruleset to be created or updated
-** *`type` (Enum("pinned" | "exclude"))*
-** *`criteria` ({ type, metadata, values } | { type, metadata, values }[])*
-** *`actions` ({ ids, docs })*
+** *`ruleset_id` (string)*: The unique identifier of the query ruleset containing the rule to be created or updated.
+** *`rule_id` (string)*: The unique identifier of the query rule within the specified ruleset to be created or updated.
+** *`type` (Enum("pinned" | "exclude"))*: The type of rule.
+** *`criteria` ({ type, metadata, values } | { type, metadata, values }[])*: The criteria that must be met for the rule to be applied.
+If multiple criteria are specified for a rule, all criteria must be met for the rule to be applied.
+** *`actions` ({ ids, docs })*: The actions to take when the rule is matched.
+The format of this action depends on the rule type.
 ** *`priority` (Optional, number)*
 
 [discrete]
 ==== put_ruleset
 Create or update a query ruleset.
+There is a limit of 100 rules per ruleset.
+This limit can be increased by using the `xpack.applications.rules.max_rules_per_ruleset` cluster setting.
+
+IMPORTANT: Due to limitations within pinned queries, you can only select documents using `ids` or `docs`, but cannot use both in single rule.
+It is advised to use one or the other in query rulesets, to avoid errors.
+Additionally, pinned queries have a maximum limit of 100 pinned hits.
+If multiple matching rules pin more than 100 documents, only the first 100 documents are pinned in the order they are specified in the ruleset.
 
 {ref}/put-query-ruleset.html[Endpoint documentation]
 [source,ts]
@@ -9382,7 +9754,7 @@ client.queryRules.putRuleset({ ruleset_id, rules })
 ==== Arguments
 
 * *Request (object):*
-** *`ruleset_id` (string)*: The unique identifier of the query ruleset to be created or updated
+** *`ruleset_id` (string)*: The unique identifier of the query ruleset to be created or updated.
 ** *`rules` ({ rule_id, type, criteria, actions, priority } | { rule_id, type, criteria, actions, priority }[])*
 
 [discrete]
@@ -9401,7 +9773,8 @@ client.queryRules.test({ ruleset_id, match_criteria })
 
 * *Request (object):*
 ** *`ruleset_id` (string)*: The unique identifier of the query ruleset to be created or updated
-** *`match_criteria` (Record<string, User-defined value>)*
+** *`match_criteria` (Record<string, User-defined value>)*: The match criteria to apply to rules in the given query ruleset.
+Match criteria should match the keys defined in the `criteria.metadata` field of the rule.
 
 [discrete]
 === rollup
@@ -9568,6 +9941,39 @@ Search rolled-up data.
 The rollup search endpoint is needed because, internally, rolled-up documents utilize a different document structure than the original data.
 It rewrites standard Query DSL into a format that matches the rollup documents then takes the response and rewrites it back to what a client would expect given the original query.
 
+The request body supports a subset of features from the regular search API.
+The following functionality is not available:
+
+`size`: Because rollups work on pre-aggregated data, no search hits can be returned and so size must be set to zero or omitted entirely.
+`highlighter`, `suggestors`, `post_filter`, `profile`, `explain`: These are similarly disallowed.
+
+**Searching both historical rollup and non-rollup data**
+
+The rollup search API has the capability to search across both "live" non-rollup data and the aggregated rollup data.
+This is done by simply adding the live indices to the URI. For example:
+
+```
+GET sensor-1,sensor_rollup/_rollup_search
+{
+  "size": 0,
+  "aggregations": {
+     "max_temperature": {
+      "max": {
+        "field": "temperature"
+      }
+    }
+  }
+}
+```
+
+The rollup search endpoint does two things when the search runs:
+
+* The original request is sent to the non-rollup index unaltered.
+* A rewritten version of the original request is sent to the rollup index.
+
+When the two responses are received, the endpoint rewrites the rollup response and merges the two together.
+During the merging process, if there is any overlap in buckets between the two responses, the buckets from the non-rollup index are used.
+
 {ref}/rollup-search.html[Endpoint documentation]
 [source,ts]
 ----
@@ -9578,9 +9984,15 @@ client.rollup.rollupSearch({ index })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (string | string[])*: Enables searching rolled-up data using the standard Query DSL.
+** *`index` (string | string[])*: A list of data streams and indices used to limit the request.
+This parameter has the following rules:
+
+* At least one data stream, index, or wildcard expression must be specified. This target can include a rollup or non-rollup index. For data streams, the stream's backing indices can only serve as non-rollup indices. Omitting the parameter or using `_all` are not permitted.
+* Multiple non-rollup indices may be specified.
+* Only one rollup index may be specified. If more than one are supplied, an exception occurs.
+* Wildcard expressions (`*`) may be used. If they match more than one rollup index, an exception occurs. However, you can use an expression to match multiple non-rollup indices or data streams.
 ** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Specifies aggregations.
-** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Specifies a DSL query.
+** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Specifies a DSL query that is subject to some limitations.
 ** *`size` (Optional, number)*: Must be zero if set, as rollups work on pre-aggregated data.
 ** *`rest_total_hits_as_int` (Optional, boolean)*: Indicates whether hits.total should be rendered as an integer or an object in the rest search response
 ** *`typed_keys` (Optional, boolean)*: Specify whether aggregation and suggester names should be prefixed by their respective types in the response
@@ -9609,6 +10021,15 @@ Stop rollup jobs.
 If you try to stop a job that does not exist, an exception occurs.
 If you try to stop a job that is already stopped, nothing happens.
 
+Since only a stopped job can be deleted, it can be useful to block the API until the indexer has fully stopped.
+This is accomplished with the `wait_for_completion` query parameter, and optionally a timeout. For example:
+
+```
+POST _rollup/job/sensor/_stop?wait_for_completion=true&timeout=10s
+```
+The parameter blocks the API call from returning until either the job has moved to STOPPED or the specified time has elapsed.
+If the specified time elapses without the job moving to STOPPED, a timeout exception occurs.
+
 {ref}/rollup-stop-job.html[Endpoint documentation]
 [source,ts]
 ----
@@ -9622,6 +10043,8 @@ client.rollup.stopJob({ id })
 ** *`id` (string)*: Identifier for the rollup job.
 ** *`timeout` (Optional, string | -1 | 0)*: If `wait_for_completion` is `true`, the API blocks for (at maximum) the specified duration while waiting for the job to stop.
 If more than `timeout` time has passed, the API throws a timeout exception.
+NOTE: Even if a timeout occurs, the stop request is still processing and eventually moves the job to STOPPED.
+The timeout simply means the API call itself timed out while waiting for the status change.
 ** *`wait_for_completion` (Optional, boolean)*: If set to `true`, causes the API to block until the indexer state completely stops.
 If set to `false`, the API returns immediately and the indexer is stopped asynchronously in the background.
 
@@ -9814,7 +10237,7 @@ client.searchApplication.search({ name })
 Get cache statistics.
 Get statistics about the shared cache for partially mounted indices.
 
-{ref}/searchable-snapshots-apis.html[Endpoint documentation]
+{ref}/searchable-snapshots-api-cache-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.searchableSnapshots.cacheStats({ ... })
@@ -9824,7 +10247,7 @@ client.searchableSnapshots.cacheStats({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`node_id` (Optional, string | string[])*: A list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+** *`node_id` (Optional, string | string[])*: The names of the nodes in the cluster to target.
 ** *`master_timeout` (Optional, string | -1 | 0)*
 
 [discrete]
@@ -9832,7 +10255,7 @@ client.searchableSnapshots.cacheStats({ ... })
 Clear the cache.
 Clear indices and data streams from the shared cache for partially mounted indices.
 
-{ref}/searchable-snapshots-apis.html[Endpoint documentation]
+{ref}/searchable-snapshots-api-clear-cache.html[Endpoint documentation]
 [source,ts]
 ----
 client.searchableSnapshots.clearCache({ ... })
@@ -9842,12 +10265,11 @@ client.searchableSnapshots.clearCache({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string | string[])*: A list of index names
+** *`index` (Optional, string | string[])*: A list of data streams, indices, and aliases to clear from the cache.
+It supports wildcards (`*`).
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 ** *`allow_no_indices` (Optional, boolean)*: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 ** *`ignore_unavailable` (Optional, boolean)*: Whether specified concrete indices should be ignored when unavailable (missing or closed)
-** *`pretty` (Optional, boolean)*
-** *`human` (Optional, boolean)*
 
 [discrete]
 ==== mount
@@ -9866,21 +10288,24 @@ client.searchableSnapshots.mount({ repository, snapshot, index })
 ==== Arguments
 
 * *Request (object):*
-** *`repository` (string)*: The name of the repository containing the snapshot of the index to mount
-** *`snapshot` (string)*: The name of the snapshot of the index to mount
-** *`index` (string)*
-** *`renamed_index` (Optional, string)*
-** *`index_settings` (Optional, Record<string, User-defined value>)*
-** *`ignore_index_settings` (Optional, string[])*
-** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
-** *`wait_for_completion` (Optional, boolean)*: Should this request wait until the operation has completed before returning
-** *`storage` (Optional, string)*: Selects the kind of local storage used to accelerate searches. Experimental, and defaults to `full_copy`
+** *`repository` (string)*: The name of the repository containing the snapshot of the index to mount.
+** *`snapshot` (string)*: The name of the snapshot of the index to mount.
+** *`index` (string)*: The name of the index contained in the snapshot whose data is to be mounted.
+If no `renamed_index` is specified, this name will also be used to create the new index.
+** *`renamed_index` (Optional, string)*: The name of the index that will be created.
+** *`index_settings` (Optional, Record<string, User-defined value>)*: The settings that should be added to the index when it is mounted.
+** *`ignore_index_settings` (Optional, string[])*: The names of settings that should be removed from the index when it is mounted.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for the master node.
+If the master node is not available before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
+** *`wait_for_completion` (Optional, boolean)*: If true, the request blocks until the operation is complete.
+** *`storage` (Optional, string)*: The mount option for the searchable snapshot index.
 
 [discrete]
 ==== stats
 Get searchable snapshot statistics.
 
-{ref}/searchable-snapshots-apis.html[Endpoint documentation]
+{ref}/searchable-snapshots-api-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.searchableSnapshots.stats({ ... })
@@ -9890,7 +10315,7 @@ client.searchableSnapshots.stats({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string | string[])*: A list of index names
+** *`index` (Optional, string | string[])*: A list of data streams and indices to retrieve statistics for.
 ** *`level` (Optional, Enum("cluster" | "indices" | "shards"))*: Return stats aggregated at cluster, index or shard level
 
 [discrete]
@@ -9974,14 +10399,47 @@ client.security.bulkPutRole({ roles })
 
 [discrete]
 ==== bulk_update_api_keys
-Updates the attributes of multiple existing API keys.
+Bulk update API keys.
+Update the attributes for multiple API keys.
+
+IMPORTANT: It is not possible to use an API key as the authentication credential for this API. To update API keys, the owner user's credentials are required.
+
+This API is similar to the update API key API but enables you to apply the same update to multiple API keys in one API call. This operation can greatly improve performance over making individual updates.
+
+It is not possible to update expired or invalidated API keys.
+
+This API supports updates to API key access scope, metadata and expiration.
+The access scope of each API key is derived from the `role_descriptors` you specify in the request and a snapshot of the owner user's permissions at the time of the request.
+The snapshot of the owner's permissions is updated automatically on every call.
+
+IMPORTANT: If you don't specify `role_descriptors` in the request, a call to this API might still change an API key's access scope. This change can occur if the owner user's permissions have changed since the API key was created or last modified.
+
+A successful request returns a JSON structure that contains the IDs of all updated API keys, the IDs of API keys that already had the requested changes and did not require an update, and error details for any failed update.
 
 {ref}/security-api-bulk-update-api-keys.html[Endpoint documentation]
 [source,ts]
 ----
-client.security.bulkUpdateApiKeys()
+client.security.bulkUpdateApiKeys({ ids })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`ids` (string | string[])*: The API key identifiers.
+** *`expiration` (Optional, string | -1 | 0)*: Expiration time for the API keys.
+By default, API keys never expire.
+This property can be omitted to leave the value unchanged.
+** *`metadata` (Optional, Record<string, User-defined value>)*: Arbitrary nested metadata to associate with the API keys.
+Within the `metadata` object, top-level keys beginning with an underscore (`_`) are reserved for system usage.
+Any information specified with this parameter fully replaces metadata previously associated with the API key.
+** *`role_descriptors` (Optional, Record<string, { cluster, indices, remote_indices, remote_cluster, global, applications, metadata, run_as, description, restriction, transient_metadata }>)*: The role descriptors to assign to the API keys.
+An API key's effective permissions are an intersection of its assigned privileges and the point-in-time snapshot of permissions of the owner user.
+You can assign new privileges by specifying them in this parameter.
+To remove assigned privileges, supply the `role_descriptors` parameter as an empty object `{}`.
+If an API key has no assigned privileges, it inherits the owner user's full permissions.
+The snapshot of the owner's permissions is always updated, whether you supply the `role_descriptors` parameter.
+The structure of a role descriptor is the same as the request for the create API keys API.
 
 [discrete]
 ==== change_password
@@ -10193,6 +10651,35 @@ client.security.createServiceToken({ namespace, service })
 ** *`service` (string)*: An identifier for the service name
 ** *`name` (Optional, string)*: An identifier for the token name
 ** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+[discrete]
+==== delegate_pki
+Delegate PKI authentication.
+This API implements the exchange of an X509Certificate chain for an Elasticsearch access token.
+The certificate chain is validated, according to RFC 5280, by sequentially considering the trust configuration of every installed PKI realm that has `delegation.enabled` set to `true`.
+A successfully trusted client certificate is also subject to the validation of the subject distinguished name according to thw `username_pattern` of the respective realm.
+
+This API is called by smart and trusted proxies, such as Kibana, which terminate the user's TLS session but still want to authenticate the user by using a PKI realm—-​as if the user connected directly to Elasticsearch.
+
+IMPORTANT: The association between the subject public key in the target certificate and the corresponding private key is not validated.
+This is part of the TLS authentication process and it is delegated to the proxy that calls this API.
+The proxy is trusted to have performed the TLS authentication and this API translates that authentication into an Elasticsearch access token.
+
+{ref}/security-api-delegate-pki-authentication.html[Endpoint documentation]
+[source,ts]
+----
+client.security.delegatePki({ x509_certificate_chain })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`x509_certificate_chain` (string[])*: The X509Certificate chain, which is represented as an ordered string array.
+Each string in the array is a base64-encoded (Section 4 of RFC4648 - not base64url-encoded) of the certificate's DER encoding.
+
+The first element is the target certificate that contains the subject distinguished name that is requesting access.
+This may be followed by additional certificates; each subsequent certificate is used to certify the previous one.
 
 [discrete]
 ==== delete_privileges
@@ -10536,14 +11023,21 @@ client.security.getServiceCredentials({ namespace, service })
 
 [discrete]
 ==== get_settings
-Retrieve settings for the security system indices
+Get security index settings.
+Get the user-configurable settings for the security internal index (`.security` and associated indices).
 
 {ref}/security-api-get-settings.html[Endpoint documentation]
 [source,ts]
 ----
-client.security.getSettings()
+client.security.getSettings({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_token
@@ -11280,14 +11774,28 @@ When specified, this information fully replaces metadata previously associated w
 
 [discrete]
 ==== update_settings
-Update settings for the security system index
+Update security index settings.
+Update the user-configurable settings for the security internal index (`.security` and associated indices). Only a subset of settings are allowed to be modified, for example `index.auto_expand_replicas` and `index.number_of_replicas`.
+
+If a specific index is not in use on the system and settings are provided for it, the request will be rejected. This API does not yet support configuring the settings for indices before they are in use.
 
 {ref}/security-api-update-settings.html[Endpoint documentation]
 [source,ts]
 ----
-client.security.updateSettings()
+client.security.updateSettings({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`security` (Optional, { index })*: Settings for the index used for most security configuration, including native realm users and roles configured with the API.
+** *`security-profile` (Optional, { index })*: Settings for the index used to store profile information.
+** *`security-tokens` (Optional, { index })*: Settings for the index used to store tokens.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== update_user_profile_data
@@ -11330,7 +11838,7 @@ Direct use is not supported.
 
 If the operator privileges feature is enabled, you must be an operator to use this API.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current[Endpoint documentation]
+{ref}/delete-shutdown.html[Endpoint documentation]
 [source,ts]
 ----
 client.shutdown.deleteNode({ node_id })
@@ -11355,7 +11863,7 @@ NOTE: This feature is designed for indirect use by Elasticsearch Service, Elasti
 
 If the operator privileges feature is enabled, you must be an operator to use this API.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current[Endpoint documentation]
+{ref}/get-shutdown.html[Endpoint documentation]
 [source,ts]
 ----
 client.shutdown.getNode({ ... })
@@ -11367,13 +11875,14 @@ client.shutdown.getNode({ ... })
 * *Request (object):*
 ** *`node_id` (Optional, string | string[])*: Which node for which to retrieve the shutdown status
 ** *`master_timeout` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-** *`timeout` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== put_node
 Prepare a node to be shut down.
 
 NOTE: This feature is designed for indirect use by Elastic Cloud, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
+
+If you specify a node that is offline, it will be prepared for shut down when it rejoins the cluster.
 
 If the operator privileges feature is enabled, you must be an operator to use this API.
 
@@ -11386,7 +11895,7 @@ If a node is already being prepared for shutdown, you can use this API to change
 IMPORTANT: This API does NOT terminate the Elasticsearch process.
 Monitor the node shutdown status to determine when it is safe to stop Elasticsearch.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current[Endpoint documentation]
+{ref}/put-shutdown.html[Endpoint documentation]
 [source,ts]
 ----
 client.shutdown.putNode({ node_id, type, reason })
@@ -11396,7 +11905,10 @@ client.shutdown.putNode({ node_id, type, reason })
 ==== Arguments
 
 * *Request (object):*
-** *`node_id` (string)*: The node id of node to be shut down
+** *`node_id` (string)*: The node identifier.
+This parameter is not validated against the cluster's active nodes.
+This enables you to register a node for shut down while it is offline.
+No error is thrown if you specify an invalid node ID.
 ** *`type` (Enum("restart" | "remove" | "replace"))*: Valid values are restart, remove, or replace.
 Use restart when you need to temporarily shut down a node to perform an upgrade, make configuration changes, or perform other maintenance.
 Because the node is expected to rejoin the cluster, data is not migrated off of the node.
@@ -11414,21 +11926,55 @@ If you specify both a restart allocation delay and an index-level allocation del
 Specifies the name of the node that is replacing the node being shut down.
 Shards from the shut down node are only allowed to be allocated to the target node, and no other data will be allocated to the target node.
 During relocation of data certain allocation rules are ignored, such as disk watermarks or user attribute filtering rules.
-** *`master_timeout` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-** *`timeout` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+** *`master_timeout` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 === simulate
 [discrete]
 ==== ingest
-Simulates running ingest with example documents.
+Simulate data ingestion.
+Run ingest pipelines against a set of provided documents, optionally with substitute pipeline definitions, to simulate ingesting data into an index.
+
+This API is meant to be used for troubleshooting or pipeline development, as it does not actually index any data into Elasticsearch.
+
+The API runs the default and final pipeline for that index against a set of documents provided in the body of the request.
+If a pipeline contains a reroute processor, it follows that reroute processor to the new index, running that index's pipelines as well the same way that a non-simulated ingest would.
+No data is indexed into Elasticsearch.
+Instead, the transformed document is returned, along with the list of pipelines that have been run and the name of the index where the document would have been indexed if this were not a simulation.
+The transformed document is validated against the mappings that would apply to this index, and any validation error is reported in the result.
+
+This API differs from the simulate pipeline API in that you specify a single pipeline for that API, and it runs only that one pipeline.
+The simulate pipeline API is more useful for developing a single pipeline, while the simulate ingest API is more useful for troubleshooting the interaction of the various pipelines that get applied when ingesting into an index.
+
+By default, the pipeline definitions that are currently in the system are used.
+However, you can supply substitute pipeline definitions in the body of the request.
+These will be used in place of the pipeline definitions that are already in the system. This can be used to replace existing pipeline definitions or to create new ones. The pipeline substitutions are used only within this request.
 
 {ref}/simulate-ingest-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.simulate.ingest()
+client.simulate.ingest({ docs })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`docs` ({ _id, _index, _source }[])*: Sample documents to test in the pipeline.
+** *`index` (Optional, string)*: The index to simulate ingesting into.
+This value can be overridden by specifying an index on each document.
+If you specify this parameter in the request path, it is used for any documents that do not explicitly specify an index argument.
+** *`component_template_substitutions` (Optional, Record<string, { template, version, _meta }>)*: A map of component template names to substitute component template definition objects.
+** *`index_template_subtitutions` (Optional, Record<string, { index_patterns, composed_of, template, version, priority, _meta, allow_auto_create, data_stream, deprecated, ignore_missing_component_templates }>)*: A map of index template names to substitute index template definition objects.
+** *`mapping_addition` (Optional, { all_field, date_detection, dynamic, dynamic_date_formats, dynamic_templates, _field_names, index_field, _meta, numeric_detection, properties, _routing, _size, _source, runtime, enabled, subobjects, _data_stream_timestamp })*
+** *`pipeline_substitutions` (Optional, Record<string, { description, on_failure, processors, version, deprecated, _meta }>)*: Pipelines to test.
+If you don’t specify the `pipeline` request path parameter, this parameter is required.
+If you specify both this and the request path parameter, the API only uses the request path parameter.
+** *`pipeline` (Optional, string)*: The pipeline to use as the default pipeline.
+This value can be used to override the default pipeline of the index.
 
 [discrete]
 === slm
@@ -11449,6 +11995,10 @@ client.slm.deleteLifecycle({ policy_id })
 
 * *Request (object):*
 ** *`policy_id` (string)*: The id of the snapshot lifecycle policy to remove
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== execute_lifecycle
@@ -11467,6 +12017,10 @@ client.slm.executeLifecycle({ policy_id })
 
 * *Request (object):*
 ** *`policy_id` (string)*: The id of the snapshot lifecycle policy to be executed
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== execute_retention
@@ -11477,9 +12031,17 @@ The retention policy is normally applied according to its schedule.
 {ref}/slm-api-execute-retention.html[Endpoint documentation]
 [source,ts]
 ----
-client.slm.executeRetention()
+client.slm.executeRetention({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_lifecycle
@@ -11497,6 +12059,10 @@ client.slm.getLifecycle({ ... })
 
 * *Request (object):*
 ** *`policy_id` (Optional, string | string[])*: List of snapshot lifecycle policies to retrieve
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_stats
@@ -11506,9 +12072,15 @@ Get global and policy-level statistics about actions taken by snapshot lifecycle
 {ref}/slm-api-get-stats.html[Endpoint documentation]
 [source,ts]
 ----
-client.slm.getStats()
+client.slm.getStats({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_status
@@ -11517,9 +12089,19 @@ Get the snapshot lifecycle management status.
 {ref}/slm-api-get-status.html[Endpoint documentation]
 [source,ts]
 ----
-client.slm.getStatus()
+client.slm.getStatus({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
 
 [discrete]
 ==== put_lifecycle
@@ -11544,8 +12126,12 @@ client.slm.putLifecycle({ policy_id })
 ** *`repository` (Optional, string)*: Repository used to store snapshots created by this policy. This repository must exist prior to the policy’s creation. You can create a repository using the snapshot repository API.
 ** *`retention` (Optional, { expire_after, max_count, min_count })*: Retention rules used to retain and delete snapshots created by the policy.
 ** *`schedule` (Optional, string)*: Periodic or absolute schedule at which the policy creates snapshots. SLM applies schedule changes immediately.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
 
 [discrete]
 ==== start
@@ -11556,9 +12142,19 @@ Manually starting SLM is necessary only if it has been stopped using the stop SL
 {ref}/slm-api-start.html[Endpoint documentation]
 [source,ts]
 ----
-client.slm.start()
+client.slm.start({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
 
 [discrete]
 ==== stop
@@ -11574,9 +12170,19 @@ Use the get snapshot lifecycle management status API to see if SLM is running.
 {ref}/slm-api-stop.html[Endpoint documentation]
 [source,ts]
 ----
-client.slm.stop()
+client.slm.stop({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
 
 [discrete]
 === snapshot
@@ -11595,16 +12201,20 @@ client.snapshot.cleanupRepository({ repository })
 ==== Arguments
 
 * *Request (object):*
-** *`repository` (string)*: Snapshot repository to clean up.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
-** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response.
+** *`repository` (string)*: The name of the snapshot repository to clean up.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If the master node is not available before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged.
+To indicate that the request should never timeout, set it to `-1`.
 
 [discrete]
 ==== clone
 Clone a snapshot.
 Clone part of all of a snapshot into another snapshot in the same repository.
 
-{ref}/modules-snapshots.html[Endpoint documentation]
+{ref}/clone-snapshot-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.clone({ repository, snapshot, target_snapshot, indices })
@@ -11614,19 +12224,23 @@ client.snapshot.clone({ repository, snapshot, target_snapshot, indices })
 ==== Arguments
 
 * *Request (object):*
-** *`repository` (string)*: A repository name
-** *`snapshot` (string)*: The name of the snapshot to clone from
-** *`target_snapshot` (string)*: The name of the cloned snapshot to create
-** *`indices` (string)*
-** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
-** *`timeout` (Optional, string | -1 | 0)*
+** *`repository` (string)*: The name of the snapshot repository that both source and target snapshot belong to.
+** *`snapshot` (string)*: The source snapshot name.
+** *`target_snapshot` (string)*: The target snapshot name.
+** *`indices` (string)*: A list of indices to include in the snapshot.
+Multi-target syntax is supported.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for the master node.
+If the master node is not available before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
+** *`timeout` (Optional, string | -1 | 0)*: The period of time to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== create
 Create a snapshot.
 Take a snapshot of a cluster or of data streams and indices.
 
-{ref}/modules-snapshots.html[Endpoint documentation]
+{ref}/create-snapshot-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.create({ repository, snapshot })
@@ -11636,16 +12250,45 @@ client.snapshot.create({ repository, snapshot })
 ==== Arguments
 
 * *Request (object):*
-** *`repository` (string)*: Repository for the snapshot.
-** *`snapshot` (string)*: Name of the snapshot. Must be unique in the repository.
-** *`ignore_unavailable` (Optional, boolean)*: If `true`, the request ignores data streams and indices in `indices` that are missing or closed. If `false`, the request returns an error for any data stream or index that is missing or closed.
-** *`include_global_state` (Optional, boolean)*: If `true`, the current cluster state is included in the snapshot. The cluster state includes persistent cluster settings, composable index templates, legacy index templates, ingest pipelines, and ILM policies. It also includes data stored in system indices, such as Watches and task records (configurable via `feature_states`).
-** *`indices` (Optional, string | string[])*: Data streams and indices to include in the snapshot. Supports multi-target syntax. Includes all data streams and indices by default.
-** *`feature_states` (Optional, string[])*: Feature states to include in the snapshot. Each feature state includes one or more system indices containing related data. You can view a list of eligible features using the get features API. If `include_global_state` is `true`, all current feature states are included by default. If `include_global_state` is `false`, no feature states are included by default.
-** *`metadata` (Optional, Record<string, User-defined value>)*: Optional metadata for the snapshot. May have any contents. Must be less than 1024 bytes. This map is not automatically generated by Elasticsearch.
-** *`partial` (Optional, boolean)*: If `true`, allows restoring a partial snapshot of indices with unavailable shards. Only shards that were successfully included in the snapshot will be restored. All missing shards will be recreated as empty. If `false`, the entire restore operation will fail if one or more indices included in the snapshot do not have all primary shards available.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-** *`wait_for_completion` (Optional, boolean)*: If `true`, the request returns a response when the snapshot is complete. If `false`, the request returns a response when the snapshot initializes.
+** *`repository` (string)*: The name of the repository for the snapshot.
+** *`snapshot` (string)*: The name of the snapshot.
+It supportes date math.
+It must be unique in the repository.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Determines how wildcard patterns in the `indices` parameter match data streams and indices.
+It supports a list of values such as `open,hidden`.
+** *`feature_states` (Optional, string[])*: The feature states to include in the snapshot.
+Each feature state includes one or more system indices containing related data.
+You can view a list of eligible features using the get features API.
+
+If `include_global_state` is `true`, all current feature states are included by default.
+If `include_global_state` is `false`, no feature states are included by default.
+
+Note that specifying an empty array will result in the default behavior.
+To exclude all feature states, regardless of the `include_global_state` value, specify an array with only the value `none` (`["none"]`).
+** *`ignore_unavailable` (Optional, boolean)*: If `true`, the request ignores data streams and indices in `indices` that are missing or closed.
+If `false`, the request returns an error for any data stream or index that is missing or closed.
+** *`include_global_state` (Optional, boolean)*: If `true`, the current cluster state is included in the snapshot.
+The cluster state includes persistent cluster settings, composable index templates, legacy index templates, ingest pipelines, and ILM policies.
+It also includes data stored in system indices, such as Watches and task records (configurable via `feature_states`).
+** *`indices` (Optional, string | string[])*: A list of data streams and indices to include in the snapshot.
+It supports a multi-target syntax.
+The default is an empty array (`[]`), which includes all regular data streams and regular indices.
+To exclude all data streams and indices, use `-*`.
+
+You can't use this parameter to include or exclude system indices or system data streams from a snapshot.
+Use `feature_states` instead.
+** *`metadata` (Optional, Record<string, User-defined value>)*: Arbitrary metadata to the snapshot, such as a record of who took the snapshot, why it was taken, or any other useful data.
+It can have any contents but it must be less than 1024 bytes.
+This information is not automatically generated by Elasticsearch.
+** *`partial` (Optional, boolean)*: If `true`, it enables you to restore a partial snapshot of indices with unavailable shards.
+Only shards that were successfully included in the snapshot will be restored.
+All missing shards will be recreated as empty.
+
+If `false`, the entire restore operation will fail if one or more indices included in the snapshot do not have all primary shards available.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`wait_for_completion` (Optional, boolean)*: If `true`, the request returns a response when the snapshot is complete.
+If `false`, the request returns a response when the snapshot initializes.
 
 [discrete]
 ==== create_repository
@@ -11654,7 +12297,10 @@ IMPORTANT: If you are migrating searchable snapshots, the repository name must b
 To register a snapshot repository, the cluster's global metadata must be writeable.
 Ensure there are no cluster blocks (for example, `cluster.blocks.read_only` and `clsuter.blocks.read_only_allow_delete` settings) that prevent write access.
 
-{ref}/modules-snapshots.html[Endpoint documentation]
+Several options for this API can be specified using a query parameter or a request body parameter.
+If both parameters are specified, only the query parameter is used.
+
+{ref}/put-snapshot-repo-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.createRepository({ repository })
@@ -11664,16 +12310,22 @@ client.snapshot.createRepository({ repository })
 ==== Arguments
 
 * *Request (object):*
-** *`repository` (string)*: A repository name
-** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
-** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
-** *`verify` (Optional, boolean)*: Whether to verify the repository after creation
+** *`repository` (string)*: The name of the snapshot repository to register or update.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for the master node.
+If the master node is not available before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged.
+To indicate that the request should never timeout, set it to `-1`.
+** *`verify` (Optional, boolean)*: If `true`, the request verifies the repository is functional on all master and data nodes in the cluster.
+If `false`, this verification is skipped.
+You can also perform this verification with the verify snapshot repository API.
 
 [discrete]
 ==== delete
 Delete snapshots.
 
-{ref}/modules-snapshots.html[Endpoint documentation]
+{ref}/delete-snapshot-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.delete({ repository, snapshot })
@@ -11683,9 +12335,12 @@ client.snapshot.delete({ repository, snapshot })
 ==== Arguments
 
 * *Request (object):*
-** *`repository` (string)*: A repository name
-** *`snapshot` (string)*: A list of snapshot names
-** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
+** *`repository` (string)*: The name of the repository to delete a snapshot from.
+** *`snapshot` (string)*: A list of snapshot names to delete.
+It also accepts wildcards (`*`).
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for the master node.
+If the master node is not available before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
 
 [discrete]
 ==== delete_repository
@@ -11693,7 +12348,7 @@ Delete snapshot repositories.
 When a repository is unregistered, Elasticsearch removes only the reference to the location where the repository is storing the snapshots.
 The snapshots themselves are left untouched and in place.
 
-{ref}/modules-snapshots.html[Endpoint documentation]
+{ref}/delete-snapshot-repo-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.deleteRepository({ repository })
@@ -11703,15 +12358,24 @@ client.snapshot.deleteRepository({ repository })
 ==== Arguments
 
 * *Request (object):*
-** *`repository` (string | string[])*: Name of the snapshot repository to unregister. Wildcard (`*`) patterns are supported.
-** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
-** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
+** *`repository` (string | string[])*: The ame of the snapshot repositories to unregister.
+Wildcard (`*`) patterns are supported.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for the master node.
+If the master node is not available before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged.
+To indicate that the request should never timeout, set it to `-1`.
 
 [discrete]
 ==== get
 Get snapshot information.
 
-{ref}/modules-snapshots.html[Endpoint documentation]
+NOTE: The `after` parameter and `next` field enable you to iterate through snapshots with some consistency guarantees regarding concurrent creation or deletion of snapshots.
+It is guaranteed that any snapshot that exists at the beginning of the iteration and is not concurrently deleted will be seen during the iteration.
+Snapshots concurrently created may be seen during an iteration.
+
+{ref}/get-snapshot-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.get({ repository, snapshot })
@@ -11721,29 +12385,47 @@ client.snapshot.get({ repository, snapshot })
 ==== Arguments
 
 * *Request (object):*
-** *`repository` (string)*: List of snapshot repository names used to limit the request. Wildcard (*) expressions are supported.
-** *`snapshot` (string | string[])*: List of snapshot names to retrieve. Also accepts wildcards (*).
-- To get information about all snapshots in a registered repository, use a wildcard (*) or _all.
-- To get information about any snapshots that are currently running, use _current.
-** *`ignore_unavailable` (Optional, boolean)*: If false, the request returns an error for any snapshots that are unavailable.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-** *`verbose` (Optional, boolean)*: If true, returns additional information about each snapshot such as the version of Elasticsearch which took the snapshot, the start and end times of the snapshot, and the number of shards snapshotted.
-** *`index_details` (Optional, boolean)*: If true, returns additional information about each index in the snapshot comprising the number of shards in the index, the total size of the index in bytes, and the maximum number of segments per shard in the index. Defaults to false, meaning that this information is omitted.
-** *`index_names` (Optional, boolean)*: If true, returns the name of each index in each snapshot.
-** *`include_repository` (Optional, boolean)*: If true, returns the repository name in each snapshot.
-** *`sort` (Optional, Enum("start_time" | "duration" | "name" | "index_count" | "repository" | "shard_count" | "failed_shard_count"))*: Allows setting a sort order for the result. Defaults to start_time, i.e. sorting by snapshot start time stamp.
-** *`size` (Optional, number)*: Maximum number of snapshots to return. Defaults to 0 which means return all that match the request without limit.
-** *`order` (Optional, Enum("asc" | "desc"))*: Sort order. Valid values are asc for ascending and desc for descending order. Defaults to asc, meaning ascending order.
-** *`after` (Optional, string)*: Offset identifier to start pagination from as returned by the next field in the response body.
+** *`repository` (string)*: A list of snapshot repository names used to limit the request.
+Wildcard (`*`) expressions are supported.
+** *`snapshot` (string | string[])*: A list of snapshot names to retrieve
+Wildcards (`*`) are supported.
+
+* To get information about all snapshots in a registered repository, use a wildcard (`*`) or `_all`.
+* To get information about any snapshots that are currently running, use `_current`.
+** *`after` (Optional, string)*: An offset identifier to start pagination from as returned by the next field in the response body.
+** *`from_sort_value` (Optional, string)*: The value of the current sort column at which to start retrieval.
+It can be a string `snapshot-` or a repository name when sorting by snapshot or repository name.
+It can be a millisecond time value or a number when sorting by `index-` or shard count.
+** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error for any snapshots that are unavailable.
+** *`index_details` (Optional, boolean)*: If `true`, the response includes additional information about each index in the snapshot comprising the number of shards in the index, the total size of the index in bytes, and the maximum number of segments per shard in the index.
+The default is `false`, meaning that this information is omitted.
+** *`index_names` (Optional, boolean)*: If `true`, the response includes the name of each index in each snapshot.
+** *`include_repository` (Optional, boolean)*: If `true`, the response includes the repository name in each snapshot.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`order` (Optional, Enum("asc" | "desc"))*: The sort order.
+Valid values are `asc` for ascending and `desc` for descending order.
+The default behavior is ascending order.
 ** *`offset` (Optional, number)*: Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0.
-** *`from_sort_value` (Optional, string)*: Value of the current sort column at which to start retrieval. Can either be a string snapshot- or repository name when sorting by snapshot or repository name, a millisecond time value or a number when sorting by index- or shard count.
-** *`slm_policy_filter` (Optional, string)*: Filter snapshots by a list of SLM policy names that snapshots belong to. Also accepts wildcards (*) and combinations of wildcards followed by exclude patterns starting with -. To include snapshots not created by an SLM policy you can use the special pattern _none that will match all snapshots without an SLM policy.
+** *`size` (Optional, number)*: The maximum number of snapshots to return.
+The default is 0, which means to return all that match the request without limit.
+** *`slm_policy_filter` (Optional, string)*: Filter snapshots by a list of snapshot lifecycle management (SLM) policy names that snapshots belong to.
+
+You can use wildcards (`*`) and combinations of wildcards followed by exclude patterns starting with `-`.
+For example, the pattern `*,-policy-a-\*` will return all snapshots except for those that were created by an SLM policy with a name starting with `policy-a-`.
+Note that the wildcard pattern `*` matches all snapshots created by an SLM policy but not those snapshots that were not created by an SLM policy.
+To include snapshots that were not created by an SLM policy, you can use the special pattern `_none` that will match all snapshots without an SLM policy.
+** *`sort` (Optional, Enum("start_time" | "duration" | "name" | "index_count" | "repository" | "shard_count" | "failed_shard_count"))*: The sort order for the result.
+The default behavior is sorting by snapshot start time stamp.
+** *`verbose` (Optional, boolean)*: If `true`, returns additional information about each snapshot such as the version of Elasticsearch which took the snapshot, the start and end times of the snapshot, and the number of shards snapshotted.
+
+NOTE: The parameters `size`, `order`, `after`, `from_sort_value`, `offset`, `slm_policy_filter`, and `sort` are not supported when you set `verbose=false` and the sort order for requests with `verbose=false` is undefined.
 
 [discrete]
 ==== get_repository
 Get snapshot repository information.
 
-{ref}/modules-snapshots.html[Endpoint documentation]
+{ref}/get-snapshot-repo-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.getRepository({ ... })
@@ -11753,9 +12435,15 @@ client.snapshot.getRepository({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`repository` (Optional, string | string[])*: A list of repository names
-** *`local` (Optional, boolean)*: Return local information, do not retrieve the state from master node (default: false)
-** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
+** *`repository` (Optional, string | string[])*: A list of snapshot repository names used to limit the request.
+Wildcard (`*`) expressions are supported including combining wildcards with exclude patterns starting with `-`.
+
+To get information about all snapshot repositories registered in the cluster, omit this parameter or use `*` or `_all`.
+** *`local` (Optional, boolean)*: If `true`, the request gets information from the local node only.
+If `false`, the request gets information from the master node.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for the master node.
+If the master node is not available before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
 
 [discrete]
 ==== repository_analyze
@@ -11789,7 +12477,7 @@ If no such template exists, you can create one or restore a cluster state that c
 
 If your snapshot contains data from App Search or Workplace Search, you must restore the Enterprise Search encryption key before you restore the snapshot.
 
-{ref}/modules-snapshots.html[Endpoint documentation]
+{ref}/restore-snapshot-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.restore({ repository, snapshot })
@@ -11799,27 +12487,79 @@ client.snapshot.restore({ repository, snapshot })
 ==== Arguments
 
 * *Request (object):*
-** *`repository` (string)*: A repository name
-** *`snapshot` (string)*: A snapshot name
-** *`feature_states` (Optional, string[])*
-** *`ignore_index_settings` (Optional, string[])*
-** *`ignore_unavailable` (Optional, boolean)*
-** *`include_aliases` (Optional, boolean)*
-** *`include_global_state` (Optional, boolean)*
-** *`index_settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })*
-** *`indices` (Optional, string | string[])*
-** *`partial` (Optional, boolean)*
-** *`rename_pattern` (Optional, string)*
-** *`rename_replacement` (Optional, string)*
-** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
-** *`wait_for_completion` (Optional, boolean)*: Should this request wait until the operation has completed before returning
+** *`repository` (string)*: The name of the repository to restore a snapshot from.
+** *`snapshot` (string)*: The name of the snapshot to restore.
+** *`feature_states` (Optional, string[])*: The feature states to restore.
+If `include_global_state` is `true`, the request restores all feature states in the snapshot by default.
+If `include_global_state` is `false`, the request restores no feature states by default.
+Note that specifying an empty array will result in the default behavior.
+To restore no feature states, regardless of the `include_global_state` value, specify an array containing only the value `none` (`["none"]`).
+** *`ignore_index_settings` (Optional, string[])*: The index settings to not restore from the snapshot.
+You can't use this option to ignore `index.number_of_shards`.
+
+For data streams, this option applies only to restored backing indices.
+New backing indices are configured using the data stream's matching index template.
+** *`ignore_unavailable` (Optional, boolean)*: If `true`, the request ignores any index or data stream in indices that's missing from the snapshot.
+If `false`, the request returns an error for any missing index or data stream.
+** *`include_aliases` (Optional, boolean)*: If `true`, the request restores aliases for any restored data streams and indices.
+If `false`, the request doesn’t restore aliases.
+** *`include_global_state` (Optional, boolean)*: If `true`, restore the cluster state. The cluster state includes:
+
+* Persistent cluster settings
+* Index templates
+* Legacy index templates
+* Ingest pipelines
+* Index lifecycle management (ILM) policies
+* Stored scripts
+* For snapshots taken after 7.12.0, feature states
+
+If `include_global_state` is `true`, the restore operation merges the legacy index templates in your cluster with the templates contained in the snapshot, replacing any existing ones whose name matches one in the snapshot.
+It completely removes all persistent settings, non-legacy index templates, ingest pipelines, and ILM lifecycle policies that exist in your cluster and replaces them with the corresponding items from the snapshot.
+
+Use the `feature_states` parameter to configure how feature states are restored.
+
+If `include_global_state` is `true` and a snapshot was created without a global state then the restore request will fail.
+** *`index_settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })*: Index settings to add or change in restored indices, including backing indices.
+You can't use this option to change `index.number_of_shards`.
+
+For data streams, this option applies only to restored backing indices.
+New backing indices are configured using the data stream's matching index template.
+** *`indices` (Optional, string | string[])*: A list of indices and data streams to restore.
+It supports a multi-target syntax.
+The default behavior is all regular indices and regular data streams in the snapshot.
+
+You can't use this parameter to restore system indices or system data streams.
+Use `feature_states` instead.
+** *`partial` (Optional, boolean)*: If `false`, the entire restore operation will fail if one or more indices included in the snapshot do not have all primary shards available.
+
+If true, it allows restoring a partial snapshot of indices with unavailable shards.
+Only shards that were successfully included in the snapshot will be restored.
+All missing shards will be recreated as empty.
+** *`rename_pattern` (Optional, string)*: A rename pattern to apply to restored data streams and indices.
+Data streams and indices matching the rename pattern will be renamed according to `rename_replacement`.
+
+The rename pattern is applied as defined by the regular expression that supports referencing the original text, according to the `appendReplacement` logic.
+** *`rename_replacement` (Optional, string)*: The rename replacement string that is used with the `rename_pattern`.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for the master node.
+If the master node is not available before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
+** *`wait_for_completion` (Optional, boolean)*: If `true`, the request returns a response when the restore operation completes.
+The operation is complete when it finishes all attempts to recover primary shards for restored indices.
+This applies even if one or more of the recovery attempts fail.
+
+If `false`, the request returns a response when the restore operation initializes.
 
 [discrete]
 ==== status
 Get the snapshot status.
 Get a detailed description of the current state for each shard participating in the snapshot.
+
 Note that this API should be used only to obtain detailed shard-level information for ongoing snapshots.
 If this detail is not needed or you want to obtain information about one or more existing snapshots, use the get snapshot API.
+
+If you omit the `<snapshot>` request path parameter, the request retrieves information only for currently running snapshots.
+This usage is preferred.
+If needed, you can specify `<repository>` and `<snapshot>` to retrieve information for specific snapshots, even if they're not currently running.
 
 WARNING: Using the API to return the status of any snapshots other than currently running snapshots can be expensive.
 The API requires a read from the repository for each shard in each snapshot.
@@ -11828,7 +12568,7 @@ For example, if you have 100 snapshots with 1,000 shards each, an API request th
 Depending on the latency of your storage, such requests can take an extremely long time to return results.
 These requests can also tax machine resources and, when using cloud storage, incur high processing costs.
 
-{ref}/modules-snapshots.html[Endpoint documentation]
+{ref}/get-snapshot-status-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.status({ ... })
@@ -11838,17 +12578,23 @@ client.snapshot.status({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`repository` (Optional, string)*: A repository name
-** *`snapshot` (Optional, string | string[])*: A list of snapshot names
-** *`ignore_unavailable` (Optional, boolean)*: Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
-** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
+** *`repository` (Optional, string)*: The snapshot repository name used to limit the request.
+It supports wildcards (`*`) if `<snapshot>` isn't specified.
+** *`snapshot` (Optional, string | string[])*: A list of snapshots to retrieve status for.
+The default is currently running snapshots.
+Wildcards (`*`) are not supported.
+** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error for any snapshots that are unavailable.
+If `true`, the request ignores snapshots that are unavailable, such as those that are corrupted or temporarily cannot be returned.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for the master node.
+If the master node is not available before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
 
 [discrete]
 ==== verify_repository
 Verify a snapshot repository.
 Check for common misconfigurations in a snapshot repository.
 
-{ref}/modules-snapshots.html[Endpoint documentation]
+{ref}/verify-snapshot-repo-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.verifyRepository({ repository })
@@ -11858,9 +12604,13 @@ client.snapshot.verifyRepository({ repository })
 ==== Arguments
 
 * *Request (object):*
-** *`repository` (string)*: A repository name
-** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
-** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
+** *`repository` (string)*: The name of the snapshot repository to verify.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for the master node.
+If the master node is not available before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged.
+To indicate that the request should never timeout, set it to `-1`.
 
 [discrete]
 === sql
@@ -11886,6 +12636,11 @@ Delete an async SQL search.
 Delete an async SQL search or a stored synchronous SQL search.
 If the search is still running, the API cancels it.
 
+If the Elasticsearch security features are enabled, only the following users can use this API to delete a search:
+
+* Users with the `cancel_task` cluster privilege.
+* The user who first submitted the search.
+
 {ref}/delete-async-sql-search-api.html[Endpoint documentation]
 [source,ts]
 ----
@@ -11896,12 +12651,14 @@ client.sql.deleteAsync({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Identifier for the search.
+** *`id` (string)*: The identifier for the search.
 
 [discrete]
 ==== get_async
 Get async SQL search results.
 Get the current status and available results for an async SQL search or stored synchronous SQL search.
+
+If the Elasticsearch security features are enabled, only the user who first submitted the SQL search can retrieve the search using this API.
 
 {ref}/get-async-sql-search-api.html[Endpoint documentation]
 [source,ts]
@@ -11913,14 +12670,16 @@ client.sql.getAsync({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Identifier for the search.
-** *`delimiter` (Optional, string)*: Separator for CSV results. The API only supports this parameter for CSV responses.
-** *`format` (Optional, string)*: Format for the response. You must specify a format using this parameter or the
-Accept HTTP header. If you specify both, the API uses this parameter.
-** *`keep_alive` (Optional, string | -1 | 0)*: Retention period for the search and its results. Defaults
-to the `keep_alive` period for the original SQL search.
-** *`wait_for_completion_timeout` (Optional, string | -1 | 0)*: Period to wait for complete results. Defaults to no timeout,
-meaning the request waits for complete search results.
+** *`id` (string)*: The identifier for the search.
+** *`delimiter` (Optional, string)*: The separator for CSV results.
+The API supports this parameter only for CSV responses.
+** *`format` (Optional, string)*: The format for the response.
+You must specify a format using this parameter or the `Accept` HTTP header.
+If you specify both, the API uses this parameter.
+** *`keep_alive` (Optional, string | -1 | 0)*: The retention period for the search and its results.
+It defaults to the `keep_alive` period for the original SQL search.
+** *`wait_for_completion_timeout` (Optional, string | -1 | 0)*: The period to wait for complete results.
+It defaults to no timeout, meaning the request waits for complete search results.
 
 [discrete]
 ==== get_async_status
@@ -11937,7 +12696,7 @@ client.sql.getAsyncStatus({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Identifier for the search.
+** *`id` (string)*: The identifier for the search.
 
 [discrete]
 ==== query
@@ -11954,31 +12713,46 @@ client.sql.query({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`catalog` (Optional, string)*: Default catalog (cluster) for queries. If unspecified, the queries execute on the data in the local cluster only.
-** *`columnar` (Optional, boolean)*: If true, the results in a columnar fashion: one row represents all the values of a certain column from the current page of results.
-** *`cursor` (Optional, string)*: Cursor used to retrieve a set of paginated results.
+** *`allow_partial_search_results` (Optional, boolean)*: If `true`, the response has partial results when there are shard request timeouts or shard failures.
+If `false`, the API returns an error with no partial results.
+** *`catalog` (Optional, string)*: The default catalog (cluster) for queries.
+If unspecified, the queries execute on the data in the local cluster only.
+** *`columnar` (Optional, boolean)*: If `true`, the results are in a columnar fashion: one row represents all the values of a certain column from the current page of results.
+The API supports this parameter only for CBOR, JSON, SMILE, and YAML responses.
+** *`cursor` (Optional, string)*: The cursor used to retrieve a set of paginated results.
 If you specify a cursor, the API only uses the `columnar` and `time_zone` request body parameters.
 It ignores other request body parameters.
-** *`fetch_size` (Optional, number)*: The maximum number of rows (or entries) to return in one response
-** *`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Elasticsearch query DSL for additional filtering.
-** *`query` (Optional, string)*: SQL query to run.
+** *`fetch_size` (Optional, number)*: The maximum number of rows (or entries) to return in one response.
+** *`field_multi_value_leniency` (Optional, boolean)*: If `false`, the API returns an exception when encountering multiple values for a field.
+If `true`, the API is lenient and returns the first value from the array with no guarantee of consistent results.
+** *`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: The Elasticsearch query DSL for additional filtering.
+** *`index_using_frozen` (Optional, boolean)*: If `true`, the search can run on frozen indices.
+** *`keep_alive` (Optional, string | -1 | 0)*: The retention period for an async or saved synchronous search.
+** *`keep_on_completion` (Optional, boolean)*: If `true`, Elasticsearch stores synchronous searches if you also specify the `wait_for_completion_timeout` parameter.
+If `false`, Elasticsearch only stores async searches that don't finish before the `wait_for_completion_timeout`.
+** *`page_timeout` (Optional, string | -1 | 0)*: The minimum retention period for the scroll cursor.
+After this time period, a pagination request might fail because the scroll cursor is no longer available.
+Subsequent scroll requests prolong the lifetime of the scroll cursor by the duration of `page_timeout` in the scroll request.
+** *`params` (Optional, Record<string, User-defined value>)*: The values for parameters in the query.
+** *`query` (Optional, string)*: The SQL query to run.
 ** *`request_timeout` (Optional, string | -1 | 0)*: The timeout before the request fails.
-** *`page_timeout` (Optional, string | -1 | 0)*: The timeout before a pagination request fails.
-** *`time_zone` (Optional, string)*: ISO-8601 time zone ID for the search.
-** *`field_multi_value_leniency` (Optional, boolean)*: Throw an exception when encountering multiple values for a field (default) or be lenient and return the first value from the list (without any guarantees of what that will be - typically the first in natural ascending order).
-** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines one or more runtime fields in the search request. These fields take
-precedence over mapped fields with the same name.
-** *`wait_for_completion_timeout` (Optional, string | -1 | 0)*: Period to wait for complete results. Defaults to no timeout, meaning the request waits for complete search results. If the search doesn’t finish within this period, the search becomes async.
-** *`params` (Optional, Record<string, User-defined value>)*: Values for parameters in the query.
-** *`keep_alive` (Optional, string | -1 | 0)*: Retention period for an async or saved synchronous search.
-** *`keep_on_completion` (Optional, boolean)*: If true, Elasticsearch stores synchronous searches if you also specify the wait_for_completion_timeout parameter. If false, Elasticsearch only stores async searches that don’t finish before the wait_for_completion_timeout.
-** *`index_using_frozen` (Optional, boolean)*: If true, the search can run on frozen indices. Defaults to false.
-** *`format` (Optional, Enum("csv" | "json" | "tsv" | "txt" | "yaml" | "cbor" | "smile"))*: Format for the response.
+** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: One or more runtime fields for the search request.
+These fields take precedence over mapped fields with the same name.
+** *`time_zone` (Optional, string)*: The ISO-8601 time zone ID for the search.
+** *`wait_for_completion_timeout` (Optional, string | -1 | 0)*: The period to wait for complete results.
+It defaults to no timeout, meaning the request waits for complete search results.
+If the search doesn't finish within this period, the search becomes async.
+
+To save a synchronous search, you must specify this parameter and the `keep_on_completion` parameter.
+** *`format` (Optional, Enum("csv" | "json" | "tsv" | "txt" | "yaml" | "cbor" | "smile"))*: The format for the response.
+You can also specify a format using the `Accept` HTTP header.
+If you specify both this parameter and the `Accept` HTTP header, this parameter takes precedence.
 
 [discrete]
 ==== translate
 Translate SQL into Elasticsearch queries.
 Translate an SQL search into a search API request containing Query DSL.
+It accepts the same request body parameters as the SQL search API, excluding `cursor`.
 
 {ref}/sql-translate-api.html[Endpoint documentation]
 [source,ts]
@@ -11990,10 +12764,10 @@ client.sql.translate({ query })
 ==== Arguments
 
 * *Request (object):*
-** *`query` (string)*: SQL query to run.
+** *`query` (string)*: The SQL query to run.
 ** *`fetch_size` (Optional, number)*: The maximum number of rows (or entries) to return in one response.
-** *`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Elasticsearch query DSL for additional filtering.
-** *`time_zone` (Optional, string)*: ISO-8601 time zone ID for the search.
+** *`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: The Elasticsearch query DSL for additional filtering.
+** *`time_zone` (Optional, string)*: The ISO-8601 time zone ID for the search.
 
 [discrete]
 === ssl
@@ -12030,6 +12804,23 @@ client.ssl.certificates()
 ==== delete_synonym
 Delete a synonym set.
 
+You can only delete a synonyms set that is not in use by any index analyzer.
+
+Synonyms sets can be used in synonym graph token filters and synonym token filters.
+These synonym filters can be used as part of search analyzers.
+
+Analyzers need to be loaded when an index is restored (such as when a node starts, or the index becomes open).
+Even if the analyzer is not used on any field mapping, it still needs to be loaded on the index recovery phase.
+
+If any analyzers cannot be loaded, the index becomes unavailable and the cluster status becomes red or yellow as index shards are not available.
+To prevent that, synonyms sets that are used in analyzers can't be deleted.
+A delete request in this case will return a 400 response code.
+
+To remove a synonyms set, you must first remove all indices that contain analyzers using it.
+You can migrate an index by creating a new index that does not contain the token filter with the synonyms set, and use the reindex API in order to copy over the index data.
+Once finished, you can delete the index.
+When the synonyms set is not used in analyzers, you will be able to delete it.
+
 {ref}/delete-synonyms-set.html[Endpoint documentation]
 [source,ts]
 ----
@@ -12040,7 +12831,7 @@ client.synonyms.deleteSynonym({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: The id of the synonyms set to be deleted
+** *`id` (string)*: The synonyms set identifier to delete.
 
 [discrete]
 ==== delete_synonym_rule
@@ -12057,8 +12848,8 @@ client.synonyms.deleteSynonymRule({ set_id, rule_id })
 ==== Arguments
 
 * *Request (object):*
-** *`set_id` (string)*: The id of the synonym set to be updated
-** *`rule_id` (string)*: The id of the synonym rule to be deleted
+** *`set_id` (string)*: The ID of the synonym set to update.
+** *`rule_id` (string)*: The ID of the synonym rule to delete.
 
 [discrete]
 ==== get_synonym
@@ -12074,9 +12865,9 @@ client.synonyms.getSynonym({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: "The id of the synonyms set to be retrieved
-** *`from` (Optional, number)*: Starting offset for query rules to be retrieved
-** *`size` (Optional, number)*: specifies a max number of query rules to retrieve
+** *`id` (string)*: The synonyms set identifier to retrieve.
+** *`from` (Optional, number)*: The starting offset for query rules to retrieve.
+** *`size` (Optional, number)*: The max number of query rules to retrieve.
 
 [discrete]
 ==== get_synonym_rule
@@ -12093,15 +12884,15 @@ client.synonyms.getSynonymRule({ set_id, rule_id })
 ==== Arguments
 
 * *Request (object):*
-** *`set_id` (string)*: The id of the synonym set to retrieve the synonym rule from
-** *`rule_id` (string)*: The id of the synonym rule to retrieve
+** *`set_id` (string)*: The ID of the synonym set to retrieve the synonym rule from.
+** *`rule_id` (string)*: The ID of the synonym rule to retrieve.
 
 [discrete]
 ==== get_synonyms_sets
 Get all synonym sets.
 Get a summary of all defined synonym sets.
 
-{ref}/list-synonyms-sets.html[Endpoint documentation]
+{ref}/get-synonyms-set.html[Endpoint documentation]
 [source,ts]
 ----
 client.synonyms.getSynonymsSets({ ... })
@@ -12111,14 +12902,17 @@ client.synonyms.getSynonymsSets({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`from` (Optional, number)*: Starting offset
-** *`size` (Optional, number)*: specifies a max number of results to get
+** *`from` (Optional, number)*: The starting offset for synonyms sets to retrieve.
+** *`size` (Optional, number)*: The maximum number of synonyms sets to retrieve.
 
 [discrete]
 ==== put_synonym
 Create or update a synonym set.
 Synonyms sets are limited to a maximum of 10,000 synonym rules per set.
 If you need to manage more synonym rules, you can create multiple synonym sets.
+
+When an existing synonyms set is updated, the search analyzers that use the synonyms set are reloaded automatically for all indices.
+This is equivalent to invoking the reload search analyzers API for all indices that use the synonyms set.
 
 {ref}/put-synonyms-set.html[Endpoint documentation]
 [source,ts]
@@ -12130,13 +12924,17 @@ client.synonyms.putSynonym({ id, synonyms_set })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: The id of the synonyms set to be created or updated
-** *`synonyms_set` ({ id, synonyms } | { id, synonyms }[])*: The synonym set information to update
+** *`id` (string)*: The ID of the synonyms set to be created or updated.
+** *`synonyms_set` ({ id, synonyms } | { id, synonyms }[])*: The synonym rules definitions for the synonyms set.
 
 [discrete]
 ==== put_synonym_rule
 Create or update a synonym rule.
 Create or update a synonym rule in a synonym set.
+
+If any of the synonym rules included is invalid, the API returns an error.
+
+When you update a synonym rule, all analyzers using the synonyms set will be reloaded automatically to reflect the new rule.
 
 {ref}/put-synonym-rule.html[Endpoint documentation]
 [source,ts]
@@ -12148,9 +12946,9 @@ client.synonyms.putSynonymRule({ set_id, rule_id, synonyms })
 ==== Arguments
 
 * *Request (object):*
-** *`set_id` (string)*: The id of the synonym set to be updated with the synonym rule
-** *`rule_id` (string)*: The id of the synonym rule to be updated or created
-** *`synonyms` (string)*
+** *`set_id` (string)*: The ID of the synonym set.
+** *`rule_id` (string)*: The ID of the synonym rule to be updated or created.
+** *`synonyms` (string)*: The synonym rule information definition, which must be in Solr format.
 
 [discrete]
 === tasks
@@ -12222,7 +13020,6 @@ This information is useful to distinguish tasks from each other but is more cost
 ** *`group_by` (Optional, Enum("nodes" | "parents" | "none"))*: Key used to group tasks in the response.
 ** *`nodes` (Optional, string | string[])*: List of node IDs or names used to limit returned information.
 ** *`parent_task_id` (Optional, string)*: Parent task ID used to limit returned information. To return all tasks, omit this parameter or use a value of `-1`.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 ** *`wait_for_completion` (Optional, boolean)*: If `true`, the request blocks until the operation is complete.
 
@@ -12232,6 +13029,22 @@ This information is useful to distinguish tasks from each other but is more cost
 ==== find_field_structure
 Find the structure of a text field.
 Find the structure of a text field in an Elasticsearch index.
+
+This API provides a starting point for extracting further information from log messages already ingested into Elasticsearch.
+For example, if you have ingested data into a very simple index that has just `@timestamp` and message fields, you can use this API to see what common structure exists in the message field.
+
+The response from the API contains:
+
+* Sample messages.
+* Statistics that reveal the most common values for all fields detected within the text and basic numeric statistics for numeric fields.
+* Information about the structure of the text, which is useful when you write ingest configurations to index it or similarly formatted text.
+* Appropriate mappings for an Elasticsearch index, which you could use to ingest the text.
+
+All this information can be calculated by the structure finder with no guidance.
+However, you can optionally override some of the decisions about the text structure by specifying one or more query parameters.
+
+If the structure finder produces unexpected results, specify the `explain` query parameter and an explanation will appear in the response.
+It helps determine why the returned structure was chosen.
 
 {ref}/find-field-structure.html[Endpoint documentation]
 [source,ts]
@@ -12260,7 +13073,7 @@ Use this parameter to specify whether to use ECS Grok patterns instead of legacy
 This setting primarily has an impact when a whole message Grok pattern such as `%{CATALINALOG}` matches the input.
 If the structure finder identifies a common structure but has no idea of the meaning then generic field names such as `path`, `ipaddress`, `field1`, and `field2` are used in the `grok_pattern` output.
 The intention in that situation is that a user who knows the meanings will rename the fields before using them.
-** *`explain` (Optional, boolean)*: If true, the response includes a field named `explanation`, which is an array of strings that indicate how the structure finder produced its result.
+** *`explain` (Optional, boolean)*: If `true`, the response includes a field named `explanation`, which is an array of strings that indicate how the structure finder produced its result.
 ** *`format` (Optional, Enum("delimited" | "ndjson" | "semi_structured_text" | "xml"))*: The high level structure of the text.
 By default, the API chooses the format.
 In this default scenario, all rows must have the same number of fields for a delimited format to be detected.
@@ -12275,7 +13088,7 @@ If this parameter is not specified, the default value is a double quote (`"`).
 If your delimited text format does not use quoting, a workaround is to set this argument to a character that does not appear anywhere in the sample.
 ** *`should_trim_fields` (Optional, boolean)*: If the format is `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them.
 If this parameter is not specified and the delimiter is pipe (`|`), the default value is true.
-Otherwise, the default value is false.
+Otherwise, the default value is `false`.
 ** *`timeout` (Optional, string | -1 | 0)*: The maximum amount of time that the structure analysis can take.
 If the analysis is still running when the timeout expires, it will be stopped.
 ** *`timestamp_field` (Optional, string)*: The name of the field that contains the primary timestamp of each record in the text.
@@ -12331,6 +13144,7 @@ The messages must contain data that is suitable to be ingested into Elasticsearc
 
 This API provides a starting point for ingesting data into Elasticsearch in a format that is suitable for subsequent use with other Elastic Stack functionality.
 Use this API rather than the find text structure API if your input text has already been split up into separate messages by some other process.
+
 The response from the API contains:
 
 * Sample messages.
@@ -12340,6 +13154,9 @@ Appropriate mappings for an Elasticsearch index, which you could use to ingest t
 
 All this information can be calculated by the structure finder with no guidance.
 However, you can optionally override some of the decisions about the text structure by specifying one or more query parameters.
+
+If the structure finder produces unexpected results, specify the `explain` query parameter and an explanation will appear in the response.
+It helps determine why the returned structure was chosen.
 
 {ref}/find-message-structure.html[Endpoint documentation]
 [source,ts]
@@ -12379,7 +13196,7 @@ If this parameter is not specified, the default value is a double quote (`"`).
 If your delimited text format does not use quoting, a workaround is to set this argument to a character that does not appear anywhere in the sample.
 ** *`should_trim_fields` (Optional, boolean)*: If the format is `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them.
 If this parameter is not specified and the delimiter is pipe (`|`), the default value is true.
-Otherwise, the default value is false.
+Otherwise, the default value is `false`.
 ** *`timeout` (Optional, string | -1 | 0)*: The maximum amount of time that the structure analysis can take.
 If the analysis is still running when the timeout expires, it will be stopped.
 ** *`timestamp_field` (Optional, string)*: The name of the field that contains the primary timestamp of each record in the text.
@@ -12458,22 +13275,99 @@ client.textStructure.findStructure({ ... })
 
 * *Request (object):*
 ** *`text_files` (Optional, TJsonDocument[])*
-** *`charset` (Optional, string)*: The text’s character set. It must be a character set that is supported by the JVM that Elasticsearch uses. For example, UTF-8, UTF-16LE, windows-1252, or EUC-JP. If this parameter is not specified, the structure finder chooses an appropriate character set.
-** *`column_names` (Optional, string)*: If you have set format to delimited, you can specify the column names in a list. If this parameter is not specified, the structure finder uses the column names from the header row of the text. If the text does not have a header role, columns are named "column1", "column2", "column3", for example.
-** *`delimiter` (Optional, string)*: If you have set format to delimited, you can specify the character used to delimit the values in each row. Only a single character is supported; the delimiter cannot have multiple characters. By default, the API considers the following possibilities: comma, tab, semi-colon, and pipe (|). In this default scenario, all rows must have the same number of fields for the delimited format to be detected. If you specify a delimiter, up to 10% of the rows can have a different number of columns than the first row.
-** *`ecs_compatibility` (Optional, string)*: The mode of compatibility with ECS compliant Grok patterns (disabled or v1, default: disabled).
-** *`explain` (Optional, boolean)*: If this parameter is set to true, the response includes a field named explanation, which is an array of strings that indicate how the structure finder produced its result.
+** *`charset` (Optional, string)*: The text's character set.
+It must be a character set that is supported by the JVM that Elasticsearch uses.
+For example, `UTF-8`, `UTF-16LE`, `windows-1252`, or `EUC-JP`.
+If this parameter is not specified, the structure finder chooses an appropriate character set.
+** *`column_names` (Optional, string)*: If you have set format to `delimited`, you can specify the column names in a list.
+If this parameter is not specified, the structure finder uses the column names from the header row of the text.
+If the text does not have a header role, columns are named "column1", "column2", "column3", for example.
+** *`delimiter` (Optional, string)*: If you have set `format` to `delimited`, you can specify the character used to delimit the values in each row.
+Only a single character is supported; the delimiter cannot have multiple characters.
+By default, the API considers the following possibilities: comma, tab, semi-colon, and pipe (`|`).
+In this default scenario, all rows must have the same number of fields for the delimited format to be detected.
+If you specify a delimiter, up to 10% of the rows can have a different number of columns than the first row.
+** *`ecs_compatibility` (Optional, string)*: The mode of compatibility with ECS compliant Grok patterns.
+Use this parameter to specify whether to use ECS Grok patterns instead of legacy ones when the structure finder creates a Grok pattern.
+Valid values are `disabled` and `v1`.
+This setting primarily has an impact when a whole message Grok pattern such as `%{CATALINALOG}` matches the input.
+If the structure finder identifies a common structure but has no idea of meaning then generic field names such as `path`, `ipaddress`, `field1`, and `field2` are used in the `grok_pattern` output, with the intention that a user who knows the meanings rename these fields before using it.
+** *`explain` (Optional, boolean)*: If this parameter is set to `true`, the response includes a field named explanation, which is an array of strings that indicate how the structure finder produced its result.
 If the structure finder produces unexpected results for some text, use this query parameter to help you determine why the returned structure was chosen.
-** *`format` (Optional, string)*: The high level structure of the text. Valid values are ndjson, xml, delimited, and semi_structured_text. By default, the API chooses the format. In this default scenario, all rows must have the same number of fields for a delimited format to be detected. If the format is set to delimited and the delimiter is not set, however, the API tolerates up to 5% of rows that have a different number of columns than the first row.
-** *`grok_pattern` (Optional, string)*: If you have set format to semi_structured_text, you can specify a Grok pattern that is used to extract fields from every message in the text. The name of the timestamp field in the Grok pattern must match what is specified in the timestamp_field parameter. If that parameter is not specified, the name of the timestamp field in the Grok pattern must match "timestamp". If grok_pattern is not specified, the structure finder creates a Grok pattern.
-** *`has_header_row` (Optional, boolean)*: If you have set format to delimited, you can use this parameter to indicate whether the column names are in the first row of the text. If this parameter is not specified, the structure finder guesses based on the similarity of the first row of the text to other rows.
-** *`line_merge_size_limit` (Optional, number)*: The maximum number of characters in a message when lines are merged to form messages while analyzing semi-structured text. If you have extremely long messages you may need to increase this, but be aware that this may lead to very long processing times if the way to group lines into messages is misdetected.
-** *`lines_to_sample` (Optional, number)*: The number of lines to include in the structural analysis, starting from the beginning of the text. The minimum is 2; If the value of this parameter is greater than the number of lines in the text, the analysis proceeds (as long as there are at least two lines in the text) for all of the lines.
-** *`quote` (Optional, string)*: If you have set format to delimited, you can specify the character used to quote the values in each row if they contain newlines or the delimiter character. Only a single character is supported. If this parameter is not specified, the default value is a double quote ("). If your delimited text format does not use quoting, a workaround is to set this argument to a character that does not appear anywhere in the sample.
-** *`should_trim_fields` (Optional, boolean)*: If you have set format to delimited, you can specify whether values between delimiters should have whitespace trimmed from them. If this parameter is not specified and the delimiter is pipe (|), the default value is true. Otherwise, the default value is false.
-** *`timeout` (Optional, string | -1 | 0)*: Sets the maximum amount of time that the structure analysis can take. If the analysis is still running when the timeout expires then it will be stopped.
-** *`timestamp_field` (Optional, string)*: Optional parameter to specify the timestamp field in the file
+** *`format` (Optional, string)*: The high level structure of the text.
+Valid values are `ndjson`, `xml`, `delimited`, and `semi_structured_text`.
+By default, the API chooses the format.
+In this default scenario, all rows must have the same number of fields for a delimited format to be detected.
+If the format is set to `delimited` and the delimiter is not set, however, the API tolerates up to 5% of rows that have a different number of columns than the first row.
+** *`grok_pattern` (Optional, string)*: If you have set `format` to `semi_structured_text`, you can specify a Grok pattern that is used to extract fields from every message in the text.
+The name of the timestamp field in the Grok pattern must match what is specified in the `timestamp_field` parameter.
+If that parameter is not specified, the name of the timestamp field in the Grok pattern must match "timestamp".
+If `grok_pattern` is not specified, the structure finder creates a Grok pattern.
+** *`has_header_row` (Optional, boolean)*: If you have set `format` to `delimited`, you can use this parameter to indicate whether the column names are in the first row of the text.
+If this parameter is not specified, the structure finder guesses based on the similarity of the first row of the text to other rows.
+** *`line_merge_size_limit` (Optional, number)*: The maximum number of characters in a message when lines are merged to form messages while analyzing semi-structured text.
+If you have extremely long messages you may need to increase this, but be aware that this may lead to very long processing times if the way to group lines into messages is misdetected.
+** *`lines_to_sample` (Optional, number)*: The number of lines to include in the structural analysis, starting from the beginning of the text.
+The minimum is 2.
+If the value of this parameter is greater than the number of lines in the text, the analysis proceeds (as long as there are at least two lines in the text) for all of the lines.
+
+NOTE: The number of lines and the variation of the lines affects the speed of the analysis.
+For example, if you upload text where the first 1000 lines are all variations on the same message, the analysis will find more commonality than would be seen with a bigger sample.
+If possible, however, it is more efficient to upload sample text with more variety in the first 1000 lines than to request analysis of 100000 lines to achieve some variety.
+** *`quote` (Optional, string)*: If you have set `format` to `delimited`, you can specify the character used to quote the values in each row if they contain newlines or the delimiter character.
+Only a single character is supported.
+If this parameter is not specified, the default value is a double quote (`"`).
+If your delimited text format does not use quoting, a workaround is to set this argument to a character that does not appear anywhere in the sample.
+** *`should_trim_fields` (Optional, boolean)*: If you have set `format` to `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them.
+If this parameter is not specified and the delimiter is pipe (`|`), the default value is `true`.
+Otherwise, the default value is `false`.
+** *`timeout` (Optional, string | -1 | 0)*: The maximum amount of time that the structure analysis can take.
+If the analysis is still running when the timeout expires then it will be stopped.
+** *`timestamp_field` (Optional, string)*: The name of the field that contains the primary timestamp of each record in the text.
+In particular, if the text were ingested into an index, this is the field that would be used to populate the `@timestamp` field.
+
+If the `format` is `semi_structured_text`, this field must match the name of the appropriate extraction in the `grok_pattern`.
+Therefore, for semi-structured text, it is best not to specify this parameter unless `grok_pattern` is also specified.
+
+For structured text, if you specify this parameter, the field must exist within the text.
+
+If this parameter is not specified, the structure finder makes a decision about which field (if any) is the primary timestamp field.
+For structured text, it is not compulsory to have a timestamp in the text.
 ** *`timestamp_format` (Optional, string)*: The Java time format of the timestamp field in the text.
+
+Only a subset of Java time format letter groups are supported:
+
+* `a`
+* `d`
+* `dd`
+* `EEE`
+* `EEEE`
+* `H`
+* `HH`
+* `h`
+* `M`
+* `MM`
+* `MMM`
+* `MMMM`
+* `mm`
+* `ss`
+* `XX`
+* `XXX`
+* `yy`
+* `yyyy`
+* `zzz`
+
+Additionally `S` letter groups (fractional seconds) of length one to nine are supported providing they occur after `ss` and separated from the `ss` by a `.`, `,` or `:`.
+Spacing and punctuation is also permitted with the exception of `?`, newline and carriage return, together with literal text enclosed in single quotes.
+For example, `MM/dd HH.mm.ss,SSSSSS 'in' yyyy` is a valid override format.
+
+One valuable use case for this parameter is when the format is semi-structured text, there are multiple timestamp formats in the text, and you know which format corresponds to the primary timestamp, but you do not want to specify the full `grok_pattern`.
+Another is when the timestamp format is one that the structure finder does not consider by default.
+
+If this parameter is not specified, the structure finder chooses the best format from a built-in set.
+
+If the special value `null` is specified the structure finder will not look for a primary timestamp in the text.
+When the format is semi-structured text this will result in the structure finder treating the text as single-line messages.
 
 [discrete]
 ==== test_grok_pattern
@@ -12491,9 +13385,11 @@ client.textStructure.testGrokPattern({ grok_pattern, text })
 ==== Arguments
 
 * *Request (object):*
-** *`grok_pattern` (string)*: Grok pattern to run on the text.
-** *`text` (string[])*: Lines of text to run the Grok pattern on.
-** *`ecs_compatibility` (Optional, string)*: The mode of compatibility with ECS compliant Grok patterns (disabled or v1, default: disabled).
+** *`grok_pattern` (string)*: The Grok pattern to run on the text.
+** *`text` (string[])*: The lines of text to run the Grok pattern on.
+** *`ecs_compatibility` (Optional, string)*: The mode of compatibility with ECS compliant Grok patterns.
+Use this parameter to specify whether to use ECS Grok patterns instead of legacy ones when the structure finder creates a Grok pattern.
+Valid values are `disabled` and `v1`.
 
 [discrete]
 === transform
@@ -12711,6 +13607,7 @@ client.transform.resetTransform({ transform_id })
 hyphens, and underscores. It has a 64 character limit and must start and end with alphanumeric characters.
 ** *`force` (Optional, boolean)*: If this value is `true`, the transform is reset regardless of its current state. If it's `false`, the transform
 must be stopped before it can be reset.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== schedule_now_transform
@@ -12886,6 +13783,9 @@ The acknowledgement state of an action is stored in the `status.actions.<id>.ack
 IMPORTANT: If the specified watch is currently being executed, this API will return an error
 The reason for this behavior is to prevent overwriting the watch status from a watch execution.
 
+Acknowledging an action throttles further executions of that action until its `ack.state` is reset to `awaits_successful_execution`.
+This happens when the condition of the watch is not met (the condition evaluates to false).
+
 {ref}/watcher-api-ack-watch.html[Endpoint documentation]
 [source,ts]
 ----
@@ -12896,8 +13796,9 @@ client.watcher.ackWatch({ watch_id })
 ==== Arguments
 
 * *Request (object):*
-** *`watch_id` (string)*: Watch ID
-** *`action_id` (Optional, string | string[])*: A list of the action ids to be acked
+** *`watch_id` (string)*: The watch identifier.
+** *`action_id` (Optional, string | string[])*: A list of the action identifiers to acknowledge.
+If you omit this parameter, all of the actions of the watch are acknowledged.
 
 [discrete]
 ==== activate_watch
@@ -12914,7 +13815,7 @@ client.watcher.activateWatch({ watch_id })
 ==== Arguments
 
 * *Request (object):*
-** *`watch_id` (string)*: Watch ID
+** *`watch_id` (string)*: The watch identifier.
 
 [discrete]
 ==== deactivate_watch
@@ -12931,7 +13832,7 @@ client.watcher.deactivateWatch({ watch_id })
 ==== Arguments
 
 * *Request (object):*
-** *`watch_id` (string)*: Watch ID
+** *`watch_id` (string)*: The watch identifier.
 
 [discrete]
 ==== delete_watch
@@ -12954,7 +13855,7 @@ client.watcher.deleteWatch({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Watch ID
+** *`id` (string)*: The watch identifier.
 
 [discrete]
 ==== execute_watch
@@ -12968,6 +13869,11 @@ You can also force execution by ignoring the watch condition and control whether
 You can use the run watch API to run watches that are not yet registered by specifying the watch definition inline.
 This serves as great tool for testing and debugging your watches prior to adding them to Watcher.
 
+When Elasticsearch security features are enabled on your cluster, watches are run with the privileges of the user that stored the watches.
+If your user is allowed to read index `a`, but not index `b`, then the exact same set of rules will apply during execution of a watch.
+
+When using the run watch API, the authorization data of the user that called the API will be used as a base, instead of the information who stored the watch.
+
 {ref}/watcher-api-execute-watch.html[Endpoint documentation]
 [source,ts]
 ----
@@ -12978,26 +13884,37 @@ client.watcher.executeWatch({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (Optional, string)*: Identifier for the watch.
+** *`id` (Optional, string)*: The watch identifier.
 ** *`action_modes` (Optional, Record<string, Enum("simulate" | "force_simulate" | "execute" | "force_execute" | "skip")>)*: Determines how to handle the watch actions as part of the watch execution.
 ** *`alternative_input` (Optional, Record<string, User-defined value>)*: When present, the watch uses this object as a payload instead of executing its own input.
 ** *`ignore_condition` (Optional, boolean)*: When set to `true`, the watch execution uses the always condition. This can also be specified as an HTTP parameter.
-** *`record_execution` (Optional, boolean)*: When set to `true`, the watch record representing the watch execution result is persisted to the `.watcher-history` index for the current time. In addition, the status of the watch is updated, possibly throttling subsequent executions. This can also be specified as an HTTP parameter.
+** *`record_execution` (Optional, boolean)*: When set to `true`, the watch record representing the watch execution result is persisted to the `.watcher-history` index for the current time.
+In addition, the status of the watch is updated, possibly throttling subsequent runs.
+This can also be specified as an HTTP parameter.
 ** *`simulated_actions` (Optional, { actions, all, use_all })*
-** *`trigger_data` (Optional, { scheduled_time, triggered_time })*: This structure is parsed as the data of the trigger event that will be used during the watch execution
-** *`watch` (Optional, { actions, condition, input, metadata, status, throttle_period, throttle_period_in_millis, transform, trigger })*: When present, this watch is used instead of the one specified in the request. This watch is not persisted to the index and record_execution cannot be set.
+** *`trigger_data` (Optional, { scheduled_time, triggered_time })*: This structure is parsed as the data of the trigger event that will be used during the watch execution.
+** *`watch` (Optional, { actions, condition, input, metadata, status, throttle_period, throttle_period_in_millis, transform, trigger })*: When present, this watch is used instead of the one specified in the request.
+This watch is not persisted to the index and `record_execution` cannot be set.
 ** *`debug` (Optional, boolean)*: Defines whether the watch runs in debug mode.
 
 [discrete]
 ==== get_settings
-Retrieve settings for the watcher system index
+Get Watcher index settings.
+Get settings for the Watcher internal index (`.watches`).
+Only a subset of settings are shown, for example `index.auto_expand_replicas` and `index.number_of_replicas`.
 
 {ref}/watcher-api-get-settings.html[Endpoint documentation]
 [source,ts]
 ----
-client.watcher.getSettings()
+client.watcher.getSettings({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_watch
@@ -13013,7 +13930,7 @@ client.watcher.getWatch({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Watch ID
+** *`id` (string)*: The watch identifier.
 
 [discrete]
 ==== put_watch
@@ -13040,15 +13957,20 @@ client.watcher.putWatch({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Watch ID
-** *`actions` (Optional, Record<string, { add_backing_index, remove_backing_index }>)*
-** *`condition` (Optional, { always, array_compare, compare, never, script })*
-** *`input` (Optional, { chain, http, search, simple })*
-** *`metadata` (Optional, Record<string, User-defined value>)*
-** *`throttle_period` (Optional, string)*
-** *`transform` (Optional, { chain, script, search })*
-** *`trigger` (Optional, { schedule })*
-** *`active` (Optional, boolean)*: Specify whether the watch is in/active by default
+** *`id` (string)*: The identifier for the watch.
+** *`actions` (Optional, Record<string, { add_backing_index, remove_backing_index }>)*: The list of actions that will be run if the condition matches.
+** *`condition` (Optional, { always, array_compare, compare, never, script })*: The condition that defines if the actions should be run.
+** *`input` (Optional, { chain, http, search, simple })*: The input that defines the input that loads the data for the watch.
+** *`metadata` (Optional, Record<string, User-defined value>)*: Metadata JSON that will be copied into the history entries.
+** *`throttle_period` (Optional, string | -1 | 0)*: The minimum time between actions being run.
+The default is 5 seconds.
+This default can be changed in the config file with the setting `xpack.watcher.throttle.period.default_period`.
+If both this value and the `throttle_period_in_millis` parameter are specified, Watcher uses the last parameter included in the request.
+** *`throttle_period_in_millis` (Optional, Unit)*: Minimum time in milliseconds between actions being run. Defaults to 5000. If both this value and the throttle_period parameter are specified, Watcher uses the last parameter included in the request.
+** *`transform` (Optional, { chain, script, search })*: The transform that processes the watch payload to prepare it for the watch actions.
+** *`trigger` (Optional, { schedule })*: The trigger that defines when the watch should run.
+** *`active` (Optional, boolean)*: The initial state of the watch.
+The default value is `true`, which means the watch is active by default.
 ** *`if_primary_term` (Optional, number)*: only update the watch if the last operation that has changed the watch has the specified primary term
 ** *`if_seq_no` (Optional, number)*: only update the watch if the last operation that has changed the watch has the specified sequence number
 ** *`version` (Optional, number)*: Explicit version number for concurrency control
@@ -13057,6 +13979,8 @@ client.watcher.putWatch({ id })
 ==== query_watches
 Query watches.
 Get all registered watches in a paginated manner and optionally filter watches by a query.
+
+Note that only the `_id` and `metadata.*` fields are queryable or sortable.
 
 {ref}/watcher-api-query-watches.html[Endpoint documentation]
 [source,ts]
@@ -13068,11 +13992,13 @@ client.watcher.queryWatches({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`from` (Optional, number)*: The offset from the first result to fetch. Needs to be non-negative.
-** *`size` (Optional, number)*: The number of hits to return. Needs to be non-negative.
-** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Optional, query filter watches to be returned.
-** *`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])*: Optional sort definition.
-** *`search_after` (Optional, number | number | string | boolean | null | User-defined value[])*: Optional search After to do pagination using last hit’s sort values.
+** *`from` (Optional, number)*: The offset from the first result to fetch.
+It must be non-negative.
+** *`size` (Optional, number)*: The number of hits to return.
+It must be non-negative.
+** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: A query that filters the watches to be returned.
+** *`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])*: One or more fields used to sort the search results.
+** *`search_after` (Optional, number | number | string | boolean | null | User-defined value[])*: Retrieve the next page of hits using a set of sort values from the previous page.
 
 [discrete]
 ==== start
@@ -13082,13 +14008,20 @@ Start the Watcher service if it is not already running.
 {ref}/watcher-api-start.html[Endpoint documentation]
 [source,ts]
 ----
-client.watcher.start()
+client.watcher.start({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
 ==== stats
 Get Watcher statistics.
+This API always returns basic metrics.
+You retrieve more metrics by using the metric parameter.
 
 {ref}/watcher-api-stats.html[Endpoint documentation]
 [source,ts]
@@ -13111,20 +14044,40 @@ Stop the Watcher service if it is running.
 {ref}/watcher-api-stop.html[Endpoint documentation]
 [source,ts]
 ----
-client.watcher.stop()
+client.watcher.stop({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for the master node.
+If the master node is not available before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
 
 [discrete]
 ==== update_settings
-Update settings for the watcher system index
+Update Watcher index settings.
+Update settings for the Watcher internal index (`.watches`).
+Only a subset of settings can be modified.
+This includes `index.auto_expand_replicas` and `index.number_of_replicas`.
 
 {ref}/watcher-api-update-settings.html[Endpoint documentation]
 [source,ts]
 ----
-client.watcher.updateSettings()
+client.watcher.updateSettings({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`index.auto_expand_replicas` (Optional, string)*
+** *`index.number_of_replicas` (Optional, number)*
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 === xpack
@@ -13147,9 +14100,11 @@ client.xpack.info({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`categories` (Optional, Enum("build" | "features" | "license")[])*: A list of the information categories to include in the response. For example, `build,license,features`.
+** *`categories` (Optional, Enum("build" | "features" | "license")[])*: A list of the information categories to include in the response.
+For example, `build,license,features`.
 ** *`accept_enterprise` (Optional, boolean)*: If this param is used it must be set to true
-** *`human` (Optional, boolean)*: Defines whether additional human-readable information is included in the response. In particular, it adds descriptions and a tag line.
+** *`human` (Optional, boolean)*: Defines whether additional human-readable information is included in the response.
+In particular, it adds descriptions and a tag line.
 
 [discrete]
 ==== usage
@@ -13167,5 +14122,7 @@ client.xpack.usage({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+To indicate that the request should never timeout, set it to `-1`.
 

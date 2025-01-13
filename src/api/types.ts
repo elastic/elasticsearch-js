@@ -1845,6 +1845,7 @@ export interface SearchShardsRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
   local?: boolean
+  master_timeout?: Duration
   preference?: string
   routing?: Routing
 }
@@ -8713,12 +8714,14 @@ export interface CcrShardStats {
 
 export interface CcrDeleteAutoFollowPatternRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
 }
 
 export type CcrDeleteAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrFollowRequest extends RequestBase {
   index: IndexName
+  master_timeout?: Duration
   wait_for_active_shards?: WaitForActiveShards
   data_stream_name?: string
   leader_index: IndexName
@@ -8767,6 +8770,7 @@ export type CcrFollowInfoFollowerIndexStatus = 'active' | 'paused'
 
 export interface CcrFollowInfoRequest extends RequestBase {
   index: Indices
+  master_timeout?: Duration
 }
 
 export interface CcrFollowInfoResponse {
@@ -8775,6 +8779,7 @@ export interface CcrFollowInfoResponse {
 
 export interface CcrFollowStatsRequest extends RequestBase {
   index: Indices
+  timeout?: Duration
 }
 
 export interface CcrFollowStatsResponse {
@@ -8783,6 +8788,7 @@ export interface CcrFollowStatsResponse {
 
 export interface CcrForgetFollowerRequest extends RequestBase {
   index: IndexName
+  timeout?: Duration
   follower_cluster?: string
   follower_index?: IndexName
   follower_index_uuid?: Uuid
@@ -8809,6 +8815,7 @@ export interface CcrGetAutoFollowPatternAutoFollowPatternSummary {
 
 export interface CcrGetAutoFollowPatternRequest extends RequestBase {
   name?: Name
+  master_timeout?: Duration
 }
 
 export interface CcrGetAutoFollowPatternResponse {
@@ -8817,18 +8824,21 @@ export interface CcrGetAutoFollowPatternResponse {
 
 export interface CcrPauseAutoFollowPatternRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
 }
 
 export type CcrPauseAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrPauseFollowRequest extends RequestBase {
   index: IndexName
+  master_timeout?: Duration
 }
 
 export type CcrPauseFollowResponse = AcknowledgedResponseBase
 
 export interface CcrPutAutoFollowPatternRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
   remote_cluster: string
   follow_index_pattern?: IndexPattern
   leader_index_patterns?: IndexPatterns
@@ -8850,12 +8860,14 @@ export type CcrPutAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrResumeAutoFollowPatternRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
 }
 
 export type CcrResumeAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrResumeFollowRequest extends RequestBase {
   index: IndexName
+  master_timeout?: Duration
   max_outstanding_read_requests?: long
   max_outstanding_write_requests?: long
   max_read_request_operation_count?: long
@@ -8889,6 +8901,8 @@ export interface CcrStatsFollowStats {
 }
 
 export interface CcrStatsRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export interface CcrStatsResponse {
@@ -8898,6 +8912,7 @@ export interface CcrStatsResponse {
 
 export interface CcrUnfollowRequest extends RequestBase {
   index: IndexName
+  master_timeout?: Duration
 }
 
 export type CcrUnfollowResponse = AcknowledgedResponseBase
@@ -8988,6 +9003,7 @@ export interface ClusterAllocationExplainNodeDiskUsage {
 export interface ClusterAllocationExplainRequest extends RequestBase {
   include_disk_info?: boolean
   include_yes_decisions?: boolean
+  master_timeout?: Duration
   current_node?: string
   index?: IndexName
   primary?: boolean
@@ -9050,6 +9066,7 @@ export interface ClusterDeleteComponentTemplateRequest extends RequestBase {
 export type ClusterDeleteComponentTemplateResponse = AcknowledgedResponseBase
 
 export interface ClusterDeleteVotingConfigExclusionsRequest extends RequestBase {
+  master_timeout?: Duration
   wait_for_removal?: boolean
 }
 
@@ -9182,6 +9199,7 @@ export interface ClusterPendingTasksResponse {
 export interface ClusterPostVotingConfigExclusionsRequest extends RequestBase {
   node_names?: Names
   node_ids?: Ids
+  master_timeout?: Duration
   timeout?: Duration
 }
 
@@ -9967,6 +9985,19 @@ export interface ConnectorSyncJobPostResponse {
   id: Id
 }
 
+export interface ConnectorSyncJobUpdateStatsRequest extends RequestBase {
+  connector_sync_job_id: Id
+  deleted_document_count: long
+  indexed_document_count: long
+  indexed_document_volume: long
+  last_seen?: Duration
+  metadata?: Metadata
+  total_document_count?: integer
+}
+
+export interface ConnectorSyncJobUpdateStatsResponse {
+}
+
 export interface ConnectorUpdateActiveFilteringRequest extends RequestBase {
   connector_id: Id
 }
@@ -10146,6 +10177,7 @@ export interface EnrichSummary {
 
 export interface EnrichDeletePolicyRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
 }
 
 export type EnrichDeletePolicyResponse = AcknowledgedResponseBase
@@ -10158,6 +10190,7 @@ export interface EnrichExecutePolicyExecuteEnrichPolicyStatus {
 
 export interface EnrichExecutePolicyRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
   wait_for_completion?: boolean
 }
 
@@ -10168,6 +10201,7 @@ export interface EnrichExecutePolicyResponse {
 
 export interface EnrichGetPolicyRequest extends RequestBase {
   name?: Names
+  master_timeout?: Duration
 }
 
 export interface EnrichGetPolicyResponse {
@@ -10176,6 +10210,7 @@ export interface EnrichGetPolicyResponse {
 
 export interface EnrichPutPolicyRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
   geo_match?: EnrichPolicy
   match?: EnrichPolicy
   range?: EnrichPolicy
@@ -10208,6 +10243,7 @@ export interface EnrichStatsExecutingPolicy {
 }
 
 export interface EnrichStatsRequest extends RequestBase {
+  master_timeout?: Duration
 }
 
 export interface EnrichStatsResponse {
@@ -10338,6 +10374,7 @@ export interface FeaturesFeature {
 }
 
 export interface FeaturesGetFeaturesRequest extends RequestBase {
+  master_timeout?: Duration
 }
 
 export interface FeaturesGetFeaturesResponse {
@@ -10345,6 +10382,7 @@ export interface FeaturesGetFeaturesResponse {
 }
 
 export interface FeaturesResetFeaturesRequest extends RequestBase {
+  master_timeout?: Duration
 }
 
 export interface FeaturesResetFeaturesResponse {
@@ -10679,7 +10717,6 @@ export interface IlmExplainLifecycleRequest extends RequestBase {
   only_errors?: boolean
   only_managed?: boolean
   master_timeout?: Duration
-  timeout?: Duration
 }
 
 export interface IlmExplainLifecycleResponse {
@@ -11622,8 +11659,6 @@ export interface IndicesFieldUsageStatsRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
   fields?: Fields
-  master_timeout?: Duration
-  timeout?: Duration
   wait_for_active_shards?: WaitForActiveShards
 }
 
@@ -11720,6 +11755,22 @@ export interface IndicesGetDataLifecycleRequest extends RequestBase {
 
 export interface IndicesGetDataLifecycleResponse {
   data_streams: IndicesGetDataLifecycleDataStreamWithLifecycle[]
+}
+
+export interface IndicesGetDataLifecycleStatsDataStreamStats {
+  backing_indices_in_error: integer
+  backing_indices_in_total: integer
+  name: DataStreamName
+}
+
+export interface IndicesGetDataLifecycleStatsRequest extends RequestBase {
+}
+
+export interface IndicesGetDataLifecycleStatsResponse {
+  data_stream_count: integer
+  data_streams: IndicesGetDataLifecycleStatsDataStreamStats[]
+  last_run_duration_in_millis?: DurationValue<UnitMillis>
+  time_between_starts_in_millis?: DurationValue<UnitMillis>
 }
 
 export interface IndicesGetDataStreamRequest extends RequestBase {
@@ -12781,6 +12832,24 @@ export interface IngestDissectProcessor extends IngestProcessorBase {
   pattern: string
 }
 
+export interface IngestDocument {
+  _id?: Id
+  _index?: IndexName
+  _source: any
+}
+
+export interface IngestDocumentSimulationKeys {
+  _id: Id
+  _index: IndexName
+  _ingest: IngestIngest
+  _routing?: string
+  _source: Record<string, any>
+  _version?: SpecUtilsStringified<VersionNumber>
+  _version_type?: VersionType
+}
+export type IngestDocumentSimulation = IngestDocumentSimulationKeys
+& { [property: string]: string | Id | IndexName | IngestIngest | Record<string, any> | SpecUtilsStringified<VersionNumber> | VersionType }
+
 export interface IngestDotExpanderProcessor extends IngestProcessorBase {
   field: Field
   override?: boolean
@@ -12894,6 +12963,12 @@ export interface IngestInferenceProcessor extends IngestProcessorBase {
   inference_config?: IngestInferenceConfig
 }
 
+export interface IngestIngest {
+  _redact?: IngestRedact
+  timestamp: DateTime
+  pipeline?: Name
+}
+
 export interface IngestIpLocationProcessor extends IngestProcessorBase {
   database_file?: string
   field: Field
@@ -12980,6 +13055,16 @@ export interface IngestPipelineProcessor extends IngestProcessorBase {
   ignore_missing_pipeline?: boolean
 }
 
+export interface IngestPipelineSimulation {
+  doc?: IngestDocumentSimulation
+  tag?: string
+  processor_type?: string
+  status?: WatcherActionStatusOptions
+  description?: string
+  ignored_error?: ErrorCause
+  error?: ErrorCause
+}
+
 export interface IngestProcessorBase {
   description?: string
   if?: string
@@ -13034,6 +13119,10 @@ export interface IngestProcessorContainer {
   urldecode?: IngestUrlDecodeProcessor
   uri_parts?: IngestUriPartsProcessor
   user_agent?: IngestUserAgentProcessor
+}
+
+export interface IngestRedact {
+  _is_redacted: boolean
 }
 
 export interface IngestRedactProcessor extends IngestProcessorBase {
@@ -13093,6 +13182,12 @@ export interface IngestSetSecurityUserProcessor extends IngestProcessorBase {
 }
 
 export type IngestShapeType = 'geo_shape' | 'shape'
+
+export interface IngestSimulateDocumentResult {
+  doc?: IngestDocumentSimulation
+  error?: ErrorCause
+  processor_results?: IngestPipelineSimulation[]
+}
 
 export interface IngestSortProcessor extends IngestProcessorBase {
   field: Field
@@ -13210,7 +13305,6 @@ export interface IngestGetGeoipDatabaseDatabaseConfigurationMetadata {
 
 export interface IngestGetGeoipDatabaseRequest extends RequestBase {
   id?: Ids
-  master_timeout?: Duration
 }
 
 export interface IngestGetGeoipDatabaseResponse {
@@ -13283,59 +13377,15 @@ export interface IngestPutPipelineRequest extends RequestBase {
 
 export type IngestPutPipelineResponse = AcknowledgedResponseBase
 
-export interface IngestSimulateDocument {
-  _id?: Id
-  _index?: IndexName
-  _source: any
-}
-
-export interface IngestSimulateDocumentSimulationKeys {
-  _id: Id
-  _index: IndexName
-  _ingest: IngestSimulateIngest
-  _routing?: string
-  _source: Record<string, any>
-  _version?: SpecUtilsStringified<VersionNumber>
-  _version_type?: VersionType
-}
-export type IngestSimulateDocumentSimulation = IngestSimulateDocumentSimulationKeys
-& { [property: string]: string | Id | IndexName | IngestSimulateIngest | Record<string, any> | SpecUtilsStringified<VersionNumber> | VersionType }
-
-export interface IngestSimulateIngest {
-  _redact?: IngestSimulateRedact
-  timestamp: DateTime
-  pipeline?: Name
-}
-
-export interface IngestSimulatePipelineSimulation {
-  doc?: IngestSimulateDocumentSimulation
-  tag?: string
-  processor_type?: string
-  status?: WatcherActionStatusOptions
-  description?: string
-  ignored_error?: ErrorCause
-  error?: ErrorCause
-}
-
-export interface IngestSimulateRedact {
-  _is_redacted: boolean
-}
-
 export interface IngestSimulateRequest extends RequestBase {
   id?: Id
   verbose?: boolean
-  docs: IngestSimulateDocument[]
+  docs: IngestDocument[]
   pipeline?: IngestPipeline
 }
 
 export interface IngestSimulateResponse {
-  docs: IngestSimulateSimulateDocumentResult[]
-}
-
-export interface IngestSimulateSimulateDocumentResult {
-  doc?: IngestSimulateDocumentSimulation
-  error?: ErrorCause
-  processor_results?: IngestSimulatePipelineSimulation[]
+  docs: IngestSimulateDocumentResult[]
 }
 
 export interface LicenseLicense {
@@ -13356,6 +13406,8 @@ export type LicenseLicenseStatus = 'active' | 'valid' | 'invalid' | 'expired'
 export type LicenseLicenseType = 'missing' | 'trial' | 'basic' | 'standard' | 'dev' | 'silver' | 'gold' | 'platinum' | 'enterprise'
 
 export interface LicenseDeleteRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export type LicenseDeleteResponse = AcknowledgedResponseBase
@@ -13405,6 +13457,8 @@ export interface LicensePostAcknowledgement {
 
 export interface LicensePostRequest extends RequestBase {
   acknowledge?: boolean
+  master_timeout?: Duration
+  timeout?: Duration
   license?: LicenseLicense
   licenses?: LicenseLicense[]
 }
@@ -13417,6 +13471,8 @@ export interface LicensePostResponse {
 
 export interface LicensePostStartBasicRequest extends RequestBase {
   acknowledge?: boolean
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export interface LicensePostStartBasicResponse {
@@ -13430,6 +13486,7 @@ export interface LicensePostStartBasicResponse {
 export interface LicensePostStartTrialRequest extends RequestBase {
   acknowledge?: boolean
   type_query_string?: string
+  master_timeout?: Duration
 }
 
 export interface LicensePostStartTrialResponse {
@@ -14937,6 +14994,7 @@ export type MlDeleteModelSnapshotResponse = AcknowledgedResponseBase
 export interface MlDeleteTrainedModelRequest extends RequestBase {
   model_id: Id
   force?: boolean
+  timeout?: Duration
 }
 
 export type MlDeleteTrainedModelResponse = AcknowledgedResponseBase
@@ -15297,7 +15355,6 @@ export interface MlGetMemoryStatsMemory {
 
 export interface MlGetMemoryStatsRequest extends RequestBase {
   node_id?: Id
-  human?: boolean
   master_timeout?: Duration
   timeout?: Duration
 }
@@ -16606,7 +16663,6 @@ export interface NodesHotThreadsRequest extends RequestBase {
   ignore_idle_threads?: boolean
   interval?: Duration
   snapshots?: long
-  master_timeout?: Duration
   threads?: long
   timeout?: Duration
   type?: ThreadType
@@ -16968,7 +17024,6 @@ export interface NodesInfoRequest extends RequestBase {
   node_id?: NodeIds
   metric?: Metrics
   flat_settings?: boolean
-  master_timeout?: Duration
   timeout?: Duration
 }
 
@@ -17002,7 +17057,6 @@ export interface NodesStatsRequest extends RequestBase {
   groups?: boolean
   include_segment_file_sizes?: boolean
   level?: Level
-  master_timeout?: Duration
   timeout?: Duration
   types?: string[]
   include_unloaded_segments?: boolean
@@ -17469,8 +17523,6 @@ export interface SearchableSnapshotsClearCacheRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   allow_no_indices?: boolean
   ignore_unavailable?: boolean
-  pretty?: boolean
-  human?: boolean
 }
 
 export type SearchableSnapshotsClearCacheResponse = any
@@ -17694,6 +17746,10 @@ export interface SecuritySearchAccess {
   allow_restricted_indices?: boolean
 }
 
+export interface SecuritySecuritySettings {
+  index?: IndicesIndexSettings
+}
+
 export type SecurityTemplateFormat = 'string' | 'json'
 
 export interface SecurityUser {
@@ -17800,6 +17856,19 @@ export interface SecurityBulkPutRoleResponse {
   updated?: string[]
   noop?: string[]
   errors?: SecurityBulkError
+}
+
+export interface SecurityBulkUpdateApiKeysRequest extends RequestBase {
+  expiration?: Duration
+  ids: string | string[]
+  metadata?: Metadata
+  role_descriptors?: Record<string, SecurityRoleDescriptor>
+}
+
+export interface SecurityBulkUpdateApiKeysResponse {
+  errors?: SecurityBulkError
+  noops: string[]
+  updated: string[]
 }
 
 export interface SecurityChangePasswordRequest extends RequestBase {
@@ -17911,6 +17980,37 @@ export interface SecurityCreateServiceTokenResponse {
 export interface SecurityCreateServiceTokenToken {
   name: Name
   value: string
+}
+
+export interface SecurityDelegatePkiAuthentication {
+  username: string
+  roles: string[]
+  full_name: string | null
+  email: string | null
+  token?: Record<string, string>
+  metadata: Metadata
+  enabled: boolean
+  authentication_realm: SecurityDelegatePkiAuthenticationRealm
+  lookup_realm: SecurityDelegatePkiAuthenticationRealm
+  authentication_type: string
+  api_key?: Record<string, string>
+}
+
+export interface SecurityDelegatePkiAuthenticationRealm {
+  name: string
+  type: string
+  domain?: string
+}
+
+export interface SecurityDelegatePkiRequest extends RequestBase {
+  x509_certificate_chain: string[]
+}
+
+export interface SecurityDelegatePkiResponse {
+  access_token: string
+  expires_in: long
+  type: string
+  authentication?: SecurityDelegatePkiAuthentication
 }
 
 export interface SecurityDeletePrivilegesFoundStatus {
@@ -18104,6 +18204,16 @@ export interface SecurityGetServiceCredentialsResponse {
   count: integer
   tokens: Record<string, Metadata>
   nodes_credentials: SecurityGetServiceCredentialsNodesCredentials
+}
+
+export interface SecurityGetSettingsRequest extends RequestBase {
+  master_timeout?: Duration
+}
+
+export interface SecurityGetSettingsResponse {
+  security: SecuritySecuritySettings
+  'security-profile': SecuritySecuritySettings
+  'security-tokens': SecuritySecuritySettings
 }
 
 export type SecurityGetTokenAccessTokenGrantType = 'password' | 'client_credentials' | '_kerberos' | 'refresh_token'
@@ -18627,6 +18737,18 @@ export interface SecurityUpdateCrossClusterApiKeyResponse {
   updated: boolean
 }
 
+export interface SecurityUpdateSettingsRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
+  security?: SecuritySecuritySettings
+  'security-profile'?: SecuritySecuritySettings
+  'security-tokens'?: SecuritySecuritySettings
+}
+
+export interface SecurityUpdateSettingsResponse {
+  acknowledged: boolean
+}
+
 export interface SecurityUpdateUserProfileDataRequest extends RequestBase {
   uid: SecurityUserProfileId
   if_seq_no?: SequenceNumber
@@ -18670,7 +18792,6 @@ export interface ShutdownGetNodePluginsStatus {
 export interface ShutdownGetNodeRequest extends RequestBase {
   node_id?: NodeIds
   master_timeout?: TimeUnit
-  timeout?: TimeUnit
 }
 
 export interface ShutdownGetNodeResponse {
@@ -18696,6 +18817,20 @@ export interface ShutdownPutNodeRequest extends RequestBase {
 }
 
 export type ShutdownPutNodeResponse = AcknowledgedResponseBase
+
+export interface SimulateIngestRequest extends RequestBase {
+  index?: IndexName
+  pipeline?: PipelineName
+  docs: IngestDocument[]
+  component_template_substitutions?: Record<string, ClusterComponentTemplateNode>
+  index_template_subtitutions?: Record<string, IndicesIndexTemplate>
+  mapping_addition?: MappingTypeMapping
+  pipeline_substitutions?: Record<string, IngestPipeline>
+}
+
+export interface SimulateIngestResponse {
+  docs: IngestSimulateDocumentResult[]
+}
 
 export interface SlmConfiguration {
   ignore_unavailable?: boolean
@@ -18764,12 +18899,16 @@ export interface SlmStatistics {
 
 export interface SlmDeleteLifecycleRequest extends RequestBase {
   policy_id: Name
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export type SlmDeleteLifecycleResponse = AcknowledgedResponseBase
 
 export interface SlmExecuteLifecycleRequest extends RequestBase {
   policy_id: Name
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export interface SlmExecuteLifecycleResponse {
@@ -18777,17 +18916,23 @@ export interface SlmExecuteLifecycleResponse {
 }
 
 export interface SlmExecuteRetentionRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export type SlmExecuteRetentionResponse = AcknowledgedResponseBase
 
 export interface SlmGetLifecycleRequest extends RequestBase {
   policy_id?: Names
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export type SlmGetLifecycleResponse = Record<Id, SlmSnapshotLifecycle>
 
 export interface SlmGetStatsRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export interface SlmGetStatsResponse {
@@ -18804,6 +18949,8 @@ export interface SlmGetStatsResponse {
 }
 
 export interface SlmGetStatusRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export interface SlmGetStatusResponse {
@@ -18824,11 +18971,15 @@ export interface SlmPutLifecycleRequest extends RequestBase {
 export type SlmPutLifecycleResponse = AcknowledgedResponseBase
 
 export interface SlmStartRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export type SlmStartResponse = AcknowledgedResponseBase
 
 export interface SlmStopRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export type SlmStopResponse = AcknowledgedResponseBase
@@ -18839,11 +18990,13 @@ export interface SnapshotAzureRepository extends SnapshotRepositoryBase {
 }
 
 export interface SnapshotAzureRepositorySettings extends SnapshotRepositorySettingsBase {
+  base_path?: string
   client?: string
   container?: string
-  base_path?: string
-  readonly?: boolean
+  delete_objects_max_size?: integer
   location_mode?: string
+  max_concurrent_batch_deletes?: integer
+  readonly?: boolean
 }
 
 export interface SnapshotFileCountSnapshotStats {
@@ -18858,10 +19011,10 @@ export interface SnapshotGcsRepository extends SnapshotRepositoryBase {
 
 export interface SnapshotGcsRepositorySettings extends SnapshotRepositorySettingsBase {
   bucket: string
-  client?: string
-  base_path?: string
-  readonly?: boolean
   application_name?: string
+  base_path?: string
+  client?: string
+  readonly?: boolean
 }
 
 export interface SnapshotIndexDetails {
@@ -18908,13 +19061,20 @@ export interface SnapshotS3Repository extends SnapshotRepositoryBase {
 
 export interface SnapshotS3RepositorySettings extends SnapshotRepositorySettingsBase {
   bucket: string
-  client?: string
   base_path?: string
-  readonly?: boolean
-  server_side_encryption?: boolean
   buffer_size?: ByteSize
   canned_acl?: string
+  client?: string
+  delete_objects_max_size?: integer
+  get_register_retry_delay?: Duration
+  max_multipart_parts?: integer
+  max_multipart_upload_cleanup_size?: integer
+  readonly?: boolean
+  server_side_encryption?: boolean
   storage_class?: string
+  'throttled_delete_retry.delay_increment'?: Duration
+  'throttled_delete_retry.maximum_delay'?: Duration
+  'throttled_delete_retry.maximum_number_of_retries'?: integer
 }
 
 export interface SnapshotShardsStats {
@@ -19060,10 +19220,11 @@ export interface SnapshotCreateRequest extends RequestBase {
   snapshot: Name
   master_timeout?: Duration
   wait_for_completion?: boolean
+  expand_wildcards?: ExpandWildcards
+  feature_states?: string[]
   ignore_unavailable?: boolean
   include_global_state?: boolean
   indices?: Indices
-  feature_states?: string[]
   metadata?: Metadata
   partial?: boolean
 }
@@ -19102,26 +19263,27 @@ export type SnapshotDeleteRepositoryResponse = AcknowledgedResponseBase
 export interface SnapshotGetRequest extends RequestBase {
   repository: Name
   snapshot: Names
+  after?: string
+  from_sort_value?: string
   ignore_unavailable?: boolean
-  master_timeout?: Duration
-  verbose?: boolean
   index_details?: boolean
   index_names?: boolean
   include_repository?: boolean
-  sort?: SnapshotSnapshotSort
-  size?: integer
+  master_timeout?: Duration
   order?: SortOrder
-  after?: string
   offset?: integer
-  from_sort_value?: string
+  size?: integer
   slm_policy_filter?: Name
+  sort?: SnapshotSnapshotSort
+  verbose?: boolean
 }
 
 export interface SnapshotGetResponse {
+  remaining: integer
+  total: integer
+  next?: string
   responses?: SnapshotGetSnapshotResponseItem[]
   snapshots?: SnapshotSnapshotInfo[]
-  total: integer
-  remaining: integer
 }
 
 export interface SnapshotGetSnapshotResponseItem {
@@ -19140,14 +19302,14 @@ export type SnapshotGetRepositoryResponse = Record<string, SnapshotRepository>
 
 export interface SnapshotRepositoryVerifyIntegrityRequest extends RequestBase {
   name: Names
-  meta_thread_pool_concurrency?: integer
   blob_thread_pool_concurrency?: integer
-  snapshot_verification_concurrency?: integer
-  index_verification_concurrency?: integer
   index_snapshot_verification_concurrency?: integer
-  max_failed_shard_snapshots?: integer
-  verify_blob_contents?: boolean
+  index_verification_concurrency?: integer
   max_bytes_per_sec?: string
+  max_failed_shard_snapshots?: integer
+  meta_thread_pool_concurrency?: integer
+  snapshot_verification_concurrency?: integer
+  verify_blob_contents?: boolean
 }
 
 export type SnapshotRepositoryVerifyIntegrityResponse = any
@@ -19248,40 +19410,41 @@ export interface SqlGetAsyncStatusRequest extends RequestBase {
 }
 
 export interface SqlGetAsyncStatusResponse {
+  expiration_time_in_millis: EpochTime<UnitMillis>
   id: string
   is_running: boolean
   is_partial: boolean
   start_time_in_millis: EpochTime<UnitMillis>
-  expiration_time_in_millis: EpochTime<UnitMillis>
   completion_status?: uint
 }
 
 export interface SqlQueryRequest extends RequestBase {
   format?: SqlQuerySqlFormat
+  allow_partial_search_results?: boolean
   catalog?: string
   columnar?: boolean
   cursor?: string
   fetch_size?: integer
-  filter?: QueryDslQueryContainer
-  query?: string
-  request_timeout?: Duration
-  page_timeout?: Duration
-  time_zone?: TimeZone
   field_multi_value_leniency?: boolean
-  runtime_mappings?: MappingRuntimeFields
-  wait_for_completion_timeout?: Duration
-  params?: Record<string, any>
+  filter?: QueryDslQueryContainer
+  index_using_frozen?: boolean
   keep_alive?: Duration
   keep_on_completion?: boolean
-  index_using_frozen?: boolean
+  page_timeout?: Duration
+  params?: Record<string, any>
+  query?: string
+  request_timeout?: Duration
+  runtime_mappings?: MappingRuntimeFields
+  time_zone?: TimeZone
+  wait_for_completion_timeout?: Duration
 }
 
 export interface SqlQueryResponse {
+  columns?: SqlColumn[]
+  cursor?: string
   id?: Id
   is_running?: boolean
   is_partial?: boolean
-  columns?: SqlColumn[]
-  cursor?: string
   rows: SqlRow[]
 }
 
@@ -19470,7 +19633,6 @@ export interface TasksListRequest extends RequestBase {
   group_by?: TasksGroupBy
   nodes?: NodeIds
   parent_task_id?: Id
-  master_timeout?: Duration
   timeout?: Duration
   wait_for_completion?: boolean
 }
@@ -19839,6 +20001,7 @@ export type TransformPutTransformResponse = AcknowledgedResponseBase
 export interface TransformResetTransformRequest extends RequestBase {
   transform_id: Id
   force?: boolean
+  timeout?: Duration
 }
 
 export type TransformResetTransformResponse = AcknowledgedResponseBase
@@ -20493,6 +20656,14 @@ export interface WatcherExecuteWatchWatchRecord {
   status?: WatcherWatchStatus
 }
 
+export interface WatcherGetSettingsRequest extends RequestBase {
+  master_timeout?: Duration
+}
+
+export interface WatcherGetSettingsResponse {
+  index: IndicesIndexSettings
+}
+
 export interface WatcherGetWatchRequest extends RequestBase {
   id: Name
 }
@@ -20517,7 +20688,8 @@ export interface WatcherPutWatchRequest extends RequestBase {
   condition?: WatcherConditionContainer
   input?: WatcherInputContainer
   metadata?: Metadata
-  throttle_period?: string
+  throttle_period?: Duration
+  throttle_period_in_millis?: DurationValue<UnitMillis>
   transform?: TransformContainer
   trigger?: WatcherTriggerContainer
 }
@@ -20544,6 +20716,7 @@ export interface WatcherQueryWatchesResponse {
 }
 
 export interface WatcherStartRequest extends RequestBase {
+  master_timeout?: Duration
 }
 
 export type WatcherStartResponse = AcknowledgedResponseBase
@@ -20586,9 +20759,21 @@ export interface WatcherStatsWatcherNodeStats {
 export type WatcherStatsWatcherState = 'stopped' | 'starting' | 'started' | 'stopping'
 
 export interface WatcherStopRequest extends RequestBase {
+  master_timeout?: Duration
 }
 
 export type WatcherStopResponse = AcknowledgedResponseBase
+
+export interface WatcherUpdateSettingsRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
+  'index.auto_expand_replicas'?: string
+  'index.number_of_replicas'?: integer
+}
+
+export interface WatcherUpdateSettingsResponse {
+  acknowledged: boolean
+}
 
 export interface XpackInfoBuildInformation {
   date: DateTime
