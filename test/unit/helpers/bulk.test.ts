@@ -1611,7 +1611,7 @@ test('errors', t => {
 
 test('Flush interval', t => {
   t.test('Slow producer', async t => {
-    const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
+    const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'], shouldClearNativeTimers: true })
     t.teardown(() => clock.uninstall())
 
     let count = 0
@@ -1663,7 +1663,7 @@ test('Flush interval', t => {
   })
 
   t.test('Abort operation', async t => {
-    const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
+    const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'], shouldClearNativeTimers: true })
     t.teardown(() => clock.uninstall())
 
     let count = 0
