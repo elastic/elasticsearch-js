@@ -17,9 +17,10 @@
  * under the License.
  */
 
-import * as http from 'http'
+import * as http from 'node:http'
+import { URL } from 'node:url'
+import { setTimeout } from 'node:timers/promises'
 import { test } from 'tap'
-import { URL } from 'url'
 import FakeTimers from '@sinonjs/fake-timers'
 import { buildServer, connection } from '../utils'
 import { Client, errors } from '../..'
@@ -451,30 +452,37 @@ test('Ensure new client instance stores requestTimeout for each connection', t =
   t.end()
 })
 
-test('Ensure new client does not time out at default (30s) when client sets requestTimeout', async t => {
-  const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
+test('No request timeout is set by default', t => {
+  const client = new Client({
+    node: { url: new URL('http://localhost:9200') },
+  })
+  t.equal(client.connectionPool.connections[0].timeout, null)
+  t.end()
+})
+
+test('Ensure new client does not time out if requestTimeout is not set', async t => {
+  const clock = FakeTimers.install({ toFake: ['setTimeout'] })
   t.teardown(() => clock.uninstall())
 
   function handler (_req: http.IncomingMessage, res: http.ServerResponse) {
-    setTimeout(() => {
-      t.pass('timeout ended')
+    setTimeout(1000 * 60 * 60).then(() => {
+      t.ok('timeout ended')
       res.setHeader('content-type', 'application/json')
       res.end(JSON.stringify({ success: true }))
-    }, 31000) // default is 30000
-    clock.runToLast()
+    })
+    clock.tick(1000 * 60 * 60)
   }
 
   const [{ port }, server] = await buildServer(handler)
 
   const client = new Client({
     node: `http://localhost:${port}`,
-    requestTimeout: 60000
   })
 
   try {
     await client.transport.request({ method: 'GET', path: '/' })
   } catch (error) {
-    t.fail('timeout error hit')
+    t.fail('Error should not be thrown', error)
   } finally {
     server.stop()
     t.end()
