@@ -13,7 +13,6 @@ const client = new Client({
   cloud: { id: '<cloud-id>' },
   auth: { apiKey: 'base64EncodedKey' },
   maxRetries: 5,
-  requestTimeout: 60000,
   sniffOnStart: true
 })
 ----
@@ -82,7 +81,7 @@ _Default:_ `3`
 
 |`requestTimeout`
 |`number` - Max request timeout in milliseconds for each request. +
-_Default:_ `30000`
+_Default:_ No value
 
 |`pingTimeout`
 |`number` - Max ping request timeout in milliseconds for each request. +

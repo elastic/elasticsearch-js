@@ -1,10 +1,8 @@
 [[timeout-best-practices]]
 === Timeout best practices
 
-This client is configured by default to operate like many HTTP client libraries do, by using a relatively short (30 second) timeout on all requests sent to {es}, raising a `TimeoutError` when that time period has elapsed without receiving a response. However, {es} will always eventually respond to any request, even if it takes several minutes. The {ref}/modules-network.html#_http_client_configuration[official {es} recommendation] is to disable response timeouts entirely by default.
+Starting in 9.0.0, this client is configured to not time out any HTTP request by default. {es} will always eventually respond to any request, even if it takes several minutes. Reissuing a request that it has not responded to yet can cause performance side effects. See the {ref}/modules-network.html#_http_client_configuration[official {es} recommendations for HTTP clients] for more information.
 
-Since changing this default would be a breaking change, we won't do that until the next major release. In the meantime, here is our recommendation for properly configuring your client:
+Prior to 9.0, this client was configured by default to operate like many HTTP client libraries do, by using a relatively short (30 second) timeout on all requests sent to {es}, raising a `TimeoutError` when that time period elapsed without receiving a response.
 
-* Ensure keep-alive is enabled; this is the default, so no settings need to be changed, unless you have set `agent` to `false` or provided an alternate `agent` that disables keep-alive
-* If using the default `UndiciConnection`, disable request timeouts by setting `timeout` to `0`
-* If using the legacy `HttpConnection`, set `timeout` to a very large number (e.g. `86400000`, or one day)
+If your circumstances require you to set timeouts on Elasticsearch requests, setting the `requestTimeout` value to a millisecond value will cause this client to operate as it did prior to 9.0.
