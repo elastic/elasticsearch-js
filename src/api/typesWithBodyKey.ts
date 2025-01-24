@@ -1897,6 +1897,7 @@ export interface SearchShardsRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
   local?: boolean
+  master_timeout?: Duration
   preference?: string
   routing?: Routing
 }
@@ -2497,6 +2498,7 @@ export interface KnnQuery extends QueryDslQueryBase {
   k?: integer
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   similarity?: float
+  rescore_vector?: RescoreVector
 }
 
 export interface KnnRetriever extends RetrieverBase {
@@ -2506,6 +2508,7 @@ export interface KnnRetriever extends RetrieverBase {
   k: integer
   num_candidates: integer
   similarity?: float
+  rescore_vector?: RescoreVector
 }
 
 export interface KnnSearch {
@@ -2518,6 +2521,7 @@ export interface KnnSearch {
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   similarity?: float
   inner_hits?: SearchInnerHits
+  rescore_vector?: RescoreVector
 }
 
 export interface LatLonGeoLocation {
@@ -2696,6 +2700,10 @@ export interface RequestCacheStats {
   memory_size?: string
   memory_size_in_bytes: long
   miss_count: long
+}
+
+export interface RescoreVector {
+  oversample: float
 }
 
 export type Result = 'created' | 'updated' | 'deleted' | 'not_found' | 'noop'
@@ -2904,6 +2912,8 @@ export interface StoredScript {
   options?: Record<string, string>
   source: string
 }
+
+export type StreamResult = ArrayBuffer
 
 export type SuggestMode = 'missing' | 'popular' | 'always'
 
@@ -5401,6 +5411,11 @@ export interface MappingCorePropertyBase extends MappingPropertyBase {
   store?: boolean
 }
 
+export interface MappingCountedKeywordProperty extends MappingPropertyBase {
+  type: 'counted_keyword'
+  index?: boolean
+}
+
 export interface MappingDataStreamTimestamp {
   enabled: boolean
 }
@@ -5521,7 +5536,7 @@ export interface MappingFieldNamesField {
   enabled: boolean
 }
 
-export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'passthrough' | 'version' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'semantic_text' | 'sparse_vector' | 'match_only_text' | 'icu_collation_keyword'
+export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'passthrough' | 'version' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'counted_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'semantic_text' | 'sparse_vector' | 'match_only_text' | 'icu_collation_keyword'
 
 export interface MappingFlattenedProperty extends MappingPropertyBase {
   boost?: double
@@ -5716,7 +5731,7 @@ export interface MappingPointProperty extends MappingDocValuesPropertyBase {
   type: 'point'
 }
 
-export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingPassthroughObjectProperty | MappingSemanticTextProperty | MappingSparseVectorProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty | MappingIcuCollationProperty
+export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingPassthroughObjectProperty | MappingSemanticTextProperty | MappingSparseVectorProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingCountedKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty | MappingIcuCollationProperty
 
 export interface MappingPropertyBase {
   meta?: Record<string, string>
@@ -6997,7 +7012,7 @@ export type CatAllocationResponse = CatAllocationAllocationRecord[]
 
 export interface CatComponentTemplatesComponentTemplate {
   name: string
-  version: string
+  version: string | null
   alias_count: string
   mapping_count: string
   settings_count: string
@@ -8786,12 +8801,14 @@ export interface CcrShardStats {
 
 export interface CcrDeleteAutoFollowPatternRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
 }
 
 export type CcrDeleteAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrFollowRequest extends RequestBase {
   index: IndexName
+  master_timeout?: Duration
   wait_for_active_shards?: WaitForActiveShards
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
@@ -8843,6 +8860,7 @@ export type CcrFollowInfoFollowerIndexStatus = 'active' | 'paused'
 
 export interface CcrFollowInfoRequest extends RequestBase {
   index: Indices
+  master_timeout?: Duration
 }
 
 export interface CcrFollowInfoResponse {
@@ -8851,6 +8869,7 @@ export interface CcrFollowInfoResponse {
 
 export interface CcrFollowStatsRequest extends RequestBase {
   index: Indices
+  timeout?: Duration
 }
 
 export interface CcrFollowStatsResponse {
@@ -8859,6 +8878,7 @@ export interface CcrFollowStatsResponse {
 
 export interface CcrForgetFollowerRequest extends RequestBase {
   index: IndexName
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     follower_cluster?: string
@@ -8888,6 +8908,7 @@ export interface CcrGetAutoFollowPatternAutoFollowPatternSummary {
 
 export interface CcrGetAutoFollowPatternRequest extends RequestBase {
   name?: Name
+  master_timeout?: Duration
 }
 
 export interface CcrGetAutoFollowPatternResponse {
@@ -8896,18 +8917,21 @@ export interface CcrGetAutoFollowPatternResponse {
 
 export interface CcrPauseAutoFollowPatternRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
 }
 
 export type CcrPauseAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrPauseFollowRequest extends RequestBase {
   index: IndexName
+  master_timeout?: Duration
 }
 
 export type CcrPauseFollowResponse = AcknowledgedResponseBase
 
 export interface CcrPutAutoFollowPatternRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     remote_cluster: string
@@ -8932,12 +8956,14 @@ export type CcrPutAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrResumeAutoFollowPatternRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
 }
 
 export type CcrResumeAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrResumeFollowRequest extends RequestBase {
   index: IndexName
+  master_timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     max_outstanding_read_requests?: long
@@ -8974,6 +9000,8 @@ export interface CcrStatsFollowStats {
 }
 
 export interface CcrStatsRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export interface CcrStatsResponse {
@@ -8983,6 +9011,7 @@ export interface CcrStatsResponse {
 
 export interface CcrUnfollowRequest extends RequestBase {
   index: IndexName
+  master_timeout?: Duration
 }
 
 export type CcrUnfollowResponse = AcknowledgedResponseBase
@@ -9073,6 +9102,7 @@ export interface ClusterAllocationExplainNodeDiskUsage {
 export interface ClusterAllocationExplainRequest extends RequestBase {
   include_disk_info?: boolean
   include_yes_decisions?: boolean
+  master_timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     current_node?: string
@@ -9138,6 +9168,7 @@ export interface ClusterDeleteComponentTemplateRequest extends RequestBase {
 export type ClusterDeleteComponentTemplateResponse = AcknowledgedResponseBase
 
 export interface ClusterDeleteVotingConfigExclusionsRequest extends RequestBase {
+  master_timeout?: Duration
   wait_for_removal?: boolean
 }
 
@@ -9270,6 +9301,7 @@ export interface ClusterPendingTasksResponse {
 export interface ClusterPostVotingConfigExclusionsRequest extends RequestBase {
   node_names?: Names
   node_ids?: Ids
+  master_timeout?: Duration
   timeout?: Duration
 }
 
@@ -10316,6 +10348,7 @@ export interface EnrichSummary {
 
 export interface EnrichDeletePolicyRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
 }
 
 export type EnrichDeletePolicyResponse = AcknowledgedResponseBase
@@ -10328,6 +10361,7 @@ export interface EnrichExecutePolicyExecuteEnrichPolicyStatus {
 
 export interface EnrichExecutePolicyRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
   wait_for_completion?: boolean
 }
 
@@ -10338,6 +10372,7 @@ export interface EnrichExecutePolicyResponse {
 
 export interface EnrichGetPolicyRequest extends RequestBase {
   name?: Names
+  master_timeout?: Duration
 }
 
 export interface EnrichGetPolicyResponse {
@@ -10346,6 +10381,7 @@ export interface EnrichGetPolicyResponse {
 
 export interface EnrichPutPolicyRequest extends RequestBase {
   name: Name
+  master_timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     geo_match?: EnrichPolicy
@@ -10381,6 +10417,7 @@ export interface EnrichStatsExecutingPolicy {
 }
 
 export interface EnrichStatsRequest extends RequestBase {
+  master_timeout?: Duration
 }
 
 export interface EnrichStatsResponse {
@@ -10476,6 +10513,8 @@ export type EqlSearchResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEven
 
 export type EqlSearchResultPosition = 'tail' | 'head'
 
+export type EsqlEsqlFormat = 'csv' | 'json' | 'tsv' | 'txt' | 'yaml' | 'cbor' | 'smile' | 'arrow'
+
 export interface EsqlTableValuesContainer {
   integer?: EsqlTableValuesIntegerValue[]
   keyword?: EsqlTableValuesKeywordValue[]
@@ -10491,10 +10530,51 @@ export type EsqlTableValuesLongDouble = double | double[]
 
 export type EsqlTableValuesLongValue = long | long[]
 
-export type EsqlQueryEsqlFormat = 'csv' | 'json' | 'tsv' | 'txt' | 'yaml' | 'cbor' | 'smile' | 'arrow'
+export interface EsqlAsyncQueryRequest extends RequestBase {
+  delimiter?: string
+  drop_null_columns?: boolean
+  format?: EsqlEsqlFormat
+  keep_alive?: Duration
+  keep_on_completion?: boolean
+  wait_for_completion_timeout?: Duration
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    columnar?: boolean
+    filter?: QueryDslQueryContainer
+    locale?: string
+    params?: FieldValue[]
+    profile?: boolean
+    query: string
+    tables?: Record<string, Record<string, EsqlTableValuesContainer>>
+  }
+}
+
+export interface EsqlAsyncQueryResponse {
+  columns?: EsqlColumns
+  id?: string
+  is_running: boolean
+}
+
+export interface EsqlAsyncQueryDeleteRequest extends RequestBase {
+  id: Id
+}
+
+export type EsqlAsyncQueryDeleteResponse = AcknowledgedResponseBase
+
+export interface EsqlAsyncQueryGetRequest extends RequestBase {
+  id: Id
+  drop_null_columns?: boolean
+  keep_alive?: Duration
+  wait_for_completion_timeout?: Duration
+}
+
+export interface EsqlAsyncQueryGetResponse {
+  columns?: EsqlColumns
+  is_running: boolean
+}
 
 export interface EsqlQueryRequest extends RequestBase {
-  format?: EsqlQueryEsqlFormat
+  format?: EsqlEsqlFormat
   delimiter?: string
   drop_null_columns?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
@@ -10517,6 +10597,7 @@ export interface FeaturesFeature {
 }
 
 export interface FeaturesGetFeaturesRequest extends RequestBase {
+  master_timeout?: Duration
 }
 
 export interface FeaturesGetFeaturesResponse {
@@ -10524,6 +10605,7 @@ export interface FeaturesGetFeaturesResponse {
 }
 
 export interface FeaturesResetFeaturesRequest extends RequestBase {
+  master_timeout?: Duration
 }
 
 export interface FeaturesResetFeaturesResponse {
@@ -10766,7 +10848,7 @@ export interface IlmMigrateAction {
 
 export interface IlmPhase {
   actions?: IlmActions
-  min_age?: Duration | long
+  min_age?: Duration
 }
 
 export interface IlmPhases {
@@ -10866,7 +10948,6 @@ export interface IlmExplainLifecycleRequest extends RequestBase {
   only_errors?: boolean
   only_managed?: boolean
   master_timeout?: Duration
-  timeout?: Duration
 }
 
 export interface IlmExplainLifecycleResponse {
@@ -11204,6 +11285,7 @@ export interface IndicesIndexSettingsLifecycle {
   parse_origination_date?: boolean
   step?: IndicesIndexSettingsLifecycleStep
   rollover_alias?: string
+  prefer_ilm?: boolean | string
 }
 
 export interface IndicesIndexSettingsLifecycleStep {
@@ -11555,6 +11637,12 @@ export interface IndicesAnalyzeTokenDetail {
   tokens: IndicesAnalyzeExplainAnalyzeToken[]
 }
 
+export interface IndicesCancelMigrateReindexRequest extends RequestBase {
+  index: Indices
+}
+
+export type IndicesCancelMigrateReindexResponse = AcknowledgedResponseBase
+
 export interface IndicesClearCacheRequest extends RequestBase {
   index?: Indices
   allow_no_indices?: boolean
@@ -11638,6 +11726,25 @@ export interface IndicesCreateDataStreamRequest extends RequestBase {
 }
 
 export type IndicesCreateDataStreamResponse = AcknowledgedResponseBase
+
+export interface IndicesCreateFromCreateFrom {
+  mappings_override?: MappingTypeMapping
+  settings_override?: IndicesIndexSettings
+  remove_index_blocks?: boolean
+}
+
+export interface IndicesCreateFromRequest extends RequestBase {
+  source: IndexName
+  dest: IndexName
+  /** @deprecated The use of the 'body' key has been deprecated, use 'create_from' instead. */
+  body?: IndicesCreateFromCreateFrom
+}
+
+export interface IndicesCreateFromResponse {
+  acknowledged: boolean
+  index: IndexName
+  shards_acknowledged: boolean
+}
 
 export interface IndicesDataStreamsStatsDataStreamsStatsItem {
   backing_indices: integer
@@ -11828,8 +11935,6 @@ export interface IndicesFieldUsageStatsRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
   fields?: Fields
-  master_timeout?: Duration
-  timeout?: Duration
   wait_for_active_shards?: WaitForActiveShards
 }
 
@@ -12005,6 +12110,34 @@ export interface IndicesGetMappingRequest extends RequestBase {
 
 export type IndicesGetMappingResponse = Record<IndexName, IndicesGetMappingIndexMappingRecord>
 
+export interface IndicesGetMigrateReindexStatusRequest extends RequestBase {
+  index: Indices
+}
+
+export interface IndicesGetMigrateReindexStatusResponse {
+  start_time?: DateTime
+  start_time_millis: EpochTime<UnitMillis>
+  complete: boolean
+  total_indices_in_data_stream: integer
+  total_indices_requiring_upgrade: integer
+  successes: integer
+  in_progress: IndicesGetMigrateReindexStatusStatusInProgress[]
+  pending: integer
+  errors: IndicesGetMigrateReindexStatusStatusError[]
+  exception?: string
+}
+
+export interface IndicesGetMigrateReindexStatusStatusError {
+  index: string
+  message: string
+}
+
+export interface IndicesGetMigrateReindexStatusStatusInProgress {
+  index: string
+  total_doc_count: long
+  reindexed_doc_count: long
+}
+
 export interface IndicesGetSettingsRequest extends RequestBase {
   index?: Indices
   name?: Names
@@ -12027,6 +12160,24 @@ export interface IndicesGetTemplateRequest extends RequestBase {
 }
 
 export type IndicesGetTemplateResponse = Record<string, IndicesTemplateMapping>
+
+export interface IndicesMigrateReindexMigrateReindex {
+  mode: IndicesMigrateReindexModeEnum
+  source: IndicesMigrateReindexSourceIndex
+}
+
+export type IndicesMigrateReindexModeEnum = 'upgrade'
+
+export interface IndicesMigrateReindexRequest extends RequestBase {
+  /** @deprecated The use of the 'body' key has been deprecated, use 'reindex' instead. */
+  body?: IndicesMigrateReindexMigrateReindex
+}
+
+export type IndicesMigrateReindexResponse = AcknowledgedResponseBase
+
+export interface IndicesMigrateReindexSourceIndex {
+  index: IndexName
+}
 
 export interface IndicesMigrateToDataStreamRequest extends RequestBase {
   name: IndexName
@@ -12939,6 +13090,93 @@ export interface InferencePutRequest extends RequestBase {
 
 export type InferencePutResponse = InferenceInferenceEndpointInfo
 
+export interface InferenceStreamInferenceRequest extends RequestBase {
+  inference_id: Id
+  task_type?: InferenceTaskType
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    input: string | string[]
+  }
+}
+
+export type InferenceStreamInferenceResponse = StreamResult
+
+export interface InferenceUnifiedInferenceCompletionTool {
+  type: string
+  function: InferenceUnifiedInferenceCompletionToolFunction
+}
+
+export interface InferenceUnifiedInferenceCompletionToolChoice {
+  type: string
+  function: InferenceUnifiedInferenceCompletionToolChoiceFunction
+}
+
+export interface InferenceUnifiedInferenceCompletionToolChoiceFunction {
+  name: string
+}
+
+export interface InferenceUnifiedInferenceCompletionToolFunction {
+  description?: string
+  name: string
+  parameters?: any
+  strict?: boolean
+}
+
+export type InferenceUnifiedInferenceCompletionToolType = string | InferenceUnifiedInferenceCompletionToolChoice
+
+export interface InferenceUnifiedInferenceContentObject {
+  text: string
+  type: string
+}
+
+export interface InferenceUnifiedInferenceMessage {
+  content?: InferenceUnifiedInferenceMessageContent
+  role: string
+  tool_call_id?: Id
+  tool_calls?: InferenceUnifiedInferenceToolCall[]
+}
+
+export type InferenceUnifiedInferenceMessageContent = string | InferenceUnifiedInferenceContentObject[]
+
+export interface InferenceUnifiedInferenceRequest extends RequestBase {
+  task_type?: InferenceTaskType
+  inference_id: Id
+  timeout?: Duration
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    messages: InferenceUnifiedInferenceMessage[]
+    model?: string
+    max_completion_tokens?: long
+    stop?: string[]
+    temperature?: float
+    tool_choice?: InferenceUnifiedInferenceCompletionToolType
+    tools?: InferenceUnifiedInferenceCompletionTool[]
+    top_p?: float
+  }
+}
+
+export type InferenceUnifiedInferenceResponse = StreamResult
+
+export interface InferenceUnifiedInferenceToolCall {
+  id: Id
+  function: InferenceUnifiedInferenceToolCallFunction
+  type: string
+}
+
+export interface InferenceUnifiedInferenceToolCallFunction {
+  arguments: string
+  name: string
+}
+
+export interface InferenceUpdateRequest extends RequestBase {
+  inference_id: Id
+  task_type?: InferenceTaskType
+  /** @deprecated The use of the 'body' key has been deprecated, use 'inference_config' instead. */
+  body?: InferenceInferenceEndpoint
+}
+
+export type InferenceUpdateResponse = InferenceInferenceEndpointInfo
+
 export interface IngestAppendProcessor extends IngestProcessorBase {
   field: Field
   value: any | any[]
@@ -13516,7 +13754,6 @@ export interface IngestGetGeoipDatabaseDatabaseConfigurationMetadata {
 
 export interface IngestGetGeoipDatabaseRequest extends RequestBase {
   id?: Ids
-  master_timeout?: Duration
 }
 
 export interface IngestGetGeoipDatabaseResponse {
@@ -13628,6 +13865,8 @@ export type LicenseLicenseStatus = 'active' | 'valid' | 'invalid' | 'expired'
 export type LicenseLicenseType = 'missing' | 'trial' | 'basic' | 'standard' | 'dev' | 'silver' | 'gold' | 'platinum' | 'enterprise'
 
 export interface LicenseDeleteRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export type LicenseDeleteResponse = AcknowledgedResponseBase
@@ -13677,6 +13916,8 @@ export interface LicensePostAcknowledgement {
 
 export interface LicensePostRequest extends RequestBase {
   acknowledge?: boolean
+  master_timeout?: Duration
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     license?: LicenseLicense
@@ -13692,6 +13933,8 @@ export interface LicensePostResponse {
 
 export interface LicensePostStartBasicRequest extends RequestBase {
   acknowledge?: boolean
+  master_timeout?: Duration
+  timeout?: Duration
 }
 
 export interface LicensePostStartBasicResponse {
@@ -13705,6 +13948,7 @@ export interface LicensePostStartBasicResponse {
 export interface LicensePostStartTrialRequest extends RequestBase {
   acknowledge?: boolean
   type_query_string?: string
+  master_timeout?: Duration
 }
 
 export interface LicensePostStartTrialResponse {
@@ -15216,6 +15460,7 @@ export type MlDeleteModelSnapshotResponse = AcknowledgedResponseBase
 export interface MlDeleteTrainedModelRequest extends RequestBase {
   model_id: Id
   force?: boolean
+  timeout?: Duration
 }
 
 export type MlDeleteTrainedModelResponse = AcknowledgedResponseBase
@@ -15603,7 +15848,6 @@ export interface MlGetMemoryStatsMemory {
 
 export interface MlGetMemoryStatsRequest extends RequestBase {
   node_id?: Id
-  human?: boolean
   master_timeout?: Duration
   timeout?: Duration
 }
@@ -16994,7 +17238,6 @@ export interface NodesHotThreadsRequest extends RequestBase {
   ignore_idle_threads?: boolean
   interval?: Duration
   snapshots?: long
-  master_timeout?: Duration
   threads?: long
   timeout?: Duration
   type?: ThreadType
@@ -17356,7 +17599,6 @@ export interface NodesInfoRequest extends RequestBase {
   node_id?: NodeIds
   metric?: Metrics
   flat_settings?: boolean
-  master_timeout?: Duration
   timeout?: Duration
 }
 
@@ -17393,7 +17635,6 @@ export interface NodesStatsRequest extends RequestBase {
   groups?: boolean
   include_segment_file_sizes?: boolean
   level?: Level
-  master_timeout?: Duration
   timeout?: Duration
   types?: string[]
   include_unloaded_segments?: boolean
@@ -17883,8 +18124,6 @@ export interface SearchableSnapshotsClearCacheRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   allow_no_indices?: boolean
   ignore_unavailable?: boolean
-  pretty?: boolean
-  human?: boolean
 }
 
 export type SearchableSnapshotsClearCacheResponse = any
@@ -18109,6 +18348,10 @@ export interface SecuritySearchAccess {
   names: IndexName | IndexName[]
   query?: SecurityIndicesPrivilegesQuery
   allow_restricted_indices?: boolean
+}
+
+export interface SecuritySecuritySettings {
+  index?: IndicesIndexSettings
 }
 
 export type SecurityTemplateFormat = 'string' | 'json'
@@ -18589,6 +18832,16 @@ export interface SecurityGetServiceCredentialsResponse {
   count: integer
   tokens: Record<string, Metadata>
   nodes_credentials: SecurityGetServiceCredentialsNodesCredentials
+}
+
+export interface SecurityGetSettingsRequest extends RequestBase {
+  master_timeout?: Duration
+}
+
+export interface SecurityGetSettingsResponse {
+  security: SecuritySecuritySettings
+  'security-profile': SecuritySecuritySettings
+  'security-tokens': SecuritySecuritySettings
 }
 
 export type SecurityGetTokenAccessTokenGrantType = 'password' | 'client_credentials' | '_kerberos' | 'refresh_token'
@@ -19183,6 +19436,21 @@ export interface SecurityUpdateCrossClusterApiKeyResponse {
   updated: boolean
 }
 
+export interface SecurityUpdateSettingsRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    security?: SecuritySecuritySettings
+    'security-profile'?: SecuritySecuritySettings
+    'security-tokens'?: SecuritySecuritySettings
+  }
+}
+
+export interface SecurityUpdateSettingsResponse {
+  acknowledged: boolean
+}
+
 export interface SecurityUpdateUserProfileDataRequest extends RequestBase {
   uid: SecurityUserProfileId
   if_seq_no?: SequenceNumber
@@ -19229,7 +19497,6 @@ export interface ShutdownGetNodePluginsStatus {
 export interface ShutdownGetNodeRequest extends RequestBase {
   node_id?: NodeIds
   master_timeout?: TimeUnit
-  timeout?: TimeUnit
 }
 
 export interface ShutdownGetNodeResponse {
@@ -19647,7 +19914,6 @@ export interface SnapshotCloneRequest extends RequestBase {
   snapshot: Name
   target_snapshot: Name
   master_timeout?: Duration
-  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     indices: string
@@ -19742,6 +20008,113 @@ export interface SnapshotGetRepositoryRequest extends RequestBase {
 }
 
 export type SnapshotGetRepositoryResponse = Record<string, SnapshotRepository>
+
+export interface SnapshotRepositoryAnalyzeBlobDetails {
+  name: string
+  overwritten: boolean
+  read_early: boolean
+  read_end: long
+  read_start: long
+  reads: SnapshotRepositoryAnalyzeReadBlobDetails
+  size: ByteSize
+  size_bytes: long
+}
+
+export interface SnapshotRepositoryAnalyzeDetailsInfo {
+  blob: SnapshotRepositoryAnalyzeBlobDetails
+  overwrite_elapsed?: Duration
+  overwrite_elapsed_nanos?: DurationValue<UnitNanos>
+  write_elapsed: Duration
+  write_elapsed_nanos: DurationValue<UnitNanos>
+  write_throttled: Duration
+  write_throttled_nanos: DurationValue<UnitNanos>
+  writer_node: SnapshotRepositoryAnalyzeNodeInfo
+}
+
+export interface SnapshotRepositoryAnalyzeNodeInfo {
+  id: Id
+  name: Name
+}
+
+export interface SnapshotRepositoryAnalyzeReadBlobDetails {
+  before_write_complete?: boolean
+  elapsed?: Duration
+  elapsed_nanos?: DurationValue<UnitNanos>
+  first_byte_time?: Duration
+  first_byte_time_nanos: DurationValue<UnitNanos>
+  found: boolean
+  node: SnapshotRepositoryAnalyzeNodeInfo
+  throttled?: Duration
+  throttled_nanos?: DurationValue<UnitNanos>
+}
+
+export interface SnapshotRepositoryAnalyzeReadSummaryInfo {
+  count: integer
+  max_wait: Duration
+  max_wait_nanos: DurationValue<UnitNanos>
+  total_elapsed: Duration
+  total_elapsed_nanos: DurationValue<UnitNanos>
+  total_size: ByteSize
+  total_size_bytes: long
+  total_throttled: Duration
+  total_throttled_nanos: DurationValue<UnitNanos>
+  total_wait: Duration
+  total_wait_nanos: DurationValue<UnitNanos>
+}
+
+export interface SnapshotRepositoryAnalyzeRequest extends RequestBase {
+  name: Name
+  blob_count?: integer
+  concurrency?: integer
+  detailed?: boolean
+  early_read_node_count?: integer
+  max_blob_size?: ByteSize
+  max_total_data_size?: ByteSize
+  rare_action_probability?: double
+  rarely_abort_writes?: boolean
+  read_node_count?: integer
+  register_operation_count?: integer
+  seed?: integer
+  timeout?: Duration
+}
+
+export interface SnapshotRepositoryAnalyzeResponse {
+  blob_count: integer
+  blob_path: string
+  concurrency: integer
+  coordinating_node: SnapshotRepositoryAnalyzeNodeInfo
+  delete_elapsed: Duration
+  delete_elapsed_nanos: DurationValue<UnitNanos>
+  details: SnapshotRepositoryAnalyzeDetailsInfo
+  early_read_node_count: integer
+  issues_detected: string[]
+  listing_elapsed: Duration
+  listing_elapsed_nanos: DurationValue<UnitNanos>
+  max_blob_size: ByteSize
+  max_blob_size_bytes: long
+  max_total_data_size: ByteSize
+  max_total_data_size_bytes: long
+  rare_action_probability: double
+  read_node_count: integer
+  repository: string
+  seed: long
+  summary: SnapshotRepositoryAnalyzeSummaryInfo
+}
+
+export interface SnapshotRepositoryAnalyzeSummaryInfo {
+  read: SnapshotRepositoryAnalyzeReadSummaryInfo
+  write: SnapshotRepositoryAnalyzeWriteSummaryInfo
+}
+
+export interface SnapshotRepositoryAnalyzeWriteSummaryInfo {
+  count: integer
+  total_elapsed: Duration
+  total_elapsed_nanos: DurationValue<UnitNanos>
+  total_size: ByteSize
+  total_size_bytes: long
+  total_throttled: Duration
+  total_throttled_nanos: long
+}
 
 export interface SnapshotRepositoryVerifyIntegrityRequest extends RequestBase {
   name: Names
@@ -20094,7 +20467,6 @@ export interface TasksListRequest extends RequestBase {
   group_by?: TasksGroupBy
   nodes?: NodeIds
   parent_task_id?: Id
-  master_timeout?: Duration
   timeout?: Duration
   wait_for_completion?: boolean
 }
@@ -20476,6 +20848,7 @@ export type TransformPutTransformResponse = AcknowledgedResponseBase
 export interface TransformResetTransformRequest extends RequestBase {
   transform_id: Id
   force?: boolean
+  timeout?: Duration
 }
 
 export type TransformResetTransformResponse = AcknowledgedResponseBase
@@ -21202,6 +21575,7 @@ export interface WatcherQueryWatchesResponse {
 }
 
 export interface WatcherStartRequest extends RequestBase {
+  master_timeout?: Duration
 }
 
 export type WatcherStartResponse = AcknowledgedResponseBase
@@ -21471,7 +21845,7 @@ export interface XpackUsageIlm {
 
 export interface XpackUsageIlmPolicyStatistics {
   indices_managed: integer
-  phases: IlmPhases
+  phases: XpackUsagePhases
 }
 
 export interface XpackUsageInvocations {
@@ -21581,6 +21955,19 @@ export interface XpackUsageMlJobForecasts {
 export interface XpackUsageMonitoring extends XpackUsageBase {
   collection_enabled: boolean
   enabled_exporters: Record<string, long>
+}
+
+export interface XpackUsagePhase {
+  actions: string[]
+  min_age: DurationValue<UnitMillis>
+}
+
+export interface XpackUsagePhases {
+  cold?: XpackUsagePhase
+  delete?: XpackUsagePhase
+  frozen?: XpackUsagePhase
+  hot?: XpackUsagePhase
+  warm?: XpackUsagePhase
 }
 
 export interface XpackUsageQuery {

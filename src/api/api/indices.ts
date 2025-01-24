@@ -130,6 +130,38 @@ export default class Indices {
   }
 
   /**
+    * Cancel a migration reindex operation. Cancel a migration reindex attempt for a data stream or index.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/migrate-data-stream.html | Elasticsearch API documentation}
+    */
+  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest | TB.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCancelMigrateReindexResponse>
+  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest | TB.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCancelMigrateReindexResponse, unknown>>
+  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest | TB.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptions): Promise<T.IndicesCancelMigrateReindexResponse>
+  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest | TB.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['index']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = `/_migration/reindex/${encodeURIComponent(params.index.toString())}/_cancel`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.cancel_migrate_reindex',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Clear the cache. Clear the cache of one or more indices. For data streams, the API clears the caches of the stream's backing indices. By default, the clear cache API clears all caches. To clear only specific caches, use the `fielddata`, `query`, or `request` parameters. To clear the cache only of specific fields, use the `fields` parameter.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-clearcache.html | Elasticsearch API documentation}
     */
@@ -317,6 +349,44 @@ export default class Indices {
       name: 'indices.create_data_stream',
       pathParts: {
         name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create an index from a source index. Copy the mappings and settings from the source index to a destination index while allowing request settings and mappings to override the source values.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/migrate-data-stream.html | Elasticsearch API documentation}
+    */
+  async createFrom (this: That, params: T.IndicesCreateFromRequest | TB.IndicesCreateFromRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateFromResponse>
+  async createFrom (this: That, params: T.IndicesCreateFromRequest | TB.IndicesCreateFromRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateFromResponse, unknown>>
+  async createFrom (this: That, params: T.IndicesCreateFromRequest | TB.IndicesCreateFromRequest, options?: TransportRequestOptions): Promise<T.IndicesCreateFromResponse>
+  async createFrom (this: That, params: T.IndicesCreateFromRequest | TB.IndicesCreateFromRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['source', 'dest']
+    const acceptedBody: string[] = ['create_from']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    let body: any = params.body ?? undefined
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_create_from/${encodeURIComponent(params.source.toString())}/${encodeURIComponent(params.dest.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.create_from',
+      pathParts: {
+        source: params.source,
+        dest: params.dest
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -946,6 +1016,7 @@ export default class Indices {
 
   /**
     * Get aliases. Retrieves information for one or more data stream or index aliases.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-get-alias.html | Elasticsearch API documentation}
     */
   async getAlias (this: That, params?: T.IndicesGetAliasRequest | TB.IndicesGetAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetAliasResponse>
   async getAlias (this: That, params?: T.IndicesGetAliasRequest | TB.IndicesGetAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetAliasResponse, unknown>>
@@ -1213,6 +1284,38 @@ export default class Indices {
   }
 
   /**
+    * Get the migration reindexing status. Get the status of a migration reindex attempt for a data stream or index.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/migrate-data-stream.html | Elasticsearch API documentation}
+    */
+  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest | TB.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetMigrateReindexStatusResponse>
+  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest | TB.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetMigrateReindexStatusResponse, unknown>>
+  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest | TB.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptions): Promise<T.IndicesGetMigrateReindexStatusResponse>
+  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest | TB.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['index']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/_migration/reindex/${encodeURIComponent(params.index.toString())}/_status`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_migrate_reindex_status',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Get index settings. Get setting information for one or more indices. For data streams, it returns setting information for the stream's backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-get-settings.html | Elasticsearch API documentation}
     */
@@ -1295,6 +1398,40 @@ export default class Indices {
       pathParts: {
         name: params.name
       }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Reindex legacy backing indices. Reindex all legacy backing indices for a data stream. This operation occurs in a persistent task. The persistent task ID is returned immediately and the reindexing work is completed in that task.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/migrate-data-stream.html | Elasticsearch API documentation}
+    */
+  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest | TB.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesMigrateReindexResponse>
+  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest | TB.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesMigrateReindexResponse, unknown>>
+  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest | TB.IndicesMigrateReindexRequest, options?: TransportRequestOptions): Promise<T.IndicesMigrateReindexResponse>
+  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest | TB.IndicesMigrateReindexRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['reindex']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    let body: any = params.body ?? undefined
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = '/_migration/reindex'
+    const meta: TransportRequestMetadata = {
+      name: 'indices.migrate_reindex'
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
