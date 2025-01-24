@@ -52,13 +52,23 @@ export default class Indices {
   async addBlock (this: That, params: T.IndicesAddBlockRequest, options?: TransportRequestOptions): Promise<T.IndicesAddBlockResponse>
   async addBlock (this: That, params: T.IndicesAddBlockRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'block']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -86,17 +96,28 @@ export default class Indices {
   async analyze (this: That, params?: T.IndicesAnalyzeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['analyzer', 'attributes', 'char_filter', 'explain', 'field', 'filter', 'normalizer', 'text', 'tokenizer']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -121,6 +142,48 @@ export default class Indices {
   }
 
   /**
+    * Cancel a migration reindex operation. Cancel a migration reindex attempt for a data stream or index.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/migrate-data-stream.html | Elasticsearch API documentation}
+    */
+  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCancelMigrateReindexResponse>
+  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCancelMigrateReindexResponse, unknown>>
+  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptions): Promise<T.IndicesCancelMigrateReindexResponse>
+  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['index']
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = `/_migration/reindex/${encodeURIComponent(params.index.toString())}/_cancel`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.cancel_migrate_reindex',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Clear the cache. Clear the cache of one or more indices. For data streams, the API clears the caches of the stream's backing indices. By default, the clear cache API clears all caches. To clear only specific caches, use the `fielddata`, `query`, or `request` parameters. To clear the cache only of specific fields, use the `fields` parameter.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html | Elasticsearch API documentation}
     */
@@ -129,14 +192,24 @@ export default class Indices {
   async clearCache (this: That, params?: T.IndicesClearCacheRequest, options?: TransportRequestOptions): Promise<T.IndicesClearCacheResponse>
   async clearCache (this: That, params?: T.IndicesClearCacheRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -170,16 +243,27 @@ export default class Indices {
   async clone (this: That, params: T.IndicesCloneRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'target']
     const acceptedBody: string[] = ['aliases', 'settings']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -206,13 +290,23 @@ export default class Indices {
   async close (this: That, params: T.IndicesCloseRequest, options?: TransportRequestOptions): Promise<T.IndicesCloseResponse>
   async close (this: That, params: T.IndicesCloseRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -239,16 +333,27 @@ export default class Indices {
   async create (this: That, params: T.IndicesCreateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['aliases', 'mappings', 'settings']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -274,13 +379,23 @@ export default class Indices {
   async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesCreateDataStreamResponse>
   async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -298,6 +413,44 @@ export default class Indices {
   }
 
   /**
+    * Create an index from a source index. Copy the mappings and settings from the source index to a destination index while allowing request settings and mappings to override the source values.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/migrate-data-stream.html | Elasticsearch API documentation}
+    */
+  async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateFromResponse>
+  async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateFromResponse, unknown>>
+  async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptions): Promise<T.IndicesCreateFromResponse>
+  async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['source', 'dest']
+    const acceptedBody: string[] = ['create_from']
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_create_from/${encodeURIComponent(params.source.toString())}/${encodeURIComponent(params.dest.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.create_from',
+      pathParts: {
+        source: params.source,
+        dest: params.dest
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Get data stream stats. Retrieves statistics for one or more data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
     */
@@ -306,14 +459,24 @@ export default class Indices {
   async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesDataStreamsStatsResponse>
   async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -346,13 +509,23 @@ export default class Indices {
   async delete (this: That, params: T.IndicesDeleteRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteResponse>
   async delete (this: That, params: T.IndicesDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -378,13 +551,23 @@ export default class Indices {
   async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteAliasResponse>
   async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -418,13 +601,23 @@ export default class Indices {
   async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteDataLifecycleResponse>
   async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -450,13 +643,23 @@ export default class Indices {
   async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteDataStreamResponse>
   async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -482,13 +685,23 @@ export default class Indices {
   async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteIndexTemplateResponse>
   async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -514,13 +727,23 @@ export default class Indices {
   async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteTemplateResponse>
   async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -546,13 +769,23 @@ export default class Indices {
   async diskUsage (this: That, params: T.IndicesDiskUsageRequest, options?: TransportRequestOptions): Promise<T.IndicesDiskUsageResponse>
   async diskUsage (this: That, params: T.IndicesDiskUsageRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -579,16 +812,17 @@ export default class Indices {
   async downsample (this: That, params: T.IndicesDownsampleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'target_index']
     const acceptedBody: string[] = ['config']
-    const querystring: Record<string, any> = {}
-    let body: any
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -615,13 +849,23 @@ export default class Indices {
   async exists (this: That, params: T.IndicesExistsRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsResponse>
   async exists (this: That, params: T.IndicesExistsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -647,13 +891,23 @@ export default class Indices {
   async existsAlias (this: That, params: T.IndicesExistsAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsAliasResponse>
   async existsAlias (this: That, params: T.IndicesExistsAliasRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name', 'index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -687,13 +941,23 @@ export default class Indices {
   async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsIndexTemplateResponse>
   async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -719,13 +983,23 @@ export default class Indices {
   async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsTemplateResponse>
   async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -751,13 +1025,23 @@ export default class Indices {
   async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesExplainDataLifecycleResponse>
   async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -783,13 +1067,23 @@ export default class Indices {
   async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesFieldUsageStatsResponse>
   async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -815,14 +1109,24 @@ export default class Indices {
   async flush (this: That, params?: T.IndicesFlushRequest, options?: TransportRequestOptions): Promise<T.IndicesFlushResponse>
   async flush (this: That, params?: T.IndicesFlushRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -855,14 +1159,24 @@ export default class Indices {
   async forcemerge (this: That, params?: T.IndicesForcemergeRequest, options?: TransportRequestOptions): Promise<T.IndicesForcemergeResponse>
   async forcemerge (this: That, params?: T.IndicesForcemergeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -895,13 +1209,23 @@ export default class Indices {
   async get (this: That, params: T.IndicesGetRequest, options?: TransportRequestOptions): Promise<T.IndicesGetResponse>
   async get (this: That, params: T.IndicesGetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -920,20 +1244,31 @@ export default class Indices {
 
   /**
     * Get aliases. Retrieves information for one or more data stream or index aliases.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-alias.html | Elasticsearch API documentation}
     */
   async getAlias (this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetAliasResponse>
   async getAlias (this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetAliasResponse, unknown>>
   async getAlias (this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesGetAliasResponse>
   async getAlias (this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name', 'index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -973,13 +1308,23 @@ export default class Indices {
   async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataLifecycleResponse>
   async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1005,14 +1350,24 @@ export default class Indices {
   async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataLifecycleStatsResponse>
   async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1035,14 +1390,24 @@ export default class Indices {
   async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataStreamResponse>
   async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1075,13 +1440,23 @@ export default class Indices {
   async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest, options?: TransportRequestOptions): Promise<T.IndicesGetFieldMappingResponse>
   async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['fields', 'index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1115,14 +1490,24 @@ export default class Indices {
   async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesGetIndexTemplateResponse>
   async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1155,14 +1540,24 @@ export default class Indices {
   async getMapping (this: That, params?: T.IndicesGetMappingRequest, options?: TransportRequestOptions): Promise<T.IndicesGetMappingResponse>
   async getMapping (this: That, params?: T.IndicesGetMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1187,6 +1582,48 @@ export default class Indices {
   }
 
   /**
+    * Get the migration reindexing status. Get the status of a migration reindex attempt for a data stream or index.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/migrate-data-stream.html | Elasticsearch API documentation}
+    */
+  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetMigrateReindexStatusResponse>
+  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetMigrateReindexStatusResponse, unknown>>
+  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptions): Promise<T.IndicesGetMigrateReindexStatusResponse>
+  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['index']
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/_migration/reindex/${encodeURIComponent(params.index.toString())}/_status`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_migrate_reindex_status',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Get index settings. Get setting information for one or more indices. For data streams, it returns setting information for the stream's backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-settings.html | Elasticsearch API documentation}
     */
@@ -1195,14 +1632,24 @@ export default class Indices {
   async getSettings (this: That, params?: T.IndicesGetSettingsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetSettingsResponse>
   async getSettings (this: That, params?: T.IndicesGetSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1242,14 +1689,24 @@ export default class Indices {
   async getTemplate (this: That, params?: T.IndicesGetTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesGetTemplateResponse>
   async getTemplate (this: That, params?: T.IndicesGetTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1274,6 +1731,40 @@ export default class Indices {
   }
 
   /**
+    * Reindex legacy backing indices. Reindex all legacy backing indices for a data stream. This operation occurs in a persistent task. The persistent task ID is returned immediately and the reindexing work is completed in that task.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/migrate-data-stream.html | Elasticsearch API documentation}
+    */
+  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesMigrateReindexResponse>
+  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesMigrateReindexResponse, unknown>>
+  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptions): Promise<T.IndicesMigrateReindexResponse>
+  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['reindex']
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = '/_migration/reindex'
+    const meta: TransportRequestMetadata = {
+      name: 'indices.migrate_reindex'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Convert an index alias to a data stream. Converts an index alias to a data stream. You must have a matching index template that is data stream enabled. The alias must meet the following criteria: The alias must have a write index; All indices for the alias must have a `@timestamp` field mapping of a `date` or `date_nanos` field type; The alias must not have any filters; The alias must not use custom routing. If successful, the request removes the alias and creates a data stream with the same name. The indices for the alias become hidden backing indices for the stream. The write index for the alias becomes the write index for the stream.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
     */
@@ -1282,13 +1773,23 @@ export default class Indices {
   async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesMigrateToDataStreamResponse>
   async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1315,16 +1816,27 @@ export default class Indices {
   async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['actions']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1347,13 +1859,23 @@ export default class Indices {
   async open (this: That, params: T.IndicesOpenRequest, options?: TransportRequestOptions): Promise<T.IndicesOpenResponse>
   async open (this: That, params: T.IndicesOpenRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1379,13 +1901,23 @@ export default class Indices {
   async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesPromoteDataStreamResponse>
   async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1412,16 +1944,27 @@ export default class Indices {
   async putAlias (this: That, params: T.IndicesPutAliasRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'name']
     const acceptedBody: string[] = ['filter', 'index_routing', 'is_write_index', 'routing', 'search_routing']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1456,16 +1999,17 @@ export default class Indices {
   async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['lifecycle']
-    const querystring: Record<string, any> = {}
-    let body: any
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1492,16 +2036,27 @@ export default class Indices {
   async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta', 'allow_auto_create', 'ignore_missing_component_templates', 'deprecated']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1528,16 +2083,27 @@ export default class Indices {
   async putMapping (this: That, params: T.IndicesPutMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['date_detection', 'dynamic', 'dynamic_date_formats', 'dynamic_templates', '_field_names', '_meta', 'numeric_detection', 'properties', '_routing', '_source', 'runtime']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1564,16 +2130,17 @@ export default class Indices {
   async putSettings (this: That, params: T.IndicesPutSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['settings']
-    const querystring: Record<string, any> = {}
-    let body: any
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1607,16 +2174,27 @@ export default class Indices {
   async putTemplate (this: That, params: T.IndicesPutTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['aliases', 'index_patterns', 'mappings', 'order', 'settings', 'version']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1642,14 +2220,24 @@ export default class Indices {
   async recovery (this: That, params?: T.IndicesRecoveryRequest, options?: TransportRequestOptions): Promise<T.IndicesRecoveryResponse>
   async recovery (this: That, params?: T.IndicesRecoveryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1682,14 +2270,24 @@ export default class Indices {
   async refresh (this: That, params?: T.IndicesRefreshRequest, options?: TransportRequestOptions): Promise<T.IndicesRefreshResponse>
   async refresh (this: That, params?: T.IndicesRefreshRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1722,13 +2320,23 @@ export default class Indices {
   async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptions): Promise<T.IndicesReloadSearchAnalyzersResponse>
   async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1754,13 +2362,23 @@ export default class Indices {
   async resolveCluster (this: That, params: T.IndicesResolveClusterRequest, options?: TransportRequestOptions): Promise<T.IndicesResolveClusterResponse>
   async resolveCluster (this: That, params: T.IndicesResolveClusterRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1786,13 +2404,23 @@ export default class Indices {
   async resolveIndex (this: That, params: T.IndicesResolveIndexRequest, options?: TransportRequestOptions): Promise<T.IndicesResolveIndexResponse>
   async resolveIndex (this: That, params: T.IndicesResolveIndexRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1819,16 +2447,27 @@ export default class Indices {
   async rollover (this: That, params: T.IndicesRolloverRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['alias', 'new_index']
     const acceptedBody: string[] = ['aliases', 'conditions', 'mappings', 'settings']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1862,14 +2501,24 @@ export default class Indices {
   async segments (this: That, params?: T.IndicesSegmentsRequest, options?: TransportRequestOptions): Promise<T.IndicesSegmentsResponse>
   async segments (this: That, params?: T.IndicesSegmentsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1902,14 +2551,24 @@ export default class Indices {
   async shardStores (this: That, params?: T.IndicesShardStoresRequest, options?: TransportRequestOptions): Promise<T.IndicesShardStoresResponse>
   async shardStores (this: That, params?: T.IndicesShardStoresRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1943,16 +2602,27 @@ export default class Indices {
   async shrink (this: That, params: T.IndicesShrinkRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'target']
     const acceptedBody: string[] = ['aliases', 'settings']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1979,13 +2649,23 @@ export default class Indices {
   async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesSimulateIndexTemplateResponse>
   async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2012,17 +2692,28 @@ export default class Indices {
   async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['allow_auto_create', 'index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta', 'ignore_missing_component_templates', 'deprecated']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2056,16 +2747,27 @@ export default class Indices {
   async split (this: That, params: T.IndicesSplitRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'target']
     const acceptedBody: string[] = ['aliases', 'settings']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2092,14 +2794,24 @@ export default class Indices {
   async stats (this: That, params?: T.IndicesStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesStatsResponse>
   async stats (this: That, params?: T.IndicesStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['metric', 'index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2131,38 +2843,6 @@ export default class Indices {
   }
 
   /**
-    * Unfreeze an index. When a frozen index is unfrozen, the index goes through the normal recovery process and becomes writeable again.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/unfreeze-index-api.html | Elasticsearch API documentation}
-    */
-  async unfreeze (this: That, params: T.IndicesUnfreezeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesUnfreezeResponse>
-  async unfreeze (this: That, params: T.IndicesUnfreezeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesUnfreezeResponse, unknown>>
-  async unfreeze (this: That, params: T.IndicesUnfreezeRequest, options?: TransportRequestOptions): Promise<T.IndicesUnfreezeResponse>
-  async unfreeze (this: That, params: T.IndicesUnfreezeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
-
-    for (const key in params) {
-      if (acceptedPath.includes(key)) {
-        continue
-      } else {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'POST'
-    const path = `/${encodeURIComponent(params.index.toString())}/_unfreeze`
-    const meta: TransportRequestMetadata = {
-      name: 'indices.unfreeze',
-      pathParts: {
-        index: params.index
-      }
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
     * Create or update an alias. Adds a data stream or index to an alias.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html | Elasticsearch API documentation}
     */
@@ -2172,17 +2852,28 @@ export default class Indices {
   async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['actions']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2206,17 +2897,28 @@ export default class Indices {
   async validateQuery (this: That, params?: T.IndicesValidateQueryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['query']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }

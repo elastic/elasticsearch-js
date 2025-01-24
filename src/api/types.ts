@@ -57,19 +57,35 @@ export interface BulkOperationContainer {
 export type BulkOperationType = 'index' | 'create' | 'update' | 'delete'
 
 export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends RequestBase {
+/** The name of the data stream, index, or index alias to perform bulk actions on. */
   index?: IndexName
+  /** If `true`, the response will include the ingest pipelines that were run for each index or create. */
   list_executed_pipelines?: boolean
+  /** The pipeline identifier to use to preprocess incoming documents. If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request. If a final pipeline is configured, it will always run regardless of the value of this parameter. */
   pipeline?: string
+  /** If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, wait for a refresh to make this operation visible to search. If `false`, do nothing with refreshes. Valid values: `true`, `false`, `wait_for`. */
   refresh?: Refresh
+  /** A custom value that is used to route operations to a specific shard. */
   routing?: Routing
+  /** Indicates whether to return the `_source` field (`true` or `false`) or contains a list of fields to return. */
   _source?: SearchSourceConfigParam
+  /** A comma-separated list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored. */
   _source_excludes?: Fields
+  /** A comma-separated list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored. */
   _source_includes?: Fields
+  /** The period each action waits for the following operations: automatic index creation, dynamic mapping updates, and waiting for active shards. The default is `1m` (one minute), which guarantees Elasticsearch waits for at least the timeout before failing. The actual wait time could be longer, particularly when multiple waits occur. */
   timeout?: Duration
+  /** The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default is `1`, which waits for each primary shard to be active. */
   wait_for_active_shards?: WaitForActiveShards
+  /** If `true`, the request's actions must target an index alias. */
   require_alias?: boolean
+  /** If `true`, the request's actions must target a data stream (existing or to be created). */
   require_data_stream?: boolean
   operations?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }
 }
 
 export interface BulkResponse {
@@ -115,7 +131,12 @@ export interface BulkWriteOperation extends BulkOperationBase {
 }
 
 export interface ClearScrollRequest extends RequestBase {
+/** A comma-separated list of scroll IDs to clear. To clear all scroll IDs, use `_all`. IMPORTANT: Scroll IDs can be long. It is recommended to specify scroll IDs in the request body parameter. */
   scroll_id?: ScrollIds
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { scroll_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { scroll_id?: never }
 }
 
 export interface ClearScrollResponse {
@@ -124,7 +145,12 @@ export interface ClearScrollResponse {
 }
 
 export interface ClosePointInTimeRequest extends RequestBase {
+/** The ID of the point-in-time. */
   id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export interface ClosePointInTimeResponse {
@@ -133,22 +159,42 @@ export interface ClosePointInTimeResponse {
 }
 
 export interface CountRequest extends RequestBase {
+/** A comma-separated list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified. */
   analyzer?: string
+  /** If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified. */
   analyze_wildcard?: boolean
+  /** The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified. */
   default_operator?: QueryDslOperator
+  /** The field to use as a default when no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified. */
   df?: string
+  /** The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, concrete, expanded, or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified. */
   lenient?: boolean
+  /** The minimum `_score` value that documents must have to be included in the result. */
   min_score?: double
+  /** The node or shard the operation should be performed on. By default, it is random. */
   preference?: string
+  /** A custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. IMPORTANT: Use with caution. Elasticsearch applies this parameter to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers. */
   terminate_after?: long
+  /** The query in Lucene query string syntax. */
   q?: string
+  /** Defines the search definition using the Query DSL. The query is optional, and when not provided, it will use `match_all` to count all the docs. */
   query?: QueryDslQueryContainer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, terminate_after?: never, q?: never, query?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, terminate_after?: never, q?: never, query?: never }
 }
 
 export interface CountResponse {
@@ -157,68 +203,131 @@ export interface CountResponse {
 }
 
 export interface CreateRequest<TDocument = unknown> extends RequestBase {
+/** A unique identifier for the document. To automatically generate a document ID, use the `POST /<target>/_doc/` request format. */
   id: Id
+  /** The name of the data stream or index to target. If the target doesn't exist and matches the name or wildcard (`*`) pattern of an index template with a `data_stream` definition, this request creates the data stream. If the target doesn't exist and doesn’t match a data stream template, this request creates the index. */
   index: IndexName
+  /** The ID of the pipeline to use to preprocess incoming documents. If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request. If a final pipeline is configured, it will always run regardless of the value of this parameter. */
   pipeline?: string
+  /** If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes. */
   refresh?: Refresh
+  /** A custom value that is used to route operations to a specific shard. */
   routing?: Routing
+  /** The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards. Elasticsearch waits for at least the specified timeout period before failing. The actual wait time could be longer, particularly when multiple waits occur. This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs. Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation. By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error. The actual wait time could be longer, particularly when multiple waits occur. */
   timeout?: Duration
+  /** The explicit version number for concurrency control. It must be a non-negative long number. */
   version?: VersionNumber
+  /** The version type. */
   version_type?: VersionType
+  /** The number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active. */
   wait_for_active_shards?: WaitForActiveShards
   document?: TDocument
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, index?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, index?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }
 }
 
 export type CreateResponse = WriteResponseBase
 
 export interface DeleteRequest extends RequestBase {
+/** A unique identifier for the document. */
   id: Id
+  /** The name of the target index. */
   index: IndexName
+  /** Only perform the operation if the document has this primary term. */
   if_primary_term?: long
+  /** Only perform the operation if the document has this sequence number. */
   if_seq_no?: SequenceNumber
+  /** If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes. */
   refresh?: Refresh
+  /** A custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** The period to wait for active shards. This parameter is useful for situations where the primary shard assigned to perform the delete operation might not be available when the delete operation runs. Some reasons for this might be that the primary shard is currently recovering from a store or undergoing relocation. By default, the delete operation will wait on the primary shard to become available for up to 1 minute before failing and responding with an error. */
   timeout?: Duration
+  /** An explicit version number for concurrency control. It must match the current version of the document for the request to succeed. */
   version?: VersionNumber
+  /** The version type. */
   version_type?: VersionType
+  /** The minimum number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active. */
   wait_for_active_shards?: WaitForActiveShards
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never }
 }
 
 export type DeleteResponse = WriteResponseBase
 
 export interface DeleteByQueryRequest extends RequestBase {
+/** A comma-separated list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams or indices, omit this parameter or use `*` or `_all`. */
   index: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** Analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified. */
   analyzer?: string
+  /** If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified. */
   analyze_wildcard?: boolean
+  /** What to do if delete by query hits version conflicts: `abort` or `proceed`. */
   conflicts?: Conflicts
+  /** The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified. */
   default_operator?: QueryDslOperator
+  /** The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified. */
   df?: string
+  /** The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** Starting offset (default: 0) */
   from?: long
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified. */
   lenient?: boolean
+  /** The node or shard the operation should be performed on. It is random by default. */
   preference?: string
+  /** If `true`, Elasticsearch refreshes all shards involved in the delete by query after the request completes. This is different than the delete API's `refresh` parameter, which causes just the shard that received the delete request to be refreshed. Unlike the delete API, it does not support `wait_for`. */
   refresh?: boolean
+  /** If `true`, the request cache is used for this request. Defaults to the index-level setting. */
   request_cache?: boolean
+  /** The throttle for this request in sub-requests per second. */
   requests_per_second?: float
+  /** A custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** A query in the Lucene query string syntax. */
   q?: string
+  /** The period to retain the search context for scrolling. */
   scroll?: Duration
+  /** The size of the scroll request that powers the operation. */
   scroll_size?: long
+  /** The explicit timeout for each search request. It defaults to no timeout. */
   search_timeout?: Duration
+  /** The type of the search operation. Available options include `query_then_fetch` and `dfs_query_then_fetch`. */
   search_type?: SearchType
+  /** The number of slices this task should be divided into. */
   slices?: Slices
+  /** A comma-separated list of `<field>:<direction>` pairs. */
   sort?: string[]
+  /** The specific `tag` of the request for logging and statistical purposes. */
   stats?: string[]
+  /** The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. Use with caution. Elasticsearch applies this parameter to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers. */
   terminate_after?: long
+  /** The period each deletion request waits for active shards. */
   timeout?: Duration
+  /** If `true`, returns the document version as part of a hit. */
   version?: boolean
+  /** The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The `timeout` value controls how long each write request waits for unavailable shards to become available. */
   wait_for_active_shards?: WaitForActiveShards
+  /** If `true`, the request blocks until the operation is complete. If `false`, Elasticsearch performs some preflight checks, launches the request, and returns a task you can use to cancel or get the status of the task. Elasticsearch creates a record of this task as a document at `.tasks/task/${taskId}`. When you are done with a task, you should delete the task document so Elasticsearch can reclaim the space. */
   wait_for_completion?: boolean
+  /** The maximum number of documents to delete. */
   max_docs?: long
+  /** The documents to delete specified with Query DSL. */
   query?: QueryDslQueryContainer
+  /** Slice the request manually using the provided slice ID and total number of slices. */
   slice?: SlicedScroll
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, sort?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, sort?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never }
 }
 
 export interface DeleteByQueryResponse {
@@ -241,49 +350,93 @@ export interface DeleteByQueryResponse {
 }
 
 export interface DeleteByQueryRethrottleRequest extends RequestBase {
+/** The ID for the task. */
   task_id: TaskId
+  /** The throttle for this request in sub-requests per second. To disable throttling, set it to `-1`. */
   requests_per_second?: float
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_id?: never, requests_per_second?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_id?: never, requests_per_second?: never }
 }
 
 export type DeleteByQueryRethrottleResponse = TasksTaskListResponseBase
 
 export interface DeleteScriptRequest extends RequestBase {
+/** Identifier for the stored script or search template. */
   id: Id
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never }
 }
 
 export type DeleteScriptResponse = AcknowledgedResponseBase
 
 export interface ExistsRequest extends RequestBase {
+/** A unique document identifier. */
   id: Id
+  /** A comma-separated list of data streams, indices, and aliases. It supports wildcards (`*`). */
   index: IndexName
+  /** The node or shard the operation should be performed on. By default, the operation is randomized between the shard replicas. If it is set to `_local`, the operation will prefer to be run on a local allocated shard when possible. If it is set to a custom value, the value is used to guarantee that the same shards will be used for the same custom value. This can help with "jumping values" when hitting different shards in different refresh states. A sample value can be something like the web session ID or the user name. */
   preference?: string
+  /** If `true`, the request is real-time as opposed to near-real-time. */
   realtime?: boolean
+  /** If `true`, the request refreshes the relevant shards before retrieving the document. Setting it to `true` should be done after careful thought and verification that this does not cause a heavy load on the system (and slow down indexing). */
   refresh?: boolean
+  /** A custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return. */
   _source?: SearchSourceConfigParam
+  /** A comma-separated list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored. */
   _source_excludes?: Fields
+  /** A comma-separated list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored. */
   _source_includes?: Fields
+  /** A comma-separated list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`. */
   stored_fields?: Fields
+  /** Explicit version number for concurrency control. The specified version must match the current version of the document for the request to succeed. */
   version?: VersionNumber
+  /** The version type. */
   version_type?: VersionType
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
 }
 
 export type ExistsResponse = boolean
 
 export interface ExistsSourceRequest extends RequestBase {
+/** A unique identifier for the document. */
   id: Id
+  /** A comma-separated list of data streams, indices, and aliases. It supports wildcards (`*`). */
   index: IndexName
+  /** The node or shard the operation should be performed on. By default, the operation is randomized between the shard replicas. */
   preference?: string
+  /** If `true`, the request is real-time as opposed to near-real-time. */
   realtime?: boolean
+  /** If `true`, the request refreshes the relevant shards before retrieving the document. Setting it to `true` should be done after careful thought and verification that this does not cause a heavy load on the system (and slow down indexing). */
   refresh?: boolean
+  /** A custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return. */
   _source?: SearchSourceConfigParam
+  /** A comma-separated list of source fields to exclude in the response. */
   _source_excludes?: Fields
+  /** A comma-separated list of source fields to include in the response. */
   _source_includes?: Fields
+  /** The version number for concurrency control. It must match the current version of the document for the request to succeed. */
   version?: VersionNumber
+  /** The version type. */
   version_type?: VersionType
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, version?: never, version_type?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, version?: never, version_type?: never }
 }
 
 export type ExistsSourceResponse = boolean
@@ -301,21 +454,40 @@ export interface ExplainExplanationDetail {
 }
 
 export interface ExplainRequest extends RequestBase {
+/** Defines the document ID. */
   id: Id
+  /** Index names used to limit the request. Only a single index name can be provided to this parameter. */
   index: IndexName
+  /** Analyzer to use for the query string. This parameter can only be used when the `q` query string parameter is specified. */
   analyzer?: string
+  /** If `true`, wildcard and prefix queries are analyzed. */
   analyze_wildcard?: boolean
+  /** The default operator for query string query: `AND` or `OR`. */
   default_operator?: QueryDslOperator
+  /** Field to use as default where no field prefix is given in the query string. */
   df?: string
+  /** If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. */
   lenient?: boolean
+  /** Specifies the node or shard the operation should be performed on. Random by default. */
   preference?: string
+  /** Custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** True or false to return the `_source` field or not, or a list of fields to return. */
   _source?: SearchSourceConfigParam
+  /** A comma-separated list of source fields to exclude from the response. */
   _source_excludes?: Fields
+  /** A comma-separated list of source fields to include in the response. */
   _source_includes?: Fields
+  /** A comma-separated list of stored fields to return in the response. */
   stored_fields?: Fields
+  /** Query in the Lucene query string syntax. */
   q?: string
+  /** Defines the search definition using the Query DSL. */
   query?: QueryDslQueryContainer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, index?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, lenient?: never, preference?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, q?: never, query?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, index?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, lenient?: never, preference?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, q?: never, query?: never }
 }
 
 export interface ExplainResponse<TDocument = unknown> {
@@ -342,17 +514,32 @@ export interface FieldCapsFieldCapability {
 }
 
 export interface FieldCapsRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (*). To target all data streams and indices, omit this parameter or use * or _all. */
   index?: Indices
+  /** If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with foo but no index starts with bar. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, missing or closed indices are not included in the response. */
   ignore_unavailable?: boolean
+  /** If true, unmapped fields are included in the response. */
   include_unmapped?: boolean
+  /** An optional set of filters: can include +metadata,-metadata,-nested,-multifield,-parent */
   filters?: string
+  /** Only return results for fields that have one of the types in the list */
   types?: string[]
+  /** If false, empty fields are not included in the response. */
   include_empty_fields?: boolean
+  /** List of fields to retrieve capabilities for. Wildcard (`*`) expressions are supported. */
   fields?: Fields
+  /** Allows to filter indices if the provided query rewrites to match_none on every shard. */
   index_filter?: QueryDslQueryContainer
+  /** Defines ad-hoc runtime fields in the request similar to the way it is done in search requests. These fields exist only as part of the query and take precedence over fields defined with the same name in the index mappings. */
   runtime_mappings?: MappingRuntimeFields
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_unmapped?: never, filters?: never, types?: never, include_empty_fields?: never, fields?: never, index_filter?: never, runtime_mappings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_unmapped?: never, filters?: never, types?: never, include_empty_fields?: never, fields?: never, index_filter?: never, runtime_mappings?: never }
 }
 
 export interface FieldCapsResponse {
@@ -374,26 +561,49 @@ export interface GetGetResult<TDocument = unknown> {
 }
 
 export interface GetRequest extends RequestBase {
+/** A unique document identifier. */
   id: Id
+  /** The name of the index that contains the document. */
   index: IndexName
+  /** Indicates whether the request forces synthetic `_source`. Use this paramater to test if the mapping supports synthetic `_source` and to get a sense of the worst case performance. Fetches with this parameter enabled will be slower than enabling synthetic source natively in the index. */
   force_synthetic_source?: boolean
+  /** The node or shard the operation should be performed on. By default, the operation is randomized between the shard replicas. If it is set to `_local`, the operation will prefer to be run on a local allocated shard when possible. If it is set to a custom value, the value is used to guarantee that the same shards will be used for the same custom value. This can help with "jumping values" when hitting different shards in different refresh states. A sample value can be something like the web session ID or the user name. */
   preference?: string
+  /** If `true`, the request is real-time as opposed to near-real-time. */
   realtime?: boolean
+  /** If `true`, the request refreshes the relevant shards before retrieving the document. Setting it to `true` should be done after careful thought and verification that this does not cause a heavy load on the system (and slow down indexing). */
   refresh?: boolean
+  /** A custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return. */
   _source?: SearchSourceConfigParam
+  /** A comma-separated list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored. */
   _source_excludes?: Fields
+  /** A comma-separated list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored. */
   _source_includes?: Fields
+  /** A comma-separated list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`. Only leaf fields can be retrieved with the `stored_field` option. Object fields can't be returned;if specified, the request fails. */
   stored_fields?: Fields
+  /** The version number for concurrency control. It must match the current version of the document for the request to succeed. */
   version?: VersionNumber
+  /** The version type. */
   version_type?: VersionType
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
 }
 
 export type GetResponse<TDocument = unknown> = GetGetResult<TDocument>
 
 export interface GetScriptRequest extends RequestBase {
+/** Identifier for the stored script or search template. */
   id: Id
+  /** Specify timeout for connection to master */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never }
 }
 
 export interface GetScriptResponse {
@@ -419,6 +629,10 @@ export interface GetScriptContextContextMethodParam {
 }
 
 export interface GetScriptContextRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface GetScriptContextResponse {
@@ -431,6 +645,10 @@ export interface GetScriptLanguagesLanguageContext {
 }
 
 export interface GetScriptLanguagesRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface GetScriptLanguagesResponse {
@@ -439,18 +657,34 @@ export interface GetScriptLanguagesResponse {
 }
 
 export interface GetSourceRequest extends RequestBase {
+/** A unique document identifier. */
   id: Id
+  /** The name of the index that contains the document. */
   index: IndexName
+  /** The node or shard the operation should be performed on. By default, the operation is randomized between the shard replicas. */
   preference?: string
+  /** If `true`, the request is real-time as opposed to near-real-time. */
   realtime?: boolean
+  /** If `true`, the request refreshes the relevant shards before retrieving the document. Setting it to `true` should be done after careful thought and verification that this does not cause a heavy load on the system (and slow down indexing). */
   refresh?: boolean
+  /** A custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return. */
   _source?: SearchSourceConfigParam
+  /** A comma-separated list of source fields to exclude in the response. */
   _source_excludes?: Fields
+  /** A comma-separated list of source fields to include in the response. */
   _source_includes?: Fields
+  /** A comma-separated list of stored fields to return as part of a hit. */
   stored_fields?: Fields
+  /** The version number for concurrency control. It must match the current version of the document for the request to succeed. */
   version?: VersionNumber
+  /** The version type. */
   version_type?: VersionType
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
 }
 
 export type GetSourceResponse<TDocument = unknown> = TDocument
@@ -580,10 +814,18 @@ export interface HealthReportRepositoryIntegrityIndicatorDetails {
 }
 
 export interface HealthReportRequest extends RequestBase {
+/** A feature of the cluster, as returned by the top-level health report API. */
   feature?: string | string[]
+  /** Explicit operation timeout. */
   timeout?: Duration
+  /** Opt-in for more information about the health of the system. */
   verbose?: boolean
+  /** Limit the number of affected resources the health report API returns. */
   size?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { feature?: never, timeout?: never, verbose?: never, size?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { feature?: never, timeout?: never, verbose?: never, size?: never }
 }
 
 export interface HealthReportResponse {
@@ -645,25 +887,46 @@ export interface HealthReportStagnatingBackingIndices {
 }
 
 export interface IndexRequest<TDocument = unknown> extends RequestBase {
+/** A unique identifier for the document. To automatically generate a document ID, use the `POST /<target>/_doc/` request format and omit this parameter. */
   id?: Id
+  /** The name of the data stream or index to target. If the target doesn't exist and matches the name or wildcard (`*`) pattern of an index template with a `data_stream` definition, this request creates the data stream. If the target doesn't exist and doesn't match a data stream template, this request creates the index. You can check for existing targets with the resolve index API. */
   index: IndexName
+  /** Only perform the operation if the document has this primary term. */
   if_primary_term?: long
+  /** Only perform the operation if the document has this sequence number. */
   if_seq_no?: SequenceNumber
+  /** Set to `create` to only index the document if it does not already exist (put if absent). If a document with the specified `_id` already exists, the indexing operation will fail. The behavior is the same as using the `<index>/_create` endpoint. If a document ID is specified, this paramater defaults to `index`. Otherwise, it defaults to `create`. If the request targets a data stream, an `op_type` of `create` is required. */
   op_type?: OpType
+  /** The ID of the pipeline to use to preprocess incoming documents. If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request. If a final pipeline is configured it will always run, regardless of the value of this parameter. */
   pipeline?: string
+  /** If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes. */
   refresh?: Refresh
+  /** A custom value that is used to route operations to a specific shard. */
   routing?: Routing
+  /** The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards. This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs. Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation. By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error. The actual wait time could be longer, particularly when multiple waits occur. */
   timeout?: Duration
+  /** An explicit version number for concurrency control. It must be a non-negative long number. */
   version?: VersionNumber
+  /** The version type. */
   version_type?: VersionType
+  /** The number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active. */
   wait_for_active_shards?: WaitForActiveShards
+  /** If `true`, the destination must be an index alias. */
   require_alias?: boolean
   document?: TDocument
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, document?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, document?: never }
 }
 
 export type IndexResponse = WriteResponseBase
 
 export interface InfoRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface InfoResponse {
@@ -675,14 +938,26 @@ export interface InfoResponse {
 }
 
 export interface KnnSearchRequest extends RequestBase {
+/** A comma-separated list of index names to search; use `_all` or to perform the operation on all indices */
   index: Indices
+  /** A comma-separated list of specific routing values */
   routing?: Routing
+  /** Indicates which source fields are returned for matching documents. These fields are returned in the hits._source property of the search response. */
   _source?: SearchSourceConfig
+  /** The request returns doc values for field names matching these patterns in the hits.fields property of the response. Accepts wildcard (*) patterns. */
   docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
+  /** List of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the _source parameter defaults to false. You can pass _source: true to return both source fields and stored fields in the search response. */
   stored_fields?: Fields
+  /** The request returns values for field names matching these patterns in the hits.fields property of the response. Accepts wildcard (*) patterns. */
   fields?: Fields
+  /** Query to filter the documents that can match. The kNN search will return the top `k` documents that also match this filter. The value can be a single query or a list of queries. If `filter` isn't provided, all documents are allowed to match. */
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+  /** kNN query to execute */
   knn: KnnSearchQuery
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, routing?: never, _source?: never, docvalue_fields?: never, stored_fields?: never, fields?: never, filter?: never, knn?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, routing?: never, _source?: never, docvalue_fields?: never, stored_fields?: never, fields?: never, filter?: never, knn?: never }
 }
 
 export interface KnnSearchResponse<TDocument = unknown> {
@@ -718,18 +993,34 @@ export interface MgetOperation {
 }
 
 export interface MgetRequest extends RequestBase {
+/** Name of the index to retrieve documents from when `ids` are specified, or when a document in the `docs` array does not specify an index. */
   index?: IndexName
+  /** Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index. */
   force_synthetic_source?: boolean
+  /** Specifies the node or shard the operation should be performed on. Random by default. */
   preference?: string
+  /** If `true`, the request is real-time as opposed to near-real-time. */
   realtime?: boolean
+  /** If `true`, the request refreshes relevant shards before retrieving documents. */
   refresh?: boolean
+  /** Custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** True or false to return the `_source` field or not, or a list of fields to return. */
   _source?: SearchSourceConfigParam
+  /** A comma-separated list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. */
   _source_excludes?: Fields
+  /** A comma-separated list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored. */
   _source_includes?: Fields
+  /** If `true`, retrieves the document fields stored in the index rather than the document `_source`. */
   stored_fields?: Fields
+  /** The documents you want to retrieve. Required if no index is specified in the request URI. */
   docs?: MgetOperation[]
+  /** The IDs of the documents you want to retrieve. Allowed when the index is specified in the request URI. */
   ids?: Ids
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, docs?: never, ids?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, docs?: never, ids?: never }
 }
 
 export interface MgetResponse<TDocument = unknown> {
@@ -797,21 +1088,39 @@ export interface MsearchMultisearchHeader {
 }
 
 export interface MsearchRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and index aliases to search. */
   index?: Indices
+  /** If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar. */
   allow_no_indices?: boolean
+  /** If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests. */
   ccs_minimize_roundtrips?: boolean
+  /** Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. */
   expand_wildcards?: ExpandWildcards
+  /** If true, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
+  /** If true, missing or closed indices are not included in the response. */
   ignore_unavailable?: boolean
+  /** Indicates whether hit.matched_queries should be rendered as a map that includes the name of the matched query associated with its score (true) or as an array containing the name of the matched queries (false) This functionality reruns each named query on every hit in a search response. Typically, this adds a small overhead to a request. However, using computationally expensive named queries on a large number of hits may add significant overhead. */
   include_named_queries_score?: boolean
+  /** Maximum number of concurrent searches the multi search API can execute. */
   max_concurrent_searches?: long
+  /** Maximum number of concurrent shard requests that each sub-search request executes per node. */
   max_concurrent_shard_requests?: long
+  /** Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint. */
   pre_filter_shard_size?: long
+  /** If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object. */
   rest_total_hits_as_int?: boolean
+  /** Custom routing value used to route search operations to a specific shard. */
   routing?: Routing
+  /** Indicates whether global term and document frequencies should be used when scoring returned documents. */
   search_type?: SearchType
+  /** Specifies whether aggregation and suggester names should be prefixed by their respective types in the response. */
   typed_keys?: boolean
   searches?: MsearchRequestItem[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, rest_total_hits_as_int?: never, routing?: never, search_type?: never, typed_keys?: never, searches?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, rest_total_hits_as_int?: never, routing?: never, search_type?: never, typed_keys?: never, searches?: never }
 }
 
 export type MsearchRequestItem = MsearchMultisearchHeader | MsearchMultisearchBody
@@ -821,13 +1130,23 @@ export type MsearchResponse<TDocument = unknown, TAggregations = Record<Aggregat
 export type MsearchResponseItem<TDocument = unknown> = MsearchMultiSearchItem<TDocument> | ErrorResponseBase
 
 export interface MsearchTemplateRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases to search. Supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*`. */
   index?: Indices
+  /** If `true`, network round-trips are minimized for cross-cluster search requests. */
   ccs_minimize_roundtrips?: boolean
+  /** Maximum number of concurrent searches the API can run. */
   max_concurrent_searches?: long
+  /** The type of the search operation. Available options: `query_then_fetch`, `dfs_query_then_fetch`. */
   search_type?: SearchType
+  /** If `true`, the response returns `hits.total` as an integer. If `false`, it returns `hits.total` as an object. */
   rest_total_hits_as_int?: boolean
+  /** If `true`, the response prefixes aggregation and suggester names with their respective types. */
   typed_keys?: boolean
   search_templates?: MsearchTemplateRequestItem[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, ccs_minimize_roundtrips?: never, max_concurrent_searches?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, search_templates?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, ccs_minimize_roundtrips?: never, max_concurrent_searches?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, search_templates?: never }
 }
 
 export type MsearchTemplateRequestItem = MsearchMultisearchHeader | MsearchTemplateTemplateConfig
@@ -859,20 +1178,38 @@ export interface MtermvectorsOperation {
 }
 
 export interface MtermvectorsRequest extends RequestBase {
+/** Name of the index that contains the documents. */
   index?: IndexName
+  /** Comma-separated list or wildcard expressions of fields to include in the statistics. Used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters. */
   fields?: Fields
+  /** If `true`, the response includes the document count, sum of document frequencies, and sum of total term frequencies. */
   field_statistics?: boolean
+  /** If `true`, the response includes term offsets. */
   offsets?: boolean
+  /** If `true`, the response includes term payloads. */
   payloads?: boolean
+  /** If `true`, the response includes term positions. */
   positions?: boolean
+  /** Specifies the node or shard the operation should be performed on. Random by default. */
   preference?: string
+  /** If true, the request is real-time as opposed to near-real-time. */
   realtime?: boolean
+  /** Custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** If true, the response includes term frequency and document frequency. */
   term_statistics?: boolean
+  /** If `true`, returns the document version as part of a hit. */
   version?: VersionNumber
+  /** Specific version type. */
   version_type?: VersionType
+  /** Array of existing or artificial documents. */
   docs?: MtermvectorsOperation[]
+  /** Simplified syntax to specify documents by their ID if they're in the same index. */
   ids?: Id[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, term_statistics?: never, version?: never, version_type?: never, docs?: never, ids?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, term_statistics?: never, version?: never, version_type?: never, docs?: never, ids?: never }
 }
 
 export interface MtermvectorsResponse {
@@ -890,14 +1227,26 @@ export interface MtermvectorsTermVectorsResult {
 }
 
 export interface OpenPointInTimeRequest extends RequestBase {
+/** A comma-separated list of index names to open point in time; use `_all` or empty string to perform the operation on all indices */
   index: Indices
+  /** Extend the length of time that the point in time persists. */
   keep_alive: Duration
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** The node or shard the operation should be performed on. By default, it is random. */
   preference?: string
+  /** A custom value that is used to route operations to a specific shard. */
   routing?: Routing
+  /** The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** Indicates whether the point in time tolerates unavailable shards or shard failures when initially creating the PIT. If `false`, creating a point in time request when a shard is missing or unavailable will throw an exception. If `true`, the point in time will contain all the shards that are available at the time of the request. */
   allow_partial_search_results?: boolean
+  /** Filter indices if the provided query rewrites to `match_none` on every shard. */
   index_filter?: QueryDslQueryContainer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, keep_alive?: never, ignore_unavailable?: never, preference?: never, routing?: never, expand_wildcards?: never, allow_partial_search_results?: never, index_filter?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, keep_alive?: never, ignore_unavailable?: never, preference?: never, routing?: never, expand_wildcards?: never, allow_partial_search_results?: never, index_filter?: never }
 }
 
 export interface OpenPointInTimeResponse {
@@ -906,16 +1255,29 @@ export interface OpenPointInTimeResponse {
 }
 
 export interface PingRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export type PingResponse = boolean
 
 export interface PutScriptRequest extends RequestBase {
+/** Identifier for the stored script or search template. Must be unique within the cluster. */
   id: Id
+  /** Context in which the script or search template should run. To prevent errors, the API immediately compiles the script or template in this context. */
   context?: Name
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** Contains the script or search template, its parameters, and its language. */
   script: StoredScript
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, context?: never, master_timeout?: never, timeout?: never, script?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, context?: never, master_timeout?: never, timeout?: never, script?: never }
 }
 
 export type PutScriptResponse = AcknowledgedResponseBase
@@ -992,13 +1354,24 @@ export interface RankEvalRankEvalRequestItem {
 }
 
 export interface RankEvalRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and index aliases used to limit the request. Wildcard (`*`) expressions are supported. To target all data streams and indices in a cluster, omit this parameter or use `_all` or `*`. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, missing or closed indices are not included in the response. */
   ignore_unavailable?: boolean
+  /** Search operation type */
   search_type?: string
+  /** A set of typical search requests, together with their provided ratings. */
   requests: RankEvalRankEvalRequestItem[]
+  /** Definition of the evaluation metric to calculate. */
   metric?: RankEvalRankEvalMetric
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, search_type?: never, requests?: never, metric?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, search_type?: never, requests?: never, metric?: never }
 }
 
 export interface RankEvalResponse {
@@ -1030,20 +1403,37 @@ export interface ReindexRemoteSource {
 }
 
 export interface ReindexRequest extends RequestBase {
+/** If `true`, the request refreshes affected shards to make this operation visible to search. */
   refresh?: boolean
+  /** The throttle for this request in sub-requests per second. By default, there is no throttle. */
   requests_per_second?: float
+  /** The period of time that a consistent view of the index should be maintained for scrolled search. */
   scroll?: Duration
+  /** The number of slices this task should be divided into. It defaults to one slice, which means the task isn't sliced into subtasks. Reindex supports sliced scroll to parallelize the reindexing process. This parallelization can improve efficiency and provide a convenient way to break the request down into smaller parts. NOTE: Reindexing from remote clusters does not support manual or automatic slicing. If set to `auto`, Elasticsearch chooses the number of slices to use. This setting will use one slice per shard, up to a certain limit. If there are multiple sources, it will choose the number of slices based on the index or backing index with the smallest number of shards. */
   slices?: Slices
+  /** The period each indexing waits for automatic index creation, dynamic mapping updates, and waiting for active shards. By default, Elasticsearch waits for at least one minute before failing. The actual wait time could be longer, particularly when multiple waits occur. */
   timeout?: Duration
+  /** The number of shard copies that must be active before proceeding with the operation. Set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value is one, which means it waits for each primary shard to be active. */
   wait_for_active_shards?: WaitForActiveShards
+  /** If `true`, the request blocks until the operation is complete. */
   wait_for_completion?: boolean
+  /** If `true`, the destination must be an index alias. */
   require_alias?: boolean
+  /** Indicates whether to continue reindexing even when there are conflicts. */
   conflicts?: Conflicts
+  /** The destination you are copying to. */
   dest: ReindexDestination
+  /** The maximum number of documents to reindex. By default, all documents are reindexed. If it is a value less then or equal to `scroll_size`, a scroll will not be used to retrieve the results for the operation. If `conflicts` is set to `proceed`, the reindex operation could attempt to reindex more documents from the source than `max_docs` until it has successfully indexed `max_docs` documents into the target or it has gone through every document in the source query. */
   max_docs?: long
+  /** The script to run to update the document source or metadata when reindexing. */
   script?: Script | string
   size?: long
+  /** The source you are copying from. */
   source: ReindexSource
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { refresh?: never, requests_per_second?: never, scroll?: never, slices?: never, timeout?: never, wait_for_active_shards?: never, wait_for_completion?: never, require_alias?: never, conflicts?: never, dest?: never, max_docs?: never, script?: never, size?: never, source?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { refresh?: never, requests_per_second?: never, scroll?: never, slices?: never, timeout?: never, wait_for_active_shards?: never, wait_for_completion?: never, require_alias?: never, conflicts?: never, dest?: never, max_docs?: never, script?: never, size?: never, source?: never }
 }
 
 export interface ReindexResponse {
@@ -1110,8 +1500,14 @@ export interface ReindexRethrottleReindexTask {
 }
 
 export interface ReindexRethrottleRequest extends RequestBase {
+/** The task identifier, which can be found by using the tasks API. */
   task_id: Id
+  /** The throttle for this request in sub-requests per second. It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
   requests_per_second?: float
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_id?: never, requests_per_second?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_id?: never, requests_per_second?: never }
 }
 
 export interface ReindexRethrottleResponse {
@@ -1119,15 +1515,24 @@ export interface ReindexRethrottleResponse {
 }
 
 export interface RenderSearchTemplateRequest extends RequestBase {
+/** ID of the search template to render. If no `source` is specified, this or the `id` request body parameter is required. */
   id?: Id
   file?: string
+  /** Key-value pairs used to replace Mustache variables in the template. The key is the variable name. The value is the variable value. */
   params?: Record<string, any>
+  /** An inline search template. Supports the same parameters as the search API's request body. These parameters also support Mustache variables. If no `id` or `<templated-id>` is specified, this parameter is required. */
   source?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, file?: never, params?: never, source?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, file?: never, params?: never, source?: never }
 }
 
 export interface RenderSearchTemplateResponse {
   template_output: Record<string, any>
 }
+
+export type ScriptsPainlessExecutePainlessContext = 'painless_test' | 'filter' | 'score' | 'boolean_field' | 'date_field' | 'double_field' | 'geo_point_field' | 'ip_field' | 'keyword_field' | 'long_field' | 'composite_field'
 
 export interface ScriptsPainlessExecutePainlessContextSetup {
   document: any
@@ -1136,9 +1541,16 @@ export interface ScriptsPainlessExecutePainlessContextSetup {
 }
 
 export interface ScriptsPainlessExecuteRequest extends RequestBase {
-  context?: string
+/** The context that the script should run in. NOTE: Result ordering in the field contexts is not guaranteed. */
+  context?: ScriptsPainlessExecutePainlessContext
+  /** Additional parameters for the `context`. NOTE: This parameter is required for all contexts except `painless_test`, which is the default if no value is provided for `context`. */
   context_setup?: ScriptsPainlessExecutePainlessContextSetup
+  /** The Painless script to run. */
   script?: Script | string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { context?: never, context_setup?: never, script?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { context?: never, context_setup?: never, script?: never }
 }
 
 export interface ScriptsPainlessExecuteResponse<TResult = unknown> {
@@ -1146,81 +1558,158 @@ export interface ScriptsPainlessExecuteResponse<TResult = unknown> {
 }
 
 export interface ScrollRequest extends RequestBase {
+/** The scroll ID */
   scroll_id?: ScrollId
+  /** If true, the API response’s hit.total property is returned as an integer. If false, the API response’s hit.total property is returned as an object. */
   rest_total_hits_as_int?: boolean
+  /** Period to retain the search context for scrolling. */
   scroll?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { scroll_id?: never, rest_total_hits_as_int?: never, scroll?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { scroll_id?: never, rest_total_hits_as_int?: never, scroll?: never }
 }
 
 export type ScrollResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
 
 export interface SearchRequest extends RequestBase {
+/** A comma-separated list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** If `true` and there are shard request timeouts or shard failures, the request returns partial results. If `false`, it returns an error with no partial results. To override the default behavior, you can set the `search.default_allow_partial_results` cluster setting to `false`. */
   allow_partial_search_results?: boolean
+  /** The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified. */
   analyzer?: string
+  /** If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified. */
   analyze_wildcard?: boolean
+  /** The number of shard results that should be reduced at once on the coordinating node. If the potential number of shards in the request can be large, this value should be used as a protection mechanism to reduce the memory overhead per search request. */
   batched_reduce_size?: long
+  /** If `true`, network round-trips between the coordinating node and the remote clusters are minimized when running cross-cluster search (CCS) requests. */
   ccs_minimize_roundtrips?: boolean
+  /** The default operator for the query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified. */
   default_operator?: QueryDslOperator
+  /** The field to use as a default when no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified. */
   df?: string
+  /** The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports comma-separated values such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, concrete, expanded or aliased indices will be ignored when frozen. */
   ignore_throttled?: boolean
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** If `true`, the response includes the score contribution from any named queries. This functionality reruns each named query on every hit in a search response. Typically, this adds a small overhead to a request. However, using computationally expensive named queries on a large number of hits may add significant overhead. */
   include_named_queries_score?: boolean
+  /** If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified. */
   lenient?: boolean
+  /** The number of concurrent shard requests per node that the search runs concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests. */
   max_concurrent_shard_requests?: long
+  /** The nodes and shards used for the search. By default, Elasticsearch selects from eligible nodes and shards using adaptive replica selection, accounting for allocation awareness. Valid values are: * `_only_local` to run the search only on shards on the local node. * `_local` to, if possible, run the search on shards on the local node, or if not, select shards using the default method. * `_only_nodes:<node-id>,<node-id>` to run the search on only the specified nodes IDs. If suitable shards exist on more than one selected node, use shards on those nodes using the default method. If none of the specified nodes are available, select shards from any available node using the default method. * `_prefer_nodes:<node-id>,<node-id>` to if possible, run the search on the specified nodes IDs. If not, select shards using the default method. `_shards:<shard>,<shard>` to run the search only on the specified shards. You can combine this value with other `preference` values. However, the `_shards` value must come first. For example: `_shards:2,3|_local`. `<custom-string>` (any string that does not start with `_`) to route searches with the same `<custom-string>` to the same shards in the same order. */
   preference?: string
+  /** A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method (if date filters are mandatory to match but the shard bounds and the query are disjoint). When unspecified, the pre-filter phase is executed if any of these conditions is met: * The request targets more than 128 shards. * The request targets one or more read-only index. * The primary sort of the query targets an indexed field. */
   pre_filter_shard_size?: long
+  /** If `true`, the caching of search results is enabled for requests where `size` is `0`. It defaults to index level settings. */
   request_cache?: boolean
+  /** A custom value that is used to route operations to a specific shard. */
   routing?: Routing
+  /** The period to retain the search context for scrolling. By default, this value cannot exceed `1d` (24 hours). You can change this limit by using the `search.max_keep_alive` cluster-level setting. */
   scroll?: Duration
+  /** Indicates how distributed term frequencies are calculated for relevance scoring. */
   search_type?: SearchType
+  /** The field to use for suggestions. */
   suggest_field?: Field
+  /** The suggest mode. This parameter can be used only when the `suggest_field` and `suggest_text` query string parameters are specified. */
   suggest_mode?: SuggestMode
+  /** The number of suggestions to return. This parameter can be used only when the `suggest_field` and `suggest_text` query string parameters are specified. */
   suggest_size?: long
+  /** The source text for which the suggestions should be returned. This parameter can be used only when the `suggest_field` and `suggest_text` query string parameters are specified. */
   suggest_text?: string
+  /** If `true`, aggregation and suggester names are be prefixed by their respective types in the response. */
   typed_keys?: boolean
+  /** Indicates whether `hits.total` should be rendered as an integer or an object in the rest search response. */
   rest_total_hits_as_int?: boolean
+  /** A comma-separated list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored. */
   _source_excludes?: Fields
+  /** A comma-separated list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored. */
   _source_includes?: Fields
+  /** A query in the Lucene query string syntax. Query parameter searches do not support the full Elasticsearch Query DSL but are handy for testing. IMPORTANT: This parameter overrides the query parameter in the request body. If both parameters are specified, documents matching the query request body parameter are not returned. */
   q?: string
+  /** Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index. */
   force_synthetic_source?: boolean
+  /** Defines the aggregations that are run as part of the search request. */
   aggregations?: Record<string, AggregationsAggregationContainer>
   /** @alias aggregations */
+  /** Defines the aggregations that are run as part of the search request. */
   aggs?: Record<string, AggregationsAggregationContainer>
+  /** Collapses search results the values of the specified field. */
   collapse?: SearchFieldCollapse
+  /** If `true`, the request returns detailed information about score computation as part of a hit. */
   explain?: boolean
+  /** Configuration of search extensions defined by Elasticsearch plugins. */
   ext?: Record<string, any>
+  /** The starting document offset, which must be non-negative. By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters. To page through more hits, use the `search_after` parameter. */
   from?: integer
+  /** Specifies the highlighter to use for retrieving highlighted snippets from one or more fields in your search results. */
   highlight?: SearchHighlight
+  /** Number of hits matching the query to count accurately. If `true`, the exact number of hits is returned at the cost of some performance. If `false`, the response does not include the total number of hits matching the query. */
   track_total_hits?: SearchTrackHits
+  /** Boost the `_score` of documents from specified indices. The boost value is the factor by which scores are multiplied. A boost value greater than `1.0` increases the score. A boost value between `0` and `1.0` decreases the score. */
   indices_boost?: Record<IndexName, double>[]
+  /** An array of wildcard (`*`) field patterns. The request returns doc values for field names matching these patterns in the `hits.fields` property of the response. */
   docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
+  /** The approximate kNN search to run. */
   knn?: KnnSearch | KnnSearch[]
+  /** The Reciprocal Rank Fusion (RRF) to use. */
   rank?: RankContainer
+  /** The minimum `_score` for matching documents. Documents with a lower `_score` are not included in the search results. */
   min_score?: double
+  /** Use the `post_filter` parameter to filter search results. The search hits are filtered after the aggregations are calculated. A post filter has no impact on the aggregation results. */
   post_filter?: QueryDslQueryContainer
+  /** Set to `true` to return detailed timing information about the execution of individual components in a search request. NOTE: This is a debugging tool and adds significant overhead to search execution. */
   profile?: boolean
+  /** The search definition using the Query DSL. */
   query?: QueryDslQueryContainer
+  /** Can be used to improve precision by reordering just the top (for example 100 - 500) documents returned by the `query` and `post_filter` phases. */
   rescore?: SearchRescore | SearchRescore[]
+  /** A retriever is a specification to describe top documents returned from a search. A retriever replaces other elements of the search API that also return top documents such as `query` and `knn`. */
   retriever?: RetrieverContainer
+  /** Retrieve a script evaluation (based on different fields) for each hit. */
   script_fields?: Record<string, ScriptField>
+  /** Used to retrieve the next page of hits using a set of sort values from the previous page. */
   search_after?: SortResults
+  /** The number of hits to return, which must not be negative. By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters. To page through more hits, use the `search_after` property. */
   size?: integer
+  /** Split a scrolled search into multiple slices that can be consumed independently. */
   slice?: SlicedScroll
+  /** A comma-separated list of <field>:<direction> pairs. */
   sort?: Sort
+  /** The source fields that are returned for matching documents. These fields are returned in the `hits._source` property of the search response. If the `stored_fields` property is specified, the `_source` property defaults to `false`. Otherwise, it defaults to `true`. */
   _source?: SearchSourceConfig
+  /** An array of wildcard (`*`) field patterns. The request returns values for field names matching these patterns in the `hits.fields` property of the response. */
   fields?: (QueryDslFieldAndFormat | Field)[]
+  /** Defines a suggester that provides similar looking terms based on a provided text. */
   suggest?: SearchSuggester
+  /** The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. IMPORTANT: Use with caution. Elasticsearch applies this property to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this property for requests that target data streams with backing indices across multiple data tiers. If set to `0` (default), the query does not terminate early. */
   terminate_after?: long
+  /** The period of time to wait for a response from each shard. If no response is received before the timeout expires, the request fails and returns an error. Defaults to no timeout. */
   timeout?: string
+  /** If `true`, calculate and return document scores, even if the scores are not used for sorting. */
   track_scores?: boolean
+  /** If `true`, the request returns the document version as part of a hit. */
   version?: boolean
+  /** If `true`, the request returns sequence number and primary term of the last modification of each hit. */
   seq_no_primary_term?: boolean
+  /** A comma-separated list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` property defaults to `false`. You can pass `_source: true` to return both source fields and stored fields in the search response. */
   stored_fields?: Fields
+  /** Limit the search to a point in time (PIT). If you provide a PIT, you cannot specify an `<index>` in the request path. */
   pit?: SearchPointInTimeReference
+  /** One or more runtime fields in the search request. These fields take precedence over mapped fields with the same name. */
   runtime_mappings?: MappingRuntimeFields
+  /** The stats groups to associate with the search. Each group maintains a statistics aggregation for its associated searches. You can retrieve these stats using the indices stats API. */
   stats?: string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
 }
 
 export type SearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
@@ -1808,25 +2297,48 @@ export type SearchTotalHitsRelation = 'eq' | 'gte'
 export type SearchTrackHits = boolean | integer
 
 export interface SearchMvtRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, or aliases to search */
   index: Indices
+  /** Field containing geospatial data to return */
   field: Field
+  /** Zoom level for the vector tile to search */
   zoom: SearchMvtZoomLevel
+  /** X coordinate for the vector tile to search */
   x: SearchMvtCoordinate
+  /** Y coordinate for the vector tile to search */
   y: SearchMvtCoordinate
+  /** Sub-aggregations for the geotile_grid. Supports the following aggregation types: - avg - cardinality - max - min - sum */
   aggs?: Record<string, AggregationsAggregationContainer>
+  /** Size, in pixels, of a clipping buffer outside the tile. This allows renderers to avoid outline artifacts from geometries that extend past the extent of the tile. */
   buffer?: integer
+  /** If false, the meta layer’s feature is the bounding box of the tile. If true, the meta layer’s feature is a bounding box resulting from a geo_bounds aggregation. The aggregation runs on <field> values that intersect the <zoom>/<x>/<y> tile with wrap_longitude set to false. The resulting bounding box may be larger than the vector tile. */
   exact_bounds?: boolean
+  /** Size, in pixels, of a side of the tile. Vector tiles are square with equal sides. */
   extent?: integer
+  /** Fields to return in the `hits` layer. Supports wildcards (`*`). This parameter does not support fields with array values. Fields with array values may return inconsistent results. */
   fields?: Fields
+  /** Aggregation used to create a grid for the `field`. */
   grid_agg?: SearchMvtGridAggregationType
+  /** Additional zoom levels available through the aggs layer. For example, if <zoom> is 7 and grid_precision is 8, you can zoom in up to level 15. Accepts 0-8. If 0, results don’t include the aggs layer. */
   grid_precision?: integer
+  /** Determines the geometry type for features in the aggs layer. In the aggs layer, each feature represents a geotile_grid cell. If 'grid' each feature is a Polygon of the cells bounding box. If 'point' each feature is a Point that is the centroid of the cell. */
   grid_type?: SearchMvtGridType
+  /** Query DSL used to filter documents for the search. */
   query?: QueryDslQueryContainer
+  /** Defines one or more runtime fields in the search request. These fields take precedence over mapped fields with the same name. */
   runtime_mappings?: MappingRuntimeFields
+  /** Maximum number of features to return in the hits layer. Accepts 0-10000. If 0, results don’t include the hits layer. */
   size?: integer
+  /** Sorts features in the hits layer. By default, the API calculates a bounding box for each feature. It sorts features based on this box’s diagonal length, from longest to shortest. */
   sort?: Sort
+  /** Number of hits matching the query to count accurately. If `true`, the exact number of hits is returned at the cost of some performance. If `false`, the response does not include the total number of hits matching the query. */
   track_total_hits?: SearchTrackHits
+  /** If `true`, the hits and aggs layers will contain additional point features representing suggested label positions for the original features. */
   with_labels?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, field?: never, zoom?: never, x?: never, y?: never, aggs?: never, buffer?: never, exact_bounds?: never, extent?: never, fields?: never, grid_agg?: never, grid_precision?: never, grid_type?: never, query?: never, runtime_mappings?: never, size?: never, sort?: never, track_total_hits?: never, with_labels?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, field?: never, zoom?: never, x?: never, y?: never, aggs?: never, buffer?: never, exact_bounds?: never, extent?: never, fields?: never, grid_agg?: never, grid_precision?: never, grid_type?: never, query?: never, runtime_mappings?: never, size?: never, sort?: never, track_total_hits?: never, with_labels?: never }
 }
 
 export type SearchMvtResponse = MapboxVectorTiles
@@ -1840,14 +2352,26 @@ export type SearchMvtGridType = 'grid' | 'point' | 'centroid'
 export type SearchMvtZoomLevel = integer
 
 export interface SearchShardsRequest extends RequestBase {
+/** Returns the indices and shards that a search request would be executed against. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** If `true`, the request retrieves information from the local node only. */
   local?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Specifies the node or shard the operation should be performed on. Random by default. */
   preference?: string
+  /** Custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, local?: never, master_timeout?: never, preference?: never, routing?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, local?: never, master_timeout?: never, preference?: never, routing?: never }
 }
 
 export interface SearchShardsResponse {
@@ -1874,23 +2398,44 @@ export interface SearchShardsShardStoreIndex {
 }
 
 export interface SearchTemplateRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases to search. Supports wildcards (*). */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** If `true`, network round-trips are minimized for cross-cluster search requests. */
   ccs_minimize_roundtrips?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled. */
   ignore_throttled?: boolean
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** Specifies the node or shard the operation should be performed on. Random by default. */
   preference?: string
+  /** Custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** Specifies how long a consistent view of the index should be maintained for scrolled search. */
   scroll?: Duration
+  /** The type of the search operation. */
   search_type?: SearchType
+  /** If true, hits.total are rendered as an integer in the response. */
   rest_total_hits_as_int?: boolean
+  /** If `true`, the response prefixes aggregation and suggester names with their respective types. */
   typed_keys?: boolean
+  /** If `true`, returns detailed information about score calculation as part of each hit. */
   explain?: boolean
+  /** ID of the search template to use. If no source is specified, this parameter is required. */
   id?: Id
+  /** Key-value pairs used to replace Mustache variables in the template. The key is the variable name. The value is the variable value. */
   params?: Record<string, any>
+  /** If `true`, the query execution is profiled. */
   profile?: boolean
+  /** An inline search template. Supports the same parameters as the search API's request body. Also supports Mustache variables. If no id is specified, this parameter is required. */
   source?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, preference?: never, routing?: never, scroll?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, explain?: never, id?: never, params?: never, profile?: never, source?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, preference?: never, routing?: never, scroll?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, explain?: never, id?: never, params?: never, profile?: never, source?: never }
 }
 
 export interface SearchTemplateResponse<TDocument = unknown> {
@@ -1911,14 +2456,25 @@ export interface SearchTemplateResponse<TDocument = unknown> {
 }
 
 export interface TermsEnumRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and index aliases to search. Wildcard (*) expressions are supported. */
   index: IndexName
+  /** The string to match at the start of indexed terms. If not provided, all terms in the field are considered. */
   field: Field
+  /** How many matching terms to return. */
   size?: integer
+  /** The maximum length of time to spend collecting results. Defaults to "1s" (one second). If the timeout is exceeded the complete flag set to false in the response and the results may be partial or empty. */
   timeout?: Duration
+  /** When true the provided search string is matched against index terms without case sensitivity. */
   case_insensitive?: boolean
+  /** Allows to filter an index shard if the provided query rewrites to match_none. */
   index_filter?: QueryDslQueryContainer
+  /** The string after which terms in the index should be returned. Allows for a form of pagination if the last result from one request is passed as the search_after parameter for a subsequent request. */
   string?: string
   search_after?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, field?: never, size?: never, timeout?: never, case_insensitive?: never, index_filter?: never, string?: never, search_after?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, field?: never, size?: never, timeout?: never, case_insensitive?: never, index_filter?: never, string?: never, search_after?: never }
 }
 
 export interface TermsEnumResponse {
@@ -1944,22 +2500,42 @@ export interface TermvectorsFilter {
 }
 
 export interface TermvectorsRequest<TDocument = unknown> extends RequestBase {
+/** Name of the index that contains the document. */
   index: IndexName
+  /** Unique identifier of the document. */
   id?: Id
+  /** Comma-separated list or wildcard expressions of fields to include in the statistics. Used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters. */
   fields?: Fields
+  /** If `true`, the response includes the document count, sum of document frequencies, and sum of total term frequencies. */
   field_statistics?: boolean
+  /** If `true`, the response includes term offsets. */
   offsets?: boolean
+  /** If `true`, the response includes term payloads. */
   payloads?: boolean
+  /** If `true`, the response includes term positions. */
   positions?: boolean
+  /** Specifies the node or shard the operation should be performed on. Random by default. */
   preference?: string
+  /** If true, the request is real-time as opposed to near-real-time. */
   realtime?: boolean
+  /** Custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** If `true`, the response includes term frequency and document frequency. */
   term_statistics?: boolean
+  /** If `true`, returns the document version as part of a hit. */
   version?: VersionNumber
+  /** Specific version type. */
   version_type?: VersionType
+  /** An artificial document (a document not present in the index) for which you want to retrieve term vectors. */
   doc?: TDocument
+  /** Filter terms based on their tf-idf scores. */
   filter?: TermvectorsFilter
+  /** Overrides the default per-field analyzer. */
   per_field_analyzer?: Record<Field, string>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, id?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, term_statistics?: never, version?: never, version_type?: never, doc?: never, filter?: never, per_field_analyzer?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, id?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, term_statistics?: never, version?: never, version_type?: never, doc?: never, filter?: never, per_field_analyzer?: never }
 }
 
 export interface TermvectorsResponse {
@@ -1992,26 +2568,50 @@ export interface TermvectorsToken {
 }
 
 export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> extends RequestBase {
+/** A unique identifier for the document to be updated. */
   id: Id
+  /** The name of the target index. By default, the index is created automatically if it doesn't exist. */
   index: IndexName
+  /** Only perform the operation if the document has this primary term. */
   if_primary_term?: long
+  /** Only perform the operation if the document has this sequence number. */
   if_seq_no?: SequenceNumber
+  /** The script language. */
   lang?: string
+  /** If 'true', Elasticsearch refreshes the affected shards to make this operation visible to search. If 'wait_for', it waits for a refresh to make this operation visible to search. If 'false', it does nothing with refreshes. */
   refresh?: Refresh
+  /** If `true`, the destination must be an index alias. */
   require_alias?: boolean
+  /** The number of times the operation should be retried when a conflict occurs. */
   retry_on_conflict?: integer
+  /** A custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** The period to wait for the following operations: dynamic mapping updates and waiting for active shards. Elasticsearch waits for at least the timeout period before failing. The actual wait time could be longer, particularly when multiple waits occur. */
   timeout?: Duration
+  /** The number of copies of each shard that must be active before proceeding with the operation. Set to 'all' or any positive integer up to the total number of shards in the index (`number_of_replicas`+1). The default value of `1` means it waits for each primary shard to be active. */
   wait_for_active_shards?: WaitForActiveShards
+  /** The source fields you want to exclude. */
   _source_excludes?: Fields
+  /** The source fields you want to retrieve. */
   _source_includes?: Fields
+  /** If `true`, the `result` in the response is set to `noop` (no operation) when there are no changes to the document. */
   detect_noop?: boolean
+  /** A partial update to an existing document. If both `doc` and `script` are specified, `doc` is ignored. */
   doc?: TPartialDocument
+  /** If `true`, use the contents of 'doc' as the value of 'upsert'. NOTE: Using ingest pipelines with `doc_as_upsert` is not supported. */
   doc_as_upsert?: boolean
+  /** The script to run to update the document. */
   script?: Script | string
+  /** If `true`, run the script whether or not the document exists. */
   scripted_upsert?: boolean
+  /** If `false`, turn off source retrieval. You can also specify a comma-separated list of the fields you want to retrieve. */
   _source?: SearchSourceConfig
+  /** If the document does not already exist, the contents of 'upsert' are inserted as a new document. If the document exists, the 'script' is run. */
   upsert?: TDocument
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, lang?: never, refresh?: never, require_alias?: never, retry_on_conflict?: never, routing?: never, timeout?: never, wait_for_active_shards?: never, _source_excludes?: never, _source_includes?: never, detect_noop?: never, doc?: never, doc_as_upsert?: never, script?: never, scripted_upsert?: never, _source?: never, upsert?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, lang?: never, refresh?: never, require_alias?: never, retry_on_conflict?: never, routing?: never, timeout?: never, wait_for_active_shards?: never, _source_excludes?: never, _source_includes?: never, detect_noop?: never, doc?: never, doc_as_upsert?: never, script?: never, scripted_upsert?: never, _source?: never, upsert?: never }
 }
 
 export type UpdateResponse<TDocument = unknown> = UpdateUpdateWriteResponseBase<TDocument>
@@ -2021,41 +2621,80 @@ export interface UpdateUpdateWriteResponseBase<TDocument = unknown> extends Writ
 }
 
 export interface UpdateByQueryRequest extends RequestBase {
+/** A comma-separated list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams or indices, omit this parameter or use `*` or `_all`. */
   index: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified. */
   analyzer?: string
+  /** If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified. */
   analyze_wildcard?: boolean
+  /** The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified. */
   default_operator?: QueryDslOperator
+  /** The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified. */
   df?: string
+  /** The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** Starting offset (default: 0) */
   from?: long
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified. */
   lenient?: boolean
+  /** The ID of the pipeline to use to preprocess incoming documents. If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request. If a final pipeline is configured it will always run, regardless of the value of this parameter. */
   pipeline?: string
+  /** The node or shard the operation should be performed on. It is random by default. */
   preference?: string
+  /** A query in the Lucene query string syntax. */
   q?: string
+  /** If `true`, Elasticsearch refreshes affected shards to make the operation visible to search after the request completes. This is different than the update API's `refresh` parameter, which causes just the shard that received the request to be refreshed. */
   refresh?: boolean
+  /** If `true`, the request cache is used for this request. It defaults to the index-level setting. */
   request_cache?: boolean
+  /** The throttle for this request in sub-requests per second. */
   requests_per_second?: float
+  /** A custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** The period to retain the search context for scrolling. */
   scroll?: Duration
+  /** The size of the scroll request that powers the operation. */
   scroll_size?: long
+  /** An explicit timeout for each search request. By default, there is no timeout. */
   search_timeout?: Duration
+  /** The type of the search operation. Available options include `query_then_fetch` and `dfs_query_then_fetch`. */
   search_type?: SearchType
+  /** The number of slices this task should be divided into. */
   slices?: Slices
+  /** A comma-separated list of <field>:<direction> pairs. */
   sort?: string[]
+  /** The specific `tag` of the request for logging and statistical purposes. */
   stats?: string[]
+  /** The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. IMPORTANT: Use with caution. Elasticsearch applies this parameter to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers. */
   terminate_after?: long
+  /** The period each update request waits for the following operations: dynamic mapping updates, waiting for active shards. By default, it is one minute. This guarantees Elasticsearch waits for at least the timeout before failing. The actual wait time could be longer, particularly when multiple waits occur. */
   timeout?: Duration
+  /** If `true`, returns the document version as part of a hit. */
   version?: boolean
+  /** Should the document increment the version number (internal) on hit or not (reindex) */
   version_type?: boolean
+  /** The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The `timeout` parameter controls how long each write request waits for unavailable shards to become available. Both work exactly the way they work in the bulk API. */
   wait_for_active_shards?: WaitForActiveShards
+  /** If `true`, the request blocks until the operation is complete. If `false`, Elasticsearch performs some preflight checks, launches the request, and returns a task ID that you can use to cancel or get the status of the task. Elasticsearch creates a record of this task as a document at `.tasks/task/${taskId}`. */
   wait_for_completion?: boolean
+  /** The maximum number of documents to update. */
   max_docs?: long
+  /** The documents to update using the Query DSL. */
   query?: QueryDslQueryContainer
+  /** The script to run to update the document source or metadata when updating. */
   script?: Script | string
+  /** Slice the request manually using the provided slice ID and total number of slices. */
   slice?: SlicedScroll
+  /** The preferred behavior when update by query hits version conflicts: `abort` or `proceed`. */
   conflicts?: Conflicts
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, pipeline?: never, preference?: never, q?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, sort?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, script?: never, slice?: never, conflicts?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, pipeline?: never, preference?: never, q?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, sort?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, script?: never, slice?: never, conflicts?: never }
 }
 
 export interface UpdateByQueryResponse {
@@ -2078,8 +2717,14 @@ export interface UpdateByQueryResponse {
 }
 
 export interface UpdateByQueryRethrottleRequest extends RequestBase {
+/** The ID for the task. */
   task_id: Id
+  /** The throttle for this request in sub-requests per second. To turn off throttling, set it to `-1`. */
   requests_per_second?: float
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_id?: never, requests_per_second?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_id?: never, requests_per_second?: never }
 }
 
 export interface UpdateByQueryRethrottleResponse {
@@ -2431,6 +3076,7 @@ export interface KnnQuery extends QueryDslQueryBase {
   k?: integer
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   similarity?: float
+  rescore_vector?: RescoreVector
 }
 
 export interface KnnRetriever extends RetrieverBase {
@@ -2440,6 +3086,7 @@ export interface KnnRetriever extends RetrieverBase {
   k: integer
   num_candidates: integer
   similarity?: float
+  rescore_vector?: RescoreVector
 }
 
 export interface KnnSearch {
@@ -2452,6 +3099,7 @@ export interface KnnSearch {
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   similarity?: float
   inner_hits?: SearchInnerHits
+  rescore_vector?: RescoreVector
 }
 
 export interface LatLonGeoLocation {
@@ -2630,6 +3278,10 @@ export interface RequestCacheStats {
   memory_size?: string
   memory_size_in_bytes: long
   miss_count: long
+}
+
+export interface RescoreVector {
+  oversample: float
 }
 
 export type Result = 'created' | 'updated' | 'deleted' | 'not_found' | 'noop'
@@ -2838,6 +3490,8 @@ export interface StoredScript {
   options?: Record<string, string>
   source: string
 }
+
+export type StreamResult = ArrayBuffer
 
 export type SuggestMode = 'missing' | 'popular' | 'always'
 
@@ -5335,6 +5989,11 @@ export interface MappingCorePropertyBase extends MappingPropertyBase {
   store?: boolean
 }
 
+export interface MappingCountedKeywordProperty extends MappingPropertyBase {
+  type: 'counted_keyword'
+  index?: boolean
+}
+
 export interface MappingDataStreamTimestamp {
   enabled: boolean
 }
@@ -5455,7 +6114,7 @@ export interface MappingFieldNamesField {
   enabled: boolean
 }
 
-export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'passthrough' | 'version' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'semantic_text' | 'sparse_vector' | 'match_only_text' | 'icu_collation_keyword'
+export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'passthrough' | 'version' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'counted_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'semantic_text' | 'sparse_vector' | 'match_only_text' | 'icu_collation_keyword'
 
 export interface MappingFlattenedProperty extends MappingPropertyBase {
   boost?: double
@@ -5650,7 +6309,7 @@ export interface MappingPointProperty extends MappingDocValuesPropertyBase {
   type: 'point'
 }
 
-export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingPassthroughObjectProperty | MappingSemanticTextProperty | MappingSparseVectorProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty | MappingIcuCollationProperty
+export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingPassthroughObjectProperty | MappingSemanticTextProperty | MappingSparseVectorProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingCountedKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty | MappingIcuCollationProperty
 
 export interface MappingPropertyBase {
   meta?: Record<string, string>
@@ -5658,6 +6317,7 @@ export interface MappingPropertyBase {
   ignore_above?: integer
   dynamic?: MappingDynamicMapping
   fields?: Record<PropertyName, MappingProperty>
+  synthetic_source_keep?: MappingSyntheticSourceKeepEnum
 }
 
 export interface MappingRangePropertyBase extends MappingDocValuesPropertyBase {
@@ -5763,6 +6423,8 @@ export interface MappingSuggestContext {
   type: string
   precision?: integer | string
 }
+
+export type MappingSyntheticSourceKeepEnum = 'none' | 'arrays' | 'all'
 
 export type MappingTermVectorOption = 'no' | 'yes' | 'with_offsets' | 'with_positions' | 'with_positions_offsets' | 'with_positions_offsets_payloads' | 'with_positions_payloads'
 
@@ -6668,23 +7330,42 @@ export interface AsyncSearchAsyncSearchResponseBase {
 }
 
 export interface AsyncSearchDeleteRequest extends RequestBase {
+/** A unique identifier for the async search. */
   id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export type AsyncSearchDeleteResponse = AcknowledgedResponseBase
 
 export interface AsyncSearchGetRequest extends RequestBase {
+/** A unique identifier for the async search. */
   id: Id
+  /** Specifies how long the async search should be available in the cluster. When not specified, the `keep_alive` set with the corresponding submit async request will be used. Otherwise, it is possible to override the value and extend the validity of the request. When this period expires, the search, if still running, is cancelled. If the search is completed, its saved results are deleted. */
   keep_alive?: Duration
+  /** Specify whether aggregation and suggester names should be prefixed by their respective types in the response */
   typed_keys?: boolean
+  /** Specifies to wait for the search to be completed up until the provided timeout. Final results will be returned if available before the timeout expires, otherwise the currently available results will be returned once the timeout expires. By default no timeout is set meaning that the currently available results will be returned without any additional wait. */
   wait_for_completion_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, keep_alive?: never, typed_keys?: never, wait_for_completion_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, keep_alive?: never, typed_keys?: never, wait_for_completion_timeout?: never }
 }
 
 export type AsyncSearchGetResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, TAggregations>
 
 export interface AsyncSearchStatusRequest extends RequestBase {
+/** A unique identifier for the async search. */
   id: Id
+  /** Specifies how long the async search needs to be available. Ongoing async searches and any saved search results are deleted after this period. */
   keep_alive?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, keep_alive?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, keep_alive?: never }
 }
 
 export type AsyncSearchStatusResponse = AsyncSearchStatusStatusResponseBase
@@ -6696,69 +7377,126 @@ export interface AsyncSearchStatusStatusResponseBase extends AsyncSearchAsyncSea
 }
 
 export interface AsyncSearchSubmitRequest extends RequestBase {
+/** A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices */
   index?: Indices
+  /** Blocks and waits until the search is completed up to a certain timeout. When the async search completes within the timeout, the response won’t include the ID as the results are not stored in the cluster. */
   wait_for_completion_timeout?: Duration
+  /** Specifies how long the async search needs to be available. Ongoing async searches and any saved search results are deleted after this period. */
+  keep_alive?: Duration
+  /** If `true`, results are stored for later retrieval when the search completes within the `wait_for_completion_timeout`. */
   keep_on_completion?: boolean
+  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
   allow_no_indices?: boolean
+  /** Indicate if an error should be returned if there is a partial search failure or timeout */
   allow_partial_search_results?: boolean
+  /** The analyzer to use for the query string */
   analyzer?: string
+  /** Specify whether wildcard and prefix queries should be analyzed (default: false) */
   analyze_wildcard?: boolean
+  /** Affects how often partial results become available, which happens whenever shard results are reduced. A partial reduction is performed every time the coordinating node has received a certain number of new shard responses (5 by default). */
   batched_reduce_size?: long
+  /** The default value is the only supported value. */
   ccs_minimize_roundtrips?: boolean
+  /** The default operator for query string query (AND or OR) */
   default_operator?: QueryDslOperator
+  /** The field to use as default where no field prefix is given in the query string */
   df?: string
+  /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
+  /** Whether specified concrete, expanded or aliased indices should be ignored when throttled */
   ignore_throttled?: boolean
+  /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
   ignore_unavailable?: boolean
+  /** Specify whether format-based query failures (such as providing text to a numeric field) should be ignored */
   lenient?: boolean
+  /** The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests */
   max_concurrent_shard_requests?: long
+  /** Specify the node or shard the operation should be performed on (default: random) */
   preference?: string
+  /** Specify if request cache should be used for this request or not, defaults to true */
   request_cache?: boolean
+  /** A comma-separated list of specific routing values */
   routing?: Routing
+  /** Search operation type */
   search_type?: SearchType
+  /** Specifies which field to use for suggestions. */
   suggest_field?: Field
+  /** Specify suggest mode */
   suggest_mode?: SuggestMode
+  /** How many suggestions to return in response */
   suggest_size?: long
+  /** The source text for which the suggestions should be returned. */
   suggest_text?: string
+  /** Specify whether aggregation and suggester names should be prefixed by their respective types in the response */
   typed_keys?: boolean
+  /** Indicates whether hits.total should be rendered as an integer or an object in the rest search response */
   rest_total_hits_as_int?: boolean
+  /** A list of fields to exclude from the returned _source field */
   _source_excludes?: Fields
+  /** A list of fields to extract and return from the _source field */
   _source_includes?: Fields
+  /** Query in the Lucene query string syntax */
   q?: string
   aggregations?: Record<string, AggregationsAggregationContainer>
   /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
+  /** If true, returns detailed information about score computation as part of a hit. */
   explain?: boolean
+  /** Configuration of search extensions defined by Elasticsearch plugins. */
   ext?: Record<string, any>
+  /** Starting document offset. By default, you cannot page through more than 10,000 hits using the from and size parameters. To page through more hits, use the search_after parameter. */
   from?: integer
   highlight?: SearchHighlight
+  /** Number of hits matching the query to count accurately. If true, the exact number of hits is returned at the cost of some performance. If false, the response does not include the total number of hits matching the query. Defaults to 10,000 hits. */
   track_total_hits?: SearchTrackHits
+  /** Boosts the _score of documents from specified indices. */
   indices_boost?: Record<IndexName, double>[]
+  /** Array of wildcard (*) patterns. The request returns doc values for field names matching these patterns in the hits.fields property of the response. */
   docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
+  /** Defines the approximate kNN search to run. */
   knn?: KnnSearch | KnnSearch[]
+  /** Minimum _score for matching documents. Documents with a lower _score are not included in the search results. */
   min_score?: double
   post_filter?: QueryDslQueryContainer
   profile?: boolean
+  /** Defines the search definition using the Query DSL. */
   query?: QueryDslQueryContainer
   rescore?: SearchRescore | SearchRescore[]
+  /** Retrieve a script evaluation (based on different fields) for each hit. */
   script_fields?: Record<string, ScriptField>
   search_after?: SortResults
+  /** The number of hits to return. By default, you cannot page through more than 10,000 hits using the from and size parameters. To page through more hits, use the search_after parameter. */
   size?: integer
   slice?: SlicedScroll
   sort?: Sort
+  /** Indicates which source fields are returned for matching documents. These fields are returned in the hits._source property of the search response. */
   _source?: SearchSourceConfig
+  /** Array of wildcard (*) patterns. The request returns values for field names matching these patterns in the hits.fields property of the response. */
   fields?: (QueryDslFieldAndFormat | Field)[]
   suggest?: SearchSuggester
+  /** Maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. Defaults to 0, which does not terminate query execution early. */
   terminate_after?: long
+  /** Specifies the period of time to wait for a response from each shard. If no response is received before the timeout expires, the request fails and returns an error. Defaults to no timeout. */
   timeout?: string
+  /** If true, calculate and return document scores, even if the scores are not used for sorting. */
   track_scores?: boolean
+  /** If true, returns document version as part of a hit. */
   version?: boolean
+  /** If true, returns sequence number and primary term of the last modification of each hit. See Optimistic concurrency control. */
   seq_no_primary_term?: boolean
+  /** List of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the _source parameter defaults to false. You can pass _source: true to return both source fields and stored fields in the search response. */
   stored_fields?: Fields
+  /** Limits the search to a point in time (PIT). If you provide a PIT, you cannot specify an <index> in the request path. */
   pit?: SearchPointInTimeReference
+  /** Defines one or more runtime fields in the search request. These fields take precedence over mapped fields with the same name. */
   runtime_mappings?: MappingRuntimeFields
+  /** Stats groups to associate with the search. Each group maintains a statistics aggregation for its associated searches. You can retrieve these stats using the indices stats API. */
   stats?: string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, request_cache?: never, routing?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, request_cache?: never, routing?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
 }
 
 export type AsyncSearchSubmitResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, TAggregations>
@@ -6769,9 +7507,16 @@ export interface AutoscalingAutoscalingPolicy {
 }
 
 export interface AutoscalingDeleteAutoscalingPolicyRequest extends RequestBase {
+/** the name of the autoscaling policy */
   name: Name
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
 }
 
 export type AutoscalingDeleteAutoscalingPolicyResponse = AcknowledgedResponseBase
@@ -6804,7 +7549,12 @@ export interface AutoscalingGetAutoscalingCapacityAutoscalingResources {
 }
 
 export interface AutoscalingGetAutoscalingCapacityRequest extends RequestBase {
+/** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
 }
 
 export interface AutoscalingGetAutoscalingCapacityResponse {
@@ -6812,17 +7562,30 @@ export interface AutoscalingGetAutoscalingCapacityResponse {
 }
 
 export interface AutoscalingGetAutoscalingPolicyRequest extends RequestBase {
+/** the name of the autoscaling policy */
   name: Name
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
 }
 
 export type AutoscalingGetAutoscalingPolicyResponse = AutoscalingAutoscalingPolicy
 
 export interface AutoscalingPutAutoscalingPolicyRequest extends RequestBase {
+/** the name of the autoscaling policy */
   name: Name
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   policy?: AutoscalingAutoscalingPolicy
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, policy?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, policy?: never }
 }
 
 export type AutoscalingPutAutoscalingPolicyResponse = AcknowledgedResponseBase
@@ -6871,9 +7634,16 @@ export interface CatAliasesAliasesRecord {
 }
 
 export interface CatAliasesRequest extends CatCatRequestBase {
+/** A comma-separated list of aliases to retrieve. Supports wildcards (`*`). To retrieve all aliases, omit this parameter or use `*` or `_all`. */
   name?: Names
+  /** The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicated that the request should never timeout, you can set it to `-1`. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never }
 }
 
 export type CatAliasesResponse = CatAliasesAliasesRecord[]
@@ -6915,17 +7685,25 @@ export interface CatAllocationAllocationRecord {
 }
 
 export interface CatAllocationRequest extends CatCatRequestBase {
+/** A comma-separated list of node identifiers or names used to limit the returned information. */
   node_id?: NodeIds
+  /** The unit used to display byte values. */
   bytes?: Bytes
+  /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never, bytes?: never, local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never, bytes?: never, local?: never, master_timeout?: never }
 }
 
 export type CatAllocationResponse = CatAllocationAllocationRecord[]
 
 export interface CatComponentTemplatesComponentTemplate {
   name: string
-  version: string
+  version: string | null
   alias_count: string
   mapping_count: string
   settings_count: string
@@ -6934,9 +7712,16 @@ export interface CatComponentTemplatesComponentTemplate {
 }
 
 export interface CatComponentTemplatesRequest extends CatCatRequestBase {
+/** The name of the component template. It accepts wildcard expressions. If it is omitted, all component templates are returned. */
   name?: string
+  /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
+  /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, local?: never, master_timeout?: never }
 }
 
 export type CatComponentTemplatesResponse = CatComponentTemplatesComponentTemplate[]
@@ -6956,7 +7741,12 @@ export interface CatCountCountRecord {
 }
 
 export interface CatCountRequest extends CatCatRequestBase {
+/** A comma-separated list of data streams, indices, and aliases used to limit the request. It supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never }
 }
 
 export type CatCountResponse = CatCountCountRecord[]
@@ -6974,8 +7764,14 @@ export interface CatFielddataFielddataRecord {
 }
 
 export interface CatFielddataRequest extends CatCatRequestBase {
+/** Comma-separated list of fields used to limit returned information. To retrieve all fields, omit this parameter. */
   fields?: Fields
+  /** The unit used to display byte values. */
   bytes?: Bytes
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { fields?: never, bytes?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { fields?: never, bytes?: never }
 }
 
 export type CatFielddataResponse = CatFielddataFielddataRecord[]
@@ -7034,13 +7830,23 @@ export interface CatHealthHealthRecord {
 }
 
 export interface CatHealthRequest extends CatCatRequestBase {
+/** The unit used to display time values. */
   time?: TimeUnit
+  /** If true, returns `HH:MM:SS` and Unix epoch timestamps. */
   ts?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { time?: never, ts?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { time?: never, ts?: never }
 }
 
 export type CatHealthResponse = CatHealthHealthRecord[]
 
 export interface CatHelpRequest {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface CatHelpResponse {
@@ -7338,14 +8144,26 @@ export interface CatIndicesIndicesRecord {
 }
 
 export interface CatIndicesRequest extends CatCatRequestBase {
+/** Comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** The unit used to display byte values. */
   bytes?: Bytes
+  /** The type of index that wildcard patterns can match. */
   expand_wildcards?: ExpandWildcards
+  /** The health status used to limit returned indices. By default, the response includes indices of any health status. */
   health?: HealthStatus
+  /** If true, the response includes information from segments that are not loaded into memory. */
   include_unloaded_segments?: boolean
+  /** If true, the response only includes information from primary shards. */
   pri?: boolean
+  /** The unit used to display time values. */
   time?: TimeUnit
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, bytes?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, time?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, bytes?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, time?: never, master_timeout?: never }
 }
 
 export type CatIndicesResponse = CatIndicesIndicesRecord[]
@@ -7360,8 +8178,14 @@ export interface CatMasterMasterRecord {
 }
 
 export interface CatMasterRequest extends CatCatRequestBase {
+/** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { local?: never, master_timeout?: never }
 }
 
 export type CatMasterResponse = CatMasterMasterRecord[]
@@ -7411,12 +8235,22 @@ export interface CatMlDataFrameAnalyticsDataFrameAnalyticsRecord {
 }
 
 export interface CatMlDataFrameAnalyticsRequest extends CatCatRequestBase {
+/** The ID of the data frame analytics to fetch */
   id?: Id
+  /** Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified) */
   allow_no_match?: boolean
+  /** The unit in which to display byte values */
   bytes?: Bytes
+  /** Comma-separated list of column names to display. */
   h?: CatCatDfaColumns
+  /** Comma-separated list of column names or column aliases used to sort the response. */
   s?: CatCatDfaColumns
+  /** Unit used to display time values. */
   time?: TimeUnit
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, time?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, time?: never }
 }
 
 export type CatMlDataFrameAnalyticsResponse = CatMlDataFrameAnalyticsDataFrameAnalyticsRecord[]
@@ -7457,11 +8291,20 @@ export interface CatMlDatafeedsDatafeedsRecord {
 }
 
 export interface CatMlDatafeedsRequest extends CatCatRequestBase {
+/** A numerical character string that uniquely identifies the datafeed. */
   datafeed_id?: Id
+  /** Specifies what to do when the request: * Contains wildcard expressions and there are no datafeeds that match. * Contains the `_all` string or no identifiers and there are no matches. * Contains wildcard expressions and there are only partial matches. If `true`, the API returns an empty datafeeds array when there are no matches and the subset of results when there are partial matches. If `false`, the API returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** Comma-separated list of column names to display. */
   h?: CatCatDatafeedColumns
+  /** Comma-separated list of column names or column aliases used to sort the response. */
   s?: CatCatDatafeedColumns
+  /** The unit used to display time values. */
   time?: TimeUnit
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, h?: never, s?: never, time?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, h?: never, s?: never, time?: never }
 }
 
 export type CatMlDatafeedsResponse = CatMlDatafeedsDatafeedsRecord[]
@@ -7644,25 +8487,47 @@ export interface CatMlJobsJobsRecord {
 }
 
 export interface CatMlJobsRequest extends CatCatRequestBase {
+/** Identifier for the anomaly detection job. */
   job_id?: Id
+  /** Specifies what to do when the request: * Contains wildcard expressions and there are no jobs that match. * Contains the `_all` string or no identifiers and there are no matches. * Contains wildcard expressions and there are only partial matches. If `true`, the API returns an empty jobs array when there are no matches and the subset of results when there are partial matches. If `false`, the API returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** The unit used to display byte values. */
   bytes?: Bytes
+  /** Comma-separated list of column names to display. */
   h?: CatCatAnonalyDetectorColumns
+  /** Comma-separated list of column names or column aliases used to sort the response. */
   s?: CatCatAnonalyDetectorColumns
+  /** The unit used to display time values. */
   time?: TimeUnit
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, time?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, time?: never }
 }
 
 export type CatMlJobsResponse = CatMlJobsJobsRecord[]
 
 export interface CatMlTrainedModelsRequest extends CatCatRequestBase {
+/** A unique identifier for the trained model. */
   model_id?: Id
+  /** Specifies what to do when the request: contains wildcard expressions and there are no models that match; contains the `_all` string or no identifiers and there are no matches; contains wildcard expressions and there are only partial matches. If `true`, the API returns an empty array when there are no matches and the subset of results when there are partial matches. If `false`, the API returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** The unit used to display byte values. */
   bytes?: Bytes
+  /** A comma-separated list of column names to display. */
   h?: CatCatTrainedModelsColumns
+  /** A comma-separated list of column names or aliases used to sort the response. */
   s?: CatCatTrainedModelsColumns
+  /** Skips the specified number of transforms. */
   from?: integer
+  /** The maximum number of transforms to display. */
   size?: integer
+  /** Unit used to display time values. */
   time?: TimeUnit
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, from?: never, size?: never, time?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, from?: never, size?: never, time?: never }
 }
 
 export type CatMlTrainedModelsResponse = CatMlTrainedModelsTrainedModelsRecord[]
@@ -7730,8 +8595,14 @@ export interface CatNodeattrsNodeAttributesRecord {
 }
 
 export interface CatNodeattrsRequest extends CatCatRequestBase {
+/** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { local?: never, master_timeout?: never }
 }
 
 export type CatNodeattrsResponse = CatNodeattrsNodeAttributesRecord[]
@@ -8007,11 +8878,20 @@ export interface CatNodesNodesRecord {
 }
 
 export interface CatNodesRequest extends CatCatRequestBase {
+/** The unit used to display byte values. */
   bytes?: Bytes
+  /** If `true`, return the full node ID. If `false`, return the shortened node ID. */
   full_id?: boolean | string
+  /** If true, the response includes information from segments that are not loaded into memory. */
   include_unloaded_segments?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Unit used to display time values. */
   time?: TimeUnit
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { bytes?: never, full_id?: never, include_unloaded_segments?: never, master_timeout?: never, time?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { bytes?: never, full_id?: never, include_unloaded_segments?: never, master_timeout?: never, time?: never }
 }
 
 export type CatNodesResponse = CatNodesNodesRecord[]
@@ -8028,9 +8908,16 @@ export interface CatPendingTasksPendingTasksRecord {
 }
 
 export interface CatPendingTasksRequest extends CatCatRequestBase {
+/** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Unit used to display time values. */
   time?: TimeUnit
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { local?: never, master_timeout?: never, time?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { local?: never, master_timeout?: never, time?: never }
 }
 
 export type CatPendingTasksResponse = CatPendingTasksPendingTasksRecord[]
@@ -8050,9 +8937,16 @@ export interface CatPluginsPluginsRecord {
 }
 
 export interface CatPluginsRequest extends CatCatRequestBase {
+/** Include bootstrap plugins in the response */
   include_bootstrap?: boolean
+  /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { include_bootstrap?: never, local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { include_bootstrap?: never, local?: never, master_timeout?: never }
 }
 
 export type CatPluginsResponse = CatPluginsPluginsRecord[]
@@ -8116,11 +9010,20 @@ export interface CatRecoveryRecoveryRecord {
 }
 
 export interface CatRecoveryRequest extends CatCatRequestBase {
+/** A comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `true`, the response only includes ongoing shard recoveries. */
   active_only?: boolean
+  /** The unit used to display byte values. */
   bytes?: Bytes
+  /** If `true`, the response includes detailed information about shard recoveries. */
   detailed?: boolean
+  /** Unit used to display time values. */
   time?: TimeUnit
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, active_only?: never, bytes?: never, detailed?: never, time?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, active_only?: never, bytes?: never, detailed?: never, time?: never }
 }
 
 export type CatRecoveryResponse = CatRecoveryRecoveryRecord[]
@@ -8133,17 +9036,31 @@ export interface CatRepositoriesRepositoriesRecord {
 }
 
 export interface CatRepositoriesRequest extends CatCatRequestBase {
+/** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { local?: never, master_timeout?: never }
 }
 
 export type CatRepositoriesResponse = CatRepositoriesRepositoriesRecord[]
 
 export interface CatSegmentsRequest extends CatCatRequestBase {
+/** A comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** The unit used to display byte values. */
   bytes?: Bytes
+  /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, bytes?: never, local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, bytes?: never, local?: never, master_timeout?: never }
 }
 
 export type CatSegmentsResponse = CatSegmentsSegmentsRecord[]
@@ -8191,10 +9108,18 @@ export interface CatSegmentsSegmentsRecord {
 }
 
 export interface CatShardsRequest extends CatCatRequestBase {
+/** A comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** The unit used to display byte values. */
   bytes?: Bytes
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Unit used to display time values. */
   time?: TimeUnit
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, bytes?: never, master_timeout?: never, time?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, bytes?: never, master_timeout?: never, time?: never }
 }
 
 export type CatShardsResponse = CatShardsShardsRecord[]
@@ -8415,10 +9340,18 @@ export interface CatShardsShardsRecord {
 }
 
 export interface CatSnapshotsRequest extends CatCatRequestBase {
+/** A comma-separated list of snapshot repositories used to limit the request. Accepts wildcard expressions. `_all` returns all repositories. If any repository fails during the request, Elasticsearch returns an error. */
   repository?: Names
+  /** If `true`, the response does not include information from unavailable snapshots. */
   ignore_unavailable?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Unit used to display time values. */
   time?: TimeUnit
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { repository?: never, ignore_unavailable?: never, master_timeout?: never, time?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { repository?: never, ignore_unavailable?: never, master_timeout?: never, time?: never }
 }
 
 export type CatSnapshotsResponse = CatSnapshotsSnapshotsRecord[]
@@ -8458,13 +9391,24 @@ export interface CatSnapshotsSnapshotsRecord {
 }
 
 export interface CatTasksRequest extends CatCatRequestBase {
+/** The task action names, which are used to limit the response. */
   actions?: string[]
+  /** If `true`, the response includes detailed information about shard recoveries. */
   detailed?: boolean
+  /** Unique node identifiers, which are used to limit the response. */
   nodes?: string[]
+  /** The parent task identifier, which is used to limit the response. */
   parent_task_id?: string
+  /** Unit used to display time values. */
   time?: TimeUnit
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** If `true`, the request blocks until the task has completed. */
   wait_for_completion?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, time?: never, timeout?: never, wait_for_completion?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, time?: never, timeout?: never, wait_for_completion?: never }
 }
 
 export type CatTasksResponse = CatTasksTasksRecord[]
@@ -8505,9 +9449,16 @@ export interface CatTasksTasksRecord {
 }
 
 export interface CatTemplatesRequest extends CatCatRequestBase {
+/** The name of the template to return. Accepts wildcard expressions. If omitted, all templates are returned. */
   name?: Name
+  /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, local?: never, master_timeout?: never }
 }
 
 export type CatTemplatesResponse = CatTemplatesTemplatesRecord[]
@@ -8527,10 +9478,18 @@ export interface CatTemplatesTemplatesRecord {
 }
 
 export interface CatThreadPoolRequest extends CatCatRequestBase {
+/** A comma-separated list of thread pool names used to limit the request. Accepts wildcard expressions. */
   thread_pool_patterns?: Names
+  /** The unit used to display time values. */
   time?: TimeUnit
+  /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { thread_pool_patterns?: never, time?: never, local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { thread_pool_patterns?: never, time?: never, local?: never, master_timeout?: never }
 }
 
 export type CatThreadPoolResponse = CatThreadPoolThreadPoolRecord[]
@@ -8579,13 +9538,24 @@ export interface CatThreadPoolThreadPoolRecord {
 }
 
 export interface CatTransformsRequest extends CatCatRequestBase {
+/** A transform identifier or a wildcard expression. If you do not specify one of these options, the API returns information for all transforms. */
   transform_id?: Id
+  /** Specifies what to do when the request: contains wildcard expressions and there are no transforms that match; contains the `_all` string or no identifiers and there are no matches; contains wildcard expressions and there are only partial matches. If `true`, it returns an empty transforms array when there are no matches and the subset of results when there are partial matches. If `false`, the request returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** Skips the specified number of transforms. */
   from?: integer
+  /** Comma-separated list of column names to display. */
   h?: CatCatTransformColumns
+  /** Comma-separated list of column names or column aliases used to sort the response. */
   s?: CatCatTransformColumns
+  /** The unit used to display time values. */
   time?: TimeUnit
+  /** The maximum number of transforms to obtain. */
   size?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, h?: never, s?: never, time?: never, size?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, h?: never, s?: never, time?: never, size?: never }
 }
 
 export type CatTransformsResponse = CatTransformsTransformsRecord[]
@@ -8713,30 +9683,57 @@ export interface CcrShardStats {
 }
 
 export interface CcrDeleteAutoFollowPatternRequest extends RequestBase {
+/** The name of the auto follow pattern. */
   name: Name
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
 }
 
 export type CcrDeleteAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrFollowRequest extends RequestBase {
+/** The name of the follower index. */
   index: IndexName
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Specifies the number of shards to wait on being active before responding. This defaults to waiting on none of the shards to be active. A shard must be restored from the leader index before being active. Restoring a follower shard requires transferring all the remote Lucene segment files to the follower index. */
   wait_for_active_shards?: WaitForActiveShards
+  /** If the leader index is part of a data stream, the name to which the local data stream for the followed index should be renamed. */
   data_stream_name?: string
+  /** The name of the index in the leader cluster to follow. */
   leader_index: IndexName
+  /** The maximum number of outstanding reads requests from the remote cluster. */
   max_outstanding_read_requests?: long
+  /** The maximum number of outstanding write requests on the follower. */
   max_outstanding_write_requests?: integer
+  /** The maximum number of operations to pull per read from the remote cluster. */
   max_read_request_operation_count?: integer
+  /** The maximum size in bytes of per read of a batch of operations pulled from the remote cluster. */
   max_read_request_size?: ByteSize
+  /** The maximum time to wait before retrying an operation that failed exceptionally. An exponential backoff strategy is employed when retrying. */
   max_retry_delay?: Duration
+  /** The maximum number of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will be deferred until the number of queued operations goes below the limit. */
   max_write_buffer_count?: integer
+  /** The maximum total bytes of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will be deferred until the total bytes of queued operations goes below the limit. */
   max_write_buffer_size?: ByteSize
+  /** The maximum number of operations per bulk write request executed on the follower. */
   max_write_request_operation_count?: integer
+  /** The maximum total bytes of operations per bulk write request executed on the follower. */
   max_write_request_size?: ByteSize
+  /** The maximum time to wait for new operations on the remote cluster when the follower index is synchronized with the leader index. When the timeout has elapsed, the poll for operations will return to the follower so that it can update some statistics. Then the follower will immediately attempt to read from the leader again. */
   read_poll_timeout?: Duration
+  /** The remote cluster containing the leader index. */
   remote_cluster: string
+  /** Settings to override from the leader index. */
   settings?: IndicesIndexSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, master_timeout?: never, wait_for_active_shards?: never, data_stream_name?: never, leader_index?: never, max_outstanding_read_requests?: never, max_outstanding_write_requests?: never, max_read_request_operation_count?: never, max_read_request_size?: never, max_retry_delay?: never, max_write_buffer_count?: never, max_write_buffer_size?: never, max_write_request_operation_count?: never, max_write_request_size?: never, read_poll_timeout?: never, remote_cluster?: never, settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, master_timeout?: never, wait_for_active_shards?: never, data_stream_name?: never, leader_index?: never, max_outstanding_read_requests?: never, max_outstanding_write_requests?: never, max_read_request_operation_count?: never, max_read_request_size?: never, max_retry_delay?: never, max_write_buffer_count?: never, max_write_buffer_size?: never, max_write_request_operation_count?: never, max_write_request_size?: never, read_poll_timeout?: never, remote_cluster?: never, settings?: never }
 }
 
 export interface CcrFollowResponse {
@@ -8769,8 +9766,14 @@ export interface CcrFollowInfoFollowerIndexParameters {
 export type CcrFollowInfoFollowerIndexStatus = 'active' | 'paused'
 
 export interface CcrFollowInfoRequest extends RequestBase {
+/** A comma-separated list of index patterns; use `_all` to perform the operation on all indices */
   index: Indices
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, master_timeout?: never }
 }
 
 export interface CcrFollowInfoResponse {
@@ -8778,8 +9781,14 @@ export interface CcrFollowInfoResponse {
 }
 
 export interface CcrFollowStatsRequest extends RequestBase {
+/** A comma-separated list of index patterns; use `_all` to perform the operation on all indices */
   index: Indices
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, timeout?: never }
 }
 
 export interface CcrFollowStatsResponse {
@@ -8787,12 +9796,18 @@ export interface CcrFollowStatsResponse {
 }
 
 export interface CcrForgetFollowerRequest extends RequestBase {
+/** the name of the leader index for which specified follower retention leases should be removed */
   index: IndexName
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   follower_cluster?: string
   follower_index?: IndexName
   follower_index_uuid?: Uuid
   leader_remote_cluster?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, timeout?: never, follower_cluster?: never, follower_index?: never, follower_index_uuid?: never, leader_remote_cluster?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, timeout?: never, follower_cluster?: never, follower_index?: never, follower_index_uuid?: never, leader_remote_cluster?: never }
 }
 
 export interface CcrForgetFollowerResponse {
@@ -8814,8 +9829,14 @@ export interface CcrGetAutoFollowPatternAutoFollowPatternSummary {
 }
 
 export interface CcrGetAutoFollowPatternRequest extends RequestBase {
+/** Specifies the auto-follow pattern collection that you want to retrieve. If you do not specify a name, the API returns information for all collections. */
   name?: Name
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
 }
 
 export interface CcrGetAutoFollowPatternResponse {
@@ -8823,50 +9844,91 @@ export interface CcrGetAutoFollowPatternResponse {
 }
 
 export interface CcrPauseAutoFollowPatternRequest extends RequestBase {
+/** The name of the auto follow pattern that should pause discovering new indices to follow. */
   name: Name
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
 }
 
 export type CcrPauseAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrPauseFollowRequest extends RequestBase {
+/** The name of the follower index that should pause following its leader index. */
   index: IndexName
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, master_timeout?: never }
 }
 
 export type CcrPauseFollowResponse = AcknowledgedResponseBase
 
 export interface CcrPutAutoFollowPatternRequest extends RequestBase {
+/** The name of the collection of auto-follow patterns. */
   name: Name
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** The remote cluster containing the leader indices to match against. */
   remote_cluster: string
+  /** The name of follower index. The template {{leader_index}} can be used to derive the name of the follower index from the name of the leader index. When following a data stream, use {{leader_index}}; CCR does not support changes to the names of a follower data stream’s backing indices. */
   follow_index_pattern?: IndexPattern
+  /** An array of simple index patterns to match against indices in the remote cluster specified by the remote_cluster field. */
   leader_index_patterns?: IndexPatterns
+  /** An array of simple index patterns that can be used to exclude indices from being auto-followed. Indices in the remote cluster whose names are matching one or more leader_index_patterns and one or more leader_index_exclusion_patterns won’t be followed. */
   leader_index_exclusion_patterns?: IndexPatterns
+  /** The maximum number of outstanding reads requests from the remote cluster. */
   max_outstanding_read_requests?: integer
+  /** Settings to override from the leader index. Note that certain settings can not be overrode (e.g., index.number_of_shards). */
   settings?: Record<string, any>
+  /** The maximum number of outstanding reads requests from the remote cluster. */
   max_outstanding_write_requests?: integer
+  /** The maximum time to wait for new operations on the remote cluster when the follower index is synchronized with the leader index. When the timeout has elapsed, the poll for operations will return to the follower so that it can update some statistics. Then the follower will immediately attempt to read from the leader again. */
   read_poll_timeout?: Duration
+  /** The maximum number of operations to pull per read from the remote cluster. */
   max_read_request_operation_count?: integer
+  /** The maximum size in bytes of per read of a batch of operations pulled from the remote cluster. */
   max_read_request_size?: ByteSize
+  /** The maximum time to wait before retrying an operation that failed exceptionally. An exponential backoff strategy is employed when retrying. */
   max_retry_delay?: Duration
+  /** The maximum number of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will be deferred until the number of queued operations goes below the limit. */
   max_write_buffer_count?: integer
+  /** The maximum total bytes of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will be deferred until the total bytes of queued operations goes below the limit. */
   max_write_buffer_size?: ByteSize
+  /** The maximum number of operations per bulk write request executed on the follower. */
   max_write_request_operation_count?: integer
+  /** The maximum total bytes of operations per bulk write request executed on the follower. */
   max_write_request_size?: ByteSize
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, remote_cluster?: never, follow_index_pattern?: never, leader_index_patterns?: never, leader_index_exclusion_patterns?: never, max_outstanding_read_requests?: never, settings?: never, max_outstanding_write_requests?: never, read_poll_timeout?: never, max_read_request_operation_count?: never, max_read_request_size?: never, max_retry_delay?: never, max_write_buffer_count?: never, max_write_buffer_size?: never, max_write_request_operation_count?: never, max_write_request_size?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, remote_cluster?: never, follow_index_pattern?: never, leader_index_patterns?: never, leader_index_exclusion_patterns?: never, max_outstanding_read_requests?: never, settings?: never, max_outstanding_write_requests?: never, read_poll_timeout?: never, max_read_request_operation_count?: never, max_read_request_size?: never, max_retry_delay?: never, max_write_buffer_count?: never, max_write_buffer_size?: never, max_write_request_operation_count?: never, max_write_request_size?: never }
 }
 
 export type CcrPutAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrResumeAutoFollowPatternRequest extends RequestBase {
+/** The name of the auto follow pattern to resume discovering new indices to follow. */
   name: Name
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
 }
 
 export type CcrResumeAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrResumeFollowRequest extends RequestBase {
+/** The name of the follow index to resume following. */
   index: IndexName
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   max_outstanding_read_requests?: long
   max_outstanding_write_requests?: long
@@ -8878,6 +9940,10 @@ export interface CcrResumeFollowRequest extends RequestBase {
   max_write_request_operation_count?: long
   max_write_request_size?: string
   read_poll_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, master_timeout?: never, max_outstanding_read_requests?: never, max_outstanding_write_requests?: never, max_read_request_operation_count?: never, max_read_request_size?: never, max_retry_delay?: never, max_write_buffer_count?: never, max_write_buffer_size?: never, max_write_request_operation_count?: never, max_write_request_size?: never, read_poll_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, master_timeout?: never, max_outstanding_read_requests?: never, max_outstanding_write_requests?: never, max_read_request_operation_count?: never, max_read_request_size?: never, max_retry_delay?: never, max_write_buffer_count?: never, max_write_buffer_size?: never, max_write_request_operation_count?: never, max_write_request_size?: never, read_poll_timeout?: never }
 }
 
 export type CcrResumeFollowResponse = AcknowledgedResponseBase
@@ -8901,8 +9967,14 @@ export interface CcrStatsFollowStats {
 }
 
 export interface CcrStatsRequest extends RequestBase {
+/** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
 }
 
 export interface CcrStatsResponse {
@@ -8911,8 +9983,14 @@ export interface CcrStatsResponse {
 }
 
 export interface CcrUnfollowRequest extends RequestBase {
+/** The name of the follower index that should be turned into a regular index. */
   index: IndexName
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, master_timeout?: never }
 }
 
 export type CcrUnfollowResponse = AcknowledgedResponseBase
@@ -9001,13 +10079,24 @@ export interface ClusterAllocationExplainNodeDiskUsage {
 }
 
 export interface ClusterAllocationExplainRequest extends RequestBase {
+/** If true, returns information about disk usage and shard sizes. */
   include_disk_info?: boolean
+  /** If true, returns YES decisions in explanation. */
   include_yes_decisions?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Specifies the node ID or the name of the node to only explain a shard that is currently located on the specified node. */
   current_node?: string
+  /** Specifies the name of the index that you would like an explanation for. */
   index?: IndexName
+  /** If true, returns explanation for the primary shard for the given shard ID. */
   primary?: boolean
+  /** Specifies the ID of the shard that you would like an explanation for. */
   shard?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { include_disk_info?: never, include_yes_decisions?: never, master_timeout?: never, current_node?: never, index?: never, primary?: never, shard?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { include_disk_info?: never, include_yes_decisions?: never, master_timeout?: never, current_node?: never, index?: never, primary?: never, shard?: never }
 }
 
 export interface ClusterAllocationExplainReservedSize {
@@ -9058,34 +10147,63 @@ export interface ClusterAllocationExplainUnassignedInformation {
 export type ClusterAllocationExplainUnassignedInformationReason = 'INDEX_CREATED' | 'CLUSTER_RECOVERED' | 'INDEX_REOPENED' | 'DANGLING_INDEX_IMPORTED' | 'NEW_INDEX_RESTORED' | 'EXISTING_INDEX_RESTORED' | 'REPLICA_ADDED' | 'ALLOCATION_FAILED' | 'NODE_LEFT' | 'REROUTE_CANCELLED' | 'REINITIALIZED' | 'REALLOCATED_REPLICA' | 'PRIMARY_FAILED' | 'FORCED_EMPTY_PRIMARY' | 'MANUAL_ALLOCATION'
 
 export interface ClusterDeleteComponentTemplateRequest extends RequestBase {
+/** Comma-separated list or wildcard expression of component template names used to limit the request. */
   name: Names
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
 }
 
 export type ClusterDeleteComponentTemplateResponse = AcknowledgedResponseBase
 
 export interface ClusterDeleteVotingConfigExclusionsRequest extends RequestBase {
+/** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Specifies whether to wait for all excluded nodes to be removed from the cluster before clearing the voting configuration exclusions list. Defaults to true, meaning that all excluded nodes must be removed from the cluster before this API takes any action. If set to false then the voting configuration exclusions list is cleared even if some excluded nodes are still in the cluster. */
   wait_for_removal?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, wait_for_removal?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, wait_for_removal?: never }
 }
 
 export type ClusterDeleteVotingConfigExclusionsResponse = boolean
 
 export interface ClusterExistsComponentTemplateRequest extends RequestBase {
+/** Comma-separated list of component template names used to limit the request. Wildcard (*) expressions are supported. */
   name: Names
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node. */
   local?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, local?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, local?: never }
 }
 
 export type ClusterExistsComponentTemplateResponse = boolean
 
 export interface ClusterGetComponentTemplateRequest extends RequestBase {
+/** Comma-separated list of component template names used to limit the request. Wildcard (`*`) expressions are supported. */
   name?: Name
+  /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
+  /** Return all default configurations for the component template (default: false) */
   include_defaults?: boolean
+  /** If `true`, the request retrieves information from the local node only. If `false`, information is retrieved from the master node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, flat_settings?: never, include_defaults?: never, local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, flat_settings?: never, include_defaults?: never, local?: never, master_timeout?: never }
 }
 
 export interface ClusterGetComponentTemplateResponse {
@@ -9093,10 +10211,18 @@ export interface ClusterGetComponentTemplateResponse {
 }
 
 export interface ClusterGetSettingsRequest extends RequestBase {
+/** If `true`, returns settings in flat format. */
   flat_settings?: boolean
+  /** If `true`, returns default cluster settings from the local node. */
   include_defaults?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { flat_settings?: never, include_defaults?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { flat_settings?: never, include_defaults?: never, master_timeout?: never, timeout?: never }
 }
 
 export interface ClusterGetSettingsResponse {
@@ -9140,18 +10266,34 @@ export interface ClusterHealthIndexHealthStats {
 }
 
 export interface ClusterHealthRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and index aliases used to limit the request. Wildcard expressions (`*`) are supported. To target all data streams and indices in a cluster, omit this parameter or use _all or `*`. */
   index?: Indices
+  /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
+  /** Can be one of cluster, indices or shards. Controls the details level of the health information returned. */
   level?: Level
+  /** If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** A number controlling to how many active shards to wait for, all to wait for all shards in the cluster to be active, or 0 to not wait. */
   wait_for_active_shards?: WaitForActiveShards
+  /** Can be one of immediate, urgent, high, normal, low, languid. Wait until all currently queued events with the given priority are processed. */
   wait_for_events?: WaitForEvents
+  /** The request waits until the specified number N of nodes is available. It also accepts >=N, <=N, >N and <N. Alternatively, it is possible to use ge(N), le(N), gt(N) and lt(N) notation. */
   wait_for_nodes?: string | integer
+  /** A boolean value which controls whether to wait (until the timeout provided) for the cluster to have no shard initializations. Defaults to false, which means it will not wait for initializing shards. */
   wait_for_no_initializing_shards?: boolean
+  /** A boolean value which controls whether to wait (until the timeout provided) for the cluster to have no shard relocations. Defaults to false, which means it will not wait for relocating shards. */
   wait_for_no_relocating_shards?: boolean
+  /** One of green, yellow or red. Will wait (until the timeout provided) until the status of the cluster changes to the one provided or better, i.e. green > yellow > red. By default, will not wait for any status. */
   wait_for_status?: HealthStatus
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, expand_wildcards?: never, level?: never, local?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, wait_for_events?: never, wait_for_nodes?: never, wait_for_no_initializing_shards?: never, wait_for_no_relocating_shards?: never, wait_for_status?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, expand_wildcards?: never, level?: never, local?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, wait_for_events?: never, wait_for_nodes?: never, wait_for_no_initializing_shards?: never, wait_for_no_relocating_shards?: never, wait_for_status?: never }
 }
 
 export type ClusterHealthResponse = ClusterHealthHealthResponseBody
@@ -9167,7 +10309,12 @@ export interface ClusterHealthShardHealthStats {
 }
 
 export interface ClusterInfoRequest extends RequestBase {
+/** Limits the information returned to the specific target. Supports a comma-separated list, such as http,ingest. */
   target: ClusterInfoTargets
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { target?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { target?: never }
 }
 
 export interface ClusterInfoResponse {
@@ -9188,8 +10335,14 @@ export interface ClusterPendingTasksPendingTask {
 }
 
 export interface ClusterPendingTasksRequest extends RequestBase {
+/** If `true`, the request retrieves information from the local node only. If `false`, information is retrieved from the master node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { local?: never, master_timeout?: never }
 }
 
 export interface ClusterPendingTasksResponse {
@@ -9197,32 +10350,58 @@ export interface ClusterPendingTasksResponse {
 }
 
 export interface ClusterPostVotingConfigExclusionsRequest extends RequestBase {
+/** A comma-separated list of the names of the nodes to exclude from the voting configuration. If specified, you may not also specify node_ids. */
   node_names?: Names
+  /** A comma-separated list of the persistent ids of the nodes to exclude from the voting configuration. If specified, you may not also specify node_names. */
   node_ids?: Ids
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** When adding a voting configuration exclusion, the API waits for the specified nodes to be excluded from the voting configuration before returning. If the timeout expires before the appropriate condition is satisfied, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_names?: never, node_ids?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_names?: never, node_ids?: never, master_timeout?: never, timeout?: never }
 }
 
 export type ClusterPostVotingConfigExclusionsResponse = boolean
 
 export interface ClusterPutComponentTemplateRequest extends RequestBase {
+/** Name of the component template to create. Elasticsearch includes the following built-in component templates: `logs-mappings`; `logs-settings`; `metrics-mappings`; `metrics-settings`;`synthetics-mapping`; `synthetics-settings`. Elastic Agent uses these templates to configure backing indices for its data streams. If you use Elastic Agent and want to overwrite one of these templates, set the `version` for your replacement template higher than the current version. If you don’t use Elastic Agent and want to disable all built-in component and index templates, set `stack.templates.enabled` to `false` using the cluster update settings API. */
   name: Name
+  /** If `true`, this request cannot replace or update existing component templates. */
   create?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** The template to be applied which includes mappings, settings, or aliases configuration. */
   template: IndicesIndexState
+  /** Version number used to manage component templates externally. This number isn't automatically generated or incremented by Elasticsearch. To unset a version, replace the template without specifying a version. */
   version?: VersionNumber
+  /** Optional user metadata about the component template. It may have any contents. This map is not automatically generated by Elasticsearch. This information is stored in the cluster state, so keeping it short is preferable. To unset `_meta`, replace the template without specifying this information. */
   _meta?: Metadata
+  /** Marks this index template as deprecated. When creating or updating a non-deprecated index template that uses deprecated components, Elasticsearch will emit a deprecation warning. */
   deprecated?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, template?: never, version?: never, _meta?: never, deprecated?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, template?: never, version?: never, _meta?: never, deprecated?: never }
 }
 
 export type ClusterPutComponentTemplateResponse = AcknowledgedResponseBase
 
 export interface ClusterPutSettingsRequest extends RequestBase {
+/** Return settings in flat format (default: false) */
   flat_settings?: boolean
+  /** Explicit operation timeout for connection to master node */
   master_timeout?: Duration
+  /** Explicit operation timeout */
   timeout?: Duration
   persistent?: Record<string, any>
   transient?: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { flat_settings?: never, master_timeout?: never, timeout?: never, persistent?: never, transient?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { flat_settings?: never, master_timeout?: never, timeout?: never, persistent?: never, transient?: never }
 }
 
 export interface ClusterPutSettingsResponse {
@@ -9255,6 +10434,10 @@ export interface ClusterRemoteInfoClusterRemoteSniffInfo {
 }
 
 export interface ClusterRemoteInfoRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export type ClusterRemoteInfoResponse = Record<string, ClusterRemoteInfoClusterRemoteInfo>
@@ -9295,13 +10478,24 @@ export interface ClusterRerouteCommandMoveAction {
 }
 
 export interface ClusterRerouteRequest extends RequestBase {
+/** If true, then the request simulates the operation. It will calculate the result of applying the commands to the current cluster state and return the resulting cluster state after the commands (and rebalancing) have been applied; it will not actually perform the requested changes. */
   dry_run?: boolean
+  /** If true, then the response contains an explanation of why the commands can or cannot run. */
   explain?: boolean
+  /** Limits the information returned to the specified metrics. */
   metric?: Metrics
+  /** If true, then retries allocation of shards that are blocked due to too many subsequent allocation failures. */
   retry_failed?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** Defines the commands to perform. */
   commands?: ClusterRerouteCommand[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { dry_run?: never, explain?: never, metric?: never, retry_failed?: never, master_timeout?: never, timeout?: never, commands?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { dry_run?: never, explain?: never, metric?: never, retry_failed?: never, master_timeout?: never, timeout?: never, commands?: never }
 }
 
 export interface ClusterRerouteRerouteDecision {
@@ -9332,16 +10526,30 @@ export interface ClusterRerouteResponse {
 }
 
 export interface ClusterStateRequest extends RequestBase {
+/** Limit the information returned to the specified metrics */
   metric?: Metrics
+  /** A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices */
   index?: Indices
+  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
   allow_no_indices?: boolean
+  /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
+  /** Return settings in flat format (default: false) */
   flat_settings?: boolean
+  /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
   ignore_unavailable?: boolean
+  /** Return local information, do not retrieve the state from master node (default: false) */
   local?: boolean
+  /** Specify timeout for connection to master */
   master_timeout?: Duration
+  /** Wait for the metadata version to be equal or greater than the specified metadata version */
   wait_for_metadata_version?: VersionNumber
+  /** The maximum time to wait for wait_for_metadata_version before timing out */
   wait_for_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { metric?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, local?: never, master_timeout?: never, wait_for_metadata_version?: never, wait_for_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { metric?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, local?: never, master_timeout?: never, wait_for_metadata_version?: never, wait_for_timeout?: never }
 }
 
 export type ClusterStateResponse = any
@@ -9570,9 +10778,16 @@ export interface ClusterStatsOperatingSystemMemoryInfo {
 }
 
 export interface ClusterStatsRequest extends RequestBase {
+/** Comma-separated list of node filters used to limit returned information. Defaults to all nodes in the cluster. */
   node_id?: NodeIds
+  /** Include remote cluster data into the response */
   include_remotes?: boolean
+  /** Period to wait for each node to respond. If a node does not respond before its timeout expires, the response does not include its stats. However, timed out nodes are included in the response’s `_nodes.failed` property. Defaults to no timeout. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never, include_remotes?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never, include_remotes?: never, timeout?: never }
 }
 
 export type ClusterStatsResponse = ClusterStatsStatsResponseBase
@@ -9608,6 +10823,7 @@ export interface ConnectorConnector {
   api_key_secret_id?: string
   configuration: ConnectorConnectorConfiguration
   custom_scheduling: ConnectorConnectorCustomScheduling
+  deleted: boolean
   description?: string
   error?: string | null
   features?: ConnectorConnectorFeatures
@@ -9835,7 +11051,12 @@ export type ConnectorSyncStatus = 'canceling' | 'canceled' | 'completed' | 'erro
 export type ConnectorValidation = ConnectorLessThanValidation | ConnectorGreaterThanValidation | ConnectorListTypeValidation | ConnectorIncludedInValidation | ConnectorRegexValidation
 
 export interface ConnectorCheckInRequest extends RequestBase {
+/** The unique identifier of the connector to be checked in */
   connector_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never }
 }
 
 export interface ConnectorCheckInResponse {
@@ -9843,19 +11064,35 @@ export interface ConnectorCheckInResponse {
 }
 
 export interface ConnectorDeleteRequest extends RequestBase {
+/** The unique identifier of the connector to be deleted */
   connector_id: Id
+  /** A flag indicating if associated sync jobs should be also removed. Defaults to false. */
   delete_sync_jobs?: boolean
+  /** A flag indicating if the connector should be hard deleted. */
+  hard?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, delete_sync_jobs?: never, hard?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, delete_sync_jobs?: never, hard?: never }
 }
 
 export type ConnectorDeleteResponse = AcknowledgedResponseBase
 
 export interface ConnectorGetRequest extends RequestBase {
+/** The unique identifier of the connector */
   connector_id: Id
+  /** A flag to indicate if the desired connector should be fetched, even if it was soft-deleted. */
+  include_deleted?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, include_deleted?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, include_deleted?: never }
 }
 
 export type ConnectorGetResponse = ConnectorConnector
 
 export interface ConnectorLastSyncRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
   last_access_control_sync_error?: string
   last_access_control_sync_scheduled_at?: DateTime
@@ -9869,6 +11106,10 @@ export interface ConnectorLastSyncRequest extends RequestBase {
   last_sync_status?: ConnectorSyncStatus
   last_synced?: DateTime
   sync_cursor?: any
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, last_access_control_sync_error?: never, last_access_control_sync_scheduled_at?: never, last_access_control_sync_status?: never, last_deleted_document_count?: never, last_incremental_sync_scheduled_at?: never, last_indexed_document_count?: never, last_seen?: never, last_sync_error?: never, last_sync_scheduled_at?: never, last_sync_status?: never, last_synced?: never, sync_cursor?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, last_access_control_sync_error?: never, last_access_control_sync_scheduled_at?: never, last_access_control_sync_status?: never, last_deleted_document_count?: never, last_incremental_sync_scheduled_at?: never, last_indexed_document_count?: never, last_seen?: never, last_sync_error?: never, last_sync_scheduled_at?: never, last_sync_status?: never, last_synced?: never, sync_cursor?: never }
 }
 
 export interface ConnectorLastSyncResponse {
@@ -9876,12 +11117,24 @@ export interface ConnectorLastSyncResponse {
 }
 
 export interface ConnectorListRequest extends RequestBase {
+/** Starting offset (default: 0) */
   from?: integer
+  /** Specifies a max number of results to get */
   size?: integer
+  /** A comma-separated list of connector index names to fetch connector documents for */
   index_name?: Indices
+  /** A comma-separated list of connector names to fetch connector documents for */
   connector_name?: Names
+  /** A comma-separated list of connector service types to fetch connector documents for */
   service_type?: Names
+  /** A flag to indicate if the desired connector should be fetched, even if it was soft-deleted. */
+  include_deleted?: boolean
+  /** A wildcard query string that filters connectors with matching name, description or index name */
   query?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { from?: never, size?: never, index_name?: never, connector_name?: never, service_type?: never, include_deleted?: never, query?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { from?: never, size?: never, index_name?: never, connector_name?: never, service_type?: never, include_deleted?: never, query?: never }
 }
 
 export interface ConnectorListResponse {
@@ -9896,6 +11149,10 @@ export interface ConnectorPostRequest extends RequestBase {
   language?: string
   name?: string
   service_type?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { description?: never, index_name?: never, is_native?: never, language?: never, name?: never, service_type?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { description?: never, index_name?: never, is_native?: never, language?: never, name?: never, service_type?: never }
 }
 
 export interface ConnectorPostResponse {
@@ -9904,6 +11161,7 @@ export interface ConnectorPostResponse {
 }
 
 export interface ConnectorPutRequest extends RequestBase {
+/** The unique identifier of the connector to be created or updated. ID is auto-generated if not provided. */
   connector_id?: Id
   description?: string
   index_name?: IndexName
@@ -9911,6 +11169,10 @@ export interface ConnectorPutRequest extends RequestBase {
   language?: string
   name?: string
   service_type?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, description?: never, index_name?: never, is_native?: never, language?: never, name?: never, service_type?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, description?: never, index_name?: never, is_native?: never, language?: never, name?: never, service_type?: never }
 }
 
 export interface ConnectorPutResponse {
@@ -9919,7 +11181,12 @@ export interface ConnectorPutResponse {
 }
 
 export interface ConnectorSyncJobCancelRequest extends RequestBase {
+/** The unique identifier of the connector sync job */
   connector_sync_job_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_sync_job_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_sync_job_id?: never }
 }
 
 export interface ConnectorSyncJobCancelResponse {
@@ -9927,47 +11194,84 @@ export interface ConnectorSyncJobCancelResponse {
 }
 
 export interface ConnectorSyncJobCheckInRequest extends RequestBase {
+/** The unique identifier of the connector sync job to be checked in. */
   connector_sync_job_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_sync_job_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_sync_job_id?: never }
 }
 
 export interface ConnectorSyncJobCheckInResponse {
 }
 
 export interface ConnectorSyncJobClaimRequest extends RequestBase {
+/** The unique identifier of the connector sync job. */
   connector_sync_job_id: Id
+  /** The cursor object from the last incremental sync job. This should reference the `sync_cursor` field in the connector state for which the job runs. */
   sync_cursor?: any
+  /** The host name of the current system that will run the job. */
   worker_hostname: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_sync_job_id?: never, sync_cursor?: never, worker_hostname?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_sync_job_id?: never, sync_cursor?: never, worker_hostname?: never }
 }
 
 export interface ConnectorSyncJobClaimResponse {
 }
 
 export interface ConnectorSyncJobDeleteRequest extends RequestBase {
+/** The unique identifier of the connector sync job to be deleted */
   connector_sync_job_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_sync_job_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_sync_job_id?: never }
 }
 
 export type ConnectorSyncJobDeleteResponse = AcknowledgedResponseBase
 
 export interface ConnectorSyncJobErrorRequest extends RequestBase {
+/** The unique identifier for the connector sync job. */
   connector_sync_job_id: Id
+  /** The error for the connector sync job error field. */
   error: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_sync_job_id?: never, error?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_sync_job_id?: never, error?: never }
 }
 
 export interface ConnectorSyncJobErrorResponse {
 }
 
 export interface ConnectorSyncJobGetRequest extends RequestBase {
+/** The unique identifier of the connector sync job */
   connector_sync_job_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_sync_job_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_sync_job_id?: never }
 }
 
 export type ConnectorSyncJobGetResponse = ConnectorConnectorSyncJob
 
 export interface ConnectorSyncJobListRequest extends RequestBase {
+/** Starting offset (default: 0) */
   from?: integer
+  /** Specifies a max number of results to get */
   size?: integer
+  /** A sync job status to fetch connector sync jobs for */
   status?: ConnectorSyncStatus
+  /** A connector id to fetch connector sync jobs for */
   connector_id?: Id
+  /** A comma-separated list of job types to fetch the sync jobs for */
   job_type?: ConnectorSyncJobType | ConnectorSyncJobType[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { from?: never, size?: never, status?: never, connector_id?: never, job_type?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { from?: never, size?: never, status?: never, connector_id?: never, job_type?: never }
 }
 
 export interface ConnectorSyncJobListResponse {
@@ -9976,9 +11280,14 @@ export interface ConnectorSyncJobListResponse {
 }
 
 export interface ConnectorSyncJobPostRequest extends RequestBase {
+/** The id of the associated connector */
   id: Id
   job_type?: ConnectorSyncJobType
   trigger_method?: ConnectorSyncJobTriggerMethod
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, job_type?: never, trigger_method?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, job_type?: never, trigger_method?: never }
 }
 
 export interface ConnectorSyncJobPostResponse {
@@ -9986,20 +11295,36 @@ export interface ConnectorSyncJobPostResponse {
 }
 
 export interface ConnectorSyncJobUpdateStatsRequest extends RequestBase {
+/** The unique identifier of the connector sync job. */
   connector_sync_job_id: Id
+  /** The number of documents the sync job deleted. */
   deleted_document_count: long
+  /** The number of documents the sync job indexed. */
   indexed_document_count: long
+  /** The total size of the data (in MiB) the sync job indexed. */
   indexed_document_volume: long
+  /** The timestamp to use in the `last_seen` property for the connector sync job. */
   last_seen?: Duration
+  /** The connector-specific metadata. */
   metadata?: Metadata
+  /** The total number of documents in the target index after the sync job finished. */
   total_document_count?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_sync_job_id?: never, deleted_document_count?: never, indexed_document_count?: never, indexed_document_volume?: never, last_seen?: never, metadata?: never, total_document_count?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_sync_job_id?: never, deleted_document_count?: never, indexed_document_count?: never, indexed_document_volume?: never, last_seen?: never, metadata?: never, total_document_count?: never }
 }
 
 export interface ConnectorSyncJobUpdateStatsResponse {
 }
 
 export interface ConnectorUpdateActiveFilteringRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never }
 }
 
 export interface ConnectorUpdateActiveFilteringResponse {
@@ -10007,9 +11332,14 @@ export interface ConnectorUpdateActiveFilteringResponse {
 }
 
 export interface ConnectorUpdateApiKeyIdRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
   api_key_id?: string
   api_key_secret_id?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, api_key_id?: never, api_key_secret_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, api_key_id?: never, api_key_secret_id?: never }
 }
 
 export interface ConnectorUpdateApiKeyIdResponse {
@@ -10017,9 +11347,14 @@ export interface ConnectorUpdateApiKeyIdResponse {
 }
 
 export interface ConnectorUpdateConfigurationRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
   configuration?: ConnectorConnectorConfiguration
   values?: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, configuration?: never, values?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, configuration?: never, values?: never }
 }
 
 export interface ConnectorUpdateConfigurationResponse {
@@ -10027,8 +11362,13 @@ export interface ConnectorUpdateConfigurationResponse {
 }
 
 export interface ConnectorUpdateErrorRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
   error: SpecUtilsWithNullValue<string>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, error?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, error?: never }
 }
 
 export interface ConnectorUpdateErrorResponse {
@@ -10036,8 +11376,13 @@ export interface ConnectorUpdateErrorResponse {
 }
 
 export interface ConnectorUpdateFeaturesRequest extends RequestBase {
+/** The unique identifier of the connector to be updated. */
   connector_id: Id
   features: ConnectorConnectorFeatures
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, features?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, features?: never }
 }
 
 export interface ConnectorUpdateFeaturesResponse {
@@ -10045,10 +11390,15 @@ export interface ConnectorUpdateFeaturesResponse {
 }
 
 export interface ConnectorUpdateFilteringRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
   filtering?: ConnectorFilteringConfig[]
   rules?: ConnectorFilteringRule[]
   advanced_snippet?: ConnectorFilteringAdvancedSnippet
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, filtering?: never, rules?: never, advanced_snippet?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, filtering?: never, rules?: never, advanced_snippet?: never }
 }
 
 export interface ConnectorUpdateFilteringResponse {
@@ -10056,8 +11406,13 @@ export interface ConnectorUpdateFilteringResponse {
 }
 
 export interface ConnectorUpdateFilteringValidationRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
   validation: ConnectorFilteringRulesValidation
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, validation?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, validation?: never }
 }
 
 export interface ConnectorUpdateFilteringValidationResponse {
@@ -10065,8 +11420,13 @@ export interface ConnectorUpdateFilteringValidationResponse {
 }
 
 export interface ConnectorUpdateIndexNameRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
   index_name: SpecUtilsWithNullValue<IndexName>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, index_name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, index_name?: never }
 }
 
 export interface ConnectorUpdateIndexNameResponse {
@@ -10074,9 +11434,14 @@ export interface ConnectorUpdateIndexNameResponse {
 }
 
 export interface ConnectorUpdateNameRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
   name?: string
   description?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, name?: never, description?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, name?: never, description?: never }
 }
 
 export interface ConnectorUpdateNameResponse {
@@ -10084,8 +11449,13 @@ export interface ConnectorUpdateNameResponse {
 }
 
 export interface ConnectorUpdateNativeRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
   is_native: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, is_native?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, is_native?: never }
 }
 
 export interface ConnectorUpdateNativeResponse {
@@ -10093,8 +11463,13 @@ export interface ConnectorUpdateNativeResponse {
 }
 
 export interface ConnectorUpdatePipelineRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
   pipeline: ConnectorIngestPipelineParams
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, pipeline?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, pipeline?: never }
 }
 
 export interface ConnectorUpdatePipelineResponse {
@@ -10102,8 +11477,13 @@ export interface ConnectorUpdatePipelineResponse {
 }
 
 export interface ConnectorUpdateSchedulingRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
   scheduling: ConnectorSchedulingConfiguration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, scheduling?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, scheduling?: never }
 }
 
 export interface ConnectorUpdateSchedulingResponse {
@@ -10111,8 +11491,13 @@ export interface ConnectorUpdateSchedulingResponse {
 }
 
 export interface ConnectorUpdateServiceTypeRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
   service_type: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, service_type?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, service_type?: never }
 }
 
 export interface ConnectorUpdateServiceTypeResponse {
@@ -10120,8 +11505,13 @@ export interface ConnectorUpdateServiceTypeResponse {
 }
 
 export interface ConnectorUpdateStatusRequest extends RequestBase {
+/** The unique identifier of the connector to be updated */
   connector_id: Id
   status: ConnectorConnectorStatus
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { connector_id?: never, status?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { connector_id?: never, status?: never }
 }
 
 export interface ConnectorUpdateStatusResponse {
@@ -10129,19 +11519,35 @@ export interface ConnectorUpdateStatusResponse {
 }
 
 export interface DanglingIndicesDeleteDanglingIndexRequest extends RequestBase {
+/** The UUID of the index to delete. Use the get dangling indices API to find the UUID. */
   index_uuid: Uuid
+  /** This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index. */
   accept_data_loss: boolean
+  /** Specify timeout for connection to master */
   master_timeout?: Duration
+  /** Explicit operation timeout */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index_uuid?: never, accept_data_loss?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index_uuid?: never, accept_data_loss?: never, master_timeout?: never, timeout?: never }
 }
 
 export type DanglingIndicesDeleteDanglingIndexResponse = AcknowledgedResponseBase
 
 export interface DanglingIndicesImportDanglingIndexRequest extends RequestBase {
+/** The UUID of the index to import. Use the get dangling indices API to locate the UUID. */
   index_uuid: Uuid
+  /** This parameter must be set to true to import a dangling index. Because Elasticsearch cannot know where the dangling index data came from or determine which shard copies are fresh and which are stale, it cannot guarantee that the imported data represents the latest state of the index when it was last in the cluster. */
   accept_data_loss: boolean
+  /** Specify timeout for connection to master */
   master_timeout?: Duration
+  /** Explicit operation timeout */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index_uuid?: never, accept_data_loss?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index_uuid?: never, accept_data_loss?: never, master_timeout?: never, timeout?: never }
 }
 
 export type DanglingIndicesImportDanglingIndexResponse = AcknowledgedResponseBase
@@ -10154,6 +11560,10 @@ export interface DanglingIndicesListDanglingIndicesDanglingIndex {
 }
 
 export interface DanglingIndicesListDanglingIndicesRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface DanglingIndicesListDanglingIndicesResponse {
@@ -10176,8 +11586,14 @@ export interface EnrichSummary {
 }
 
 export interface EnrichDeletePolicyRequest extends RequestBase {
+/** Enrich policy to delete. */
   name: Name
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
 }
 
 export type EnrichDeletePolicyResponse = AcknowledgedResponseBase
@@ -10189,9 +11605,16 @@ export interface EnrichExecutePolicyExecuteEnrichPolicyStatus {
 }
 
 export interface EnrichExecutePolicyRequest extends RequestBase {
+/** Enrich policy to execute. */
   name: Name
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** If `true`, the request blocks other enrich policy execution requests until complete. */
   wait_for_completion?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, wait_for_completion?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, wait_for_completion?: never }
 }
 
 export interface EnrichExecutePolicyResponse {
@@ -10200,8 +11623,14 @@ export interface EnrichExecutePolicyResponse {
 }
 
 export interface EnrichGetPolicyRequest extends RequestBase {
+/** Comma-separated list of enrich policy names used to limit the request. To return information for all enrich policies, omit this parameter. */
   name?: Names
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
 }
 
 export interface EnrichGetPolicyResponse {
@@ -10209,11 +11638,20 @@ export interface EnrichGetPolicyResponse {
 }
 
 export interface EnrichPutPolicyRequest extends RequestBase {
+/** Name of the enrich policy to create or update. */
   name: Name
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Matches enrich data to incoming documents based on a `geo_shape` query. */
   geo_match?: EnrichPolicy
+  /** Matches enrich data to incoming documents based on a `term` query. */
   match?: EnrichPolicy
+  /** Matches a number, date, or IP address in incoming documents to a range in the enrich index based on a `term` query. */
   range?: EnrichPolicy
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, geo_match?: never, match?: never, range?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, geo_match?: never, match?: never, range?: never }
 }
 
 export type EnrichPutPolicyResponse = AcknowledgedResponseBase
@@ -10243,7 +11681,12 @@ export interface EnrichStatsExecutingPolicy {
 }
 
 export interface EnrichStatsRequest extends RequestBase {
+/** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
 }
 
 export interface EnrichStatsResponse {
@@ -10282,21 +11725,38 @@ export interface EqlHitsSequence<TEvent = unknown> {
 }
 
 export interface EqlDeleteRequest extends RequestBase {
+/** Identifier for the search to delete. A search ID is provided in the EQL search API's response for an async search. A search ID is also provided if the request’s `keep_on_completion` parameter is `true`. */
   id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export type EqlDeleteResponse = AcknowledgedResponseBase
 
 export interface EqlGetRequest extends RequestBase {
+/** Identifier for the search. */
   id: Id
+  /** Period for which the search and its results are stored on the cluster. Defaults to the keep_alive value set by the search’s EQL search API request. */
   keep_alive?: Duration
+  /** Timeout duration to wait for the request to finish. Defaults to no timeout, meaning the request waits for complete search results. */
   wait_for_completion_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, keep_alive?: never, wait_for_completion_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, keep_alive?: never, wait_for_completion_timeout?: never }
 }
 
 export type EqlGetResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEvent>
 
 export interface EqlGetStatusRequest extends RequestBase {
+/** Identifier for the search. */
   id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export interface EqlGetStatusResponse {
@@ -10309,32 +11769,49 @@ export interface EqlGetStatusResponse {
 }
 
 export interface EqlSearchRequest extends RequestBase {
+/** The name of the index to scope the operation */
   index: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
+  /** If true, missing or closed indices are not included in the response. */
   ignore_unavailable?: boolean
+  /** EQL query you wish to run. */
   query: string
   case_sensitive?: boolean
+  /** Field containing the event classification, such as process, file, or network. */
   event_category_field?: Field
+  /** Field used to sort hits with the same timestamp in ascending order */
   tiebreaker_field?: Field
+  /** Field containing event timestamp. Default "@timestamp" */
   timestamp_field?: Field
+  /** Maximum number of events to search at a time for sequence queries. */
   fetch_size?: uint
+  /** Query, written in Query DSL, used to filter the events on which the EQL query runs. */
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   keep_alive?: Duration
   keep_on_completion?: boolean
   wait_for_completion_timeout?: Duration
   allow_partial_search_results?: boolean
   allow_partial_sequence_results?: boolean
+  /** For basic queries, the maximum number of matching events to return. Defaults to 10 */
   size?: uint
+  /** Array of wildcard (*) patterns. The response returns values for field names matching these patterns in the fields property of each hit. */
   fields?: QueryDslFieldAndFormat | Field | (QueryDslFieldAndFormat | Field)[]
   result_position?: EqlSearchResultPosition
   runtime_mappings?: MappingRuntimeFields
+  /** By default, the response of a sample query contains up to `10` samples, with one sample per unique set of join keys. Use the `size` parameter to get a smaller or larger set of samples. To retrieve more than one sample per set of join keys, use the `max_samples_per_key` parameter. Pipes are not supported for sample queries. */
   max_samples_per_key?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, query?: never, case_sensitive?: never, event_category_field?: never, tiebreaker_field?: never, timestamp_field?: never, fetch_size?: never, filter?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, allow_partial_search_results?: never, allow_partial_sequence_results?: never, size?: never, fields?: never, result_position?: never, runtime_mappings?: never, max_samples_per_key?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, query?: never, case_sensitive?: never, event_category_field?: never, tiebreaker_field?: never, timestamp_field?: never, fetch_size?: never, filter?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, allow_partial_search_results?: never, allow_partial_sequence_results?: never, size?: never, fields?: never, result_position?: never, runtime_mappings?: never, max_samples_per_key?: never }
 }
 
 export type EqlSearchResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEvent>
 
 export type EqlSearchResultPosition = 'tail' | 'head'
+
+export type EsqlEsqlFormat = 'csv' | 'json' | 'tsv' | 'txt' | 'yaml' | 'cbor' | 'smile' | 'arrow'
 
 export interface EsqlTableValuesContainer {
   integer?: EsqlTableValuesIntegerValue[]
@@ -10351,19 +11828,99 @@ export type EsqlTableValuesLongDouble = double | double[]
 
 export type EsqlTableValuesLongValue = long | long[]
 
-export type EsqlQueryEsqlFormat = 'csv' | 'json' | 'tsv' | 'txt' | 'yaml' | 'cbor' | 'smile' | 'arrow'
-
-export interface EsqlQueryRequest extends RequestBase {
-  format?: EsqlQueryEsqlFormat
+export interface EsqlAsyncQueryRequest extends RequestBase {
+/** The character to use between values within a CSV row. It is valid only for the CSV format. */
   delimiter?: string
+  /** Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results. If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns. */
   drop_null_columns?: boolean
+  /** A short version of the Accept header, for example `json` or `yaml`. */
+  format?: EsqlEsqlFormat
+  /** The period for which the query and its results are stored in the cluster. The default period is five days. When this period expires, the query and its results are deleted, even if the query is still ongoing. If the `keep_on_completion` parameter is false, Elasticsearch only stores async queries that do not complete within the period set by the `wait_for_completion_timeout` parameter, regardless of this value. */
+  keep_alive?: Duration
+  /** Indicates whether the query and its results are stored in the cluster. If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter. */
+  keep_on_completion?: boolean
+  /** The period to wait for the request to finish. By default, the request waits for 1 second for the query results. If the query completes during this period, results are returned Otherwise, a query ID is returned that can later be used to retrieve the results. */
+  wait_for_completion_timeout?: Duration
+  /** By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results. */
   columnar?: boolean
+  /** Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on. */
   filter?: QueryDslQueryContainer
   locale?: string
+  /** To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters. */
   params?: FieldValue[]
+  /** If provided and `true` the response will include an extra `profile` object with information on how the query was executed. This information is for human debugging and its format can change at any time but it can give some insight into the performance of each part of the query. */
   profile?: boolean
+  /** The ES|QL query API accepts an ES|QL query string in the query parameter, runs it, and returns the results. */
   query: string
+  /** Tables to use with the LOOKUP operation. The top level key is the table name and the next level key is the column name. */
   tables?: Record<string, Record<string, EsqlTableValuesContainer>>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never }
+}
+
+export interface EsqlAsyncQueryResponse {
+  columns?: EsqlColumns
+  id?: string
+  is_running: boolean
+}
+
+export interface EsqlAsyncQueryDeleteRequest extends RequestBase {
+/** The unique identifier of the query. A query ID is provided in the ES|QL async query API response for a query that does not complete in the designated time. A query ID is also provided when the request was submitted with the `keep_on_completion` parameter set to `true`. */
+  id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
+}
+
+export type EsqlAsyncQueryDeleteResponse = AcknowledgedResponseBase
+
+export interface EsqlAsyncQueryGetRequest extends RequestBase {
+/** The unique identifier of the query. A query ID is provided in the ES|QL async query API response for a query that does not complete in the designated time. A query ID is also provided when the request was submitted with the `keep_on_completion` parameter set to `true`. */
+  id: Id
+  /** Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results. If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns. */
+  drop_null_columns?: boolean
+  /** The period for which the query and its results are stored in the cluster. When this period expires, the query and its results are deleted, even if the query is still ongoing. */
+  keep_alive?: Duration
+  /** The period to wait for the request to finish. By default, the request waits for complete query results. If the request completes during the period specified in this parameter, complete query results are returned. Otherwise, the response returns an `is_running` value of `true` and no results. */
+  wait_for_completion_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, drop_null_columns?: never, keep_alive?: never, wait_for_completion_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, drop_null_columns?: never, keep_alive?: never, wait_for_completion_timeout?: never }
+}
+
+export interface EsqlAsyncQueryGetResponse {
+  columns?: EsqlColumns
+  is_running: boolean
+}
+
+export interface EsqlQueryRequest extends RequestBase {
+/** A short version of the Accept header, e.g. json, yaml. */
+  format?: EsqlEsqlFormat
+  /** The character to use between values within a CSV row. Only valid for the CSV format. */
+  delimiter?: string
+  /** Should columns that are entirely `null` be removed from the `columns` and `values` portion of the results? Defaults to `false`. If `true` then the response will include an extra section under the name `all_columns` which has the name of all columns. */
+  drop_null_columns?: boolean
+  /** By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results. */
+  columnar?: boolean
+  /** Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on. */
+  filter?: QueryDslQueryContainer
+  locale?: string
+  /** To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters. */
+  params?: FieldValue[]
+  /** If provided and `true` the response will include an extra `profile` object with information on how the query was executed. This information is for human debugging and its format can change at any time but it can give some insight into the performance of each part of the query. */
+  profile?: boolean
+  /** The ES|QL query API accepts an ES|QL query string in the query parameter, runs it, and returns the results. */
+  query: string
+  /** Tables to use with the LOOKUP operation. The top level key is the table name and the next level key is the column name. */
+  tables?: Record<string, Record<string, EsqlTableValuesContainer>>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never }
 }
 
 export type EsqlQueryResponse = EsqlColumns
@@ -10374,7 +11931,12 @@ export interface FeaturesFeature {
 }
 
 export interface FeaturesGetFeaturesRequest extends RequestBase {
+/** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
 }
 
 export interface FeaturesGetFeaturesResponse {
@@ -10382,7 +11944,12 @@ export interface FeaturesGetFeaturesResponse {
 }
 
 export interface FeaturesResetFeaturesRequest extends RequestBase {
+/** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
 }
 
 export interface FeaturesResetFeaturesResponse {
@@ -10392,11 +11959,20 @@ export interface FeaturesResetFeaturesResponse {
 export type FleetCheckpoint = long
 
 export interface FleetGlobalCheckpointsRequest extends RequestBase {
+/** A single index or index alias that resolves to a single index. */
   index: IndexName | IndexAlias
+  /** A boolean value which controls whether to wait (until the timeout) for the global checkpoints to advance past the provided `checkpoints`. */
   wait_for_advance?: boolean
+  /** A boolean value which controls whether to wait (until the timeout) for the target index to exist and all primary shards be active. Can only be true when `wait_for_advance` is true. */
   wait_for_index?: boolean
+  /** A comma separated list of previous global checkpoints. When used in combination with `wait_for_advance`, the API will only return once the global checkpoints advances past the checkpoints. Providing an empty list will cause Elasticsearch to immediately return the current global checkpoints. */
   checkpoints?: FleetCheckpoint[]
+  /** Period to wait for a global checkpoints to advance past `checkpoints`. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, wait_for_advance?: never, wait_for_index?: never, checkpoints?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, wait_for_advance?: never, wait_for_index?: never, checkpoints?: never, timeout?: never }
 }
 
 export interface FleetGlobalCheckpointsResponse {
@@ -10405,21 +11981,39 @@ export interface FleetGlobalCheckpointsResponse {
 }
 
 export interface FleetMsearchRequest extends RequestBase {
+/** A single target to search. If the target is an index alias, it must resolve to a single index. */
   index?: IndexName | IndexAlias
+  /** If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar. */
   allow_no_indices?: boolean
+  /** If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests. */
   ccs_minimize_roundtrips?: boolean
+  /** Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. */
   expand_wildcards?: ExpandWildcards
+  /** If true, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
+  /** If true, missing or closed indices are not included in the response. */
   ignore_unavailable?: boolean
+  /** Maximum number of concurrent searches the multi search API can execute. */
   max_concurrent_searches?: long
+  /** Maximum number of concurrent shard requests that each sub-search request executes per node. */
   max_concurrent_shard_requests?: long
+  /** Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint. */
   pre_filter_shard_size?: long
+  /** Indicates whether global term and document frequencies should be used when scoring returned documents. */
   search_type?: SearchType
+  /** If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object. */
   rest_total_hits_as_int?: boolean
+  /** Specifies whether aggregation and suggester names should be prefixed by their respective types in the response. */
   typed_keys?: boolean
+  /** A comma separated list of checkpoints. When configured, the search API will only be executed on a shard after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause Elasticsearch to immediately execute the search. */
   wait_for_checkpoints?: FleetCheckpoint[]
+  /** If true, returns partial results if there are shard request timeouts or [shard failures](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html#shard-failures). If false, returns an error with no partial results. Defaults to the configured cluster setting `search.default_allow_partial_results` which is true by default. */
   allow_partial_search_results?: boolean
   searches?: MsearchRequestItem[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, wait_for_checkpoints?: never, allow_partial_search_results?: never, searches?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, wait_for_checkpoints?: never, allow_partial_search_results?: never, searches?: never }
 }
 
 export interface FleetMsearchResponse<TDocument = unknown> {
@@ -10427,6 +12021,7 @@ export interface FleetMsearchResponse<TDocument = unknown> {
 }
 
 export interface FleetSearchRequest extends RequestBase {
+/** A single target to search. If the target is an index alias, it must resolve to a single index. */
   index: IndexName | IndexAlias
   allow_no_indices?: boolean
   analyzer?: string
@@ -10446,50 +12041,79 @@ export interface FleetSearchRequest extends RequestBase {
   routing?: Routing
   scroll?: Duration
   search_type?: SearchType
+  /** Specifies which field to use for suggestions. */
   suggest_field?: Field
   suggest_mode?: SuggestMode
   suggest_size?: long
+  /** The source text for which the suggestions should be returned. */
   suggest_text?: string
   typed_keys?: boolean
   rest_total_hits_as_int?: boolean
   _source_excludes?: Fields
   _source_includes?: Fields
   q?: string
+  /** A comma separated list of checkpoints. When configured, the search API will only be executed on a shard after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause Elasticsearch to immediately execute the search. */
   wait_for_checkpoints?: FleetCheckpoint[]
+  /** If true, returns partial results if there are shard request timeouts or [shard failures](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html#shard-failures). If false, returns an error with no partial results. Defaults to the configured cluster setting `search.default_allow_partial_results` which is true by default. */
   allow_partial_search_results?: boolean
   aggregations?: Record<string, AggregationsAggregationContainer>
   /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
+  /** If true, returns detailed information about score computation as part of a hit. */
   explain?: boolean
+  /** Configuration of search extensions defined by Elasticsearch plugins. */
   ext?: Record<string, any>
+  /** Starting document offset. By default, you cannot page through more than 10,000 hits using the from and size parameters. To page through more hits, use the search_after parameter. */
   from?: integer
   highlight?: SearchHighlight
+  /** Number of hits matching the query to count accurately. If true, the exact number of hits is returned at the cost of some performance. If false, the response does not include the total number of hits matching the query. Defaults to 10,000 hits. */
   track_total_hits?: SearchTrackHits
+  /** Boosts the _score of documents from specified indices. */
   indices_boost?: Record<IndexName, double>[]
+  /** Array of wildcard (*) patterns. The request returns doc values for field names matching these patterns in the hits.fields property of the response. */
   docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
+  /** Minimum _score for matching documents. Documents with a lower _score are not included in the search results. */
   min_score?: double
   post_filter?: QueryDslQueryContainer
   profile?: boolean
+  /** Defines the search definition using the Query DSL. */
   query?: QueryDslQueryContainer
   rescore?: SearchRescore | SearchRescore[]
+  /** Retrieve a script evaluation (based on different fields) for each hit. */
   script_fields?: Record<string, ScriptField>
   search_after?: SortResults
+  /** The number of hits to return. By default, you cannot page through more than 10,000 hits using the from and size parameters. To page through more hits, use the search_after parameter. */
   size?: integer
   slice?: SlicedScroll
   sort?: Sort
+  /** Indicates which source fields are returned for matching documents. These fields are returned in the hits._source property of the search response. */
   _source?: SearchSourceConfig
+  /** Array of wildcard (*) patterns. The request returns values for field names matching these patterns in the hits.fields property of the response. */
   fields?: (QueryDslFieldAndFormat | Field)[]
   suggest?: SearchSuggester
+  /** Maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. Defaults to 0, which does not terminate query execution early. */
   terminate_after?: long
+  /** Specifies the period of time to wait for a response from each shard. If no response is received before the timeout expires, the request fails and returns an error. Defaults to no timeout. */
   timeout?: string
+  /** If true, calculate and return document scores, even if the scores are not used for sorting. */
   track_scores?: boolean
+  /** If true, returns document version as part of a hit. */
   version?: boolean
+  /** If true, returns sequence number and primary term of the last modification of each hit. See Optimistic concurrency control. */
   seq_no_primary_term?: boolean
+  /** List of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the _source parameter defaults to false. You can pass _source: true to return both source fields and stored fields in the search response. */
   stored_fields?: Fields
+  /** Limits the search to a point in time (PIT). If you provide a PIT, you cannot specify an <index> in the request path. */
   pit?: SearchPointInTimeReference
+  /** Defines one or more runtime fields in the search request. These fields take precedence over mapped fields with the same name. */
   runtime_mappings?: MappingRuntimeFields
+  /** Stats groups to associate with the search. Each group maintains a statistics aggregation for its associated searches. You can retrieve these stats using the indices stats API. */
   stats?: string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, wait_for_checkpoints?: never, allow_partial_search_results?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, wait_for_checkpoints?: never, allow_partial_search_results?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
 }
 
 export interface FleetSearchResponse<TDocument = unknown> {
@@ -10556,13 +12180,24 @@ export interface GraphVertexInclude {
 }
 
 export interface GraphExploreRequest extends RequestBase {
+/** Name of the index. */
   index: Indices
+  /** Custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** Specifies the period of time to wait for a response from each shard. If no response is received before the timeout expires, the request fails and returns an error. Defaults to no timeout. */
   timeout?: Duration
+  /** Specifies or more fields from which you want to extract terms that are associated with the specified vertices. */
   connections?: GraphHop
+  /** Direct the Graph API how to build the graph. */
   controls?: GraphExploreControls
+  /** A seed query that identifies the documents of interest. Can be any valid Elasticsearch query. */
   query?: QueryDslQueryContainer
+  /** Specifies one or more fields that contain the terms you want to include in the graph as vertices. */
   vertices?: GraphVertexDefinition[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, routing?: never, timeout?: never, connections?: never, controls?: never, query?: never, vertices?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, routing?: never, timeout?: never, connections?: never, controls?: never, query?: never, vertices?: never }
 }
 
 export interface GraphExploreResponse {
@@ -10617,7 +12252,7 @@ export interface IlmMigrateAction {
 
 export interface IlmPhase {
   actions?: IlmActions
-  min_age?: Duration | long
+  min_age?: Duration
 }
 
 export interface IlmPhases {
@@ -10666,9 +12301,16 @@ export interface IlmWaitForSnapshotAction {
 }
 
 export interface IlmDeleteLifecycleRequest extends RequestBase {
+/** Identifier for the policy. */
   name: Name
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
 }
 
 export type IlmDeleteLifecycleResponse = AcknowledgedResponseBase
@@ -10713,10 +12355,18 @@ export interface IlmExplainLifecycleLifecycleExplainUnmanaged {
 }
 
 export interface IlmExplainLifecycleRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases to target. Supports wildcards (`*`). To target all data streams and indices, use `*` or `_all`. */
   index: IndexName
+  /** Filters the returned indices to only indices that are managed by ILM and are in an error state, either due to an encountering an error while executing the policy, or attempting to use a policy that does not exist. */
   only_errors?: boolean
+  /** Filters the returned indices to only indices that are managed by ILM. */
   only_managed?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, only_errors?: never, only_managed?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, only_errors?: never, only_managed?: never, master_timeout?: never }
 }
 
 export interface IlmExplainLifecycleResponse {
@@ -10730,14 +12380,25 @@ export interface IlmGetLifecycleLifecycle {
 }
 
 export interface IlmGetLifecycleRequest extends RequestBase {
+/** Identifier for the policy. */
   name?: Name
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
 }
 
 export type IlmGetLifecycleResponse = Record<string, IlmGetLifecycleLifecycle>
 
 export interface IlmGetStatusRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface IlmGetStatusResponse {
@@ -10745,9 +12406,14 @@ export interface IlmGetStatusResponse {
 }
 
 export interface IlmMigrateToDataTiersRequest extends RequestBase {
+/** If true, simulates the migration from node attributes based allocation filters to data tiers, but does not perform the migration. This provides a way to retrieve the indices and ILM policies that need to be migrated. */
   dry_run?: boolean
   legacy_template_to_delete?: string
   node_attribute?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { dry_run?: never, legacy_template_to_delete?: never, node_attribute?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { dry_run?: never, legacy_template_to_delete?: never, node_attribute?: never }
 }
 
 export interface IlmMigrateToDataTiersResponse {
@@ -10761,9 +12427,16 @@ export interface IlmMigrateToDataTiersResponse {
 }
 
 export interface IlmMoveToStepRequest extends RequestBase {
+/** The name of the index whose lifecycle step is to change */
   index: IndexName
+  /** The step that the index is expected to be in. */
   current_step: IlmMoveToStepStepKey
+  /** The step that you want to run. */
   next_step: IlmMoveToStepStepKey
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, current_step?: never, next_step?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, current_step?: never, next_step?: never }
 }
 
 export type IlmMoveToStepResponse = AcknowledgedResponseBase
@@ -10775,16 +12448,28 @@ export interface IlmMoveToStepStepKey {
 }
 
 export interface IlmPutLifecycleRequest extends RequestBase {
+/** Identifier for the policy. */
   name: Name
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   policy?: IlmPolicy
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, policy?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, policy?: never }
 }
 
 export type IlmPutLifecycleResponse = AcknowledgedResponseBase
 
 export interface IlmRemovePolicyRequest extends RequestBase {
+/** The name of the index to remove policy on */
   index: IndexName
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never }
 }
 
 export interface IlmRemovePolicyResponse {
@@ -10793,21 +12478,38 @@ export interface IlmRemovePolicyResponse {
 }
 
 export interface IlmRetryRequest extends RequestBase {
+/** The name of the indices (comma-separated) whose failed lifecycle step is to be retry */
   index: IndexName
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never }
 }
 
 export type IlmRetryResponse = AcknowledgedResponseBase
 
 export interface IlmStartRequest extends RequestBase {
+/** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
 }
 
 export type IlmStartResponse = AcknowledgedResponseBase
 
 export interface IlmStopRequest extends RequestBase {
+/** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
 }
 
 export type IlmStopResponse = AcknowledgedResponseBase
@@ -11045,6 +12747,7 @@ export interface IndicesIndexSettingsLifecycle {
   parse_origination_date?: boolean
   step?: IndicesIndexSettingsLifecycleStep
   rollover_alias?: string
+  prefer_ilm?: boolean | string
 }
 
 export interface IndicesIndexSettingsLifecycleStep {
@@ -11124,7 +12827,8 @@ export interface IndicesMappingLimitSettings {
   nested_objects?: IndicesMappingLimitSettingsNestedObjects
   field_name_length?: IndicesMappingLimitSettingsFieldNameLength
   dimension_fields?: IndicesMappingLimitSettingsDimensionFields
-  ignore_malformed?: boolean
+  source?: IndicesMappingLimitSettingsSourceFields
+  ignore_malformed?: boolean | string
 }
 
 export interface IndicesMappingLimitSettingsDepth {
@@ -11145,6 +12849,10 @@ export interface IndicesMappingLimitSettingsNestedFields {
 
 export interface IndicesMappingLimitSettingsNestedObjects {
   limit?: long
+}
+
+export interface IndicesMappingLimitSettingsSourceFields {
+  mode: IndicesSourceMode
 }
 
 export interface IndicesMappingLimitSettingsTotalFields {
@@ -11274,6 +12982,8 @@ export interface IndicesSoftDeletes {
   retention_lease?: IndicesRetentionLease
 }
 
+export type IndicesSourceMode = 'disabled' | 'stored' | 'synthetic'
+
 export interface IndicesStorage {
   type: IndicesStorageType
   allow_mmap?: boolean
@@ -11312,13 +13022,24 @@ export interface IndicesAddBlockIndicesBlockStatus {
 }
 
 export interface IndicesAddBlockRequest extends RequestBase {
+/** A comma separated list of indices to add a block to */
   index: IndexName
+  /** The block to add (one of read, write, read_only or metadata) */
   block: IndicesAddBlockIndicesBlockOptions
+  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
   allow_no_indices?: boolean
+  /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
+  /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
   ignore_unavailable?: boolean
+  /** Specify timeout for connection to master */
   master_timeout?: Duration
+  /** Explicit operation timeout */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, block?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, block?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never, timeout?: never }
 }
 
 export interface IndicesAddBlockResponse {
@@ -11369,16 +13090,30 @@ export type IndicesAnalyzeExplainAnalyzeToken = IndicesAnalyzeExplainAnalyzeToke
 & { [property: string]: any }
 
 export interface IndicesAnalyzeRequest extends RequestBase {
+/** Index used to derive the analyzer. If specified, the `analyzer` or field parameter overrides this value. If no index is specified or the index does not have a default analyzer, the analyze API uses the standard analyzer. */
   index?: IndexName
+  /** The name of the analyzer that should be applied to the provided `text`. This could be a built-in analyzer, or an analyzer that’s been configured in the index. */
   analyzer?: string
+  /** Array of token attributes used to filter the output of the `explain` parameter. */
   attributes?: string[]
+  /** Array of character filters used to preprocess characters before the tokenizer. */
   char_filter?: AnalysisCharFilter[]
+  /** If `true`, the response includes token attributes and additional details. */
   explain?: boolean
+  /** Field used to derive the analyzer. To use this parameter, you must specify an index. If specified, the `analyzer` parameter overrides this value. */
   field?: Field
+  /** Array of token filters used to apply after the tokenizer. */
   filter?: AnalysisTokenFilter[]
+  /** Normalizer to use to convert text into a single token. */
   normalizer?: string
+  /** Text to analyze. If an array of strings is provided, it is analyzed as a multi-value field. */
   text?: IndicesAnalyzeTextToAnalyze
+  /** Tokenizer to use to convert text into tokens. */
   tokenizer?: AnalysisTokenizer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, analyzer?: never, attributes?: never, char_filter?: never, explain?: never, field?: never, filter?: never, normalizer?: never, text?: never, tokenizer?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, analyzer?: never, attributes?: never, char_filter?: never, explain?: never, field?: never, filter?: never, normalizer?: never, text?: never, tokenizer?: never }
 }
 
 export interface IndicesAnalyzeResponse {
@@ -11393,27 +13128,61 @@ export interface IndicesAnalyzeTokenDetail {
   tokens: IndicesAnalyzeExplainAnalyzeToken[]
 }
 
+export interface IndicesCancelMigrateReindexRequest extends RequestBase {
+/** The index or data stream name */
+  index: Indices
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never }
+}
+
+export type IndicesCancelMigrateReindexResponse = AcknowledgedResponseBase
+
 export interface IndicesClearCacheRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, clears the fields cache. Use the `fields` parameter to clear the cache of specific fields only. */
   fielddata?: boolean
+  /** Comma-separated list of field names used to limit the `fielddata` parameter. */
   fields?: Fields
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** If `true`, clears the query cache. */
   query?: boolean
+  /** If `true`, clears the request cache. */
   request?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, fielddata?: never, fields?: never, ignore_unavailable?: never, query?: never, request?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, fielddata?: never, fields?: never, ignore_unavailable?: never, query?: never, request?: never }
 }
 
 export type IndicesClearCacheResponse = ShardsOperationResponseBase
 
 export interface IndicesCloneRequest extends RequestBase {
+/** Name of the source index to clone. */
   index: IndexName
+  /** Name of the target index to create. */
   target: Name
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
   wait_for_active_shards?: WaitForActiveShards
+  /** Aliases for the resulting index. */
   aliases?: Record<IndexName, IndicesAlias>
+  /** Configuration options for the target index. */
   settings?: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, target?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, aliases?: never, settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, target?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, aliases?: never, settings?: never }
 }
 
 export interface IndicesCloneResponse {
@@ -11432,13 +13201,24 @@ export interface IndicesCloseCloseShardResult {
 }
 
 export interface IndicesCloseRequest extends RequestBase {
+/** Comma-separated list or wildcard expression of index names used to limit the request. */
   index: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
   wait_for_active_shards?: WaitForActiveShards
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never }
 }
 
 export interface IndicesCloseResponse {
@@ -11448,13 +13228,24 @@ export interface IndicesCloseResponse {
 }
 
 export interface IndicesCreateRequest extends RequestBase {
+/** Name of the index you wish to create. */
   index: IndexName
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
   wait_for_active_shards?: WaitForActiveShards
+  /** Aliases for the index. */
   aliases?: Record<Name, IndicesAlias>
+  /** Mapping for fields in the index. If specified, this mapping can include: - Field names - Field data types - Mapping parameters */
   mappings?: MappingTypeMapping
+  /** Configuration options for the index. */
   settings?: IndicesIndexSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, aliases?: never, mappings?: never, settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, aliases?: never, mappings?: never, settings?: never }
 }
 
 export interface IndicesCreateResponse {
@@ -11464,12 +13255,43 @@ export interface IndicesCreateResponse {
 }
 
 export interface IndicesCreateDataStreamRequest extends RequestBase {
+/** Name of the data stream, which must meet the following criteria: Lowercase only; Cannot include `\`, `/`, `*`, `?`, `"`, `<`, `>`, `|`, `,`, `#`, `:`, or a space character; Cannot start with `-`, `_`, `+`, or `.ds-`; Cannot be `.` or `..`; Cannot be longer than 255 bytes. Multi-byte characters count towards this limit faster. */
   name: DataStreamName
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
 }
 
 export type IndicesCreateDataStreamResponse = AcknowledgedResponseBase
+
+export interface IndicesCreateFromCreateFrom {
+  mappings_override?: MappingTypeMapping
+  settings_override?: IndicesIndexSettings
+  remove_index_blocks?: boolean
+}
+
+export interface IndicesCreateFromRequest extends RequestBase {
+/** The source index or data stream name */
+  source: IndexName
+  /** The destination index or data stream name */
+  dest: IndexName
+  create_from?: IndicesCreateFromCreateFrom
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { source?: never, dest?: never, create_from?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { source?: never, dest?: never, create_from?: never }
+}
+
+export interface IndicesCreateFromResponse {
+  acknowledged: boolean
+  index: IndexName
+  shards_acknowledged: boolean
+}
 
 export interface IndicesDataStreamsStatsDataStreamsStatsItem {
   backing_indices: integer
@@ -11480,8 +13302,14 @@ export interface IndicesDataStreamsStatsDataStreamsStatsItem {
 }
 
 export interface IndicesDataStreamsStatsRequest extends RequestBase {
+/** Comma-separated list of data streams used to limit the request. Wildcard expressions (`*`) are supported. To target all data streams in a cluster, omit this parameter or use `*`. */
   name?: IndexName
+  /** Type of data stream that wildcard patterns can match. Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never }
 }
 
 export interface IndicesDataStreamsStatsResponse {
@@ -11494,112 +13322,210 @@ export interface IndicesDataStreamsStatsResponse {
 }
 
 export interface IndicesDeleteRequest extends RequestBase {
+/** Comma-separated list of indices to delete. You cannot specify index aliases. By default, this parameter does not support wildcards (`*`) or `_all`. To use wildcards or `_all`, set the `action.destructive_requires_name` cluster setting to `false`. */
   index: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never, timeout?: never }
 }
 
 export type IndicesDeleteResponse = IndicesResponseBase
 
 export interface IndicesDeleteAliasRequest extends RequestBase {
+/** Comma-separated list of data streams or indices used to limit the request. Supports wildcards (`*`). */
   index: Indices
+  /** Comma-separated list of aliases to remove. Supports wildcards (`*`). To remove all aliases, use `*` or `_all`. */
   name: Names
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, name?: never, master_timeout?: never, timeout?: never }
 }
 
 export type IndicesDeleteAliasResponse = AcknowledgedResponseBase
 
 export interface IndicesDeleteDataLifecycleRequest extends RequestBase {
+/** A comma-separated list of data streams of which the data stream lifecycle will be deleted; use `*` to get all data streams */
   name: DataStreamNames
+  /** Whether wildcard expressions should get expanded to open or closed indices (default: open) */
   expand_wildcards?: ExpandWildcards
+  /** Specify timeout for connection to master */
   master_timeout?: Duration
+  /** Explicit timestamp for the document */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never }
 }
 
 export type IndicesDeleteDataLifecycleResponse = AcknowledgedResponseBase
 
 export interface IndicesDeleteDataStreamRequest extends RequestBase {
+/** Comma-separated list of data streams to delete. Wildcard (`*`) expressions are supported. */
   name: DataStreamNames
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Type of data stream that wildcard patterns can match. Supports comma-separated values,such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, expand_wildcards?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, expand_wildcards?: never }
 }
 
 export type IndicesDeleteDataStreamResponse = AcknowledgedResponseBase
 
 export interface IndicesDeleteIndexTemplateRequest extends RequestBase {
+/** Comma-separated list of index template names used to limit the request. Wildcard (*) expressions are supported. */
   name: Names
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
 }
 
 export type IndicesDeleteIndexTemplateResponse = AcknowledgedResponseBase
 
 export interface IndicesDeleteTemplateRequest extends RequestBase {
+/** The name of the legacy index template to delete. Wildcard (`*`) expressions are supported. */
   name: Name
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
 }
 
 export type IndicesDeleteTemplateResponse = AcknowledgedResponseBase
 
 export interface IndicesDiskUsageRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases used to limit the request. It’s recommended to execute this API with a single index (or the latest backing index of a data stream) as the API consumes resources significantly. */
   index: Indices
+  /** If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, the API performs a flush before analysis. If `false`, the response may not include uncommitted data. */
   flush?: boolean
+  /** If `true`, missing or closed indices are not included in the response. */
   ignore_unavailable?: boolean
+  /** Analyzing field disk usage is resource-intensive. To use the API, this parameter must be set to `true`. */
   run_expensive_tasks?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flush?: never, ignore_unavailable?: never, run_expensive_tasks?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flush?: never, ignore_unavailable?: never, run_expensive_tasks?: never }
 }
 
 export type IndicesDiskUsageResponse = any
 
 export interface IndicesDownsampleRequest extends RequestBase {
+/** Name of the time series index to downsample. */
   index: IndexName
+  /** Name of the index to create. */
   target_index: IndexName
   config?: IndicesDownsampleConfig
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, target_index?: never, config?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, target_index?: never, config?: never }
 }
 
 export type IndicesDownsampleResponse = any
 
 export interface IndicesExistsRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases. Supports wildcards (`*`). */
   index: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** If `true`, return all default settings in the response. */
   include_defaults?: boolean
+  /** If `true`, the request retrieves information from the local node only. */
   local?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, include_defaults?: never, local?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, include_defaults?: never, local?: never }
 }
 
 export type IndicesExistsResponse = boolean
 
 export interface IndicesExistsAliasRequest extends RequestBase {
+/** Comma-separated list of aliases to check. Supports wildcards (`*`). */
   name: Names
+  /** Comma-separated list of data streams or indices used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `false`, requests that include a missing data stream or index in the target indices or data streams return an error. */
   ignore_unavailable?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never }
 }
 
 export type IndicesExistsAliasResponse = boolean
 
 export interface IndicesExistsIndexTemplateRequest extends RequestBase {
+/** Comma-separated list of index template names used to limit the request. Wildcard (*) expressions are supported. */
   name: Name
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
 }
 
 export type IndicesExistsIndexTemplateResponse = boolean
 
 export interface IndicesExistsTemplateRequest extends RequestBase {
+/** A comma-separated list of index template names used to limit the request. Wildcard (`*`) expressions are supported. */
   name: Names
+  /** Indicates whether to use a flat format for the response. */
   flat_settings?: boolean
+  /** Indicates whether to get information from the local node only. */
   local?: boolean
+  /** The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, flat_settings?: never, local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, flat_settings?: never, local?: never, master_timeout?: never }
 }
 
 export type IndicesExistsTemplateResponse = boolean
@@ -11617,9 +13543,16 @@ export interface IndicesExplainDataLifecycleDataStreamLifecycleExplain {
 }
 
 export interface IndicesExplainDataLifecycleRequest extends RequestBase {
+/** The name of the index to explain */
   index: Indices
+  /** indicates if the API should return the default values the system uses for the index's lifecycle */
   include_defaults?: boolean
+  /** Specify timeout for connection to master */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, include_defaults?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, include_defaults?: never, master_timeout?: never }
 }
 
 export interface IndicesExplainDataLifecycleResponse {
@@ -11654,12 +13587,22 @@ export interface IndicesFieldUsageStatsInvertedIndex {
 }
 
 export interface IndicesFieldUsageStatsRequest extends RequestBase {
+/** Comma-separated list or wildcard expression of index names used to limit the request. */
   index: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, missing or closed indices are not included in the response. */
   ignore_unavailable?: boolean
+  /** Comma-separated list or wildcard expressions of fields to include in the statistics. */
   fields?: Fields
+  /** The number of shard copies that must be active before proceeding with the operation. Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
   wait_for_active_shards?: WaitForActiveShards
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, fields?: never, wait_for_active_shards?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, fields?: never, wait_for_active_shards?: never }
 }
 
 export type IndicesFieldUsageStatsResponse = IndicesFieldUsageStatsFieldsUsageBody
@@ -11681,25 +13624,47 @@ export interface IndicesFieldUsageStatsUsageStatsShards {
 }
 
 export interface IndicesFlushRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases to flush. Supports wildcards (`*`). To flush all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, the request forces a flush even if there are no changes to commit to the index. */
   force?: boolean
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** If `true`, the flush operation blocks until execution when another flush operation is running. If `false`, Elasticsearch returns an error if you request a flush when another flush operation is running. */
   wait_if_ongoing?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, force?: never, ignore_unavailable?: never, wait_if_ongoing?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, force?: never, ignore_unavailable?: never, wait_if_ongoing?: never }
 }
 
 export type IndicesFlushResponse = ShardsOperationResponseBase
 
 export interface IndicesForcemergeRequest extends RequestBase {
+/** A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices */
   index?: Indices
+  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
   allow_no_indices?: boolean
+  /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
+  /** Specify whether the index should be flushed after performing the operation (default: true) */
   flush?: boolean
+  /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
   ignore_unavailable?: boolean
+  /** The number of segments the index should be merged into (default: dynamic) */
   max_num_segments?: long
+  /** Specify whether the operation should only expunge deleted documents */
   only_expunge_deletes?: boolean
+  /** Should the request wait until the force merge is completed. */
   wait_for_completion?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flush?: never, ignore_unavailable?: never, max_num_segments?: never, only_expunge_deletes?: never, wait_for_completion?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flush?: never, ignore_unavailable?: never, max_num_segments?: never, only_expunge_deletes?: never, wait_for_completion?: never }
 }
 
 export type IndicesForcemergeResponse = IndicesForcemergeForceMergeResponseBody
@@ -11713,15 +13678,28 @@ export type IndicesGetFeature = 'aliases' | 'mappings' | 'settings'
 export type IndicesGetFeatures = IndicesGetFeature | IndicesGetFeature[]
 
 export interface IndicesGetRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and index aliases used to limit the request. Wildcard expressions (*) are supported. */
   index: Indices
+  /** If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as open,hidden. */
   expand_wildcards?: ExpandWildcards
+  /** If true, returns settings in flat format. */
   flat_settings?: boolean
+  /** If false, requests that target a missing index return an error. */
   ignore_unavailable?: boolean
+  /** If true, return all default settings in the response. */
   include_defaults?: boolean
+  /** If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Return only information on specified index features */
   features?: IndicesGetFeatures
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, include_defaults?: never, local?: never, master_timeout?: never, features?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, include_defaults?: never, local?: never, master_timeout?: never, features?: never }
 }
 
 export type IndicesGetResponse = Record<IndexName, IndicesIndexState>
@@ -11731,12 +13709,22 @@ export interface IndicesGetAliasIndexAliases {
 }
 
 export interface IndicesGetAliasRequest extends RequestBase {
+/** Comma-separated list of aliases to retrieve. Supports wildcards (`*`). To retrieve all aliases, omit this parameter or use `*` or `_all`. */
   name?: Names
+  /** Comma-separated list of data streams or indices used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never }
 }
 
 export type IndicesGetAliasResponse = Record<IndexName, IndicesGetAliasIndexAliases>
@@ -11747,10 +13735,18 @@ export interface IndicesGetDataLifecycleDataStreamWithLifecycle {
 }
 
 export interface IndicesGetDataLifecycleRequest extends RequestBase {
+/** Comma-separated list of data streams to limit the request. Supports wildcards (`*`). To target all data streams, omit this parameter or use `*` or `_all`. */
   name: DataStreamNames
+  /** Type of data stream that wildcard patterns can match. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, return all default settings in the response. */
   include_defaults?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, include_defaults?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, include_defaults?: never, master_timeout?: never }
 }
 
 export interface IndicesGetDataLifecycleResponse {
@@ -11764,6 +13760,10 @@ export interface IndicesGetDataLifecycleStatsDataStreamStats {
 }
 
 export interface IndicesGetDataLifecycleStatsRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface IndicesGetDataLifecycleStatsResponse {
@@ -11774,11 +13774,20 @@ export interface IndicesGetDataLifecycleStatsResponse {
 }
 
 export interface IndicesGetDataStreamRequest extends RequestBase {
+/** Comma-separated list of data stream names used to limit the request. Wildcard (`*`) expressions are supported. If omitted, all data streams are returned. */
   name?: DataStreamNames
+  /** Type of data stream that wildcard patterns can match. Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** If true, returns all relevant default configurations for the index template. */
   include_defaults?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Whether the maximum timestamp for each data stream should be calculated and returned. */
   verbose?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, include_defaults?: never, master_timeout?: never, verbose?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, include_defaults?: never, master_timeout?: never, verbose?: never }
 }
 
 export interface IndicesGetDataStreamResponse {
@@ -11786,13 +13795,24 @@ export interface IndicesGetDataStreamResponse {
 }
 
 export interface IndicesGetFieldMappingRequest extends RequestBase {
+/** Comma-separated list or wildcard expression of fields used to limit returned information. Supports wildcards (`*`). */
   fields: Fields
+  /** Comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** If `true`, return all default settings in the response. */
   include_defaults?: boolean
+  /** If `true`, the request retrieves information from the local node only. */
   local?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { fields?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_defaults?: never, local?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { fields?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_defaults?: never, local?: never }
 }
 
 export type IndicesGetFieldMappingResponse = Record<IndexName, IndicesGetFieldMappingTypeFieldMappings>
@@ -11807,11 +13827,20 @@ export interface IndicesGetIndexTemplateIndexTemplateItem {
 }
 
 export interface IndicesGetIndexTemplateRequest extends RequestBase {
+/** Comma-separated list of index template names used to limit the request. Wildcard (*) expressions are supported. */
   name?: Name
+  /** If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node. */
   local?: boolean
+  /** If true, returns settings in flat format. */
   flat_settings?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** If true, returns all relevant default configurations for the index template. */
   include_defaults?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, local?: never, flat_settings?: never, master_timeout?: never, include_defaults?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, local?: never, flat_settings?: never, master_timeout?: never, include_defaults?: never }
 }
 
 export interface IndicesGetIndexTemplateResponse {
@@ -11824,43 +13853,135 @@ export interface IndicesGetMappingIndexMappingRecord {
 }
 
 export interface IndicesGetMappingRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** If `true`, the request retrieves information from the local node only. */
   local?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, local?: never, master_timeout?: never }
 }
 
 export type IndicesGetMappingResponse = Record<IndexName, IndicesGetMappingIndexMappingRecord>
 
+export interface IndicesGetMigrateReindexStatusRequest extends RequestBase {
+/** The index or data stream name. */
+  index: Indices
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never }
+}
+
+export interface IndicesGetMigrateReindexStatusResponse {
+  start_time?: DateTime
+  start_time_millis: EpochTime<UnitMillis>
+  complete: boolean
+  total_indices_in_data_stream: integer
+  total_indices_requiring_upgrade: integer
+  successes: integer
+  in_progress: IndicesGetMigrateReindexStatusStatusInProgress[]
+  pending: integer
+  errors: IndicesGetMigrateReindexStatusStatusError[]
+  exception?: string
+}
+
+export interface IndicesGetMigrateReindexStatusStatusError {
+  index: string
+  message: string
+}
+
+export interface IndicesGetMigrateReindexStatusStatusInProgress {
+  index: string
+  total_doc_count: long
+  reindexed_doc_count: long
+}
+
 export interface IndicesGetSettingsRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** Comma-separated list or wildcard expression of settings to retrieve. */
   name?: Names
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with foo but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** If `true`, return all default settings in the response. */
   include_defaults?: boolean
+  /** If `true`, the request retrieves information from the local node only. If `false`, information is retrieved from the master node. */
   local?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, name?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, include_defaults?: never, local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, name?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, include_defaults?: never, local?: never, master_timeout?: never }
 }
 
 export type IndicesGetSettingsResponse = Record<IndexName, IndicesIndexState>
 
 export interface IndicesGetTemplateRequest extends RequestBase {
+/** Comma-separated list of index template names used to limit the request. Wildcard (`*`) expressions are supported. To return all index templates, omit this parameter or use a value of `_all` or `*`. */
   name?: Names
+  /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
+  /** If `true`, the request retrieves information from the local node only. */
   local?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, flat_settings?: never, local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, flat_settings?: never, local?: never, master_timeout?: never }
 }
 
 export type IndicesGetTemplateResponse = Record<string, IndicesTemplateMapping>
 
+export interface IndicesMigrateReindexMigrateReindex {
+  mode: IndicesMigrateReindexModeEnum
+  source: IndicesMigrateReindexSourceIndex
+}
+
+export type IndicesMigrateReindexModeEnum = 'upgrade'
+
+export interface IndicesMigrateReindexRequest extends RequestBase {
+  reindex?: IndicesMigrateReindexMigrateReindex
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { reindex?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { reindex?: never }
+}
+
+export type IndicesMigrateReindexResponse = AcknowledgedResponseBase
+
+export interface IndicesMigrateReindexSourceIndex {
+  index: IndexName
+}
+
 export interface IndicesMigrateToDataStreamRequest extends RequestBase {
+/** Name of the index alias to convert to a data stream. */
   name: IndexName
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
 }
 
 export type IndicesMigrateToDataStreamResponse = AcknowledgedResponseBase
@@ -11876,19 +13997,35 @@ export interface IndicesModifyDataStreamIndexAndDataStreamAction {
 }
 
 export interface IndicesModifyDataStreamRequest extends RequestBase {
+/** Actions to perform. */
   actions: IndicesModifyDataStreamAction[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { actions?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { actions?: never }
 }
 
 export type IndicesModifyDataStreamResponse = AcknowledgedResponseBase
 
 export interface IndicesOpenRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (`*`). By default, you must explicitly name the indices you using to limit the request. To limit a request using `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to false. You can update this setting in the `elasticsearch.yml` file or using the cluster update settings API. */
   index: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
   wait_for_active_shards?: WaitForActiveShards
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never }
 }
 
 export interface IndicesOpenResponse {
@@ -11897,32 +14034,59 @@ export interface IndicesOpenResponse {
 }
 
 export interface IndicesPromoteDataStreamRequest extends RequestBase {
+/** The name of the data stream */
   name: IndexName
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
 }
 
 export type IndicesPromoteDataStreamResponse = any
 
 export interface IndicesPutAliasRequest extends RequestBase {
+/** Comma-separated list of data streams or indices to add. Supports wildcards (`*`). Wildcard patterns that match both data streams and indices return an error. */
   index: Indices
+  /** Alias to update. If the alias doesn’t exist, the request creates it. Index alias names support date math. */
   name: Name
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** Query used to limit documents the alias can access. */
   filter?: QueryDslQueryContainer
+  /** Value used to route indexing operations to a specific shard. If specified, this overwrites the `routing` value for indexing operations. Data stream aliases don’t support this parameter. */
   index_routing?: Routing
+  /** If `true`, sets the write index or data stream for the alias. If an alias points to multiple indices or data streams and `is_write_index` isn’t set, the alias rejects write requests. If an index alias points to one index and `is_write_index` isn’t set, the index automatically acts as the write index. Data stream aliases don’t automatically set a write data stream, even if the alias points to one data stream. */
   is_write_index?: boolean
+  /** Value used to route indexing and search operations to a specific shard. Data stream aliases don’t support this parameter. */
   routing?: Routing
+  /** Value used to route search operations to a specific shard. If specified, this overwrites the `routing` value for search operations. Data stream aliases don’t support this parameter. */
   search_routing?: Routing
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, name?: never, master_timeout?: never, timeout?: never, filter?: never, index_routing?: never, is_write_index?: never, routing?: never, search_routing?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, name?: never, master_timeout?: never, timeout?: never, filter?: never, index_routing?: never, is_write_index?: never, routing?: never, search_routing?: never }
 }
 
 export type IndicesPutAliasResponse = AcknowledgedResponseBase
 
 export interface IndicesPutDataLifecycleRequest extends RequestBase {
+/** Comma-separated list of data streams used to limit the request. Supports wildcards (`*`). To target all data streams use `*` or `_all`. */
   name: DataStreamNames
+  /** Type of data stream that wildcard patterns can match. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `hidden`, `open`, `closed`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   lifecycle?: IndicesDataStreamLifecycle
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never, lifecycle?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never, lifecycle?: never }
 }
 
 export type IndicesPutDataLifecycleResponse = AcknowledgedResponseBase
@@ -11935,72 +14099,137 @@ export interface IndicesPutIndexTemplateIndexTemplateMapping {
 }
 
 export interface IndicesPutIndexTemplateRequest extends RequestBase {
+/** Index or template name */
   name: Name
+  /** If `true`, this request cannot replace or update existing index templates. */
   create?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** User defined reason for creating/updating the index template */
   cause?: string
+  /** Name of the index template to create. */
   index_patterns?: Indices
+  /** An ordered list of component template names. Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence. */
   composed_of?: Name[]
+  /** Template to be applied. It may optionally include an `aliases`, `mappings`, or `settings` configuration. */
   template?: IndicesPutIndexTemplateIndexTemplateMapping
+  /** If this object is included, the template is used to create data streams and their backing indices. Supports an empty object. Data streams require a matching index template with a `data_stream` object. */
   data_stream?: IndicesDataStreamVisibility
+  /** Priority to determine index template precedence when a new data stream or index is created. The index template with the highest priority is chosen. If no priority is specified the template is treated as though it is of priority 0 (lowest priority). This number is not automatically generated by Elasticsearch. */
   priority?: long
+  /** Version number used to manage index templates externally. This number is not automatically generated by Elasticsearch. External systems can use these version numbers to simplify template management. To unset a version, replace the template without specifying one. */
   version?: VersionNumber
+  /** Optional user metadata about the index template. It may have any contents. It is not automatically generated or used by Elasticsearch. This user-defined object is stored in the cluster state, so keeping it short is preferable To unset the metadata, replace the template without specifying it. */
   _meta?: Metadata
+  /** This setting overrides the value of the `action.auto_create_index` cluster setting. If set to `true` in a template, then indices can be automatically created using that template even if auto-creation of indices is disabled via `actions.auto_create_index`. If set to `false`, then indices or data streams matching the template must always be explicitly created, and may never be automatically created. */
   allow_auto_create?: boolean
+  /** The configuration option ignore_missing_component_templates can be used when an index template references a component template that might not exist */
   ignore_missing_component_templates?: string[]
+  /** Marks this index template as deprecated. When creating or updating a non-deprecated index template that uses deprecated components, Elasticsearch will emit a deprecation warning. */
   deprecated?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, cause?: never, index_patterns?: never, composed_of?: never, template?: never, data_stream?: never, priority?: never, version?: never, _meta?: never, allow_auto_create?: never, ignore_missing_component_templates?: never, deprecated?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, cause?: never, index_patterns?: never, composed_of?: never, template?: never, data_stream?: never, priority?: never, version?: never, _meta?: never, allow_auto_create?: never, ignore_missing_component_templates?: never, deprecated?: never }
 }
 
 export type IndicesPutIndexTemplateResponse = AcknowledgedResponseBase
 
 export interface IndicesPutMappingRequest extends RequestBase {
+/** A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices. */
   index: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** If `true`, the mappings are applied only to the current write index for the target. */
   write_index_only?: boolean
+  /** Controls whether dynamic date detection is enabled. */
   date_detection?: boolean
+  /** Controls whether new fields are added dynamically. */
   dynamic?: MappingDynamicMapping
+  /** If date detection is enabled then new string fields are checked against 'dynamic_date_formats' and if the value matches then a new date field is added instead of string. */
   dynamic_date_formats?: string[]
+  /** Specify dynamic templates for the mapping. */
   dynamic_templates?: Record<string, MappingDynamicTemplate> | Record<string, MappingDynamicTemplate>[]
+  /** Control whether field names are enabled for the index. */
   _field_names?: MappingFieldNamesField
+  /** A mapping type can have custom meta data associated with it. These are not used at all by Elasticsearch, but can be used to store application-specific metadata. */
   _meta?: Metadata
+  /** Automatically map strings into numeric data types for all fields. */
   numeric_detection?: boolean
+  /** Mapping for a field. For new fields, this mapping can include: - Field name - Field data type - Mapping parameters */
   properties?: Record<PropertyName, MappingProperty>
+  /** Enable making a routing value required on indexed documents. */
   _routing?: MappingRoutingField
+  /** Control whether the _source field is enabled on the index. */
   _source?: MappingSourceField
+  /** Mapping of runtime fields for the index. */
   runtime?: MappingRuntimeFields
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never, timeout?: never, write_index_only?: never, date_detection?: never, dynamic?: never, dynamic_date_formats?: never, dynamic_templates?: never, _field_names?: never, _meta?: never, numeric_detection?: never, properties?: never, _routing?: never, _source?: never, runtime?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never, timeout?: never, write_index_only?: never, date_detection?: never, dynamic?: never, dynamic_date_formats?: never, dynamic_templates?: never, _field_names?: never, _meta?: never, numeric_detection?: never, properties?: never, _routing?: never, _source?: never, runtime?: never }
 }
 
 export type IndicesPutMappingResponse = IndicesResponseBase
 
 export interface IndicesPutSettingsRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
+  /** If `true`, returns settings in flat format. */
   ignore_unavailable?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** If `true`, existing index settings remain unchanged. */
   preserve_existing?: boolean
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   settings?: IndicesIndexSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, master_timeout?: never, preserve_existing?: never, timeout?: never, settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, master_timeout?: never, preserve_existing?: never, timeout?: never, settings?: never }
 }
 
 export type IndicesPutSettingsResponse = AcknowledgedResponseBase
 
 export interface IndicesPutTemplateRequest extends RequestBase {
+/** The name of the template */
   name: Name
+  /** If true, this request cannot replace or update existing index templates. */
   create?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
   cause?: string
+  /** Aliases for the index. */
   aliases?: Record<IndexName, IndicesAlias>
+  /** Array of wildcard expressions used to match the names of indices during creation. */
   index_patterns?: string | string[]
+  /** Mapping for fields in the index. */
   mappings?: MappingTypeMapping
+  /** Order in which Elasticsearch applies this template if index matches multiple templates. Templates with lower 'order' values are merged first. Templates with higher 'order' values are merged later, overriding templates with lower values. */
   order?: integer
+  /** Configuration options for the index. */
   settings?: IndicesIndexSettings
+  /** Version number used to manage index templates externally. This number is not automatically generated by Elasticsearch. To unset a version, replace the template without specifying one. */
   version?: VersionNumber
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, cause?: never, aliases?: never, index_patterns?: never, mappings?: never, order?: never, settings?: never, version?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, cause?: never, aliases?: never, index_patterns?: never, mappings?: never, order?: never, settings?: never, version?: never }
 }
 
 export type IndicesPutTemplateResponse = AcknowledgedResponseBase
@@ -12070,9 +14299,16 @@ export interface IndicesRecoveryRecoveryStatus {
 }
 
 export interface IndicesRecoveryRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `true`, the response only includes ongoing shard recoveries. */
   active_only?: boolean
+  /** If `true`, the response includes detailed information about shard recoveries. */
   detailed?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, active_only?: never, detailed?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, active_only?: never, detailed?: never }
 }
 
 export type IndicesRecoveryResponse = Record<IndexName, IndicesRecoveryRecoveryStatus>
@@ -12113,10 +14349,18 @@ export interface IndicesRecoveryVerifyIndex {
 }
 
 export interface IndicesRefreshRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never }
 }
 
 export type IndicesRefreshResponse = ShardsOperationResponseBase
@@ -12133,20 +14377,37 @@ export interface IndicesReloadSearchAnalyzersReloadResult {
 }
 
 export interface IndicesReloadSearchAnalyzersRequest extends RequestBase {
+/** A comma-separated list of index names to reload analyzers for */
   index: Indices
+  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
   allow_no_indices?: boolean
+  /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
+  /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
   ignore_unavailable?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never }
 }
 
 export type IndicesReloadSearchAnalyzersResponse = IndicesReloadSearchAnalyzersReloadResult
 
 export interface IndicesResolveClusterRequest extends RequestBase {
+/** Comma-separated name(s) or index pattern(s) of the indices, aliases, and data streams to resolve. Resources on remote clusters can be specified using the `<cluster>`:`<name>` syntax. */
   name: Names
+  /** If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If true, concrete, expanded or aliased indices are ignored when frozen. Defaults to false. */
   ignore_throttled?: boolean
+  /** If false, the request returns an error if it targets a missing or closed index. Defaults to false. */
   ignore_unavailable?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never }
 }
 
 export interface IndicesResolveClusterResolveClusterInfo {
@@ -12160,10 +14421,18 @@ export interface IndicesResolveClusterResolveClusterInfo {
 export type IndicesResolveClusterResponse = Record<ClusterAlias, IndicesResolveClusterResolveClusterInfo>
 
 export interface IndicesResolveIndexRequest extends RequestBase {
+/** Comma-separated name(s) or index pattern(s) of the indices, aliases, and data streams to resolve. Resources on remote clusters can be specified using the `<cluster>`:`<name>` syntax. */
   name: Names
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never }
 }
 
 export interface IndicesResolveIndexResolveIndexAliasItem {
@@ -12191,16 +14460,30 @@ export interface IndicesResolveIndexResponse {
 }
 
 export interface IndicesRolloverRequest extends RequestBase {
+/** Name of the data stream or index alias to roll over. */
   alias: IndexAlias
+  /** Name of the index to create. Supports date math. Data streams do not support this parameter. */
   new_index?: IndexName
+  /** If `true`, checks whether the current index satisfies the specified conditions but does not perform a rollover. */
   dry_run?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** The number of shard copies that must be active before proceeding with the operation. Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
   wait_for_active_shards?: WaitForActiveShards
+  /** Aliases for the target index. Data streams do not support this parameter. */
   aliases?: Record<IndexName, IndicesAlias>
+  /** Conditions for the rollover. If specified, Elasticsearch only performs the rollover if the current index satisfies these conditions. If this parameter is not specified, Elasticsearch performs the rollover unconditionally. If conditions are specified, at least one of them must be a `max_*` condition. The index will rollover if any `max_*` condition is satisfied and all `min_*` conditions are satisfied. */
   conditions?: IndicesRolloverRolloverConditions
+  /** Mapping for fields in the index. If specified, this mapping can include field names, field data types, and mapping paramaters. */
   mappings?: MappingTypeMapping
+  /** Configuration options for the index. Data streams do not support this parameter. */
   settings?: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { alias?: never, new_index?: never, dry_run?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, aliases?: never, conditions?: never, mappings?: never, settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { alias?: never, new_index?: never, dry_run?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, aliases?: never, conditions?: never, mappings?: never, settings?: never }
 }
 
 export interface IndicesRolloverResponse {
@@ -12236,10 +14519,18 @@ export interface IndicesSegmentsIndexSegment {
 }
 
 export interface IndicesSegmentsRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never }
 }
 
 export interface IndicesSegmentsResponse {
@@ -12277,11 +14568,20 @@ export interface IndicesShardStoresIndicesShardStores {
 }
 
 export interface IndicesShardStoresRequest extends RequestBase {
+/** List of data streams, indices, and aliases used to limit the request. */
   index?: Indices
+  /** If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. */
   expand_wildcards?: ExpandWildcards
+  /** If true, missing or closed indices are not included in the response. */
   ignore_unavailable?: boolean
+  /** List of shard health statuses used to limit the request. */
   status?: IndicesShardStoresShardStoreStatus | IndicesShardStoresShardStoreStatus[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, status?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, status?: never }
 }
 
 export interface IndicesShardStoresResponse {
@@ -12319,13 +14619,24 @@ export interface IndicesShardStoresShardStoreWrapper {
 }
 
 export interface IndicesShrinkRequest extends RequestBase {
+/** Name of the source index to shrink. */
   index: IndexName
+  /** Name of the target index to create. */
   target: IndexName
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
   wait_for_active_shards?: WaitForActiveShards
+  /** The key is the alias name. Index alias names support date math. */
   aliases?: Record<IndexName, IndicesAlias>
+  /** Configuration options for the target index. */
   settings?: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, target?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, aliases?: never, settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, target?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, aliases?: never, settings?: never }
 }
 
 export interface IndicesShrinkResponse {
@@ -12335,9 +14646,16 @@ export interface IndicesShrinkResponse {
 }
 
 export interface IndicesSimulateIndexTemplateRequest extends RequestBase {
+/** Name of the index to simulate */
   name: Name
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** If true, returns all relevant default configurations for the index template. */
   include_defaults?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, include_defaults?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, include_defaults?: never }
 }
 
 export interface IndicesSimulateIndexTemplateResponse {
@@ -12351,20 +14669,38 @@ export interface IndicesSimulateTemplateOverlapping {
 }
 
 export interface IndicesSimulateTemplateRequest extends RequestBase {
+/** Name of the index template to simulate. To test a template configuration before you add it to the cluster, omit this parameter and specify the template configuration in the request body. */
   name?: Name
+  /** If true, the template passed in the body is only used if no existing templates match the same index patterns. If false, the simulation uses the template with the highest priority. Note that the template is not permanently added or updated in either case; it is only used for the simulation. */
   create?: boolean
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** If true, returns all relevant default configurations for the index template. */
   include_defaults?: boolean
+  /** This setting overrides the value of the `action.auto_create_index` cluster setting. If set to `true` in a template, then indices can be automatically created using that template even if auto-creation of indices is disabled via `actions.auto_create_index`. If set to `false`, then indices or data streams matching the template must always be explicitly created, and may never be automatically created. */
   allow_auto_create?: boolean
+  /** Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation. */
   index_patterns?: Indices
+  /** An ordered list of component template names. Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence. */
   composed_of?: Name[]
+  /** Template to be applied. It may optionally include an `aliases`, `mappings`, or `settings` configuration. */
   template?: IndicesPutIndexTemplateIndexTemplateMapping
+  /** If this object is included, the template is used to create data streams and their backing indices. Supports an empty object. Data streams require a matching index template with a `data_stream` object. */
   data_stream?: IndicesDataStreamVisibility
+  /** Priority to determine index template precedence when a new data stream or index is created. The index template with the highest priority is chosen. If no priority is specified the template is treated as though it is of priority 0 (lowest priority). This number is not automatically generated by Elasticsearch. */
   priority?: long
+  /** Version number used to manage index templates externally. This number is not automatically generated by Elasticsearch. */
   version?: VersionNumber
+  /** Optional user metadata about the index template. May have any contents. This map is not automatically generated by Elasticsearch. */
   _meta?: Metadata
+  /** The configuration option ignore_missing_component_templates can be used when an index template references a component template that might not exist */
   ignore_missing_component_templates?: string[]
+  /** Marks this index template as deprecated. When creating or updating a non-deprecated index template that uses deprecated components, Elasticsearch will emit a deprecation warning. */
   deprecated?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, include_defaults?: never, allow_auto_create?: never, index_patterns?: never, composed_of?: never, template?: never, data_stream?: never, priority?: never, version?: never, _meta?: never, ignore_missing_component_templates?: never, deprecated?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, include_defaults?: never, allow_auto_create?: never, index_patterns?: never, composed_of?: never, template?: never, data_stream?: never, priority?: never, version?: never, _meta?: never, ignore_missing_component_templates?: never, deprecated?: never }
 }
 
 export interface IndicesSimulateTemplateResponse {
@@ -12379,13 +14715,24 @@ export interface IndicesSimulateTemplateTemplate {
 }
 
 export interface IndicesSplitRequest extends RequestBase {
+/** Name of the source index to split. */
   index: IndexName
+  /** Name of the target index to create. */
   target: IndexName
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
   wait_for_active_shards?: WaitForActiveShards
+  /** Aliases for the resulting index. */
   aliases?: Record<IndexName, IndicesAlias>
+  /** Configuration options for the target index. */
   settings?: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, target?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, aliases?: never, settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, target?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, aliases?: never, settings?: never }
 }
 
 export interface IndicesSplitResponse {
@@ -12434,17 +14781,32 @@ export interface IndicesStatsMappingStats {
 }
 
 export interface IndicesStatsRequest extends RequestBase {
+/** Limit the information returned the specific metrics. */
   metric?: Metrics
+  /** A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices */
   index?: Indices
+  /** Comma-separated list or wildcard expressions of fields to include in fielddata and suggest statistics. */
   completion_fields?: Fields
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** Comma-separated list or wildcard expressions of fields to include in fielddata statistics. */
   fielddata_fields?: Fields
+  /** Comma-separated list or wildcard expressions of fields to include in the statistics. */
   fields?: Fields
+  /** If true, statistics are not collected from closed indices. */
   forbid_closed_indices?: boolean
+  /** Comma-separated list of search groups to include in the search statistics. */
   groups?: string | string[]
+  /** If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested). */
   include_segment_file_sizes?: boolean
+  /** If true, the response includes information from segments that are not loaded into memory. */
   include_unloaded_segments?: boolean
+  /** Indicates whether statistics are aggregated at the cluster, index, or shard level. */
   level?: Level
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { metric?: never, index?: never, completion_fields?: never, expand_wildcards?: never, fielddata_fields?: never, fields?: never, forbid_closed_indices?: never, groups?: never, include_segment_file_sizes?: never, include_unloaded_segments?: never, level?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { metric?: never, index?: never, completion_fields?: never, expand_wildcards?: never, fielddata_fields?: never, fields?: never, forbid_closed_indices?: never, groups?: never, include_segment_file_sizes?: never, include_unloaded_segments?: never, level?: never }
 }
 
 export interface IndicesStatsResponse {
@@ -12546,21 +14908,6 @@ export interface IndicesStatsShardsTotalStats {
   total_count: long
 }
 
-export interface IndicesUnfreezeRequest extends RequestBase {
-  index: IndexName
-  allow_no_indices?: boolean
-  expand_wildcards?: ExpandWildcards
-  ignore_unavailable?: boolean
-  master_timeout?: Duration
-  timeout?: Duration
-  wait_for_active_shards?: string
-}
-
-export interface IndicesUnfreezeResponse {
-  acknowledged: boolean
-  shards_acknowledged: boolean
-}
-
 export interface IndicesUpdateAliasesAction {
   add?: IndicesUpdateAliasesAddAction
   remove?: IndicesUpdateAliasesRemoveAction
@@ -12596,9 +14943,16 @@ export interface IndicesUpdateAliasesRemoveIndexAction {
 }
 
 export interface IndicesUpdateAliasesRequest extends RequestBase {
+/** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** Actions to perform. */
   actions?: IndicesUpdateAliasesAction[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never, actions?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never, actions?: never }
 }
 
 export type IndicesUpdateAliasesResponse = AcknowledgedResponseBase
@@ -12611,20 +14965,38 @@ export interface IndicesValidateQueryIndicesValidationExplanation {
 }
 
 export interface IndicesValidateQueryRequest extends RequestBase {
+/** Comma-separated list of data streams, indices, and aliases to search. Supports wildcards (`*`). To search all data streams or indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. */
   allow_no_indices?: boolean
+  /** If `true`, the validation is executed on all shards instead of one random shard per index. */
   all_shards?: boolean
+  /** Analyzer to use for the query string. This parameter can only be used when the `q` query string parameter is specified. */
   analyzer?: string
+  /** If `true`, wildcard and prefix queries are analyzed. */
   analyze_wildcard?: boolean
+  /** The default operator for query string query: `AND` or `OR`. */
   default_operator?: QueryDslOperator
+  /** Field to use as default where no field prefix is given in the query string. This parameter can only be used when the `q` query string parameter is specified. */
   df?: string
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, the response returns detailed information if an error has occurred. */
   explain?: boolean
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
+  /** If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. */
   lenient?: boolean
+  /** If `true`, returns a more detailed explanation showing the actual Lucene query that will be executed. */
   rewrite?: boolean
+  /** Query in the Lucene query string syntax. */
   q?: string
+  /** Query in the Lucene query string syntax. */
   query?: QueryDslQueryContainer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, all_shards?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, explain?: never, ignore_unavailable?: never, lenient?: never, rewrite?: never, q?: never, query?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, all_shards?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, explain?: never, ignore_unavailable?: never, lenient?: never, rewrite?: never, q?: never, query?: never }
 }
 
 export interface IndicesValidateQueryResponse {
@@ -12692,17 +15064,31 @@ export interface InferenceTextEmbeddingResult {
 }
 
 export interface InferenceDeleteRequest extends RequestBase {
+/** The task type */
   task_type?: InferenceTaskType
+  /** The inference Id */
   inference_id: Id
+  /** When true, the endpoint is not deleted, and a list of ingest processors which reference this endpoint is returned */
   dry_run?: boolean
+  /** When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields */
   force?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never, dry_run?: never, force?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, inference_id?: never, dry_run?: never, force?: never }
 }
 
 export type InferenceDeleteResponse = InferenceDeleteInferenceEndpointResult
 
 export interface InferenceGetRequest extends RequestBase {
+/** The task type */
   task_type?: InferenceTaskType
+  /** The inference Id */
   inference_id?: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, inference_id?: never }
 }
 
 export interface InferenceGetResponse {
@@ -12710,23 +15096,147 @@ export interface InferenceGetResponse {
 }
 
 export interface InferenceInferenceRequest extends RequestBase {
+/** The task type */
   task_type?: InferenceTaskType
+  /** The inference Id */
   inference_id: Id
+  /** Specifies the amount of time to wait for the inference request to complete. */
   timeout?: Duration
+  /** Query input, required for rerank task. Not required for other tasks. */
   query?: string
+  /** Inference input. Either a string or an array of strings. */
   input: string | string[]
+  /** Optional task settings */
   task_settings?: InferenceTaskSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, query?: never, input?: never, task_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, query?: never, input?: never, task_settings?: never }
 }
 
 export type InferenceInferenceResponse = InferenceInferenceResult
 
 export interface InferencePutRequest extends RequestBase {
+/** The task type */
   task_type?: InferenceTaskType
+  /** The inference Id */
   inference_id: Id
   inference_config?: InferenceInferenceEndpoint
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never, inference_config?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, inference_id?: never, inference_config?: never }
 }
 
 export type InferencePutResponse = InferenceInferenceEndpointInfo
+
+export interface InferenceStreamInferenceRequest extends RequestBase {
+/** The unique identifier for the inference endpoint. */
+  inference_id: Id
+  /** The type of task that the model performs. */
+  task_type?: InferenceTaskType
+  /** The text on which you want to perform the inference task. It can be a single string or an array. NOTE: Inference endpoints for the completion task type currently only support a single string as input. */
+  input: string | string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { inference_id?: never, task_type?: never, input?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { inference_id?: never, task_type?: never, input?: never }
+}
+
+export type InferenceStreamInferenceResponse = StreamResult
+
+export interface InferenceUnifiedInferenceCompletionTool {
+  type: string
+  function: InferenceUnifiedInferenceCompletionToolFunction
+}
+
+export interface InferenceUnifiedInferenceCompletionToolChoice {
+  type: string
+  function: InferenceUnifiedInferenceCompletionToolChoiceFunction
+}
+
+export interface InferenceUnifiedInferenceCompletionToolChoiceFunction {
+  name: string
+}
+
+export interface InferenceUnifiedInferenceCompletionToolFunction {
+  description?: string
+  name: string
+  parameters?: any
+  strict?: boolean
+}
+
+export type InferenceUnifiedInferenceCompletionToolType = string | InferenceUnifiedInferenceCompletionToolChoice
+
+export interface InferenceUnifiedInferenceContentObject {
+  text: string
+  type: string
+}
+
+export interface InferenceUnifiedInferenceMessage {
+  content?: InferenceUnifiedInferenceMessageContent
+  role: string
+  tool_call_id?: Id
+  tool_calls?: InferenceUnifiedInferenceToolCall[]
+}
+
+export type InferenceUnifiedInferenceMessageContent = string | InferenceUnifiedInferenceContentObject[]
+
+export interface InferenceUnifiedInferenceRequest extends RequestBase {
+/** The task type */
+  task_type?: InferenceTaskType
+  /** The inference Id */
+  inference_id: Id
+  /** Specifies the amount of time to wait for the inference request to complete. */
+  timeout?: Duration
+  /** A list of objects representing the conversation. */
+  messages: InferenceUnifiedInferenceMessage[]
+  /** The ID of the model to use. */
+  model?: string
+  /** The upper bound limit for the number of tokens that can be generated for a completion request. */
+  max_completion_tokens?: long
+  /** A sequence of strings to control when the model should stop generating additional tokens. */
+  stop?: string[]
+  /** The sampling temperature to use. */
+  temperature?: float
+  /** Controls which tool is called by the model. */
+  tool_choice?: InferenceUnifiedInferenceCompletionToolType
+  /** A list of tools that the model can call. */
+  tools?: InferenceUnifiedInferenceCompletionTool[]
+  /** Nucleus sampling, an alternative to sampling with temperature. */
+  top_p?: float
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, messages?: never, model?: never, max_completion_tokens?: never, stop?: never, temperature?: never, tool_choice?: never, tools?: never, top_p?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, messages?: never, model?: never, max_completion_tokens?: never, stop?: never, temperature?: never, tool_choice?: never, tools?: never, top_p?: never }
+}
+
+export type InferenceUnifiedInferenceResponse = StreamResult
+
+export interface InferenceUnifiedInferenceToolCall {
+  id: Id
+  function: InferenceUnifiedInferenceToolCallFunction
+  type: string
+}
+
+export interface InferenceUnifiedInferenceToolCallFunction {
+  arguments: string
+  name: string
+}
+
+export interface InferenceUpdateRequest extends RequestBase {
+/** The unique identifier of the inference endpoint. */
+  inference_id: Id
+  /** The type of inference task that the model performs. */
+  task_type?: InferenceTaskType
+  inference_config?: InferenceInferenceEndpoint
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { inference_id?: never, task_type?: never, inference_config?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { inference_id?: never, task_type?: never, inference_config?: never }
+}
+
+export type InferenceUpdateResponse = InferenceInferenceEndpointInfo
 
 export interface IngestAppendProcessor extends IngestProcessorBase {
   field: Field
@@ -13247,25 +15757,46 @@ export interface IngestWeb {
 }
 
 export interface IngestDeleteGeoipDatabaseRequest extends RequestBase {
+/** A comma-separated list of geoip database configurations to delete */
   id: Ids
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never }
 }
 
 export type IngestDeleteGeoipDatabaseResponse = AcknowledgedResponseBase
 
 export interface IngestDeleteIpLocationDatabaseRequest extends RequestBase {
+/** A comma-separated list of IP location database configurations. */
   id: Ids
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. A value of `-1` indicates that the request should never time out. */
   master_timeout?: Duration
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. A value of `-1` indicates that the request should never time out. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never }
 }
 
 export type IngestDeleteIpLocationDatabaseResponse = AcknowledgedResponseBase
 
 export interface IngestDeletePipelineRequest extends RequestBase {
+/** Pipeline ID or wildcard expression of pipeline IDs used to limit the request. To delete all ingest pipelines in a cluster, use a value of `*`. */
   id: Id
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never }
 }
 
 export type IngestDeletePipelineResponse = AcknowledgedResponseBase
@@ -13289,6 +15820,10 @@ export interface IngestGeoIpStatsGeoIpNodeDatabases {
 }
 
 export interface IngestGeoIpStatsRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface IngestGeoIpStatsResponse {
@@ -13304,7 +15839,12 @@ export interface IngestGetGeoipDatabaseDatabaseConfigurationMetadata {
 }
 
 export interface IngestGetGeoipDatabaseRequest extends RequestBase {
+/** Comma-separated list of database configuration IDs to retrieve. Wildcard (`*`) expressions are supported. To get all database configurations, omit this parameter or use `*`. */
   id?: Ids
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export interface IngestGetGeoipDatabaseResponse {
@@ -13320,8 +15860,14 @@ export interface IngestGetIpLocationDatabaseDatabaseConfigurationMetadata {
 }
 
 export interface IngestGetIpLocationDatabaseRequest extends RequestBase {
+/** Comma-separated list of database configuration IDs to retrieve. Wildcard (`*`) expressions are supported. To get all database configurations, omit this parameter or use `*`. */
   id?: Ids
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. A value of `-1` indicates that the request should never time out. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never }
 }
 
 export interface IngestGetIpLocationDatabaseResponse {
@@ -13329,14 +15875,25 @@ export interface IngestGetIpLocationDatabaseResponse {
 }
 
 export interface IngestGetPipelineRequest extends RequestBase {
+/** Comma-separated list of pipeline IDs to retrieve. Wildcard (`*`) expressions are supported. To get all ingest pipelines, omit this parameter or use `*`. */
   id?: Id
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Return pipelines without their definitions (default: false) */
   summary?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, summary?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never, summary?: never }
 }
 
 export type IngestGetPipelineResponse = Record<string, IngestPipeline>
 
 export interface IngestProcessorGrokRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface IngestProcessorGrokResponse {
@@ -13344,44 +15901,82 @@ export interface IngestProcessorGrokResponse {
 }
 
 export interface IngestPutGeoipDatabaseRequest extends RequestBase {
+/** ID of the database configuration to create or update. */
   id: Id
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** The provider-assigned name of the IP geolocation database to download. */
   name: Name
+  /** The configuration necessary to identify which IP geolocation provider to use to download the database, as well as any provider-specific configuration necessary for such downloading. At present, the only supported provider is maxmind, and the maxmind provider requires that an account_id (string) is configured. */
   maxmind: IngestMaxmind
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never, name?: never, maxmind?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never, name?: never, maxmind?: never }
 }
 
 export type IngestPutGeoipDatabaseResponse = AcknowledgedResponseBase
 
 export interface IngestPutIpLocationDatabaseRequest extends RequestBase {
+/** The database configuration identifier. */
   id: Id
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. A value of `-1` indicates that the request should never time out. */
   master_timeout?: Duration
+  /** The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata. If no response is received before the timeout expires, the cluster metadata update still applies but the response indicates that it was not completely acknowledged. A value of `-1` indicates that the request should never time out. */
   timeout?: Duration
   configuration?: IngestDatabaseConfiguration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never, configuration?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never, configuration?: never }
 }
 
 export type IngestPutIpLocationDatabaseResponse = AcknowledgedResponseBase
 
 export interface IngestPutPipelineRequest extends RequestBase {
+/** ID of the ingest pipeline to create or update. */
   id: Id
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** Required version for optimistic concurrency control for pipeline updates */
   if_version?: VersionNumber
+  /** Optional metadata about the ingest pipeline. May have any contents. This map is not automatically generated by Elasticsearch. */
   _meta?: Metadata
+  /** Description of the ingest pipeline. */
   description?: string
+  /** Processors to run immediately after a processor failure. Each processor supports a processor-level `on_failure` value. If a processor without an `on_failure` value fails, Elasticsearch uses this pipeline-level parameter as a fallback. The processors in this parameter run sequentially in the order specified. Elasticsearch will not attempt to run the pipeline's remaining processors. */
   on_failure?: IngestProcessorContainer[]
+  /** Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified. */
   processors?: IngestProcessorContainer[]
+  /** Version number used by external systems to track ingest pipelines. This parameter is intended for external systems only. Elasticsearch does not use or validate pipeline version numbers. */
   version?: VersionNumber
+  /** Marks this ingest pipeline as deprecated. When a deprecated ingest pipeline is referenced as the default or final pipeline when creating or updating a non-deprecated index template, Elasticsearch will emit a deprecation warning. */
   deprecated?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never, if_version?: never, _meta?: never, description?: never, on_failure?: never, processors?: never, version?: never, deprecated?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never, if_version?: never, _meta?: never, description?: never, on_failure?: never, processors?: never, version?: never, deprecated?: never }
 }
 
 export type IngestPutPipelineResponse = AcknowledgedResponseBase
 
 export interface IngestSimulateRequest extends RequestBase {
+/** Pipeline to test. If you don’t specify a `pipeline` in the request body, this parameter is required. */
   id?: Id
+  /** If `true`, the response includes output data for each processor in the executed pipeline. */
   verbose?: boolean
+  /** Sample documents to test in the pipeline. */
   docs: IngestDocument[]
+  /** Pipeline to test. If you don’t specify the `pipeline` request path parameter, this parameter is required. If you specify both this and the request path parameter, the API only uses the request path parameter. */
   pipeline?: IngestPipeline
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, verbose?: never, docs?: never, pipeline?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, verbose?: never, docs?: never, pipeline?: never }
 }
 
 export interface IngestSimulateResponse {
@@ -13406,8 +16001,14 @@ export type LicenseLicenseStatus = 'active' | 'valid' | 'invalid' | 'expired'
 export type LicenseLicenseType = 'missing' | 'trial' | 'basic' | 'standard' | 'dev' | 'silver' | 'gold' | 'platinum' | 'enterprise'
 
 export interface LicenseDeleteRequest extends RequestBase {
+/** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
 }
 
 export type LicenseDeleteResponse = AcknowledgedResponseBase
@@ -13428,8 +16029,14 @@ export interface LicenseGetLicenseInformation {
 }
 
 export interface LicenseGetRequest extends RequestBase {
+/** If `true`, this parameter returns enterprise for Enterprise license types. If `false`, this parameter returns platinum for both platinum and enterprise license types. This behavior is maintained for backwards compatibility. This parameter is deprecated and will always be set to true in 8.x. */
   accept_enterprise?: boolean
+  /** Specifies whether to retrieve local information. The default value is `false`, which means the information is retrieved from the master node. */
   local?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { accept_enterprise?: never, local?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { accept_enterprise?: never, local?: never }
 }
 
 export interface LicenseGetResponse {
@@ -13437,6 +16044,10 @@ export interface LicenseGetResponse {
 }
 
 export interface LicenseGetBasicStatusRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface LicenseGetBasicStatusResponse {
@@ -13444,6 +16055,10 @@ export interface LicenseGetBasicStatusResponse {
 }
 
 export interface LicenseGetTrialStatusRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface LicenseGetTrialStatusResponse {
@@ -13456,11 +16071,19 @@ export interface LicensePostAcknowledgement {
 }
 
 export interface LicensePostRequest extends RequestBase {
+/** Specifies whether you acknowledge the license changes. */
   acknowledge?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   license?: LicenseLicense
+  /** A sequence of one or more JSON documents containing the license information. */
   licenses?: LicenseLicense[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { acknowledge?: never, master_timeout?: never, timeout?: never, license?: never, licenses?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { acknowledge?: never, master_timeout?: never, timeout?: never, license?: never, licenses?: never }
 }
 
 export interface LicensePostResponse {
@@ -13470,9 +16093,16 @@ export interface LicensePostResponse {
 }
 
 export interface LicensePostStartBasicRequest extends RequestBase {
+/** whether the user has acknowledged acknowledge messages (default: false) */
   acknowledge?: boolean
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { acknowledge?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { acknowledge?: never, master_timeout?: never, timeout?: never }
 }
 
 export interface LicensePostStartBasicResponse {
@@ -13484,9 +16114,15 @@ export interface LicensePostStartBasicResponse {
 }
 
 export interface LicensePostStartTrialRequest extends RequestBase {
+/** whether the user has acknowledged acknowledge messages (default: false) */
   acknowledge?: boolean
   type_query_string?: string
+  /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { acknowledge?: never, type_query_string?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { acknowledge?: never, type_query_string?: never, master_timeout?: never }
 }
 
 export interface LicensePostStartTrialResponse {
@@ -13521,20 +16157,35 @@ export interface LogstashPipelineSettings {
 }
 
 export interface LogstashDeletePipelineRequest extends RequestBase {
+/** An identifier for the pipeline. */
   id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export type LogstashDeletePipelineResponse = boolean
 
 export interface LogstashGetPipelineRequest extends RequestBase {
+/** A comma-separated list of pipeline identifiers. */
   id?: Ids
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export type LogstashGetPipelineResponse = Record<Id, LogstashPipeline>
 
 export interface LogstashPutPipelineRequest extends RequestBase {
+/** An identifier for the pipeline. */
   id: Id
   pipeline?: LogstashPipeline
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, pipeline?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, pipeline?: never }
 }
 
 export type LogstashPutPipelineResponse = boolean
@@ -13551,7 +16202,12 @@ export interface MigrationDeprecationsDeprecation {
 export type MigrationDeprecationsDeprecationLevel = 'none' | 'info' | 'warning' | 'critical'
 
 export interface MigrationDeprecationsRequest extends RequestBase {
+/** Comma-separate list of data streams or indices to check. Wildcard (*) expressions are supported. */
   index?: IndexName
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never }
 }
 
 export interface MigrationDeprecationsResponse {
@@ -13578,6 +16234,10 @@ export interface MigrationGetFeatureUpgradeStatusMigrationFeatureIndexInfo {
 export type MigrationGetFeatureUpgradeStatusMigrationStatus = 'NO_MIGRATION_NEEDED' | 'MIGRATION_NEEDED' | 'IN_PROGRESS' | 'ERROR'
 
 export interface MigrationGetFeatureUpgradeStatusRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface MigrationGetFeatureUpgradeStatusResponse {
@@ -13590,6 +16250,10 @@ export interface MigrationPostFeatureUpgradeMigrationFeature {
 }
 
 export interface MigrationPostFeatureUpgradeRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface MigrationPostFeatureUpgradeResponse {
@@ -14893,7 +17557,12 @@ export interface MlZeroShotClassificationInferenceUpdateOptions {
 }
 
 export interface MlClearTrainedModelDeploymentCacheRequest extends RequestBase {
+/** The unique identifier of the trained model. */
   model_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_id?: never }
 }
 
 export interface MlClearTrainedModelDeploymentCacheResponse {
@@ -14901,10 +17570,18 @@ export interface MlClearTrainedModelDeploymentCacheResponse {
 }
 
 export interface MlCloseJobRequest extends RequestBase {
+/** Identifier for the anomaly detection job. It can be a job identifier, a group name, or a wildcard expression. You can close multiple anomaly detection jobs in a single API request by using a group name, a comma-separated list of jobs, or a wildcard expression. You can close all jobs by using `_all` or by specifying `*` as the job identifier. */
   job_id: Id
+  /** Refer to the description for the `allow_no_match` query parameter. */
   allow_no_match?: boolean
+  /** Refer to the descriptiion for the `force` query parameter. */
   force?: boolean
+  /** Refer to the description for the `timeout` query parameter. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, allow_no_match?: never, force?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, allow_no_match?: never, force?: never, timeout?: never }
 }
 
 export interface MlCloseJobResponse {
@@ -14912,21 +17589,38 @@ export interface MlCloseJobResponse {
 }
 
 export interface MlDeleteCalendarRequest extends RequestBase {
+/** A string that uniquely identifies a calendar. */
   calendar_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { calendar_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { calendar_id?: never }
 }
 
 export type MlDeleteCalendarResponse = AcknowledgedResponseBase
 
 export interface MlDeleteCalendarEventRequest extends RequestBase {
+/** A string that uniquely identifies a calendar. */
   calendar_id: Id
+  /** Identifier for the scheduled event. You can obtain this identifier by using the get calendar events API. */
   event_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { calendar_id?: never, event_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { calendar_id?: never, event_id?: never }
 }
 
 export type MlDeleteCalendarEventResponse = AcknowledgedResponseBase
 
 export interface MlDeleteCalendarJobRequest extends RequestBase {
+/** A string that uniquely identifies a calendar. */
   calendar_id: Id
+  /** An identifier for the anomaly detection jobs. It can be a job identifier, a group name, or a comma-separated list of jobs or groups. */
   job_id: Ids
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { calendar_id?: never, job_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { calendar_id?: never, job_id?: never }
 }
 
 export interface MlDeleteCalendarJobResponse {
@@ -14936,24 +17630,44 @@ export interface MlDeleteCalendarJobResponse {
 }
 
 export interface MlDeleteDataFrameAnalyticsRequest extends RequestBase {
+/** Identifier for the data frame analytics job. */
   id: Id
+  /** If `true`, it deletes a job that is not stopped; this method is quicker than stopping and deleting the job. */
   force?: boolean
+  /** The time to wait for the job to be deleted. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, force?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, force?: never, timeout?: never }
 }
 
 export type MlDeleteDataFrameAnalyticsResponse = AcknowledgedResponseBase
 
 export interface MlDeleteDatafeedRequest extends RequestBase {
+/** A numerical character string that uniquely identifies the datafeed. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric characters. */
   datafeed_id: Id
+  /** Use to forcefully delete a started datafeed; this method is quicker than stopping and deleting the datafeed. */
   force?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { datafeed_id?: never, force?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { datafeed_id?: never, force?: never }
 }
 
 export type MlDeleteDatafeedResponse = AcknowledgedResponseBase
 
 export interface MlDeleteExpiredDataRequest extends RequestBase {
+/** Identifier for an anomaly detection job. It can be a job identifier, a group name, or a wildcard expression. */
   job_id?: Id
+  /** The desired requests per second for the deletion processes. The default behavior is no throttling. */
   requests_per_second?: float
+  /** How long can the underlying delete processes run until they are canceled. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, requests_per_second?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, requests_per_second?: never, timeout?: never }
 }
 
 export interface MlDeleteExpiredDataResponse {
@@ -14961,55 +17675,102 @@ export interface MlDeleteExpiredDataResponse {
 }
 
 export interface MlDeleteFilterRequest extends RequestBase {
+/** A string that uniquely identifies a filter. */
   filter_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { filter_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { filter_id?: never }
 }
 
 export type MlDeleteFilterResponse = AcknowledgedResponseBase
 
 export interface MlDeleteForecastRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** A comma-separated list of forecast identifiers. If you do not specify this optional parameter or if you specify `_all` or `*` the API deletes all forecasts from the job. */
   forecast_id?: Id
+  /** Specifies whether an error occurs when there are no forecasts. In particular, if this parameter is set to `false` and there are no forecasts associated with the job, attempts to delete all forecasts return an error. */
   allow_no_forecasts?: boolean
+  /** Specifies the period of time to wait for the completion of the delete operation. When this period of time elapses, the API fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, forecast_id?: never, allow_no_forecasts?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, forecast_id?: never, allow_no_forecasts?: never, timeout?: never }
 }
 
 export type MlDeleteForecastResponse = AcknowledgedResponseBase
 
 export interface MlDeleteJobRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** Use to forcefully delete an opened job; this method is quicker than closing and deleting the job. */
   force?: boolean
+  /** Specifies whether annotations that have been added by the user should be deleted along with any auto-generated annotations when the job is reset. */
   delete_user_annotations?: boolean
+  /** Specifies whether the request should return immediately or wait until the job deletion completes. */
   wait_for_completion?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, force?: never, delete_user_annotations?: never, wait_for_completion?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, force?: never, delete_user_annotations?: never, wait_for_completion?: never }
 }
 
 export type MlDeleteJobResponse = AcknowledgedResponseBase
 
 export interface MlDeleteModelSnapshotRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** Identifier for the model snapshot. */
   snapshot_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, snapshot_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, snapshot_id?: never }
 }
 
 export type MlDeleteModelSnapshotResponse = AcknowledgedResponseBase
 
 export interface MlDeleteTrainedModelRequest extends RequestBase {
+/** The unique identifier of the trained model. */
   model_id: Id
+  /** Forcefully deletes a trained model that is referenced by ingest pipelines or has a started deployment. */
   force?: boolean
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_id?: never, force?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_id?: never, force?: never, timeout?: never }
 }
 
 export type MlDeleteTrainedModelResponse = AcknowledgedResponseBase
 
 export interface MlDeleteTrainedModelAliasRequest extends RequestBase {
+/** The model alias to delete. */
   model_alias: Name
+  /** The trained model ID to which the model alias refers. */
   model_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_alias?: never, model_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_alias?: never, model_id?: never }
 }
 
 export type MlDeleteTrainedModelAliasResponse = AcknowledgedResponseBase
 
 export interface MlEstimateModelMemoryRequest extends RequestBase {
+/** For a list of the properties that you can specify in the `analysis_config` component of the body of this API. */
   analysis_config?: MlAnalysisConfig
+  /** Estimates of the highest cardinality in a single bucket that is observed for influencer fields over the time period that the job analyzes data. To produce a good answer, values must be provided for all influencer fields. Providing values for fields that are not listed as `influencers` has no effect on the estimation. */
   max_bucket_cardinality?: Record<Field, long>
+  /** Estimates of the cardinality that is observed for fields over the whole time period that the job analyzes data. To produce a good answer, values must be provided for fields referenced in the `by_field_name`, `over_field_name` and `partition_field_name` of any detectors. Providing values for other fields has no effect on the estimation. It can be omitted from the request if no detectors have a `by_field_name`, `over_field_name` or `partition_field_name`. */
   overall_cardinality?: Record<Field, long>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { analysis_config?: never, max_bucket_cardinality?: never, overall_cardinality?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { analysis_config?: never, max_bucket_cardinality?: never, overall_cardinality?: never }
 }
 
 export interface MlEstimateModelMemoryResponse {
@@ -15096,9 +17857,16 @@ export interface MlEvaluateDataFrameDataframeRegressionSummary {
 }
 
 export interface MlEvaluateDataFrameRequest extends RequestBase {
+/** Defines the type of evaluation you want to perform. */
   evaluation: MlDataframeEvaluationContainer
+  /** Defines the `index` in which the evaluation will be performed. */
   index: IndexName
+  /** A query clause that retrieves a subset of data from the source index. */
   query?: QueryDslQueryContainer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { evaluation?: never, index?: never, query?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { evaluation?: never, index?: never, query?: never }
 }
 
 export interface MlEvaluateDataFrameResponse {
@@ -15108,15 +17876,28 @@ export interface MlEvaluateDataFrameResponse {
 }
 
 export interface MlExplainDataFrameAnalyticsRequest extends RequestBase {
+/** Identifier for the data frame analytics job. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric characters. */
   id?: Id
+  /** The configuration of how to source the analysis data. It requires an index. Optionally, query and _source may be specified. */
   source?: MlDataframeAnalyticsSource
+  /** The destination configuration, consisting of index and optionally results_field (ml by default). */
   dest?: MlDataframeAnalyticsDestination
+  /** The analysis configuration, which contains the information necessary to perform one of the following types of analysis: classification, outlier detection, or regression. */
   analysis?: MlDataframeAnalysisContainer
+  /** A description of the job. */
   description?: string
+  /** The approximate maximum amount of memory resources that are permitted for analytical processing. If your `elasticsearch.yml` file contains an `xpack.ml.max_model_memory_limit` setting, an error occurs when you try to create data frame analytics jobs that have `model_memory_limit` values greater than that setting. */
   model_memory_limit?: string
+  /** The maximum number of threads to be used by the analysis. Using more threads may decrease the time necessary to complete the analysis at the cost of using more CPU. Note that the process may use additional threads for operational functionality other than the analysis itself. */
   max_num_threads?: integer
+  /** Specify includes and/or excludes patterns to select which fields will be included in the analysis. The patterns specified in excludes are applied last, therefore excludes takes precedence. In other words, if the same field is specified in both includes and excludes, then the field will not be included in the analysis. */
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
+  /** Specifies whether this job can start when there is insufficient machine learning node capacity for it to be immediately assigned to a node. */
   allow_lazy_start?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, source?: never, dest?: never, analysis?: never, description?: never, model_memory_limit?: never, max_num_threads?: never, analyzed_fields?: never, allow_lazy_start?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, source?: never, dest?: never, analysis?: never, description?: never, model_memory_limit?: never, max_num_threads?: never, analyzed_fields?: never, allow_lazy_start?: never }
 }
 
 export interface MlExplainDataFrameAnalyticsResponse {
@@ -15125,12 +17906,22 @@ export interface MlExplainDataFrameAnalyticsResponse {
 }
 
 export interface MlFlushJobRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** Refer to the description for the `advance_time` query parameter. */
   advance_time?: DateTime
+  /** Refer to the description for the `calc_interim` query parameter. */
   calc_interim?: boolean
+  /** Refer to the description for the `end` query parameter. */
   end?: DateTime
+  /** Refer to the description for the `skip_time` query parameter. */
   skip_time?: DateTime
+  /** Refer to the description for the `start` query parameter. */
   start?: DateTime
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, advance_time?: never, calc_interim?: never, end?: never, skip_time?: never, start?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, advance_time?: never, calc_interim?: never, end?: never, skip_time?: never, start?: never }
 }
 
 export interface MlFlushJobResponse {
@@ -15139,10 +17930,18 @@ export interface MlFlushJobResponse {
 }
 
 export interface MlForecastRequest extends RequestBase {
+/** Identifier for the anomaly detection job. The job must be open when you create a forecast; otherwise, an error occurs. */
   job_id: Id
+  /** Refer to the description for the `duration` query parameter. */
   duration?: Duration
+  /** Refer to the description for the `expires_in` query parameter. */
   expires_in?: Duration
+  /** Refer to the description for the `max_model_memory` query parameter. */
   max_model_memory?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, duration?: never, expires_in?: never, max_model_memory?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, duration?: never, expires_in?: never, max_model_memory?: never }
 }
 
 export interface MlForecastResponse {
@@ -15151,18 +17950,33 @@ export interface MlForecastResponse {
 }
 
 export interface MlGetBucketsRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** The timestamp of a single bucket result. If you do not specify this parameter, the API returns information about all buckets. */
   timestamp?: DateTime
+  /** Skips the specified number of buckets. */
   from?: integer
+  /** Specifies the maximum number of buckets to obtain. */
   size?: integer
+  /** Refer to the description for the `anomaly_score` query parameter. */
   anomaly_score?: double
+  /** Refer to the description for the `desc` query parameter. */
   desc?: boolean
+  /** Refer to the description for the `end` query parameter. */
   end?: DateTime
+  /** Refer to the description for the `exclude_interim` query parameter. */
   exclude_interim?: boolean
+  /** Refer to the description for the `expand` query parameter. */
   expand?: boolean
   page?: MlPage
+  /** Refer to the desription for the `sort` query parameter. */
   sort?: Field
+  /** Refer to the description for the `start` query parameter. */
   start?: DateTime
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, timestamp?: never, from?: never, size?: never, anomaly_score?: never, desc?: never, end?: never, exclude_interim?: never, expand?: never, page?: never, sort?: never, start?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, timestamp?: never, from?: never, size?: never, anomaly_score?: never, desc?: never, end?: never, exclude_interim?: never, expand?: never, page?: never, sort?: never, start?: never }
 }
 
 export interface MlGetBucketsResponse {
@@ -15171,12 +17985,22 @@ export interface MlGetBucketsResponse {
 }
 
 export interface MlGetCalendarEventsRequest extends RequestBase {
+/** A string that uniquely identifies a calendar. You can get information for multiple calendars by using a comma-separated list of ids or a wildcard expression. You can get information for all calendars by using `_all` or `*` or by omitting the calendar identifier. */
   calendar_id: Id
+  /** Specifies to get events with timestamps earlier than this time. */
   end?: DateTime
+  /** Skips the specified number of events. */
   from?: integer
+  /** Specifies to get events for a specific anomaly detection job identifier or job group. It must be used with a calendar identifier of `_all` or `*`. */
   job_id?: Id
+  /** Specifies the maximum number of events to obtain. */
   size?: integer
+  /** Specifies to get events with timestamps after this time. */
   start?: DateTime
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { calendar_id?: never, end?: never, from?: never, job_id?: never, size?: never, start?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { calendar_id?: never, end?: never, from?: never, job_id?: never, size?: never, start?: never }
 }
 
 export interface MlGetCalendarEventsResponse {
@@ -15191,10 +18015,18 @@ export interface MlGetCalendarsCalendar {
 }
 
 export interface MlGetCalendarsRequest extends RequestBase {
+/** A string that uniquely identifies a calendar. You can get information for multiple calendars by using a comma-separated list of ids or a wildcard expression. You can get information for all calendars by using `_all` or `*` or by omitting the calendar identifier. */
   calendar_id?: Id
+  /** Skips the specified number of calendars. This parameter is supported only when you omit the calendar identifier. */
   from?: integer
+  /** Specifies the maximum number of calendars to obtain. This parameter is supported only when you omit the calendar identifier. */
   size?: integer
+  /** This object is supported only when you omit the calendar identifier. */
   page?: MlPage
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { calendar_id?: never, from?: never, size?: never, page?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { calendar_id?: never, from?: never, size?: never, page?: never }
 }
 
 export interface MlGetCalendarsResponse {
@@ -15203,12 +18035,22 @@ export interface MlGetCalendarsResponse {
 }
 
 export interface MlGetCategoriesRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** Identifier for the category, which is unique in the job. If you specify neither the category ID nor the partition_field_value, the API returns information about all categories. If you specify only the partition_field_value, it returns information about all categories for the specified partition. */
   category_id?: CategoryId
+  /** Skips the specified number of categories. */
   from?: integer
+  /** Only return categories for the specified partition. */
   partition_field_value?: string
+  /** Specifies the maximum number of categories to obtain. */
   size?: integer
+  /** Configures pagination. This parameter has the `from` and `size` properties. */
   page?: MlPage
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, category_id?: never, from?: never, partition_field_value?: never, size?: never, page?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, category_id?: never, from?: never, partition_field_value?: never, size?: never, page?: never }
 }
 
 export interface MlGetCategoriesResponse {
@@ -15217,11 +18059,20 @@ export interface MlGetCategoriesResponse {
 }
 
 export interface MlGetDataFrameAnalyticsRequest extends RequestBase {
+/** Identifier for the data frame analytics job. If you do not specify this option, the API returns information for the first hundred data frame analytics jobs. */
   id?: Id
+  /** Specifies what to do when the request: 1. Contains wildcard expressions and there are no data frame analytics jobs that match. 2. Contains the `_all` string or no identifiers and there are no matches. 3. Contains wildcard expressions and there are only partial matches. The default value returns an empty data_frame_analytics array when there are no matches and the subset of results when there are partial matches. If this parameter is `false`, the request returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** Skips the specified number of data frame analytics jobs. */
   from?: integer
+  /** Specifies the maximum number of data frame analytics jobs to obtain. */
   size?: integer
+  /** Indicates if certain fields should be removed from the configuration on retrieval. This allows the configuration to be in an acceptable format to be retrieved and then added to another cluster. */
   exclude_generated?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, allow_no_match?: never, from?: never, size?: never, exclude_generated?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, allow_no_match?: never, from?: never, size?: never, exclude_generated?: never }
 }
 
 export interface MlGetDataFrameAnalyticsResponse {
@@ -15230,11 +18081,20 @@ export interface MlGetDataFrameAnalyticsResponse {
 }
 
 export interface MlGetDataFrameAnalyticsStatsRequest extends RequestBase {
+/** Identifier for the data frame analytics job. If you do not specify this option, the API returns information for the first hundred data frame analytics jobs. */
   id?: Id
+  /** Specifies what to do when the request: 1. Contains wildcard expressions and there are no data frame analytics jobs that match. 2. Contains the `_all` string or no identifiers and there are no matches. 3. Contains wildcard expressions and there are only partial matches. The default value returns an empty data_frame_analytics array when there are no matches and the subset of results when there are partial matches. If this parameter is `false`, the request returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** Skips the specified number of data frame analytics jobs. */
   from?: integer
+  /** Specifies the maximum number of data frame analytics jobs to obtain. */
   size?: integer
+  /** Defines whether the stats response should be verbose. */
   verbose?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, allow_no_match?: never, from?: never, size?: never, verbose?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, allow_no_match?: never, from?: never, size?: never, verbose?: never }
 }
 
 export interface MlGetDataFrameAnalyticsStatsResponse {
@@ -15243,8 +18103,14 @@ export interface MlGetDataFrameAnalyticsStatsResponse {
 }
 
 export interface MlGetDatafeedStatsRequest extends RequestBase {
+/** Identifier for the datafeed. It can be a datafeed identifier or a wildcard expression. If you do not specify one of these options, the API returns information about all datafeeds. */
   datafeed_id?: Ids
+  /** Specifies what to do when the request: 1. Contains wildcard expressions and there are no datafeeds that match. 2. Contains the `_all` string or no identifiers and there are no matches. 3. Contains wildcard expressions and there are only partial matches. The default value is `true`, which returns an empty `datafeeds` array when there are no matches and the subset of results when there are partial matches. If this parameter is `false`, the request returns a `404` status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never }
 }
 
 export interface MlGetDatafeedStatsResponse {
@@ -15253,9 +18119,16 @@ export interface MlGetDatafeedStatsResponse {
 }
 
 export interface MlGetDatafeedsRequest extends RequestBase {
+/** Identifier for the datafeed. It can be a datafeed identifier or a wildcard expression. If you do not specify one of these options, the API returns information about all datafeeds. */
   datafeed_id?: Ids
+  /** Specifies what to do when the request: 1. Contains wildcard expressions and there are no datafeeds that match. 2. Contains the `_all` string or no identifiers and there are no matches. 3. Contains wildcard expressions and there are only partial matches. The default value is `true`, which returns an empty `datafeeds` array when there are no matches and the subset of results when there are partial matches. If this parameter is `false`, the request returns a `404` status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** Indicates if certain fields should be removed from the configuration on retrieval. This allows the configuration to be in an acceptable format to be retrieved and then added to another cluster. */
   exclude_generated?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, exclude_generated?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, exclude_generated?: never }
 }
 
 export interface MlGetDatafeedsResponse {
@@ -15264,9 +18137,16 @@ export interface MlGetDatafeedsResponse {
 }
 
 export interface MlGetFiltersRequest extends RequestBase {
+/** A string that uniquely identifies a filter. */
   filter_id?: Ids
+  /** Skips the specified number of filters. */
   from?: integer
+  /** Specifies the maximum number of filters to obtain. */
   size?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { filter_id?: never, from?: never, size?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { filter_id?: never, from?: never, size?: never }
 }
 
 export interface MlGetFiltersResponse {
@@ -15275,16 +18155,30 @@ export interface MlGetFiltersResponse {
 }
 
 export interface MlGetInfluencersRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** If true, the results are sorted in descending order. */
   desc?: boolean
+  /** Returns influencers with timestamps earlier than this time. The default value means it is unset and results are not limited to specific timestamps. */
   end?: DateTime
+  /** If true, the output excludes interim results. By default, interim results are included. */
   exclude_interim?: boolean
+  /** Returns influencers with anomaly scores greater than or equal to this value. */
   influencer_score?: double
+  /** Skips the specified number of influencers. */
   from?: integer
+  /** Specifies the maximum number of influencers to obtain. */
   size?: integer
+  /** Specifies the sort field for the requested influencers. By default, the influencers are sorted by the `influencer_score` value. */
   sort?: Field
+  /** Returns influencers with timestamps after this time. The default value means it is unset and results are not limited to specific timestamps. */
   start?: DateTime
+  /** Configures pagination. This parameter has the `from` and `size` properties. */
   page?: MlPage
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, desc?: never, end?: never, exclude_interim?: never, influencer_score?: never, from?: never, size?: never, sort?: never, start?: never, page?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, desc?: never, end?: never, exclude_interim?: never, influencer_score?: never, from?: never, size?: never, sort?: never, start?: never, page?: never }
 }
 
 export interface MlGetInfluencersResponse {
@@ -15293,8 +18187,14 @@ export interface MlGetInfluencersResponse {
 }
 
 export interface MlGetJobStatsRequest extends RequestBase {
+/** Identifier for the anomaly detection job. It can be a job identifier, a group name, a comma-separated list of jobs, or a wildcard expression. If you do not specify one of these options, the API returns information for all anomaly detection jobs. */
   job_id?: Id
+  /** Specifies what to do when the request: 1. Contains wildcard expressions and there are no jobs that match. 2. Contains the _all string or no identifiers and there are no matches. 3. Contains wildcard expressions and there are only partial matches. If `true`, the API returns an empty `jobs` array when there are no matches and the subset of results when there are partial matches. If `false`, the API returns a `404` status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, allow_no_match?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, allow_no_match?: never }
 }
 
 export interface MlGetJobStatsResponse {
@@ -15303,9 +18203,16 @@ export interface MlGetJobStatsResponse {
 }
 
 export interface MlGetJobsRequest extends RequestBase {
+/** Identifier for the anomaly detection job. It can be a job identifier, a group name, or a wildcard expression. If you do not specify one of these options, the API returns information for all anomaly detection jobs. */
   job_id?: Ids
+  /** Specifies what to do when the request: 1. Contains wildcard expressions and there are no jobs that match. 2. Contains the _all string or no identifiers and there are no matches. 3. Contains wildcard expressions and there are only partial matches. The default value is `true`, which returns an empty `jobs` array when there are no matches and the subset of results when there are partial matches. If this parameter is `false`, the request returns a `404` status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** Indicates if certain fields should be removed from the configuration on retrieval. This allows the configuration to be in an acceptable format to be retrieved and then added to another cluster. */
   exclude_generated?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, allow_no_match?: never, exclude_generated?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, allow_no_match?: never, exclude_generated?: never }
 }
 
 export interface MlGetJobsResponse {
@@ -15354,9 +18261,16 @@ export interface MlGetMemoryStatsMemory {
 }
 
 export interface MlGetMemoryStatsRequest extends RequestBase {
+/** The names of particular nodes in the cluster to target. For example, `nodeId1,nodeId2` or `ml:true` */
   node_id?: Id
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never, master_timeout?: never, timeout?: never }
 }
 
 export interface MlGetMemoryStatsResponse {
@@ -15366,9 +18280,16 @@ export interface MlGetMemoryStatsResponse {
 }
 
 export interface MlGetModelSnapshotUpgradeStatsRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** A numerical character string that uniquely identifies the model snapshot. You can get information for multiple snapshots by using a comma-separated list or a wildcard expression. You can get all snapshots by using `_all`, by specifying `*` as the snapshot ID, or by omitting the snapshot ID. */
   snapshot_id: Id
+  /** Specifies what to do when the request: - Contains wildcard expressions and there are no jobs that match. - Contains the _all string or no identifiers and there are no matches. - Contains wildcard expressions and there are only partial matches. The default value is true, which returns an empty jobs array when there are no matches and the subset of results when there are partial matches. If this parameter is false, the request returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, snapshot_id?: never, allow_no_match?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, snapshot_id?: never, allow_no_match?: never }
 }
 
 export interface MlGetModelSnapshotUpgradeStatsResponse {
@@ -15377,15 +18298,27 @@ export interface MlGetModelSnapshotUpgradeStatsResponse {
 }
 
 export interface MlGetModelSnapshotsRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** A numerical character string that uniquely identifies the model snapshot. You can get information for multiple snapshots by using a comma-separated list or a wildcard expression. You can get all snapshots by using `_all`, by specifying `*` as the snapshot ID, or by omitting the snapshot ID. */
   snapshot_id?: Id
+  /** Skips the specified number of snapshots. */
   from?: integer
+  /** Specifies the maximum number of snapshots to obtain. */
   size?: integer
+  /** Refer to the description for the `desc` query parameter. */
   desc?: boolean
+  /** Refer to the description for the `end` query parameter. */
   end?: DateTime
   page?: MlPage
+  /** Refer to the description for the `sort` query parameter. */
   sort?: Field
+  /** Refer to the description for the `start` query parameter. */
   start?: DateTime
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, snapshot_id?: never, from?: never, size?: never, desc?: never, end?: never, page?: never, sort?: never, start?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, snapshot_id?: never, from?: never, size?: never, desc?: never, end?: never, page?: never, sort?: never, start?: never }
 }
 
 export interface MlGetModelSnapshotsResponse {
@@ -15394,14 +18327,26 @@ export interface MlGetModelSnapshotsResponse {
 }
 
 export interface MlGetOverallBucketsRequest extends RequestBase {
+/** Identifier for the anomaly detection job. It can be a job identifier, a group name, a comma-separated list of jobs or groups, or a wildcard expression. You can summarize the bucket results for all anomaly detection jobs by using `_all` or by specifying `*` as the `<job_id>`. */
   job_id: Id
+  /** Refer to the description for the `allow_no_match` query parameter. */
   allow_no_match?: boolean
+  /** Refer to the description for the `bucket_span` query parameter. */
   bucket_span?: Duration
+  /** Refer to the description for the `end` query parameter. */
   end?: DateTime
+  /** Refer to the description for the `exclude_interim` query parameter. */
   exclude_interim?: boolean
+  /** Refer to the description for the `overall_score` query parameter. */
   overall_score?: double | string
+  /** Refer to the description for the `start` query parameter. */
   start?: DateTime
+  /** Refer to the description for the `top_n` query parameter. */
   top_n?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, allow_no_match?: never, bucket_span?: never, end?: never, exclude_interim?: never, overall_score?: never, start?: never, top_n?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, allow_no_match?: never, bucket_span?: never, end?: never, exclude_interim?: never, overall_score?: never, start?: never, top_n?: never }
 }
 
 export interface MlGetOverallBucketsResponse {
@@ -15410,16 +18355,29 @@ export interface MlGetOverallBucketsResponse {
 }
 
 export interface MlGetRecordsRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** Skips the specified number of records. */
   from?: integer
+  /** Specifies the maximum number of records to obtain. */
   size?: integer
+  /** Refer to the description for the `desc` query parameter. */
   desc?: boolean
+  /** Refer to the description for the `end` query parameter. */
   end?: DateTime
+  /** Refer to the description for the `exclude_interim` query parameter. */
   exclude_interim?: boolean
   page?: MlPage
+  /** Refer to the description for the `record_score` query parameter. */
   record_score?: double
+  /** Refer to the description for the `sort` query parameter. */
   sort?: Field
+  /** Refer to the description for the `start` query parameter. */
   start?: DateTime
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, from?: never, size?: never, desc?: never, end?: never, exclude_interim?: never, page?: never, record_score?: never, sort?: never, start?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, from?: never, size?: never, desc?: never, end?: never, exclude_interim?: never, page?: never, record_score?: never, sort?: never, start?: never }
 }
 
 export interface MlGetRecordsResponse {
@@ -15428,15 +18386,28 @@ export interface MlGetRecordsResponse {
 }
 
 export interface MlGetTrainedModelsRequest extends RequestBase {
+/** The unique identifier of the trained model or a model alias. You can get information for multiple trained models in a single API request by using a comma-separated list of model IDs or a wildcard expression. */
   model_id?: Ids
+  /** Specifies what to do when the request: - Contains wildcard expressions and there are no models that match. - Contains the _all string or no identifiers and there are no matches. - Contains wildcard expressions and there are only partial matches. If true, it returns an empty array when there are no matches and the subset of results when there are partial matches. */
   allow_no_match?: boolean
+  /** Specifies whether the included model definition should be returned as a JSON map (true) or in a custom compressed format (false). */
   decompress_definition?: boolean
+  /** Indicates if certain fields should be removed from the configuration on retrieval. This allows the configuration to be in an acceptable format to be retrieved and then added to another cluster. */
   exclude_generated?: boolean
+  /** Skips the specified number of models. */
   from?: integer
+  /** A comma delimited string of optional fields to include in the response body. */
   include?: MlInclude
+  /** parameter is deprecated! Use [include=definition] instead */
   include_model_definition?: boolean
+  /** Specifies the maximum number of models to obtain. */
   size?: integer
+  /** A comma delimited string of tags. A trained model can have many tags, or none. When supplied, only trained models that contain all the supplied tags are returned. */
   tags?: string | string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_id?: never, allow_no_match?: never, decompress_definition?: never, exclude_generated?: never, from?: never, include?: never, include_model_definition?: never, size?: never, tags?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_id?: never, allow_no_match?: never, decompress_definition?: never, exclude_generated?: never, from?: never, include?: never, include_model_definition?: never, size?: never, tags?: never }
 }
 
 export interface MlGetTrainedModelsResponse {
@@ -15445,10 +18416,18 @@ export interface MlGetTrainedModelsResponse {
 }
 
 export interface MlGetTrainedModelsStatsRequest extends RequestBase {
+/** The unique identifier of the trained model or a model alias. It can be a comma-separated list or a wildcard expression. */
   model_id?: Ids
+  /** Specifies what to do when the request: - Contains wildcard expressions and there are no models that match. - Contains the _all string or no identifiers and there are no matches. - Contains wildcard expressions and there are only partial matches. If true, it returns an empty array when there are no matches and the subset of results when there are partial matches. */
   allow_no_match?: boolean
+  /** Skips the specified number of models. */
   from?: integer
+  /** Specifies the maximum number of models to obtain. */
   size?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_id?: never, allow_no_match?: never, from?: never, size?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_id?: never, allow_no_match?: never, from?: never, size?: never }
 }
 
 export interface MlGetTrainedModelsStatsResponse {
@@ -15457,10 +18436,18 @@ export interface MlGetTrainedModelsStatsResponse {
 }
 
 export interface MlInferTrainedModelRequest extends RequestBase {
+/** The unique identifier of the trained model. */
   model_id: Id
+  /** Controls the amount of time to wait for inference results. */
   timeout?: Duration
+  /** An array of objects to pass to the model for inference. The objects should contain a fields matching your configured trained model input. Typically, for NLP models, the field name is `text_field`. Currently, for NLP models, only a single value is allowed. */
   docs: Record<string, any>[]
+  /** The inference configuration updates to apply on the API call */
   inference_config?: MlInferenceConfigUpdateContainer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_id?: never, timeout?: never, docs?: never, inference_config?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_id?: never, timeout?: never, docs?: never, inference_config?: never }
 }
 
 export interface MlInferTrainedModelResponse {
@@ -15498,6 +18485,10 @@ export interface MlInfoNativeCode {
 }
 
 export interface MlInfoRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface MlInfoResponse {
@@ -15508,8 +18499,14 @@ export interface MlInfoResponse {
 }
 
 export interface MlOpenJobRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** Refer to the description for the `timeout` query parameter. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, timeout?: never }
 }
 
 export interface MlOpenJobResponse {
@@ -15518,8 +18515,14 @@ export interface MlOpenJobResponse {
 }
 
 export interface MlPostCalendarEventsRequest extends RequestBase {
+/** A string that uniquely identifies a calendar. */
   calendar_id: Id
+  /** A list of one of more scheduled events. The event’s start and end times can be specified as integer milliseconds since the epoch or as a string in ISO 8601 format. */
   events: MlCalendarEvent[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { calendar_id?: never, events?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { calendar_id?: never, events?: never }
 }
 
 export interface MlPostCalendarEventsResponse {
@@ -15527,10 +18530,17 @@ export interface MlPostCalendarEventsResponse {
 }
 
 export interface MlPostDataRequest<TData = unknown> extends RequestBase {
+/** Identifier for the anomaly detection job. The job must have a state of open to receive and process the data. */
   job_id: Id
+  /** Specifies the end of the bucket resetting range. */
   reset_end?: DateTime
+  /** Specifies the start of the bucket resetting range. */
   reset_start?: DateTime
   data?: TData[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, reset_end?: never, reset_start?: never, data?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, reset_end?: never, reset_start?: never, data?: never }
 }
 
 export interface MlPostDataResponse {
@@ -15563,8 +18573,14 @@ export interface MlPreviewDataFrameAnalyticsDataframePreviewConfig {
 }
 
 export interface MlPreviewDataFrameAnalyticsRequest extends RequestBase {
+/** Identifier for the data frame analytics job. */
   id?: Id
+  /** A data frame analytics config as described in create data frame analytics jobs. Note that `id` and `dest` don’t need to be provided in the context of this API. */
   config?: MlPreviewDataFrameAnalyticsDataframePreviewConfig
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, config?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, config?: never }
 }
 
 export interface MlPreviewDataFrameAnalyticsResponse {
@@ -15572,19 +18588,35 @@ export interface MlPreviewDataFrameAnalyticsResponse {
 }
 
 export interface MlPreviewDatafeedRequest extends RequestBase {
+/** A numerical character string that uniquely identifies the datafeed. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric characters. NOTE: If you use this path parameter, you cannot provide datafeed or anomaly detection job configuration details in the request body. */
   datafeed_id?: Id
+  /** The start time from where the datafeed preview should begin */
   start?: DateTime
+  /** The end time when the datafeed preview should stop */
   end?: DateTime
+  /** The datafeed definition to preview. */
   datafeed_config?: MlDatafeedConfig
+  /** The configuration details for the anomaly detection job that is associated with the datafeed. If the `datafeed_config` object does not include a `job_id` that references an existing anomaly detection job, you must supply this `job_config` object. If you include both a `job_id` and a `job_config`, the latter information is used. You cannot specify a `job_config` object unless you also supply a `datafeed_config` object. */
   job_config?: MlJobConfig
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { datafeed_id?: never, start?: never, end?: never, datafeed_config?: never, job_config?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { datafeed_id?: never, start?: never, end?: never, datafeed_config?: never, job_config?: never }
 }
 
 export type MlPreviewDatafeedResponse<TDocument = unknown> = TDocument[]
 
 export interface MlPutCalendarRequest extends RequestBase {
+/** A string that uniquely identifies a calendar. */
   calendar_id: Id
+  /** An array of anomaly detection job identifiers. */
   job_ids?: Id[]
+  /** A description of the calendar. */
   description?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { calendar_id?: never, job_ids?: never, description?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { calendar_id?: never, job_ids?: never, description?: never }
 }
 
 export interface MlPutCalendarResponse {
@@ -15594,8 +18626,14 @@ export interface MlPutCalendarResponse {
 }
 
 export interface MlPutCalendarJobRequest extends RequestBase {
+/** A string that uniquely identifies a calendar. */
   calendar_id: Id
+  /** An identifier for the anomaly detection jobs. It can be a job identifier, a group name, or a comma-separated list of jobs or groups. */
   job_id: Ids
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { calendar_id?: never, job_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { calendar_id?: never, job_id?: never }
 }
 
 export interface MlPutCalendarJobResponse {
@@ -15605,18 +18643,31 @@ export interface MlPutCalendarJobResponse {
 }
 
 export interface MlPutDataFrameAnalyticsRequest extends RequestBase {
+/** Identifier for the data frame analytics job. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric characters. */
   id: Id
+  /** Specifies whether this job can start when there is insufficient machine learning node capacity for it to be immediately assigned to a node. If set to `false` and a machine learning node with capacity to run the job cannot be immediately found, the API returns an error. If set to `true`, the API does not return an error; the job waits in the `starting` state until sufficient machine learning node capacity is available. This behavior is also affected by the cluster-wide `xpack.ml.max_lazy_ml_nodes` setting. */
   allow_lazy_start?: boolean
+  /** The analysis configuration, which contains the information necessary to perform one of the following types of analysis: classification, outlier detection, or regression. */
   analysis: MlDataframeAnalysisContainer
+  /** Specifies `includes` and/or `excludes` patterns to select which fields will be included in the analysis. The patterns specified in `excludes` are applied last, therefore `excludes` takes precedence. In other words, if the same field is specified in both `includes` and `excludes`, then the field will not be included in the analysis. If `analyzed_fields` is not set, only the relevant fields will be included. For example, all the numeric fields for outlier detection. The supported fields vary for each type of analysis. Outlier detection requires numeric or `boolean` data to analyze. The algorithms don’t support missing values therefore fields that have data types other than numeric or boolean are ignored. Documents where included fields contain missing values, null values, or an array are also ignored. Therefore the `dest` index may contain documents that don’t have an outlier score. Regression supports fields that are numeric, `boolean`, `text`, `keyword`, and `ip` data types. It is also tolerant of missing values. Fields that are supported are included in the analysis, other fields are ignored. Documents where included fields contain an array with two or more values are also ignored. Documents in the `dest` index that don’t contain a results field are not included in the regression analysis. Classification supports fields that are numeric, `boolean`, `text`, `keyword`, and `ip` data types. It is also tolerant of missing values. Fields that are supported are included in the analysis, other fields are ignored. Documents where included fields contain an array with two or more values are also ignored. Documents in the `dest` index that don’t contain a results field are not included in the classification analysis. Classification analysis can be improved by mapping ordinal variable values to a single number. For example, in case of age ranges, you can model the values as `0-14 = 0`, `15-24 = 1`, `25-34 = 2`, and so on. */
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
+  /** A description of the job. */
   description?: string
+  /** The destination configuration. */
   dest: MlDataframeAnalyticsDestination
+  /** The maximum number of threads to be used by the analysis. Using more threads may decrease the time necessary to complete the analysis at the cost of using more CPU. Note that the process may use additional threads for operational functionality other than the analysis itself. */
   max_num_threads?: integer
   _meta?: Metadata
+  /** The approximate maximum amount of memory resources that are permitted for analytical processing. If your `elasticsearch.yml` file contains an `xpack.ml.max_model_memory_limit` setting, an error occurs when you try to create data frame analytics jobs that have `model_memory_limit` values greater than that setting. */
   model_memory_limit?: string
+  /** The configuration of how to source the analysis data. */
   source: MlDataframeAnalyticsSource
   headers?: HttpHeaders
   version?: VersionString
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, allow_lazy_start?: never, analysis?: never, analyzed_fields?: never, description?: never, dest?: never, max_num_threads?: never, _meta?: never, model_memory_limit?: never, source?: never, headers?: never, version?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, allow_lazy_start?: never, analysis?: never, analyzed_fields?: never, description?: never, dest?: never, max_num_threads?: never, _meta?: never, model_memory_limit?: never, source?: never, headers?: never, version?: never }
 }
 
 export interface MlPutDataFrameAnalyticsResponse {
@@ -15636,29 +18687,53 @@ export interface MlPutDataFrameAnalyticsResponse {
 }
 
 export interface MlPutDatafeedRequest extends RequestBase {
+/** A numerical character string that uniquely identifies the datafeed. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric characters. */
   datafeed_id: Id
+  /** If true, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the `_all` string or when no indices are specified. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values. */
   expand_wildcards?: ExpandWildcards
+  /** If true, concrete, expanded, or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
+  /** If true, unavailable indices (missing or closed) are ignored. */
   ignore_unavailable?: boolean
+  /** If set, the datafeed performs aggregation searches. Support for aggregations is limited and should be used only with low cardinality data. */
   aggregations?: Record<string, AggregationsAggregationContainer>
   /** @alias aggregations */
+  /** If set, the datafeed performs aggregation searches. Support for aggregations is limited and should be used only with low cardinality data. */
   aggs?: Record<string, AggregationsAggregationContainer>
+  /** Datafeeds might be required to search over long time periods, for several months or years. This search is split into time chunks in order to ensure the load on Elasticsearch is managed. Chunking configuration controls how the size of these time chunks are calculated; it is an advanced configuration option. */
   chunking_config?: MlChunkingConfig
+  /** Specifies whether the datafeed checks for missing data and the size of the window. The datafeed can optionally search over indices that have already been read in an effort to determine whether any data has subsequently been added to the index. If missing data is found, it is a good indication that the `query_delay` is set too low and the data is being indexed after the datafeed has passed that moment in time. This check runs only on real-time datafeeds. */
   delayed_data_check_config?: MlDelayedDataCheckConfig
+  /** The interval at which scheduled queries are made while the datafeed runs in real time. The default value is either the bucket span for short bucket spans, or, for longer bucket spans, a sensible fraction of the bucket span. When `frequency` is shorter than the bucket span, interim results for the last (partial) bucket are written then eventually overwritten by the full bucket results. If the datafeed uses aggregations, this value must be divisible by the interval of the date histogram aggregation. */
   frequency?: Duration
+  /** An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the machine learning nodes must have the `remote_cluster_client` role. */
   indices?: Indices
   /** @alias indices */
+  /** An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the machine learning nodes must have the `remote_cluster_client` role. */
   indexes?: Indices
+  /** Specifies index expansion options that are used during search */
   indices_options?: IndicesOptions
+  /** Identifier for the anomaly detection job. */
   job_id?: Id
+  /** If a real-time datafeed has never seen any data (including during any initial training period), it automatically stops and closes the associated job after this many real-time searches return no documents. In other words, it stops after `frequency` times `max_empty_searches` of real-time operation. If not set, a datafeed with no end time that sees no data remains started until it is explicitly stopped. By default, it is not set. */
   max_empty_searches?: integer
+  /** The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an Elasticsearch search POST body. All the options that are supported by Elasticsearch can be used, as this object is passed verbatim to Elasticsearch. */
   query?: QueryDslQueryContainer
+  /** The number of seconds behind real time that data is queried. For example, if data from 10:04 a.m. might not be searchable in Elasticsearch until 10:06 a.m., set this property to 120 seconds. The default value is randomly selected between `60s` and `120s`. This randomness improves the query performance when there are multiple jobs running on the same node. */
   query_delay?: Duration
+  /** Specifies runtime fields for the datafeed search. */
   runtime_mappings?: MappingRuntimeFields
+  /** Specifies scripts that evaluate custom expressions and returns script fields to the datafeed. The detector configuration objects in a job can contain functions that use these script fields. */
   script_fields?: Record<string, ScriptField>
+  /** The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations. The maximum value is the value of `index.max_result_window`, which is 10,000 by default. */
   scroll_size?: integer
   headers?: HttpHeaders
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, headers?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, headers?: never }
 }
 
 export interface MlPutDatafeedResponse {
@@ -15680,9 +18755,16 @@ export interface MlPutDatafeedResponse {
 }
 
 export interface MlPutFilterRequest extends RequestBase {
+/** A string that uniquely identifies a filter. */
   filter_id: Id
+  /** A description of the filter. */
   description?: string
+  /** The items of the filter. A wildcard `*` can be used at the beginning or the end of an item. Up to 10000 items are allowed in each filter. */
   items?: string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { filter_id?: never, description?: never, items?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { filter_id?: never, description?: never, items?: never }
 }
 
 export interface MlPutFilterResponse {
@@ -15692,26 +18774,50 @@ export interface MlPutFilterResponse {
 }
 
 export interface MlPutJobRequest extends RequestBase {
+/** The identifier for the anomaly detection job. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric characters. */
   job_id: Id
+  /** If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the `_all` string or when no indices are specified. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values. Valid values are: * `all`: Match any data stream or index, including hidden ones. * `closed`: Match closed, non-hidden indices. Also matches any non-hidden data stream. Data streams cannot be closed. * `hidden`: Match hidden data streams and hidden indices. Must be combined with `open`, `closed`, or both. * `none`: Wildcard patterns are not accepted. * `open`: Match open, non-hidden indices. Also matches any non-hidden data stream. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
+  /** If `true`, unavailable indices (missing or closed) are ignored. */
   ignore_unavailable?: boolean
+  /** Advanced configuration option. Specifies whether this job can open when there is insufficient machine learning node capacity for it to be immediately assigned to a node. By default, if a machine learning node with capacity to run the job cannot immediately be found, the open anomaly detection jobs API returns an error. However, this is also subject to the cluster-wide `xpack.ml.max_lazy_ml_nodes` setting. If this option is set to true, the open anomaly detection jobs API does not return an error and the job waits in the opening state until sufficient machine learning node capacity is available. */
   allow_lazy_open?: boolean
+  /** Specifies how to analyze the data. After you create a job, you cannot change the analysis configuration; all the properties are informational. */
   analysis_config: MlAnalysisConfig
+  /** Limits can be applied for the resources required to hold the mathematical models in memory. These limits are approximate and can be set per job. They do not control the memory used by other processes, for example the Elasticsearch Java processes. */
   analysis_limits?: MlAnalysisLimits
+  /** Advanced configuration option. The time between each periodic persistence of the model. The default value is a randomized value between 3 to 4 hours, which avoids all jobs persisting at exactly the same time. The smallest allowed value is 1 hour. For very large models (several GB), persistence could take 10-20 minutes, so do not set the `background_persist_interval` value too low. */
   background_persist_interval?: Duration
+  /** Advanced configuration option. Contains custom meta data about the job. */
   custom_settings?: MlCustomSettings
+  /** Advanced configuration option, which affects the automatic removal of old model snapshots for this job. It specifies a period of time (in days) after which only the first snapshot per day is retained. This period is relative to the timestamp of the most recent snapshot for this job. Valid values range from 0 to `model_snapshot_retention_days`. */
   daily_model_snapshot_retention_after_days?: long
+  /** Defines the format of the input data when you send data to the job by using the post data API. Note that when configure a datafeed, these properties are automatically set. When data is received via the post data API, it is not stored in Elasticsearch. Only the results for anomaly detection are retained. */
   data_description: MlDataDescription
+  /** Defines a datafeed for the anomaly detection job. If Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead. */
   datafeed_config?: MlDatafeedConfig
+  /** A description of the job. */
   description?: string
+  /** A list of job groups. A job can belong to no groups or many. */
   groups?: string[]
+  /** This advanced configuration option stores model information along with the results. It provides a more detailed view into anomaly detection. If you enable model plot it can add considerable overhead to the performance of the system; it is not feasible for jobs with many entities. Model plot provides a simplified and indicative view of the model and its bounds. It does not display complex features such as multivariate correlations or multimodal data. As such, anomalies may occasionally be reported which cannot be seen in the model plot. Model plot config can be configured when the job is created or updated later. It must be disabled if performance issues are experienced. */
   model_plot_config?: MlModelPlotConfig
+  /** Advanced configuration option, which affects the automatic removal of old model snapshots for this job. It specifies the maximum period of time (in days) that snapshots are retained. This period is relative to the timestamp of the most recent snapshot for this job. By default, snapshots ten days older than the newest snapshot are deleted. */
   model_snapshot_retention_days?: long
+  /** Advanced configuration option. The period over which adjustments to the score are applied, as new data is seen. The default value is the longer of 30 days or 100 bucket spans. */
   renormalization_window_days?: long
+  /** A text string that affects the name of the machine learning results index. By default, the job generates an index named `.ml-anomalies-shared`. */
   results_index_name?: IndexName
+  /** Advanced configuration option. The period of time (in days) that results are retained. Age is calculated relative to the timestamp of the latest bucket result. If this property has a non-null value, once per day at 00:30 (server time), results that are the specified number of days older than the latest bucket result are deleted from Elasticsearch. The default value is null, which means all results are retained. Annotations generated by the system also count as results for retention purposes; they are deleted after the same number of days as results. Annotations added by users are retained forever. */
   results_retention_days?: long
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, allow_lazy_open?: never, analysis_config?: never, analysis_limits?: never, background_persist_interval?: never, custom_settings?: never, daily_model_snapshot_retention_after_days?: never, data_description?: never, datafeed_config?: never, description?: never, groups?: never, model_plot_config?: never, model_snapshot_retention_days?: never, renormalization_window_days?: never, results_index_name?: never, results_retention_days?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, allow_lazy_open?: never, analysis_config?: never, analysis_limits?: never, background_persist_interval?: never, custom_settings?: never, daily_model_snapshot_retention_after_days?: never, data_description?: never, datafeed_config?: never, description?: never, groups?: never, model_plot_config?: never, model_snapshot_retention_days?: never, renormalization_window_days?: never, results_index_name?: never, results_retention_days?: never }
 }
 
 export interface MlPutJobResponse {
@@ -15779,20 +18885,38 @@ export interface MlPutTrainedModelPreprocessor {
 }
 
 export interface MlPutTrainedModelRequest extends RequestBase {
+/** The unique identifier of the trained model. */
   model_id: Id
+  /** If set to `true` and a `compressed_definition` is provided, the request defers definition decompression and skips relevant validations. */
   defer_definition_decompression?: boolean
+  /** Whether to wait for all child operations (e.g. model download) to complete. */
   wait_for_completion?: boolean
+  /** The compressed (GZipped and Base64 encoded) inference definition of the model. If compressed_definition is specified, then definition cannot be specified. */
   compressed_definition?: string
+  /** The inference definition for the model. If definition is specified, then compressed_definition cannot be specified. */
   definition?: MlPutTrainedModelDefinition
+  /** A human-readable description of the inference trained model. */
   description?: string
+  /** The default configuration for inference. This can be either a regression or classification configuration. It must match the underlying definition.trained_model's target_type. For pre-packaged models such as ELSER the config is not required. */
   inference_config?: MlInferenceConfigCreateContainer
+  /** The input field names for the model definition. */
   input?: MlPutTrainedModelInput
+  /** An object map that contains metadata about the model. */
   metadata?: any
+  /** The model type. */
   model_type?: MlTrainedModelType
+  /** The estimated memory usage in bytes to keep the trained model in memory. This property is supported only if defer_definition_decompression is true or the model definition is not supplied. */
   model_size_bytes?: long
+  /** The platform architecture (if applicable) of the trained mode. If the model only works on one platform, because it is heavily optimized for a particular processor architecture and OS combination, then this field specifies which. The format of the string must match the platform identifiers used by Elasticsearch, so one of, `linux-x86_64`, `linux-aarch64`, `darwin-x86_64`, `darwin-aarch64`, or `windows-x86_64`. For portable models (those that work independent of processor architecture or OS features), leave this field unset. */
   platform_architecture?: string
+  /** An array of tags to organize the model. */
   tags?: string[]
+  /** Optional prefix strings applied at inference */
   prefix_strings?: MlTrainedModelPrefixStrings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_id?: never, defer_definition_decompression?: never, wait_for_completion?: never, compressed_definition?: never, definition?: never, description?: never, inference_config?: never, input?: never, metadata?: never, model_type?: never, model_size_bytes?: never, platform_architecture?: never, tags?: never, prefix_strings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_id?: never, defer_definition_decompression?: never, wait_for_completion?: never, compressed_definition?: never, definition?: never, description?: never, inference_config?: never, input?: never, metadata?: never, model_type?: never, model_size_bytes?: never, platform_architecture?: never, tags?: never, prefix_strings?: never }
 }
 
 export type MlPutTrainedModelResponse = MlTrainedModelConfig
@@ -15834,44 +18958,82 @@ export interface MlPutTrainedModelWeights {
 }
 
 export interface MlPutTrainedModelAliasRequest extends RequestBase {
+/** The alias to create or update. This value cannot end in numbers. */
   model_alias: Name
+  /** The identifier for the trained model that the alias refers to. */
   model_id: Id
+  /** Specifies whether the alias gets reassigned to the specified trained model if it is already assigned to a different model. If the alias is already assigned and this parameter is false, the API returns an error. */
   reassign?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_alias?: never, model_id?: never, reassign?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_alias?: never, model_id?: never, reassign?: never }
 }
 
 export type MlPutTrainedModelAliasResponse = AcknowledgedResponseBase
 
 export interface MlPutTrainedModelDefinitionPartRequest extends RequestBase {
+/** The unique identifier of the trained model. */
   model_id: Id
+  /** The definition part number. When the definition is loaded for inference the definition parts are streamed in the order of their part number. The first part must be `0` and the final part must be `total_parts - 1`. */
   part: integer
+  /** The definition part for the model. Must be a base64 encoded string. */
   definition: string
+  /** The total uncompressed definition length in bytes. Not base64 encoded. */
   total_definition_length: long
+  /** The total number of parts that will be uploaded. Must be greater than 0. */
   total_parts: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_id?: never, part?: never, definition?: never, total_definition_length?: never, total_parts?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_id?: never, part?: never, definition?: never, total_definition_length?: never, total_parts?: never }
 }
 
 export type MlPutTrainedModelDefinitionPartResponse = AcknowledgedResponseBase
 
 export interface MlPutTrainedModelVocabularyRequest extends RequestBase {
+/** The unique identifier of the trained model. */
   model_id: Id
+  /** The model vocabulary, which must not be empty. */
   vocabulary: string[]
+  /** The optional model merges if required by the tokenizer. */
   merges?: string[]
+  /** The optional vocabulary value scores if required by the tokenizer. */
   scores?: double[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_id?: never, vocabulary?: never, merges?: never, scores?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_id?: never, vocabulary?: never, merges?: never, scores?: never }
 }
 
 export type MlPutTrainedModelVocabularyResponse = AcknowledgedResponseBase
 
 export interface MlResetJobRequest extends RequestBase {
+/** The ID of the job to reset. */
   job_id: Id
+  /** Should this request wait until the operation has completed before returning. */
   wait_for_completion?: boolean
+  /** Specifies whether annotations that have been added by the user should be deleted along with any auto-generated annotations when the job is reset. */
   delete_user_annotations?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, wait_for_completion?: never, delete_user_annotations?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, wait_for_completion?: never, delete_user_annotations?: never }
 }
 
 export type MlResetJobResponse = AcknowledgedResponseBase
 
 export interface MlRevertModelSnapshotRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** You can specify `empty` as the <snapshot_id>. Reverting to the empty snapshot means the anomaly detection job starts learning a new model from scratch when it is started. */
   snapshot_id: Id
+  /** Refer to the description for the `delete_intervening_results` query parameter. */
   delete_intervening_results?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, snapshot_id?: never, delete_intervening_results?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, snapshot_id?: never, delete_intervening_results?: never }
 }
 
 export interface MlRevertModelSnapshotResponse {
@@ -15879,15 +19041,27 @@ export interface MlRevertModelSnapshotResponse {
 }
 
 export interface MlSetUpgradeModeRequest extends RequestBase {
+/** When `true`, it enables `upgrade_mode` which temporarily halts all job and datafeed tasks and prohibits new job and datafeed tasks from starting. */
   enabled?: boolean
+  /** The time to wait for the request to be completed. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { enabled?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { enabled?: never, timeout?: never }
 }
 
 export type MlSetUpgradeModeResponse = AcknowledgedResponseBase
 
 export interface MlStartDataFrameAnalyticsRequest extends RequestBase {
+/** Identifier for the data frame analytics job. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric characters. */
   id: Id
+  /** Controls the amount of time to wait until the data frame analytics job starts. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, timeout?: never }
 }
 
 export interface MlStartDataFrameAnalyticsResponse {
@@ -15896,10 +19070,18 @@ export interface MlStartDataFrameAnalyticsResponse {
 }
 
 export interface MlStartDatafeedRequest extends RequestBase {
+/** A numerical character string that uniquely identifies the datafeed. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric characters. */
   datafeed_id: Id
+  /** Refer to the description for the `end` query parameter. */
   end?: DateTime
+  /** Refer to the description for the `start` query parameter. */
   start?: DateTime
+  /** Refer to the description for the `timeout` query parameter. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { datafeed_id?: never, end?: never, start?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { datafeed_id?: never, end?: never, start?: never, timeout?: never }
 }
 
 export interface MlStartDatafeedResponse {
@@ -15908,15 +19090,28 @@ export interface MlStartDatafeedResponse {
 }
 
 export interface MlStartTrainedModelDeploymentRequest extends RequestBase {
+/** The unique identifier of the trained model. Currently, only PyTorch models are supported. */
   model_id: Id
+  /** The inference cache size (in memory outside the JVM heap) per node for the model. The default value is the same size as the `model_size_bytes`. To disable the cache, `0b` can be provided. */
   cache_size?: ByteSize
+  /** A unique identifier for the deployment of the model. */
   deployment_id?: string
+  /** The number of model allocations on each node where the model is deployed. All allocations on a node share the same copy of the model in memory but use a separate set of threads to evaluate the model. Increasing this value generally increases the throughput. If this setting is greater than the number of hardware threads it will automatically be changed to a value less than the number of hardware threads. */
   number_of_allocations?: integer
+  /** The deployment priority. */
   priority?: MlTrainingPriority
+  /** Specifies the number of inference requests that are allowed in the queue. After the number of requests exceeds this value, new requests are rejected with a 429 error. */
   queue_capacity?: integer
+  /** Sets the number of threads used by each model allocation during inference. This generally increases the inference speed. The inference process is a compute-bound process; any number greater than the number of available hardware threads on the machine does not increase the inference speed. If this setting is greater than the number of hardware threads it will automatically be changed to a value less than the number of hardware threads. */
   threads_per_allocation?: integer
+  /** Specifies the amount of time to wait for the model to deploy. */
   timeout?: Duration
+  /** Specifies the allocation status to wait for before returning. */
   wait_for?: MlDeploymentAllocationState
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_id?: never, cache_size?: never, deployment_id?: never, number_of_allocations?: never, priority?: never, queue_capacity?: never, threads_per_allocation?: never, timeout?: never, wait_for?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_id?: never, cache_size?: never, deployment_id?: never, number_of_allocations?: never, priority?: never, queue_capacity?: never, threads_per_allocation?: never, timeout?: never, wait_for?: never }
 }
 
 export interface MlStartTrainedModelDeploymentResponse {
@@ -15924,10 +19119,18 @@ export interface MlStartTrainedModelDeploymentResponse {
 }
 
 export interface MlStopDataFrameAnalyticsRequest extends RequestBase {
+/** Identifier for the data frame analytics job. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric characters. */
   id: Id
+  /** Specifies what to do when the request: 1. Contains wildcard expressions and there are no data frame analytics jobs that match. 2. Contains the _all string or no identifiers and there are no matches. 3. Contains wildcard expressions and there are only partial matches. The default value is true, which returns an empty data_frame_analytics array when there are no matches and the subset of results when there are partial matches. If this parameter is false, the request returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** If true, the data frame analytics job is stopped forcefully. */
   force?: boolean
+  /** Controls the amount of time to wait until the data frame analytics job stops. Defaults to 20 seconds. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, allow_no_match?: never, force?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, allow_no_match?: never, force?: never, timeout?: never }
 }
 
 export interface MlStopDataFrameAnalyticsResponse {
@@ -15935,10 +19138,18 @@ export interface MlStopDataFrameAnalyticsResponse {
 }
 
 export interface MlStopDatafeedRequest extends RequestBase {
+/** Identifier for the datafeed. You can stop multiple datafeeds in a single API request by using a comma-separated list of datafeeds or a wildcard expression. You can close all datafeeds by using `_all` or by specifying `*` as the identifier. */
   datafeed_id: Id
+  /** Refer to the description for the `allow_no_match` query parameter. */
   allow_no_match?: boolean
+  /** Refer to the description for the `force` query parameter. */
   force?: boolean
+  /** Refer to the description for the `timeout` query parameter. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, force?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, force?: never, timeout?: never }
 }
 
 export interface MlStopDatafeedResponse {
@@ -15946,9 +19157,16 @@ export interface MlStopDatafeedResponse {
 }
 
 export interface MlStopTrainedModelDeploymentRequest extends RequestBase {
+/** The unique identifier of the trained model. */
   model_id: Id
+  /** Specifies what to do when the request: contains wildcard expressions and there are no deployments that match; contains the `_all` string or no identifiers and there are no matches; or contains wildcard expressions and there are only partial matches. By default, it returns an empty array when there are no matches and the subset of results when there are partial matches. If `false`, the request returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** Forcefully stops the deployment, even if it is used by ingest pipelines. You can't use these pipelines until you restart the model deployment. */
   force?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_id?: never, allow_no_match?: never, force?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_id?: never, allow_no_match?: never, force?: never }
 }
 
 export interface MlStopTrainedModelDeploymentResponse {
@@ -15956,11 +19174,20 @@ export interface MlStopTrainedModelDeploymentResponse {
 }
 
 export interface MlUpdateDataFrameAnalyticsRequest extends RequestBase {
+/** Identifier for the data frame analytics job. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric characters. */
   id: Id
+  /** A description of the job. */
   description?: string
+  /** The approximate maximum amount of memory resources that are permitted for analytical processing. If your `elasticsearch.yml` file contains an `xpack.ml.max_model_memory_limit` setting, an error occurs when you try to create data frame analytics jobs that have `model_memory_limit` values greater than that setting. */
   model_memory_limit?: string
+  /** The maximum number of threads to be used by the analysis. Using more threads may decrease the time necessary to complete the analysis at the cost of using more CPU. Note that the process may use additional threads for operational functionality other than the analysis itself. */
   max_num_threads?: integer
+  /** Specifies whether this job can start when there is insufficient machine learning node capacity for it to be immediately assigned to a node. */
   allow_lazy_start?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, description?: never, model_memory_limit?: never, max_num_threads?: never, allow_lazy_start?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, description?: never, model_memory_limit?: never, max_num_threads?: never, allow_lazy_start?: never }
 }
 
 export interface MlUpdateDataFrameAnalyticsResponse {
@@ -15979,26 +19206,48 @@ export interface MlUpdateDataFrameAnalyticsResponse {
 }
 
 export interface MlUpdateDatafeedRequest extends RequestBase {
+/** A numerical character string that uniquely identifies the datafeed. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric characters. */
   datafeed_id: Id
+  /** If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the `_all` string or when no indices are specified. */
   allow_no_indices?: boolean
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values. Valid values are: * `all`: Match any data stream or index, including hidden ones. * `closed`: Match closed, non-hidden indices. Also matches any non-hidden data stream. Data streams cannot be closed. * `hidden`: Match hidden data streams and hidden indices. Must be combined with `open`, `closed`, or both. * `none`: Wildcard patterns are not accepted. * `open`: Match open, non-hidden indices. Also matches any non-hidden data stream. */
   expand_wildcards?: ExpandWildcards
+  /** If `true`, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
+  /** If `true`, unavailable indices (missing or closed) are ignored. */
   ignore_unavailable?: boolean
+  /** If set, the datafeed performs aggregation searches. Support for aggregations is limited and should be used only with low cardinality data. */
   aggregations?: Record<string, AggregationsAggregationContainer>
+  /** Datafeeds might search over long time periods, for several months or years. This search is split into time chunks in order to ensure the load on Elasticsearch is managed. Chunking configuration controls how the size of these time chunks are calculated; it is an advanced configuration option. */
   chunking_config?: MlChunkingConfig
+  /** Specifies whether the datafeed checks for missing data and the size of the window. The datafeed can optionally search over indices that have already been read in an effort to determine whether any data has subsequently been added to the index. If missing data is found, it is a good indication that the `query_delay` is set too low and the data is being indexed after the datafeed has passed that moment in time. This check runs only on real-time datafeeds. */
   delayed_data_check_config?: MlDelayedDataCheckConfig
+  /** The interval at which scheduled queries are made while the datafeed runs in real time. The default value is either the bucket span for short bucket spans, or, for longer bucket spans, a sensible fraction of the bucket span. When `frequency` is shorter than the bucket span, interim results for the last (partial) bucket are written then eventually overwritten by the full bucket results. If the datafeed uses aggregations, this value must be divisible by the interval of the date histogram aggregation. */
   frequency?: Duration
+  /** An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the machine learning nodes must have the `remote_cluster_client` role. */
   indices?: string[]
   /** @alias indices */
+  /** An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the machine learning nodes must have the `remote_cluster_client` role. */
   indexes?: string[]
+  /** Specifies index expansion options that are used during search. */
   indices_options?: IndicesOptions
   job_id?: Id
+  /** If a real-time datafeed has never seen any data (including during any initial training period), it automatically stops and closes the associated job after this many real-time searches return no documents. In other words, it stops after `frequency` times `max_empty_searches` of real-time operation. If not set, a datafeed with no end time that sees no data remains started until it is explicitly stopped. By default, it is not set. */
   max_empty_searches?: integer
+  /** The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an Elasticsearch search POST body. All the options that are supported by Elasticsearch can be used, as this object is passed verbatim to Elasticsearch. Note that if you change the query, the analyzed data is also changed. Therefore, the time required to learn might be long and the understandability of the results is unpredictable. If you want to make significant changes to the source data, it is recommended that you clone the job and datafeed and make the amendments in the clone. Let both run in parallel and close one when you are satisfied with the results of the job. */
   query?: QueryDslQueryContainer
+  /** The number of seconds behind real time that data is queried. For example, if data from 10:04 a.m. might not be searchable in Elasticsearch until 10:06 a.m., set this property to 120 seconds. The default value is randomly selected between `60s` and `120s`. This randomness improves the query performance when there are multiple jobs running on the same node. */
   query_delay?: Duration
+  /** Specifies runtime fields for the datafeed search. */
   runtime_mappings?: MappingRuntimeFields
+  /** Specifies scripts that evaluate custom expressions and returns script fields to the datafeed. The detector configuration objects in a job can contain functions that use these script fields. */
   script_fields?: Record<string, ScriptField>
+  /** The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations. The maximum value is the value of `index.max_result_window`. */
   scroll_size?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never }
 }
 
 export interface MlUpdateDatafeedResponse {
@@ -16020,10 +19269,18 @@ export interface MlUpdateDatafeedResponse {
 }
 
 export interface MlUpdateFilterRequest extends RequestBase {
+/** A string that uniquely identifies a filter. */
   filter_id: Id
+  /** The items to add to the filter. */
   add_items?: string[]
+  /** A description for the filter. */
   description?: string
+  /** The items to remove from the filter. */
   remove_items?: string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { filter_id?: never, add_items?: never, description?: never, remove_items?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { filter_id?: never, add_items?: never, description?: never, remove_items?: never }
 }
 
 export interface MlUpdateFilterResponse {
@@ -16033,22 +19290,38 @@ export interface MlUpdateFilterResponse {
 }
 
 export interface MlUpdateJobRequest extends RequestBase {
+/** Identifier for the job. */
   job_id: Id
+  /** Advanced configuration option. Specifies whether this job can open when there is insufficient machine learning node capacity for it to be immediately assigned to a node. If `false` and a machine learning node with capacity to run the job cannot immediately be found, the open anomaly detection jobs API returns an error. However, this is also subject to the cluster-wide `xpack.ml.max_lazy_ml_nodes` setting. If this option is set to `true`, the open anomaly detection jobs API does not return an error and the job waits in the opening state until sufficient machine learning node capacity is available. */
   allow_lazy_open?: boolean
   analysis_limits?: MlAnalysisMemoryLimit
+  /** Advanced configuration option. The time between each periodic persistence of the model. The default value is a randomized value between 3 to 4 hours, which avoids all jobs persisting at exactly the same time. The smallest allowed value is 1 hour. For very large models (several GB), persistence could take 10-20 minutes, so do not set the value too low. If the job is open when you make the update, you must stop the datafeed, close the job, then reopen the job and restart the datafeed for the changes to take effect. */
   background_persist_interval?: Duration
+  /** Advanced configuration option. Contains custom meta data about the job. For example, it can contain custom URL information as shown in Adding custom URLs to machine learning results. */
   custom_settings?: Record<string, any>
   categorization_filters?: string[]
+  /** A description of the job. */
   description?: string
   model_plot_config?: MlModelPlotConfig
   model_prune_window?: Duration
+  /** Advanced configuration option, which affects the automatic removal of old model snapshots for this job. It specifies a period of time (in days) after which only the first snapshot per day is retained. This period is relative to the timestamp of the most recent snapshot for this job. Valid values range from 0 to `model_snapshot_retention_days`. For jobs created before version 7.8.0, the default value matches `model_snapshot_retention_days`. */
   daily_model_snapshot_retention_after_days?: long
+  /** Advanced configuration option, which affects the automatic removal of old model snapshots for this job. It specifies the maximum period of time (in days) that snapshots are retained. This period is relative to the timestamp of the most recent snapshot for this job. */
   model_snapshot_retention_days?: long
+  /** Advanced configuration option. The period over which adjustments to the score are applied, as new data is seen. */
   renormalization_window_days?: long
+  /** Advanced configuration option. The period of time (in days) that results are retained. Age is calculated relative to the timestamp of the latest bucket result. If this property has a non-null value, once per day at 00:30 (server time), results that are the specified number of days older than the latest bucket result are deleted from Elasticsearch. The default value is null, which means all results are retained. */
   results_retention_days?: long
+  /** A list of job groups. A job can belong to no groups or many. */
   groups?: string[]
+  /** An array of detector update objects. */
   detectors?: MlDetectorUpdate[]
+  /** Settings related to how categorization interacts with partition fields. */
   per_partition_categorization?: MlPerPartitionCategorization
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, allow_lazy_open?: never, analysis_limits?: never, background_persist_interval?: never, custom_settings?: never, categorization_filters?: never, description?: never, model_plot_config?: never, model_prune_window?: never, daily_model_snapshot_retention_after_days?: never, model_snapshot_retention_days?: never, renormalization_window_days?: never, results_retention_days?: never, groups?: never, detectors?: never, per_partition_categorization?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, allow_lazy_open?: never, analysis_limits?: never, background_persist_interval?: never, custom_settings?: never, categorization_filters?: never, description?: never, model_plot_config?: never, model_prune_window?: never, daily_model_snapshot_retention_after_days?: never, model_snapshot_retention_days?: never, renormalization_window_days?: never, results_retention_days?: never, groups?: never, detectors?: never, per_partition_categorization?: never }
 }
 
 export interface MlUpdateJobResponse {
@@ -16076,10 +19349,18 @@ export interface MlUpdateJobResponse {
 }
 
 export interface MlUpdateModelSnapshotRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** Identifier for the model snapshot. */
   snapshot_id: Id
+  /** A description of the model snapshot. */
   description?: string
+  /** If `true`, this snapshot will not be deleted during automatic cleanup of snapshots older than `model_snapshot_retention_days`. However, this snapshot will be deleted when the job is deleted. */
   retain?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, snapshot_id?: never, description?: never, retain?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, snapshot_id?: never, description?: never, retain?: never }
 }
 
 export interface MlUpdateModelSnapshotResponse {
@@ -16088,8 +19369,14 @@ export interface MlUpdateModelSnapshotResponse {
 }
 
 export interface MlUpdateTrainedModelDeploymentRequest extends RequestBase {
+/** The unique identifier of the trained model. Currently, only PyTorch models are supported. */
   model_id: Id
+  /** The number of model allocations on each node where the model is deployed. All allocations on a node share the same copy of the model in memory but use a separate set of threads to evaluate the model. Increasing this value generally increases the throughput. If this setting is greater than the number of hardware threads it will automatically be changed to a value less than the number of hardware threads. */
   number_of_allocations?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { model_id?: never, number_of_allocations?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { model_id?: never, number_of_allocations?: never }
 }
 
 export interface MlUpdateTrainedModelDeploymentResponse {
@@ -16097,10 +19384,18 @@ export interface MlUpdateTrainedModelDeploymentResponse {
 }
 
 export interface MlUpgradeJobSnapshotRequest extends RequestBase {
+/** Identifier for the anomaly detection job. */
   job_id: Id
+  /** A numerical character string that uniquely identifies the model snapshot. */
   snapshot_id: Id
+  /** When true, the API won’t respond until the upgrade is complete. Otherwise, it responds as soon as the upgrade task is assigned to a node. */
   wait_for_completion?: boolean
+  /** Controls the time to wait for the request to complete. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, snapshot_id?: never, wait_for_completion?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, snapshot_id?: never, wait_for_completion?: never, timeout?: never }
 }
 
 export interface MlUpgradeJobSnapshotResponse {
@@ -16118,22 +19413,38 @@ export interface MlValidateRequest extends RequestBase {
   model_snapshot_id?: Id
   model_snapshot_retention_days?: long
   results_index_name?: IndexName
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { job_id?: never, analysis_config?: never, analysis_limits?: never, data_description?: never, description?: never, model_plot?: never, model_snapshot_id?: never, model_snapshot_retention_days?: never, results_index_name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { job_id?: never, analysis_config?: never, analysis_limits?: never, data_description?: never, description?: never, model_plot?: never, model_snapshot_id?: never, model_snapshot_retention_days?: never, results_index_name?: never }
 }
 
 export type MlValidateResponse = AcknowledgedResponseBase
 
 export interface MlValidateDetectorRequest extends RequestBase {
   detector?: MlDetector
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { detector?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { detector?: never }
 }
 
 export type MlValidateDetectorResponse = AcknowledgedResponseBase
 
 export interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = unknown> extends RequestBase {
+/** Default document type for items which don't provide one */
   type?: string
+  /** Identifier of the monitored system */
   system_id: string
+  /**  */
   system_api_version: string
+  /** Collection interval (e.g., '10s' or '10000ms') of the payload */
   interval: Duration
   operations?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { type?: never, system_id?: never, system_api_version?: never, interval?: never, operations?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { type?: never, system_id?: never, system_api_version?: never, interval?: never, operations?: never }
 }
 
 export interface MonitoringBulkResponse {
@@ -16636,8 +19947,14 @@ export interface NodesTransportHistogram {
 }
 
 export interface NodesClearRepositoriesMeteringArchiveRequest extends RequestBase {
+/** Comma-separated list of node IDs or names used to limit returned information. */
   node_id: NodeIds
+  /** Specifies the maximum `archive_version` to be cleared from the archive. */
   max_archive_version: long
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never, max_archive_version?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never, max_archive_version?: never }
 }
 
 export type NodesClearRepositoriesMeteringArchiveResponse = NodesClearRepositoriesMeteringArchiveResponseBase
@@ -16648,7 +19965,12 @@ export interface NodesClearRepositoriesMeteringArchiveResponseBase extends Nodes
 }
 
 export interface NodesGetRepositoriesMeteringInfoRequest extends RequestBase {
+/** Comma-separated list of node IDs or names used to limit returned information. All the nodes selective options are explained [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster.html#cluster-nodes). */
   node_id: NodeIds
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never }
 }
 
 export type NodesGetRepositoriesMeteringInfoResponse = NodesGetRepositoriesMeteringInfoResponseBase
@@ -16659,14 +19981,26 @@ export interface NodesGetRepositoriesMeteringInfoResponseBase extends NodesNodes
 }
 
 export interface NodesHotThreadsRequest extends RequestBase {
+/** List of node IDs or names used to limit returned information. */
   node_id?: NodeIds
+  /** If true, known idle threads (e.g. waiting in a socket select, or to get a task from an empty queue) are filtered out. */
   ignore_idle_threads?: boolean
+  /** The interval to do the second sampling of threads. */
   interval?: Duration
+  /** Number of samples of thread stacktrace. */
   snapshots?: long
+  /** Specifies the number of hot threads to provide information for. */
   threads?: long
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** The type to sample. */
   type?: ThreadType
+  /** The sort order for 'cpu' type (default: total) */
   sort?: ThreadType
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never, ignore_idle_threads?: never, interval?: never, snapshots?: never, threads?: never, timeout?: never, type?: never, sort?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never, ignore_idle_threads?: never, interval?: never, snapshots?: never, threads?: never, timeout?: never, type?: never, sort?: never }
 }
 
 export interface NodesHotThreadsResponse {
@@ -17021,10 +20355,18 @@ export interface NodesInfoNodeThreadPoolInfo {
 }
 
 export interface NodesInfoRequest extends RequestBase {
+/** Comma-separated list of node IDs or names used to limit returned information. */
   node_id?: NodeIds
+  /** Limits the information returned to the specific metrics. Supports a comma-separated list, such as http,ingest. */
   metric?: Metrics
+  /** If true, returns settings in flat format. */
   flat_settings?: boolean
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never, metric?: never, flat_settings?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never, metric?: never, flat_settings?: never, timeout?: never }
 }
 
 export type NodesInfoResponse = NodesInfoResponseBase
@@ -17035,9 +20377,16 @@ export interface NodesInfoResponseBase extends NodesNodesResponseBase {
 }
 
 export interface NodesReloadSecureSettingsRequest extends RequestBase {
+/** The names of particular nodes in the cluster to target. */
   node_id?: NodeIds
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** The password for the Elasticsearch keystore. */
   secure_settings_password?: Password
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never, timeout?: never, secure_settings_password?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never, timeout?: never, secure_settings_password?: never }
 }
 
 export type NodesReloadSecureSettingsResponse = NodesReloadSecureSettingsResponseBase
@@ -17048,18 +20397,34 @@ export interface NodesReloadSecureSettingsResponseBase extends NodesNodesRespons
 }
 
 export interface NodesStatsRequest extends RequestBase {
+/** Comma-separated list of node IDs or names used to limit returned information. */
   node_id?: NodeIds
+  /** Limit the information returned to the specified metrics */
   metric?: Metrics
+  /** Limit the information returned for indices metric to the specific index metrics. It can be used only if indices (or all) metric is specified. */
   index_metric?: Metrics
+  /** Comma-separated list or wildcard expressions of fields to include in fielddata and suggest statistics. */
   completion_fields?: Fields
+  /** Comma-separated list or wildcard expressions of fields to include in fielddata statistics. */
   fielddata_fields?: Fields
+  /** Comma-separated list or wildcard expressions of fields to include in the statistics. */
   fields?: Fields
+  /** Comma-separated list of search groups to include in the search statistics. */
   groups?: boolean
+  /** If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested). */
   include_segment_file_sizes?: boolean
+  /** Indicates whether statistics are aggregated at the cluster, index, or shard level. */
   level?: Level
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** A comma-separated list of document types for the indexing index metric. */
   types?: string[]
+  /** If `true`, the response includes information from segments that are not loaded into memory. */
   include_unloaded_segments?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never, metric?: never, index_metric?: never, completion_fields?: never, fielddata_fields?: never, fields?: never, groups?: never, include_segment_file_sizes?: never, level?: never, timeout?: never, types?: never, include_unloaded_segments?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never, metric?: never, index_metric?: never, completion_fields?: never, fielddata_fields?: never, fields?: never, groups?: never, include_segment_file_sizes?: never, level?: never, timeout?: never, types?: never, include_unloaded_segments?: never }
 }
 
 export type NodesStatsResponse = NodesStatsResponseBase
@@ -17077,9 +20442,16 @@ export interface NodesUsageNodeUsage {
 }
 
 export interface NodesUsageRequest extends RequestBase {
+/** A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes */
   node_id?: NodeIds
+  /** Limits the information returned to the specific metrics. A comma-separated list of the following options: `_all`, `rest_actions`. */
   metric?: Metrics
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never, metric?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never, metric?: never, timeout?: never }
 }
 
 export type NodesUsageResponse = NodesUsageResponseBase
@@ -17118,27 +20490,49 @@ export interface QueryRulesQueryRuleset {
 }
 
 export interface QueryRulesDeleteRuleRequest extends RequestBase {
+/** The unique identifier of the query ruleset containing the rule to delete */
   ruleset_id: Id
+  /** The unique identifier of the query rule within the specified ruleset to delete */
   rule_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { ruleset_id?: never, rule_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { ruleset_id?: never, rule_id?: never }
 }
 
 export type QueryRulesDeleteRuleResponse = AcknowledgedResponseBase
 
 export interface QueryRulesDeleteRulesetRequest extends RequestBase {
+/** The unique identifier of the query ruleset to delete */
   ruleset_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { ruleset_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { ruleset_id?: never }
 }
 
 export type QueryRulesDeleteRulesetResponse = AcknowledgedResponseBase
 
 export interface QueryRulesGetRuleRequest extends RequestBase {
+/** The unique identifier of the query ruleset containing the rule to retrieve */
   ruleset_id: Id
+  /** The unique identifier of the query rule within the specified ruleset to retrieve */
   rule_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { ruleset_id?: never, rule_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { ruleset_id?: never, rule_id?: never }
 }
 
 export type QueryRulesGetRuleResponse = QueryRulesQueryRule
 
 export interface QueryRulesGetRulesetRequest extends RequestBase {
+/** The unique identifier of the query ruleset */
   ruleset_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { ruleset_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { ruleset_id?: never }
 }
 
 export type QueryRulesGetRulesetResponse = QueryRulesQueryRuleset
@@ -17151,8 +20545,14 @@ export interface QueryRulesListRulesetsQueryRulesetListItem {
 }
 
 export interface QueryRulesListRulesetsRequest extends RequestBase {
+/** The offset from the first result to fetch. */
   from?: integer
+  /** The maximum number of results to retrieve. */
   size?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { from?: never, size?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { from?: never, size?: never }
 }
 
 export interface QueryRulesListRulesetsResponse {
@@ -17161,12 +20561,21 @@ export interface QueryRulesListRulesetsResponse {
 }
 
 export interface QueryRulesPutRuleRequest extends RequestBase {
+/** The unique identifier of the query ruleset containing the rule to be created or updated. */
   ruleset_id: Id
+  /** The unique identifier of the query rule within the specified ruleset to be created or updated. */
   rule_id: Id
+  /** The type of rule. */
   type: QueryRulesQueryRuleType
+  /** The criteria that must be met for the rule to be applied. If multiple criteria are specified for a rule, all criteria must be met for the rule to be applied. */
   criteria: QueryRulesQueryRuleCriteria | QueryRulesQueryRuleCriteria[]
+  /** The actions to take when the rule is matched. The format of this action depends on the rule type. */
   actions: QueryRulesQueryRuleActions
   priority?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { ruleset_id?: never, rule_id?: never, type?: never, criteria?: never, actions?: never, priority?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { ruleset_id?: never, rule_id?: never, type?: never, criteria?: never, actions?: never, priority?: never }
 }
 
 export interface QueryRulesPutRuleResponse {
@@ -17174,8 +20583,13 @@ export interface QueryRulesPutRuleResponse {
 }
 
 export interface QueryRulesPutRulesetRequest extends RequestBase {
+/** The unique identifier of the query ruleset to be created or updated. */
   ruleset_id: Id
   rules: QueryRulesQueryRule | QueryRulesQueryRule[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { ruleset_id?: never, rules?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { ruleset_id?: never, rules?: never }
 }
 
 export interface QueryRulesPutRulesetResponse {
@@ -17188,8 +20602,14 @@ export interface QueryRulesTestQueryRulesetMatchedRule {
 }
 
 export interface QueryRulesTestRequest extends RequestBase {
+/** The unique identifier of the query ruleset to be created or updated */
   ruleset_id: Id
+  /** The match criteria to apply to rules in the given query ruleset. Match criteria should match the keys defined in the `criteria.metadata` field of the rule. */
   match_criteria: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { ruleset_id?: never, match_criteria?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { ruleset_id?: never, match_criteria?: never }
 }
 
 export interface QueryRulesTestResponse {
@@ -17230,7 +20650,12 @@ export interface RollupTermsGrouping {
 }
 
 export interface RollupDeleteJobRequest extends RequestBase {
+/** Identifier for the job. */
   id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export interface RollupDeleteJobResponse {
@@ -17241,7 +20666,12 @@ export interface RollupDeleteJobResponse {
 export type RollupGetJobsIndexingJobState = 'started' | 'indexing' | 'stopping' | 'stopped' | 'aborting'
 
 export interface RollupGetJobsRequest extends RequestBase {
+/** Identifier for the rollup job. If it is `_all` or omitted, the API returns all rollup jobs. */
   id?: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export interface RollupGetJobsResponse {
@@ -17287,7 +20717,12 @@ export interface RollupGetJobsRollupJobStatus {
 }
 
 export interface RollupGetRollupCapsRequest extends RequestBase {
+/** Index, indices or index-pattern to return rollup capabilities for. `_all` may be used to fetch rollup capabilities from all jobs. */
   id?: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export type RollupGetRollupCapsResponse = Record<IndexName, RollupGetRollupCapsRollupCapabilities>
@@ -17314,7 +20749,12 @@ export interface RollupGetRollupIndexCapsIndexCapabilities {
 }
 
 export interface RollupGetRollupIndexCapsRequest extends RequestBase {
+/** Data stream or index to check for rollup capabilities. Wildcard (`*`) expressions are supported. */
   index: Ids
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never }
 }
 
 export type RollupGetRollupIndexCapsResponse = Record<IndexName, RollupGetRollupIndexCapsIndexCapabilities>
@@ -17333,28 +20773,51 @@ export interface RollupGetRollupIndexCapsRollupJobSummaryField {
 }
 
 export interface RollupPutJobRequest extends RequestBase {
+/** Identifier for the rollup job. This can be any alphanumeric string and uniquely identifies the data that is associated with the rollup job. The ID is persistent; it is stored with the rolled up data. If you create a job, let it run for a while, then delete the job, the data that the job rolled up is still be associated with this job ID. You cannot create a new job with the same ID since that could lead to problems with mismatched job configurations. */
   id: Id
+  /** A cron string which defines the intervals when the rollup job should be executed. When the interval triggers, the indexer attempts to rollup the data in the index pattern. The cron pattern is unrelated to the time interval of the data being rolled up. For example, you may wish to create hourly rollups of your document but to only run the indexer on a daily basis at midnight, as defined by the cron. The cron pattern is defined just like a Watcher cron schedule. */
   cron: string
+  /** Defines the grouping fields and aggregations that are defined for this rollup job. These fields will then be available later for aggregating into buckets. These aggs and fields can be used in any combination. Think of the groups configuration as defining a set of tools that can later be used in aggregations to partition the data. Unlike raw data, we have to think ahead to which fields and aggregations might be used. Rollups provide enough flexibility that you simply need to determine which fields are needed, not in what order they are needed. */
   groups: RollupGroupings
+  /** The index or index pattern to roll up. Supports wildcard-style patterns (`logstash-*`). The job attempts to rollup the entire index or index-pattern. */
   index_pattern: string
+  /** Defines the metrics to collect for each grouping tuple. By default, only the doc_counts are collected for each group. To make rollup useful, you will often add metrics like averages, mins, maxes, etc. Metrics are defined on a per-field basis and for each field you configure which metric should be collected. */
   metrics?: RollupFieldMetric[]
+  /** The number of bucket results that are processed on each iteration of the rollup indexer. A larger value tends to execute faster, but requires more memory during processing. This value has no effect on how the data is rolled up; it is merely used for tweaking the speed or memory cost of the indexer. */
   page_size: integer
+  /** The index that contains the rollup results. The index can be shared with other rollup jobs. The data is stored so that it doesn’t interfere with unrelated jobs. */
   rollup_index: IndexName
+  /** Time to wait for the request to complete. */
   timeout?: Duration
   headers?: HttpHeaders
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, cron?: never, groups?: never, index_pattern?: never, metrics?: never, page_size?: never, rollup_index?: never, timeout?: never, headers?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, cron?: never, groups?: never, index_pattern?: never, metrics?: never, page_size?: never, rollup_index?: never, timeout?: never, headers?: never }
 }
 
 export type RollupPutJobResponse = AcknowledgedResponseBase
 
 export interface RollupRollupSearchRequest extends RequestBase {
+/** A comma-separated list of data streams and indices used to limit the request. This parameter has the following rules: * At least one data stream, index, or wildcard expression must be specified. This target can include a rollup or non-rollup index. For data streams, the stream's backing indices can only serve as non-rollup indices. Omitting the parameter or using `_all` are not permitted. * Multiple non-rollup indices may be specified. * Only one rollup index may be specified. If more than one are supplied, an exception occurs. * Wildcard expressions (`*`) may be used. If they match more than one rollup index, an exception occurs. However, you can use an expression to match multiple non-rollup indices or data streams. */
   index: Indices
+  /** Indicates whether hits.total should be rendered as an integer or an object in the rest search response */
   rest_total_hits_as_int?: boolean
+  /** Specify whether aggregation and suggester names should be prefixed by their respective types in the response */
   typed_keys?: boolean
+  /** Specifies aggregations. */
   aggregations?: Record<string, AggregationsAggregationContainer>
   /** @alias aggregations */
+  /** Specifies aggregations. */
   aggs?: Record<string, AggregationsAggregationContainer>
+  /** Specifies a DSL query that is subject to some limitations. */
   query?: QueryDslQueryContainer
+  /** Must be zero if set, as rollups work on pre-aggregated data. */
   size?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, rest_total_hits_as_int?: never, typed_keys?: never, aggregations?: never, aggs?: never, query?: never, size?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, rest_total_hits_as_int?: never, typed_keys?: never, aggregations?: never, aggs?: never, query?: never, size?: never }
 }
 
 export interface RollupRollupSearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> {
@@ -17367,7 +20830,12 @@ export interface RollupRollupSearchResponse<TDocument = unknown, TAggregations =
 }
 
 export interface RollupStartJobRequest extends RequestBase {
+/** Identifier for the rollup job. */
   id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export interface RollupStartJobResponse {
@@ -17375,9 +20843,16 @@ export interface RollupStartJobResponse {
 }
 
 export interface RollupStopJobRequest extends RequestBase {
+/** Identifier for the rollup job. */
   id: Id
+  /** If `wait_for_completion` is `true`, the API blocks for (at maximum) the specified duration while waiting for the job to stop. If more than `timeout` time has passed, the API throws a timeout exception. NOTE: Even if a timeout occurs, the stop request is still processing and eventually moves the job to STOPPED. The timeout simply means the API call itself timed out while waiting for the status change. */
   timeout?: Duration
+  /** If set to `true`, causes the API to block until the indexer state completely stops. If set to `false`, the API returns immediately and the indexer is stopped asynchronously in the background. */
   wait_for_completion?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, timeout?: never, wait_for_completion?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, timeout?: never, wait_for_completion?: never }
 }
 
 export interface RollupStopJobResponse {
@@ -17410,33 +20885,60 @@ export interface SearchApplicationSearchApplicationTemplate {
 }
 
 export interface SearchApplicationDeleteRequest extends RequestBase {
+/** The name of the search application to delete */
   name: Name
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
 }
 
 export type SearchApplicationDeleteResponse = AcknowledgedResponseBase
 
 export interface SearchApplicationDeleteBehavioralAnalyticsRequest extends RequestBase {
+/** The name of the analytics collection to be deleted */
   name: Name
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
 }
 
 export type SearchApplicationDeleteBehavioralAnalyticsResponse = AcknowledgedResponseBase
 
 export interface SearchApplicationGetRequest extends RequestBase {
+/** The name of the search application */
   name: Name
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
 }
 
 export type SearchApplicationGetResponse = SearchApplicationSearchApplication
 
 export interface SearchApplicationGetBehavioralAnalyticsRequest extends RequestBase {
+/** A list of analytics collections to limit the returned information */
   name?: Name[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
 }
 
 export type SearchApplicationGetBehavioralAnalyticsResponse = Record<Name, SearchApplicationAnalyticsCollection>
 
 export interface SearchApplicationListRequest extends RequestBase {
+/** Query in the Lucene query string syntax. */
   q?: string
+  /** Starting offset. */
   from?: integer
+  /** Specifies a max number of results to get. */
   size?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { q?: never, from?: never, size?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { q?: never, from?: never, size?: never }
 }
 
 export interface SearchApplicationListResponse {
@@ -17445,10 +20947,17 @@ export interface SearchApplicationListResponse {
 }
 
 export interface SearchApplicationPostBehavioralAnalyticsEventRequest extends RequestBase {
+/** The name of the behavioral analytics collection. */
   collection_name: Name
+  /** The analytics event type. */
   event_type: SearchApplicationEventType
+  /** Whether the response type has to include more details */
   debug?: boolean
   payload?: any
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { collection_name?: never, event_type?: never, debug?: never, payload?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { collection_name?: never, event_type?: never, debug?: never, payload?: never }
 }
 
 export interface SearchApplicationPostBehavioralAnalyticsEventResponse {
@@ -17457,9 +20966,15 @@ export interface SearchApplicationPostBehavioralAnalyticsEventResponse {
 }
 
 export interface SearchApplicationPutRequest extends RequestBase {
+/** The name of the search application to be created or updated. */
   name: Name
+  /** If `true`, this request cannot replace or update existing Search Applications. */
   create?: boolean
   search_application?: SearchApplicationSearchApplicationParameters
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, create?: never, search_application?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, create?: never, search_application?: never }
 }
 
 export interface SearchApplicationPutResponse {
@@ -17471,23 +20986,40 @@ export interface SearchApplicationPutBehavioralAnalyticsAnalyticsAcknowledgeResp
 }
 
 export interface SearchApplicationPutBehavioralAnalyticsRequest extends RequestBase {
+/** The name of the analytics collection to be created or updated. */
   name: Name
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
 }
 
 export type SearchApplicationPutBehavioralAnalyticsResponse = SearchApplicationPutBehavioralAnalyticsAnalyticsAcknowledgeResponseBase
 
 export interface SearchApplicationRenderQueryRequest extends RequestBase {
+/** The name of the search application to render teh query for. */
   name: Name
   params?: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, params?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, params?: never }
 }
 
 export interface SearchApplicationRenderQueryResponse {
 }
 
 export interface SearchApplicationSearchRequest extends RequestBase {
+/** The name of the search application to be searched. */
   name: Name
+  /** Determines whether aggregation names are prefixed by their respective types in the response. */
   typed_keys?: boolean
+  /** Query parameters specific to this request, which will override any defaults specified in the template. */
   params?: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, typed_keys?: never, params?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, typed_keys?: never, params?: never }
 }
 
 export type SearchApplicationSearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
@@ -17499,8 +21031,13 @@ export interface SearchableSnapshotsCacheStatsNode {
 }
 
 export interface SearchableSnapshotsCacheStatsRequest extends RequestBase {
+/** The names of the nodes in the cluster to target. */
   node_id?: NodeIds
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never, master_timeout?: never }
 }
 
 export interface SearchableSnapshotsCacheStatsResponse {
@@ -17519,10 +21056,18 @@ export interface SearchableSnapshotsCacheStatsShared {
 }
 
 export interface SearchableSnapshotsClearCacheRequest extends RequestBase {
+/** A comma-separated list of data streams, indices, and aliases to clear from the cache. It supports wildcards (`*`). */
   index?: Indices
+  /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
+  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
   allow_no_indices?: boolean
+  /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
   ignore_unavailable?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, expand_wildcards?: never, allow_no_indices?: never, ignore_unavailable?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, expand_wildcards?: never, allow_no_indices?: never, ignore_unavailable?: never }
 }
 
 export type SearchableSnapshotsClearCacheResponse = any
@@ -17534,15 +21079,28 @@ export interface SearchableSnapshotsMountMountedSnapshot {
 }
 
 export interface SearchableSnapshotsMountRequest extends RequestBase {
+/** The name of the repository containing the snapshot of the index to mount. */
   repository: Name
+  /** The name of the snapshot of the index to mount. */
   snapshot: Name
+  /** The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** If true, the request blocks until the operation is complete. */
   wait_for_completion?: boolean
+  /** The mount option for the searchable snapshot index. */
   storage?: string
+  /** The name of the index contained in the snapshot whose data is to be mounted. If no `renamed_index` is specified, this name will also be used to create the new index. */
   index: IndexName
+  /** The name of the index that will be created. */
   renamed_index?: IndexName
+  /** The settings that should be added to the index when it is mounted. */
   index_settings?: Record<string, any>
+  /** The names of settings that should be removed from the index when it is mounted. */
   ignore_index_settings?: string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never, storage?: never, index?: never, renamed_index?: never, index_settings?: never, ignore_index_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never, storage?: never, index?: never, renamed_index?: never, index_settings?: never, ignore_index_settings?: never }
 }
 
 export interface SearchableSnapshotsMountResponse {
@@ -17550,8 +21108,14 @@ export interface SearchableSnapshotsMountResponse {
 }
 
 export interface SearchableSnapshotsStatsRequest extends RequestBase {
+/** A comma-separated list of data streams and indices to retrieve statistics for. */
   index?: Indices
+  /** Return stats aggregated at cluster, index or shard level */
   level?: SearchableSnapshotsStatsLevel
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, level?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, level?: never }
 }
 
 export interface SearchableSnapshotsStatsResponse {
@@ -17800,10 +21364,18 @@ export interface SecurityUserProfileWithMetadata extends SecurityUserProfile {
 }
 
 export interface SecurityActivateUserProfileRequest extends RequestBase {
+/** The user's Elasticsearch access token or JWT. Both `access` and `id` JWT token types are supported and they depend on the underlying JWT realm configuration. If you specify the `access_token` grant type, this parameter is required. It is not valid with other grant types. */
   access_token?: string
+  /** The type of grant. */
   grant_type: SecurityGrantType
+  /** The user's password. If you specify the `password` grant type, this parameter is required. It is not valid with other grant types. */
   password?: string
+  /** The username that identifies the user. If you specify the `password` grant type, this parameter is required. It is not valid with other grant types. */
   username?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { access_token?: never, grant_type?: never, password?: never, username?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { access_token?: never, grant_type?: never, password?: never, username?: never }
 }
 
 export type SecurityActivateUserProfileResponse = SecurityUserProfileWithMetadata
@@ -17814,6 +21386,10 @@ export interface SecurityAuthenticateAuthenticateApiKey {
 }
 
 export interface SecurityAuthenticateRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface SecurityAuthenticateResponse {
@@ -17836,8 +21412,14 @@ export interface SecurityAuthenticateToken {
 }
 
 export interface SecurityBulkDeleteRoleRequest extends RequestBase {
+/** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** An array of role names to delete */
   names: string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { refresh?: never, names?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { refresh?: never, names?: never }
 }
 
 export interface SecurityBulkDeleteRoleResponse {
@@ -17847,8 +21429,14 @@ export interface SecurityBulkDeleteRoleResponse {
 }
 
 export interface SecurityBulkPutRoleRequest extends RequestBase {
+/** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** A dictionary of role name to RoleDescriptor objects to add or update */
   roles: Record<string, SecurityRoleDescriptor>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { refresh?: never, roles?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { refresh?: never, roles?: never }
 }
 
 export interface SecurityBulkPutRoleResponse {
@@ -17859,10 +21447,18 @@ export interface SecurityBulkPutRoleResponse {
 }
 
 export interface SecurityBulkUpdateApiKeysRequest extends RequestBase {
+/** Expiration time for the API keys. By default, API keys never expire. This property can be omitted to leave the value unchanged. */
   expiration?: Duration
+  /** The API key identifiers. */
   ids: string | string[]
+  /** Arbitrary nested metadata to associate with the API keys. Within the `metadata` object, top-level keys beginning with an underscore (`_`) are reserved for system usage. Any information specified with this parameter fully replaces metadata previously associated with the API key. */
   metadata?: Metadata
+  /** The role descriptors to assign to the API keys. An API key's effective permissions are an intersection of its assigned privileges and the point-in-time snapshot of permissions of the owner user. You can assign new privileges by specifying them in this parameter. To remove assigned privileges, supply the `role_descriptors` parameter as an empty object `{}`. If an API key has no assigned privileges, it inherits the owner user's full permissions. The snapshot of the owner's permissions is always updated, whether you supply the `role_descriptors` parameter. The structure of a role descriptor is the same as the request for the create API keys API. */
   role_descriptors?: Record<string, SecurityRoleDescriptor>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { expiration?: never, ids?: never, metadata?: never, role_descriptors?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { expiration?: never, ids?: never, metadata?: never, role_descriptors?: never }
 }
 
 export interface SecurityBulkUpdateApiKeysResponse {
@@ -17872,17 +21468,30 @@ export interface SecurityBulkUpdateApiKeysResponse {
 }
 
 export interface SecurityChangePasswordRequest extends RequestBase {
+/** The user whose password you want to change. If you do not specify this parameter, the password is changed for the current user. */
   username?: Username
+  /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** The new password value. Passwords must be at least 6 characters long. */
   password?: Password
+  /** A hash of the new password value. This must be produced using the same hashing algorithm as has been configured for password storage. For more details, see the explanation of the `xpack.security.authc.password_hashing.algorithm` setting. */
   password_hash?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { username?: never, refresh?: never, password?: never, password_hash?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { username?: never, refresh?: never, password?: never, password_hash?: never }
 }
 
 export interface SecurityChangePasswordResponse {
 }
 
 export interface SecurityClearApiKeyCacheRequest extends RequestBase {
+/** Comma-separated list of API key IDs to evict from the API key cache. To evict all API keys, use `*`. Does not support other wildcard patterns. */
   ids: Ids
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { ids?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { ids?: never }
 }
 
 export interface SecurityClearApiKeyCacheResponse {
@@ -17892,7 +21501,12 @@ export interface SecurityClearApiKeyCacheResponse {
 }
 
 export interface SecurityClearCachedPrivilegesRequest extends RequestBase {
+/** A comma-separated list of applications. To clear all applications, use an asterism (`*`). It does not support other wildcard patterns. */
   application: Name
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { application?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { application?: never }
 }
 
 export interface SecurityClearCachedPrivilegesResponse {
@@ -17902,8 +21516,14 @@ export interface SecurityClearCachedPrivilegesResponse {
 }
 
 export interface SecurityClearCachedRealmsRequest extends RequestBase {
+/** A comma-separated list of realms. To clear all realms, use an asterisk (`*`). It does not support other wildcard patterns. */
   realms: Names
+  /** A comma-separated list of the users to clear from the cache. If you do not specify this parameter, the API evicts all users from the user cache. */
   usernames?: string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { realms?: never, usernames?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { realms?: never, usernames?: never }
 }
 
 export interface SecurityClearCachedRealmsResponse {
@@ -17913,7 +21533,12 @@ export interface SecurityClearCachedRealmsResponse {
 }
 
 export interface SecurityClearCachedRolesRequest extends RequestBase {
+/** A comma-separated list of roles to evict from the role cache. To evict all roles, use an asterisk (`*`). It does not support other wildcard patterns. */
   name: Names
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
 }
 
 export interface SecurityClearCachedRolesResponse {
@@ -17923,9 +21548,16 @@ export interface SecurityClearCachedRolesResponse {
 }
 
 export interface SecurityClearCachedServiceTokensRequest extends RequestBase {
+/** The namespace, which is a top-level grouping of service accounts. */
   namespace: Namespace
+  /** The name of the service, which must be unique within its namespace. */
   service: Service
+  /** A comma-separated list of token names to evict from the service account token caches. Use a wildcard (`*`) to evict all tokens that belong to a service account. It does not support other wildcard patterns. */
   name: Names
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { namespace?: never, service?: never, name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { namespace?: never, service?: never, name?: never }
 }
 
 export interface SecurityClearCachedServiceTokensResponse {
@@ -17935,11 +21567,20 @@ export interface SecurityClearCachedServiceTokensResponse {
 }
 
 export interface SecurityCreateApiKeyRequest extends RequestBase {
+/** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** The expiration time for the API key. By default, API keys never expire. */
   expiration?: Duration
+  /** A name for the API key. */
   name?: Name
+  /** An array of role descriptors for this API key. When it is not specified or it is an empty array, the API key will have a point in time snapshot of permissions of the authenticated user. If you supply role descriptors, the resultant permissions are an intersection of API keys permissions and the authenticated user's permissions thereby limiting the access scope for API keys. The structure of role descriptor is the same as the request for the create role API. For more details, refer to the create or update roles API. NOTE: Due to the way in which this permission intersection is calculated, it is not possible to create an API key that is a child of another API key, unless the derived key is created without any privileges. In this case, you must explicitly specify a role descriptor with no privileges. The derived API key can be used for authentication; it will not have authority to call Elasticsearch APIs. */
   role_descriptors?: Record<string, SecurityRoleDescriptor>
+  /** Arbitrary metadata that you want to associate with the API key. It supports nested data structure. Within the metadata object, keys beginning with `_` are reserved for system usage. */
   metadata?: Metadata
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { refresh?: never, expiration?: never, name?: never, role_descriptors?: never, metadata?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { refresh?: never, expiration?: never, name?: never, role_descriptors?: never, metadata?: never }
 }
 
 export interface SecurityCreateApiKeyResponse {
@@ -17951,10 +21592,18 @@ export interface SecurityCreateApiKeyResponse {
 }
 
 export interface SecurityCreateCrossClusterApiKeyRequest extends RequestBase {
+/** The access to be granted to this API key. The access is composed of permissions for cross-cluster search and cross-cluster replication. At least one of them must be specified. NOTE: No explicit privileges should be specified for either search or replication access. The creation process automatically converts the access specification to a role descriptor which has relevant privileges assigned accordingly. */
   access: SecurityAccess
+  /** Expiration time for the API key. By default, API keys never expire. */
   expiration?: Duration
+  /** Arbitrary metadata that you want to associate with the API key. It supports nested data structure. Within the metadata object, keys beginning with `_` are reserved for system usage. */
   metadata?: Metadata
+  /** Specifies the name for this API key. */
   name: Name
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { access?: never, expiration?: never, metadata?: never, name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { access?: never, expiration?: never, metadata?: never, name?: never }
 }
 
 export interface SecurityCreateCrossClusterApiKeyResponse {
@@ -17966,10 +21615,18 @@ export interface SecurityCreateCrossClusterApiKeyResponse {
 }
 
 export interface SecurityCreateServiceTokenRequest extends RequestBase {
+/** The name of the namespace, which is a top-level grouping of service accounts. */
   namespace: Namespace
+  /** The name of the service. */
   service: Service
+  /** The name for the service account token. If omitted, a random name will be generated. Token names must be at least one and no more than 256 characters. They can contain alphanumeric characters (a-z, A-Z, 0-9), dashes (`-`), and underscores (`_`), but cannot begin with an underscore. NOTE: Token names must be unique in the context of the associated service account. They must also be globally unique with their fully qualified names, which are comprised of the service account principal and token name, such as `<namespace>/<service>/<token-name>`. */
   name?: Name
+  /** If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { namespace?: never, service?: never, name?: never, refresh?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { namespace?: never, service?: never, name?: never, refresh?: never }
 }
 
 export interface SecurityCreateServiceTokenResponse {
@@ -18003,7 +21660,12 @@ export interface SecurityDelegatePkiAuthenticationRealm {
 }
 
 export interface SecurityDelegatePkiRequest extends RequestBase {
+/** The X509Certificate chain, which is represented as an ordered string array. Each string in the array is a base64-encoded (Section 4 of RFC4648 - not base64url-encoded) of the certificate's DER encoding. The first element is the target certificate that contains the subject distinguished name that is requesting access. This may be followed by additional certificates; each subsequent certificate is used to certify the previous one. */
   x509_certificate_chain: string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { x509_certificate_chain?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { x509_certificate_chain?: never }
 }
 
 export interface SecurityDelegatePkiResponse {
@@ -18018,16 +21680,29 @@ export interface SecurityDeletePrivilegesFoundStatus {
 }
 
 export interface SecurityDeletePrivilegesRequest extends RequestBase {
+/** The name of the application. Application privileges are always associated with exactly one application. */
   application: Name
+  /** The name of the privilege. */
   name: Names
+  /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { application?: never, name?: never, refresh?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { application?: never, name?: never, refresh?: never }
 }
 
 export type SecurityDeletePrivilegesResponse = Record<string, Record<string, SecurityDeletePrivilegesFoundStatus>>
 
 export interface SecurityDeleteRoleRequest extends RequestBase {
+/** The name of the role. */
   name: Name
+  /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, refresh?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, refresh?: never }
 }
 
 export interface SecurityDeleteRoleResponse {
@@ -18035,8 +21710,14 @@ export interface SecurityDeleteRoleResponse {
 }
 
 export interface SecurityDeleteRoleMappingRequest extends RequestBase {
+/** The distinct name that identifies the role mapping. The name is used solely as an identifier to facilitate interaction via the API; it does not affect the behavior of the mapping in any way. */
   name: Name
+  /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, refresh?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, refresh?: never }
 }
 
 export interface SecurityDeleteRoleMappingResponse {
@@ -18044,10 +21725,18 @@ export interface SecurityDeleteRoleMappingResponse {
 }
 
 export interface SecurityDeleteServiceTokenRequest extends RequestBase {
+/** The namespace, which is a top-level grouping of service accounts. */
   namespace: Namespace
+  /** The service name. */
   service: Service
+  /** The name of the service account token. */
   name: Name
+  /** If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { namespace?: never, service?: never, name?: never, refresh?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { namespace?: never, service?: never, name?: never, refresh?: never }
 }
 
 export interface SecurityDeleteServiceTokenResponse {
@@ -18055,8 +21744,14 @@ export interface SecurityDeleteServiceTokenResponse {
 }
 
 export interface SecurityDeleteUserRequest extends RequestBase {
+/** An identifier for the user. */
   username: Username
+  /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { username?: never, refresh?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { username?: never, refresh?: never }
 }
 
 export interface SecurityDeleteUserResponse {
@@ -18064,36 +21759,64 @@ export interface SecurityDeleteUserResponse {
 }
 
 export interface SecurityDisableUserRequest extends RequestBase {
+/** An identifier for the user. */
   username: Username
+  /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { username?: never, refresh?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { username?: never, refresh?: never }
 }
 
 export interface SecurityDisableUserResponse {
 }
 
 export interface SecurityDisableUserProfileRequest extends RequestBase {
+/** Unique identifier for the user profile. */
   uid: SecurityUserProfileId
+  /** If 'true', Elasticsearch refreshes the affected shards to make this operation visible to search. If 'wait_for', it waits for a refresh to make this operation visible to search. If 'false', it does nothing with refreshes. */
   refresh?: Refresh
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { uid?: never, refresh?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { uid?: never, refresh?: never }
 }
 
 export type SecurityDisableUserProfileResponse = AcknowledgedResponseBase
 
 export interface SecurityEnableUserRequest extends RequestBase {
+/** An identifier for the user. */
   username: Username
+  /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { username?: never, refresh?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { username?: never, refresh?: never }
 }
 
 export interface SecurityEnableUserResponse {
 }
 
 export interface SecurityEnableUserProfileRequest extends RequestBase {
+/** A unique identifier for the user profile. */
   uid: SecurityUserProfileId
+  /** If 'true', Elasticsearch refreshes the affected shards to make this operation visible to search. If 'wait_for', it waits for a refresh to make this operation visible to search. If 'false', nothing is done with refreshes. */
   refresh?: Refresh
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { uid?: never, refresh?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { uid?: never, refresh?: never }
 }
 
 export type SecurityEnableUserProfileResponse = AcknowledgedResponseBase
 
 export interface SecurityEnrollKibanaRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface SecurityEnrollKibanaResponse {
@@ -18107,6 +21830,10 @@ export interface SecurityEnrollKibanaToken {
 }
 
 export interface SecurityEnrollNodeRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface SecurityEnrollNodeResponse {
@@ -18119,14 +21846,26 @@ export interface SecurityEnrollNodeResponse {
 }
 
 export interface SecurityGetApiKeyRequest extends RequestBase {
+/** An API key id. This parameter cannot be used with any of `name`, `realm_name` or `username`. */
   id?: Id
+  /** An API key name. This parameter cannot be used with any of `id`, `realm_name` or `username`. It supports prefix search with wildcard. */
   name?: Name
+  /** A boolean flag that can be used to query API keys owned by the currently authenticated user. The `realm_name` or `username` parameters cannot be specified when this parameter is set to `true` as they are assumed to be the currently authenticated ones. */
   owner?: boolean
+  /** The name of an authentication realm. This parameter cannot be used with either `id` or `name` or when `owner` flag is set to `true`. */
   realm_name?: Name
+  /** The username of a user. This parameter cannot be used with either `id` or `name` or when `owner` flag is set to `true`. */
   username?: Username
+  /** Return the snapshot of the owner user's role descriptors associated with the API key. An API key's actual permission is the intersection of its assigned role descriptors and the owner user's role descriptors. */
   with_limited_by?: boolean
+  /** A boolean flag that can be used to query API keys that are currently active. An API key is considered active if it is neither invalidated, nor expired at query time. You can specify this together with other parameters such as `owner` or `name`. If `active_only` is false, the response will include both active and inactive (expired or invalidated) keys. */
   active_only?: boolean
+  /** Determines whether to also retrieve the profile uid, for the API key owner principal, if it exists. */
   with_profile_uid?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, name?: never, owner?: never, realm_name?: never, username?: never, with_limited_by?: never, active_only?: never, with_profile_uid?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, name?: never, owner?: never, realm_name?: never, username?: never, with_limited_by?: never, active_only?: never, with_profile_uid?: never }
 }
 
 export interface SecurityGetApiKeyResponse {
@@ -18134,6 +21873,10 @@ export interface SecurityGetApiKeyResponse {
 }
 
 export interface SecurityGetBuiltinPrivilegesRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export interface SecurityGetBuiltinPrivilegesResponse {
@@ -18143,14 +21886,25 @@ export interface SecurityGetBuiltinPrivilegesResponse {
 }
 
 export interface SecurityGetPrivilegesRequest extends RequestBase {
+/** The name of the application. Application privileges are always associated with exactly one application. If you do not specify this parameter, the API returns information about all privileges for all applications. */
   application?: Name
+  /** The name of the privilege. If you do not specify this parameter, the API returns information about all privileges for the requested application. */
   name?: Names
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { application?: never, name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { application?: never, name?: never }
 }
 
 export type SecurityGetPrivilegesResponse = Record<string, Record<string, SecurityPutPrivilegesActions>>
 
 export interface SecurityGetRoleRequest extends RequestBase {
+/** The name of the role. You can specify multiple roles as a comma-separated list. If you do not specify this parameter, the API returns information about all roles. */
   name?: Names
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
 }
 
 export type SecurityGetRoleResponse = Record<string, SecurityGetRoleRole>
@@ -18169,14 +21923,25 @@ export interface SecurityGetRoleRole {
 }
 
 export interface SecurityGetRoleMappingRequest extends RequestBase {
+/** The distinct name that identifies the role mapping. The name is used solely as an identifier to facilitate interaction via the API; it does not affect the behavior of the mapping in any way. You can specify multiple mapping names as a comma-separated list. If you do not specify this parameter, the API returns information about all role mappings. */
   name?: Names
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
 }
 
 export type SecurityGetRoleMappingResponse = Record<string, SecurityRoleMapping>
 
 export interface SecurityGetServiceAccountsRequest extends RequestBase {
+/** The name of the namespace. Omit this parameter to retrieve information about all service accounts. If you omit this parameter, you must also omit the `service` parameter. */
   namespace?: Namespace
+  /** The service name. Omit this parameter to retrieve information about all service accounts that belong to the specified `namespace`. */
   service?: Service
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { namespace?: never, service?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { namespace?: never, service?: never }
 }
 
 export type SecurityGetServiceAccountsResponse = Record<string, SecurityGetServiceAccountsRoleDescriptorWrapper>
@@ -18195,8 +21960,14 @@ export interface SecurityGetServiceCredentialsNodesCredentialsFileToken {
 }
 
 export interface SecurityGetServiceCredentialsRequest extends RequestBase {
+/** The name of the namespace. */
   namespace: Namespace
+  /** The service name. */
   service: Name
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { namespace?: never, service?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { namespace?: never, service?: never }
 }
 
 export interface SecurityGetServiceCredentialsResponse {
@@ -18207,7 +21978,12 @@ export interface SecurityGetServiceCredentialsResponse {
 }
 
 export interface SecurityGetSettingsRequest extends RequestBase {
+/** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
 }
 
 export interface SecurityGetSettingsResponse {
@@ -18231,12 +22007,22 @@ export interface SecurityGetTokenAuthenticationProvider {
 }
 
 export interface SecurityGetTokenRequest extends RequestBase {
+/** The type of grant. Supported grant types are: `password`, `_kerberos`, `client_credentials`, and `refresh_token`. */
   grant_type?: SecurityGetTokenAccessTokenGrantType
+  /** The scope of the token. Currently tokens are only issued for a scope of FULL regardless of the value sent with the request. */
   scope?: string
+  /** The user's password. If you specify the `password` grant type, this parameter is required. This parameter is not valid with any other supported grant type. */
   password?: Password
+  /** The base64 encoded kerberos ticket. If you specify the `_kerberos` grant type, this parameter is required. This parameter is not valid with any other supported grant type. */
   kerberos_ticket?: string
+  /** The string that was returned when you created the token, which enables you to extend its life. If you specify the `refresh_token` grant type, this parameter is required. This parameter is not valid with any other supported grant type. */
   refresh_token?: string
+  /** The username that identifies the user. If you specify the `password` grant type, this parameter is required. This parameter is not valid with any other supported grant type. */
   username?: Username
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { grant_type?: never, scope?: never, password?: never, kerberos_ticket?: never, refresh_token?: never, username?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { grant_type?: never, scope?: never, password?: never, kerberos_ticket?: never, refresh_token?: never, username?: never }
 }
 
 export interface SecurityGetTokenResponse {
@@ -18255,16 +22041,28 @@ export interface SecurityGetTokenUserRealm {
 }
 
 export interface SecurityGetUserRequest extends RequestBase {
+/** An identifier for the user. You can specify multiple usernames as a comma-separated list. If you omit this parameter, the API retrieves information about all users. */
   username?: Username | Username[]
+  /** Determines whether to retrieve the user profile UID, if it exists, for the users. */
   with_profile_uid?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { username?: never, with_profile_uid?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { username?: never, with_profile_uid?: never }
 }
 
 export type SecurityGetUserResponse = Record<string, SecurityUser>
 
 export interface SecurityGetUserPrivilegesRequest extends RequestBase {
+/** The name of the application. Application privileges are always associated with exactly one application. If you do not specify this parameter, the API returns information about all privileges for all applications. */
   application?: Name
+  /** The name of the privilege. If you do not specify this parameter, the API returns information about all privileges for the requested application. */
   priviledge?: Name
   username?: Name | null
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { application?: never, priviledge?: never, username?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { application?: never, priviledge?: never, username?: never }
 }
 
 export interface SecurityGetUserPrivilegesResponse {
@@ -18281,8 +22079,14 @@ export interface SecurityGetUserProfileGetUserProfileErrors {
 }
 
 export interface SecurityGetUserProfileRequest extends RequestBase {
+/** A unique identifier for the user profile. */
   uid: SecurityUserProfileId | SecurityUserProfileId[]
+  /** A comma-separated list of filters for the `data` field of the profile document. To return all content use `data=*`. To return a subset of content use `data=<key>` to retrieve content nested under the specified `<key>`. By default returns no `data` content. */
   data?: string | string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { uid?: never, data?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { uid?: never, data?: never }
 }
 
 export interface SecurityGetUserProfileResponse {
@@ -18300,12 +22104,22 @@ export interface SecurityGrantApiKeyGrantApiKey {
 }
 
 export interface SecurityGrantApiKeyRequest extends RequestBase {
+/** The API key. */
   api_key: SecurityGrantApiKeyGrantApiKey
+  /** The type of grant. Supported grant types are: `access_token`, `password`. */
   grant_type: SecurityGrantApiKeyApiKeyGrantType
+  /** The user's access token. If you specify the `access_token` grant type, this parameter is required. It is not valid with other grant types. */
   access_token?: string
+  /** The user name that identifies the user. If you specify the `password` grant type, this parameter is required. It is not valid with other grant types. */
   username?: Username
+  /** The user's password. If you specify the `password` grant type, this parameter is required. It is not valid with other grant types. */
   password?: Password
+  /** The name of the user to be impersonated. */
   run_as?: Username
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { api_key?: never, grant_type?: never, access_token?: never, username?: never, password?: never, run_as?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { api_key?: never, grant_type?: never, access_token?: never, username?: never, password?: never, run_as?: never }
 }
 
 export interface SecurityGrantApiKeyResponse {
@@ -18333,10 +22147,16 @@ export interface SecurityHasPrivilegesIndexPrivilegesCheck {
 export type SecurityHasPrivilegesPrivileges = Record<string, boolean>
 
 export interface SecurityHasPrivilegesRequest extends RequestBase {
+/** Username */
   user?: Name
   application?: SecurityHasPrivilegesApplicationPrivilegesCheck[]
+  /** A list of the cluster privileges that you want to check. */
   cluster?: SecurityClusterPrivilege[]
   index?: SecurityHasPrivilegesIndexPrivilegesCheck[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { user?: never, application?: never, cluster?: never, index?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { user?: never, application?: never, cluster?: never, index?: never }
 }
 
 export type SecurityHasPrivilegesResourcePrivileges = Record<Name, SecurityHasPrivilegesPrivileges>
@@ -18361,8 +22181,14 @@ export interface SecurityHasPrivilegesUserProfilePrivilegesCheck {
 }
 
 export interface SecurityHasPrivilegesUserProfileRequest extends RequestBase {
+/** A list of profile IDs. The privileges are checked for associated users of the profiles. */
   uids: SecurityUserProfileId[]
+  /** An object containing all the privileges to be checked. */
   privileges: SecurityHasPrivilegesUserProfilePrivilegesCheck
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { uids?: never, privileges?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { uids?: never, privileges?: never }
 }
 
 export interface SecurityHasPrivilegesUserProfileResponse {
@@ -18372,11 +22198,20 @@ export interface SecurityHasPrivilegesUserProfileResponse {
 
 export interface SecurityInvalidateApiKeyRequest extends RequestBase {
   id?: Id
+  /** A list of API key ids. This parameter cannot be used with any of `name`, `realm_name`, or `username`. */
   ids?: Id[]
+  /** An API key name. This parameter cannot be used with any of `ids`, `realm_name` or `username`. */
   name?: Name
+  /** Query API keys owned by the currently authenticated user. The `realm_name` or `username` parameters cannot be specified when this parameter is set to `true` as they are assumed to be the currently authenticated ones. NOTE: At least one of `ids`, `name`, `username`, and `realm_name` must be specified if `owner` is `false`. */
   owner?: boolean
+  /** The name of an authentication realm. This parameter cannot be used with either `ids` or `name`, or when `owner` flag is set to `true`. */
   realm_name?: string
+  /** The username of a user. This parameter cannot be used with either `ids` or `name` or when `owner` flag is set to `true`. */
   username?: Username
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, ids?: never, name?: never, owner?: never, realm_name?: never, username?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, ids?: never, name?: never, owner?: never, realm_name?: never, username?: never }
 }
 
 export interface SecurityInvalidateApiKeyResponse {
@@ -18387,10 +22222,18 @@ export interface SecurityInvalidateApiKeyResponse {
 }
 
 export interface SecurityInvalidateTokenRequest extends RequestBase {
+/** An access token. This parameter cannot be used if any of `refresh_token`, `realm_name`, or `username` are used. */
   token?: string
+  /** A refresh token. This parameter cannot be used if any of `refresh_token`, `realm_name`, or `username` are used. */
   refresh_token?: string
+  /** The name of an authentication realm. This parameter cannot be used with either `refresh_token` or `token`. */
   realm_name?: Name
+  /** The username of a user. This parameter cannot be used with either `refresh_token` or `token`. */
   username?: Username
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { token?: never, refresh_token?: never, realm_name?: never, username?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { token?: never, refresh_token?: never, realm_name?: never, username?: never }
 }
 
 export interface SecurityInvalidateTokenResponse {
@@ -18401,10 +22244,18 @@ export interface SecurityInvalidateTokenResponse {
 }
 
 export interface SecurityOidcAuthenticateRequest extends RequestBase {
+/** Associate a client session with an ID token and mitigate replay attacks. This value needs to be the same as the one that was provided to the `/_security/oidc/prepare` API or the one that was generated by Elasticsearch and included in the response to that call. */
   nonce: string
+  /** The name of the OpenID Connect realm. This property is useful in cases where multiple realms are defined. */
   realm?: string
+  /** The URL to which the OpenID Connect Provider redirected the User Agent in response to an authentication request after a successful authentication. This URL must be provided as-is (URL encoded), taken from the body of the response or as the value of a location header in the response from the OpenID Connect Provider. */
   redirect_uri: string
+  /** Maintain state between the authentication request and the response. This value needs to be the same as the one that was provided to the `/_security/oidc/prepare` API or the one that was generated by Elasticsearch and included in the response to that call. */
   state: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { nonce?: never, realm?: never, redirect_uri?: never, state?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { nonce?: never, realm?: never, redirect_uri?: never, state?: never }
 }
 
 export interface SecurityOidcAuthenticateResponse {
@@ -18415,8 +22266,14 @@ export interface SecurityOidcAuthenticateResponse {
 }
 
 export interface SecurityOidcLogoutRequest extends RequestBase {
+/** The access token to be invalidated. */
   access_token: string
+  /** The refresh token to be invalidated. */
   refresh_token?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { access_token?: never, refresh_token?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { access_token?: never, refresh_token?: never }
 }
 
 export interface SecurityOidcLogoutResponse {
@@ -18424,11 +22281,20 @@ export interface SecurityOidcLogoutResponse {
 }
 
 export interface SecurityOidcPrepareAuthenticationRequest extends RequestBase {
+/** In the case of a third party initiated single sign on, this is the issuer identifier for the OP that the RP is to send the authentication request to. It cannot be specified when *realm* is specified. One of *realm* or *iss* is required. */
   iss?: string
+  /** In the case of a third party initiated single sign on, it is a string value that is included in the authentication request as the *login_hint* parameter. This parameter is not valid when *realm* is specified. */
   login_hint?: string
+  /** The value used to associate a client session with an ID token and to mitigate replay attacks. If the caller of the API does not provide a value, Elasticsearch will generate one with sufficient entropy and return it in the response. */
   nonce?: string
+  /** The name of the OpenID Connect realm in Elasticsearch the configuration of which should be used in order to generate the authentication request. It cannot be specified when *iss* is specified. One of *realm* or *iss* is required. */
   realm?: string
+  /** The value used to maintain state between the authentication request and the response, typically used as a Cross-Site Request Forgery mitigation. If the caller of the API does not provide a value, Elasticsearch will generate one with sufficient entropy and return it in the response. */
   state?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { iss?: never, login_hint?: never, nonce?: never, realm?: never, state?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { iss?: never, login_hint?: never, nonce?: never, realm?: never, state?: never }
 }
 
 export interface SecurityOidcPrepareAuthenticationResponse {
@@ -18446,25 +22312,46 @@ export interface SecurityPutPrivilegesActions {
 }
 
 export interface SecurityPutPrivilegesRequest extends RequestBase {
+/** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
   privileges?: Record<string, Record<string, SecurityPutPrivilegesActions>>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { refresh?: never, privileges?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { refresh?: never, privileges?: never }
 }
 
 export type SecurityPutPrivilegesResponse = Record<string, Record<string, SecurityCreatedStatus>>
 
 export interface SecurityPutRoleRequest extends RequestBase {
+/** The name of the role that is being created or updated. On Elasticsearch Serverless, the role name must begin with a letter or digit and can only contain letters, digits and the characters '_', '-', and '.'. Each role must have a unique name, as this will serve as the identifier for that role. */
   name: Name
+  /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** A list of application privilege entries. */
   applications?: SecurityApplicationPrivileges[]
+  /** A list of cluster privileges. These privileges define the cluster-level actions for users with this role. */
   cluster?: SecurityClusterPrivilege[]
+  /** An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware. Support for global privileges is currently limited to the management of application privileges. */
   global?: Record<string, any>
+  /** A list of indices permissions entries. */
   indices?: SecurityIndicesPrivileges[]
+  /** A list of remote indices permissions entries. NOTE: Remote indices are effective for remote clusters configured with the API key based model. They have no effect for remote clusters configured with the certificate based model. */
   remote_indices?: SecurityRemoteIndicesPrivileges[]
+  /** A list of remote cluster permissions entries. */
   remote_cluster?: SecurityRemoteClusterPrivileges[]
+  /** Optional metadata. Within the metadata object, keys that begin with an underscore (`_`) are reserved for system use. */
   metadata?: Metadata
+  /** A list of users that the owners of this role can impersonate. *Note*: in Serverless, the run-as feature is disabled. For API compatibility, you can still specify an empty `run_as` field, but a non-empty list will be rejected. */
   run_as?: string[]
+  /** Optional description of the role descriptor */
   description?: string
+  /** Indicates roles that might be incompatible with the current cluster license, specifically roles with document and field level security. When the cluster license doesn’t allow certain features for a given role, this parameter is updated dynamically to list the incompatible features. If `enabled` is `false`, the role is ignored, but is still listed in the response from the authenticate API. */
   transient_metadata?: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, refresh?: never, applications?: never, cluster?: never, global?: never, indices?: never, remote_indices?: never, remote_cluster?: never, metadata?: never, run_as?: never, description?: never, transient_metadata?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, refresh?: never, applications?: never, cluster?: never, global?: never, indices?: never, remote_indices?: never, remote_cluster?: never, metadata?: never, run_as?: never, description?: never, transient_metadata?: never }
 }
 
 export interface SecurityPutRoleResponse {
@@ -18472,14 +22359,25 @@ export interface SecurityPutRoleResponse {
 }
 
 export interface SecurityPutRoleMappingRequest extends RequestBase {
+/** The distinct name that identifies the role mapping. The name is used solely as an identifier to facilitate interaction via the API; it does not affect the behavior of the mapping in any way. */
   name: Name
+  /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
+  /** Mappings that have `enabled` set to `false` are ignored when role mapping is performed. */
   enabled?: boolean
+  /** Additional metadata that helps define which roles are assigned to each user. Within the metadata object, keys beginning with `_` are reserved for system usage. */
   metadata?: Metadata
+  /** A list of role names that are granted to the users that match the role mapping rules. Exactly one of `roles` or `role_templates` must be specified. */
   roles?: string[]
+  /** A list of Mustache templates that will be evaluated to determine the roles names that should granted to the users that match the role mapping rules. Exactly one of `roles` or `role_templates` must be specified. */
   role_templates?: SecurityRoleTemplate[]
+  /** The rules that determine which users should be matched by the mapping. A rule is a logical condition that is expressed by using a JSON DSL. */
   rules?: SecurityRoleMappingRule
   run_as?: string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, refresh?: never, enabled?: never, metadata?: never, roles?: never, role_templates?: never, rules?: never, run_as?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, refresh?: never, enabled?: never, metadata?: never, roles?: never, role_templates?: never, rules?: never, run_as?: never }
 }
 
 export interface SecurityPutRoleMappingResponse {
@@ -18488,15 +22386,28 @@ export interface SecurityPutRoleMappingResponse {
 }
 
 export interface SecurityPutUserRequest extends RequestBase {
+/** An identifier for the user. NOTE: Usernames must be at least 1 and no more than 507 characters. They can contain alphanumeric characters (a-z, A-Z, 0-9), spaces, punctuation, and printable symbols in the Basic Latin (ASCII) block. Leading or trailing whitespace is not allowed. */
   username: Username
+  /** Valid values are `true`, `false`, and `wait_for`. These values have the same meaning as in the index API, but the default value for this API is true. */
   refresh?: Refresh
+  /** The email of the user. */
   email?: string | null
+  /** The full name of the user. */
   full_name?: string | null
+  /** Arbitrary metadata that you want to associate with the user. */
   metadata?: Metadata
+  /** The user's password. Passwords must be at least 6 characters long. When adding a user, one of `password` or `password_hash` is required. When updating an existing user, the password is optional, so that other fields on the user (such as their roles) may be updated without modifying the user's password */
   password?: Password
+  /** A hash of the user's password. This must be produced using the same hashing algorithm as has been configured for password storage. For more details, see the explanation of the `xpack.security.authc.password_hashing.algorithm` setting in the user cache and password hash algorithm documentation. Using this parameter allows the client to pre-hash the password for performance and/or confidentiality reasons. The `password` parameter and the `password_hash` parameter cannot be used in the same request. */
   password_hash?: string
+  /** A set of roles the user has. The roles determine the user's access permissions. To create a user without any roles, specify an empty list (`[]`). */
   roles?: string[]
+  /** Specifies whether the user is enabled. */
   enabled?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { username?: never, refresh?: never, email?: never, full_name?: never, metadata?: never, password?: never, password_hash?: never, roles?: never, enabled?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { username?: never, refresh?: never, email?: never, full_name?: never, metadata?: never, password?: never, password_hash?: never, roles?: never, enabled?: never }
 }
 
 export interface SecurityPutUserResponse {
@@ -18542,17 +22453,31 @@ export interface SecurityQueryApiKeysApiKeyQueryContainer {
 }
 
 export interface SecurityQueryApiKeysRequest extends RequestBase {
+/** Return the snapshot of the owner user's role descriptors associated with the API key. An API key's actual permission is the intersection of its assigned role descriptors and the owner user's role descriptors (effectively limited by it). An API key cannot retrieve any API key’s limited-by role descriptors (including itself) unless it has `manage_api_key` or higher privileges. */
   with_limited_by?: boolean
+  /** Determines whether to also retrieve the profile UID for the API key owner principal. If it exists, the profile UID is returned under the `profile_uid` response field for each API key. */
   with_profile_uid?: boolean
+  /** Determines whether aggregation names are prefixed by their respective types in the response. */
   typed_keys?: boolean
+  /** Any aggregations to run over the corpus of returned API keys. Aggregations and queries work together. Aggregations are computed only on the API keys that match the query. This supports only a subset of aggregation types, namely: `terms`, `range`, `date_range`, `missing`, `cardinality`, `value_count`, `composite`, `filter`, and `filters`. Additionally, aggregations only run over the same subset of fields that query works with. */
   aggregations?: Record<string, SecurityQueryApiKeysApiKeyAggregationContainer>
   /** @alias aggregations */
+  /** Any aggregations to run over the corpus of returned API keys. Aggregations and queries work together. Aggregations are computed only on the API keys that match the query. This supports only a subset of aggregation types, namely: `terms`, `range`, `date_range`, `missing`, `cardinality`, `value_count`, `composite`, `filter`, and `filters`. Additionally, aggregations only run over the same subset of fields that query works with. */
   aggs?: Record<string, SecurityQueryApiKeysApiKeyAggregationContainer>
+  /** A query to filter which API keys to return. If the query parameter is missing, it is equivalent to a `match_all` query. The query supports a subset of query types, including `match_all`, `bool`, `term`, `terms`, `match`, `ids`, `prefix`, `wildcard`, `exists`, `range`, and `simple_query_string`. You can query the following public information associated with an API key: `id`, `type`, `name`, `creation`, `expiration`, `invalidated`, `invalidation`, `username`, `realm`, and `metadata`. NOTE: The queryable string values associated with API keys are internally mapped as keywords. Consequently, if no `analyzer` parameter is specified for a `match` query, then the provided match query string is interpreted as a single keyword value. Such a match query is hence equivalent to a `term` query. */
   query?: SecurityQueryApiKeysApiKeyQueryContainer
+  /** The starting document offset. It must not be negative. By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters. To page through more hits, use the `search_after` parameter. */
   from?: integer
+  /** The sort definition. Other than `id`, all public fields of an API key are eligible for sorting. In addition, sort can also be applied to the `_doc` field to sort by index order. */
   sort?: Sort
+  /** The number of hits to return. It must not be negative. The `size` parameter can be set to `0`, in which case no API key matches are returned, only the aggregation results. By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters. To page through more hits, use the `search_after` parameter. */
   size?: integer
+  /** The search after definition. */
   search_after?: SortResults
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { with_limited_by?: never, with_profile_uid?: never, typed_keys?: never, aggregations?: never, aggs?: never, query?: never, from?: never, sort?: never, size?: never, search_after?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { with_limited_by?: never, with_profile_uid?: never, typed_keys?: never, aggregations?: never, aggs?: never, query?: never, from?: never, sort?: never, size?: never, search_after?: never }
 }
 
 export interface SecurityQueryApiKeysResponse {
@@ -18568,11 +22493,20 @@ export interface SecurityQueryRoleQueryRole extends SecurityRoleDescriptor {
 }
 
 export interface SecurityQueryRoleRequest extends RequestBase {
+/** A query to filter which roles to return. If the query parameter is missing, it is equivalent to a `match_all` query. The query supports a subset of query types, including `match_all`, `bool`, `term`, `terms`, `match`, `ids`, `prefix`, `wildcard`, `exists`, `range`, and `simple_query_string`. You can query the following information associated with roles: `name`, `description`, `metadata`, `applications.application`, `applications.privileges`, and `applications.resources`. */
   query?: SecurityQueryRoleRoleQueryContainer
+  /** The starting document offset. It must not be negative. By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters. To page through more hits, use the `search_after` parameter. */
   from?: integer
+  /** The sort definition. You can sort on `username`, `roles`, or `enabled`. In addition, sort can also be applied to the `_doc` field to sort by index order. */
   sort?: Sort
+  /** The number of hits to return. It must not be negative. By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters. To page through more hits, use the `search_after` parameter. */
   size?: integer
+  /** The search after definition. */
   search_after?: SortResults
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { query?: never, from?: never, sort?: never, size?: never, search_after?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { query?: never, from?: never, sort?: never, size?: never, search_after?: never }
 }
 
 export interface SecurityQueryRoleResponse {
@@ -18600,12 +22534,22 @@ export interface SecurityQueryUserQueryUser extends SecurityUser {
 }
 
 export interface SecurityQueryUserRequest extends RequestBase {
+/** Determines whether to retrieve the user profile UID, if it exists, for the users. */
   with_profile_uid?: boolean
+  /** A query to filter which users to return. If the query parameter is missing, it is equivalent to a `match_all` query. The query supports a subset of query types, including `match_all`, `bool`, `term`, `terms`, `match`, `ids`, `prefix`, `wildcard`, `exists`, `range`, and `simple_query_string`. You can query the following information associated with user: `username`, `roles`, `enabled`, `full_name`, and `email`. */
   query?: SecurityQueryUserUserQueryContainer
+  /** The starting document offset. It must not be negative. By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters. To page through more hits, use the `search_after` parameter. */
   from?: integer
+  /** The sort definition. Fields eligible for sorting are: `username`, `roles`, `enabled`. In addition, sort can also be applied to the `_doc` field to sort by index order. */
   sort?: Sort
+  /** The number of hits to return. It must not be negative. By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters. To page through more hits, use the `search_after` parameter. */
   size?: integer
+  /** The search after definition */
   search_after?: SortResults
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { with_profile_uid?: never, query?: never, from?: never, sort?: never, size?: never, search_after?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { with_profile_uid?: never, query?: never, from?: never, sort?: never, size?: never, search_after?: never }
 }
 
 export interface SecurityQueryUserResponse {
@@ -18629,9 +22573,16 @@ export interface SecurityQueryUserUserQueryContainer {
 }
 
 export interface SecuritySamlAuthenticateRequest extends RequestBase {
+/** The SAML response as it was sent by the user's browser, usually a Base64 encoded XML document. */
   content: string
+  /** A JSON array with all the valid SAML Request Ids that the caller of the API has for the current user. */
   ids: Ids
+  /** The name of the realm that should authenticate the SAML response. Useful in cases where many SAML realms are defined. */
   realm?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { content?: never, ids?: never, realm?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { content?: never, ids?: never, realm?: never }
 }
 
 export interface SecuritySamlAuthenticateResponse {
@@ -18643,18 +22594,33 @@ export interface SecuritySamlAuthenticateResponse {
 }
 
 export interface SecuritySamlCompleteLogoutRequest extends RequestBase {
+/** The name of the SAML realm in Elasticsearch for which the configuration is used to verify the logout response. */
   realm: string
+  /** A JSON array with all the valid SAML Request Ids that the caller of the API has for the current user. */
   ids: Ids
+  /** If the SAML IdP sends the logout response with the HTTP-Redirect binding, this field must be set to the query string of the redirect URI. */
   query_string?: string
+  /** If the SAML IdP sends the logout response with the HTTP-Post binding, this field must be set to the value of the SAMLResponse form parameter from the logout response. */
   content?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { realm?: never, ids?: never, query_string?: never, content?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { realm?: never, ids?: never, query_string?: never, content?: never }
 }
 
 export type SecuritySamlCompleteLogoutResponse = boolean
 
 export interface SecuritySamlInvalidateRequest extends RequestBase {
+/** The Assertion Consumer Service URL that matches the one of the SAML realm in Elasticsearch that should be used. You must specify either this parameter or the `realm` parameter. */
   acs?: string
+  /** The query part of the URL that the user was redirected to by the SAML IdP to initiate the Single Logout. This query should include a single parameter named `SAMLRequest` that contains a SAML logout request that is deflated and Base64 encoded. If the SAML IdP has signed the logout request, the URL should include two extra parameters named `SigAlg` and `Signature` that contain the algorithm used for the signature and the signature value itself. In order for Elasticsearch to be able to verify the IdP's signature, the value of the `query_string` field must be an exact match to the string provided by the browser. The client application must not attempt to parse or process the string in any way. */
   query_string: string
+  /** The name of the SAML realm in Elasticsearch the configuration. You must specify either this parameter or the `acs` parameter. */
   realm?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { acs?: never, query_string?: never, realm?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { acs?: never, query_string?: never, realm?: never }
 }
 
 export interface SecuritySamlInvalidateResponse {
@@ -18664,8 +22630,14 @@ export interface SecuritySamlInvalidateResponse {
 }
 
 export interface SecuritySamlLogoutRequest extends RequestBase {
+/** The access token that was returned as a response to calling the SAML authenticate API. Alternatively, the most recent token that was received after refreshing the original one by using a `refresh_token`. */
   token: string
+  /** The refresh token that was returned as a response to calling the SAML authenticate API. Alternatively, the most recent refresh token that was received after refreshing the original access token. */
   refresh_token?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { token?: never, refresh_token?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { token?: never, refresh_token?: never }
 }
 
 export interface SecuritySamlLogoutResponse {
@@ -18673,9 +22645,16 @@ export interface SecuritySamlLogoutResponse {
 }
 
 export interface SecuritySamlPrepareAuthenticationRequest extends RequestBase {
+/** The Assertion Consumer Service URL that matches the one of the SAML realms in Elasticsearch. The realm is used to generate the authentication request. You must specify either this parameter or the `realm` parameter. */
   acs?: string
+  /** The name of the SAML realm in Elasticsearch for which the configuration is used to generate the authentication request. You must specify either this parameter or the `acs` parameter. */
   realm?: string
+  /** A string that will be included in the redirect URL that this API returns as the `RelayState` query parameter. If the Authentication Request is signed, this value is used as part of the signature computation. */
   relay_state?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { acs?: never, realm?: never, relay_state?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { acs?: never, realm?: never, relay_state?: never }
 }
 
 export interface SecuritySamlPrepareAuthenticationResponse {
@@ -18685,7 +22664,12 @@ export interface SecuritySamlPrepareAuthenticationResponse {
 }
 
 export interface SecuritySamlServiceProviderMetadataRequest extends RequestBase {
+/** The name of the SAML realm in Elasticsearch. */
   realm_name: Name
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { realm_name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { realm_name?: never }
 }
 
 export interface SecuritySamlServiceProviderMetadataResponse {
@@ -18698,10 +22682,18 @@ export interface SecuritySuggestUserProfilesHint {
 }
 
 export interface SecuritySuggestUserProfilesRequest extends RequestBase {
+/** A query string used to match name-related fields in user profile documents. Name-related fields are the user's `username`, `full_name`, and `email`. */
   name?: string
+  /** The number of profiles to return. */
   size?: long
+  /** A comma-separated list of filters for the `data` field of the profile document. To return all content use `data=*`. To return a subset of content, use `data=<key>` to retrieve content nested under the specified `<key>`. By default, the API returns no `data` content. It is an error to specify `data` as both the query parameter and the request body field. */
   data?: string | string[]
+  /** Extra search criteria to improve relevance of the suggestion result. Profiles matching the spcified hint are ranked higher in the response. Profiles not matching the hint aren't excluded from the response as long as the profile matches the `name` field query. */
   hint?: SecuritySuggestUserProfilesHint
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, size?: never, data?: never, hint?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, size?: never, data?: never, hint?: never }
 }
 
 export interface SecuritySuggestUserProfilesResponse {
@@ -18716,10 +22708,18 @@ export interface SecuritySuggestUserProfilesTotalUserProfiles {
 }
 
 export interface SecurityUpdateApiKeyRequest extends RequestBase {
+/** The ID of the API key to update. */
   id: Id
+  /** The role descriptors to assign to this API key. The API key's effective permissions are an intersection of its assigned privileges and the point in time snapshot of permissions of the owner user. You can assign new privileges by specifying them in this parameter. To remove assigned privileges, you can supply an empty `role_descriptors` parameter, that is to say, an empty object `{}`. If an API key has no assigned privileges, it inherits the owner user's full permissions. The snapshot of the owner's permissions is always updated, whether you supply the `role_descriptors` parameter or not. The structure of a role descriptor is the same as the request for the create API keys API. */
   role_descriptors?: Record<string, SecurityRoleDescriptor>
+  /** Arbitrary metadata that you want to associate with the API key. It supports a nested data structure. Within the metadata object, keys beginning with `_` are reserved for system usage. When specified, this value fully replaces the metadata previously associated with the API key. */
   metadata?: Metadata
+  /** The expiration time for the API key. By default, API keys never expire. This property can be omitted to leave the expiration unchanged. */
   expiration?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, role_descriptors?: never, metadata?: never, expiration?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, role_descriptors?: never, metadata?: never, expiration?: never }
 }
 
 export interface SecurityUpdateApiKeyResponse {
@@ -18727,10 +22727,18 @@ export interface SecurityUpdateApiKeyResponse {
 }
 
 export interface SecurityUpdateCrossClusterApiKeyRequest extends RequestBase {
+/** The ID of the cross-cluster API key to update. */
   id: Id
+  /** The access to be granted to this API key. The access is composed of permissions for cross cluster search and cross cluster replication. At least one of them must be specified. When specified, the new access assignment fully replaces the previously assigned access. */
   access: SecurityAccess
+  /** The expiration time for the API key. By default, API keys never expire. This property can be omitted to leave the value unchanged. */
   expiration?: Duration
+  /** Arbitrary metadata that you want to associate with the API key. It supports nested data structure. Within the metadata object, keys beginning with `_` are reserved for system usage. When specified, this information fully replaces metadata previously associated with the API key. */
   metadata?: Metadata
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, access?: never, expiration?: never, metadata?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, access?: never, expiration?: never, metadata?: never }
 }
 
 export interface SecurityUpdateCrossClusterApiKeyResponse {
@@ -18738,11 +22746,20 @@ export interface SecurityUpdateCrossClusterApiKeyResponse {
 }
 
 export interface SecurityUpdateSettingsRequest extends RequestBase {
+/** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** Settings for the index used for most security configuration, including native realm users and roles configured with the API. */
   security?: SecuritySecuritySettings
+  /** Settings for the index used to store profile information. */
   'security-profile'?: SecuritySecuritySettings
+  /** Settings for the index used to store tokens. */
   'security-tokens'?: SecuritySecuritySettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never, security?: never, 'security-profile'?: never, 'security-tokens'?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never, security?: never, 'security-profile'?: never, 'security-tokens'?: never }
 }
 
 export interface SecurityUpdateSettingsResponse {
@@ -18750,12 +22767,22 @@ export interface SecurityUpdateSettingsResponse {
 }
 
 export interface SecurityUpdateUserProfileDataRequest extends RequestBase {
+/** A unique identifier for the user profile. */
   uid: SecurityUserProfileId
+  /** Only perform the operation if the document has this sequence number. */
   if_seq_no?: SequenceNumber
+  /** Only perform the operation if the document has this primary term. */
   if_primary_term?: long
+  /** If 'true', Elasticsearch refreshes the affected shards to make this operation visible to search. If 'wait_for', it waits for a refresh to make this operation visible to search. If 'false', nothing is done with refreshes. */
   refresh?: Refresh
+  /** Searchable data that you want to associate with the user profile. This field supports a nested data structure. Within the labels object, top-level keys cannot begin with an underscore (`_`) or contain a period (`.`). */
   labels?: Record<string, any>
+  /** Non-searchable data that you want to associate with the user profile. This field supports a nested data structure. Within the `data` object, top-level keys cannot begin with an underscore (`_`) or contain a period (`.`). The data object is not searchable, but can be retrieved with the get user profile API. */
   data?: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { uid?: never, if_seq_no?: never, if_primary_term?: never, refresh?: never, labels?: never, data?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { uid?: never, if_seq_no?: never, if_primary_term?: never, refresh?: never, labels?: never, data?: never }
 }
 
 export type SecurityUpdateUserProfileDataResponse = AcknowledgedResponseBase
@@ -18763,9 +22790,16 @@ export type SecurityUpdateUserProfileDataResponse = AcknowledgedResponseBase
 export type ShutdownType = 'restart' | 'remove' | 'replace'
 
 export interface ShutdownDeleteNodeRequest extends RequestBase {
+/** The node id of node to be removed from the shutdown state */
   node_id: NodeId
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: TimeUnit
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: TimeUnit
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never, master_timeout?: never, timeout?: never }
 }
 
 export type ShutdownDeleteNodeResponse = AcknowledgedResponseBase
@@ -18790,8 +22824,14 @@ export interface ShutdownGetNodePluginsStatus {
 }
 
 export interface ShutdownGetNodeRequest extends RequestBase {
+/** Which node for which to retrieve the shutdown status */
   node_id?: NodeIds
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: TimeUnit
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never, master_timeout?: never }
 }
 
 export interface ShutdownGetNodeResponse {
@@ -18807,25 +22847,46 @@ export type ShutdownGetNodeShutdownStatus = 'not_started' | 'in_progress' | 'sta
 export type ShutdownGetNodeShutdownType = 'remove' | 'restart'
 
 export interface ShutdownPutNodeRequest extends RequestBase {
+/** The node identifier. This parameter is not validated against the cluster's active nodes. This enables you to register a node for shut down while it is offline. No error is thrown if you specify an invalid node ID. */
   node_id: NodeId
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: TimeUnit
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: TimeUnit
+  /** Valid values are restart, remove, or replace. Use restart when you need to temporarily shut down a node to perform an upgrade, make configuration changes, or perform other maintenance. Because the node is expected to rejoin the cluster, data is not migrated off of the node. Use remove when you need to permanently remove a node from the cluster. The node is not marked ready for shutdown until data is migrated off of the node Use replace to do a 1:1 replacement of a node with another node. Certain allocation decisions will be ignored (such as disk watermarks) in the interest of true replacement of the source node with the target node. During a replace-type shutdown, rollover and index creation may result in unassigned shards, and shrink may fail until the replacement is complete. */
   type: ShutdownType
+  /** A human-readable reason that the node is being shut down. This field provides information for other cluster operators; it does not affect the shut down process. */
   reason: string
+  /** Only valid if type is restart. Controls how long Elasticsearch will wait for the node to restart and join the cluster before reassigning its shards to other nodes. This works the same as delaying allocation with the index.unassigned.node_left.delayed_timeout setting. If you specify both a restart allocation delay and an index-level allocation delay, the longer of the two is used. */
   allocation_delay?: string
+  /** Only valid if type is replace. Specifies the name of the node that is replacing the node being shut down. Shards from the shut down node are only allowed to be allocated to the target node, and no other data will be allocated to the target node. During relocation of data certain allocation rules are ignored, such as disk watermarks or user attribute filtering rules. */
   target_node_name?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { node_id?: never, master_timeout?: never, timeout?: never, type?: never, reason?: never, allocation_delay?: never, target_node_name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { node_id?: never, master_timeout?: never, timeout?: never, type?: never, reason?: never, allocation_delay?: never, target_node_name?: never }
 }
 
 export type ShutdownPutNodeResponse = AcknowledgedResponseBase
 
 export interface SimulateIngestRequest extends RequestBase {
+/** The index to simulate ingesting into. This value can be overridden by specifying an index on each document. If you specify this parameter in the request path, it is used for any documents that do not explicitly specify an index argument. */
   index?: IndexName
+  /** The pipeline to use as the default pipeline. This value can be used to override the default pipeline of the index. */
   pipeline?: PipelineName
+  /** Sample documents to test in the pipeline. */
   docs: IngestDocument[]
+  /** A map of component template names to substitute component template definition objects. */
   component_template_substitutions?: Record<string, ClusterComponentTemplateNode>
+  /** A map of index template names to substitute index template definition objects. */
   index_template_subtitutions?: Record<string, IndicesIndexTemplate>
   mapping_addition?: MappingTypeMapping
+  /** Pipelines to test. If you don’t specify the `pipeline` request path parameter, this parameter is required. If you specify both this and the request path parameter, the API only uses the request path parameter. */
   pipeline_substitutions?: Record<string, IngestPipeline>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, pipeline?: never, docs?: never, component_template_substitutions?: never, index_template_subtitutions?: never, mapping_addition?: never, pipeline_substitutions?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, pipeline?: never, docs?: never, component_template_substitutions?: never, index_template_subtitutions?: never, mapping_addition?: never, pipeline_substitutions?: never }
 }
 
 export interface SimulateIngestResponse {
@@ -18898,17 +22959,31 @@ export interface SlmStatistics {
 }
 
 export interface SlmDeleteLifecycleRequest extends RequestBase {
+/** The id of the snapshot lifecycle policy to remove */
   policy_id: Name
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { policy_id?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { policy_id?: never, master_timeout?: never, timeout?: never }
 }
 
 export type SlmDeleteLifecycleResponse = AcknowledgedResponseBase
 
 export interface SlmExecuteLifecycleRequest extends RequestBase {
+/** The id of the snapshot lifecycle policy to be executed */
   policy_id: Name
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { policy_id?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { policy_id?: never, master_timeout?: never, timeout?: never }
 }
 
 export interface SlmExecuteLifecycleResponse {
@@ -18916,23 +22991,42 @@ export interface SlmExecuteLifecycleResponse {
 }
 
 export interface SlmExecuteRetentionRequest extends RequestBase {
+/** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
 }
 
 export type SlmExecuteRetentionResponse = AcknowledgedResponseBase
 
 export interface SlmGetLifecycleRequest extends RequestBase {
+/** Comma-separated list of snapshot lifecycle policies to retrieve */
   policy_id?: Names
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { policy_id?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { policy_id?: never, master_timeout?: never, timeout?: never }
 }
 
 export type SlmGetLifecycleResponse = Record<Id, SlmSnapshotLifecycle>
 
 export interface SlmGetStatsRequest extends RequestBase {
+/** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
 }
 
 export interface SlmGetStatsResponse {
@@ -18949,8 +23043,14 @@ export interface SlmGetStatsResponse {
 }
 
 export interface SlmGetStatusRequest extends RequestBase {
+/** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
 }
 
 export interface SlmGetStatusResponse {
@@ -18958,28 +23058,52 @@ export interface SlmGetStatusResponse {
 }
 
 export interface SlmPutLifecycleRequest extends RequestBase {
+/** The identifier for the snapshot lifecycle policy you want to create or update. */
   policy_id: Name
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   timeout?: Duration
+  /** Configuration for each snapshot created by the policy. */
   config?: SlmConfiguration
+  /** Name automatically assigned to each snapshot created by the policy. Date math is supported. To prevent conflicting snapshot names, a UUID is automatically appended to each snapshot name. */
   name?: Name
+  /** Repository used to store snapshots created by this policy. This repository must exist prior to the policy’s creation. You can create a repository using the snapshot repository API. */
   repository?: string
+  /** Retention rules used to retain and delete snapshots created by the policy. */
   retention?: SlmRetention
+  /** Periodic or absolute schedule at which the policy creates snapshots. SLM applies schedule changes immediately. */
   schedule?: WatcherCronExpression
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { policy_id?: never, master_timeout?: never, timeout?: never, config?: never, name?: never, repository?: never, retention?: never, schedule?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { policy_id?: never, master_timeout?: never, timeout?: never, config?: never, name?: never, repository?: never, retention?: never, schedule?: never }
 }
 
 export type SlmPutLifecycleResponse = AcknowledgedResponseBase
 
 export interface SlmStartRequest extends RequestBase {
+/** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
 }
 
 export type SlmStartResponse = AcknowledgedResponseBase
 
 export interface SlmStopRequest extends RequestBase {
+/** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
 }
 
 export type SlmStopResponse = AcknowledgedResponseBase
@@ -19195,9 +23319,16 @@ export interface SnapshotCleanupRepositoryCleanupRepositoryResults {
 }
 
 export interface SnapshotCleanupRepositoryRequest extends RequestBase {
+/** The name of the snapshot repository to clean up. */
   name: Name
+  /** The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1` */
   master_timeout?: Duration
+  /** The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata. If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged. To indicate that the request should never timeout, set it to `-1`. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
 }
 
 export interface SnapshotCleanupRepositoryResponse {
@@ -19205,28 +23336,53 @@ export interface SnapshotCleanupRepositoryResponse {
 }
 
 export interface SnapshotCloneRequest extends RequestBase {
+/** The name of the snapshot repository that both source and target snapshot belong to. */
   repository: Name
+  /** The source snapshot name. */
   snapshot: Name
+  /** The target snapshot name. */
   target_snapshot: Name
+  /** The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** The period of time to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** A comma-separated list of indices to include in the snapshot. Multi-target syntax is supported. */
   indices: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, target_snapshot?: never, master_timeout?: never, timeout?: never, indices?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, target_snapshot?: never, master_timeout?: never, timeout?: never, indices?: never }
 }
 
 export type SnapshotCloneResponse = AcknowledgedResponseBase
 
 export interface SnapshotCreateRequest extends RequestBase {
+/** The name of the repository for the snapshot. */
   repository: Name
+  /** The name of the snapshot. It supportes date math. It must be unique in the repository. */
   snapshot: Name
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** If `true`, the request returns a response when the snapshot is complete. If `false`, the request returns a response when the snapshot initializes. */
   wait_for_completion?: boolean
+  /** Determines how wildcard patterns in the `indices` parameter match data streams and indices. It supports comma-separated values such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
+  /** The feature states to include in the snapshot. Each feature state includes one or more system indices containing related data. You can view a list of eligible features using the get features API. If `include_global_state` is `true`, all current feature states are included by default. If `include_global_state` is `false`, no feature states are included by default. Note that specifying an empty array will result in the default behavior. To exclude all feature states, regardless of the `include_global_state` value, specify an array with only the value `none` (`["none"]`). */
   feature_states?: string[]
+  /** If `true`, the request ignores data streams and indices in `indices` that are missing or closed. If `false`, the request returns an error for any data stream or index that is missing or closed. */
   ignore_unavailable?: boolean
+  /** If `true`, the current cluster state is included in the snapshot. The cluster state includes persistent cluster settings, composable index templates, legacy index templates, ingest pipelines, and ILM policies. It also includes data stored in system indices, such as Watches and task records (configurable via `feature_states`). */
   include_global_state?: boolean
+  /** A comma-separated list of data streams and indices to include in the snapshot. It supports a multi-target syntax. The default is an empty array (`[]`), which includes all regular data streams and regular indices. To exclude all data streams and indices, use `-*`. You can't use this parameter to include or exclude system indices or system data streams from a snapshot. Use `feature_states` instead. */
   indices?: Indices
+  /** Arbitrary metadata to the snapshot, such as a record of who took the snapshot, why it was taken, or any other useful data. It can have any contents but it must be less than 1024 bytes. This information is not automatically generated by Elasticsearch. */
   metadata?: Metadata
+  /** If `true`, it enables you to restore a partial snapshot of indices with unavailable shards. Only shards that were successfully included in the snapshot will be restored. All missing shards will be recreated as empty. If `false`, the entire restore operation will fail if one or more indices included in the snapshot do not have all primary shards available. */
   partial?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never, expand_wildcards?: never, feature_states?: never, ignore_unavailable?: never, include_global_state?: never, indices?: never, metadata?: never, partial?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never, expand_wildcards?: never, feature_states?: never, ignore_unavailable?: never, include_global_state?: never, indices?: never, metadata?: never, partial?: never }
 }
 
 export interface SnapshotCreateResponse {
@@ -19235,47 +23391,88 @@ export interface SnapshotCreateResponse {
 }
 
 export interface SnapshotCreateRepositoryRequest extends RequestBase {
+/** The name of the snapshot repository to register or update. */
   name: Name
+  /** The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata. If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged. To indicate that the request should never timeout, set it to `-1`. */
   timeout?: Duration
+  /** If `true`, the request verifies the repository is functional on all master and data nodes in the cluster. If `false`, this verification is skipped. You can also perform this verification with the verify snapshot repository API. */
   verify?: boolean
   repository?: SnapshotRepository
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, verify?: never, repository?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, verify?: never, repository?: never }
 }
 
 export type SnapshotCreateRepositoryResponse = AcknowledgedResponseBase
 
 export interface SnapshotDeleteRequest extends RequestBase {
+/** The name of the repository to delete a snapshot from. */
   repository: Name
+  /** A comma-separated list of snapshot names to delete. It also accepts wildcards (`*`). */
   snapshot: Name
+  /** The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never }
 }
 
 export type SnapshotDeleteResponse = AcknowledgedResponseBase
 
 export interface SnapshotDeleteRepositoryRequest extends RequestBase {
+/** The ame of the snapshot repositories to unregister. Wildcard (`*`) patterns are supported. */
   name: Names
+  /** The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata. If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged. To indicate that the request should never timeout, set it to `-1`. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
 }
 
 export type SnapshotDeleteRepositoryResponse = AcknowledgedResponseBase
 
 export interface SnapshotGetRequest extends RequestBase {
+/** A comma-separated list of snapshot repository names used to limit the request. Wildcard (`*`) expressions are supported. */
   repository: Name
+  /** A comma-separated list of snapshot names to retrieve Wildcards (`*`) are supported. * To get information about all snapshots in a registered repository, use a wildcard (`*`) or `_all`. * To get information about any snapshots that are currently running, use `_current`. */
   snapshot: Names
+  /** An offset identifier to start pagination from as returned by the next field in the response body. */
   after?: string
+  /** The value of the current sort column at which to start retrieval. It can be a string `snapshot-` or a repository name when sorting by snapshot or repository name. It can be a millisecond time value or a number when sorting by `index-` or shard count. */
   from_sort_value?: string
+  /** If `false`, the request returns an error for any snapshots that are unavailable. */
   ignore_unavailable?: boolean
+  /** If `true`, the response includes additional information about each index in the snapshot comprising the number of shards in the index, the total size of the index in bytes, and the maximum number of segments per shard in the index. The default is `false`, meaning that this information is omitted. */
   index_details?: boolean
+  /** If `true`, the response includes the name of each index in each snapshot. */
   index_names?: boolean
+  /** If `true`, the response includes the repository name in each snapshot. */
   include_repository?: boolean
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** The sort order. Valid values are `asc` for ascending and `desc` for descending order. The default behavior is ascending order. */
   order?: SortOrder
+  /** Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0. */
   offset?: integer
+  /** The maximum number of snapshots to return. The default is 0, which means to return all that match the request without limit. */
   size?: integer
+  /** Filter snapshots by a comma-separated list of snapshot lifecycle management (SLM) policy names that snapshots belong to. You can use wildcards (`*`) and combinations of wildcards followed by exclude patterns starting with `-`. For example, the pattern `*,-policy-a-\*` will return all snapshots except for those that were created by an SLM policy with a name starting with `policy-a-`. Note that the wildcard pattern `*` matches all snapshots created by an SLM policy but not those snapshots that were not created by an SLM policy. To include snapshots that were not created by an SLM policy, you can use the special pattern `_none` that will match all snapshots without an SLM policy. */
   slm_policy_filter?: Name
+  /** The sort order for the result. The default behavior is sorting by snapshot start time stamp. */
   sort?: SnapshotSnapshotSort
+  /** If `true`, returns additional information about each snapshot such as the version of Elasticsearch which took the snapshot, the start and end times of the snapshot, and the number of shards snapshotted. NOTE: The parameters `size`, `order`, `after`, `from_sort_value`, `offset`, `slm_policy_filter`, and `sort` are not supported when you set `verbose=false` and the sort order for requests with `verbose=false` is undefined. */
   verbose?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, after?: never, from_sort_value?: never, ignore_unavailable?: never, index_details?: never, index_names?: never, include_repository?: never, master_timeout?: never, order?: never, offset?: never, size?: never, slm_policy_filter?: never, sort?: never, verbose?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, after?: never, from_sort_value?: never, ignore_unavailable?: never, index_details?: never, index_names?: never, include_repository?: never, master_timeout?: never, order?: never, offset?: never, size?: never, slm_policy_filter?: never, sort?: never, verbose?: never }
 }
 
 export interface SnapshotGetResponse {
@@ -19293,42 +23490,204 @@ export interface SnapshotGetSnapshotResponseItem {
 }
 
 export interface SnapshotGetRepositoryRequest extends RequestBase {
+/** A comma-separated list of snapshot repository names used to limit the request. Wildcard (`*`) expressions are supported including combining wildcards with exclude patterns starting with `-`. To get information about all snapshot repositories registered in the cluster, omit this parameter or use `*` or `_all`. */
   name?: Names
+  /** If `true`, the request gets information from the local node only. If `false`, the request gets information from the master node. */
   local?: boolean
+  /** The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, local?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, local?: never, master_timeout?: never }
 }
 
 export type SnapshotGetRepositoryResponse = Record<string, SnapshotRepository>
 
+export interface SnapshotRepositoryAnalyzeBlobDetails {
+  name: string
+  overwritten: boolean
+  read_early: boolean
+  read_end: long
+  read_start: long
+  reads: SnapshotRepositoryAnalyzeReadBlobDetails
+  size: ByteSize
+  size_bytes: long
+}
+
+export interface SnapshotRepositoryAnalyzeDetailsInfo {
+  blob: SnapshotRepositoryAnalyzeBlobDetails
+  overwrite_elapsed?: Duration
+  overwrite_elapsed_nanos?: DurationValue<UnitNanos>
+  write_elapsed: Duration
+  write_elapsed_nanos: DurationValue<UnitNanos>
+  write_throttled: Duration
+  write_throttled_nanos: DurationValue<UnitNanos>
+  writer_node: SnapshotRepositoryAnalyzeNodeInfo
+}
+
+export interface SnapshotRepositoryAnalyzeNodeInfo {
+  id: Id
+  name: Name
+}
+
+export interface SnapshotRepositoryAnalyzeReadBlobDetails {
+  before_write_complete?: boolean
+  elapsed?: Duration
+  elapsed_nanos?: DurationValue<UnitNanos>
+  first_byte_time?: Duration
+  first_byte_time_nanos: DurationValue<UnitNanos>
+  found: boolean
+  node: SnapshotRepositoryAnalyzeNodeInfo
+  throttled?: Duration
+  throttled_nanos?: DurationValue<UnitNanos>
+}
+
+export interface SnapshotRepositoryAnalyzeReadSummaryInfo {
+  count: integer
+  max_wait: Duration
+  max_wait_nanos: DurationValue<UnitNanos>
+  total_elapsed: Duration
+  total_elapsed_nanos: DurationValue<UnitNanos>
+  total_size: ByteSize
+  total_size_bytes: long
+  total_throttled: Duration
+  total_throttled_nanos: DurationValue<UnitNanos>
+  total_wait: Duration
+  total_wait_nanos: DurationValue<UnitNanos>
+}
+
+export interface SnapshotRepositoryAnalyzeRequest extends RequestBase {
+/** The name of the repository. */
+  name: Name
+  /** The total number of blobs to write to the repository during the test. For realistic experiments, you should set it to at least `2000`. */
+  blob_count?: integer
+  /** The number of operations to run concurrently during the test. */
+  concurrency?: integer
+  /** Indicates whether to return detailed results, including timing information for every operation performed during the analysis. If false, it returns only a summary of the analysis. */
+  detailed?: boolean
+  /** The number of nodes on which to perform an early read operation while writing each blob. Early read operations are only rarely performed. */
+  early_read_node_count?: integer
+  /** The maximum size of a blob to be written during the test. For realistic experiments, you should set it to at least `2gb`. */
+  max_blob_size?: ByteSize
+  /** An upper limit on the total size of all the blobs written during the test. For realistic experiments, you should set it to at least `1tb`. */
+  max_total_data_size?: ByteSize
+  /** The probability of performing a rare action such as an early read, an overwrite, or an aborted write on each blob. */
+  rare_action_probability?: double
+  /** Indicates whether to rarely cancel writes before they complete. */
+  rarely_abort_writes?: boolean
+  /** The number of nodes on which to read a blob after writing. */
+  read_node_count?: integer
+  /** The minimum number of linearizable register operations to perform in total. For realistic experiments, you should set it to at least `100`. */
+  register_operation_count?: integer
+  /** The seed for the pseudo-random number generator used to generate the list of operations performed during the test. To repeat the same set of operations in multiple experiments, use the same seed in each experiment. Note that the operations are performed concurrently so might not always happen in the same order on each run. */
+  seed?: integer
+  /** The period of time to wait for the test to complete. If no response is received before the timeout expires, the test is cancelled and returns an error. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, blob_count?: never, concurrency?: never, detailed?: never, early_read_node_count?: never, max_blob_size?: never, max_total_data_size?: never, rare_action_probability?: never, rarely_abort_writes?: never, read_node_count?: never, register_operation_count?: never, seed?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, blob_count?: never, concurrency?: never, detailed?: never, early_read_node_count?: never, max_blob_size?: never, max_total_data_size?: never, rare_action_probability?: never, rarely_abort_writes?: never, read_node_count?: never, register_operation_count?: never, seed?: never, timeout?: never }
+}
+
+export interface SnapshotRepositoryAnalyzeResponse {
+  blob_count: integer
+  blob_path: string
+  concurrency: integer
+  coordinating_node: SnapshotRepositoryAnalyzeNodeInfo
+  delete_elapsed: Duration
+  delete_elapsed_nanos: DurationValue<UnitNanos>
+  details: SnapshotRepositoryAnalyzeDetailsInfo
+  early_read_node_count: integer
+  issues_detected: string[]
+  listing_elapsed: Duration
+  listing_elapsed_nanos: DurationValue<UnitNanos>
+  max_blob_size: ByteSize
+  max_blob_size_bytes: long
+  max_total_data_size: ByteSize
+  max_total_data_size_bytes: long
+  rare_action_probability: double
+  read_node_count: integer
+  repository: string
+  seed: long
+  summary: SnapshotRepositoryAnalyzeSummaryInfo
+}
+
+export interface SnapshotRepositoryAnalyzeSummaryInfo {
+  read: SnapshotRepositoryAnalyzeReadSummaryInfo
+  write: SnapshotRepositoryAnalyzeWriteSummaryInfo
+}
+
+export interface SnapshotRepositoryAnalyzeWriteSummaryInfo {
+  count: integer
+  total_elapsed: Duration
+  total_elapsed_nanos: DurationValue<UnitNanos>
+  total_size: ByteSize
+  total_size_bytes: long
+  total_throttled: Duration
+  total_throttled_nanos: long
+}
+
 export interface SnapshotRepositoryVerifyIntegrityRequest extends RequestBase {
+/** The name of the snapshot repository. */
   name: Names
+  /** If `verify_blob_contents` is `true`, this parameter specifies how many blobs to verify at once. */
   blob_thread_pool_concurrency?: integer
+  /** The maximum number of index snapshots to verify concurrently within each index verification. */
   index_snapshot_verification_concurrency?: integer
+  /** The number of indices to verify concurrently. The default behavior is to use the entire `snapshot_meta` thread pool. */
   index_verification_concurrency?: integer
+  /** If `verify_blob_contents` is `true`, this parameter specifies the maximum amount of data that Elasticsearch will read from the repository every second. */
   max_bytes_per_sec?: string
+  /** The number of shard snapshot failures to track during integrity verification, in order to avoid excessive resource usage. If your repository contains more than this number of shard snapshot failures, the verification will fail. */
   max_failed_shard_snapshots?: integer
+  /** The maximum number of snapshot metadata operations to run concurrently. The default behavior is to use at most half of the `snapshot_meta` thread pool at once. */
   meta_thread_pool_concurrency?: integer
+  /** The number of snapshots to verify concurrently. The default behavior is to use at most half of the `snapshot_meta` thread pool at once. */
   snapshot_verification_concurrency?: integer
+  /** Indicates whether to verify the checksum of every data blob in the repository. If this feature is enabled, Elasticsearch will read the entire repository contents, which may be extremely slow and expensive. */
   verify_blob_contents?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, blob_thread_pool_concurrency?: never, index_snapshot_verification_concurrency?: never, index_verification_concurrency?: never, max_bytes_per_sec?: never, max_failed_shard_snapshots?: never, meta_thread_pool_concurrency?: never, snapshot_verification_concurrency?: never, verify_blob_contents?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, blob_thread_pool_concurrency?: never, index_snapshot_verification_concurrency?: never, index_verification_concurrency?: never, max_bytes_per_sec?: never, max_failed_shard_snapshots?: never, meta_thread_pool_concurrency?: never, snapshot_verification_concurrency?: never, verify_blob_contents?: never }
 }
 
 export type SnapshotRepositoryVerifyIntegrityResponse = any
 
 export interface SnapshotRestoreRequest extends RequestBase {
+/** The name of the repository to restore a snapshot from. */
   repository: Name
+  /** The name of the snapshot to restore. */
   snapshot: Name
+  /** The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** If `true`, the request returns a response when the restore operation completes. The operation is complete when it finishes all attempts to recover primary shards for restored indices. This applies even if one or more of the recovery attempts fail. If `false`, the request returns a response when the restore operation initializes. */
   wait_for_completion?: boolean
+  /** The feature states to restore. If `include_global_state` is `true`, the request restores all feature states in the snapshot by default. If `include_global_state` is `false`, the request restores no feature states by default. Note that specifying an empty array will result in the default behavior. To restore no feature states, regardless of the `include_global_state` value, specify an array containing only the value `none` (`["none"]`). */
   feature_states?: string[]
+  /** The index settings to not restore from the snapshot. You can't use this option to ignore `index.number_of_shards`. For data streams, this option applies only to restored backing indices. New backing indices are configured using the data stream's matching index template. */
   ignore_index_settings?: string[]
+  /** If `true`, the request ignores any index or data stream in indices that's missing from the snapshot. If `false`, the request returns an error for any missing index or data stream. */
   ignore_unavailable?: boolean
+  /** If `true`, the request restores aliases for any restored data streams and indices. If `false`, the request doesn’t restore aliases. */
   include_aliases?: boolean
+  /** If `true`, restore the cluster state. The cluster state includes: * Persistent cluster settings * Index templates * Legacy index templates * Ingest pipelines * Index lifecycle management (ILM) policies * Stored scripts * For snapshots taken after 7.12.0, feature states If `include_global_state` is `true`, the restore operation merges the legacy index templates in your cluster with the templates contained in the snapshot, replacing any existing ones whose name matches one in the snapshot. It completely removes all persistent settings, non-legacy index templates, ingest pipelines, and ILM lifecycle policies that exist in your cluster and replaces them with the corresponding items from the snapshot. Use the `feature_states` parameter to configure how feature states are restored. If `include_global_state` is `true` and a snapshot was created without a global state then the restore request will fail. */
   include_global_state?: boolean
+  /** Index settings to add or change in restored indices, including backing indices. You can't use this option to change `index.number_of_shards`. For data streams, this option applies only to restored backing indices. New backing indices are configured using the data stream's matching index template. */
   index_settings?: IndicesIndexSettings
+  /** A comma-separated list of indices and data streams to restore. It supports a multi-target syntax. The default behavior is all regular indices and regular data streams in the snapshot. You can't use this parameter to restore system indices or system data streams. Use `feature_states` instead. */
   indices?: Indices
+  /** If `false`, the entire restore operation will fail if one or more indices included in the snapshot do not have all primary shards available. If true, it allows restoring a partial snapshot of indices with unavailable shards. Only shards that were successfully included in the snapshot will be restored. All missing shards will be recreated as empty. */
   partial?: boolean
+  /** A rename pattern to apply to restored data streams and indices. Data streams and indices matching the rename pattern will be renamed according to `rename_replacement`. The rename pattern is applied as defined by the regular expression that supports referencing the original text, according to the `appendReplacement` logic. */
   rename_pattern?: string
+  /** The rename replacement string that is used with the `rename_pattern`. */
   rename_replacement?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never, feature_states?: never, ignore_index_settings?: never, ignore_unavailable?: never, include_aliases?: never, include_global_state?: never, index_settings?: never, indices?: never, partial?: never, rename_pattern?: never, rename_replacement?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never, feature_states?: never, ignore_index_settings?: never, ignore_unavailable?: never, include_aliases?: never, include_global_state?: never, index_settings?: never, indices?: never, partial?: never, rename_pattern?: never, rename_replacement?: never }
 }
 
 export interface SnapshotRestoreResponse {
@@ -19343,10 +23702,18 @@ export interface SnapshotRestoreSnapshotRestore {
 }
 
 export interface SnapshotStatusRequest extends RequestBase {
+/** The snapshot repository name used to limit the request. It supports wildcards (`*`) if `<snapshot>` isn't specified. */
   repository?: Name
+  /** A comma-separated list of snapshots to retrieve status for. The default is currently running snapshots. Wildcards (`*`) are not supported. */
   snapshot?: Names
+  /** If `false`, the request returns an error for any snapshots that are unavailable. If `true`, the request ignores snapshots that are unavailable, such as those that are corrupted or temporarily cannot be returned. */
   ignore_unavailable?: boolean
+  /** The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, ignore_unavailable?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, ignore_unavailable?: never, master_timeout?: never }
 }
 
 export interface SnapshotStatusResponse {
@@ -19358,9 +23725,16 @@ export interface SnapshotVerifyRepositoryCompactNodeInfo {
 }
 
 export interface SnapshotVerifyRepositoryRequest extends RequestBase {
+/** The name of the snapshot repository to verify. */
   name: Name
+  /** The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata. If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged. To indicate that the request should never timeout, set it to `-1`. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
 }
 
 export interface SnapshotVerifyRepositoryResponse {
@@ -19375,7 +23749,12 @@ export interface SqlColumn {
 export type SqlRow = any[]
 
 export interface SqlClearCursorRequest extends RequestBase {
+/** Cursor to clear. */
   cursor: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { cursor?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { cursor?: never }
 }
 
 export interface SqlClearCursorResponse {
@@ -19383,17 +23762,31 @@ export interface SqlClearCursorResponse {
 }
 
 export interface SqlDeleteAsyncRequest extends RequestBase {
+/** The identifier for the search. */
   id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export type SqlDeleteAsyncResponse = AcknowledgedResponseBase
 
 export interface SqlGetAsyncRequest extends RequestBase {
+/** The identifier for the search. */
   id: Id
+  /** The separator for CSV results. The API supports this parameter only for CSV responses. */
   delimiter?: string
+  /** The format for the response. You must specify a format using this parameter or the `Accept` HTTP header. If you specify both, the API uses this parameter. */
   format?: string
+  /** The retention period for the search and its results. It defaults to the `keep_alive` period for the original SQL search. */
   keep_alive?: Duration
+  /** The period to wait for complete results. It defaults to no timeout, meaning the request waits for complete search results. */
   wait_for_completion_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, delimiter?: never, format?: never, keep_alive?: never, wait_for_completion_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, delimiter?: never, format?: never, keep_alive?: never, wait_for_completion_timeout?: never }
 }
 
 export interface SqlGetAsyncResponse {
@@ -19406,7 +23799,12 @@ export interface SqlGetAsyncResponse {
 }
 
 export interface SqlGetAsyncStatusRequest extends RequestBase {
+/** The identifier for the search. */
   id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export interface SqlGetAsyncStatusResponse {
@@ -19419,24 +23817,46 @@ export interface SqlGetAsyncStatusResponse {
 }
 
 export interface SqlQueryRequest extends RequestBase {
+/** The format for the response. You can also specify a format using the `Accept` HTTP header. If you specify both this parameter and the `Accept` HTTP header, this parameter takes precedence. */
   format?: SqlQuerySqlFormat
+  /** If `true`, the response has partial results when there are shard request timeouts or shard failures. If `false`, the API returns an error with no partial results. */
   allow_partial_search_results?: boolean
+  /** The default catalog (cluster) for queries. If unspecified, the queries execute on the data in the local cluster only. */
   catalog?: string
+  /** If `true`, the results are in a columnar fashion: one row represents all the values of a certain column from the current page of results. The API supports this parameter only for CBOR, JSON, SMILE, and YAML responses. */
   columnar?: boolean
+  /** The cursor used to retrieve a set of paginated results. If you specify a cursor, the API only uses the `columnar` and `time_zone` request body parameters. It ignores other request body parameters. */
   cursor?: string
+  /** The maximum number of rows (or entries) to return in one response. */
   fetch_size?: integer
+  /** If `false`, the API returns an exception when encountering multiple values for a field. If `true`, the API is lenient and returns the first value from the array with no guarantee of consistent results. */
   field_multi_value_leniency?: boolean
+  /** The Elasticsearch query DSL for additional filtering. */
   filter?: QueryDslQueryContainer
+  /** If `true`, the search can run on frozen indices. */
   index_using_frozen?: boolean
+  /** The retention period for an async or saved synchronous search. */
   keep_alive?: Duration
+  /** If `true`, Elasticsearch stores synchronous searches if you also specify the `wait_for_completion_timeout` parameter. If `false`, Elasticsearch only stores async searches that don't finish before the `wait_for_completion_timeout`. */
   keep_on_completion?: boolean
+  /** The minimum retention period for the scroll cursor. After this time period, a pagination request might fail because the scroll cursor is no longer available. Subsequent scroll requests prolong the lifetime of the scroll cursor by the duration of `page_timeout` in the scroll request. */
   page_timeout?: Duration
+  /** The values for parameters in the query. */
   params?: Record<string, any>
+  /** The SQL query to run. */
   query?: string
+  /** The timeout before the request fails. */
   request_timeout?: Duration
+  /** One or more runtime fields for the search request. These fields take precedence over mapped fields with the same name. */
   runtime_mappings?: MappingRuntimeFields
+  /** The ISO-8601 time zone ID for the search. */
   time_zone?: TimeZone
+  /** The period to wait for complete results. It defaults to no timeout, meaning the request waits for complete search results. If the search doesn't finish within this period, the search becomes async. To save a synchronous search, you must specify this parameter and the `keep_on_completion` parameter. */
   wait_for_completion_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { format?: never, allow_partial_search_results?: never, catalog?: never, columnar?: never, cursor?: never, fetch_size?: never, field_multi_value_leniency?: never, filter?: never, index_using_frozen?: never, keep_alive?: never, keep_on_completion?: never, page_timeout?: never, params?: never, query?: never, request_timeout?: never, runtime_mappings?: never, time_zone?: never, wait_for_completion_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { format?: never, allow_partial_search_results?: never, catalog?: never, columnar?: never, cursor?: never, fetch_size?: never, field_multi_value_leniency?: never, filter?: never, index_using_frozen?: never, keep_alive?: never, keep_on_completion?: never, page_timeout?: never, params?: never, query?: never, request_timeout?: never, runtime_mappings?: never, time_zone?: never, wait_for_completion_timeout?: never }
 }
 
 export interface SqlQueryResponse {
@@ -19451,10 +23871,18 @@ export interface SqlQueryResponse {
 export type SqlQuerySqlFormat = 'csv' | 'json' | 'tsv' | 'txt' | 'yaml' | 'cbor' | 'smile'
 
 export interface SqlTranslateRequest extends RequestBase {
+/** The maximum number of rows (or entries) to return in one response. */
   fetch_size?: integer
+  /** The Elasticsearch query DSL for additional filtering. */
   filter?: QueryDslQueryContainer
+  /** The SQL query to run. */
   query: string
+  /** The ISO-8601 time zone ID for the search. */
   time_zone?: TimeZone
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { fetch_size?: never, filter?: never, query?: never, time_zone?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { fetch_size?: never, filter?: never, query?: never, time_zone?: never }
 }
 
 export interface SqlTranslateResponse {
@@ -19478,6 +23906,10 @@ export interface SslCertificatesCertificateInformation {
 }
 
 export interface SslCertificatesRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
 }
 
 export type SslCertificatesResponse = SslCertificatesCertificateInformation[]
@@ -19500,22 +23932,40 @@ export interface SynonymsSynonymsUpdateResult {
 }
 
 export interface SynonymsDeleteSynonymRequest extends RequestBase {
+/** The synonyms set identifier to delete. */
   id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export type SynonymsDeleteSynonymResponse = AcknowledgedResponseBase
 
 export interface SynonymsDeleteSynonymRuleRequest extends RequestBase {
+/** The ID of the synonym set to update. */
   set_id: Id
+  /** The ID of the synonym rule to delete. */
   rule_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { set_id?: never, rule_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { set_id?: never, rule_id?: never }
 }
 
 export type SynonymsDeleteSynonymRuleResponse = SynonymsSynonymsUpdateResult
 
 export interface SynonymsGetSynonymRequest extends RequestBase {
+/** The synonyms set identifier to retrieve. */
   id: Id
+  /** The starting offset for query rules to retrieve. */
   from?: integer
+  /** The max number of query rules to retrieve. */
   size?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, from?: never, size?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, from?: never, size?: never }
 }
 
 export interface SynonymsGetSynonymResponse {
@@ -19524,15 +23974,27 @@ export interface SynonymsGetSynonymResponse {
 }
 
 export interface SynonymsGetSynonymRuleRequest extends RequestBase {
+/** The ID of the synonym set to retrieve the synonym rule from. */
   set_id: Id
+  /** The ID of the synonym rule to retrieve. */
   rule_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { set_id?: never, rule_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { set_id?: never, rule_id?: never }
 }
 
 export type SynonymsGetSynonymRuleResponse = SynonymsSynonymRuleRead
 
 export interface SynonymsGetSynonymsSetsRequest extends RequestBase {
+/** The starting offset for synonyms sets to retrieve. */
   from?: integer
+  /** The maximum number of synonyms sets to retrieve. */
   size?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { from?: never, size?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { from?: never, size?: never }
 }
 
 export interface SynonymsGetSynonymsSetsResponse {
@@ -19546,8 +24008,14 @@ export interface SynonymsGetSynonymsSetsSynonymsSetItem {
 }
 
 export interface SynonymsPutSynonymRequest extends RequestBase {
+/** The ID of the synonyms set to be created or updated. */
   id: Id
+  /** The synonym rules definitions for the synonyms set. */
   synonyms_set: SynonymsSynonymRule | SynonymsSynonymRule[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, synonyms_set?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, synonyms_set?: never }
 }
 
 export interface SynonymsPutSynonymResponse {
@@ -19556,9 +24024,16 @@ export interface SynonymsPutSynonymResponse {
 }
 
 export interface SynonymsPutSynonymRuleRequest extends RequestBase {
+/** The ID of the synonym set. */
   set_id: Id
+  /** The ID of the synonym rule to be updated or created. */
   rule_id: Id
+  /** The synonym rule information definition, which must be in Solr format. */
   synonyms: SynonymsSynonymString
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { set_id?: never, rule_id?: never, synonyms?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { set_id?: never, rule_id?: never, synonyms?: never }
 }
 
 export type SynonymsPutSynonymRuleResponse = SynonymsSynonymsUpdateResult
@@ -19605,19 +24080,35 @@ export interface TasksTaskListResponseBase {
 }
 
 export interface TasksCancelRequest extends RequestBase {
+/** The task identifier. */
   task_id?: TaskId
+  /** A comma-separated list or wildcard expression of actions that is used to limit the request. */
   actions?: string | string[]
+  /** A comma-separated list of node IDs or names that is used to limit the request. */
   nodes?: string[]
+  /** A parent task ID that is used to limit the tasks. */
   parent_task_id?: string
+  /** If true, the request blocks until all found tasks are complete. */
   wait_for_completion?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_id?: never, actions?: never, nodes?: never, parent_task_id?: never, wait_for_completion?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_id?: never, actions?: never, nodes?: never, parent_task_id?: never, wait_for_completion?: never }
 }
 
 export type TasksCancelResponse = TasksTaskListResponseBase
 
 export interface TasksGetRequest extends RequestBase {
+/** The task identifier. */
   task_id: Id
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** If `true`, the request blocks until the task has completed. */
   wait_for_completion?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_id?: never, timeout?: never, wait_for_completion?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_id?: never, timeout?: never, wait_for_completion?: never }
 }
 
 export interface TasksGetResponse {
@@ -19628,13 +24119,24 @@ export interface TasksGetResponse {
 }
 
 export interface TasksListRequest extends RequestBase {
+/** A comma-separated list or wildcard expression of actions used to limit the request. For example, you can use `cluser:*` to retrieve all cluster-related tasks. */
   actions?: string | string[]
+  /** If `true`, the response includes detailed information about the running tasks. This information is useful to distinguish tasks from each other but is more costly to run. */
   detailed?: boolean
+  /** A key that is used to group tasks in the response. The task lists can be grouped either by nodes or by parent tasks. */
   group_by?: TasksGroupBy
+  /** A comma-separated list of node IDs or names that is used to limit the returned information. */
   nodes?: NodeIds
+  /** A parent task identifier that is used to limit returned information. To return all tasks, omit this parameter or use a value of `-1`. If the parent task is not found, the API does not return a 404 response code. */
   parent_task_id?: Id
+  /** The period to wait for each node to respond. If a node does not respond before its timeout expires, the response does not include its information. However, timed out nodes are included in the `node_failures` property. */
   timeout?: Duration
+  /** If `true`, the request blocks until the operation is complete. */
   wait_for_completion?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { actions?: never, detailed?: never, group_by?: never, nodes?: never, parent_task_id?: never, timeout?: never, wait_for_completion?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { actions?: never, detailed?: never, group_by?: never, nodes?: never, parent_task_id?: never, timeout?: never, wait_for_completion?: never }
 }
 
 export type TasksListResponse = TasksTaskListResponseBase
@@ -19661,20 +24163,38 @@ export interface TextStructureTopHit {
 }
 
 export interface TextStructureFindFieldStructureRequest extends RequestBase {
+/** If `format` is set to `delimited`, you can specify the column names in a comma-separated list. If this parameter is not specified, the structure finder uses the column names from the header row of the text. If the text does not have a header row, columns are named "column1", "column2", "column3", for example. */
   column_names?: string
+  /** If you have set `format` to `delimited`, you can specify the character used to delimit the values in each row. Only a single character is supported; the delimiter cannot have multiple characters. By default, the API considers the following possibilities: comma, tab, semi-colon, and pipe (`|`). In this default scenario, all rows must have the same number of fields for the delimited format to be detected. If you specify a delimiter, up to 10% of the rows can have a different number of columns than the first row. */
   delimiter?: string
+  /** The number of documents to include in the structural analysis. The minimum value is 2. */
   documents_to_sample?: uint
+  /** The mode of compatibility with ECS compliant Grok patterns. Use this parameter to specify whether to use ECS Grok patterns instead of legacy ones when the structure finder creates a Grok pattern. This setting primarily has an impact when a whole message Grok pattern such as `%{CATALINALOG}` matches the input. If the structure finder identifies a common structure but has no idea of the meaning then generic field names such as `path`, `ipaddress`, `field1`, and `field2` are used in the `grok_pattern` output. The intention in that situation is that a user who knows the meanings will rename the fields before using them. */
   ecs_compatibility?: TextStructureEcsCompatibilityType
+  /** If `true`, the response includes a field named `explanation`, which is an array of strings that indicate how the structure finder produced its result. */
   explain?: boolean
+  /** The field that should be analyzed. */
   field: Field
+  /** The high level structure of the text. By default, the API chooses the format. In this default scenario, all rows must have the same number of fields for a delimited format to be detected. If the format is set to delimited and the delimiter is not set, however, the API tolerates up to 5% of rows that have a different number of columns than the first row. */
   format?: TextStructureFormatType
+  /** If the format is `semi_structured_text`, you can specify a Grok pattern that is used to extract fields from every message in the text. The name of the timestamp field in the Grok pattern must match what is specified in the `timestamp_field` parameter. If that parameter is not specified, the name of the timestamp field in the Grok pattern must match "timestamp". If `grok_pattern` is not specified, the structure finder creates a Grok pattern. */
   grok_pattern?: GrokPattern
+  /** The name of the index that contains the analyzed field. */
   index: IndexName
+  /** If the format is `delimited`, you can specify the character used to quote the values in each row if they contain newlines or the delimiter character. Only a single character is supported. If this parameter is not specified, the default value is a double quote (`"`). If your delimited text format does not use quoting, a workaround is to set this argument to a character that does not appear anywhere in the sample. */
   quote?: string
+  /** If the format is `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them. If this parameter is not specified and the delimiter is pipe (`|`), the default value is true. Otherwise, the default value is `false`. */
   should_trim_fields?: boolean
+  /** The maximum amount of time that the structure analysis can take. If the analysis is still running when the timeout expires, it will be stopped. */
   timeout?: Duration
+  /** The name of the field that contains the primary timestamp of each record in the text. In particular, if the text was ingested into an index, this is the field that would be used to populate the `@timestamp` field. If the format is `semi_structured_text`, this field must match the name of the appropriate extraction in the `grok_pattern`. Therefore, for semi-structured text, it is best not to specify this parameter unless `grok_pattern` is also specified. For structured text, if you specify this parameter, the field must exist within the text. If this parameter is not specified, the structure finder makes a decision about which field (if any) is the primary timestamp field. For structured text, it is not compulsory to have a timestamp in the text. */
   timestamp_field?: Field
+  /** The Java time format of the timestamp field in the text. Only a subset of Java time format letter groups are supported: * `a` * `d` * `dd` * `EEE` * `EEEE` * `H` * `HH` * `h` * `M` * `MM` * `MMM` * `MMMM` * `mm` * `ss` * `XX` * `XXX` * `yy` * `yyyy` * `zzz` Additionally `S` letter groups (fractional seconds) of length one to nine are supported providing they occur after `ss` and are separated from the `ss` by a period (`.`), comma (`,`), or colon (`:`). Spacing and punctuation is also permitted with the exception a question mark (`?`), newline, and carriage return, together with literal text enclosed in single quotes. For example, `MM/dd HH.mm.ss,SSSSSS 'in' yyyy` is a valid override format. One valuable use case for this parameter is when the format is semi-structured text, there are multiple timestamp formats in the text, and you know which format corresponds to the primary timestamp, but you do not want to specify the full `grok_pattern`. Another is when the timestamp format is one that the structure finder does not consider by default. If this parameter is not specified, the structure finder chooses the best format from a built-in set. If the special value `null` is specified, the structure finder will not look for a primary timestamp in the text. When the format is semi-structured text, this will result in the structure finder treating the text as single-line messages. */
   timestamp_format?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { column_names?: never, delimiter?: never, documents_to_sample?: never, ecs_compatibility?: never, explain?: never, field?: never, format?: never, grok_pattern?: never, index?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { column_names?: never, delimiter?: never, documents_to_sample?: never, ecs_compatibility?: never, explain?: never, field?: never, format?: never, grok_pattern?: never, index?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never }
 }
 
 export interface TextStructureFindFieldStructureResponse {
@@ -19696,18 +24216,34 @@ export interface TextStructureFindFieldStructureResponse {
 }
 
 export interface TextStructureFindMessageStructureRequest extends RequestBase {
+/** If the format is `delimited`, you can specify the column names in a comma-separated list. If this parameter is not specified, the structure finder uses the column names from the header row of the text. If the text does not have a header role, columns are named "column1", "column2", "column3", for example. */
   column_names?: string
+  /** If you the format is `delimited`, you can specify the character used to delimit the values in each row. Only a single character is supported; the delimiter cannot have multiple characters. By default, the API considers the following possibilities: comma, tab, semi-colon, and pipe (`|`). In this default scenario, all rows must have the same number of fields for the delimited format to be detected. If you specify a delimiter, up to 10% of the rows can have a different number of columns than the first row. */
   delimiter?: string
+  /** The mode of compatibility with ECS compliant Grok patterns. Use this parameter to specify whether to use ECS Grok patterns instead of legacy ones when the structure finder creates a Grok pattern. This setting primarily has an impact when a whole message Grok pattern such as `%{CATALINALOG}` matches the input. If the structure finder identifies a common structure but has no idea of meaning then generic field names such as `path`, `ipaddress`, `field1`, and `field2` are used in the `grok_pattern` output, with the intention that a user who knows the meanings rename these fields before using it. */
   ecs_compatibility?: TextStructureEcsCompatibilityType
+  /** If this parameter is set to true, the response includes a field named `explanation`, which is an array of strings that indicate how the structure finder produced its result. */
   explain?: boolean
+  /** The high level structure of the text. By default, the API chooses the format. In this default scenario, all rows must have the same number of fields for a delimited format to be detected. If the format is `delimited` and the delimiter is not set, however, the API tolerates up to 5% of rows that have a different number of columns than the first row. */
   format?: TextStructureFormatType
+  /** If the format is `semi_structured_text`, you can specify a Grok pattern that is used to extract fields from every message in the text. The name of the timestamp field in the Grok pattern must match what is specified in the `timestamp_field` parameter. If that parameter is not specified, the name of the timestamp field in the Grok pattern must match "timestamp". If `grok_pattern` is not specified, the structure finder creates a Grok pattern. */
   grok_pattern?: GrokPattern
+  /** If the format is `delimited`, you can specify the character used to quote the values in each row if they contain newlines or the delimiter character. Only a single character is supported. If this parameter is not specified, the default value is a double quote (`"`). If your delimited text format does not use quoting, a workaround is to set this argument to a character that does not appear anywhere in the sample. */
   quote?: string
+  /** If the format is `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them. If this parameter is not specified and the delimiter is pipe (`|`), the default value is true. Otherwise, the default value is `false`. */
   should_trim_fields?: boolean
+  /** The maximum amount of time that the structure analysis can take. If the analysis is still running when the timeout expires, it will be stopped. */
   timeout?: Duration
+  /** The name of the field that contains the primary timestamp of each record in the text. In particular, if the text was ingested into an index, this is the field that would be used to populate the `@timestamp` field. If the format is `semi_structured_text`, this field must match the name of the appropriate extraction in the `grok_pattern`. Therefore, for semi-structured text, it is best not to specify this parameter unless `grok_pattern` is also specified. For structured text, if you specify this parameter, the field must exist within the text. If this parameter is not specified, the structure finder makes a decision about which field (if any) is the primary timestamp field. For structured text, it is not compulsory to have a timestamp in the text. */
   timestamp_field?: Field
+  /** The Java time format of the timestamp field in the text. Only a subset of Java time format letter groups are supported: * `a` * `d` * `dd` * `EEE` * `EEEE` * `H` * `HH` * `h` * `M` * `MM` * `MMM` * `MMMM` * `mm` * `ss` * `XX` * `XXX` * `yy` * `yyyy` * `zzz` Additionally `S` letter groups (fractional seconds) of length one to nine are supported providing they occur after `ss` and are separated from the `ss` by a period (`.`), comma (`,`), or colon (`:`). Spacing and punctuation is also permitted with the exception a question mark (`?`), newline, and carriage return, together with literal text enclosed in single quotes. For example, `MM/dd HH.mm.ss,SSSSSS 'in' yyyy` is a valid override format. One valuable use case for this parameter is when the format is semi-structured text, there are multiple timestamp formats in the text, and you know which format corresponds to the primary timestamp, but you do not want to specify the full `grok_pattern`. Another is when the timestamp format is one that the structure finder does not consider by default. If this parameter is not specified, the structure finder chooses the best format from a built-in set. If the special value `null` is specified, the structure finder will not look for a primary timestamp in the text. When the format is semi-structured text, this will result in the structure finder treating the text as single-line messages. */
   timestamp_format?: string
+  /** The list of messages you want to analyze. */
   messages: string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, messages?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, messages?: never }
 }
 
 export interface TextStructureFindMessageStructureResponse {
@@ -19729,22 +24265,41 @@ export interface TextStructureFindMessageStructureResponse {
 }
 
 export interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
+/** The text's character set. It must be a character set that is supported by the JVM that Elasticsearch uses. For example, `UTF-8`, `UTF-16LE`, `windows-1252`, or `EUC-JP`. If this parameter is not specified, the structure finder chooses an appropriate character set. */
   charset?: string
+  /** If you have set format to `delimited`, you can specify the column names in a comma-separated list. If this parameter is not specified, the structure finder uses the column names from the header row of the text. If the text does not have a header role, columns are named "column1", "column2", "column3", for example. */
   column_names?: string
+  /** If you have set `format` to `delimited`, you can specify the character used to delimit the values in each row. Only a single character is supported; the delimiter cannot have multiple characters. By default, the API considers the following possibilities: comma, tab, semi-colon, and pipe (`|`). In this default scenario, all rows must have the same number of fields for the delimited format to be detected. If you specify a delimiter, up to 10% of the rows can have a different number of columns than the first row. */
   delimiter?: string
+  /** The mode of compatibility with ECS compliant Grok patterns. Use this parameter to specify whether to use ECS Grok patterns instead of legacy ones when the structure finder creates a Grok pattern. Valid values are `disabled` and `v1`. This setting primarily has an impact when a whole message Grok pattern such as `%{CATALINALOG}` matches the input. If the structure finder identifies a common structure but has no idea of meaning then generic field names such as `path`, `ipaddress`, `field1`, and `field2` are used in the `grok_pattern` output, with the intention that a user who knows the meanings rename these fields before using it. */
   ecs_compatibility?: string
+  /** If this parameter is set to `true`, the response includes a field named explanation, which is an array of strings that indicate how the structure finder produced its result. If the structure finder produces unexpected results for some text, use this query parameter to help you determine why the returned structure was chosen. */
   explain?: boolean
+  /** The high level structure of the text. Valid values are `ndjson`, `xml`, `delimited`, and `semi_structured_text`. By default, the API chooses the format. In this default scenario, all rows must have the same number of fields for a delimited format to be detected. If the format is set to `delimited` and the delimiter is not set, however, the API tolerates up to 5% of rows that have a different number of columns than the first row. */
   format?: string
+  /** If you have set `format` to `semi_structured_text`, you can specify a Grok pattern that is used to extract fields from every message in the text. The name of the timestamp field in the Grok pattern must match what is specified in the `timestamp_field` parameter. If that parameter is not specified, the name of the timestamp field in the Grok pattern must match "timestamp". If `grok_pattern` is not specified, the structure finder creates a Grok pattern. */
   grok_pattern?: GrokPattern
+  /** If you have set `format` to `delimited`, you can use this parameter to indicate whether the column names are in the first row of the text. If this parameter is not specified, the structure finder guesses based on the similarity of the first row of the text to other rows. */
   has_header_row?: boolean
+  /** The maximum number of characters in a message when lines are merged to form messages while analyzing semi-structured text. If you have extremely long messages you may need to increase this, but be aware that this may lead to very long processing times if the way to group lines into messages is misdetected. */
   line_merge_size_limit?: uint
+  /** The number of lines to include in the structural analysis, starting from the beginning of the text. The minimum is 2. If the value of this parameter is greater than the number of lines in the text, the analysis proceeds (as long as there are at least two lines in the text) for all of the lines. NOTE: The number of lines and the variation of the lines affects the speed of the analysis. For example, if you upload text where the first 1000 lines are all variations on the same message, the analysis will find more commonality than would be seen with a bigger sample. If possible, however, it is more efficient to upload sample text with more variety in the first 1000 lines than to request analysis of 100000 lines to achieve some variety. */
   lines_to_sample?: uint
+  /** If you have set `format` to `delimited`, you can specify the character used to quote the values in each row if they contain newlines or the delimiter character. Only a single character is supported. If this parameter is not specified, the default value is a double quote (`"`). If your delimited text format does not use quoting, a workaround is to set this argument to a character that does not appear anywhere in the sample. */
   quote?: string
+  /** If you have set `format` to `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them. If this parameter is not specified and the delimiter is pipe (`|`), the default value is `true`. Otherwise, the default value is `false`. */
   should_trim_fields?: boolean
+  /** The maximum amount of time that the structure analysis can take. If the analysis is still running when the timeout expires then it will be stopped. */
   timeout?: Duration
+  /** The name of the field that contains the primary timestamp of each record in the text. In particular, if the text were ingested into an index, this is the field that would be used to populate the `@timestamp` field. If the `format` is `semi_structured_text`, this field must match the name of the appropriate extraction in the `grok_pattern`. Therefore, for semi-structured text, it is best not to specify this parameter unless `grok_pattern` is also specified. For structured text, if you specify this parameter, the field must exist within the text. If this parameter is not specified, the structure finder makes a decision about which field (if any) is the primary timestamp field. For structured text, it is not compulsory to have a timestamp in the text. */
   timestamp_field?: Field
+  /** The Java time format of the timestamp field in the text. Only a subset of Java time format letter groups are supported: * `a` * `d` * `dd` * `EEE` * `EEEE` * `H` * `HH` * `h` * `M` * `MM` * `MMM` * `MMMM` * `mm` * `ss` * `XX` * `XXX` * `yy` * `yyyy` * `zzz` Additionally `S` letter groups (fractional seconds) of length one to nine are supported providing they occur after `ss` and separated from the `ss` by a `.`, `,` or `:`. Spacing and punctuation is also permitted with the exception of `?`, newline and carriage return, together with literal text enclosed in single quotes. For example, `MM/dd HH.mm.ss,SSSSSS 'in' yyyy` is a valid override format. One valuable use case for this parameter is when the format is semi-structured text, there are multiple timestamp formats in the text, and you know which format corresponds to the primary timestamp, but you do not want to specify the full `grok_pattern`. Another is when the timestamp format is one that the structure finder does not consider by default. If this parameter is not specified, the structure finder chooses the best format from a built-in set. If the special value `null` is specified the structure finder will not look for a primary timestamp in the text. When the format is semi-structured text this will result in the structure finder treating the text as single-line messages. */
   timestamp_format?: string
   text_files?: TJsonDocument[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { charset?: never, column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, has_header_row?: never, line_merge_size_limit?: never, lines_to_sample?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, text_files?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { charset?: never, column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, has_header_row?: never, line_merge_size_limit?: never, lines_to_sample?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, text_files?: never }
 }
 
 export interface TextStructureFindStructureResponse {
@@ -19784,9 +24339,16 @@ export interface TextStructureTestGrokPatternMatchedText {
 }
 
 export interface TextStructureTestGrokPatternRequest extends RequestBase {
+/** The mode of compatibility with ECS compliant Grok patterns. Use this parameter to specify whether to use ECS Grok patterns instead of legacy ones when the structure finder creates a Grok pattern. Valid values are `disabled` and `v1`. */
   ecs_compatibility?: string
+  /** The Grok pattern to run on the text. */
   grok_pattern: GrokPattern
+  /** The lines of text to run the Grok pattern on. */
   text: string[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { ecs_compatibility?: never, grok_pattern?: never, text?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { ecs_compatibility?: never, grok_pattern?: never, text?: never }
 }
 
 export interface TextStructureTestGrokPatternResponse {
@@ -19850,20 +24412,37 @@ export interface TransformTimeSync {
 }
 
 export interface TransformDeleteTransformRequest extends RequestBase {
+/** Identifier for the transform. */
   transform_id: Id
+  /** If this value is false, the transform must be stopped before it can be deleted. If true, the transform is deleted regardless of its current state. */
   force?: boolean
+  /** If this value is true, the destination index is deleted together with the transform. If false, the destination index will not be deleted */
   delete_dest_index?: boolean
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { transform_id?: never, force?: never, delete_dest_index?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { transform_id?: never, force?: never, delete_dest_index?: never, timeout?: never }
 }
 
 export type TransformDeleteTransformResponse = AcknowledgedResponseBase
 
 export interface TransformGetTransformRequest extends RequestBase {
+/** Identifier for the transform. It can be a transform identifier or a wildcard expression. You can get information for all transforms by using `_all`, by specifying `*` as the `<transform_id>`, or by omitting the `<transform_id>`. */
   transform_id?: Names
+  /** Specifies what to do when the request: 1. Contains wildcard expressions and there are no transforms that match. 2. Contains the _all string or no identifiers and there are no matches. 3. Contains wildcard expressions and there are only partial matches. If this parameter is false, the request returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** Skips the specified number of transforms. */
   from?: integer
+  /** Specifies the maximum number of transforms to obtain. */
   size?: integer
+  /** Excludes fields that were automatically added when creating the transform. This allows the configuration to be in an acceptable format to be retrieved and then added to another cluster. */
   exclude_generated?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, size?: never, exclude_generated?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, size?: never, exclude_generated?: never }
 }
 
 export interface TransformGetTransformResponse {
@@ -19907,11 +24486,20 @@ export interface TransformGetTransformStatsCheckpointing {
 }
 
 export interface TransformGetTransformStatsRequest extends RequestBase {
+/** Identifier for the transform. It can be a transform identifier or a wildcard expression. You can get information for all transforms by using `_all`, by specifying `*` as the `<transform_id>`, or by omitting the `<transform_id>`. */
   transform_id: Names
+  /** Specifies what to do when the request: 1. Contains wildcard expressions and there are no transforms that match. 2. Contains the _all string or no identifiers and there are no matches. 3. Contains wildcard expressions and there are only partial matches. If this parameter is false, the request returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** Skips the specified number of transforms. */
   from?: long
+  /** Specifies the maximum number of transforms to obtain. */
   size?: long
+  /** Controls the time to wait for the stats */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, size?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, size?: never, timeout?: never }
 }
 
 export interface TransformGetTransformStatsResponse {
@@ -19962,17 +24550,32 @@ export interface TransformGetTransformStatsTransformStatsHealth {
 }
 
 export interface TransformPreviewTransformRequest extends RequestBase {
+/** Identifier for the transform to preview. If you specify this path parameter, you cannot provide transform configuration details in the request body. */
   transform_id?: Id
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** The destination for the transform. */
   dest?: TransformDestination
+  /** Free text description of the transform. */
   description?: string
+  /** The interval between checks for changes in the source indices when the transform is running continuously. Also determines the retry interval in the event of transient failures while the transform is searching or indexing. The minimum value is 1s and the maximum is 1h. */
   frequency?: Duration
+  /** The pivot method transforms the data by aggregating and grouping it. These objects define the group by fields and the aggregation to reduce the data. */
   pivot?: TransformPivot
+  /** The source of the data for the transform. */
   source?: TransformSource
+  /** Defines optional transform settings. */
   settings?: TransformSettings
+  /** Defines the properties transforms require to run continuously. */
   sync?: TransformSyncContainer
+  /** Defines a retention policy for the transform. Data that meets the defined criteria is deleted from the destination index. */
   retention_policy?: TransformRetentionPolicyContainer
+  /** The latest method transforms the data by finding the latest document for each unique key. */
   latest?: TransformLatest
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { transform_id?: never, timeout?: never, dest?: never, description?: never, frequency?: never, pivot?: never, source?: never, settings?: never, sync?: never, retention_policy?: never, latest?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { transform_id?: never, timeout?: never, dest?: never, description?: never, frequency?: never, pivot?: never, source?: never, settings?: never, sync?: never, retention_policy?: never, latest?: never }
 }
 
 export interface TransformPreviewTransformResponse<TTransform = unknown> {
@@ -19981,69 +24584,131 @@ export interface TransformPreviewTransformResponse<TTransform = unknown> {
 }
 
 export interface TransformPutTransformRequest extends RequestBase {
+/** Identifier for the transform. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It has a 64 character limit and must start and end with alphanumeric characters. */
   transform_id: Id
+  /** When the transform is created, a series of validations occur to ensure its success. For example, there is a check for the existence of the source indices and a check that the destination index is not part of the source index pattern. You can use this parameter to skip the checks, for example when the source index does not exist until after the transform is created. The validations are always run when you start the transform, however, with the exception of privilege checks. */
   defer_validation?: boolean
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** The destination for the transform. */
   dest: TransformDestination
+  /** Free text description of the transform. */
   description?: string
+  /** The interval between checks for changes in the source indices when the transform is running continuously. Also determines the retry interval in the event of transient failures while the transform is searching or indexing. The minimum value is `1s` and the maximum is `1h`. */
   frequency?: Duration
+  /** The latest method transforms the data by finding the latest document for each unique key. */
   latest?: TransformLatest
+  /** Defines optional transform metadata. */
   _meta?: Metadata
+  /** The pivot method transforms the data by aggregating and grouping it. These objects define the group by fields and the aggregation to reduce the data. */
   pivot?: TransformPivot
+  /** Defines a retention policy for the transform. Data that meets the defined criteria is deleted from the destination index. */
   retention_policy?: TransformRetentionPolicyContainer
+  /** Defines optional transform settings. */
   settings?: TransformSettings
+  /** The source of the data for the transform. */
   source: TransformSource
+  /** Defines the properties transforms require to run continuously. */
   sync?: TransformSyncContainer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { transform_id?: never, defer_validation?: never, timeout?: never, dest?: never, description?: never, frequency?: never, latest?: never, _meta?: never, pivot?: never, retention_policy?: never, settings?: never, source?: never, sync?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { transform_id?: never, defer_validation?: never, timeout?: never, dest?: never, description?: never, frequency?: never, latest?: never, _meta?: never, pivot?: never, retention_policy?: never, settings?: never, source?: never, sync?: never }
 }
 
 export type TransformPutTransformResponse = AcknowledgedResponseBase
 
 export interface TransformResetTransformRequest extends RequestBase {
+/** Identifier for the transform. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It has a 64 character limit and must start and end with alphanumeric characters. */
   transform_id: Id
+  /** If this value is `true`, the transform is reset regardless of its current state. If it's `false`, the transform must be stopped before it can be reset. */
   force?: boolean
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { transform_id?: never, force?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { transform_id?: never, force?: never, timeout?: never }
 }
 
 export type TransformResetTransformResponse = AcknowledgedResponseBase
 
 export interface TransformScheduleNowTransformRequest extends RequestBase {
+/** Identifier for the transform. */
   transform_id: Id
+  /** Controls the time to wait for the scheduling to take place */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { transform_id?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { transform_id?: never, timeout?: never }
 }
 
 export type TransformScheduleNowTransformResponse = AcknowledgedResponseBase
 
 export interface TransformStartTransformRequest extends RequestBase {
+/** Identifier for the transform. */
   transform_id: Id
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** Restricts the set of transformed entities to those changed after this time. Relative times like now-30d are supported. Only applicable for continuous transforms. */
   from?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { transform_id?: never, timeout?: never, from?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { transform_id?: never, timeout?: never, from?: never }
 }
 
 export type TransformStartTransformResponse = AcknowledgedResponseBase
 
 export interface TransformStopTransformRequest extends RequestBase {
+/** Identifier for the transform. To stop multiple transforms, use a comma-separated list or a wildcard expression. To stop all transforms, use `_all` or `*` as the identifier. */
   transform_id: Name
+  /** Specifies what to do when the request: contains wildcard expressions and there are no transforms that match; contains the `_all` string or no identifiers and there are no matches; contains wildcard expressions and there are only partial matches. If it is true, the API returns a successful acknowledgement message when there are no matches. When there are only partial matches, the API stops the appropriate transforms. If it is false, the request returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** If it is true, the API forcefully stops the transforms. */
   force?: boolean
+  /** Period to wait for a response when `wait_for_completion` is `true`. If no response is received before the timeout expires, the request returns a timeout exception. However, the request continues processing and eventually moves the transform to a STOPPED state. */
   timeout?: Duration
+  /** If it is true, the transform does not completely stop until the current checkpoint is completed. If it is false, the transform stops as soon as possible. */
   wait_for_checkpoint?: boolean
+  /** If it is true, the API blocks until the indexer state completely stops. If it is false, the API returns immediately and the indexer is stopped asynchronously in the background. */
   wait_for_completion?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, force?: never, timeout?: never, wait_for_checkpoint?: never, wait_for_completion?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, force?: never, timeout?: never, wait_for_checkpoint?: never, wait_for_completion?: never }
 }
 
 export type TransformStopTransformResponse = AcknowledgedResponseBase
 
 export interface TransformUpdateTransformRequest extends RequestBase {
+/** Identifier for the transform. */
   transform_id: Id
+  /** When true, deferrable validations are not run. This behavior may be desired if the source index does not exist until after the transform is created. */
   defer_validation?: boolean
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** The destination for the transform. */
   dest?: TransformDestination
+  /** Free text description of the transform. */
   description?: string
+  /** The interval between checks for changes in the source indices when the transform is running continuously. Also determines the retry interval in the event of transient failures while the transform is searching or indexing. The minimum value is 1s and the maximum is 1h. */
   frequency?: Duration
+  /** Defines optional transform metadata. */
   _meta?: Metadata
+  /** The source of the data for the transform. */
   source?: TransformSource
+  /** Defines optional transform settings. */
   settings?: TransformSettings
+  /** Defines the properties transforms require to run continuously. */
   sync?: TransformSyncContainer
+  /** Defines a retention policy for the transform. Data that meets the defined criteria is deleted from the destination index. */
   retention_policy?: TransformRetentionPolicyContainer | null
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { transform_id?: never, defer_validation?: never, timeout?: never, dest?: never, description?: never, frequency?: never, _meta?: never, source?: never, settings?: never, sync?: never, retention_policy?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { transform_id?: never, defer_validation?: never, timeout?: never, dest?: never, description?: never, frequency?: never, _meta?: never, source?: never, settings?: never, sync?: never, retention_policy?: never }
 }
 
 export interface TransformUpdateTransformResponse {
@@ -20064,8 +24729,14 @@ export interface TransformUpdateTransformResponse {
 }
 
 export interface TransformUpgradeTransformsRequest extends RequestBase {
+/** When true, the request checks for updates but does not run them. */
   dry_run?: boolean
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { dry_run?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { dry_run?: never, timeout?: never }
 }
 
 export interface TransformUpgradeTransformsResponse {
@@ -20591,8 +25262,14 @@ export interface WatcherWebhookResult {
 }
 
 export interface WatcherAckWatchRequest extends RequestBase {
+/** The watch identifier. */
   watch_id: Name
+  /** A comma-separated list of the action identifiers to acknowledge. If you omit this parameter, all of the actions of the watch are acknowledged. */
   action_id?: Names
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { watch_id?: never, action_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { watch_id?: never, action_id?: never }
 }
 
 export interface WatcherAckWatchResponse {
@@ -20600,7 +25277,12 @@ export interface WatcherAckWatchResponse {
 }
 
 export interface WatcherActivateWatchRequest extends RequestBase {
+/** The watch identifier. */
   watch_id: Name
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { watch_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { watch_id?: never }
 }
 
 export interface WatcherActivateWatchResponse {
@@ -20608,7 +25290,12 @@ export interface WatcherActivateWatchResponse {
 }
 
 export interface WatcherDeactivateWatchRequest extends RequestBase {
+/** The watch identifier. */
   watch_id: Name
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { watch_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { watch_id?: never }
 }
 
 export interface WatcherDeactivateWatchResponse {
@@ -20616,7 +25303,12 @@ export interface WatcherDeactivateWatchResponse {
 }
 
 export interface WatcherDeleteWatchRequest extends RequestBase {
+/** The watch identifier. */
   id: Name
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export interface WatcherDeleteWatchResponse {
@@ -20626,15 +25318,27 @@ export interface WatcherDeleteWatchResponse {
 }
 
 export interface WatcherExecuteWatchRequest extends RequestBase {
+/** The watch identifier. */
   id?: Id
+  /** Defines whether the watch runs in debug mode. */
   debug?: boolean
+  /** Determines how to handle the watch actions as part of the watch execution. */
   action_modes?: Record<string, WatcherActionExecutionMode>
+  /** When present, the watch uses this object as a payload instead of executing its own input. */
   alternative_input?: Record<string, any>
+  /** When set to `true`, the watch execution uses the always condition. This can also be specified as an HTTP parameter. */
   ignore_condition?: boolean
+  /** When set to `true`, the watch record representing the watch execution result is persisted to the `.watcher-history` index for the current time. In addition, the status of the watch is updated, possibly throttling subsequent runs. This can also be specified as an HTTP parameter. */
   record_execution?: boolean
   simulated_actions?: WatcherSimulatedActions
+  /** This structure is parsed as the data of the trigger event that will be used during the watch execution. */
   trigger_data?: WatcherScheduleTriggerEvent
+  /** When present, this watch is used instead of the one specified in the request. This watch is not persisted to the index and `record_execution` cannot be set. */
   watch?: WatcherWatch
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, debug?: never, action_modes?: never, alternative_input?: never, ignore_condition?: never, record_execution?: never, simulated_actions?: never, trigger_data?: never, watch?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, debug?: never, action_modes?: never, alternative_input?: never, ignore_condition?: never, record_execution?: never, simulated_actions?: never, trigger_data?: never, watch?: never }
 }
 
 export interface WatcherExecuteWatchResponse {
@@ -20657,7 +25361,12 @@ export interface WatcherExecuteWatchWatchRecord {
 }
 
 export interface WatcherGetSettingsRequest extends RequestBase {
+/** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
 }
 
 export interface WatcherGetSettingsResponse {
@@ -20665,7 +25374,12 @@ export interface WatcherGetSettingsResponse {
 }
 
 export interface WatcherGetWatchRequest extends RequestBase {
+/** The watch identifier. */
   id: Name
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export interface WatcherGetWatchResponse {
@@ -20679,19 +25393,36 @@ export interface WatcherGetWatchResponse {
 }
 
 export interface WatcherPutWatchRequest extends RequestBase {
+/** The identifier for the watch. */
   id: Id
+  /** The initial state of the watch. The default value is `true`, which means the watch is active by default. */
   active?: boolean
+  /** only update the watch if the last operation that has changed the watch has the specified primary term */
   if_primary_term?: long
+  /** only update the watch if the last operation that has changed the watch has the specified sequence number */
   if_seq_no?: SequenceNumber
+  /** Explicit version number for concurrency control */
   version?: VersionNumber
+  /** The list of actions that will be run if the condition matches. */
   actions?: Record<string, WatcherAction>
+  /** The condition that defines if the actions should be run. */
   condition?: WatcherConditionContainer
+  /** The input that defines the input that loads the data for the watch. */
   input?: WatcherInputContainer
+  /** Metadata JSON that will be copied into the history entries. */
   metadata?: Metadata
+  /** The minimum time between actions being run. The default is 5 seconds. This default can be changed in the config file with the setting `xpack.watcher.throttle.period.default_period`. If both this value and the `throttle_period_in_millis` parameter are specified, Watcher uses the last parameter included in the request. */
   throttle_period?: Duration
+  /** Minimum time in milliseconds between actions being run. Defaults to 5000. If both this value and the throttle_period parameter are specified, Watcher uses the last parameter included in the request. */
   throttle_period_in_millis?: DurationValue<UnitMillis>
+  /** The transform that processes the watch payload to prepare it for the watch actions. */
   transform?: TransformContainer
+  /** The trigger that defines when the watch should run. */
   trigger?: WatcherTriggerContainer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, active?: never, if_primary_term?: never, if_seq_no?: never, version?: never, actions?: never, condition?: never, input?: never, metadata?: never, throttle_period?: never, throttle_period_in_millis?: never, transform?: never, trigger?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, active?: never, if_primary_term?: never, if_seq_no?: never, version?: never, actions?: never, condition?: never, input?: never, metadata?: never, throttle_period?: never, throttle_period_in_millis?: never, transform?: never, trigger?: never }
 }
 
 export interface WatcherPutWatchResponse {
@@ -20703,11 +25434,20 @@ export interface WatcherPutWatchResponse {
 }
 
 export interface WatcherQueryWatchesRequest extends RequestBase {
+/** The offset from the first result to fetch. It must be non-negative. */
   from?: integer
+  /** The number of hits to return. It must be non-negative. */
   size?: integer
+  /** A query that filters the watches to be returned. */
   query?: QueryDslQueryContainer
+  /** One or more fields used to sort the search results. */
   sort?: Sort
+  /** Retrieve the next page of hits using a set of sort values from the previous page. */
   search_after?: SortResults
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { from?: never, size?: never, query?: never, sort?: never, search_after?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { from?: never, size?: never, query?: never, sort?: never, search_after?: never }
 }
 
 export interface WatcherQueryWatchesResponse {
@@ -20716,14 +25456,25 @@ export interface WatcherQueryWatchesResponse {
 }
 
 export interface WatcherStartRequest extends RequestBase {
+/** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
 }
 
 export type WatcherStartResponse = AcknowledgedResponseBase
 
 export interface WatcherStatsRequest extends RequestBase {
+/** Defines which additional metrics are included in the response. */
   metric?: WatcherStatsWatcherMetric | WatcherStatsWatcherMetric[]
+  /** Defines whether stack traces are generated for each watch that is running. */
   emit_stacktraces?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { metric?: never, emit_stacktraces?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { metric?: never, emit_stacktraces?: never }
 }
 
 export interface WatcherStatsResponse {
@@ -20759,16 +25510,27 @@ export interface WatcherStatsWatcherNodeStats {
 export type WatcherStatsWatcherState = 'stopped' | 'starting' | 'started' | 'stopping'
 
 export interface WatcherStopRequest extends RequestBase {
+/** The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
 }
 
 export type WatcherStopResponse = AcknowledgedResponseBase
 
 export interface WatcherUpdateSettingsRequest extends RequestBase {
+/** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   'index.auto_expand_replicas'?: string
   'index.number_of_replicas'?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never, 'index.auto_expand_replicas'?: never, 'index.number_of_replicas'?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never, 'index.auto_expand_replicas'?: never, 'index.number_of_replicas'?: never }
 }
 
 export interface WatcherUpdateSettingsResponse {
@@ -20797,7 +25559,6 @@ export interface XpackInfoFeatures {
   enterprise_search: XpackInfoFeature
   eql: XpackInfoFeature
   esql: XpackInfoFeature
-  frozen_indices: XpackInfoFeature
   graph: XpackInfoFeature
   ilm: XpackInfoFeature
   logstash: XpackInfoFeature
@@ -20832,9 +25593,16 @@ export interface XpackInfoNativeCodeInformation {
 }
 
 export interface XpackInfoRequest extends RequestBase {
+/** A comma-separated list of the information categories to include in the response. For example, `build,license,features`. */
   categories?: XpackInfoXPackCategory[]
+  /** If this param is used it must be set to true */
   accept_enterprise?: boolean
+  /** Defines whether additional human-readable information is included in the response. In particular, it adds descriptions and a tag line. */
   human?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { categories?: never, accept_enterprise?: never, human?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { categories?: never, accept_enterprise?: never, human?: never }
 }
 
 export interface XpackInfoResponse {
@@ -20968,10 +25736,6 @@ export interface XpackUsageFlattened extends XpackUsageBase {
   field_count: integer
 }
 
-export interface XpackUsageFrozenIndices extends XpackUsageBase {
-  indices_count: long
-}
-
 export interface XpackUsageHealthStatistics extends XpackUsageBase {
   invocations: XpackUsageInvocations
 }
@@ -20983,7 +25747,7 @@ export interface XpackUsageIlm {
 
 export interface XpackUsageIlmPolicyStatistics {
   indices_managed: integer
-  phases: IlmPhases
+  phases: XpackUsagePhases
 }
 
 export interface XpackUsageInvocations {
@@ -21095,6 +25859,19 @@ export interface XpackUsageMonitoring extends XpackUsageBase {
   enabled_exporters: Record<string, long>
 }
 
+export interface XpackUsagePhase {
+  actions: string[]
+  min_age: DurationValue<UnitMillis>
+}
+
+export interface XpackUsagePhases {
+  cold?: XpackUsagePhase
+  delete?: XpackUsagePhase
+  frozen?: XpackUsagePhase
+  hot?: XpackUsagePhase
+  warm?: XpackUsagePhase
+}
+
 export interface XpackUsageQuery {
   count?: integer
   failed?: integer
@@ -21118,7 +25895,12 @@ export interface XpackUsageRealmCache {
 }
 
 export interface XpackUsageRequest extends RequestBase {
+/** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
 }
 
 export interface XpackUsageResponse {
@@ -21134,7 +25916,6 @@ export interface XpackUsageResponse {
   enrich?: XpackUsageBase
   eql: XpackUsageEql
   flattened?: XpackUsageFlattened
-  frozen_indices: XpackUsageFrozenIndices
   graph: XpackUsageBase
   health_api?: XpackUsageHealthStatistics
   ilm: XpackUsageIlm

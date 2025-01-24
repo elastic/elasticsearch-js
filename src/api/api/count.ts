@@ -38,7 +38,7 @@ import * as T from '../types'
 interface That { transport: Transport }
 
 /**
-  * Count search results. Get the number of documents matching a query.
+  * Count search results. Get the number of documents matching a query. The query can either be provided using a simple query string as a parameter or using the Query DSL defined within the request body. The latter must be nested in a `query` key, which is the same as the search API. The count API supports multi-target syntax. You can run a single count API search across multiple data streams and indices. The operation is broadcast across all shards. For each shard ID group, a replica is chosen and the search is run against it. This means that replicas increase the scalability of the count.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html | Elasticsearch API documentation}
   */
 export default async function CountApi (this: That, params?: T.CountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CountResponse>
@@ -47,17 +47,28 @@ export default async function CountApi (this: That, params?: T.CountRequest, opt
 export default async function CountApi (this: That, params?: T.CountRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
   const acceptedBody: string[] = ['query']
-  const querystring: Record<string, any> = {}
-  const body: Record<string, any> = {}
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
+  }
 
   params = params ?? {}
   for (const key in params) {
     if (acceptedBody.includes(key)) {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body' && key !== 'querystring') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

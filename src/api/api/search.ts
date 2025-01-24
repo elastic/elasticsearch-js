@@ -38,7 +38,7 @@ import * as T from '../types'
 interface That { transport: Transport }
 
 /**
-  * Run a search. Get search hits that match the query defined in the request. You can provide search queries using the `q` query string parameter or the request body. If both are specified, only the query parameter is used.
+  * Run a search. Get search hits that match the query defined in the request. You can provide search queries using the `q` query string parameter or the request body. If both are specified, only the query parameter is used. If the Elasticsearch security features are enabled, you must have the read index privilege for the target data stream, index, or alias. For cross-cluster search, refer to the documentation about configuring CCS privileges. To search a point in time (PIT) for an alias, you must have the `read` index privilege for the alias's data streams or indices. **Search slicing** When paging through a large number of documents, it can be helpful to split the search into multiple slices to consume them independently with the `slice` and `pit` properties. By default the splitting is done first on the shards, then locally on each shard. The local splitting partitions the shard into contiguous ranges based on Lucene document IDs. For instance if the number of shards is equal to 2 and you request 4 slices, the slices 0 and 2 are assigned to the first shard and the slices 1 and 3 are assigned to the second shard. IMPORTANT: The same point-in-time ID should be used for all slices. If different PIT IDs are used, slices can overlap and miss documents. This situation can occur because the splitting criterion is based on Lucene document IDs, which are not stable across changes to the index.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html | Elasticsearch API documentation}
   */
 export default async function SearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.SearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchResponse<TDocument, TAggregations>>
@@ -47,12 +47,23 @@ export default async function SearchApi<TDocument = unknown, TAggregations = Rec
 export default async function SearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.SearchRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
   const acceptedBody: string[] = ['aggregations', 'aggs', 'collapse', 'explain', 'ext', 'from', 'highlight', 'track_total_hits', 'indices_boost', 'docvalue_fields', 'knn', 'rank', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'retriever', 'script_fields', 'search_after', 'size', 'slice', 'sort', '_source', 'fields', 'suggest', 'terminate_after', 'timeout', 'track_scores', 'version', 'seq_no_primary_term', 'stored_fields', 'pit', 'runtime_mappings', 'stats']
-  const querystring: Record<string, any> = {}
-  const body: Record<string, any> = {}
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
+  }
 
   params = params ?? {}
   for (const key in params) {
     if (acceptedBody.includes(key)) {
+      body = body ?? {}
       if (key === 'sort' && typeof params[key] === 'string' && params[key].includes(':')) { // eslint-disable-line
         querystring[key] = params[key]
       } else {
@@ -61,7 +72,7 @@ export default async function SearchApi<TDocument = unknown, TAggregations = Rec
       }
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body' && key !== 'querystring') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

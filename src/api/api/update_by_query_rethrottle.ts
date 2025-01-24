@@ -39,20 +39,30 @@ interface That { transport: Transport }
 
 /**
   * Throttle an update by query operation. Change the number of requests per second for a particular update by query operation. Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html#docs-update-by-query-rethrottle | Elasticsearch API documentation}
   */
 export default async function UpdateByQueryRethrottleApi (this: That, params: T.UpdateByQueryRethrottleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.UpdateByQueryRethrottleResponse>
 export default async function UpdateByQueryRethrottleApi (this: That, params: T.UpdateByQueryRethrottleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.UpdateByQueryRethrottleResponse, unknown>>
 export default async function UpdateByQueryRethrottleApi (this: That, params: T.UpdateByQueryRethrottleRequest, options?: TransportRequestOptions): Promise<T.UpdateByQueryRethrottleResponse>
 export default async function UpdateByQueryRethrottleApi (this: That, params: T.UpdateByQueryRethrottleRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['task_id']
-  const querystring: Record<string, any> = {}
-  const body = undefined
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
+  }
 
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body' && key !== 'querystring') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

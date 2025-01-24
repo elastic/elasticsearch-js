@@ -38,7 +38,7 @@ import * as T from '../types'
 interface That { transport: Transport }
 
 /**
-  * Check for a document source. Checks if a document's `_source` is stored.
+  * Check for a document source. Check whether a document source exists in an index. For example: ``` HEAD my-index-000001/_source/1 ``` A document's source is not available if it is disabled in the mapping.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html | Elasticsearch API documentation}
   */
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExistsSourceResponse>
@@ -46,13 +46,23 @@ export default async function ExistsSourceApi (this: That, params: T.ExistsSourc
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest, options?: TransportRequestOptions): Promise<T.ExistsSourceResponse>
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
-  const querystring: Record<string, any> = {}
-  const body = undefined
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
+  }
 
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body' && key !== 'querystring') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

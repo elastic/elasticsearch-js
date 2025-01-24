@@ -53,16 +53,17 @@ export default class Monitoring {
   async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['type']
     const acceptedBody: string[] = ['operations']
-    const querystring: Record<string, any> = {}
-    let body: any
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }

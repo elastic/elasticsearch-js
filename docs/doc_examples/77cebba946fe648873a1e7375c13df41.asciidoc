@@ -5,7 +5,8 @@
 ----
 const response = await client.cluster.putSettings({
   persistent: {
-    "cluster.routing.allocation.disk.watermark.low": "30gb",
+    "cluster.routing.allocation.disk.watermark.low": "90%",
+    "cluster.routing.allocation.disk.watermark.high": "95%",
   },
 });
 console.log(response);
