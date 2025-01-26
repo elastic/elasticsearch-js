@@ -1,5 +1,5 @@
 ARG NODE_VERSION=${NODE_VERSION:-18}
-FROM node:$NODE_VERSION
+FROM node:latest@sha256:3b73c4b366d490f76908dda253bb4516bbb3398948fd880d8682c5ef16427eca:$NODE_VERSION
 
 # Install required tools
 RUN apt-get clean -y && \
