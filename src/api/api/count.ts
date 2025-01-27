@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Count search results. Get the number of documents matching a query.
+  * Count search results. Get the number of documents matching a query. The query can either be provided using a simple query string as a parameter or using the Query DSL defined within the request body. The latter must be nested in a `query` key, which is the same as the search API. The count API supports multi-target syntax. You can run a single count API search across multiple data streams and indices. The operation is broadcast across all shards. For each shard ID group, a replica is chosen and the search is run against it. This means that replicas increase the scalability of the count.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/search-count.html | Elasticsearch API documentation}
   */
 export default async function CountApi (this: That, params?: T.CountRequest | TB.CountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CountResponse>

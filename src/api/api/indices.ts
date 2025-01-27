@@ -946,6 +946,7 @@ export default class Indices {
 
   /**
     * Get aliases. Retrieves information for one or more data stream or index aliases.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.17/indices-get-alias.html | Elasticsearch API documentation}
     */
   async getAlias (this: That, params?: T.IndicesGetAliasRequest | TB.IndicesGetAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetAliasResponse>
   async getAlias (this: That, params?: T.IndicesGetAliasRequest | TB.IndicesGetAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetAliasResponse, unknown>>
