@@ -38,7 +38,7 @@ import * as T from '../types'
 interface That { transport: Transport }
 
 /**
-  * Get a document's source. Returns the source of a document.
+  * Get a document's source. Get the source of a document. For example: ``` GET my-index-000001/_source/1 ``` You can use the source filtering parameters to control which parts of the `_source` are returned: ``` GET my-index-000001/_source/1/?_source_includes=*.id&_source_excludes=entities ```
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html | Elasticsearch API documentation}
   */
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetSourceResponse<TDocument>>
@@ -46,13 +46,23 @@ export default async function GetSourceApi<TDocument = unknown> (this: That, par
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest, options?: TransportRequestOptions): Promise<T.GetSourceResponse<TDocument>>
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
-  const querystring: Record<string, any> = {}
-  const body = undefined
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
+  }
 
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body' && key !== 'querystring') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

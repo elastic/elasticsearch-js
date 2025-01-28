@@ -47,16 +47,27 @@ export default async function SearchMvtApi (this: That, params: T.SearchMvtReque
 export default async function SearchMvtApi (this: That, params: T.SearchMvtRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index', 'field', 'zoom', 'x', 'y']
   const acceptedBody: string[] = ['aggs', 'buffer', 'exact_bounds', 'extent', 'fields', 'grid_agg', 'grid_precision', 'grid_type', 'query', 'runtime_mappings', 'size', 'sort', 'track_total_hits', 'with_labels']
-  const querystring: Record<string, any> = {}
-  const body: Record<string, any> = {}
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
+  }
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body' && key !== 'querystring') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

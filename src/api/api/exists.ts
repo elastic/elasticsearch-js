@@ -38,7 +38,7 @@ import * as T from '../types'
 interface That { transport: Transport }
 
 /**
-  * Check a document. Checks if a specified document exists.
+  * Check a document. Verify that a document exists. For example, check to see if a document with the `_id` 0 exists: ``` HEAD my-index-000001/_doc/0 ``` If the document exists, the API returns a status code of `200 - OK`. If the document doesn’t exist, the API returns `404 - Not Found`. **Versioning support** You can use the `version` parameter to check the document only if its current version is equal to the specified one. Internally, Elasticsearch has marked the old document as deleted and added an entirely new document. The old version of the document doesn't disappear immediately, although you won't be able to access it. Elasticsearch cleans up deleted documents in the background as you continue to index more data.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html | Elasticsearch API documentation}
   */
 export default async function ExistsApi (this: That, params: T.ExistsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExistsResponse>
@@ -46,13 +46,23 @@ export default async function ExistsApi (this: That, params: T.ExistsRequest, op
 export default async function ExistsApi (this: That, params: T.ExistsRequest, options?: TransportRequestOptions): Promise<T.ExistsResponse>
 export default async function ExistsApi (this: That, params: T.ExistsRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
-  const querystring: Record<string, any> = {}
-  const body = undefined
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
+  }
 
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body' && key !== 'querystring') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

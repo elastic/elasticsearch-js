@@ -38,7 +38,7 @@ import * as T from '../types'
 interface That { transport: Transport }
 
 /**
-  * Run a script. Runs a script and returns a result.
+  * Run a script. Runs a script and returns a result. Use this API to build and test scripts, such as when defining a script for a runtime field. This API requires very few dependencies and is especially useful if you don't have permissions to write documents on a cluster. The API uses several _contexts_, which control how scripts are run, what variables are available at runtime, and what the return type is. Each context requires a script, but additional parameters depend on the context you're using for that script.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html | Elasticsearch API documentation}
   */
 export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ScriptsPainlessExecuteResponse<TResult>>
@@ -47,17 +47,28 @@ export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this
 export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
   const acceptedBody: string[] = ['context', 'context_setup', 'script']
-  const querystring: Record<string, any> = {}
-  const body: Record<string, any> = {}
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
+  }
 
   params = params ?? {}
   for (const key in params) {
     if (acceptedBody.includes(key)) {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body' && key !== 'querystring') {
       // @ts-expect-error
       querystring[key] = params[key]
     }
