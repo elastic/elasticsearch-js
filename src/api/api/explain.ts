@@ -47,16 +47,27 @@ export default async function ExplainApi<TDocument = unknown> (this: That, param
 export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
   const acceptedBody: string[] = ['query']
-  const querystring: Record<string, any> = {}
-  const body: Record<string, any> = {}
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
+  }
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body' && key !== 'querystring') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

@@ -5,6 +5,9 @@
 ----
 const response = await client.indices.create({
   index: "retrievers_example",
+  settings: {
+    number_of_shards: 1,
+  },
   mappings: {
     properties: {
       vector: {
@@ -12,6 +15,9 @@ const response = await client.indices.create({
         dims: 3,
         similarity: "l2_norm",
         index: true,
+        index_options: {
+          type: "flat",
+        },
       },
       text: {
         type: "text",

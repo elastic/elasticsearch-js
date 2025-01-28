@@ -47,16 +47,17 @@ export default async function MsearchTemplateApi<TDocument = unknown, TAggregati
 export default async function MsearchTemplateApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.MsearchTemplateRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
   const acceptedBody: string[] = ['search_templates']
-  const querystring: Record<string, any> = {}
-  let body: any
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
+  let body: any = params.body ?? undefined
   for (const key in params) {
     if (acceptedBody.includes(key)) {
       // @ts-expect-error
       body = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body' && key !== 'querystring') {
       // @ts-expect-error
       querystring[key] = params[key]
     }
