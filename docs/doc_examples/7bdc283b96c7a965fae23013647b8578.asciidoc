@@ -7,13 +7,13 @@ const response = await client.indices.create({
   index: "test-index",
   mappings: {
     properties: {
-      infer_field: {
-        type: "semantic_text",
-        inference_id: ".elser-2-elasticsearch",
-      },
       source_field: {
         type: "text",
         copy_to: "infer_field",
+      },
+      infer_field: {
+        type: "semantic_text",
+        inference_id: ".elser-2-elasticsearch",
       },
     },
   },
