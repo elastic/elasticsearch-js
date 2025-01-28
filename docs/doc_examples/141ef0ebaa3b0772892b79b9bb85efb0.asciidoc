@@ -3,11 +3,13 @@
 
 [source, js]
 ----
-const response = await client.inference.inference({
+const response = await client.inference.put({
   task_type: "my-inference-endpoint",
   inference_id: "_update",
-  service_settings: {
-    api_key: "<API_KEY>",
+  inference_config: {
+    service_settings: {
+      api_key: "<API_KEY>",
+    },
   },
 });
 console.log(response);
