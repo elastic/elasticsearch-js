@@ -2905,6 +2905,8 @@ export interface StoredScript {
   source: string
 }
 
+export type StreamResult = ArrayBuffer
+
 export type SuggestMode = 'missing' | 'popular' | 'always'
 
 export type SuggestionName = string
@@ -6984,7 +6986,7 @@ export type CatAllocationResponse = CatAllocationAllocationRecord[]
 
 export interface CatComponentTemplatesComponentTemplate {
   name: string
-  version: string
+  version: string | null
   alias_count: string
   mapping_count: string
   settings_count: string
@@ -10457,6 +10459,8 @@ export type EqlSearchResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEven
 
 export type EqlSearchResultPosition = 'tail' | 'head'
 
+export type EsqlEsqlFormat = 'csv' | 'json' | 'tsv' | 'txt' | 'yaml' | 'cbor' | 'smile' | 'arrow'
+
 export interface EsqlTableValuesContainer {
   integer?: EsqlTableValuesIntegerValue[]
   keyword?: EsqlTableValuesKeywordValue[]
@@ -10472,10 +10476,51 @@ export type EsqlTableValuesLongDouble = double | double[]
 
 export type EsqlTableValuesLongValue = long | long[]
 
-export type EsqlQueryEsqlFormat = 'csv' | 'json' | 'tsv' | 'txt' | 'yaml' | 'cbor' | 'smile' | 'arrow'
+export interface EsqlAsyncQueryRequest extends RequestBase {
+  delimiter?: string
+  drop_null_columns?: boolean
+  format?: EsqlEsqlFormat
+  keep_alive?: Duration
+  keep_on_completion?: boolean
+  wait_for_completion_timeout?: Duration
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    columnar?: boolean
+    filter?: QueryDslQueryContainer
+    locale?: string
+    params?: FieldValue[]
+    profile?: boolean
+    query: string
+    tables?: Record<string, Record<string, EsqlTableValuesContainer>>
+  }
+}
+
+export interface EsqlAsyncQueryResponse {
+  columns?: EsqlColumns
+  id?: string
+  is_running: boolean
+}
+
+export interface EsqlAsyncQueryDeleteRequest extends RequestBase {
+  id: Id
+}
+
+export type EsqlAsyncQueryDeleteResponse = AcknowledgedResponseBase
+
+export interface EsqlAsyncQueryGetRequest extends RequestBase {
+  id: Id
+  drop_null_columns?: boolean
+  keep_alive?: Duration
+  wait_for_completion_timeout?: Duration
+}
+
+export interface EsqlAsyncQueryGetResponse {
+  columns?: EsqlColumns
+  is_running: boolean
+}
 
 export interface EsqlQueryRequest extends RequestBase {
-  format?: EsqlQueryEsqlFormat
+  format?: EsqlEsqlFormat
   delimiter?: string
   drop_null_columns?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
@@ -10747,7 +10792,7 @@ export interface IlmMigrateAction {
 
 export interface IlmPhase {
   actions?: IlmActions
-  min_age?: Duration | long
+  min_age?: Duration
 }
 
 export interface IlmPhases {
@@ -11186,6 +11231,7 @@ export interface IndicesIndexSettingsLifecycle {
   parse_origination_date?: boolean
   step?: IndicesIndexSettingsLifecycleStep
   rollover_alias?: string
+  prefer_ilm?: boolean | string
 }
 
 export interface IndicesIndexSettingsLifecycleStep {
@@ -12923,6 +12969,26 @@ export interface InferencePutRequest extends RequestBase {
 }
 
 export type InferencePutResponse = InferenceInferenceEndpointInfo
+
+export interface InferenceStreamInferenceRequest extends RequestBase {
+  inference_id: Id
+  task_type?: InferenceTaskType
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    input: string | string[]
+  }
+}
+
+export type InferenceStreamInferenceResponse = StreamResult
+
+export interface InferenceUpdateRequest extends RequestBase {
+  inference_id: Id
+  task_type?: InferenceTaskType
+  /** @deprecated The use of the 'body' key has been deprecated, use 'inference_config' instead. */
+  body?: InferenceInferenceEndpoint
+}
+
+export type InferenceUpdateResponse = InferenceInferenceEndpointInfo
 
 export interface IngestAppendProcessor extends IngestProcessorBase {
   field: Field
@@ -18100,6 +18166,10 @@ export interface SecuritySearchAccess {
   allow_restricted_indices?: boolean
 }
 
+export interface SecuritySecuritySettings {
+  index?: IndicesIndexSettings
+}
+
 export type SecurityTemplateFormat = 'string' | 'json'
 
 export interface SecurityUser {
@@ -18578,6 +18648,16 @@ export interface SecurityGetServiceCredentialsResponse {
   count: integer
   tokens: Record<string, Metadata>
   nodes_credentials: SecurityGetServiceCredentialsNodesCredentials
+}
+
+export interface SecurityGetSettingsRequest extends RequestBase {
+  master_timeout?: Duration
+}
+
+export interface SecurityGetSettingsResponse {
+  security: SecuritySecuritySettings
+  'security-profile': SecuritySecuritySettings
+  'security-tokens': SecuritySecuritySettings
 }
 
 export type SecurityGetTokenAccessTokenGrantType = 'password' | 'client_credentials' | '_kerberos' | 'refresh_token'
@@ -19172,6 +19252,21 @@ export interface SecurityUpdateCrossClusterApiKeyResponse {
   updated: boolean
 }
 
+export interface SecurityUpdateSettingsRequest extends RequestBase {
+  master_timeout?: Duration
+  timeout?: Duration
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    security?: SecuritySecuritySettings
+    'security-profile'?: SecuritySecuritySettings
+    'security-tokens'?: SecuritySecuritySettings
+  }
+}
+
+export interface SecurityUpdateSettingsResponse {
+  acknowledged: boolean
+}
+
 export interface SecurityUpdateUserProfileDataRequest extends RequestBase {
   uid: SecurityUserProfileId
   if_seq_no?: SequenceNumber
@@ -19731,6 +19826,113 @@ export interface SnapshotGetRepositoryRequest extends RequestBase {
 }
 
 export type SnapshotGetRepositoryResponse = Record<string, SnapshotRepository>
+
+export interface SnapshotRepositoryAnalyzeBlobDetails {
+  name: string
+  overwritten: boolean
+  read_early: boolean
+  read_end: long
+  read_start: long
+  reads: SnapshotRepositoryAnalyzeReadBlobDetails
+  size: ByteSize
+  size_bytes: long
+}
+
+export interface SnapshotRepositoryAnalyzeDetailsInfo {
+  blob: SnapshotRepositoryAnalyzeBlobDetails
+  overwrite_elapsed?: Duration
+  overwrite_elapsed_nanos?: DurationValue<UnitNanos>
+  write_elapsed: Duration
+  write_elapsed_nanos: DurationValue<UnitNanos>
+  write_throttled: Duration
+  write_throttled_nanos: DurationValue<UnitNanos>
+  writer_node: SnapshotRepositoryAnalyzeNodeInfo
+}
+
+export interface SnapshotRepositoryAnalyzeNodeInfo {
+  id: Id
+  name: Name
+}
+
+export interface SnapshotRepositoryAnalyzeReadBlobDetails {
+  before_write_complete?: boolean
+  elapsed?: Duration
+  elapsed_nanos?: DurationValue<UnitNanos>
+  first_byte_time?: Duration
+  first_byte_time_nanos: DurationValue<UnitNanos>
+  found: boolean
+  node: SnapshotRepositoryAnalyzeNodeInfo
+  throttled?: Duration
+  throttled_nanos?: DurationValue<UnitNanos>
+}
+
+export interface SnapshotRepositoryAnalyzeReadSummaryInfo {
+  count: integer
+  max_wait: Duration
+  max_wait_nanos: DurationValue<UnitNanos>
+  total_elapsed: Duration
+  total_elapsed_nanos: DurationValue<UnitNanos>
+  total_size: ByteSize
+  total_size_bytes: long
+  total_throttled: Duration
+  total_throttled_nanos: DurationValue<UnitNanos>
+  total_wait: Duration
+  total_wait_nanos: DurationValue<UnitNanos>
+}
+
+export interface SnapshotRepositoryAnalyzeRequest extends RequestBase {
+  name: Name
+  blob_count?: integer
+  concurrency?: integer
+  detailed?: boolean
+  early_read_node_count?: integer
+  max_blob_size?: ByteSize
+  max_total_data_size?: ByteSize
+  rare_action_probability?: double
+  rarely_abort_writes?: boolean
+  read_node_count?: integer
+  register_operation_count?: integer
+  seed?: integer
+  timeout?: Duration
+}
+
+export interface SnapshotRepositoryAnalyzeResponse {
+  blob_count: integer
+  blob_path: string
+  concurrency: integer
+  coordinating_node: SnapshotRepositoryAnalyzeNodeInfo
+  delete_elapsed: Duration
+  delete_elapsed_nanos: DurationValue<UnitNanos>
+  details: SnapshotRepositoryAnalyzeDetailsInfo
+  early_read_node_count: integer
+  issues_detected: string[]
+  listing_elapsed: Duration
+  listing_elapsed_nanos: DurationValue<UnitNanos>
+  max_blob_size: ByteSize
+  max_blob_size_bytes: long
+  max_total_data_size: ByteSize
+  max_total_data_size_bytes: long
+  rare_action_probability: double
+  read_node_count: integer
+  repository: string
+  seed: long
+  summary: SnapshotRepositoryAnalyzeSummaryInfo
+}
+
+export interface SnapshotRepositoryAnalyzeSummaryInfo {
+  read: SnapshotRepositoryAnalyzeReadSummaryInfo
+  write: SnapshotRepositoryAnalyzeWriteSummaryInfo
+}
+
+export interface SnapshotRepositoryAnalyzeWriteSummaryInfo {
+  count: integer
+  total_elapsed: Duration
+  total_elapsed_nanos: DurationValue<UnitNanos>
+  total_size: ByteSize
+  total_size_bytes: long
+  total_throttled: Duration
+  total_throttled_nanos: long
+}
 
 export interface SnapshotRepositoryVerifyIntegrityRequest extends RequestBase {
   name: Names
@@ -21459,7 +21661,7 @@ export interface XpackUsageIlm {
 
 export interface XpackUsageIlmPolicyStatistics {
   indices_managed: integer
-  phases: IlmPhases
+  phases: XpackUsagePhases
 }
 
 export interface XpackUsageInvocations {
@@ -21569,6 +21771,19 @@ export interface XpackUsageMlJobForecasts {
 export interface XpackUsageMonitoring extends XpackUsageBase {
   collection_enabled: boolean
   enabled_exporters: Record<string, long>
+}
+
+export interface XpackUsagePhase {
+  actions: string[]
+  min_age: DurationValue<UnitMillis>
+}
+
+export interface XpackUsagePhases {
+  cold?: XpackUsagePhase
+  delete?: XpackUsagePhase
+  frozen?: XpackUsagePhase
+  hot?: XpackUsagePhase
+  warm?: XpackUsagePhase
 }
 
 export interface XpackUsageQuery {
