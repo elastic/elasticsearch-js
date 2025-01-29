@@ -52,14 +52,24 @@ export default class Profiling {
   async flamegraph (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async flamegraph (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }
@@ -81,14 +91,24 @@ export default class Profiling {
   async stacktraces (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async stacktraces (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }
@@ -110,14 +130,24 @@ export default class Profiling {
   async status (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async status (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }
@@ -139,14 +169,24 @@ export default class Profiling {
   async topnFunctions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async topnFunctions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }

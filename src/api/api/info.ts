@@ -46,14 +46,24 @@ export default async function InfoApi (this: That, params?: T.InfoRequest, optio
 export default async function InfoApi (this: That, params?: T.InfoRequest, options?: TransportRequestOptions): Promise<T.InfoResponse>
 export default async function InfoApi (this: That, params?: T.InfoRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
-  const querystring: Record<string, any> = {}
-  const body = undefined
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
+  }
 
   params = params ?? {}
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body' && key !== 'querystring') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

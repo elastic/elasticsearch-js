@@ -52,13 +52,23 @@ export default class Ilm {
   async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmDeleteLifecycleResponse>
   async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -84,13 +94,23 @@ export default class Ilm {
   async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmExplainLifecycleResponse>
   async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -116,14 +136,24 @@ export default class Ilm {
   async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmGetLifecycleResponse>
   async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -156,14 +186,24 @@ export default class Ilm {
   async getStatus (this: That, params?: T.IlmGetStatusRequest, options?: TransportRequestOptions): Promise<T.IlmGetStatusResponse>
   async getStatus (this: That, params?: T.IlmGetStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -187,17 +227,28 @@ export default class Ilm {
   async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['legacy_template_to_delete', 'node_attribute']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -221,16 +272,27 @@ export default class Ilm {
   async moveToStep (this: That, params: T.IlmMoveToStepRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['current_step', 'next_step']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -257,16 +319,27 @@ export default class Ilm {
   async putLifecycle (this: That, params: T.IlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['policy']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -292,13 +365,23 @@ export default class Ilm {
   async removePolicy (this: That, params: T.IlmRemovePolicyRequest, options?: TransportRequestOptions): Promise<T.IlmRemovePolicyResponse>
   async removePolicy (this: That, params: T.IlmRemovePolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -324,13 +407,23 @@ export default class Ilm {
   async retry (this: That, params: T.IlmRetryRequest, options?: TransportRequestOptions): Promise<T.IlmRetryResponse>
   async retry (this: That, params: T.IlmRetryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -356,14 +449,24 @@ export default class Ilm {
   async start (this: That, params?: T.IlmStartRequest, options?: TransportRequestOptions): Promise<T.IlmStartResponse>
   async start (this: That, params?: T.IlmStartRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -386,14 +489,24 @@ export default class Ilm {
   async stop (this: That, params?: T.IlmStopRequest, options?: TransportRequestOptions): Promise<T.IlmStopResponse>
   async stop (this: That, params?: T.IlmStopRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }

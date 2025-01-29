@@ -53,17 +53,28 @@ export default class Cluster {
   async allocationExplain (this: That, params?: T.ClusterAllocationExplainRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['current_node', 'index', 'primary', 'shard']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -86,13 +97,23 @@ export default class Cluster {
   async deleteComponentTemplate (this: That, params: T.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptions): Promise<T.ClusterDeleteComponentTemplateResponse>
   async deleteComponentTemplate (this: That, params: T.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -118,14 +139,24 @@ export default class Cluster {
   async deleteVotingConfigExclusions (this: That, params?: T.ClusterDeleteVotingConfigExclusionsRequest, options?: TransportRequestOptions): Promise<T.ClusterDeleteVotingConfigExclusionsResponse>
   async deleteVotingConfigExclusions (this: That, params?: T.ClusterDeleteVotingConfigExclusionsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -148,13 +179,23 @@ export default class Cluster {
   async existsComponentTemplate (this: That, params: T.ClusterExistsComponentTemplateRequest, options?: TransportRequestOptions): Promise<T.ClusterExistsComponentTemplateResponse>
   async existsComponentTemplate (this: That, params: T.ClusterExistsComponentTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -180,14 +221,24 @@ export default class Cluster {
   async getComponentTemplate (this: That, params?: T.ClusterGetComponentTemplateRequest, options?: TransportRequestOptions): Promise<T.ClusterGetComponentTemplateResponse>
   async getComponentTemplate (this: That, params?: T.ClusterGetComponentTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -220,14 +271,24 @@ export default class Cluster {
   async getSettings (this: That, params?: T.ClusterGetSettingsRequest, options?: TransportRequestOptions): Promise<T.ClusterGetSettingsResponse>
   async getSettings (this: That, params?: T.ClusterGetSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -250,14 +311,24 @@ export default class Cluster {
   async health (this: That, params?: T.ClusterHealthRequest, options?: TransportRequestOptions): Promise<T.ClusterHealthResponse>
   async health (this: That, params?: T.ClusterHealthRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -290,13 +361,23 @@ export default class Cluster {
   async info (this: That, params: T.ClusterInfoRequest, options?: TransportRequestOptions): Promise<T.ClusterInfoResponse>
   async info (this: That, params: T.ClusterInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['target']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -322,14 +403,24 @@ export default class Cluster {
   async pendingTasks (this: That, params?: T.ClusterPendingTasksRequest, options?: TransportRequestOptions): Promise<T.ClusterPendingTasksResponse>
   async pendingTasks (this: That, params?: T.ClusterPendingTasksRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -352,14 +443,24 @@ export default class Cluster {
   async postVotingConfigExclusions (this: That, params?: T.ClusterPostVotingConfigExclusionsRequest, options?: TransportRequestOptions): Promise<T.ClusterPostVotingConfigExclusionsResponse>
   async postVotingConfigExclusions (this: That, params?: T.ClusterPostVotingConfigExclusionsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -383,16 +484,27 @@ export default class Cluster {
   async putComponentTemplate (this: That, params: T.ClusterPutComponentTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['template', 'version', '_meta', 'deprecated']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -419,17 +531,28 @@ export default class Cluster {
   async putSettings (this: That, params?: T.ClusterPutSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['persistent', 'transient']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -452,14 +575,24 @@ export default class Cluster {
   async remoteInfo (this: That, params?: T.ClusterRemoteInfoRequest, options?: TransportRequestOptions): Promise<T.ClusterRemoteInfoResponse>
   async remoteInfo (this: That, params?: T.ClusterRemoteInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -483,17 +616,28 @@ export default class Cluster {
   async reroute (this: That, params?: T.ClusterRerouteRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['commands']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -516,14 +660,24 @@ export default class Cluster {
   async state (this: That, params?: T.ClusterStateRequest, options?: TransportRequestOptions): Promise<T.ClusterStateResponse>
   async state (this: That, params?: T.ClusterStateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['metric', 'index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -560,14 +714,24 @@ export default class Cluster {
   async stats (this: That, params?: T.ClusterStatsRequest, options?: TransportRequestOptions): Promise<T.ClusterStatsResponse>
   async stats (this: That, params?: T.ClusterStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }

@@ -52,13 +52,23 @@ export default class Ingest {
   async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestDeleteGeoipDatabaseResponse>
   async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -84,13 +94,23 @@ export default class Ingest {
   async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestDeleteIpLocationDatabaseResponse>
   async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -116,13 +136,23 @@ export default class Ingest {
   async deletePipeline (this: That, params: T.IngestDeletePipelineRequest, options?: TransportRequestOptions): Promise<T.IngestDeletePipelineResponse>
   async deletePipeline (this: That, params: T.IngestDeletePipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -148,14 +178,24 @@ export default class Ingest {
   async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest, options?: TransportRequestOptions): Promise<T.IngestGeoIpStatsResponse>
   async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -178,14 +218,24 @@ export default class Ingest {
   async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestGetGeoipDatabaseResponse>
   async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -218,14 +268,24 @@ export default class Ingest {
   async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestGetIpLocationDatabaseResponse>
   async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -258,14 +318,24 @@ export default class Ingest {
   async getPipeline (this: That, params?: T.IngestGetPipelineRequest, options?: TransportRequestOptions): Promise<T.IngestGetPipelineResponse>
   async getPipeline (this: That, params?: T.IngestGetPipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -298,14 +368,24 @@ export default class Ingest {
   async processorGrok (this: That, params?: T.IngestProcessorGrokRequest, options?: TransportRequestOptions): Promise<T.IngestProcessorGrokResponse>
   async processorGrok (this: That, params?: T.IngestProcessorGrokRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -329,16 +409,27 @@ export default class Ingest {
   async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['name', 'maxmind']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -365,16 +456,17 @@ export default class Ingest {
   async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['configuration']
-    const querystring: Record<string, any> = {}
-    let body: any
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -401,16 +493,27 @@ export default class Ingest {
   async putPipeline (this: That, params: T.IngestPutPipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['_meta', 'description', 'on_failure', 'processors', 'version', 'deprecated']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -437,16 +540,27 @@ export default class Ingest {
   async simulate (this: That, params: T.IngestSimulateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['docs', 'pipeline']
-    const querystring: Record<string, any> = {}
-    const body: Record<string, any> = {}
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
