@@ -414,8 +414,8 @@ The supported request specific options are:
 _Default:_ `null`
 
 |`requestTimeout`
-|`number | string` - Max request timeout for the request in milliseconds, it overrides the client default. +
-_Default:_ `30000`
+|`number | string | null` - Max request timeout for the request in milliseconds. This overrides the client default, which is to not time out at all. See https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-network.html#_http_client_configuration[Elasticsearch best practices for HTML clients] for more info. +
+_Default:_ No timeout
 
 |`retryOnTimeout`
 |`boolean` - Retry requests that have timed out.

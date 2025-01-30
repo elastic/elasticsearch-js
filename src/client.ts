@@ -108,14 +108,15 @@ export interface ClientOptions {
     * @defaultValue 3 */
   maxRetries?: number
   /** @property requestTimeout Max request timeout in milliseconds for each request
-    * @defaultValue 30000 */
+    * @defaultValue No timeout
+    * @remarks Read [the Elasticsearch docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-network.html#_http_client_configuration) about HTTP client configuration for details. */
   requestTimeout?: number
   /** @property pingTimeout Max number of milliseconds a `ClusterConnectionPool` will wait when pinging nodes before marking them dead
     * @defaultValue 3000 */
   pingTimeout?: number
   /** @property sniffInterval Perform a sniff operation every `n` milliseconds
     * @remarks Sniffing might not be the best solution for you. Read https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how to learn more.
-    * @defaultValue */
+    * @defaultValue false */
   sniffInterval?: number | boolean
   /** @property sniffOnStart Perform a sniff once the client is started
     * @remarks Sniffing might not be the best solution for you. Read https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how to learn more.
@@ -244,7 +245,6 @@ export default class Client extends API {
       Serializer,
       ConnectionPool: (opts.cloud != null) ? CloudConnectionPool : WeightedConnectionPool,
       maxRetries: 3,
-      requestTimeout: 30000,
       pingTimeout: 3000,
       sniffInterval: false,
       sniffOnStart: false,

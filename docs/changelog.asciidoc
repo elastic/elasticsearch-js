@@ -13,6 +13,11 @@
 In 8.0, the top-level `body` parameter that was available on all API functions <<remove-body-key,was deprecated>>. In 9.0 this property is completely removed.
 
 [discrete]
+===== Remove the default 30-second timeout on all requests sent to Elasticsearch
+
+Setting HTTP timeouts on Elasticsearch requests goes against Elastic's recommendations. See <<timeout-best-practices>> for more information.
+
+[discrete]
 === 8.17.0
 
 [discrete]

@@ -583,7 +583,7 @@ test('Multiple searches (concurrency = 1)', t => {
 
 test('Flush interval', t => {
   t.plan(2)
-  const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
+  const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'], shouldClearNativeTimers: true })
   t.teardown(() => clock.uninstall())
 
   const MockConnection = connection.buildMockConnection({
