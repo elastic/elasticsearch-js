@@ -6,7 +6,7 @@ Check that the document `/game-of-thrones/1` exists.
 NOTE: Since this API uses the `HEAD` method, the body value will be boolean.
 
 [source,js]
----------
+----
 'use strict'
 
 const { Client } = require('@elastic/elasticsearch')
@@ -34,4 +34,4 @@ async function run () {
 }
 
 run().catch(console.log)
----------
+----
