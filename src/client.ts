@@ -211,7 +211,14 @@ export default class Client extends API {
     }
 
     if (options.enableMetaHeader) {
-      options.headers['x-elastic-client-meta'] = `es=${clientVersion},js=${nodeVersion},t=${transportVersion},hc=${nodeVersion}`
+      let clientMeta = `es=${clientVersion},js=${nodeVersion},t=${transportVersion}`
+      if (options.Connection === UndiciConnection) {
+        clientMeta += `,un=${nodeVersion}`
+      } else {
+        // assumes HttpConnection
+        clientMeta += `,hc=${nodeVersion}`
+      }
+      options.headers['x-elastic-client-meta'] = clientMeta
     }
 
     this.name = options.name
