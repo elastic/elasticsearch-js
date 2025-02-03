@@ -121,7 +121,7 @@ export default class Ml {
   }
 
   /**
-    * Delete a calendar. Removes all scheduled events from a calendar, then deletes it.
+    * Delete a calendar. Remove all scheduled events from a calendar, then delete it.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ml-delete-calendar.html | Elasticsearch API documentation}
     */
   async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest | TB.MlDeleteCalendarRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarResponse>
@@ -283,7 +283,7 @@ export default class Ml {
   }
 
   /**
-    * Delete expired ML data. Deletes all job results, model snapshots and forecast data that have exceeded their retention days period. Machine learning state documents that are not associated with any job are also deleted. You can limit the request to a single or set of anomaly detection jobs by using a job identifier, a group name, a comma-separated list of jobs, or a wildcard expression. You can delete expired data for all anomaly detection jobs by using _all, by specifying * as the <job_id>, or by omitting the <job_id>.
+    * Delete expired ML data. Delete all job results, model snapshots and forecast data that have exceeded their retention days period. Machine learning state documents that are not associated with any job are also deleted. You can limit the request to a single or set of anomaly detection jobs by using a job identifier, a group name, a comma-separated list of jobs, or a wildcard expression. You can delete expired data for all anomaly detection jobs by using `_all`, by specifying `*` as the `<job_id>`, or by omitting the `<job_id>`.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ml-delete-expired-data.html | Elasticsearch API documentation}
     */
   async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest | TB.MlDeleteExpiredDataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteExpiredDataResponse>
@@ -537,8 +537,8 @@ export default class Ml {
   }
 
   /**
-    * Estimate job model memory usage. Makes an estimation of the memory usage for an anomaly detection job model. It is based on analysis configuration details for the job and cardinality estimates for the fields it references.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ml-apis.html | Elasticsearch API documentation}
+    * Estimate job model memory usage. Make an estimation of the memory usage for an anomaly detection job model. The estimate is based on analysis configuration details for the job and cardinality estimates for the fields it references.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ml-estimate-model-memory.html | Elasticsearch API documentation}
     */
   async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest | TB.MlEstimateModelMemoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlEstimateModelMemoryResponse>
   async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest | TB.MlEstimateModelMemoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlEstimateModelMemoryResponse, unknown>>
@@ -621,7 +621,7 @@ export default class Ml {
 
   /**
     * Explain data frame analytics config. This API provides explanations for a data frame analytics config that either exists already or one that has not been created yet. The following explanations are provided: * which fields are included or not in the analysis and why, * how much memory is estimated to be required. The estimate can be used when deciding the appropriate value for model_memory_limit setting later on. If you have object fields or fields that are excluded via source filtering, they are not included in the explanation.
-    * @see {@link http://www.elastic.co/guide/en/elasticsearch/reference/8.x/explain-dfanalytics.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/explain-dfanalytics.html | Elasticsearch API documentation}
     */
   async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlExplainDataFrameAnalyticsResponse>
   async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlExplainDataFrameAnalyticsResponse, unknown>>
@@ -1764,8 +1764,8 @@ export default class Ml {
   }
 
   /**
-    * Preview features used by data frame analytics. Previews the extracted features used by a data frame analytics config.
-    * @see {@link http://www.elastic.co/guide/en/elasticsearch/reference/8.x/preview-dfanalytics.html | Elasticsearch API documentation}
+    * Preview features used by data frame analytics. Preview the extracted features used by a data frame analytics config.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/preview-dfanalytics.html | Elasticsearch API documentation}
     */
   async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest | TB.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPreviewDataFrameAnalyticsResponse>
   async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest | TB.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPreviewDataFrameAnalyticsResponse, unknown>>
@@ -2875,7 +2875,7 @@ export default class Ml {
   }
 
   /**
-    * Upgrade a snapshot. Upgrades an anomaly detection model snapshot to the latest major version. Over time, older snapshot formats are deprecated and removed. Anomaly detection jobs support only snapshots that are from the current or previous major version. This API provides a means to upgrade a snapshot to the current major version. This aids in preparing the cluster for an upgrade to the next major version. Only one snapshot per anomaly detection job can be upgraded at a time and the upgraded snapshot cannot be the current snapshot of the anomaly detection job.
+    * Upgrade a snapshot. Upgrade an anomaly detection model snapshot to the latest major version. Over time, older snapshot formats are deprecated and removed. Anomaly detection jobs support only snapshots that are from the current or previous major version. This API provides a means to upgrade a snapshot to the current major version. This aids in preparing the cluster for an upgrade to the next major version. Only one snapshot per anomaly detection job can be upgraded at a time and the upgraded snapshot cannot be the current snapshot of the anomaly detection job.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/ml-upgrade-job-model-snapshot.html | Elasticsearch API documentation}
     */
   async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest | TB.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpgradeJobSnapshotResponse>
@@ -2951,7 +2951,7 @@ export default class Ml {
 
   /**
     * Validate an anomaly detection job.
-    * @see {@link https://www.elastic.co/guide/en/machine-learning/8.x/ml-jobs.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8 | Elasticsearch API documentation}
     */
   async validateDetector (this: That, params: T.MlValidateDetectorRequest | TB.MlValidateDetectorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateDetectorResponse>
   async validateDetector (this: That, params: T.MlValidateDetectorRequest | TB.MlValidateDetectorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlValidateDetectorResponse, unknown>>

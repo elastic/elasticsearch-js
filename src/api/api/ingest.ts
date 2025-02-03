@@ -46,7 +46,7 @@ export default class Ingest {
 
   /**
     * Delete GeoIP database configurations. Delete one or more IP geolocation database configurations.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/delete-geoip-database-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ingest-delete-geoip-database | Elasticsearch API documentation}
     */
   async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest | TB.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeleteGeoipDatabaseResponse>
   async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest | TB.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestDeleteGeoipDatabaseResponse, unknown>>
@@ -172,7 +172,7 @@ export default class Ingest {
 
   /**
     * Get GeoIP database configurations. Get information about one or more IP geolocation database configurations.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-geoip-database-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ingest-get-geoip-database | Elasticsearch API documentation}
     */
   async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest | TB.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetGeoipDatabaseResponse>
   async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest | TB.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGetGeoipDatabaseResponse, unknown>>
@@ -322,7 +322,7 @@ export default class Ingest {
 
   /**
     * Create or update a GeoIP database configuration. Refer to the create or update IP geolocation database configuration API.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/put-geoip-database-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ingest-put-geoip-database | Elasticsearch API documentation}
     */
   async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest | TB.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutGeoipDatabaseResponse>
   async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest | TB.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestPutGeoipDatabaseResponse, unknown>>

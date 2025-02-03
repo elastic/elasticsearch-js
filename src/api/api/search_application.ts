@@ -182,7 +182,7 @@ export default class SearchApplication {
 
   /**
     * Get search applications. Get information about search applications.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/list-search-applications.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/list-analytics-collection.html | Elasticsearch API documentation}
     */
   async list (this: That, params?: T.SearchApplicationListRequest | TB.SearchApplicationListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationListResponse>
   async list (this: That, params?: T.SearchApplicationListRequest | TB.SearchApplicationListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchApplicationListResponse, unknown>>

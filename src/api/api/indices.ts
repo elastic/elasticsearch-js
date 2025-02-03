@@ -45,8 +45,8 @@ export default class Indices {
   }
 
   /**
-    * Add an index block. Limits the operations allowed on an index by blocking specific operation types.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/index-modules-blocks.html | Elasticsearch API documentation}
+    * Add an index block. Add an index block to an index. Index blocks limit the operations allowed on an index by blocking specific operation types.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/index-modules-blocks.html#add-index-block | Elasticsearch API documentation}
     */
   async addBlock (this: That, params: T.IndicesAddBlockRequest | TB.IndicesAddBlockRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesAddBlockResponse>
   async addBlock (this: That, params: T.IndicesAddBlockRequest | TB.IndicesAddBlockRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesAddBlockResponse, unknown>>
@@ -323,8 +323,8 @@ export default class Indices {
   }
 
   /**
-    * Create a data stream. Creates a data stream. You must have a matching index template with data stream enabled.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/data-streams.html | Elasticsearch API documentation}
+    * Create a data stream. You must have a matching index template with data stream enabled.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-create-data-stream.html | Elasticsearch API documentation}
     */
   async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest | TB.IndicesCreateDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateDataStreamResponse>
   async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest | TB.IndicesCreateDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateDataStreamResponse, unknown>>
@@ -393,8 +393,8 @@ export default class Indices {
   }
 
   /**
-    * Get data stream stats. Retrieves statistics for one or more data streams.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/data-streams.html | Elasticsearch API documentation}
+    * Get data stream stats. Get statistics for one or more data streams.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/data-stream-stats-api.html | Elasticsearch API documentation}
     */
   async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest | TB.IndicesDataStreamsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDataStreamsStatsResponse>
   async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest | TB.IndicesDataStreamsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDataStreamsStatsResponse, unknown>>
@@ -538,7 +538,7 @@ export default class Indices {
 
   /**
     * Delete data streams. Deletes one or more data streams and their backing indices.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/data-streams.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-delete-data-stream.html | Elasticsearch API documentation}
     */
   async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest | TB.IndicesDeleteDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataStreamResponse>
   async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest | TB.IndicesDeleteDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteDataStreamResponse, unknown>>
@@ -735,8 +735,8 @@ export default class Indices {
   }
 
   /**
-    * Check aliases. Checks if one or more data stream or index aliases exist.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-aliases.html | Elasticsearch API documentation}
+    * Check aliases. Check if one or more data stream or index aliases exist.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-exists-alias | Elasticsearch API documentation}
     */
   async existsAlias (this: That, params: T.IndicesExistsAliasRequest | TB.IndicesExistsAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsAliasResponse>
   async existsAlias (this: That, params: T.IndicesExistsAliasRequest | TB.IndicesExistsAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsAliasResponse, unknown>>
@@ -776,7 +776,7 @@ export default class Indices {
 
   /**
     * Check index templates. Check whether index templates exist.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/index-templates.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-exists-index-template | Elasticsearch API documentation}
     */
   async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest | TB.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsIndexTemplateResponse>
   async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest | TB.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsIndexTemplateResponse, unknown>>
@@ -1062,7 +1062,7 @@ export default class Indices {
   }
 
   /**
-    * Get data stream lifecycles. Retrieves the data stream lifecycle configuration of one or more data streams.
+    * Get data stream lifecycles. Get the data stream lifecycle configuration of one or more data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/data-streams-get-lifecycle.html | Elasticsearch API documentation}
     */
   async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest | TB.IndicesGetDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataLifecycleResponse>
@@ -1124,8 +1124,8 @@ export default class Indices {
   }
 
   /**
-    * Get data streams. Retrieves information about one or more data streams.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/data-streams.html | Elasticsearch API documentation}
+    * Get data streams. Get information about one or more data streams.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-get-data-stream.html | Elasticsearch API documentation}
     */
   async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest | TB.IndicesGetDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamResponse>
   async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest | TB.IndicesGetDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataStreamResponse, unknown>>
@@ -1951,17 +1951,18 @@ export default class Indices {
   }
 
   /**
-    * Resolve the cluster. Resolve the specified index expressions to return information about each cluster, including the local cluster, if included. Multiple patterns and remote clusters are supported. This endpoint is useful before doing a cross-cluster search in order to determine which remote clusters should be included in a search. You use the same index expression with this endpoint as you would for cross-cluster search. Index and cluster exclusions are also supported with this endpoint. For each cluster in the index expression, information is returned about: * Whether the querying ("local") cluster is currently connected to each remote cluster in the index expression scope. * Whether each remote cluster is configured with `skip_unavailable` as `true` or `false`. * Whether there are any indices, aliases, or data streams on that cluster that match the index expression. * Whether the search is likely to have errors returned when you do the cross-cluster search (including any authorization errors if you do not have permission to query the index). * Cluster version information, including the Elasticsearch server version. For example, `GET /_resolve/cluster/my-index-*,cluster*:my-index-*` returns information about the local cluster and all remotely configured clusters that start with the alias `cluster*`. Each cluster returns information about whether it has any indices, aliases or data streams that match `my-index-*`. **Advantages of using this endpoint before a cross-cluster search** You may want to exclude a cluster or index from a search when: * A remote cluster is not currently connected and is configured with `skip_unavailable=false`. Running a cross-cluster search under those conditions will cause the entire search to fail. * A cluster has no matching indices, aliases or data streams for the index expression (or your user does not have permissions to search them). For example, suppose your index expression is `logs*,remote1:logs*` and the remote1 cluster has no indices, aliases or data streams that match `logs*`. In that case, that cluster will return no results from that cluster if you include it in a cross-cluster search. * The index expression (combined with any query parameters you specify) will likely cause an exception to be thrown when you do the search. In these cases, the "error" field in the `_resolve/cluster` response will be present. (This is also where security/permission errors will be shown.) * A remote cluster is an older version that does not support the feature you want to use in your search.
+    * Resolve the cluster. Resolve the specified index expressions to return information about each cluster, including the local "querying" cluster, if included. If no index expression is provided, the API will return information about all the remote clusters that are configured on the querying cluster. This endpoint is useful before doing a cross-cluster search in order to determine which remote clusters should be included in a search. You use the same index expression with this endpoint as you would for cross-cluster search. Index and cluster exclusions are also supported with this endpoint. For each cluster in the index expression, information is returned about: * Whether the querying ("local") cluster is currently connected to each remote cluster specified in the index expression. Note that this endpoint actively attempts to contact the remote clusters, unlike the `remote/info` endpoint. * Whether each remote cluster is configured with `skip_unavailable` as `true` or `false`. * Whether there are any indices, aliases, or data streams on that cluster that match the index expression. * Whether the search is likely to have errors returned when you do the cross-cluster search (including any authorization errors if you do not have permission to query the index). * Cluster version information, including the Elasticsearch server version. For example, `GET /_resolve/cluster/my-index-*,cluster*:my-index-*` returns information about the local cluster and all remotely configured clusters that start with the alias `cluster*`. Each cluster returns information about whether it has any indices, aliases or data streams that match `my-index-*`. ## Note on backwards compatibility The ability to query without an index expression was added in version 8.18, so when querying remote clusters older than that, the local cluster will send the index expression `dummy*` to those remote clusters. Thus, if an errors occur, you may see a reference to that index expression even though you didn't request it. If it causes a problem, you can instead include an index expression like `*:*` to bypass the issue. ## Advantages of using this endpoint before a cross-cluster search You may want to exclude a cluster or index from a search when: * A remote cluster is not currently connected and is configured with `skip_unavailable=false`. Running a cross-cluster search under those conditions will cause the entire search to fail. * A cluster has no matching indices, aliases or data streams for the index expression (or your user does not have permissions to search them). For example, suppose your index expression is `logs*,remote1:logs*` and the remote1 cluster has no indices, aliases or data streams that match `logs*`. In that case, that cluster will return no results from that cluster if you include it in a cross-cluster search. * The index expression (combined with any query parameters you specify) will likely cause an exception to be thrown when you do the search. In these cases, the "error" field in the `_resolve/cluster` response will be present. (This is also where security/permission errors will be shown.) * A remote cluster is an older version that does not support the feature you want to use in your search. ## Test availability of remote clusters The `remote/info` endpoint is commonly used to test whether the "local" cluster (the cluster being queried) is connected to its remote clusters, but it does not necessarily reflect whether the remote cluster is available or not. The remote cluster may be available, while the local cluster is not currently connected to it. You can use the `_resolve/cluster` API to attempt to reconnect to remote clusters. For example with `GET _resolve/cluster` or `GET _resolve/cluster/*:*`. The `connected` field in the response will indicate whether it was successful. If a connection was (re-)established, this will also cause the `remote/info` endpoint to now indicate a connected status.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-resolve-cluster-api.html | Elasticsearch API documentation}
     */
-  async resolveCluster (this: That, params: T.IndicesResolveClusterRequest | TB.IndicesResolveClusterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesResolveClusterResponse>
-  async resolveCluster (this: That, params: T.IndicesResolveClusterRequest | TB.IndicesResolveClusterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesResolveClusterResponse, unknown>>
-  async resolveCluster (this: That, params: T.IndicesResolveClusterRequest | TB.IndicesResolveClusterRequest, options?: TransportRequestOptions): Promise<T.IndicesResolveClusterResponse>
-  async resolveCluster (this: That, params: T.IndicesResolveClusterRequest | TB.IndicesResolveClusterRequest, options?: TransportRequestOptions): Promise<any> {
+  async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest | TB.IndicesResolveClusterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesResolveClusterResponse>
+  async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest | TB.IndicesResolveClusterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesResolveClusterResponse, unknown>>
+  async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest | TB.IndicesResolveClusterRequest, options?: TransportRequestOptions): Promise<T.IndicesResolveClusterResponse>
+  async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest | TB.IndicesResolveClusterRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
 
+    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
@@ -1971,8 +1972,15 @@ export default class Indices {
       }
     }
 
-    const method = 'GET'
-    const path = `/_resolve/cluster/${encodeURIComponent(params.name.toString())}`
+    let method = ''
+    let path = ''
+    if (params.name != null) {
+      method = 'GET'
+      path = `/_resolve/cluster/${encodeURIComponent(params.name.toString())}`
+    } else {
+      method = 'GET'
+      path = '/_resolve/cluster'
+    }
     const meta: TransportRequestMetadata = {
       name: 'indices.resolve_cluster',
       pathParts: {
