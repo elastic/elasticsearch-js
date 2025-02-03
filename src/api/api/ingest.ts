@@ -45,7 +45,7 @@ export default class Ingest {
 
   /**
     * Delete GeoIP database configurations. Delete one or more IP geolocation database configurations.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-geoip-database-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-delete-geoip-database | Elasticsearch API documentation}
     */
   async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeleteGeoipDatabaseResponse>
   async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestDeleteGeoipDatabaseResponse, unknown>>
@@ -87,7 +87,7 @@ export default class Ingest {
 
   /**
     * Delete IP geolocation database configurations.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-ip-location-database-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-delete-ip-location-database | Elasticsearch API documentation}
     */
   async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeleteIpLocationDatabaseResponse>
   async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestDeleteIpLocationDatabaseResponse, unknown>>
@@ -129,7 +129,7 @@ export default class Ingest {
 
   /**
     * Delete pipelines. Delete one or more ingest pipelines.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-pipeline-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-delete-pipeline | Elasticsearch API documentation}
     */
   async deletePipeline (this: That, params: T.IngestDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeletePipelineResponse>
   async deletePipeline (this: That, params: T.IngestDeletePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestDeletePipelineResponse, unknown>>
@@ -211,7 +211,7 @@ export default class Ingest {
 
   /**
     * Get GeoIP database configurations. Get information about one or more IP geolocation database configurations.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-geoip-database-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-geoip-database | Elasticsearch API documentation}
     */
   async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetGeoipDatabaseResponse>
   async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGetGeoipDatabaseResponse, unknown>>
@@ -261,7 +261,7 @@ export default class Ingest {
 
   /**
     * Get IP geolocation database configurations.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-ip-location-database-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-ip-location-database | Elasticsearch API documentation}
     */
   async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetIpLocationDatabaseResponse>
   async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGetIpLocationDatabaseResponse, unknown>>
@@ -311,7 +311,7 @@ export default class Ingest {
 
   /**
     * Get pipelines. Get information about one or more ingest pipelines. This API returns a local reference of the pipeline.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-pipeline-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-pipeline | Elasticsearch API documentation}
     */
   async getPipeline (this: That, params?: T.IngestGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetPipelineResponse>
   async getPipeline (this: That, params?: T.IngestGetPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGetPipelineResponse, unknown>>
@@ -401,7 +401,7 @@ export default class Ingest {
 
   /**
     * Create or update a GeoIP database configuration. Refer to the create or update IP geolocation database configuration API.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-geoip-database-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-put-geoip-database | Elasticsearch API documentation}
     */
   async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutGeoipDatabaseResponse>
   async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestPutGeoipDatabaseResponse, unknown>>
@@ -448,7 +448,7 @@ export default class Ingest {
 
   /**
     * Create or update an IP geolocation database configuration.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-ip-location-database-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-put-ip-location-database | Elasticsearch API documentation}
     */
   async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutIpLocationDatabaseResponse>
   async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestPutIpLocationDatabaseResponse, unknown>>
@@ -532,7 +532,7 @@ export default class Ingest {
 
   /**
     * Simulate a pipeline. Run an ingest pipeline against a set of provided documents. You can either specify an existing pipeline to use with the provided documents or supply a pipeline definition in the body of the request.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-simulate | Elasticsearch API documentation}
     */
   async simulate (this: That, params: T.IngestSimulateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestSimulateResponse>
   async simulate (this: That, params: T.IngestSimulateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestSimulateResponse, unknown>>

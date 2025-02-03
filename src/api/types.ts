@@ -187,9 +187,9 @@ export interface CountRequest extends RequestBase {
   routing?: Routing
   /** The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. IMPORTANT: Use with caution. Elasticsearch applies this parameter to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers. */
   terminate_after?: long
-  /** The query in Lucene query string syntax. */
+  /** The query in Lucene query string syntax. This parameter cannot be used with a request body. */
   q?: string
-  /** Defines the search definition using the Query DSL. The query is optional, and when not provided, it will use `match_all` to count all the docs. */
+  /** Defines the search query using Query DSL. A request body query cannot be used with the `q` query string parameter. */
   query?: QueryDslQueryContainer
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, terminate_after?: never, q?: never, query?: never }
@@ -363,11 +363,11 @@ export interface DeleteByQueryRethrottleRequest extends RequestBase {
 export type DeleteByQueryRethrottleResponse = TasksTaskListResponseBase
 
 export interface DeleteScriptRequest extends RequestBase {
-/** Identifier for the stored script or search template. */
+/** The identifier for the stored script or search template. */
   id: Id
-  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   master_timeout?: Duration
-  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never }
@@ -454,33 +454,33 @@ export interface ExplainExplanationDetail {
 }
 
 export interface ExplainRequest extends RequestBase {
-/** Defines the document ID. */
+/** The document identifier. */
   id: Id
-  /** Index names used to limit the request. Only a single index name can be provided to this parameter. */
+  /** Index names that are used to limit the request. Only a single index name can be provided to this parameter. */
   index: IndexName
-  /** Analyzer to use for the query string. This parameter can only be used when the `q` query string parameter is specified. */
+  /** The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified. */
   analyzer?: string
-  /** If `true`, wildcard and prefix queries are analyzed. */
+  /** If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified. */
   analyze_wildcard?: boolean
-  /** The default operator for query string query: `AND` or `OR`. */
+  /** The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified. */
   default_operator?: QueryDslOperator
-  /** Field to use as default where no field prefix is given in the query string. */
+  /** The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified. */
   df?: string
-  /** If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. */
+  /** If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified. */
   lenient?: boolean
-  /** Specifies the node or shard the operation should be performed on. Random by default. */
+  /** The node or shard the operation should be performed on. It is random by default. */
   preference?: string
-  /** Custom value used to route operations to a specific shard. */
+  /** A custom value used to route operations to a specific shard. */
   routing?: Routing
-  /** True or false to return the `_source` field or not, or a list of fields to return. */
+  /** `True` or `false` to return the `_source` field or not or a list of fields to return. */
   _source?: SearchSourceConfigParam
-  /** A comma-separated list of source fields to exclude from the response. */
+  /** A comma-separated list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored. */
   _source_excludes?: Fields
-  /** A comma-separated list of source fields to include in the response. */
+  /** A comma-separated list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored. */
   _source_includes?: Fields
   /** A comma-separated list of stored fields to return in the response. */
   stored_fields?: Fields
-  /** Query in the Lucene query string syntax. */
+  /** The query in the Lucene query string syntax. */
   q?: string
   /** Defines the search definition using the Query DSL. */
   query?: QueryDslQueryContainer
@@ -514,27 +514,27 @@ export interface FieldCapsFieldCapability {
 }
 
 export interface FieldCapsRequest extends RequestBase {
-/** Comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (*). To target all data streams and indices, omit this parameter or use * or _all. */
+/** A comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (*). To target all data streams and indices, omit this parameter or use * or _all. */
   index?: Indices
   /** If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with foo but no index starts with bar. */
   allow_no_indices?: boolean
-  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. */
+  /** The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, missing or closed indices are not included in the response. */
   ignore_unavailable?: boolean
   /** If true, unmapped fields are included in the response. */
   include_unmapped?: boolean
-  /** An optional set of filters: can include +metadata,-metadata,-nested,-multifield,-parent */
+  /** A comma-separated list of filters to apply to the response. */
   filters?: string
-  /** Only return results for fields that have one of the types in the list */
+  /** A comma-separated list of field types to include. Any fields that do not match one of these types will be excluded from the results. It defaults to empty, meaning that all field types are returned. */
   types?: string[]
   /** If false, empty fields are not included in the response. */
   include_empty_fields?: boolean
-  /** List of fields to retrieve capabilities for. Wildcard (`*`) expressions are supported. */
+  /** A list of fields to retrieve capabilities for. Wildcard (`*`) expressions are supported. */
   fields?: Fields
-  /** Allows to filter indices if the provided query rewrites to match_none on every shard. */
+  /** Filter indices if the provided query rewrites to `match_none` on every shard. IMPORTANT: The filtering is done on a best-effort basis, it uses index statistics and mappings to rewrite queries to `match_none` instead of fully running the request. For instance a range query over a date field can rewrite to `match_none` if all documents within a shard (including deleted documents) are outside of the provided range. However, not all queries can rewrite to `match_none` so this API may return an index even if the provided filter matches no document. */
   index_filter?: QueryDslQueryContainer
-  /** Defines ad-hoc runtime fields in the request similar to the way it is done in search requests. These fields exist only as part of the query and take precedence over fields defined with the same name in the index mappings. */
+  /** Define ad-hoc runtime fields in the request similar to the way it is done in search requests. These fields exist only as part of the query and take precedence over fields defined with the same name in the index mappings. */
   runtime_mappings?: MappingRuntimeFields
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_unmapped?: never, filters?: never, types?: never, include_empty_fields?: never, fields?: never, index_filter?: never, runtime_mappings?: never }
@@ -596,9 +596,9 @@ export interface GetRequest extends RequestBase {
 export type GetResponse<TDocument = unknown> = GetGetResult<TDocument>
 
 export interface GetScriptRequest extends RequestBase {
-/** Identifier for the stored script or search template. */
+/** The identifier for the stored script or search template. */
   id: Id
-  /** Specify timeout for connection to master */
+  /** The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, master_timeout?: never }
@@ -938,21 +938,21 @@ export interface InfoResponse {
 }
 
 export interface KnnSearchRequest extends RequestBase {
-/** A comma-separated list of index names to search; use `_all` or to perform the operation on all indices */
+/** A comma-separated list of index names to search; use `_all` or to perform the operation on all indices. */
   index: Indices
-  /** A comma-separated list of specific routing values */
+  /** A comma-separated list of specific routing values. */
   routing?: Routing
-  /** Indicates which source fields are returned for matching documents. These fields are returned in the hits._source property of the search response. */
+  /** Indicates which source fields are returned for matching documents. These fields are returned in the `hits._source` property of the search response. */
   _source?: SearchSourceConfig
-  /** The request returns doc values for field names matching these patterns in the hits.fields property of the response. Accepts wildcard (*) patterns. */
+  /** The request returns doc values for field names matching these patterns in the `hits.fields` property of the response. It accepts wildcard (`*`) patterns. */
   docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
-  /** List of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the _source parameter defaults to false. You can pass _source: true to return both source fields and stored fields in the search response. */
+  /** A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`. You can pass `_source: true` to return both source fields and stored fields in the search response. */
   stored_fields?: Fields
-  /** The request returns values for field names matching these patterns in the hits.fields property of the response. Accepts wildcard (*) patterns. */
+  /** The request returns values for field names matching these patterns in the `hits.fields` property of the response. It accepts wildcard (`*`) patterns. */
   fields?: Fields
-  /** Query to filter the documents that can match. The kNN search will return the top `k` documents that also match this filter. The value can be a single query or a list of queries. If `filter` isn't provided, all documents are allowed to match. */
+  /** A query to filter the documents that can match. The kNN search will return the top `k` documents that also match this filter. The value can be a single query or a list of queries. If `filter` isn't provided, all documents are allowed to match. */
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
-  /** kNN query to execute */
+  /** The kNN query to run. */
   knn: KnnSearchQuery
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, routing?: never, _source?: never, docvalue_fields?: never, stored_fields?: never, fields?: never, filter?: never, knn?: never }
@@ -1130,13 +1130,13 @@ export type MsearchResponse<TDocument = unknown, TAggregations = Record<Aggregat
 export type MsearchResponseItem<TDocument = unknown> = MsearchMultiSearchItem<TDocument> | ErrorResponseBase
 
 export interface MsearchTemplateRequest extends RequestBase {
-/** Comma-separated list of data streams, indices, and aliases to search. Supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*`. */
+/** A comma-separated list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*`. */
   index?: Indices
   /** If `true`, network round-trips are minimized for cross-cluster search requests. */
   ccs_minimize_roundtrips?: boolean
-  /** Maximum number of concurrent searches the API can run. */
+  /** The maximum number of concurrent searches the API can run. */
   max_concurrent_searches?: long
-  /** The type of the search operation. Available options: `query_then_fetch`, `dfs_query_then_fetch`. */
+  /** The type of the search operation. */
   search_type?: SearchType
   /** If `true`, the response returns `hits.total` as an integer. If `false`, it returns `hits.total` as an object. */
   rest_total_hits_as_int?: boolean
@@ -1178,9 +1178,9 @@ export interface MtermvectorsOperation {
 }
 
 export interface MtermvectorsRequest extends RequestBase {
-/** Name of the index that contains the documents. */
+/** The name of the index that contains the documents. */
   index?: IndexName
-  /** Comma-separated list or wildcard expressions of fields to include in the statistics. Used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters. */
+  /** A comma-separated list or wildcard expressions of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters. */
   fields?: Fields
   /** If `true`, the response includes the document count, sum of document frequencies, and sum of total term frequencies. */
   field_statistics?: boolean
@@ -1190,21 +1190,21 @@ export interface MtermvectorsRequest extends RequestBase {
   payloads?: boolean
   /** If `true`, the response includes term positions. */
   positions?: boolean
-  /** Specifies the node or shard the operation should be performed on. Random by default. */
+  /** The node or shard the operation should be performed on. It is random by default. */
   preference?: string
   /** If true, the request is real-time as opposed to near-real-time. */
   realtime?: boolean
-  /** Custom value used to route operations to a specific shard. */
+  /** A custom value used to route operations to a specific shard. */
   routing?: Routing
   /** If true, the response includes term frequency and document frequency. */
   term_statistics?: boolean
   /** If `true`, returns the document version as part of a hit. */
   version?: VersionNumber
-  /** Specific version type. */
+  /** The version type. */
   version_type?: VersionType
-  /** Array of existing or artificial documents. */
+  /** An array of existing or artificial documents. */
   docs?: MtermvectorsOperation[]
-  /** Simplified syntax to specify documents by their ID if they're in the same index. */
+  /** A simplified syntax to specify documents by their ID if they're in the same index. */
   ids?: Id[]
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, term_statistics?: never, version?: never, version_type?: never, docs?: never, ids?: never }
@@ -1264,15 +1264,15 @@ export interface PingRequest extends RequestBase {
 export type PingResponse = boolean
 
 export interface PutScriptRequest extends RequestBase {
-/** Identifier for the stored script or search template. Must be unique within the cluster. */
+/** The identifier for the stored script or search template. It must be unique within the cluster. */
   id: Id
-  /** Context in which the script or search template should run. To prevent errors, the API immediately compiles the script or template in this context. */
+  /** The context in which the script or search template should run. To prevent errors, the API immediately compiles the script or template in this context. */
   context?: Name
-  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   master_timeout?: Duration
-  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   timeout?: Duration
-  /** Contains the script or search template, its parameters, and its language. */
+  /** The script or search template, its parameters, and its language. */
   script: StoredScript
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, context?: never, master_timeout?: never, timeout?: never, script?: never }
@@ -1354,7 +1354,7 @@ export interface RankEvalRankEvalRequestItem {
 }
 
 export interface RankEvalRequest extends RequestBase {
-/** Comma-separated list of data streams, indices, and index aliases used to limit the request. Wildcard (`*`) expressions are supported. To target all data streams and indices in a cluster, omit this parameter or use `_all` or `*`. */
+/** A comma-separated list of data streams, indices, and index aliases used to limit the request. Wildcard (`*`) expressions are supported. To target all data streams and indices in a cluster, omit this parameter or use `_all` or `*`. */
   index?: Indices
   /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
@@ -1515,12 +1515,12 @@ export interface ReindexRethrottleResponse {
 }
 
 export interface RenderSearchTemplateRequest extends RequestBase {
-/** ID of the search template to render. If no `source` is specified, this or the `id` request body parameter is required. */
+/** The ID of the search template to render. If no `source` is specified, this or the `id` request body parameter is required. */
   id?: Id
   file?: string
   /** Key-value pairs used to replace Mustache variables in the template. The key is the variable name. The value is the variable value. */
   params?: Record<string, any>
-  /** An inline search template. Supports the same parameters as the search API's request body. These parameters also support Mustache variables. If no `id` or `<templated-id>` is specified, this parameter is required. */
+  /** An inline search template. It supports the same parameters as the search API's request body. These parameters also support Mustache variables. If no `id` or `<templated-id>` is specified, this parameter is required. */
   source?: string
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, file?: never, params?: never, source?: never }
@@ -1562,7 +1562,7 @@ export interface ScrollRequest extends RequestBase {
   scroll_id?: ScrollId
   /** If true, the API response’s hit.total property is returned as an integer. If false, the API response’s hit.total property is returned as an object. */
   rest_total_hits_as_int?: boolean
-  /** Period to retain the search context for scrolling. */
+  /** The period to retain the search context for scrolling. */
   scroll?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { scroll_id?: never, rest_total_hits_as_int?: never, scroll?: never }
@@ -2307,33 +2307,33 @@ export interface SearchMvtRequest extends RequestBase {
   x: SearchMvtCoordinate
   /** Y coordinate for the vector tile to search */
   y: SearchMvtCoordinate
-  /** Sub-aggregations for the geotile_grid. Supports the following aggregation types: - avg - cardinality - max - min - sum */
+  /** Sub-aggregations for the geotile_grid. It supports the following aggregation types: - `avg` - `boxplot` - `cardinality` - `extended stats` - `max` - `median absolute deviation` - `min` - `percentile` - `percentile-rank` - `stats` - `sum` - `value count` The aggregation names can't start with `_mvt_`. The `_mvt_` prefix is reserved for internal aggregations. */
   aggs?: Record<string, AggregationsAggregationContainer>
-  /** Size, in pixels, of a clipping buffer outside the tile. This allows renderers to avoid outline artifacts from geometries that extend past the extent of the tile. */
+  /** The size, in pixels, of a clipping buffer outside the tile. This allows renderers to avoid outline artifacts from geometries that extend past the extent of the tile. */
   buffer?: integer
-  /** If false, the meta layer’s feature is the bounding box of the tile. If true, the meta layer’s feature is a bounding box resulting from a geo_bounds aggregation. The aggregation runs on <field> values that intersect the <zoom>/<x>/<y> tile with wrap_longitude set to false. The resulting bounding box may be larger than the vector tile. */
+  /** If `false`, the meta layer's feature is the bounding box of the tile. If `true`, the meta layer's feature is a bounding box resulting from a `geo_bounds` aggregation. The aggregation runs on <field> values that intersect the `<zoom>/<x>/<y>` tile with `wrap_longitude` set to `false`. The resulting bounding box may be larger than the vector tile. */
   exact_bounds?: boolean
-  /** Size, in pixels, of a side of the tile. Vector tiles are square with equal sides. */
+  /** The size, in pixels, of a side of the tile. Vector tiles are square with equal sides. */
   extent?: integer
-  /** Fields to return in the `hits` layer. Supports wildcards (`*`). This parameter does not support fields with array values. Fields with array values may return inconsistent results. */
+  /** The fields to return in the `hits` layer. It supports wildcards (`*`). This parameter does not support fields with array values. Fields with array values may return inconsistent results. */
   fields?: Fields
-  /** Aggregation used to create a grid for the `field`. */
+  /** The aggregation used to create a grid for the `field`. */
   grid_agg?: SearchMvtGridAggregationType
-  /** Additional zoom levels available through the aggs layer. For example, if <zoom> is 7 and grid_precision is 8, you can zoom in up to level 15. Accepts 0-8. If 0, results don’t include the aggs layer. */
+  /** Additional zoom levels available through the aggs layer. For example, if `<zoom>` is `7` and `grid_precision` is `8`, you can zoom in up to level 15. Accepts 0-8. If 0, results don't include the aggs layer. */
   grid_precision?: integer
-  /** Determines the geometry type for features in the aggs layer. In the aggs layer, each feature represents a geotile_grid cell. If 'grid' each feature is a Polygon of the cells bounding box. If 'point' each feature is a Point that is the centroid of the cell. */
+  /** Determines the geometry type for features in the aggs layer. In the aggs layer, each feature represents a `geotile_grid` cell. If `grid, each feature is a polygon of the cells bounding box. If `point`, each feature is a Point that is the centroid of the cell. */
   grid_type?: SearchMvtGridType
-  /** Query DSL used to filter documents for the search. */
+  /** The query DSL used to filter documents for the search. */
   query?: QueryDslQueryContainer
   /** Defines one or more runtime fields in the search request. These fields take precedence over mapped fields with the same name. */
   runtime_mappings?: MappingRuntimeFields
-  /** Maximum number of features to return in the hits layer. Accepts 0-10000. If 0, results don’t include the hits layer. */
+  /** The maximum number of features to return in the hits layer. Accepts 0-10000. If 0, results don't include the hits layer. */
   size?: integer
-  /** Sorts features in the hits layer. By default, the API calculates a bounding box for each feature. It sorts features based on this box’s diagonal length, from longest to shortest. */
+  /** Sort the features in the hits layer. By default, the API calculates a bounding box for each feature. It sorts features based on this box's diagonal length, from longest to shortest. */
   sort?: Sort
-  /** Number of hits matching the query to count accurately. If `true`, the exact number of hits is returned at the cost of some performance. If `false`, the response does not include the total number of hits matching the query. */
+  /** The number of hits matching the query to count accurately. If `true`, the exact number of hits is returned at the cost of some performance. If `false`, the response does not include the total number of hits matching the query. */
   track_total_hits?: SearchTrackHits
-  /** If `true`, the hits and aggs layers will contain additional point features representing suggested label positions for the original features. */
+  /** If `true`, the hits and aggs layers will contain additional point features representing suggested label positions for the original features. * `Point` and `MultiPoint` features will have one of the points selected. * `Polygon` and `MultiPolygon` features will have a single point generated, either the centroid, if it is within the polygon, or another point within the polygon selected from the sorted triangle-tree. * `LineString` features will likewise provide a roughly central point selected from the triangle-tree. * The aggregation results will provide one central point for each aggregation bucket. All attributes from the original features will also be copied to the new label features. In addition, the new features will be distinguishable using the tag `_mvt_label_position`. */
   with_labels?: boolean
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, field?: never, zoom?: never, x?: never, y?: never, aggs?: never, buffer?: never, exact_bounds?: never, extent?: never, fields?: never, grid_agg?: never, grid_precision?: never, grid_type?: never, query?: never, runtime_mappings?: never, size?: never, sort?: never, track_total_hits?: never, with_labels?: never }
@@ -2352,7 +2352,7 @@ export type SearchMvtGridType = 'grid' | 'point' | 'centroid'
 export type SearchMvtZoomLevel = integer
 
 export interface SearchShardsRequest extends RequestBase {
-/** Returns the indices and shards that a search request would be executed against. */
+/** A comma-separated list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
   /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
@@ -2362,11 +2362,11 @@ export interface SearchShardsRequest extends RequestBase {
   ignore_unavailable?: boolean
   /** If `true`, the request retrieves information from the local node only. */
   local?: boolean
-  /** Period to wait for a connection to the master node. */
+  /** The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. IT can also be set to `-1` to indicate that the request should never timeout. */
   master_timeout?: Duration
-  /** Specifies the node or shard the operation should be performed on. Random by default. */
+  /** The node or shard the operation should be performed on. It is random by default. */
   preference?: string
-  /** Custom value used to route operations to a specific shard. */
+  /** A custom value used to route operations to a specific shard. */
   routing?: Routing
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, local?: never, master_timeout?: never, preference?: never, routing?: never }
@@ -2398,39 +2398,39 @@ export interface SearchShardsShardStoreIndex {
 }
 
 export interface SearchTemplateRequest extends RequestBase {
-/** Comma-separated list of data streams, indices, and aliases to search. Supports wildcards (*). */
+/** A comma-separated list of data streams, indices, and aliases to search. It supports wildcards (`*`). */
   index?: Indices
   /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
   /** If `true`, network round-trips are minimized for cross-cluster search requests. */
   ccs_minimize_roundtrips?: boolean
-  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+  /** The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled. */
   ignore_throttled?: boolean
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
-  /** Specifies the node or shard the operation should be performed on. Random by default. */
+  /** The node or shard the operation should be performed on. It is random by default. */
   preference?: string
-  /** Custom value used to route operations to a specific shard. */
+  /** A custom value used to route operations to a specific shard. */
   routing?: Routing
   /** Specifies how long a consistent view of the index should be maintained for scrolled search. */
   scroll?: Duration
   /** The type of the search operation. */
   search_type?: SearchType
-  /** If true, hits.total are rendered as an integer in the response. */
+  /** If `true`, `hits.total` is rendered as an integer in the response. If `false`, it is rendered as an object. */
   rest_total_hits_as_int?: boolean
   /** If `true`, the response prefixes aggregation and suggester names with their respective types. */
   typed_keys?: boolean
-  /** If `true`, returns detailed information about score calculation as part of each hit. */
+  /** If `true`, returns detailed information about score calculation as part of each hit. If you specify both this and the `explain` query parameter, the API uses only the query parameter. */
   explain?: boolean
-  /** ID of the search template to use. If no source is specified, this parameter is required. */
+  /** The ID of the search template to use. If no `source` is specified, this parameter is required. */
   id?: Id
   /** Key-value pairs used to replace Mustache variables in the template. The key is the variable name. The value is the variable value. */
   params?: Record<string, any>
   /** If `true`, the query execution is profiled. */
   profile?: boolean
-  /** An inline search template. Supports the same parameters as the search API's request body. Also supports Mustache variables. If no id is specified, this parameter is required. */
+  /** An inline search template. Supports the same parameters as the search API's request body. It also supports Mustache variables. If no `id` is specified, this parameter is required. */
   source?: string
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, preference?: never, routing?: never, scroll?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, explain?: never, id?: never, params?: never, profile?: never, source?: never }
@@ -2456,20 +2456,21 @@ export interface SearchTemplateResponse<TDocument = unknown> {
 }
 
 export interface TermsEnumRequest extends RequestBase {
-/** Comma-separated list of data streams, indices, and index aliases to search. Wildcard (*) expressions are supported. */
+/** A comma-separated list of data streams, indices, and index aliases to search. Wildcard (`*`) expressions are supported. To search all data streams or indices, omit this parameter or use `*` or `_all`. */
   index: IndexName
   /** The string to match at the start of indexed terms. If not provided, all terms in the field are considered. */
   field: Field
-  /** How many matching terms to return. */
+  /** The number of matching terms to return. */
   size?: integer
-  /** The maximum length of time to spend collecting results. Defaults to "1s" (one second). If the timeout is exceeded the complete flag set to false in the response and the results may be partial or empty. */
+  /** The maximum length of time to spend collecting results. If the timeout is exceeded the `complete` flag set to `false` in the response and the results may be partial or empty. */
   timeout?: Duration
-  /** When true the provided search string is matched against index terms without case sensitivity. */
+  /** When `true`, the provided search string is matched against index terms without case sensitivity. */
   case_insensitive?: boolean
-  /** Allows to filter an index shard if the provided query rewrites to match_none. */
+  /** Filter an index shard if the provided query rewrites to `match_none`. */
   index_filter?: QueryDslQueryContainer
-  /** The string after which terms in the index should be returned. Allows for a form of pagination if the last result from one request is passed as the search_after parameter for a subsequent request. */
+  /** The string to match at the start of indexed terms. If it is not provided, all terms in the field are considered. > info > The prefix string cannot be larger than the largest possible keyword value, which is Lucene's term byte-length limit of 32766. */
   string?: string
+  /** The string after which terms in the index should be returned. It allows for a form of pagination if the last result from one request is passed as the `search_after` parameter for a subsequent request. */
   search_after?: string
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, field?: never, size?: never, timeout?: never, case_insensitive?: never, index_filter?: never, string?: never, search_after?: never }
@@ -2500,13 +2501,13 @@ export interface TermvectorsFilter {
 }
 
 export interface TermvectorsRequest<TDocument = unknown> extends RequestBase {
-/** Name of the index that contains the document. */
+/** The name of the index that contains the document. */
   index: IndexName
-  /** Unique identifier of the document. */
+  /** A unique identifier for the document. */
   id?: Id
-  /** Comma-separated list or wildcard expressions of fields to include in the statistics. Used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters. */
+  /** A comma-separated list or wildcard expressions of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters. */
   fields?: Fields
-  /** If `true`, the response includes the document count, sum of document frequencies, and sum of total term frequencies. */
+  /** If `true`, the response includes: * The document count (how many documents contain this field). * The sum of document frequencies (the sum of document frequencies for all terms in this field). * The sum of total term frequencies (the sum of total term frequencies of each term in this field). */
   field_statistics?: boolean
   /** If `true`, the response includes term offsets. */
   offsets?: boolean
@@ -2514,23 +2515,23 @@ export interface TermvectorsRequest<TDocument = unknown> extends RequestBase {
   payloads?: boolean
   /** If `true`, the response includes term positions. */
   positions?: boolean
-  /** Specifies the node or shard the operation should be performed on. Random by default. */
+  /** The node or shard the operation should be performed on. It is random by default. */
   preference?: string
   /** If true, the request is real-time as opposed to near-real-time. */
   realtime?: boolean
-  /** Custom value used to route operations to a specific shard. */
+  /** A custom value that is used to route operations to a specific shard. */
   routing?: Routing
-  /** If `true`, the response includes term frequency and document frequency. */
+  /** If `true`, the response includes: * The total term frequency (how often a term occurs in all documents). * The document frequency (the number of documents containing the current term). By default these values are not returned since term statistics can have a serious performance impact. */
   term_statistics?: boolean
   /** If `true`, returns the document version as part of a hit. */
   version?: VersionNumber
-  /** Specific version type. */
+  /** The version type. */
   version_type?: VersionType
   /** An artificial document (a document not present in the index) for which you want to retrieve term vectors. */
   doc?: TDocument
-  /** Filter terms based on their tf-idf scores. */
+  /** Filter terms based on their tf-idf scores. This could be useful in order find out a good characteristic vector of a document. This feature works in a similar manner to the second phase of the More Like This Query. */
   filter?: TermvectorsFilter
-  /** Overrides the default per-field analyzer. */
+  /** Override the default per-field analyzer. This is useful in order to generate term vectors in any fashion, especially when using artificial documents. When providing an analyzer for a field that already stores term vectors, the term vectors will be regenerated. */
   per_field_analyzer?: Record<Field, string>
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, id?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, term_statistics?: never, version?: never, version_type?: never, doc?: never, filter?: never, per_field_analyzer?: never }
@@ -2897,7 +2898,7 @@ export interface ErrorResponseBase {
   status: integer
 }
 
-export type EsqlColumns = ArrayBuffer
+export type EsqlResult = ArrayBuffer
 
 export type ExpandWildcard = 'all' | 'open' | 'closed' | 'hidden' | 'none'
 
@@ -9781,9 +9782,9 @@ export interface CcrFollowInfoResponse {
 }
 
 export interface CcrFollowStatsRequest extends RequestBase {
-/** A comma-separated list of index patterns; use `_all` to perform the operation on all indices */
+/** A comma-delimited list of index patterns. */
   index: Indices
-  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, timeout?: never }
@@ -9829,9 +9830,9 @@ export interface CcrGetAutoFollowPatternAutoFollowPatternSummary {
 }
 
 export interface CcrGetAutoFollowPatternRequest extends RequestBase {
-/** Specifies the auto-follow pattern collection that you want to retrieve. If you do not specify a name, the API returns information for all collections. */
+/** The auto-follow pattern collection that you want to retrieve. If you do not specify a name, the API returns information for all collections. */
   name?: Name
-  /** Period to wait for a connection to the master node. */
+  /** The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
@@ -9844,9 +9845,9 @@ export interface CcrGetAutoFollowPatternResponse {
 }
 
 export interface CcrPauseAutoFollowPatternRequest extends RequestBase {
-/** The name of the auto follow pattern that should pause discovering new indices to follow. */
+/** The name of the auto-follow pattern to pause. */
   name: Name
-  /** Period to wait for a connection to the master node. */
+  /** The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
@@ -9857,9 +9858,9 @@ export interface CcrPauseAutoFollowPatternRequest extends RequestBase {
 export type CcrPauseAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrPauseFollowRequest extends RequestBase {
-/** The name of the follower index that should pause following its leader index. */
+/** The name of the follower index. */
   index: IndexName
-  /** Period to wait for a connection to the master node. */
+  /** The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, master_timeout?: never }
@@ -9913,9 +9914,9 @@ export interface CcrPutAutoFollowPatternRequest extends RequestBase {
 export type CcrPutAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrResumeAutoFollowPatternRequest extends RequestBase {
-/** The name of the auto follow pattern to resume discovering new indices to follow. */
+/** The name of the auto-follow pattern to resume. */
   name: Name
-  /** Period to wait for a connection to the master node. */
+  /** The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
@@ -9967,9 +9968,9 @@ export interface CcrStatsFollowStats {
 }
 
 export interface CcrStatsRequest extends RequestBase {
-/** Period to wait for a connection to the master node. */
+/** The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   master_timeout?: Duration
-  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
@@ -9983,9 +9984,9 @@ export interface CcrStatsResponse {
 }
 
 export interface CcrUnfollowRequest extends RequestBase {
-/** The name of the follower index that should be turned into a regular index. */
+/** The name of the follower index. */
   index: IndexName
-  /** Period to wait for a connection to the master node. */
+  /** The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, master_timeout?: never }
@@ -10004,6 +10005,7 @@ export interface ClusterComponentTemplateNode {
   template: ClusterComponentTemplateSummary
   version?: VersionNumber
   _meta?: Metadata
+  deprecated?: boolean
 }
 
 export interface ClusterComponentTemplateSummary {
@@ -10421,6 +10423,7 @@ export interface ClusterRemoteInfoClusterRemoteProxyInfo {
   server_name: string
   num_proxy_sockets_connected: integer
   max_proxy_socket_connections: integer
+  cluster_credentials?: string
 }
 
 export interface ClusterRemoteInfoClusterRemoteSniffInfo {
@@ -11791,7 +11794,9 @@ export interface EqlSearchRequest extends RequestBase {
   keep_alive?: Duration
   keep_on_completion?: boolean
   wait_for_completion_timeout?: Duration
+  /** Allow query execution also in case of shard failures. If true, the query will keep running and will return results based on the available shards. For sequences, the behavior can be further refined using allow_partial_sequence_results */
   allow_partial_search_results?: boolean
+  /** This flag applies only to sequences and has effect only if allow_partial_search_results=true. If true, the sequence query will return results based on the available shards, ignoring the others. If false, the sequence query will return successfully, but will always have empty results. */
   allow_partial_sequence_results?: boolean
   /** For basic queries, the maximum number of matching events to return. Defaults to 10 */
   size?: uint
@@ -11860,11 +11865,7 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   querystring?: { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never }
 }
 
-export interface EsqlAsyncQueryResponse {
-  columns?: EsqlColumns
-  id?: string
-  is_running: boolean
-}
+export type EsqlAsyncQueryResponse = EsqlResult
 
 export interface EsqlAsyncQueryDeleteRequest extends RequestBase {
 /** The unique identifier of the query. A query ID is provided in the ES|QL async query API response for a query that does not complete in the designated time. A query ID is also provided when the request was submitted with the `keep_on_completion` parameter set to `true`. */
@@ -11892,10 +11893,20 @@ export interface EsqlAsyncQueryGetRequest extends RequestBase {
   querystring?: { [key: string]: any } & { id?: never, drop_null_columns?: never, keep_alive?: never, wait_for_completion_timeout?: never }
 }
 
-export interface EsqlAsyncQueryGetResponse {
-  columns?: EsqlColumns
-  is_running: boolean
+export type EsqlAsyncQueryGetResponse = EsqlResult
+
+export interface EsqlAsyncQueryStopRequest extends RequestBase {
+/** The unique identifier of the query. A query ID is provided in the ES|QL async query API response for a query that does not complete in the designated time. A query ID is also provided when the request was submitted with the `keep_on_completion` parameter set to `true`. */
+  id: Id
+  /** Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results. If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns. */
+  drop_null_columns?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, drop_null_columns?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, drop_null_columns?: never }
 }
+
+export type EsqlAsyncQueryStopResponse = EsqlResult
 
 export interface EsqlQueryRequest extends RequestBase {
 /** A short version of the Accept header, e.g. json, yaml. */
@@ -11923,7 +11934,7 @@ export interface EsqlQueryRequest extends RequestBase {
   querystring?: { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never }
 }
 
-export type EsqlQueryResponse = EsqlColumns
+export type EsqlQueryResponse = EsqlResult
 
 export interface FeaturesFeature {
   name: string
@@ -12982,7 +12993,7 @@ export interface IndicesSoftDeletes {
   retention_lease?: IndicesRetentionLease
 }
 
-export type IndicesSourceMode = 'disabled' | 'stored' | 'synthetic'
+export type IndicesSourceMode = 'DISABLED' | 'STORED' | 'SYNTHETIC'
 
 export interface IndicesStorage {
   type: IndicesStorageType
@@ -13022,19 +13033,19 @@ export interface IndicesAddBlockIndicesBlockStatus {
 }
 
 export interface IndicesAddBlockRequest extends RequestBase {
-/** A comma separated list of indices to add a block to */
+/** A comma-separated list or wildcard expression of index names used to limit the request. By default, you must explicitly name the indices you are adding blocks to. To allow the adding of blocks to indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`. You can update this setting in the `elasticsearch.yml` file or by using the cluster update settings API. */
   index: IndexName
-  /** The block to add (one of read, write, read_only or metadata) */
+  /** The block type to add to the index. */
   block: IndicesAddBlockIndicesBlockOptions
-  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
+  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
-  /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
+  /** The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
+  /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
-  /** Specify timeout for connection to master */
+  /** The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   master_timeout?: Duration
-  /** Explicit operation timeout */
+  /** The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata. If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged. It can also be set to `-1` to indicate that the request should never timeout. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, block?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never, timeout?: never }
@@ -14394,20 +14405,22 @@ export interface IndicesReloadSearchAnalyzersRequest extends RequestBase {
 export type IndicesReloadSearchAnalyzersResponse = IndicesReloadSearchAnalyzersReloadResult
 
 export interface IndicesResolveClusterRequest extends RequestBase {
-/** Comma-separated name(s) or index pattern(s) of the indices, aliases, and data streams to resolve. Resources on remote clusters can be specified using the `<cluster>`:`<name>` syntax. */
-  name: Names
-  /** If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar. */
+/** A comma-separated list of names or index patterns for the indices, aliases, and data streams to resolve. Resources on remote clusters can be specified using the `<cluster>`:`<name>` syntax. Index and cluster exclusions (e.g., `-cluster1:*`) are also supported. If no index expression is specified, information about all remote clusters configured on the local cluster is returned without doing any index matching */
+  name?: Names
+  /** If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index options to the `_resolve/cluster` API endpoint that takes no index expression. */
   allow_no_indices?: boolean
-  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+  /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index options to the `_resolve/cluster` API endpoint that takes no index expression. */
   expand_wildcards?: ExpandWildcards
-  /** If true, concrete, expanded or aliased indices are ignored when frozen. Defaults to false. */
+  /** If true, concrete, expanded, or aliased indices are ignored when frozen. NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index options to the `_resolve/cluster` API endpoint that takes no index expression. */
   ignore_throttled?: boolean
-  /** If false, the request returns an error if it targets a missing or closed index. Defaults to false. */
+  /** If false, the request returns an error if it targets a missing or closed index. NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index options to the `_resolve/cluster` API endpoint that takes no index expression. */
   ignore_unavailable?: boolean
+  /** The maximum time to wait for remote clusters to respond. If a remote cluster does not respond within this timeout period, the API response will show the cluster as not connected and include an error message that the request timed out. The default timeout is unset and the query can take as long as the networking layer is configured to wait for remote clusters that are not responding (typically 30 seconds). */
+  timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never }
+  body?: string | { [key: string]: any } & { name?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never }
+  querystring?: { [key: string]: any } & { name?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, timeout?: never }
 }
 
 export interface IndicesResolveClusterResolveClusterInfo {
@@ -15066,11 +15079,11 @@ export interface InferenceTextEmbeddingResult {
 export interface InferenceDeleteRequest extends RequestBase {
 /** The task type */
   task_type?: InferenceTaskType
-  /** The inference Id */
+  /** The inference identifier. */
   inference_id: Id
-  /** When true, the endpoint is not deleted, and a list of ingest processors which reference this endpoint is returned */
+  /** When true, the endpoint is not deleted and a list of ingest processors which reference this endpoint is returned. */
   dry_run?: boolean
-  /** When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields */
+  /** When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields. */
   force?: boolean
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never, dry_run?: never, force?: never }
@@ -15096,17 +15109,17 @@ export interface InferenceGetResponse {
 }
 
 export interface InferenceInferenceRequest extends RequestBase {
-/** The task type */
+/** The type of inference task that the model performs. */
   task_type?: InferenceTaskType
-  /** The inference Id */
+  /** The unique identifier for the inference endpoint. */
   inference_id: Id
-  /** Specifies the amount of time to wait for the inference request to complete. */
+  /** The amount of time to wait for the inference request to complete. */
   timeout?: Duration
-  /** Query input, required for rerank task. Not required for other tasks. */
+  /** The query input, which is required only for the `rerank` task. It is not required for other tasks. */
   query?: string
-  /** Inference input. Either a string or an array of strings. */
+  /** The text on which you want to perform the inference task. It can be a single string or an array. > info > Inference endpoints for the `completion` task type currently only support a single string as input. */
   input: string | string[]
-  /** Optional task settings */
+  /** Task settings for the individual inference request. These settings are specific to the task type you specified and override the task settings specified when initializing the service. */
   task_settings?: InferenceTaskSettings
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, query?: never, input?: never, task_settings?: never }
@@ -15759,9 +15772,9 @@ export interface IngestWeb {
 export interface IngestDeleteGeoipDatabaseRequest extends RequestBase {
 /** A comma-separated list of geoip database configurations to delete */
   id: Ids
-  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
-  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never }
@@ -15839,7 +15852,7 @@ export interface IngestGetGeoipDatabaseDatabaseConfigurationMetadata {
 }
 
 export interface IngestGetGeoipDatabaseRequest extends RequestBase {
-/** Comma-separated list of database configuration IDs to retrieve. Wildcard (`*`) expressions are supported. To get all database configurations, omit this parameter or use `*`. */
+/** A comma-separated list of database configuration IDs to retrieve. Wildcard (`*`) expressions are supported. To get all database configurations, omit this parameter or use `*`. */
   id?: Ids
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never }
@@ -15965,13 +15978,13 @@ export interface IngestPutPipelineRequest extends RequestBase {
 export type IngestPutPipelineResponse = AcknowledgedResponseBase
 
 export interface IngestSimulateRequest extends RequestBase {
-/** Pipeline to test. If you don’t specify a `pipeline` in the request body, this parameter is required. */
+/** The pipeline to test. If you don't specify a `pipeline` in the request body, this parameter is required. */
   id?: Id
   /** If `true`, the response includes output data for each processor in the executed pipeline. */
   verbose?: boolean
   /** Sample documents to test in the pipeline. */
   docs: IngestDocument[]
-  /** Pipeline to test. If you don’t specify the `pipeline` request path parameter, this parameter is required. If you specify both this and the request path parameter, the API only uses the request path parameter. */
+  /** The pipeline to test. If you don't specify the `pipeline` request path parameter, this parameter is required. If you specify both this and the request path parameter, the API only uses the request path parameter. */
   pipeline?: IngestPipeline
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, verbose?: never, docs?: never, pipeline?: never }
@@ -16001,9 +16014,9 @@ export type LicenseLicenseStatus = 'active' | 'valid' | 'invalid' | 'expired'
 export type LicenseLicenseType = 'missing' | 'trial' | 'basic' | 'standard' | 'dev' | 'silver' | 'gold' | 'platinum' | 'enterprise'
 
 export interface LicenseDeleteRequest extends RequestBase {
-/** Period to wait for a connection to the master node. */
+/** The period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
@@ -16073,9 +16086,9 @@ export interface LicensePostAcknowledgement {
 export interface LicensePostRequest extends RequestBase {
 /** Specifies whether you acknowledge the license changes. */
   acknowledge?: boolean
-  /** Period to wait for a connection to the master node. */
+  /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
+  /** The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   license?: LicenseLicense
   /** A sequence of one or more JSON documents containing the license information. */
@@ -16216,6 +16229,8 @@ export interface MigrationDeprecationsResponse {
   data_streams: Record<string, MigrationDeprecationsDeprecation[]>
   node_settings: MigrationDeprecationsDeprecation[]
   ml_settings: MigrationDeprecationsDeprecation[]
+  templates: Record<string, MigrationDeprecationsDeprecation[]>
+  ilm_policies: Record<string, MigrationDeprecationsDeprecation[]>
 }
 
 export interface MigrationGetFeatureUpgradeStatusMigrationFeature {
@@ -20885,7 +20900,7 @@ export interface SearchApplicationSearchApplicationTemplate {
 }
 
 export interface SearchApplicationDeleteRequest extends RequestBase {
-/** The name of the search application to delete */
+/** The name of the search application to delete. */
   name: Name
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never }
@@ -23523,12 +23538,7 @@ export interface SnapshotRepositoryAnalyzeDetailsInfo {
   write_elapsed_nanos: DurationValue<UnitNanos>
   write_throttled: Duration
   write_throttled_nanos: DurationValue<UnitNanos>
-  writer_node: SnapshotRepositoryAnalyzeNodeInfo
-}
-
-export interface SnapshotRepositoryAnalyzeNodeInfo {
-  id: Id
-  name: Name
+  writer_node: SnapshotRepositoryAnalyzeSnapshotNodeInfo
 }
 
 export interface SnapshotRepositoryAnalyzeReadBlobDetails {
@@ -23538,7 +23548,7 @@ export interface SnapshotRepositoryAnalyzeReadBlobDetails {
   first_byte_time?: Duration
   first_byte_time_nanos: DurationValue<UnitNanos>
   found: boolean
-  node: SnapshotRepositoryAnalyzeNodeInfo
+  node: SnapshotRepositoryAnalyzeSnapshotNodeInfo
   throttled?: Duration
   throttled_nanos?: DurationValue<UnitNanos>
 }
@@ -23594,7 +23604,7 @@ export interface SnapshotRepositoryAnalyzeResponse {
   blob_count: integer
   blob_path: string
   concurrency: integer
-  coordinating_node: SnapshotRepositoryAnalyzeNodeInfo
+  coordinating_node: SnapshotRepositoryAnalyzeSnapshotNodeInfo
   delete_elapsed: Duration
   delete_elapsed_nanos: DurationValue<UnitNanos>
   details: SnapshotRepositoryAnalyzeDetailsInfo
@@ -23611,6 +23621,11 @@ export interface SnapshotRepositoryAnalyzeResponse {
   repository: string
   seed: long
   summary: SnapshotRepositoryAnalyzeSummaryInfo
+}
+
+export interface SnapshotRepositoryAnalyzeSnapshotNodeInfo {
+  id: Id
+  name: Name
 }
 
 export interface SnapshotRepositoryAnalyzeSummaryInfo {
@@ -24843,15 +24858,15 @@ export type WatcherDay = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursd
 
 export interface WatcherEmail {
   id?: Id
-  bcc?: string[]
+  bcc?: string | string[]
   body?: WatcherEmailBody
-  cc?: string[]
+  cc?: string | string[]
   from?: string
   priority?: WatcherEmailPriority
-  reply_to?: string[]
+  reply_to?: string | string[]
   sent_date?: DateTime
   subject: string
-  to: string[]
+  to: string | string[]
   attachments?: Record<string, WatcherEmailAttachmentContainer>
 }
 

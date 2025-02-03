@@ -39,14 +39,14 @@ interface That { transport: Transport }
 
 /**
   * Render a search template. Render a search template as a search request body.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/render-search-template-api.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-render-search-template | Elasticsearch API documentation}
   */
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RenderSearchTemplateResponse>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RenderSearchTemplateResponse, unknown>>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<T.RenderSearchTemplateResponse>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['id']
-  const acceptedBody: string[] = ['file', 'params', 'source']
+  const acceptedPath: string[] = []
+  const acceptedBody: string[] = ['id', 'file', 'params', 'source']
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
