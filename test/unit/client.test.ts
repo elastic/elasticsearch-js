@@ -25,7 +25,7 @@ import FakeTimers from '@sinonjs/fake-timers'
 import { buildServer, connection } from '../utils'
 import { Client, errors } from '../..'
 import * as symbols from '@elastic/transport/lib/symbols'
-import { BaseConnectionPool, CloudConnectionPool, WeightedConnectionPool } from '@elastic/transport'
+import { BaseConnectionPool, CloudConnectionPool, WeightedConnectionPool, HttpConnection } from '@elastic/transport'
 
 let clientVersion: string = require('../../package.json').version // eslint-disable-line
 if (clientVersion.includes('-')) {
@@ -402,6 +402,44 @@ test('Meta header disabled', async t => {
   })
 
   await client.transport.request({ method: 'GET', path: '/' })
+})
+
+test('Meta header indicates when UndiciConnection is used', async t => {
+  t.plan(1)
+
+  function handler (req: http.IncomingMessage, res: http.ServerResponse) {
+    t.equal(req.headers['x-elastic-client-meta'], `es=${clientVersion},js=${nodeVersion},t=${transportVersion},un=${nodeVersion}`)
+    res.end('ok')
+  }
+
+  const [{ port }, server] = await buildServer(handler)
+
+  const client = new Client({
+    node: `http://localhost:${port}`,
+    // Connection: UndiciConnection is the default
+  })
+
+  await client.transport.request({ method: 'GET', path: '/' })
+  server.stop()
+})
+
+test('Meta header indicates when HttpConnection is used', async t => {
+  t.plan(1)
+
+  function handler (req: http.IncomingMessage, res: http.ServerResponse) {
+    t.equal(req.headers['x-elastic-client-meta'], `es=${clientVersion},js=${nodeVersion},t=${transportVersion},hc=${nodeVersion}`)
+    res.end('ok')
+  }
+
+  const [{ port }, server] = await buildServer(handler)
+
+  const client = new Client({
+    node: `http://localhost:${port}`,
+    Connection: HttpConnection,
+  })
+
+  await client.transport.request({ method: 'GET', path: '/' })
+  server.stop()
 })
 
 test('caFingerprint', t => {
