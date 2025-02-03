@@ -46,7 +46,7 @@ export default class Eql {
 
   /**
     * Delete an async EQL search. Delete an async EQL search or a stored synchronous EQL search. The API also deletes results for the search.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/eql-search-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-eql-delete | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.EqlDeleteRequest | TB.EqlDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlDeleteResponse>
   async delete (this: That, params: T.EqlDeleteRequest | TB.EqlDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlDeleteResponse, unknown>>

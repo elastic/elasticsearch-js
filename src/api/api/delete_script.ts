@@ -40,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Delete a script or search template. Deletes a stored script or search template.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/modules-scripting.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/delete-stored-script-api.html | Elasticsearch API documentation}
   */
 export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteScriptResponse>
 export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteScriptResponse, unknown>>

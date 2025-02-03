@@ -75,7 +75,7 @@ export default class License {
   }
 
   /**
-    * Get license information. Get information about your Elastic license including its type, its status, when it was issued, and when it expires. NOTE: If the master node is generating a new cluster state, the get license API may return a `404 Not Found` response. If you receive an unexpected 404 response after cluster startup, wait a short period and retry the request.
+    * Get license information. Get information about your Elastic license including its type, its status, when it was issued, and when it expires. >info > If the master node is generating a new cluster state, the get license API may return a `404 Not Found` response. > If you receive an unexpected 404 response after cluster startup, wait a short period and retry the request.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-license.html | Elasticsearch API documentation}
     */
   async get (this: That, params?: T.LicenseGetRequest | TB.LicenseGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseGetResponse>

@@ -28,6 +28,9 @@ const response = await client.indices.create({
       topic: {
         type: "keyword",
       },
+      timestamp: {
+        type: "date",
+      },
     },
   },
 });
@@ -41,6 +44,7 @@ const response1 = await client.index({
     text: "Large language models are revolutionizing information retrieval by boosting search precision, deepening contextual understanding, and reshaping user experiences in data-rich environments.",
     year: 2024,
     topic: ["llm", "ai", "information_retrieval"],
+    timestamp: "2021-01-01T12:10:30",
   },
 });
 console.log(response1);
@@ -53,6 +57,7 @@ const response2 = await client.index({
     text: "Artificial intelligence is transforming medicine, from advancing diagnostics and tailoring treatment plans to empowering predictive patient care for improved health outcomes.",
     year: 2023,
     topic: ["ai", "medicine"],
+    timestamp: "2022-01-01T12:10:30",
   },
 });
 console.log(response2);
@@ -65,6 +70,7 @@ const response3 = await client.index({
     text: "AI is redefining security by enabling advanced threat detection, proactive risk analysis, and dynamic defenses against increasingly sophisticated cyber threats.",
     year: 2024,
     topic: ["ai", "security"],
+    timestamp: "2023-01-01T12:10:30",
   },
 });
 console.log(response3);
@@ -77,6 +83,7 @@ const response4 = await client.index({
     text: "Elastic introduces Elastic AI Assistant, the open, generative AI sidekick powered by ESRE to democratize cybersecurity and enable users of every skill level.",
     year: 2023,
     topic: ["ai", "elastic", "assistant"],
+    timestamp: "2024-01-01T12:10:30",
   },
 });
 console.log(response4);
@@ -89,6 +96,7 @@ const response5 = await client.index({
     text: "Learn how to spin up a deployment of our hosted Elasticsearch Service and use Elastic Observability to gain deeper insight into the behavior of your applications and systems.",
     year: 2024,
     topic: ["documentation", "observability", "elastic"],
+    timestamp: "2025-01-01T12:10:30",
   },
 });
 console.log(response5);

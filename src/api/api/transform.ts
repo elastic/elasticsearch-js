@@ -45,7 +45,7 @@ export default class Transform {
   }
 
   /**
-    * Delete a transform. Deletes a transform.
+    * Delete a transform.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/delete-transform.html | Elasticsearch API documentation}
     */
   async deleteTransform (this: That, params: T.TransformDeleteTransformRequest | TB.TransformDeleteTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformDeleteTransformResponse>
@@ -106,7 +106,7 @@ export default class Transform {
   }
 
   /**
-    * Get transforms. Retrieves configuration information for transforms.
+    * Get transforms. Get configuration information for transforms.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-transform.html | Elasticsearch API documentation}
     */
   async getTransform (this: That, params?: T.TransformGetTransformRequest | TB.TransformGetTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetTransformResponse>
@@ -146,7 +146,7 @@ export default class Transform {
   }
 
   /**
-    * Get transform stats. Retrieves usage information for transforms.
+    * Get transform stats. Get usage information for transforms.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-transform-stats.html | Elasticsearch API documentation}
     */
   async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest | TB.TransformGetTransformStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetTransformStatsResponse>
@@ -274,7 +274,7 @@ export default class Transform {
   }
 
   /**
-    * Reset a transform. Resets a transform. Before you can reset it, you must stop it; alternatively, use the `force` query parameter. If the destination index was created by the transform, it is deleted.
+    * Reset a transform. Before you can reset it, you must stop it; alternatively, use the `force` query parameter. If the destination index was created by the transform, it is deleted.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/reset-transform.html | Elasticsearch API documentation}
     */
   async resetTransform (this: That, params: T.TransformResetTransformRequest | TB.TransformResetTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformResetTransformResponse>
@@ -306,7 +306,7 @@ export default class Transform {
   }
 
   /**
-    * Schedule a transform to start now. Instantly runs a transform to process data. If you _schedule_now a transform, it will process the new data instantly, without waiting for the configured frequency interval. After _schedule_now API is called, the transform will be processed again at now + frequency unless _schedule_now API is called again in the meantime.
+    * Schedule a transform to start now. Instantly run a transform to process data. If you run this API, the transform will process the new data instantly, without waiting for the configured frequency interval. After the API is called, the transform will be processed again at `now + frequency` unless the API is called again in the meantime.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/schedule-now-transform.html | Elasticsearch API documentation}
     */
   async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest | TB.TransformScheduleNowTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformScheduleNowTransformResponse>
@@ -338,7 +338,7 @@ export default class Transform {
   }
 
   /**
-    * Start a transform. Starts a transform. When you start a transform, it creates the destination index if it does not already exist. The `number_of_shards` is set to `1` and the `auto_expand_replicas` is set to `0-1`. If it is a pivot transform, it deduces the mapping definitions for the destination index from the source indices and the transform aggregations. If fields in the destination index are derived from scripts (as in the case of `scripted_metric` or `bucket_script` aggregations), the transform uses dynamic mappings unless an index template exists. If it is a latest transform, it does not deduce mapping definitions; it uses dynamic mappings. To use explicit mappings, create the destination index before you start the transform. Alternatively, you can create an index template, though it does not affect the deduced mappings in a pivot transform. When the transform starts, a series of validations occur to ensure its success. If you deferred validation when you created the transform, they occur when you start the transform—with the exception of privilege checks. When Elasticsearch security features are enabled, the transform remembers which roles the user that created it had at the time of creation and uses those same roles. If those roles do not have the required privileges on the source and destination indices, the transform fails when it attempts unauthorized operations.
+    * Start a transform. When you start a transform, it creates the destination index if it does not already exist. The `number_of_shards` is set to `1` and the `auto_expand_replicas` is set to `0-1`. If it is a pivot transform, it deduces the mapping definitions for the destination index from the source indices and the transform aggregations. If fields in the destination index are derived from scripts (as in the case of `scripted_metric` or `bucket_script` aggregations), the transform uses dynamic mappings unless an index template exists. If it is a latest transform, it does not deduce mapping definitions; it uses dynamic mappings. To use explicit mappings, create the destination index before you start the transform. Alternatively, you can create an index template, though it does not affect the deduced mappings in a pivot transform. When the transform starts, a series of validations occur to ensure its success. If you deferred validation when you created the transform, they occur when you start the transform—with the exception of privilege checks. When Elasticsearch security features are enabled, the transform remembers which roles the user that created it had at the time of creation and uses those same roles. If those roles do not have the required privileges on the source and destination indices, the transform fails when it attempts unauthorized operations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/start-transform.html | Elasticsearch API documentation}
     */
   async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformStartTransformResponse>
