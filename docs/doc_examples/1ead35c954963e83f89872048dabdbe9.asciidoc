@@ -4,6 +4,15 @@
 [source, js]
 ----
 const response = await client.security.queryRole({
+  query: {
+    bool: {
+      must_not: {
+        term: {
+          "metadata._reserved": true,
+        },
+      },
+    },
+  },
   sort: ["name"],
 });
 console.log(response);

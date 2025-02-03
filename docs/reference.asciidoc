@@ -201,8 +201,8 @@ client.closePointInTime({ id })
 Count search results.
 Get the number of documents matching a query.
 
-The query can either be provided using a simple query string as a parameter or using the Query DSL defined within the request body.
-The latter must be nested in a `query` key, which is the same as the search API.
+The query can be provided either by using a simple query string as a parameter, or by defining Query DSL within the request body.
+The query is optional. When no query is provided, the API uses `match_all` to count all the documents.
 
 The count API supports multi-target syntax. You can run a single count API search across multiple data streams and indices.
 
@@ -220,7 +220,7 @@ client.count({ ... })
 
 * *Request (object):*
 ** *`index` (Optional, string | string[])*: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
-** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Defines the search definition using the Query DSL. The query is optional, and when not provided, it will use `match_all` to count all the docs.
+** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Defines the search query using Query DSL. A request body query cannot be used with the `q` query string parameter.
 ** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 ** *`analyzer` (Optional, string)*: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 ** *`analyze_wildcard` (Optional, boolean)*: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
@@ -234,7 +234,7 @@ client.count({ ... })
 ** *`preference` (Optional, string)*: The node or shard the operation should be performed on. By default, it is random.
 ** *`routing` (Optional, string)*: A custom value used to route operations to a specific shard.
 ** *`terminate_after` (Optional, number)*: The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. IMPORTANT: Use with caution. Elasticsearch applies this parameter to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers.
-** *`q` (Optional, string)*: The query in Lucene query string syntax.
+** *`q` (Optional, string)*: The query in Lucene query string syntax. This parameter cannot be used with a request body.
 
 [discrete]
 === create
@@ -542,7 +542,7 @@ client.deleteByQueryRethrottle({ task_id })
 Delete a script or search template.
 Deletes a stored script or search template.
 
-{ref}/modules-scripting.html[Endpoint documentation]
+{ref}/delete-stored-script-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.deleteScript({ id })
@@ -551,9 +551,9 @@ client.deleteScript({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Identifier for the stored script or search template.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+** *`id` (string)*: The identifier for the stored script or search template.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
 
 [discrete]
 === exists
@@ -636,7 +636,8 @@ client.existsSource({ id, index })
 [discrete]
 === explain
 Explain a document match result.
-Returns information about why a specific document matches, or doesn’t match, a query.
+Get information about why a specific document matches, or doesn't match, a query.
+It computes a score explanation for a query and a specific document.
 
 {ref}/search-explain.html[Endpoint documentation]
 [source,ts]
@@ -647,21 +648,21 @@ client.explain({ id, index })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Defines the document ID.
-** *`index` (string)*: Index names used to limit the request. Only a single index name can be provided to this parameter.
+** *`id` (string)*: The document identifier.
+** *`index` (string)*: Index names that are used to limit the request. Only a single index name can be provided to this parameter.
 ** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Defines the search definition using the Query DSL.
-** *`analyzer` (Optional, string)*: Analyzer to use for the query string. This parameter can only be used when the `q` query string parameter is specified.
-** *`analyze_wildcard` (Optional, boolean)*: If `true`, wildcard and prefix queries are analyzed.
-** *`default_operator` (Optional, Enum("and" | "or"))*: The default operator for query string query: `AND` or `OR`.
-** *`df` (Optional, string)*: Field to use as default where no field prefix is given in the query string.
-** *`lenient` (Optional, boolean)*: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
-** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on. Random by default.
-** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
-** *`_source` (Optional, boolean | string | string[])*: True or false to return the `_source` field or not, or a list of fields to return.
-** *`_source_excludes` (Optional, string | string[])*: A list of source fields to exclude from the response.
-** *`_source_includes` (Optional, string | string[])*: A list of source fields to include in the response.
+** *`analyzer` (Optional, string)*: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
+** *`analyze_wildcard` (Optional, boolean)*: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
+** *`default_operator` (Optional, Enum("and" | "or"))*: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
+** *`df` (Optional, string)*: The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
+** *`lenient` (Optional, boolean)*: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
+** *`preference` (Optional, string)*: The node or shard the operation should be performed on. It is random by default.
+** *`routing` (Optional, string)*: A custom value used to route operations to a specific shard.
+** *`_source` (Optional, boolean | string | string[])*: `True` or `false` to return the `_source` field or not or a list of fields to return.
+** *`_source_excludes` (Optional, string | string[])*: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+** *`_source_includes` (Optional, string | string[])*: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
 ** *`stored_fields` (Optional, string | string[])*: A list of stored fields to return in the response.
-** *`q` (Optional, string)*: Query in the Lucene query string syntax.
+** *`q` (Optional, string)*: The query in the Lucene query string syntax.
 
 [discrete]
 === field_caps
@@ -682,16 +683,16 @@ client.fieldCaps({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string | string[])*: List of data streams, indices, and aliases used to limit the request. Supports wildcards (*). To target all data streams and indices, omit this parameter or use * or _all.
-** *`fields` (Optional, string | string[])*: List of fields to retrieve capabilities for. Wildcard (`*`) expressions are supported.
-** *`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Allows to filter indices if the provided query rewrites to match_none on every shard.
-** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines ad-hoc runtime fields in the request similar to the way it is done in search requests. These fields exist only as part of the query and take precedence over fields defined with the same name in the index mappings.
+** *`index` (Optional, string | string[])*: A list of data streams, indices, and aliases used to limit the request. Supports wildcards (*). To target all data streams and indices, omit this parameter or use * or _all.
+** *`fields` (Optional, string | string[])*: A list of fields to retrieve capabilities for. Wildcard (`*`) expressions are supported.
+** *`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Filter indices if the provided query rewrites to `match_none` on every shard. IMPORTANT: The filtering is done on a best-effort basis, it uses index statistics and mappings to rewrite queries to `match_none` instead of fully running the request. For instance a range query over a date field can rewrite to `match_none` if all documents within a shard (including deleted documents) are outside of the provided range. However, not all queries can rewrite to `match_none` so this API may return an index even if the provided filter matches no document.
+** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Define ad-hoc runtime fields in the request similar to the way it is done in search requests. These fields exist only as part of the query and take precedence over fields defined with the same name in the index mappings.
 ** *`allow_no_indices` (Optional, boolean)*: If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with foo but no index starts with bar.
-** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `true`, missing or closed indices are not included in the response.
 ** *`include_unmapped` (Optional, boolean)*: If true, unmapped fields are included in the response.
-** *`filters` (Optional, string)*: An optional set of filters: can include +metadata,-metadata,-nested,-multifield,-parent
-** *`types` (Optional, string[])*: Only return results for fields that have one of the types in the list
+** *`filters` (Optional, string)*: A list of filters to apply to the response.
+** *`types` (Optional, string[])*: A list of field types to include. Any fields that do not match one of these types will be excluded from the results. It defaults to empty, meaning that all field types are returned.
 ** *`include_empty_fields` (Optional, boolean)*: If false, empty fields are not included in the response.
 
 [discrete]
@@ -792,8 +793,8 @@ client.getScript({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Identifier for the stored script or search template.
-** *`master_timeout` (Optional, string | -1 | 0)*: Specify timeout for connection to master
+** *`id` (string)*: The identifier for the stored script or search template.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
 
 [discrete]
 === get_script_context
@@ -801,7 +802,7 @@ Get script contexts.
 
 Get a list of supported script contexts and their methods.
 
-{painless}/painless-contexts.html[Endpoint documentation]
+{ref}/get-script-contexts-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.getScriptContext()
@@ -813,7 +814,7 @@ Get script languages.
 
 Get a list of available script types, languages, and contexts.
 
-{ref}/modules-scripting.html[Endpoint documentation]
+{ref}/get-script-languages-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.getScriptLanguages()
@@ -1067,7 +1068,13 @@ This means the results returned are not always the true k closest neighbors.
 The kNN search API supports restricting the search using a filter.
 The search will return the top k documents that also match the filter query.
 
-{ref}/search-search.html[Endpoint documentation]
+A kNN search response has the exact same structure as a search API response.
+However, certain sections have a meaning specific to kNN search:
+
+* The document `_score` is determined by the similarity between the query and document vector.
+* The `hits.total` object contains the total number of nearest neighbor candidates considered, which is `num_candidates * num_shards`. The `hits.total.relation` will always be `eq`, indicating an exact value.
+
+{ref}/knn-search-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.knnSearch({ index, knn })
@@ -1076,14 +1083,14 @@ client.knnSearch({ index, knn })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (string | string[])*: A list of index names to search; use `_all` or to perform the operation on all indices
-** *`knn` ({ field, query_vector, k, num_candidates })*: kNN query to execute
-** *`_source` (Optional, boolean | { excludes, includes })*: Indicates which source fields are returned for matching documents. These fields are returned in the hits._source property of the search response.
-** *`docvalue_fields` (Optional, { field, format, include_unmapped }[])*: The request returns doc values for field names matching these patterns in the hits.fields property of the response. Accepts wildcard (*) patterns.
-** *`stored_fields` (Optional, string | string[])*: List of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the _source parameter defaults to false. You can pass _source: true to return both source fields and stored fields in the search response.
-** *`fields` (Optional, string | string[])*: The request returns values for field names matching these patterns in the hits.fields property of the response. Accepts wildcard (*) patterns.
-** *`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type } | { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type }[])*: Query to filter the documents that can match. The kNN search will return the top `k` documents that also match this filter. The value can be a single query or a list of queries. If `filter` isn't provided, all documents are allowed to match.
-** *`routing` (Optional, string)*: A list of specific routing values
+** *`index` (string | string[])*: A list of index names to search; use `_all` or to perform the operation on all indices.
+** *`knn` ({ field, query_vector, k, num_candidates })*: The kNN query to run.
+** *`_source` (Optional, boolean | { excludes, includes })*: Indicates which source fields are returned for matching documents. These fields are returned in the `hits._source` property of the search response.
+** *`docvalue_fields` (Optional, { field, format, include_unmapped }[])*: The request returns doc values for field names matching these patterns in the `hits.fields` property of the response. It accepts wildcard (`*`) patterns.
+** *`stored_fields` (Optional, string | string[])*: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`. You can pass `_source: true` to return both source fields and stored fields in the search response.
+** *`fields` (Optional, string | string[])*: The request returns values for field names matching these patterns in the `hits.fields` property of the response. It accepts wildcard (`*`) patterns.
+** *`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type } | { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type }[])*: A query to filter the documents that can match. The kNN search will return the top `k` documents that also match this filter. The value can be a single query or a list of queries. If `filter` isn't provided, all documents are allowed to match.
+** *`routing` (Optional, string)*: A list of specific routing values.
 
 [discrete]
 === mget
@@ -1092,6 +1099,18 @@ Get multiple documents.
 Get multiple JSON documents by ID from one or more indices.
 If you specify an index in the request URI, you only need to specify the document IDs in the request body.
 To ensure fast responses, this multi get (mget) API responds with partial results if one or more shards fail.
+
+**Filter source fields**
+
+By default, the `_source` field is returned for every document (if stored).
+Use the `_source` and `_source_include` or `source_exclude` attributes to filter what fields are returned for a particular document.
+You can include the `_source`, `_source_includes`, and `_source_excludes` query parameters in the request URI to specify the defaults to use when there are no per-document instructions.
+
+**Get stored fields**
+
+Use the `stored_fields` attribute to specify the set of stored fields you want to retrieve.
+Any requested fields that are not stored are ignored.
+You can include the `stored_fields` query parameter in the request URI to specify the defaults to use when there are no per-document instructions.
 
 {ref}/docs-multi-get.html[Endpoint documentation]
 [source,ts]
@@ -1164,7 +1183,21 @@ client.msearch({ ... })
 === msearch_template
 Run multiple templated searches.
 
-{ref}/search-multi-search.html[Endpoint documentation]
+Run multiple templated searches with a single request.
+If you are providing a text file or text input to `curl`, use the `--data-binary` flag instead of `-d` to preserve newlines.
+For example:
+
+----
+$ cat requests
+{ "index": "my-index" }
+{ "id": "my-search-template", "params": { "query_string": "hello world", "from": 0, "size": 10 }}
+{ "index": "my-other-index" }
+{ "id": "my-other-search-template", "params": { "query_type": "match_all" }}
+
+$ curl -H "Content-Type: application/x-ndjson" -XGET localhost:9200/_msearch/template --data-binary "@requests"; echo
+----
+
+{ref}/multi-search-template.html[Endpoint documentation]
 [source,ts]
 ----
 client.msearchTemplate({ ... })
@@ -1173,11 +1206,11 @@ client.msearchTemplate({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string | string[])*: List of data streams, indices, and aliases to search. Supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*`.
+** *`index` (Optional, string | string[])*: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*`.
 ** *`search_templates` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } | { aggregations, collapse, query, explain, ext, stored_fields, docvalue_fields, knn, from, highlight, indices_boost, min_score, post_filter, profile, rescore, script_fields, search_after, size, sort, _source, fields, terminate_after, stats, timeout, track_scores, track_total_hits, version, runtime_mappings, seq_no_primary_term, pit, suggest }[])*
 ** *`ccs_minimize_roundtrips` (Optional, boolean)*: If `true`, network round-trips are minimized for cross-cluster search requests.
-** *`max_concurrent_searches` (Optional, number)*: Maximum number of concurrent searches the API can run.
-** *`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))*: The type of the search operation. Available options: `query_then_fetch`, `dfs_query_then_fetch`.
+** *`max_concurrent_searches` (Optional, number)*: The maximum number of concurrent searches the API can run.
+** *`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))*: The type of the search operation.
 ** *`rest_total_hits_as_int` (Optional, boolean)*: If `true`, the response returns `hits.total` as an integer. If `false`, it returns `hits.total` as an object.
 ** *`typed_keys` (Optional, boolean)*: If `true`, the response prefixes aggregation and suggester names with their respective types.
 
@@ -1185,10 +1218,16 @@ client.msearchTemplate({ ... })
 === mtermvectors
 Get multiple term vectors.
 
+Get multiple term vectors with a single request.
 You can specify existing documents by index and ID or provide artificial documents in the body of the request.
 You can specify the index in the request body or request URI.
 The response contains a `docs` array with all the fetched termvectors.
 Each element has the structure provided by the termvectors API.
+
+**Artificial documents**
+
+You can also use `mtermvectors` to generate term vectors for artificial documents provided in the body of the request.
+The mapping used is determined by the specified `_index`.
 
 {ref}/docs-multi-termvectors.html[Endpoint documentation]
 [source,ts]
@@ -1199,20 +1238,20 @@ client.mtermvectors({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string)*: Name of the index that contains the documents.
-** *`docs` (Optional, { _id, _index, routing, _source, stored_fields, version, version_type }[])*: Array of existing or artificial documents.
-** *`ids` (Optional, string[])*: Simplified syntax to specify documents by their ID if they're in the same index.
-** *`fields` (Optional, string | string[])*: List or wildcard expressions of fields to include in the statistics. Used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
+** *`index` (Optional, string)*: The name of the index that contains the documents.
+** *`docs` (Optional, { _id, _index, routing, _source, stored_fields, version, version_type }[])*: An array of existing or artificial documents.
+** *`ids` (Optional, string[])*: A simplified syntax to specify documents by their ID if they're in the same index.
+** *`fields` (Optional, string | string[])*: A list or wildcard expressions of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
 ** *`field_statistics` (Optional, boolean)*: If `true`, the response includes the document count, sum of document frequencies, and sum of total term frequencies.
 ** *`offsets` (Optional, boolean)*: If `true`, the response includes term offsets.
 ** *`payloads` (Optional, boolean)*: If `true`, the response includes term payloads.
 ** *`positions` (Optional, boolean)*: If `true`, the response includes term positions.
-** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on. Random by default.
+** *`preference` (Optional, string)*: The node or shard the operation should be performed on. It is random by default.
 ** *`realtime` (Optional, boolean)*: If true, the request is real-time as opposed to near-real-time.
-** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`routing` (Optional, string)*: A custom value used to route operations to a specific shard.
 ** *`term_statistics` (Optional, boolean)*: If true, the response includes term frequency and document frequency.
 ** *`version` (Optional, number)*: If `true`, returns the document version as part of a hit.
-** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type.
+** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: The version type.
 
 [discrete]
 === open_point_in_time
@@ -1288,7 +1327,7 @@ client.ping()
 Create or update a script or search template.
 Creates or updates a stored script or search template.
 
-{ref}/modules-scripting.html[Endpoint documentation]
+{ref}/create-stored-script-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.putScript({ id, script })
@@ -1297,11 +1336,11 @@ client.putScript({ id, script })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Identifier for the stored script or search template. Must be unique within the cluster.
-** *`script` ({ lang, options, source })*: Contains the script or search template, its parameters, and its language.
-** *`context` (Optional, string)*: Context in which the script or search template should run. To prevent errors, the API immediately compiles the script or template in this context.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+** *`id` (string)*: The identifier for the stored script or search template. It must be unique within the cluster.
+** *`script` ({ lang, options, source })*: The script or search template, its parameters, and its language.
+** *`context` (Optional, string)*: The context in which the script or search template should run. To prevent errors, the API immediately compiles the script or template in this context.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
 
 [discrete]
 === rank_eval
@@ -1319,7 +1358,7 @@ client.rankEval({ requests })
 
 * *Request (object):*
 ** *`requests` ({ id, request, ratings, template_id, params }[])*: A set of typical search requests, together with their provided ratings.
-** *`index` (Optional, string | string[])*: List of data streams, indices, and index aliases used to limit the request. Wildcard (`*`) expressions are supported. To target all data streams and indices in a cluster, omit this parameter or use `_all` or `*`.
+** *`index` (Optional, string | string[])*: A list of data streams, indices, and index aliases used to limit the request. Wildcard (`*`) expressions are supported. To target all data streams and indices in a cluster, omit this parameter or use `_all` or `*`.
 ** *`metric` (Optional, { precision, recall, mean_reciprocal_rank, dcg, expected_reciprocal_rank })*: Definition of the evaluation metric to calculate.
 ** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -1577,10 +1616,10 @@ client.renderSearchTemplate({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (Optional, string)*: ID of the search template to render. If no `source` is specified, this or the `id` request body parameter is required.
+** *`id` (Optional, string)*: The ID of the search template to render. If no `source` is specified, this or the `id` request body parameter is required.
 ** *`file` (Optional, string)*
 ** *`params` (Optional, Record<string, User-defined value>)*: Key-value pairs used to replace Mustache variables in the template. The key is the variable name. The value is the variable value.
-** *`source` (Optional, string)*: An inline search template. Supports the same parameters as the search API's request body. These parameters also support Mustache variables. If no `id` or `<templated-id>` is specified, this parameter is required.
+** *`source` (Optional, string)*: An inline search template. It supports the same parameters as the search API's request body. These parameters also support Mustache variables. If no `id` or `<templated-id>` is specified, this parameter is required.
 
 [discrete]
 === scripts_painless_execute
@@ -1617,7 +1656,7 @@ You can also use the scroll API to specify a new scroll parameter that extends o
 
 IMPORTANT: Results from a scrolling search reflect the state of the index at the time of the initial search request. Subsequent indexing or document changes only affect later search and scroll requests.
 
-{ref}/search-request-body.html[Endpoint documentation]
+{ref}/scroll-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.scroll({ scroll_id })
@@ -1626,8 +1665,8 @@ client.scroll({ scroll_id })
 ==== Arguments
 
 * *Request (object):*
-** *`scroll_id` (string)*: Scroll ID of the search.
-** *`scroll` (Optional, string | -1 | 0)*: Period to retain the search context for scrolling.
+** *`scroll_id` (string)*: The scroll ID of the search.
+** *`scroll` (Optional, string | -1 | 0)*: The period to retain the search context for scrolling.
 ** *`rest_total_hits_as_int` (Optional, boolean)*: If true, the API response’s hit.total property is returned as an integer. If false, the API response’s hit.total property is returned as an object.
 
 [discrete]
@@ -1734,6 +1773,138 @@ client.search({ ... })
 Search a vector tile.
 
 Search a vector tile for geospatial values.
+Before using this API, you should be familiar with the Mapbox vector tile specification.
+The API returns results as a binary mapbox vector tile.
+
+Internally, Elasticsearch translates a vector tile search API request into a search containing:
+
+* A `geo_bounding_box` query on the `<field>`. The query uses the `<zoom>/<x>/<y>` tile as a bounding box.
+* A `geotile_grid` or `geohex_grid` aggregation on the `<field>`. The `grid_agg` parameter determines the aggregation type. The aggregation uses the `<zoom>/<x>/<y>` tile as a bounding box.
+* Optionally, a `geo_bounds` aggregation on the `<field>`. The search only includes this aggregation if the `exact_bounds` parameter is `true`.
+* If the optional parameter `with_labels` is `true`, the internal search will include a dynamic runtime field that calls the `getLabelPosition` function of the geometry doc value. This enables the generation of new point features containing suggested geometry labels, so that, for example, multi-polygons will have only one label.
+
+For example, Elasticsearch may translate a vector tile search API request with a `grid_agg` argument of `geotile` and an `exact_bounds` argument of `true` into the following search
+
+----
+GET my-index/_search
+{
+  "size": 10000,
+  "query": {
+    "geo_bounding_box": {
+      "my-geo-field": {
+        "top_left": {
+          "lat": -40.979898069620134,
+          "lon": -45
+        },
+        "bottom_right": {
+          "lat": -66.51326044311186,
+          "lon": 0
+        }
+      }
+    }
+  },
+  "aggregations": {
+    "grid": {
+      "geotile_grid": {
+        "field": "my-geo-field",
+        "precision": 11,
+        "size": 65536,
+        "bounds": {
+          "top_left": {
+            "lat": -40.979898069620134,
+            "lon": -45
+          },
+          "bottom_right": {
+            "lat": -66.51326044311186,
+            "lon": 0
+          }
+        }
+      }
+    },
+    "bounds": {
+      "geo_bounds": {
+        "field": "my-geo-field",
+        "wrap_longitude": false
+      }
+    }
+  }
+}
+----
+
+The API returns results as a binary Mapbox vector tile.
+Mapbox vector tiles are encoded as Google Protobufs (PBF). By default, the tile contains three layers:
+
+* A `hits` layer containing a feature for each `<field>` value matching the `geo_bounding_box` query.
+* An `aggs` layer containing a feature for each cell of the `geotile_grid` or `geohex_grid`. The layer only contains features for cells with matching data.
+* A meta layer containing:
+  * A feature containing a bounding box. By default, this is the bounding box of the tile.
+  * Value ranges for any sub-aggregations on the `geotile_grid` or `geohex_grid`.
+  * Metadata for the search.
+
+The API only returns features that can display at its zoom level.
+For example, if a polygon feature has no area at its zoom level, the API omits it.
+The API returns errors as UTF-8 encoded JSON.
+
+IMPORTANT: You can specify several options for this API as either a query parameter or request body parameter.
+If you specify both parameters, the query parameter takes precedence.
+
+**Grid precision for geotile**
+
+For a `grid_agg` of `geotile`, you can use cells in the `aggs` layer as tiles for lower zoom levels.
+`grid_precision` represents the additional zoom levels available through these cells. The final precision is computed by as follows: `<zoom> + grid_precision`.
+For example, if `<zoom>` is 7 and `grid_precision` is 8, then the `geotile_grid` aggregation will use a precision of 15.
+The maximum final precision is 29.
+The `grid_precision` also determines the number of cells for the grid as follows: `(2^grid_precision) x (2^grid_precision)`.
+For example, a value of 8 divides the tile into a grid of 256 x 256 cells.
+The `aggs` layer only contains features for cells with matching data.
+
+**Grid precision for geohex**
+
+For a `grid_agg` of `geohex`, Elasticsearch uses `<zoom>` and `grid_precision` to calculate a final precision as follows: `<zoom> + grid_precision`.
+
+This precision determines the H3 resolution of the hexagonal cells produced by the `geohex` aggregation.
+The following table maps the H3 resolution for each precision.
+For example, if `<zoom>` is 3 and `grid_precision` is 3, the precision is 6.
+At a precision of 6, hexagonal cells have an H3 resolution of 2.
+If `<zoom>` is 3 and `grid_precision` is 4, the precision is 7.
+At a precision of 7, hexagonal cells have an H3 resolution of 3.
+
+| Precision | Unique tile bins | H3 resolution | Unique hex bins |	Ratio |
+| --------- | ---------------- | ------------- | ----------------| ----- |
+| 1  | 4                  | 0  | 122             | 30.5           |
+| 2  | 16                 | 0  | 122             | 7.625          |
+| 3  | 64                 | 1  | 842             | 13.15625       |
+| 4  | 256                | 1  | 842             | 3.2890625      |
+| 5  | 1024               | 2  | 5882            | 5.744140625    |
+| 6  | 4096               | 2  | 5882            | 1.436035156    |
+| 7  | 16384              | 3  | 41162           | 2.512329102    |
+| 8  | 65536              | 3  | 41162           | 0.6280822754   |
+| 9  | 262144             | 4  | 288122          | 1.099098206    |
+| 10 | 1048576            | 4  | 288122          | 0.2747745514   |
+| 11 | 4194304            | 5  | 2016842         | 0.4808526039   |
+| 12 | 16777216           | 6  | 14117882        | 0.8414913416   |
+| 13 | 67108864           | 6  | 14117882        | 0.2103728354   |
+| 14 | 268435456          | 7  | 98825162        | 0.3681524172   |
+| 15 | 1073741824         | 8  | 691776122       | 0.644266719    |
+| 16 | 4294967296         | 8  | 691776122       | 0.1610666797   |
+| 17 | 17179869184        | 9  | 4842432842      | 0.2818666889   |
+| 18 | 68719476736        | 10 | 33897029882     | 0.4932667053   |
+| 19 | 274877906944       | 11 | 237279209162    | 0.8632167343   |
+| 20 | 1099511627776      | 11 | 237279209162    | 0.2158041836   |
+| 21 | 4398046511104      | 12 | 1660954464122   | 0.3776573213   |
+| 22 | 17592186044416     | 13 | 11626681248842  | 0.6609003122   |
+| 23 | 70368744177664     | 13 | 11626681248842  | 0.165225078    |
+| 24 | 281474976710656    | 14 | 81386768741882  | 0.2891438866   |
+| 25 | 1125899906842620   | 15 | 569707381193162 | 0.5060018015   |
+| 26 | 4503599627370500   | 15 | 569707381193162 | 0.1265004504   |
+| 27 | 18014398509482000  | 15 | 569707381193162 | 0.03162511259  |
+| 28 | 72057594037927900  | 15 | 569707381193162 | 0.007906278149 |
+| 29 | 288230376151712000 | 15 | 569707381193162 | 0.001976569537 |
+
+Hexagonal cells don't align perfectly on a vector tile.
+Some cells may intersect more than one vector tile.
+To compute the H3 resolution for each precision, Elasticsearch compares the average density of hexagonal bins at each resolution with the average density of tile bins at each zoom level.
+Elasticsearch uses the H3 resolution that is closest to the corresponding geotile density.
 
 {ref}/search-vector-tile-api.html[Endpoint documentation]
 [source,ts]
@@ -1749,20 +1920,20 @@ client.searchMvt({ index, field, zoom, x, y })
 ** *`zoom` (number)*: Zoom level for the vector tile to search
 ** *`x` (number)*: X coordinate for the vector tile to search
 ** *`y` (number)*: Y coordinate for the vector tile to search
-** *`aggs` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Sub-aggregations for the geotile_grid. Supports the following aggregation types: - avg - cardinality - max - min - sum
-** *`buffer` (Optional, number)*: Size, in pixels, of a clipping buffer outside the tile. This allows renderers to avoid outline artifacts from geometries that extend past the extent of the tile.
-** *`exact_bounds` (Optional, boolean)*: If false, the meta layer’s feature is the bounding box of the tile. If true, the meta layer’s feature is a bounding box resulting from a geo_bounds aggregation. The aggregation runs on <field> values that intersect the <zoom>/<x>/<y> tile with wrap_longitude set to false. The resulting bounding box may be larger than the vector tile.
-** *`extent` (Optional, number)*: Size, in pixels, of a side of the tile. Vector tiles are square with equal sides.
-** *`fields` (Optional, string | string[])*: Fields to return in the `hits` layer. Supports wildcards (`*`). This parameter does not support fields with array values. Fields with array values may return inconsistent results.
-** *`grid_agg` (Optional, Enum("geotile" | "geohex"))*: Aggregation used to create a grid for the `field`.
-** *`grid_precision` (Optional, number)*: Additional zoom levels available through the aggs layer. For example, if <zoom> is 7 and grid_precision is 8, you can zoom in up to level 15. Accepts 0-8. If 0, results don’t include the aggs layer.
-** *`grid_type` (Optional, Enum("grid" | "point" | "centroid"))*: Determines the geometry type for features in the aggs layer. In the aggs layer, each feature represents a geotile_grid cell. If 'grid' each feature is a Polygon of the cells bounding box. If 'point' each feature is a Point that is the centroid of the cell.
-** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Query DSL used to filter documents for the search.
+** *`aggs` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Sub-aggregations for the geotile_grid. It supports the following aggregation types: - `avg` - `boxplot` - `cardinality` - `extended stats` - `max` - `median absolute deviation` - `min` - `percentile` - `percentile-rank` - `stats` - `sum` - `value count` The aggregation names can't start with `_mvt_`. The `_mvt_` prefix is reserved for internal aggregations.
+** *`buffer` (Optional, number)*: The size, in pixels, of a clipping buffer outside the tile. This allows renderers to avoid outline artifacts from geometries that extend past the extent of the tile.
+** *`exact_bounds` (Optional, boolean)*: If `false`, the meta layer's feature is the bounding box of the tile. If `true`, the meta layer's feature is a bounding box resulting from a `geo_bounds` aggregation. The aggregation runs on <field> values that intersect the `<zoom>/<x>/<y>` tile with `wrap_longitude` set to `false`. The resulting bounding box may be larger than the vector tile.
+** *`extent` (Optional, number)*: The size, in pixels, of a side of the tile. Vector tiles are square with equal sides.
+** *`fields` (Optional, string | string[])*: The fields to return in the `hits` layer. It supports wildcards (`*`). This parameter does not support fields with array values. Fields with array values may return inconsistent results.
+** *`grid_agg` (Optional, Enum("geotile" | "geohex"))*: The aggregation used to create a grid for the `field`.
+** *`grid_precision` (Optional, number)*: Additional zoom levels available through the aggs layer. For example, if `<zoom>` is `7` and `grid_precision` is `8`, you can zoom in up to level 15. Accepts 0-8. If 0, results don't include the aggs layer.
+** *`grid_type` (Optional, Enum("grid" | "point" | "centroid"))*: Determines the geometry type for features in the aggs layer. In the aggs layer, each feature represents a `geotile_grid` cell. If `grid, each feature is a polygon of the cells bounding box. If `point`, each feature is a Point that is the centroid of the cell.
+** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: The query DSL used to filter documents for the search.
 ** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines one or more runtime fields in the search request. These fields take precedence over mapped fields with the same name.
-** *`size` (Optional, number)*: Maximum number of features to return in the hits layer. Accepts 0-10000. If 0, results don’t include the hits layer.
-** *`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])*: Sorts features in the hits layer. By default, the API calculates a bounding box for each feature. It sorts features based on this box’s diagonal length, from longest to shortest.
-** *`track_total_hits` (Optional, boolean | number)*: Number of hits matching the query to count accurately. If `true`, the exact number of hits is returned at the cost of some performance. If `false`, the response does not include the total number of hits matching the query.
-** *`with_labels` (Optional, boolean)*: If `true`, the hits and aggs layers will contain additional point features representing suggested label positions for the original features.
+** *`size` (Optional, number)*: The maximum number of features to return in the hits layer. Accepts 0-10000. If 0, results don't include the hits layer.
+** *`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])*: Sort the features in the hits layer. By default, the API calculates a bounding box for each feature. It sorts features based on this box's diagonal length, from longest to shortest.
+** *`track_total_hits` (Optional, boolean | number)*: The number of hits matching the query to count accurately. If `true`, the exact number of hits is returned at the cost of some performance. If `false`, the response does not include the total number of hits matching the query.
+** *`with_labels` (Optional, boolean)*: If `true`, the hits and aggs layers will contain additional point features representing suggested label positions for the original features. * `Point` and `MultiPoint` features will have one of the points selected. * `Polygon` and `MultiPolygon` features will have a single point generated, either the centroid, if it is within the polygon, or another point within the polygon selected from the sorted triangle-tree. * `LineString` features will likewise provide a roughly central point selected from the triangle-tree. * The aggregation results will provide one central point for each aggregation bucket. All attributes from the original features will also be copied to the new label features. In addition, the new features will be distinguishable using the tag `_mvt_label_position`.
 
 [discrete]
 === search_shards
@@ -1770,7 +1941,9 @@ Get the search shards.
 
 Get the indices and shards that a search request would be run against.
 This information can be useful for working out issues or planning optimizations with routing and shard preferences.
-When filtered aliases are used, the filter is returned as part of the indices section.
+When filtered aliases are used, the filter is returned as part of the `indices` section.
+
+If the Elasticsearch security features are enabled, you must have the `view_index_metadata` or `manage` index privilege for the target data stream, index, or alias.
 
 {ref}/search-shards.html[Endpoint documentation]
 [source,ts]
@@ -1781,19 +1954,19 @@ client.searchShards({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string | string[])*: Returns the indices and shards that a search request would be executed against.
+** *`index` (Optional, string | string[])*: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
 ** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`local` (Optional, boolean)*: If `true`, the request retrieves information from the local node only.
-** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on. Random by default.
-** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`preference` (Optional, string)*: The node or shard the operation should be performed on. It is random by default.
+** *`routing` (Optional, string)*: A custom value used to route operations to a specific shard.
 
 [discrete]
 === search_template
 Run a search with a search template.
 
-{ref}/search-template.html[Endpoint documentation]
+{ref}/search-template-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.searchTemplate({ ... })
@@ -1802,22 +1975,22 @@ client.searchTemplate({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string | string[])*: List of data streams, indices, and aliases to search. Supports wildcards (*).
-** *`explain` (Optional, boolean)*: If `true`, returns detailed information about score calculation as part of each hit.
-** *`id` (Optional, string)*: ID of the search template to use. If no source is specified, this parameter is required.
+** *`index` (Optional, string | string[])*: A list of data streams, indices, and aliases to search. It supports wildcards (`*`).
+** *`explain` (Optional, boolean)*: If `true`, returns detailed information about score calculation as part of each hit. If you specify both this and the `explain` query parameter, the API uses only the query parameter.
+** *`id` (Optional, string)*: The ID of the search template to use. If no `source` is specified, this parameter is required.
 ** *`params` (Optional, Record<string, User-defined value>)*: Key-value pairs used to replace Mustache variables in the template. The key is the variable name. The value is the variable value.
 ** *`profile` (Optional, boolean)*: If `true`, the query execution is profiled.
-** *`source` (Optional, string)*: An inline search template. Supports the same parameters as the search API's request body. Also supports Mustache variables. If no id is specified, this parameter is required.
+** *`source` (Optional, string)*: An inline search template. Supports the same parameters as the search API's request body. It also supports Mustache variables. If no `id` is specified, this parameter is required.
 ** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 ** *`ccs_minimize_roundtrips` (Optional, boolean)*: If `true`, network round-trips are minimized for cross-cluster search requests.
-** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_throttled` (Optional, boolean)*: If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
-** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on. Random by default.
-** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`preference` (Optional, string)*: The node or shard the operation should be performed on. It is random by default.
+** *`routing` (Optional, string)*: A custom value used to route operations to a specific shard.
 ** *`scroll` (Optional, string | -1 | 0)*: Specifies how long a consistent view of the index should be maintained for scrolled search.
 ** *`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))*: The type of the search operation.
-** *`rest_total_hits_as_int` (Optional, boolean)*: If true, hits.total are rendered as an integer in the response.
+** *`rest_total_hits_as_int` (Optional, boolean)*: If `true`, `hits.total` is rendered as an integer in the response. If `false`, it is rendered as an object.
 ** *`typed_keys` (Optional, boolean)*: If `true`, the response prefixes aggregation and suggester names with their respective types.
 
 [discrete]
@@ -1825,12 +1998,10 @@ client.searchTemplate({ ... })
 Get terms in an index.
 
 Discover terms that match a partial string in an index.
-This "terms enum" API is designed for low-latency look-ups used in auto-complete scenarios.
+This API is designed for low-latency look-ups used in auto-complete scenarios.
 
-If the `complete` property in the response is false, the returned terms set may be incomplete and should be treated as approximate.
-This can occur due to a few reasons, such as a request timeout or a node error.
-
-NOTE: The terms enum API may return terms from deleted documents. Deleted documents are initially only marked as deleted. It is not until their segments are merged that documents are actually deleted. Until that happens, the terms enum API will return terms from these documents.
+> info
+> The terms enum API may return terms from deleted documents. Deleted documents are initially only marked as deleted. It is not until their segments are merged that documents are actually deleted. Until that happens, the terms enum API will return terms from these documents.
 
 {ref}/search-terms-enum.html[Endpoint documentation]
 [source,ts]
@@ -1841,20 +2012,58 @@ client.termsEnum({ index, field })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (string)*: List of data streams, indices, and index aliases to search. Wildcard (*) expressions are supported.
+** *`index` (string)*: A list of data streams, indices, and index aliases to search. Wildcard (`*`) expressions are supported. To search all data streams or indices, omit this parameter or use `*` or `_all`.
 ** *`field` (string)*: The string to match at the start of indexed terms. If not provided, all terms in the field are considered.
-** *`size` (Optional, number)*: How many matching terms to return.
-** *`timeout` (Optional, string | -1 | 0)*: The maximum length of time to spend collecting results. Defaults to "1s" (one second). If the timeout is exceeded the complete flag set to false in the response and the results may be partial or empty.
-** *`case_insensitive` (Optional, boolean)*: When true the provided search string is matched against index terms without case sensitivity.
-** *`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Allows to filter an index shard if the provided query rewrites to match_none.
-** *`string` (Optional, string)*: The string after which terms in the index should be returned. Allows for a form of pagination if the last result from one request is passed as the search_after parameter for a subsequent request.
-** *`search_after` (Optional, string)*
+** *`size` (Optional, number)*: The number of matching terms to return.
+** *`timeout` (Optional, string | -1 | 0)*: The maximum length of time to spend collecting results. If the timeout is exceeded the `complete` flag set to `false` in the response and the results may be partial or empty.
+** *`case_insensitive` (Optional, boolean)*: When `true`, the provided search string is matched against index terms without case sensitivity.
+** *`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Filter an index shard if the provided query rewrites to `match_none`.
+** *`string` (Optional, string)*: The string to match at the start of indexed terms. If it is not provided, all terms in the field are considered. > info > The prefix string cannot be larger than the largest possible keyword value, which is Lucene's term byte-length limit of 32766.
+** *`search_after` (Optional, string)*: The string after which terms in the index should be returned. It allows for a form of pagination if the last result from one request is passed as the `search_after` parameter for a subsequent request.
 
 [discrete]
 === termvectors
 Get term vector information.
 
 Get information and statistics about terms in the fields of a particular document.
+
+You can retrieve term vectors for documents stored in the index or for artificial documents passed in the body of the request.
+You can specify the fields you are interested in through the `fields` parameter or by adding the fields to the request body.
+For example:
+
+----
+GET /my-index-000001/_termvectors/1?fields=message
+----
+
+Fields can be specified using wildcards, similar to the multi match query.
+
+Term vectors are real-time by default, not near real-time.
+This can be changed by setting `realtime` parameter to `false`.
+
+You can request three types of values: _term information_, _term statistics_, and _field statistics_.
+By default, all term information and field statistics are returned for all fields but term statistics are excluded.
+
+**Term information**
+
+* term frequency in the field (always returned)
+* term positions (`positions: true`)
+* start and end offsets (`offsets: true`)
+* term payloads (`payloads: true`), as base64 encoded bytes
+
+If the requested information wasn't stored in the index, it will be computed on the fly if possible.
+Additionally, term vectors could be computed for documents not even existing in the index, but instead provided by the user.
+
+> warn
+> Start and end offsets assume UTF-16 encoding is being used. If you want to use these offsets in order to get the original text that produced this token, you should make sure that the string you are taking a sub-string of is also encoded using UTF-16.
+
+**Behaviour**
+
+The term and field statistics are not accurate.
+Deleted documents are not taken into account.
+The information is only retrieved for the shard the requested document resides in.
+The term and field statistics are therefore only useful as relative measures whereas the absolute numbers have no meaning in this context.
+By default, when requesting term vectors of artificial documents, a shard to get the statistics from is randomly selected.
+Use `routing` only to hit a particular shard.
 
 {ref}/docs-termvectors.html[Endpoint documentation]
 [source,ts]
@@ -1865,22 +2074,22 @@ client.termvectors({ index })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (string)*: Name of the index that contains the document.
-** *`id` (Optional, string)*: Unique identifier of the document.
+** *`index` (string)*: The name of the index that contains the document.
+** *`id` (Optional, string)*: A unique identifier for the document.
 ** *`doc` (Optional, object)*: An artificial document (a document not present in the index) for which you want to retrieve term vectors.
-** *`filter` (Optional, { max_doc_freq, max_num_terms, max_term_freq, max_word_length, min_doc_freq, min_term_freq, min_word_length })*: Filter terms based on their tf-idf scores.
-** *`per_field_analyzer` (Optional, Record<string, string>)*: Overrides the default per-field analyzer.
-** *`fields` (Optional, string | string[])*: List or wildcard expressions of fields to include in the statistics. Used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
-** *`field_statistics` (Optional, boolean)*: If `true`, the response includes the document count, sum of document frequencies, and sum of total term frequencies.
+** *`filter` (Optional, { max_doc_freq, max_num_terms, max_term_freq, max_word_length, min_doc_freq, min_term_freq, min_word_length })*: Filter terms based on their tf-idf scores. This could be useful in order find out a good characteristic vector of a document. This feature works in a similar manner to the second phase of the More Like This Query.
+** *`per_field_analyzer` (Optional, Record<string, string>)*: Override the default per-field analyzer. This is useful in order to generate term vectors in any fashion, especially when using artificial documents. When providing an analyzer for a field that already stores term vectors, the term vectors will be regenerated.
+** *`fields` (Optional, string | string[])*: A list or wildcard expressions of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
+** *`field_statistics` (Optional, boolean)*: If `true`, the response includes: * The document count (how many documents contain this field). * The sum of document frequencies (the sum of document frequencies for all terms in this field). * The sum of total term frequencies (the sum of total term frequencies of each term in this field).
 ** *`offsets` (Optional, boolean)*: If `true`, the response includes term offsets.
 ** *`payloads` (Optional, boolean)*: If `true`, the response includes term payloads.
 ** *`positions` (Optional, boolean)*: If `true`, the response includes term positions.
-** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on. Random by default.
+** *`preference` (Optional, string)*: The node or shard the operation should be performed on. It is random by default.
 ** *`realtime` (Optional, boolean)*: If true, the request is real-time as opposed to near-real-time.
-** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
-** *`term_statistics` (Optional, boolean)*: If `true`, the response includes term frequency and document frequency.
+** *`routing` (Optional, string)*: A custom value that is used to route operations to a specific shard.
+** *`term_statistics` (Optional, boolean)*: If `true`, the response includes: * The total term frequency (how often a term occurs in all documents). * The document frequency (the number of documents containing the current term). By default these values are not returned since term statistics can have a serious performance impact.
 ** *`version` (Optional, number)*: If `true`, returns the document version as part of a hit.
-** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type.
+** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: The version type.
 
 [discrete]
 === update
@@ -13036,7 +13245,7 @@ client.simulate.ingest({ docs })
 ** *`index` (Optional, string)*: The index to simulate ingesting into.
 This value can be overridden by specifying an index on each document.
 If you specify this parameter in the request path, it is used for any documents that do not explicitly specify an index argument.
-** *`component_template_substitutions` (Optional, Record<string, { template, version, _meta }>)*: A map of component template names to substitute component template definition objects.
+** *`component_template_substitutions` (Optional, Record<string, { template, version, _meta, deprecated }>)*: A map of component template names to substitute component template definition objects.
 ** *`index_template_subtitutions` (Optional, Record<string, { index_patterns, composed_of, template, version, priority, _meta, allow_auto_create, data_stream, deprecated, ignore_missing_component_templates }>)*: A map of index template names to substitute index template definition objects.
 ** *`mapping_addition` (Optional, { all_field, date_detection, dynamic, dynamic_date_formats, dynamic_templates, _field_names, index_field, _meta, numeric_detection, properties, _routing, _size, _source, runtime, enabled, subobjects, _data_stream_timestamp })*
 ** *`pipeline_substitutions` (Optional, Record<string, { description, on_failure, processors, version, deprecated, _meta }>)*: Pipelines to test.
