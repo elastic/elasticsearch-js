@@ -45,7 +45,7 @@ export default class TextStructure {
 
   /**
     * Find the structure of a text field. Find the structure of a text field in an Elasticsearch index. This API provides a starting point for extracting further information from log messages already ingested into Elasticsearch. For example, if you have ingested data into a very simple index that has just `@timestamp` and message fields, you can use this API to see what common structure exists in the message field. The response from the API contains: * Sample messages. * Statistics that reveal the most common values for all fields detected within the text and basic numeric statistics for numeric fields. * Information about the structure of the text, which is useful when you write ingest configurations to index it or similarly formatted text. * Appropriate mappings for an Elasticsearch index, which you could use to ingest the text. All this information can be calculated by the structure finder with no guidance. However, you can optionally override some of the decisions about the text structure by specifying one or more query parameters. If the structure finder produces unexpected results, specify the `explain` query parameter and an explanation will appear in the response. It helps determine why the returned structure was chosen.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/find-field-structure.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-text_structure | Elasticsearch API documentation}
     */
   async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureFindFieldStructureResponse>
   async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindFieldStructureResponse, unknown>>
@@ -84,7 +84,7 @@ export default class TextStructure {
 
   /**
     * Find the structure of text messages. Find the structure of a list of text messages. The messages must contain data that is suitable to be ingested into Elasticsearch. This API provides a starting point for ingesting data into Elasticsearch in a format that is suitable for subsequent use with other Elastic Stack functionality. Use this API rather than the find text structure API if your input text has already been split up into separate messages by some other process. The response from the API contains: * Sample messages. * Statistics that reveal the most common values for all fields detected within the text and basic numeric statistics for numeric fields. * Information about the structure of the text, which is useful when you write ingest configurations to index it or similarly formatted text. Appropriate mappings for an Elasticsearch index, which you could use to ingest the text. All this information can be calculated by the structure finder with no guidance. However, you can optionally override some of the decisions about the text structure by specifying one or more query parameters. If the structure finder produces unexpected results, specify the `explain` query parameter and an explanation will appear in the response. It helps determine why the returned structure was chosen.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/find-message-structure.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-text-structure-find-message-structure | Elasticsearch API documentation}
     */
   async findMessageStructure (this: That, params: T.TextStructureFindMessageStructureRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureFindMessageStructureResponse>
   async findMessageStructure (this: That, params: T.TextStructureFindMessageStructureRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindMessageStructureResponse, unknown>>
@@ -128,7 +128,7 @@ export default class TextStructure {
 
   /**
     * Find the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch. This API provides a starting point for ingesting data into Elasticsearch in a format that is suitable for subsequent use with other Elastic Stack functionality. Unlike other Elasticsearch endpoints, the data that is posted to this endpoint does not need to be UTF-8 encoded and in JSON format. It must, however, be text; binary text formats are not currently supported. The size is limited to the Elasticsearch HTTP receive buffer size, which defaults to 100 Mb. The response from the API contains: * A couple of messages from the beginning of the text. * Statistics that reveal the most common values for all fields detected within the text and basic numeric statistics for numeric fields. * Information about the structure of the text, which is useful when you write ingest configurations to index it or similarly formatted text. * Appropriate mappings for an Elasticsearch index, which you could use to ingest the text. All this information can be calculated by the structure finder with no guidance. However, you can optionally override some of the decisions about the text structure by specifying one or more query parameters.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/find-structure.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-text-structure-find-structure | Elasticsearch API documentation}
     */
   async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureFindStructureResponse>
   async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindStructureResponse, unknown>>
@@ -162,7 +162,7 @@ export default class TextStructure {
 
   /**
     * Test a Grok pattern. Test a Grok pattern on one or more lines of text. The API indicates whether the lines match the pattern together with the offsets and lengths of the matched substrings.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/test-grok-pattern.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-text-structure-test-grok-pattern | Elasticsearch API documentation}
     */
   async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureTestGrokPatternResponse>
   async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureTestGrokPatternResponse, unknown>>

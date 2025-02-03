@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Throttle a reindex operation. Change the number of requests per second for a particular reindex operation. For example: ``` POST _reindex/r1A2WoRbTwKZ516z6NEs5A:36619/_rethrottle?requests_per_second=-1 ``` Rethrottling that speeds up the query takes effect immediately. Rethrottling that slows down the query will take effect after completing the current batch. This behavior prevents scroll timeouts.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-reindex | Elasticsearch API documentation}
   */
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ReindexRethrottleResponse>
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ReindexRethrottleResponse, unknown>>

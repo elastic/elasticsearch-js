@@ -6,15 +6,11 @@
 const response = await client.update({
   index: "test",
   id: 1,
-  script: {
-    source: "ctx._source.counter += params.count",
-    lang: "painless",
-    params: {
-      count: 4,
-    },
+  doc: {
+    product_price: 100,
   },
   upsert: {
-    counter: 1,
+    product_price: 50,
   },
 });
 console.log(response);
