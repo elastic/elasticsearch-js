@@ -45,7 +45,7 @@ export default class Rollup {
 
   /**
     * Delete a rollup job. A job must be stopped before it can be deleted. If you attempt to delete a started job, an error occurs. Similarly, if you attempt to delete a nonexistent job, an exception occurs. IMPORTANT: When you delete a job, you remove only the process that is actively monitoring and rolling up data. The API does not delete any previously rolled up data. This is by design; a user may wish to roll up a static data set. Because the data set is static, after it has been fully rolled up there is no need to keep the indexing rollup job around (as there will be no new data). Thus the job can be deleted, leaving behind the rolled up data for analysis. If you wish to also remove the rollup data and the rollup index contains the data for only a single job, you can delete the whole rollup index. If the rollup index stores data from several jobs, you must issue a delete-by-query that targets the rollup job's identifier in the rollup index. For example: ``` POST my_rollup_index/_delete_by_query { "query": { "term": { "_rollup.id": "the_rollup_job_id" } } } ```
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-delete-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-delete-job | Elasticsearch API documentation}
     */
   async deleteJob (this: That, params: T.RollupDeleteJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupDeleteJobResponse>
   async deleteJob (this: That, params: T.RollupDeleteJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupDeleteJobResponse, unknown>>
@@ -87,7 +87,7 @@ export default class Rollup {
 
   /**
     * Get rollup job information. Get the configuration, stats, and status of rollup jobs. NOTE: This API returns only active (both `STARTED` and `STOPPED`) jobs. If a job was created, ran for a while, then was deleted, the API does not return any details about it. For details about a historical rollup job, the rollup capabilities API may be more useful.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-get-jobs | Elasticsearch API documentation}
     */
   async getJobs (this: That, params?: T.RollupGetJobsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetJobsResponse>
   async getJobs (this: That, params?: T.RollupGetJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetJobsResponse, unknown>>
@@ -137,7 +137,7 @@ export default class Rollup {
 
   /**
     * Get the rollup job capabilities. Get the capabilities of any rollup jobs that have been configured for a specific index or index pattern. This API is useful because a rollup job is often configured to rollup only a subset of fields from the source index. Furthermore, only certain aggregations can be configured for various fields, leading to a limited subset of functionality depending on that configuration. This API enables you to inspect an index and determine: 1. Does this index have associated rollup data somewhere in the cluster? 2. If yes to the first question, what fields were rolled up, what aggregations can be performed, and where does the data live?
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-rollup-caps.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-get-rollup-caps | Elasticsearch API documentation}
     */
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetRollupCapsResponse>
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetRollupCapsResponse, unknown>>
@@ -187,7 +187,7 @@ export default class Rollup {
 
   /**
     * Get the rollup index capabilities. Get the rollup capabilities of all jobs inside of a rollup index. A single rollup index may store the data for multiple rollup jobs and may have a variety of capabilities depending on those jobs. This API enables you to determine: * What jobs are stored in an index (or indices specified via a pattern)? * What target indices were rolled up, what fields were used in those rollups, and what aggregations can be performed on each job?
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-rollup-index-caps.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-get-rollup-index-caps | Elasticsearch API documentation}
     */
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetRollupIndexCapsResponse>
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetRollupIndexCapsResponse, unknown>>
@@ -229,7 +229,7 @@ export default class Rollup {
 
   /**
     * Create a rollup job. WARNING: From 8.15.0, calling this API in a cluster with no rollup usage will fail with a message about the deprecation and planned removal of rollup features. A cluster needs to contain either a rollup job or a rollup index in order for this API to be allowed to run. The rollup job configuration contains all the details about how the job should run, when it indexes documents, and what future queries will be able to run against the rollup index. There are three main sections to the job configuration: the logistical details about the job (for example, the cron schedule), the fields that are used for grouping, and what metrics to collect for each group. Jobs are created in a `STOPPED` state. You can start them with the start rollup jobs API.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-put-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-put-job | Elasticsearch API documentation}
     */
   async putJob (this: That, params: T.RollupPutJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupPutJobResponse>
   async putJob (this: That, params: T.RollupPutJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupPutJobResponse, unknown>>
@@ -276,7 +276,7 @@ export default class Rollup {
 
   /**
     * Search rolled-up data. The rollup search endpoint is needed because, internally, rolled-up documents utilize a different document structure than the original data. It rewrites standard Query DSL into a format that matches the rollup documents then takes the response and rewrites it back to what a client would expect given the original query. The request body supports a subset of features from the regular search API. The following functionality is not available: `size`: Because rollups work on pre-aggregated data, no search hits can be returned and so size must be set to zero or omitted entirely. `highlighter`, `suggestors`, `post_filter`, `profile`, `explain`: These are similarly disallowed. **Searching both historical rollup and non-rollup data** The rollup search API has the capability to search across both "live" non-rollup data and the aggregated rollup data. This is done by simply adding the live indices to the URI. For example: ``` GET sensor-1,sensor_rollup/_rollup_search { "size": 0, "aggregations": { "max_temperature": { "max": { "field": "temperature" } } } } ``` The rollup search endpoint does two things when the search runs: * The original request is sent to the non-rollup index unaltered. * A rewritten version of the original request is sent to the rollup index. When the two responses are received, the endpoint rewrites the rollup response and merges the two together. During the merging process, if there is any overlap in buckets between the two responses, the buckets from the non-rollup index are used.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-search.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-rollup-search | Elasticsearch API documentation}
     */
   async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupRollupSearchResponse<TDocument, TAggregations>>
   async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupRollupSearchResponse<TDocument, TAggregations>, unknown>>
@@ -323,7 +323,7 @@ export default class Rollup {
 
   /**
     * Start rollup jobs. If you try to start a job that does not exist, an exception occurs. If you try to start a job that is already started, nothing happens.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-start-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-start-job | Elasticsearch API documentation}
     */
   async startJob (this: That, params: T.RollupStartJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupStartJobResponse>
   async startJob (this: That, params: T.RollupStartJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupStartJobResponse, unknown>>
@@ -365,7 +365,7 @@ export default class Rollup {
 
   /**
     * Stop rollup jobs. If you try to stop a job that does not exist, an exception occurs. If you try to stop a job that is already stopped, nothing happens. Since only a stopped job can be deleted, it can be useful to block the API until the indexer has fully stopped. This is accomplished with the `wait_for_completion` query parameter, and optionally a timeout. For example: ``` POST _rollup/job/sensor/_stop?wait_for_completion=true&timeout=10s ``` The parameter blocks the API call from returning until either the job has moved to STOPPED or the specified time has elapsed. If the specified time elapses without the job moving to STOPPED, a timeout exception occurs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-stop-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-stop-job | Elasticsearch API documentation}
     */
   async stopJob (this: That, params: T.RollupStopJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupStopJobResponse>
   async stopJob (this: That, params: T.RollupStopJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupStopJobResponse, unknown>>

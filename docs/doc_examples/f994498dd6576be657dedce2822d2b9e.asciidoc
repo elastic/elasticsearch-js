@@ -30,6 +30,13 @@ const response = await client.search({
       ],
     },
   },
+  highlight: {
+    fields: {
+      semantic_text: {
+        number_of_fragments: 2,
+      },
+    },
+  },
 });
 console.log(response);
 ----

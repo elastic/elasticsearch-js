@@ -38,8 +38,8 @@ import * as T from '../types'
 interface That { transport: Transport }
 
 /**
-  * Explain a document match result. Returns information about why a specific document matches, or doesn’t match, a query.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html | Elasticsearch API documentation}
+  * Explain a document match result. Get information about why a specific document matches, or doesn't match, a query. It computes a score explanation for a query and a specific document.
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-explain | Elasticsearch API documentation}
   */
 export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExplainResponse<TDocument>>
 export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ExplainResponse<TDocument>, unknown>>
