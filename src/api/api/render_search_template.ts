@@ -46,8 +46,8 @@ export default async function RenderSearchTemplateApi (this: That, params?: T.Re
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RenderSearchTemplateResponse, unknown>>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<T.RenderSearchTemplateResponse>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['id']
-  const acceptedBody: string[] = ['file', 'params', 'source']
+  const acceptedPath: string[] = []
+  const acceptedBody: string[] = ['id', 'file', 'params', 'source']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   const userBody: any = params?.body

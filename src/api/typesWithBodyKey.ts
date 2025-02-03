@@ -1157,6 +1157,7 @@ export interface RenderSearchTemplateRequest extends RequestBase {
   id?: Id
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
+    id?: Id
     file?: string
     params?: Record<string, any>
     source?: string
@@ -1167,6 +1168,8 @@ export interface RenderSearchTemplateResponse {
   template_output: Record<string, any>
 }
 
+export type ScriptsPainlessExecutePainlessContext = 'painless_test' | 'filter' | 'score' | 'boolean_field' | 'date_field' | 'double_field' | 'geo_point_field' | 'ip_field' | 'keyword_field' | 'long_field' | 'composite_field'
+
 export interface ScriptsPainlessExecutePainlessContextSetup {
   document: any
   index: IndexName
@@ -1176,7 +1179,7 @@ export interface ScriptsPainlessExecutePainlessContextSetup {
 export interface ScriptsPainlessExecuteRequest extends RequestBase {
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
-    context?: string
+    context?: ScriptsPainlessExecutePainlessContext
     context_setup?: ScriptsPainlessExecutePainlessContextSetup
     script?: Script | string
   }
@@ -2319,7 +2322,7 @@ export interface ErrorResponseBase {
   status: integer
 }
 
-export type EsqlColumns = ArrayBuffer
+export type EsqlResult = ArrayBuffer
 
 export type ExpandWildcard = 'all' | 'open' | 'closed' | 'hidden' | 'none'
 
@@ -5739,6 +5742,7 @@ export interface MappingPropertyBase {
   ignore_above?: integer
   dynamic?: MappingDynamicMapping
   fields?: Record<PropertyName, MappingProperty>
+  synthetic_source_keep?: MappingSyntheticSourceKeepEnum
 }
 
 export interface MappingRangePropertyBase extends MappingDocValuesPropertyBase {
@@ -5844,6 +5848,8 @@ export interface MappingSuggestContext {
   type: string
   precision?: integer | string
 }
+
+export type MappingSyntheticSourceKeepEnum = 'none' | 'arrays' | 'all'
 
 export type MappingTermVectorOption = 'no' | 'yes' | 'with_offsets' | 'with_positions' | 'with_positions_offsets' | 'with_positions_offsets_payloads' | 'with_positions_payloads'
 
@@ -9025,6 +9031,7 @@ export interface ClusterComponentTemplateNode {
   template: ClusterComponentTemplateSummary
   version?: VersionNumber
   _meta?: Metadata
+  deprecated?: boolean
 }
 
 export interface ClusterComponentTemplateSummary {
@@ -9350,6 +9357,7 @@ export interface ClusterRemoteInfoClusterRemoteProxyInfo {
   server_name: string
   num_proxy_sockets_connected: integer
   max_proxy_socket_connections: integer
+  cluster_credentials?: string
 }
 
 export interface ClusterRemoteInfoClusterRemoteSniffInfo {
@@ -10513,8 +10521,6 @@ export type EqlSearchResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEven
 
 export type EqlSearchResultPosition = 'tail' | 'head'
 
-export type EsqlEsqlFormat = 'csv' | 'json' | 'tsv' | 'txt' | 'yaml' | 'cbor' | 'smile' | 'arrow'
-
 export interface EsqlTableValuesContainer {
   integer?: EsqlTableValuesIntegerValue[]
   keyword?: EsqlTableValuesKeywordValue[]
@@ -10533,7 +10539,7 @@ export type EsqlTableValuesLongValue = long | long[]
 export interface EsqlAsyncQueryRequest extends RequestBase {
   delimiter?: string
   drop_null_columns?: boolean
-  format?: EsqlEsqlFormat
+  format?: EsqlQueryEsqlFormat
   keep_alive?: Duration
   keep_on_completion?: boolean
   wait_for_completion_timeout?: Duration
@@ -10549,11 +10555,7 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   }
 }
 
-export interface EsqlAsyncQueryResponse {
-  columns?: EsqlColumns
-  id?: string
-  is_running: boolean
-}
+export type EsqlAsyncQueryResponse = EsqlResult
 
 export interface EsqlAsyncQueryDeleteRequest extends RequestBase {
   id: Id
@@ -10568,13 +10570,19 @@ export interface EsqlAsyncQueryGetRequest extends RequestBase {
   wait_for_completion_timeout?: Duration
 }
 
-export interface EsqlAsyncQueryGetResponse {
-  columns?: EsqlColumns
-  is_running: boolean
+export type EsqlAsyncQueryGetResponse = EsqlResult
+
+export interface EsqlAsyncQueryStopRequest extends RequestBase {
+  id: Id
+  drop_null_columns?: boolean
 }
 
+export type EsqlAsyncQueryStopResponse = EsqlResult
+
+export type EsqlQueryEsqlFormat = 'csv' | 'json' | 'tsv' | 'txt' | 'yaml' | 'cbor' | 'smile' | 'arrow'
+
 export interface EsqlQueryRequest extends RequestBase {
-  format?: EsqlEsqlFormat
+  format?: EsqlQueryEsqlFormat
   delimiter?: string
   drop_null_columns?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
@@ -10589,7 +10597,7 @@ export interface EsqlQueryRequest extends RequestBase {
   }
 }
 
-export type EsqlQueryResponse = EsqlColumns
+export type EsqlQueryResponse = EsqlResult
 
 export interface FeaturesFeature {
   name: string
@@ -11365,7 +11373,8 @@ export interface IndicesMappingLimitSettings {
   nested_objects?: IndicesMappingLimitSettingsNestedObjects
   field_name_length?: IndicesMappingLimitSettingsFieldNameLength
   dimension_fields?: IndicesMappingLimitSettingsDimensionFields
-  ignore_malformed?: boolean
+  source?: IndicesMappingLimitSettingsSourceFields
+  ignore_malformed?: boolean | string
 }
 
 export interface IndicesMappingLimitSettingsDepth {
@@ -11386,6 +11395,10 @@ export interface IndicesMappingLimitSettingsNestedFields {
 
 export interface IndicesMappingLimitSettingsNestedObjects {
   limit?: long
+}
+
+export interface IndicesMappingLimitSettingsSourceFields {
+  mode: IndicesSourceMode
 }
 
 export interface IndicesMappingLimitSettingsTotalFields {
@@ -11514,6 +11527,8 @@ export interface IndicesSoftDeletes {
   enabled?: boolean
   retention_lease?: IndicesRetentionLease
 }
+
+export type IndicesSourceMode = 'DISABLED' | 'STORED' | 'SYNTHETIC'
 
 export interface IndicesStorage {
   type: IndicesStorageType
@@ -12481,11 +12496,12 @@ export interface IndicesReloadSearchAnalyzersRequest extends RequestBase {
 export type IndicesReloadSearchAnalyzersResponse = IndicesReloadSearchAnalyzersReloadResult
 
 export interface IndicesResolveClusterRequest extends RequestBase {
-  name: Names
+  name?: Names
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
+  timeout?: Duration
 }
 
 export interface IndicesResolveClusterResolveClusterInfo {
@@ -14023,6 +14039,8 @@ export interface MigrationDeprecationsResponse {
   data_streams: Record<string, MigrationDeprecationsDeprecation[]>
   node_settings: MigrationDeprecationsDeprecation[]
   ml_settings: MigrationDeprecationsDeprecation[]
+  templates: Record<string, MigrationDeprecationsDeprecation[]>
+  ilm_policies: Record<string, MigrationDeprecationsDeprecation[]>
 }
 
 export interface MigrationGetFeatureUpgradeStatusMigrationFeature {
@@ -20028,12 +20046,7 @@ export interface SnapshotRepositoryAnalyzeDetailsInfo {
   write_elapsed_nanos: DurationValue<UnitNanos>
   write_throttled: Duration
   write_throttled_nanos: DurationValue<UnitNanos>
-  writer_node: SnapshotRepositoryAnalyzeNodeInfo
-}
-
-export interface SnapshotRepositoryAnalyzeNodeInfo {
-  id: Id
-  name: Name
+  writer_node: SnapshotRepositoryAnalyzeSnapshotNodeInfo
 }
 
 export interface SnapshotRepositoryAnalyzeReadBlobDetails {
@@ -20043,7 +20056,7 @@ export interface SnapshotRepositoryAnalyzeReadBlobDetails {
   first_byte_time?: Duration
   first_byte_time_nanos: DurationValue<UnitNanos>
   found: boolean
-  node: SnapshotRepositoryAnalyzeNodeInfo
+  node: SnapshotRepositoryAnalyzeSnapshotNodeInfo
   throttled?: Duration
   throttled_nanos?: DurationValue<UnitNanos>
 }
@@ -20082,7 +20095,7 @@ export interface SnapshotRepositoryAnalyzeResponse {
   blob_count: integer
   blob_path: string
   concurrency: integer
-  coordinating_node: SnapshotRepositoryAnalyzeNodeInfo
+  coordinating_node: SnapshotRepositoryAnalyzeSnapshotNodeInfo
   delete_elapsed: Duration
   delete_elapsed_nanos: DurationValue<UnitNanos>
   details: SnapshotRepositoryAnalyzeDetailsInfo
@@ -20099,6 +20112,11 @@ export interface SnapshotRepositoryAnalyzeResponse {
   repository: string
   seed: long
   summary: SnapshotRepositoryAnalyzeSummaryInfo
+}
+
+export interface SnapshotRepositoryAnalyzeSnapshotNodeInfo {
+  id: Id
+  name: Name
 }
 
 export interface SnapshotRepositoryAnalyzeSummaryInfo {
@@ -21022,15 +21040,15 @@ export type WatcherDay = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursd
 
 export interface WatcherEmail {
   id?: Id
-  bcc?: string[]
+  bcc?: string | string[]
   body?: WatcherEmailBody
-  cc?: string[]
+  cc?: string | string[]
   from?: string
   priority?: WatcherEmailPriority
-  reply_to?: string[]
+  reply_to?: string | string[]
   sent_date?: DateTime
   subject: string
-  to: string[]
+  to: string | string[]
   attachments?: Record<string, WatcherEmailAttachmentContainer>
 }
 

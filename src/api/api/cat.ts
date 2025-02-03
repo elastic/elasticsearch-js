@@ -846,7 +846,7 @@ export default class Cat {
 
   /**
     * Get task information. Get information about tasks currently running in the cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the task management API.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/tasks.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/cat-tasks.html | Elasticsearch API documentation}
     */
   async tasks (this: That, params?: T.CatTasksRequest | TB.CatTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTasksResponse>
   async tasks (this: That, params?: T.CatTasksRequest | TB.CatTasksRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTasksResponse, unknown>>

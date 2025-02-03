@@ -150,6 +150,38 @@ export default class Esql {
   }
 
   /**
+    * Stop async ES|QL query. This API interrupts the query execution and returns the results so far. If the Elasticsearch security features are enabled, only the user who first submitted the ES|QL query can stop it.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/esql-async-query-stop-api.html | Elasticsearch API documentation}
+    */
+  async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest | TB.EsqlAsyncQueryStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryStopResponse>
+  async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest | TB.EsqlAsyncQueryStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryStopResponse, unknown>>
+  async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest | TB.EsqlAsyncQueryStopRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryStopResponse>
+  async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest | TB.EsqlAsyncQueryStopRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = `/_query/async/${encodeURIComponent(params.id.toString())}/stop`
+    const meta: TransportRequestMetadata = {
+      name: 'esql.async_query_stop',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query language) query.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/esql-rest.html | Elasticsearch API documentation}
     */
