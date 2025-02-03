@@ -3,9 +3,8 @@
 
 [source, js]
 ----
-const response = await client.indices.resolveCluster({
-  name: "not-present,clust*:my-index*,oldcluster:*",
-  ignore_unavailable: "false",
+const response = await client.migration.deprecations({
+  index: ".ml-anomalies-*",
 });
 console.log(response);
 ----
