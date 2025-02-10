@@ -34,6 +34,8 @@ export interface BulkCreateOperation extends BulkWriteOperation {
 export interface BulkDeleteOperation extends BulkOperationBase {
 }
 
+export type BulkFailureStoreStatus = 'not_applicable_or_unknown' | 'used' | 'not_enabled' | 'failed'
+
 export interface BulkIndexOperation extends BulkWriteOperation {
 }
 
@@ -83,6 +85,7 @@ export interface BulkResponseItem {
   _id?: string | null
   _index: string
   status: integer
+  failure_store?: BulkFailureStoreStatus
   error?: ErrorCause
   _primary_term?: long
   result?: string
@@ -13681,20 +13684,21 @@ export interface MlAnomaly {
 }
 
 export interface MlAnomalyCause {
-  actual: double[]
-  by_field_name: Name
-  by_field_value: string
-  correlated_by_field_value: string
-  field_name: Field
-  function: string
-  function_description: string
-  influencers: MlInfluence[]
-  over_field_name: Name
-  over_field_value: string
-  partition_field_name: string
-  partition_field_value: string
+  actual?: double[]
+  by_field_name?: Name
+  by_field_value?: string
+  correlated_by_field_value?: string
+  field_name?: Field
+  function?: string
+  function_description?: string
+  geo_results?: MlGeoResults
+  influencers?: MlInfluence[]
+  over_field_name?: Name
+  over_field_value?: string
+  partition_field_name?: string
+  partition_field_value?: string
   probability: double
-  typical: double[]
+  typical?: double[]
 }
 
 export interface MlAnomalyExplanation {
@@ -14263,8 +14267,8 @@ export interface MlFilterRef {
 export type MlFilterType = 'include' | 'exclude'
 
 export interface MlGeoResults {
-  actual_point: string
-  typical_point: string
+  actual_point?: string
+  typical_point?: string
 }
 
 export interface MlHyperparameter {
@@ -18838,6 +18842,18 @@ export interface ShutdownPutNodeRequest extends RequestBase {
 
 export type ShutdownPutNodeResponse = AcknowledgedResponseBase
 
+export interface SimulateIngestIngestDocumentSimulationKeys {
+  _id: Id
+  _index: IndexName
+  _source: Record<string, any>
+  _version: SpecUtilsStringified<VersionNumber>
+  executed_pipelines: string[]
+  ignored_fields?: Record<string, string>[]
+  error?: ErrorCause
+}
+export type SimulateIngestIngestDocumentSimulation = SimulateIngestIngestDocumentSimulationKeys
+& { [property: string]: string | Id | IndexName | Record<string, any> | SpecUtilsStringified<VersionNumber> | string[] | Record<string, string>[] | ErrorCause }
+
 export interface SimulateIngestRequest extends RequestBase {
   index?: IndexName
   pipeline?: PipelineName
@@ -18849,7 +18865,11 @@ export interface SimulateIngestRequest extends RequestBase {
 }
 
 export interface SimulateIngestResponse {
-  docs: IngestSimulateDocumentResult[]
+  docs: SimulateIngestSimulateIngestDocumentResult[]
+}
+
+export interface SimulateIngestSimulateIngestDocumentResult {
+  doc?: SimulateIngestIngestDocumentSimulation
 }
 
 export interface SlmConfiguration {
