@@ -21,6 +21,12 @@
         "dockerfile"
       ],
       "pinDigests": false
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "pinDigests": false
     }
   ]
 }
