@@ -34,6 +34,8 @@ export interface BulkCreateOperation extends BulkWriteOperation {
 export interface BulkDeleteOperation extends BulkOperationBase {
 }
 
+export type BulkFailureStoreStatus = 'not_applicable_or_unknown' | 'used' | 'not_enabled' | 'failed'
+
 export interface BulkIndexOperation extends BulkWriteOperation {
 }
 
@@ -59,6 +61,8 @@ export type BulkOperationType = 'index' | 'create' | 'update' | 'delete'
 export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends RequestBase {
 /** The name of the data stream, index, or index alias to perform bulk actions on. */
   index?: IndexName
+  /** True or false if to include the document source in the error message in case of parsing errors. */
+  include_source_on_error?: boolean
   /** If `true`, the response will include the ingest pipelines that were run for each index or create. */
   list_executed_pipelines?: boolean
   /** The pipeline identifier to use to preprocess incoming documents. If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request. If a final pipeline is configured, it will always run regardless of the value of this parameter. */
@@ -83,9 +87,9 @@ export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> ex
   require_data_stream?: boolean
   operations?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }
+  body?: string | { [key: string]: any } & { index?: never, include_source_on_error?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }
+  querystring?: { [key: string]: any } & { index?: never, include_source_on_error?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }
 }
 
 export interface BulkResponse {
@@ -99,6 +103,7 @@ export interface BulkResponseItem {
   _id?: string | null
   _index: string
   status: integer
+  failure_store?: BulkFailureStoreStatus
   error?: ErrorCause
   _primary_term?: long
   result?: string
@@ -207,6 +212,8 @@ export interface CreateRequest<TDocument = unknown> extends RequestBase {
   id: Id
   /** The name of the data stream or index to target. If the target doesn't exist and matches the name or wildcard (`*`) pattern of an index template with a `data_stream` definition, this request creates the data stream. If the target doesn't exist and doesn’t match a data stream template, this request creates the index. */
   index: IndexName
+  /** True or false if to include the document source in the error message in case of parsing errors. */
+  include_source_on_error?: boolean
   /** The ID of the pipeline to use to preprocess incoming documents. If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request. If a final pipeline is configured, it will always run regardless of the value of this parameter. */
   pipeline?: string
   /** If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes. */
@@ -223,9 +230,9 @@ export interface CreateRequest<TDocument = unknown> extends RequestBase {
   wait_for_active_shards?: WaitForActiveShards
   document?: TDocument
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, include_source_on_error?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, include_source_on_error?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }
 }
 
 export type CreateResponse = WriteResponseBase
@@ -895,6 +902,8 @@ export interface IndexRequest<TDocument = unknown> extends RequestBase {
   if_primary_term?: long
   /** Only perform the operation if the document has this sequence number. */
   if_seq_no?: SequenceNumber
+  /** True or false if to include the document source in the error message in case of parsing errors. */
+  include_source_on_error?: boolean
   /** Set to `create` to only index the document if it does not already exist (put if absent). If a document with the specified `_id` already exists, the indexing operation will fail. The behavior is the same as using the `<index>/_create` endpoint. If a document ID is specified, this paramater defaults to `index`. Otherwise, it defaults to `create`. If the request targets a data stream, an `op_type` of `create` is required. */
   op_type?: OpType
   /** The ID of the pipeline to use to preprocess incoming documents. If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request. If a final pipeline is configured it will always run, regardless of the value of this parameter. */
@@ -915,9 +924,9 @@ export interface IndexRequest<TDocument = unknown> extends RequestBase {
   require_alias?: boolean
   document?: TDocument
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, document?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, document?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, document?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, document?: never }
 }
 
 export type IndexResponse = WriteResponseBase
@@ -2577,6 +2586,8 @@ export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> 
   if_primary_term?: long
   /** Only perform the operation if the document has this sequence number. */
   if_seq_no?: SequenceNumber
+  /** True or false if to include the document source in the error message in case of parsing errors. */
+  include_source_on_error?: boolean
   /** The script language. */
   lang?: string
   /** If 'true', Elasticsearch refreshes the affected shards to make this operation visible to search. If 'wait_for', it waits for a refresh to make this operation visible to search. If 'false', it does nothing with refreshes. */
@@ -2610,9 +2621,9 @@ export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> 
   /** If the document does not already exist, the contents of 'upsert' are inserted as a new document. If the document exists, the 'script' is run. */
   upsert?: TDocument
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, lang?: never, refresh?: never, require_alias?: never, retry_on_conflict?: never, routing?: never, timeout?: never, wait_for_active_shards?: never, _source_excludes?: never, _source_includes?: never, detect_noop?: never, doc?: never, doc_as_upsert?: never, script?: never, scripted_upsert?: never, _source?: never, upsert?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, lang?: never, refresh?: never, require_alias?: never, retry_on_conflict?: never, routing?: never, timeout?: never, wait_for_active_shards?: never, _source_excludes?: never, _source_includes?: never, detect_noop?: never, doc?: never, doc_as_upsert?: never, script?: never, scripted_upsert?: never, _source?: never, upsert?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, lang?: never, refresh?: never, require_alias?: never, retry_on_conflict?: never, routing?: never, timeout?: never, wait_for_active_shards?: never, _source_excludes?: never, _source_includes?: never, detect_noop?: never, doc?: never, doc_as_upsert?: never, script?: never, scripted_upsert?: never, _source?: never, upsert?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, lang?: never, refresh?: never, require_alias?: never, retry_on_conflict?: never, routing?: never, timeout?: never, wait_for_active_shards?: never, _source_excludes?: never, _source_includes?: never, detect_noop?: never, doc?: never, doc_as_upsert?: never, script?: never, scripted_upsert?: never, _source?: never, upsert?: never }
 }
 
 export type UpdateResponse<TDocument = unknown> = UpdateUpdateWriteResponseBase<TDocument>
@@ -5232,9 +5243,8 @@ export interface AnalysisEstonianAnalyzer {
 export interface AnalysisFingerprintAnalyzer {
   type: 'fingerprint'
   version?: VersionString
-  max_output_size: integer
-  preserve_original: boolean
-  separator: string
+  max_output_size?: integer
+  separator?: string
   stopwords?: AnalysisStopWords
   stopwords_path?: string
 }
@@ -5598,8 +5608,9 @@ export interface AnalysisPatternAnalyzer {
   version?: VersionString
   flags?: string
   lowercase?: boolean
-  pattern: string
+  pattern?: string
   stopwords?: AnalysisStopWords
+  stopwords_path?: string
 }
 
 export interface AnalysisPatternCaptureTokenFilter extends AnalysisTokenFilterBase {
@@ -5756,6 +5767,7 @@ export interface AnalysisStandardAnalyzer {
   type: 'standard'
   max_token_length?: integer
   stopwords?: AnalysisStopWords
+  stopwords_path?: string
 }
 
 export interface AnalysisStandardTokenizer extends AnalysisTokenizerBase {
@@ -6927,7 +6939,7 @@ export interface QueryDslPercolateQuery extends QueryDslQueryBase {
 
 export interface QueryDslPinnedDoc {
   _id: Id
-  _index: IndexName
+  _index?: IndexName
 }
 
 export interface QueryDslPinnedQuery extends QueryDslQueryBase {
@@ -6997,7 +7009,7 @@ export interface QueryDslQueryContainer {
   span_near?: QueryDslSpanNearQuery
   span_not?: QueryDslSpanNotQuery
   span_or?: QueryDslSpanOrQuery
-  span_term?: Partial<Record<Field, QueryDslSpanTermQuery | string>>
+  span_term?: Partial<Record<Field, QueryDslSpanTermQuery | FieldValue>>
   span_within?: QueryDslSpanWithinQuery
   sparse_vector?: QueryDslSparseVectorQuery
   term?: Partial<Record<Field, QueryDslTermQuery | FieldValue>>
@@ -7197,12 +7209,13 @@ export interface QueryDslSpanQuery {
   span_near?: QueryDslSpanNearQuery
   span_not?: QueryDslSpanNotQuery
   span_or?: QueryDslSpanOrQuery
-  span_term?: Partial<Record<Field, QueryDslSpanTermQuery | string>>
+  span_term?: Partial<Record<Field, QueryDslSpanTermQuery | FieldValue>>
   span_within?: QueryDslSpanWithinQuery
 }
 
 export interface QueryDslSpanTermQuery extends QueryDslQueryBase {
-  value: string
+  value: FieldValue
+  term: FieldValue
 }
 
 export interface QueryDslSpanWithinQuery extends QueryDslQueryBase {
@@ -7344,7 +7357,7 @@ export type AsyncSearchDeleteResponse = AcknowledgedResponseBase
 export interface AsyncSearchGetRequest extends RequestBase {
 /** A unique identifier for the async search. */
   id: Id
-  /** Specifies how long the async search should be available in the cluster. When not specified, the `keep_alive` set with the corresponding submit async request will be used. Otherwise, it is possible to override the value and extend the validity of the request. When this period expires, the search, if still running, is cancelled. If the search is completed, its saved results are deleted. */
+  /** The length of time that the async search should be available in the cluster. When not specified, the `keep_alive` set with the corresponding submit async request will be used. Otherwise, it is possible to override the value and extend the validity of the request. When this period expires, the search, if still running, is cancelled. If the search is completed, its saved results are deleted. */
   keep_alive?: Duration
   /** Specify whether aggregation and suggester names should be prefixed by their respective types in the response */
   typed_keys?: boolean
@@ -7361,7 +7374,7 @@ export type AsyncSearchGetResponse<TDocument = unknown, TAggregations = Record<A
 export interface AsyncSearchStatusRequest extends RequestBase {
 /** A unique identifier for the async search. */
   id: Id
-  /** Specifies how long the async search needs to be available. Ongoing async searches and any saved search results are deleted after this period. */
+  /** The length of time that the async search needs to be available. Ongoing async searches and any saved search results are deleted after this period. */
   keep_alive?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, keep_alive?: never }
@@ -9684,9 +9697,9 @@ export interface CcrShardStats {
 }
 
 export interface CcrDeleteAutoFollowPatternRequest extends RequestBase {
-/** The name of the auto follow pattern. */
+/** The auto-follow pattern collection to delete. */
   name: Name
-  /** Period to wait for a connection to the master node. */
+  /** The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
@@ -9767,9 +9780,9 @@ export interface CcrFollowInfoFollowerIndexParameters {
 export type CcrFollowInfoFollowerIndexStatus = 'active' | 'paused'
 
 export interface CcrFollowInfoRequest extends RequestBase {
-/** A comma-separated list of index patterns; use `_all` to perform the operation on all indices */
+/** A comma-delimited list of follower index patterns. */
   index: Indices
-  /** Period to wait for a connection to the master node. */
+  /** The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, master_timeout?: never }
@@ -12160,7 +12173,7 @@ export interface GraphExploreControls {
 
 export interface GraphHop {
   connections?: GraphHop
-  query: QueryDslQueryContainer
+  query?: QueryDslQueryContainer
   vertices: GraphVertexDefinition[]
 }
 
@@ -12179,14 +12192,14 @@ export interface GraphVertex {
 export interface GraphVertexDefinition {
   exclude?: string[]
   field: Field
-  include?: GraphVertexInclude[]
+  include?: (GraphVertexInclude | string)[]
   min_doc_count?: long
   shard_min_doc_count?: long
   size?: integer
 }
 
 export interface GraphVertexInclude {
-  boost: double
+  boost?: double
   term: string
 }
 
@@ -15044,6 +15057,7 @@ export interface InferenceInferenceEndpointInfo extends InferenceInferenceEndpoi
 
 export interface InferenceInferenceResult {
   text_embedding_bytes?: InferenceTextEmbeddingByteResult[]
+  text_embedding_bits?: InferenceTextEmbeddingByteResult[]
   text_embedding?: InferenceTextEmbeddingResult[]
   sparse_embedding?: InferenceSparseEmbeddingResult[]
   completion?: InferenceCompletionResult[]
@@ -15330,7 +15344,7 @@ export interface IngestDatabaseConfigurationFull {
 }
 
 export interface IngestDateIndexNameProcessor extends IngestProcessorBase {
-  date_formats: string[]
+  date_formats?: string[]
   date_rounding: string
   field: Field
   index_name_format?: string
@@ -15590,7 +15604,7 @@ export interface IngestPipelineSimulation {
 
 export interface IngestProcessorBase {
   description?: string
-  if?: string
+  if?: Script | string
   ignore_failure?: boolean
   on_failure?: IngestProcessorContainer[]
   tag?: string
@@ -16347,20 +16361,21 @@ export interface MlAnomaly {
 }
 
 export interface MlAnomalyCause {
-  actual: double[]
-  by_field_name: Name
-  by_field_value: string
-  correlated_by_field_value: string
-  field_name: Field
-  function: string
-  function_description: string
-  influencers: MlInfluence[]
-  over_field_name: Name
-  over_field_value: string
-  partition_field_name: string
-  partition_field_value: string
+  actual?: double[]
+  by_field_name?: Name
+  by_field_value?: string
+  correlated_by_field_value?: string
+  field_name?: Field
+  function?: string
+  function_description?: string
+  geo_results?: MlGeoResults
+  influencers?: MlInfluence[]
+  over_field_name?: Name
+  over_field_value?: string
+  partition_field_name?: string
+  partition_field_value?: string
   probability: double
-  typical: double[]
+  typical?: double[]
 }
 
 export interface MlAnomalyExplanation {
@@ -16600,8 +16615,8 @@ export interface MlDataframeAnalysis {
 }
 
 export interface MlDataframeAnalysisAnalyzedFields {
-  includes: string[]
-  excludes: string[]
+  includes?: string[]
+  excludes?: string[]
 }
 
 export interface MlDataframeAnalysisClassification extends MlDataframeAnalysis {
@@ -16932,8 +16947,8 @@ export interface MlFilterRef {
 export type MlFilterType = 'include' | 'exclude'
 
 export interface MlGeoResults {
-  actual_point: string
-  typical_point: string
+  actual_point?: string
+  typical_point?: string
 }
 
 export interface MlHyperparameter {
@@ -22884,6 +22899,18 @@ export interface ShutdownPutNodeRequest extends RequestBase {
 
 export type ShutdownPutNodeResponse = AcknowledgedResponseBase
 
+export interface SimulateIngestIngestDocumentSimulationKeys {
+  _id: Id
+  _index: IndexName
+  _source: Record<string, any>
+  _version: SpecUtilsStringified<VersionNumber>
+  executed_pipelines: string[]
+  ignored_fields?: Record<string, string>[]
+  error?: ErrorCause
+}
+export type SimulateIngestIngestDocumentSimulation = SimulateIngestIngestDocumentSimulationKeys
+& { [property: string]: string | Id | IndexName | Record<string, any> | SpecUtilsStringified<VersionNumber> | string[] | Record<string, string>[] | ErrorCause }
+
 export interface SimulateIngestRequest extends RequestBase {
 /** The index to simulate ingesting into. This value can be overridden by specifying an index on each document. If you specify this parameter in the request path, it is used for any documents that do not explicitly specify an index argument. */
   index?: IndexName
@@ -22905,7 +22932,11 @@ export interface SimulateIngestRequest extends RequestBase {
 }
 
 export interface SimulateIngestResponse {
-  docs: IngestSimulateDocumentResult[]
+  docs: SimulateIngestSimulateIngestDocumentResult[]
+}
+
+export interface SimulateIngestSimulateIngestDocumentResult {
+  doc?: SimulateIngestIngestDocumentSimulation
 }
 
 export interface SlmConfiguration {
@@ -23125,7 +23156,7 @@ export type SlmStopResponse = AcknowledgedResponseBase
 
 export interface SnapshotAzureRepository extends SnapshotRepositoryBase {
   type: 'azure'
-  settings: SnapshotAzureRepositorySettings
+  settings?: SnapshotAzureRepositorySettings
 }
 
 export interface SnapshotAzureRepositorySettings extends SnapshotRepositorySettingsBase {
