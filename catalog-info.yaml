@@ -28,6 +28,9 @@ spec:
     spec:
       repository: elastic/elasticsearch-js
       pipeline_file: .buildkite/pipeline.yml
+      env:
+        ELASTIC_SLACK_NOTIFICATIONS_ENABLED: "true"
+        SLACK_NOTIFICATIONS_CHANNEL: "#devtools-notify-javascript"
       teams:
         devtools-team:
           access_level: MANAGE_BUILD_AND_READ
