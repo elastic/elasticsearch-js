@@ -53,7 +53,7 @@ export default class Esql {
   async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest | TB.EsqlAsyncQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryResponse>
   async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest | TB.EsqlAsyncQueryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'profile', 'query', 'tables']
+    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -190,7 +190,7 @@ export default class Esql {
   async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlQueryResponse>
   async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'profile', 'query', 'tables']
+    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
