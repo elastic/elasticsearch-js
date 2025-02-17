@@ -10325,6 +10325,7 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   profile?: boolean
   query: string
   tables?: Record<string, Record<string, EsqlTableValuesContainer>>
+  include_ccs_metadata?: boolean
 }
 
 export type EsqlAsyncQueryResponse = EsqlResult
@@ -10357,6 +10358,7 @@ export interface EsqlQueryRequest extends RequestBase {
   profile?: boolean
   query: string
   tables?: Record<string, Record<string, EsqlTableValuesContainer>>
+  include_ccs_metadata?: boolean
 }
 
 export type EsqlQueryResponse = EsqlResult
@@ -10674,7 +10676,7 @@ export interface IlmExplainLifecycleLifecycleExplainManaged {
   age?: Duration
   failed_step?: Name
   failed_step_retry_count?: integer
-  index?: IndexName
+  index: IndexName
   index_creation_date?: DateTime
   index_creation_date_millis?: EpochTime<UnitMillis>
   is_auto_retryable_error?: boolean
@@ -10684,7 +10686,11 @@ export interface IlmExplainLifecycleLifecycleExplainManaged {
   phase: Name
   phase_time?: DateTime
   phase_time_millis?: EpochTime<UnitMillis>
-  policy: Name
+  policy?: Name
+  previous_step_info?: Record<string, any>
+  repository_name?: string
+  snapshot_name?: string
+  shrink_index_name?: string
   step?: Name
   step_info?: Record<string, any>
   step_time?: DateTime
@@ -10694,6 +10700,7 @@ export interface IlmExplainLifecycleLifecycleExplainManaged {
 }
 
 export interface IlmExplainLifecycleLifecycleExplainPhaseExecution {
+  phase_definition?: IlmPhase
   policy: Name
   version: VersionNumber
   modified_date_in_millis: EpochTime<UnitMillis>
@@ -12673,7 +12680,7 @@ export interface InferenceInferenceResult {
 
 export interface InferenceRankedDocument {
   index: integer
-  score: float
+  relevance_score: float
   text?: string
 }
 
