@@ -52,7 +52,7 @@ export default class Esql {
   async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryResponse>
   async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'profile', 'query', 'tables']
+    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -222,7 +222,7 @@ export default class Esql {
   async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlQueryResponse>
   async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'profile', 'query', 'tables']
+    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
