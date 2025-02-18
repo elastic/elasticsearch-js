@@ -4994,6 +4994,9 @@ and its format can change at any time but it can give some insight into the perf
 of each part of the query.
 ** *`tables` (Optional, Record<string, Record<string, { integer, keyword, long, double }>>)*: Tables to use with the LOOKUP operation. The top level key is the table
 name and the next level key is the column name.
+** *`include_ccs_metadata` (Optional, boolean)*: When set to `true` and performing a cross-cluster query, the response will include an extra `_clusters`
+object with information about the clusters that participated in the search along with info such as shards
+count.
 ** *`delimiter` (Optional, string)*: The character to use between values within a CSV row.
 It is valid only for the CSV format.
 ** *`drop_null_columns` (Optional, boolean)*: Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
@@ -5112,6 +5115,9 @@ and its format can change at any time but it can give some insight into the perf
 of each part of the query.
 ** *`tables` (Optional, Record<string, Record<string, { integer, keyword, long, double }>>)*: Tables to use with the LOOKUP operation. The top level key is the table
 name and the next level key is the column name.
+** *`include_ccs_metadata` (Optional, boolean)*: When set to `true` and performing a cross-cluster query, the response will include an extra `_clusters`
+object with information about the clusters that participated in the search along with info such as shards
+count.
 ** *`format` (Optional, Enum("csv" | "json" | "tsv" | "txt" | "yaml" | "cbor" | "smile" | "arrow"))*: A short version of the Accept header, e.g. json, yaml.
 ** *`delimiter` (Optional, string)*: The character to use between values within a CSV row. Only valid for the CSV format.
 ** *`drop_null_columns` (Optional, boolean)*: Should columns that are entirely `null` be removed from the `columns` and `values` portion of the results?
