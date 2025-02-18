@@ -1992,7 +1992,7 @@ export interface SearchHit<TDocument = unknown> {
   matched_queries?: string[] | Record<string, double>
   _nested?: SearchNestedIdentity
   _ignored?: string[]
-  ignored_field_values?: Record<string, FieldValue[]>
+  ignored_field_values?: Record<string, any[]>
   _shard?: string
   _node?: string
   _routing?: string
@@ -2939,7 +2939,7 @@ export interface FieldSort {
 
 export type FieldSortNumericType = 'long' | 'double' | 'date' | 'date_nanos'
 
-export type FieldValue = long | double | string | boolean | null | any
+export type FieldValue = long | double | string | boolean | null
 
 export interface FielddataStats {
   evictions?: long
@@ -11872,10 +11872,12 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   query: string
   /** Tables to use with the LOOKUP operation. The top level key is the table name and the next level key is the column name. */
   tables?: Record<string, Record<string, EsqlTableValuesContainer>>
+  /** When set to `true` and performing a cross-cluster query, the response will include an extra `_clusters` object with information about the clusters that participated in the search along with info such as shards count. */
+  include_ccs_metadata?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never }
+  body?: string | { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never }
+  querystring?: { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never }
 }
 
 export type EsqlAsyncQueryResponse = EsqlResult
@@ -11941,10 +11943,12 @@ export interface EsqlQueryRequest extends RequestBase {
   query: string
   /** Tables to use with the LOOKUP operation. The top level key is the table name and the next level key is the column name. */
   tables?: Record<string, Record<string, EsqlTableValuesContainer>>
+  /** When set to `true` and performing a cross-cluster query, the response will include an extra `_clusters` object with information about the clusters that participated in the search along with info such as shards count. */
+  include_ccs_metadata?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never }
+  body?: string | { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never }
+  querystring?: { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never }
 }
 
 export type EsqlQueryResponse = EsqlResult
@@ -12348,7 +12352,7 @@ export interface IlmExplainLifecycleLifecycleExplainManaged {
   age?: Duration
   failed_step?: Name
   failed_step_retry_count?: integer
-  index?: IndexName
+  index: IndexName
   index_creation_date?: DateTime
   index_creation_date_millis?: EpochTime<UnitMillis>
   is_auto_retryable_error?: boolean
@@ -12358,7 +12362,11 @@ export interface IlmExplainLifecycleLifecycleExplainManaged {
   phase: Name
   phase_time?: DateTime
   phase_time_millis?: EpochTime<UnitMillis>
-  policy: Name
+  policy?: Name
+  previous_step_info?: Record<string, any>
+  repository_name?: string
+  snapshot_name?: string
+  shrink_index_name?: string
   step?: Name
   step_info?: Record<string, any>
   step_time?: DateTime
@@ -12368,6 +12376,7 @@ export interface IlmExplainLifecycleLifecycleExplainManaged {
 }
 
 export interface IlmExplainLifecycleLifecycleExplainPhaseExecution {
+  phase_definition?: IlmPhase
   policy: Name
   version: VersionNumber
   modified_date_in_millis: EpochTime<UnitMillis>
@@ -15066,7 +15075,7 @@ export interface InferenceInferenceResult {
 
 export interface InferenceRankedDocument {
   index: integer
-  score: float
+  relevance_score: float
   text?: string
 }
 
