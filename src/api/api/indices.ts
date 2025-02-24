@@ -1998,15 +1998,25 @@ export default class Indices {
   async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesPutDataLifecycleResponse>
   async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['lifecycle']
+    const acceptedBody: string[] = ['data_retention', 'downsampling', 'enabled']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
-    let body: any = params.body ?? undefined
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
-        body = params[key]
+        body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {

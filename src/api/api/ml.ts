@@ -2864,6 +2864,7 @@ export default class Ml {
   async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlStartTrainedModelDeploymentResponse>
   async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
+    const acceptedBody: string[] = ['adaptive_allocations']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2878,7 +2879,11 @@ export default class Ml {
     }
 
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
@@ -3273,7 +3278,7 @@ export default class Ml {
   async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlUpdateTrainedModelDeploymentResponse>
   async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['number_of_allocations']
+    const acceptedBody: string[] = ['number_of_allocations', 'adaptive_allocations']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
