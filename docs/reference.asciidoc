@@ -4047,8 +4047,8 @@ client.ilm.start({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`master_timeout` (Optional, string | -1 | 0)*
-** *`timeout` (Optional, string | -1 | 0)*
+** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
+** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
 
 [discrete]
 ==== stop
@@ -4069,8 +4069,8 @@ client.ilm.stop({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`master_timeout` (Optional, string | -1 | 0)*
-** *`timeout` (Optional, string | -1 | 0)*
+** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
+** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
 
 [discrete]
 === indices
@@ -5765,7 +5765,7 @@ client.inference.put({ inference_id })
 * *Request (object):*
 ** *`inference_id` (string)*: The inference Id
 ** *`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion"))*: The task type
-** *`inference_config` (Optional, { service, service_settings, task_settings })*
+** *`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })*
 
 [discrete]
 ==== stream_inference
