@@ -7650,14 +7650,18 @@ export interface CatAliasesAliasesRecord {
 export interface CatAliasesRequest extends CatCatRequestBase {
 /** A comma-separated list of aliases to retrieve. Supports wildcards (`*`). To retrieve all aliases, omit this parameter or use `*` or `_all`. */
   name?: Names
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. To indicated that the request should never timeout, you can set it to `-1`. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { name?: never, h?: never, s?: never, expand_wildcards?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { name?: never, h?: never, s?: never, expand_wildcards?: never, master_timeout?: never }
 }
 
 export type CatAliasesResponse = CatAliasesAliasesRecord[]
@@ -7703,14 +7707,18 @@ export interface CatAllocationRequest extends CatCatRequestBase {
   node_id?: NodeIds
   /** The unit used to display byte values. */
   bytes?: Bytes
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { node_id?: never, bytes?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { node_id?: never, bytes?: never, h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { node_id?: never, bytes?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { node_id?: never, bytes?: never, h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatAllocationResponse = CatAllocationAllocationRecord[]
@@ -7728,14 +7736,18 @@ export interface CatComponentTemplatesComponentTemplate {
 export interface CatComponentTemplatesRequest extends CatCatRequestBase {
 /** The name of the component template. It accepts wildcard expressions. If it is omitted, all component templates are returned. */
   name?: string
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
   /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { name?: never, h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { name?: never, h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatComponentTemplatesResponse = CatComponentTemplatesComponentTemplate[]
@@ -7757,10 +7769,14 @@ export interface CatCountCountRecord {
 export interface CatCountRequest extends CatCatRequestBase {
 /** A comma-separated list of data streams, indices, and aliases used to limit the request. It supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never }
+  body?: string | { [key: string]: any } & { index?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never }
+  querystring?: { [key: string]: any } & { index?: never, h?: never, s?: never }
 }
 
 export type CatCountResponse = CatCountCountRecord[]
@@ -7782,10 +7798,14 @@ export interface CatFielddataRequest extends CatCatRequestBase {
   fields?: Fields
   /** The unit used to display byte values. */
   bytes?: Bytes
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { fields?: never, bytes?: never }
+  body?: string | { [key: string]: any } & { fields?: never, bytes?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { fields?: never, bytes?: never }
+  querystring?: { [key: string]: any } & { fields?: never, bytes?: never, h?: never, s?: never }
 }
 
 export type CatFielddataResponse = CatFielddataFielddataRecord[]
@@ -7848,10 +7868,14 @@ export interface CatHealthRequest extends CatCatRequestBase {
   time?: TimeUnit
   /** If true, returns `HH:MM:SS` and Unix epoch timestamps. */
   ts?: boolean
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { time?: never, ts?: never }
+  body?: string | { [key: string]: any } & { time?: never, ts?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { time?: never, ts?: never }
+  querystring?: { [key: string]: any } & { time?: never, ts?: never, h?: never, s?: never }
 }
 
 export type CatHealthResponse = CatHealthHealthRecord[]
@@ -8174,10 +8198,14 @@ export interface CatIndicesRequest extends CatCatRequestBase {
   time?: TimeUnit
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, bytes?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, time?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { index?: never, bytes?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, time?: never, master_timeout?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, bytes?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, time?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { index?: never, bytes?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, time?: never, master_timeout?: never, h?: never, s?: never }
 }
 
 export type CatIndicesResponse = CatIndicesIndicesRecord[]
@@ -8192,14 +8220,18 @@ export interface CatMasterMasterRecord {
 }
 
 export interface CatMasterRequest extends CatCatRequestBase {
-/** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
+/** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
+  /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatMasterResponse = CatMasterMasterRecord[]
@@ -8609,14 +8641,18 @@ export interface CatNodeattrsNodeAttributesRecord {
 }
 
 export interface CatNodeattrsRequest extends CatCatRequestBase {
-/** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
+/** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
+  /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatNodeattrsResponse = CatNodeattrsNodeAttributesRecord[]
@@ -8898,14 +8934,18 @@ export interface CatNodesRequest extends CatCatRequestBase {
   full_id?: boolean | string
   /** If true, the response includes information from segments that are not loaded into memory. */
   include_unloaded_segments?: boolean
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** Unit used to display time values. */
   time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { bytes?: never, full_id?: never, include_unloaded_segments?: never, master_timeout?: never, time?: never }
+  body?: string | { [key: string]: any } & { bytes?: never, full_id?: never, include_unloaded_segments?: never, h?: never, s?: never, master_timeout?: never, time?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { bytes?: never, full_id?: never, include_unloaded_segments?: never, master_timeout?: never, time?: never }
+  querystring?: { [key: string]: any } & { bytes?: never, full_id?: never, include_unloaded_segments?: never, h?: never, s?: never, master_timeout?: never, time?: never }
 }
 
 export type CatNodesResponse = CatNodesNodesRecord[]
@@ -8922,16 +8962,20 @@ export interface CatPendingTasksPendingTasksRecord {
 }
 
 export interface CatPendingTasksRequest extends CatCatRequestBase {
-/** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
+/** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
+  /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** Unit used to display time values. */
   time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { local?: never, master_timeout?: never, time?: never }
+  body?: string | { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never, time?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { local?: never, master_timeout?: never, time?: never }
+  querystring?: { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never, time?: never }
 }
 
 export type CatPendingTasksResponse = CatPendingTasksPendingTasksRecord[]
@@ -8951,16 +8995,20 @@ export interface CatPluginsPluginsRecord {
 }
 
 export interface CatPluginsRequest extends CatCatRequestBase {
-/** Include bootstrap plugins in the response */
+/** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
+  /** Include bootstrap plugins in the response */
   include_bootstrap?: boolean
   /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { include_bootstrap?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { h?: never, s?: never, include_bootstrap?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { include_bootstrap?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { h?: never, s?: never, include_bootstrap?: never, local?: never, master_timeout?: never }
 }
 
 export type CatPluginsResponse = CatPluginsPluginsRecord[]
@@ -9032,12 +9080,16 @@ export interface CatRecoveryRequest extends CatCatRequestBase {
   bytes?: Bytes
   /** If `true`, the response includes detailed information about shard recoveries. */
   detailed?: boolean
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** Unit used to display time values. */
   time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, active_only?: never, bytes?: never, detailed?: never, time?: never }
+  body?: string | { [key: string]: any } & { index?: never, active_only?: never, bytes?: never, detailed?: never, h?: never, s?: never, time?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, active_only?: never, bytes?: never, detailed?: never, time?: never }
+  querystring?: { [key: string]: any } & { index?: never, active_only?: never, bytes?: never, detailed?: never, h?: never, s?: never, time?: never }
 }
 
 export type CatRecoveryResponse = CatRecoveryRecoveryRecord[]
@@ -9050,14 +9102,18 @@ export interface CatRepositoriesRepositoriesRecord {
 }
 
 export interface CatRepositoriesRequest extends CatCatRequestBase {
-/** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
+/** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
+  /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatRepositoriesResponse = CatRepositoriesRepositoriesRecord[]
@@ -9067,14 +9123,18 @@ export interface CatSegmentsRequest extends CatCatRequestBase {
   index?: Indices
   /** The unit used to display byte values. */
   bytes?: Bytes
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, bytes?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { index?: never, bytes?: never, h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, bytes?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { index?: never, bytes?: never, h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatSegmentsResponse = CatSegmentsSegmentsRecord[]
@@ -9126,14 +9186,18 @@ export interface CatShardsRequest extends CatCatRequestBase {
   index?: Indices
   /** The unit used to display byte values. */
   bytes?: Bytes
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** Unit used to display time values. */
   time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, bytes?: never, master_timeout?: never, time?: never }
+  body?: string | { [key: string]: any } & { index?: never, bytes?: never, h?: never, s?: never, master_timeout?: never, time?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, bytes?: never, master_timeout?: never, time?: never }
+  querystring?: { [key: string]: any } & { index?: never, bytes?: never, h?: never, s?: never, master_timeout?: never, time?: never }
 }
 
 export type CatShardsResponse = CatShardsShardsRecord[]
@@ -9358,14 +9422,18 @@ export interface CatSnapshotsRequest extends CatCatRequestBase {
   repository?: Names
   /** If `true`, the response does not include information from unavailable snapshots. */
   ignore_unavailable?: boolean
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** Unit used to display time values. */
   time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { repository?: never, ignore_unavailable?: never, master_timeout?: never, time?: never }
+  body?: string | { [key: string]: any } & { repository?: never, ignore_unavailable?: never, h?: never, s?: never, master_timeout?: never, time?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { repository?: never, ignore_unavailable?: never, master_timeout?: never, time?: never }
+  querystring?: { [key: string]: any } & { repository?: never, ignore_unavailable?: never, h?: never, s?: never, master_timeout?: never, time?: never }
 }
 
 export type CatSnapshotsResponse = CatSnapshotsSnapshotsRecord[]
@@ -9413,6 +9481,10 @@ export interface CatTasksRequest extends CatCatRequestBase {
   nodes?: string[]
   /** The parent task identifier, which is used to limit the response. */
   parent_task_id?: string
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** Unit used to display time values. */
   time?: TimeUnit
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
@@ -9420,9 +9492,9 @@ export interface CatTasksRequest extends CatCatRequestBase {
   /** If `true`, the request blocks until the task has completed. */
   wait_for_completion?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, time?: never, timeout?: never, wait_for_completion?: never }
+  body?: string | { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, h?: never, s?: never, time?: never, timeout?: never, wait_for_completion?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, time?: never, timeout?: never, wait_for_completion?: never }
+  querystring?: { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, h?: never, s?: never, time?: never, timeout?: never, wait_for_completion?: never }
 }
 
 export type CatTasksResponse = CatTasksTasksRecord[]
@@ -9465,14 +9537,18 @@ export interface CatTasksTasksRecord {
 export interface CatTemplatesRequest extends CatCatRequestBase {
 /** The name of the template to return. Accepts wildcard expressions. If omitted, all templates are returned. */
   name?: Name
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
   local?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { name?: never, h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { name?: never, h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatTemplatesResponse = CatTemplatesTemplatesRecord[]
@@ -9494,6 +9570,10 @@ export interface CatTemplatesTemplatesRecord {
 export interface CatThreadPoolRequest extends CatCatRequestBase {
 /** A comma-separated list of thread pool names used to limit the request. Accepts wildcard expressions. */
   thread_pool_patterns?: Names
+  /** List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
   /** The unit used to display time values. */
   time?: TimeUnit
   /** If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
@@ -9501,9 +9581,9 @@ export interface CatThreadPoolRequest extends CatCatRequestBase {
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { thread_pool_patterns?: never, time?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { thread_pool_patterns?: never, h?: never, s?: never, time?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { thread_pool_patterns?: never, time?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { thread_pool_patterns?: never, h?: never, s?: never, time?: never, local?: never, master_timeout?: never }
 }
 
 export type CatThreadPoolResponse = CatThreadPoolThreadPoolRecord[]
@@ -12441,12 +12521,14 @@ export interface IlmGetStatusResponse {
 export interface IlmMigrateToDataTiersRequest extends RequestBase {
 /** If true, simulates the migration from node attributes based allocation filters to data tiers, but does not perform the migration. This provides a way to retrieve the indices and ILM policies that need to be migrated. */
   dry_run?: boolean
+  /** The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout. */
+  master_timeout?: Duration
   legacy_template_to_delete?: string
   node_attribute?: string
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { dry_run?: never, legacy_template_to_delete?: never, node_attribute?: never }
+  body?: string | { [key: string]: any } & { dry_run?: never, master_timeout?: never, legacy_template_to_delete?: never, node_attribute?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { dry_run?: never, legacy_template_to_delete?: never, node_attribute?: never }
+  querystring?: { [key: string]: any } & { dry_run?: never, master_timeout?: never, legacy_template_to_delete?: never, node_attribute?: never }
 }
 
 export interface IlmMigrateToDataTiersResponse {
@@ -13840,12 +13922,10 @@ export interface IndicesGetFieldMappingRequest extends RequestBase {
   ignore_unavailable?: boolean
   /** If `true`, return all default settings in the response. */
   include_defaults?: boolean
-  /** If `true`, the request retrieves information from the local node only. */
-  local?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { fields?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_defaults?: never, local?: never }
+  body?: string | { [key: string]: any } & { fields?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_defaults?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { fields?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_defaults?: never, local?: never }
+  querystring?: { [key: string]: any } & { fields?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_defaults?: never }
 }
 
 export type IndicesGetFieldMappingResponse = Record<IndexName, IndicesGetFieldMappingTypeFieldMappings>
@@ -14115,11 +14195,16 @@ export interface IndicesPutDataLifecycleRequest extends RequestBase {
   master_timeout?: Duration
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
-  lifecycle?: IndicesDataStreamLifecycle
+  /** If defined, every document added to this data stream will be stored at least for this time frame. Any time after this duration the document could be deleted. When empty, every document in this data stream will be stored indefinitely. */
+  data_retention?: Duration
+  /** The downsampling configuration to execute for the managed backing index after rollover. */
+  downsampling?: IndicesDataStreamLifecycleDownsampling
+  /** If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle that's disabled (enabled: `false`) will have no effect on the data stream. */
+  enabled?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never, lifecycle?: never }
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never, data_retention?: never, downsampling?: never, enabled?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never, lifecycle?: never }
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never, data_retention?: never, downsampling?: never, enabled?: never }
 }
 
 export type IndicesPutDataLifecycleResponse = AcknowledgedResponseBase
@@ -15053,7 +15138,15 @@ export type InferenceDenseByteVector = byte[]
 
 export type InferenceDenseVector = float[]
 
+export interface InferenceInferenceChunkingSettings extends InferenceInferenceEndpoint {
+  max_chunk_size?: integer
+  overlap?: integer
+  sentence_overlap?: integer
+  strategy?: string
+}
+
 export interface InferenceInferenceEndpoint {
+  chunking_settings?: InferenceInferenceChunkingSettings
   service: string
   service_settings: InferenceServiceSettings
   task_settings?: InferenceTaskSettings
@@ -19135,7 +19228,7 @@ export interface MlStartTrainedModelDeploymentRequest extends RequestBase {
   cache_size?: ByteSize
   /** A unique identifier for the deployment of the model. */
   deployment_id?: string
-  /** The number of model allocations on each node where the model is deployed. All allocations on a node share the same copy of the model in memory but use a separate set of threads to evaluate the model. Increasing this value generally increases the throughput. If this setting is greater than the number of hardware threads it will automatically be changed to a value less than the number of hardware threads. */
+  /** The number of model allocations on each node where the model is deployed. All allocations on a node share the same copy of the model in memory but use a separate set of threads to evaluate the model. Increasing this value generally increases the throughput. If this setting is greater than the number of hardware threads it will automatically be changed to a value less than the number of hardware threads. If adaptive_allocations is enabled, do not set this value, because it’s automatically set. */
   number_of_allocations?: integer
   /** The deployment priority. */
   priority?: MlTrainingPriority
@@ -19147,10 +19240,12 @@ export interface MlStartTrainedModelDeploymentRequest extends RequestBase {
   timeout?: Duration
   /** Specifies the allocation status to wait for before returning. */
   wait_for?: MlDeploymentAllocationState
+  /** Adaptive allocations configuration. When enabled, the number of allocations is set based on the current load. If adaptive_allocations is enabled, do not set the number of allocations manually. */
+  adaptive_allocations?: MlAdaptiveAllocationsSettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { model_id?: never, cache_size?: never, deployment_id?: never, number_of_allocations?: never, priority?: never, queue_capacity?: never, threads_per_allocation?: never, timeout?: never, wait_for?: never }
+  body?: string | { [key: string]: any } & { model_id?: never, cache_size?: never, deployment_id?: never, number_of_allocations?: never, priority?: never, queue_capacity?: never, threads_per_allocation?: never, timeout?: never, wait_for?: never, adaptive_allocations?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { model_id?: never, cache_size?: never, deployment_id?: never, number_of_allocations?: never, priority?: never, queue_capacity?: never, threads_per_allocation?: never, timeout?: never, wait_for?: never }
+  querystring?: { [key: string]: any } & { model_id?: never, cache_size?: never, deployment_id?: never, number_of_allocations?: never, priority?: never, queue_capacity?: never, threads_per_allocation?: never, timeout?: never, wait_for?: never, adaptive_allocations?: never }
 }
 
 export interface MlStartTrainedModelDeploymentResponse {
@@ -19410,12 +19505,14 @@ export interface MlUpdateModelSnapshotResponse {
 export interface MlUpdateTrainedModelDeploymentRequest extends RequestBase {
 /** The unique identifier of the trained model. Currently, only PyTorch models are supported. */
   model_id: Id
-  /** The number of model allocations on each node where the model is deployed. All allocations on a node share the same copy of the model in memory but use a separate set of threads to evaluate the model. Increasing this value generally increases the throughput. If this setting is greater than the number of hardware threads it will automatically be changed to a value less than the number of hardware threads. */
+  /** The number of model allocations on each node where the model is deployed. All allocations on a node share the same copy of the model in memory but use a separate set of threads to evaluate the model. Increasing this value generally increases the throughput. If this setting is greater than the number of hardware threads it will automatically be changed to a value less than the number of hardware threads. If adaptive_allocations is enabled, do not set this value, because it’s automatically set. */
   number_of_allocations?: integer
+  /** Adaptive allocations configuration. When enabled, the number of allocations is set based on the current load. If adaptive_allocations is enabled, do not set the number of allocations manually. */
+  adaptive_allocations?: MlAdaptiveAllocationsSettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { model_id?: never, number_of_allocations?: never }
+  body?: string | { [key: string]: any } & { model_id?: never, number_of_allocations?: never, adaptive_allocations?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { model_id?: never, number_of_allocations?: never }
+  querystring?: { [key: string]: any } & { model_id?: never, number_of_allocations?: never, adaptive_allocations?: never }
 }
 
 export interface MlUpdateTrainedModelDeploymentResponse {
@@ -26132,9 +26229,7 @@ export interface SpecUtilsCommonQueryParameters {
 
 export interface SpecUtilsCommonCatQueryParameters {
   format?: string
-  h?: Names
   help?: boolean
-  s?: Names
   v?: boolean
 }
 
