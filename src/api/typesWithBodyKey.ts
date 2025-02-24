@@ -6760,6 +6760,7 @@ export interface AsyncSearchStatusStatusResponseBase extends AsyncSearchAsyncSea
 export interface AsyncSearchSubmitRequest extends RequestBase {
   index?: Indices
   wait_for_completion_timeout?: Duration
+  keep_alive?: Duration
   keep_on_completion?: boolean
   allow_no_indices?: boolean
   allow_partial_search_results?: boolean
@@ -12899,7 +12900,15 @@ export type InferenceDenseByteVector = byte[]
 
 export type InferenceDenseVector = float[]
 
+export interface InferenceInferenceChunkingSettings extends InferenceInferenceEndpoint {
+  max_chunk_size?: integer
+  overlap?: integer
+  sentence_overlap?: integer
+  strategy?: string
+}
+
 export interface InferenceInferenceEndpoint {
+  chunking_settings?: InferenceInferenceChunkingSettings
   service: string
   service_settings: InferenceServiceSettings
   task_settings?: InferenceTaskSettings

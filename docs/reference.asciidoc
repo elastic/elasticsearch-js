@@ -2444,6 +2444,8 @@ aggregation for its associated searches. You can retrieve these stats using
 the indices stats API.
 ** *`wait_for_completion_timeout` (Optional, string | -1 | 0)*: Blocks and waits until the search is completed up to a certain timeout.
 When the async search completes within the timeout, the response won’t include the ID as the results are not stored in the cluster.
+** *`keep_alive` (Optional, string | -1 | 0)*: Specifies how long the async search needs to be available.
+Ongoing async searches and any saved search results are deleted after this period.
 ** *`keep_on_completion` (Optional, boolean)*: If `true`, results are stored for later retrieval when the search completes within the `wait_for_completion_timeout`.
 ** *`allow_no_indices` (Optional, boolean)*: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 ** *`allow_partial_search_results` (Optional, boolean)*: Indicate if an error should be returned if there is a partial search failure or timeout
@@ -7692,7 +7694,7 @@ client.inference.put({ inference_id })
 * *Request (object):*
 ** *`inference_id` (string)*: The inference Id
 ** *`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion"))*: The task type
-** *`inference_config` (Optional, { service, service_settings, task_settings })*
+** *`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })*
 
 [discrete]
 ==== stream_inference
@@ -7743,7 +7745,7 @@ client.inference.update({ inference_id })
 * *Request (object):*
 ** *`inference_id` (string)*: The unique identifier of the inference endpoint.
 ** *`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion"))*: The type of inference task that the model performs.
-** *`inference_config` (Optional, { service, service_settings, task_settings })*
+** *`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })*
 
 [discrete]
 === ingest
