@@ -2459,6 +2459,8 @@ aggregation for its associated searches. You can retrieve these stats using
 the indices stats API.
 ** *`wait_for_completion_timeout` (Optional, string | -1 | 0)*: Blocks and waits until the search is completed up to a certain timeout.
 When the async search completes within the timeout, the response won’t include the ID as the results are not stored in the cluster.
+** *`keep_alive` (Optional, string | -1 | 0)*: Specifies how long the async search needs to be available.
+Ongoing async searches and any saved search results are deleted after this period.
 ** *`keep_on_completion` (Optional, boolean)*: If `true`, results are stored for later retrieval when the search completes within the `wait_for_completion_timeout`.
 ** *`allow_no_indices` (Optional, boolean)*: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 ** *`allow_partial_search_results` (Optional, boolean)*: Indicate if an error should be returned if there is a partial search failure or timeout
@@ -2606,6 +2608,10 @@ client.cat.aliases({ ... })
 
 * *Request (object):*
 ** *`name` (Optional, string | string[])*: A list of aliases to retrieve. Supports wildcards (`*`).  To retrieve all aliases, omit this parameter or use `*` or `_all`.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: The type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 It supports a list of values, such as `open,hidden`.
@@ -2637,6 +2643,10 @@ client.cat.allocation({ ... })
 * *Request (object):*
 ** *`node_id` (Optional, string | string[])*: A list of node identifiers or names used to limit the returned information.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
@@ -2666,6 +2676,10 @@ client.cat.componentTemplates({ ... })
 ** *`name` (Optional, string)*: The name of the component template.
 It accepts wildcard expressions.
 If it is omitted, all component templates are returned.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
@@ -2695,6 +2709,10 @@ client.cat.count({ ... })
 ** *`index` (Optional, string | string[])*: A list of data streams, indices, and aliases used to limit the request.
 It supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 
 [discrete]
 ==== fielddata
@@ -2718,6 +2736,10 @@ client.cat.fielddata({ ... })
 ** *`fields` (Optional, string | string[])*: List of fields used to limit returned information.
 To retrieve all fields, omit this parameter.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 
 [discrete]
 ==== health
@@ -2745,6 +2767,10 @@ client.cat.health({ ... })
 * *Request (object):*
 ** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 ** *`ts` (Optional, boolean)*: If true, returns `HH:MM:SS` and Unix epoch timestamps.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 
 [discrete]
 ==== help
@@ -2797,6 +2823,10 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 ** *`pri` (Optional, boolean)*: If true, the response only includes information from primary shards.
 ** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 
 [discrete]
 ==== master
@@ -2816,6 +2846,10 @@ client.cat.master({ ... })
 ==== Arguments
 
 * *Request (object):*
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
@@ -2973,6 +3007,10 @@ client.cat.nodeattrs({ ... })
 ==== Arguments
 
 * *Request (object):*
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
@@ -2999,6 +3037,10 @@ client.cat.nodes({ ... })
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`full_id` (Optional, boolean | string)*: If `true`, return the full node ID. If `false`, return the shortened node ID.
 ** *`include_unloaded_segments` (Optional, boolean)*: If true, the response includes information from segments that are not loaded into memory.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 ** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
@@ -3019,6 +3061,10 @@ client.cat.pendingTasks({ ... })
 ==== Arguments
 
 * *Request (object):*
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
@@ -3043,6 +3089,10 @@ client.cat.plugins({ ... })
 ==== Arguments
 
 * *Request (object):*
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`include_bootstrap` (Optional, boolean)*: Include bootstrap plugins in the response
 ** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
@@ -3074,6 +3124,10 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 ** *`active_only` (Optional, boolean)*: If `true`, the response only includes ongoing shard recoveries.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`detailed` (Optional, boolean)*: If `true`, the response includes detailed information about shard recoveries.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
 [discrete]
@@ -3093,6 +3147,10 @@ client.cat.repositories({ ... })
 ==== Arguments
 
 * *Request (object):*
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
@@ -3121,6 +3179,10 @@ client.cat.segments({ ... })
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
@@ -3149,6 +3211,10 @@ client.cat.shards({ ... })
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 ** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
@@ -3175,6 +3241,10 @@ Accepts wildcard expressions.
 `_all` returns all repositories.
 If any repository fails during the request, Elasticsearch returns an error.
 ** *`ignore_unavailable` (Optional, boolean)*: If `true`, the response does not include information from unavailable snapshots.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 ** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
@@ -3199,6 +3269,10 @@ client.cat.tasks({ ... })
 ** *`detailed` (Optional, boolean)*: If `true`, the response includes detailed information about shard recoveries.
 ** *`nodes` (Optional, string[])*: Unique node identifiers, which are used to limit the response.
 ** *`parent_task_id` (Optional, string)*: The parent task identifier, which is used to limit the response.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
@@ -3224,6 +3298,10 @@ client.cat.templates({ ... })
 * *Request (object):*
 ** *`name` (Optional, string)*: The name of the template to return.
 Accepts wildcard expressions. If omitted, all templates are returned.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
@@ -3250,6 +3328,10 @@ client.cat.threadPool({ ... })
 * *Request (object):*
 ** *`thread_pool_patterns` (Optional, string | string[])*: A list of thread pool names used to limit the request.
 Accepts wildcard expressions.
+** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+Sorting defaults to ascending and can be changed by setting `:asc`
+or `:desc` as a suffix to the column name.
 ** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 ** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
@@ -6926,7 +7008,12 @@ client.indices.putDataLifecycle({ name })
 ** *`name` (string | string[])*: List of data streams used to limit the request.
 Supports wildcards (`*`).
 To target all data streams use `*` or `_all`.
-** *`lifecycle` (Optional, { data_retention, downsampling, enabled })*
+** *`data_retention` (Optional, string | -1 | 0)*: If defined, every document added to this data stream will be stored at least for this time frame.
+Any time after this duration the document could be deleted.
+When empty, every document in this data stream will be stored indefinitely.
+** *`downsampling` (Optional, { rounds })*: The downsampling configuration to execute for the managed backing index after rollover.
+** *`enabled` (Optional, boolean)*: If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
+that's disabled (enabled: `false`) will have no effect on the data stream.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of data stream that wildcard patterns can match.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `hidden`, `open`, `closed`, `none`.
@@ -7957,7 +8044,7 @@ client.inference.put({ inference_id })
 * *Request (object):*
 ** *`inference_id` (string)*: The inference Id
 ** *`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion"))*: The task type
-** *`inference_config` (Optional, { service, service_settings, task_settings })*
+** *`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })*
 
 [discrete]
 ==== stream_inference
@@ -8032,7 +8119,7 @@ client.inference.update({ inference_id })
 * *Request (object):*
 ** *`inference_id` (string)*: The unique identifier of the inference endpoint.
 ** *`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion"))*: The type of inference task that the model performs.
-** *`inference_config` (Optional, { service, service_settings, task_settings })*
+** *`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })*
 
 [discrete]
 === ingest
