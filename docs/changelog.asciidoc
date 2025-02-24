@@ -2,6 +2,22 @@
 == Release notes
 
 [discrete]
+=== 8.17.1
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Improved support for Elasticsearch `v8.17`
+
+Updated TypeScript types based on fixes and improvements to the Elasticsearch specification.
+
+[discrete]
+===== Report correct transport connection type in telemetry
+
+The client's telemetry reporting mechanism was incorrectly reporting all traffic as using `HttpConnection` when the default is `UndiciConnection`. https://github.com/elastic/elasticsearch-js/issues/2324[#2324]
+
+[discrete]
 === 8.17.0
 
 [discrete]
@@ -12,6 +28,22 @@
 
 You can find all the API changes
 https://www.elastic.co/guide/en/elasticsearch/reference/8.17/release-notes-8.17.0.html[here].
+
+[discrete]
+=== 8.16.4
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Improved support for Elasticsearch `v8.16`
+
+Updated TypeScript types based on fixes and improvements to the Elasticsearch specification.
+
+[discrete]
+===== Report correct transport connection type in telemetry
+
+The client's telemetry reporting mechanism was incorrectly reporting all traffic as using `HttpConnection` when the default is `UndiciConnection`. https://github.com/elastic/elasticsearch-js/issues/2324[#2324]
 
 [discrete]
 === 8.16.3
