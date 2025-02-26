@@ -10,7 +10,7 @@ To check for security updates, go to [Security announcements for the Elastic sta
 
 % Release notes include only features, enhancements, and fixes. Add breaking changes, deprecations, and known issues to the applicable release notes sections. 
 
-% ## version.next [felasticsearch-javascript-client-next-release-notes]
+% ## version.next [elasticsearch-javascript-client-next-release-notes]
 % **Release date:** Month day, year
 
 % ### Features and enhancements [elasticsearch-javascript-client-next-features-enhancements]
