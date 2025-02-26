@@ -35,12 +35,185 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Ccr {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'ccr.delete_auto_follow_pattern': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.follow': {
+        path: [
+          'index'
+        ],
+        body: [
+          'data_stream_name',
+          'leader_index',
+          'max_outstanding_read_requests',
+          'max_outstanding_write_requests',
+          'max_read_request_operation_count',
+          'max_read_request_size',
+          'max_retry_delay',
+          'max_write_buffer_count',
+          'max_write_buffer_size',
+          'max_write_request_operation_count',
+          'max_write_request_size',
+          'read_poll_timeout',
+          'remote_cluster',
+          'settings'
+        ],
+        query: [
+          'master_timeout',
+          'wait_for_active_shards'
+        ]
+      },
+      'ccr.follow_info': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.follow_stats': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'timeout'
+        ]
+      },
+      'ccr.forget_follower': {
+        path: [
+          'index'
+        ],
+        body: [
+          'follower_cluster',
+          'follower_index',
+          'follower_index_uuid',
+          'leader_remote_cluster'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'ccr.get_auto_follow_pattern': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.pause_auto_follow_pattern': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.pause_follow': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.put_auto_follow_pattern': {
+        path: [
+          'name'
+        ],
+        body: [
+          'remote_cluster',
+          'follow_index_pattern',
+          'leader_index_patterns',
+          'leader_index_exclusion_patterns',
+          'max_outstanding_read_requests',
+          'settings',
+          'max_outstanding_write_requests',
+          'read_poll_timeout',
+          'max_read_request_operation_count',
+          'max_read_request_size',
+          'max_retry_delay',
+          'max_write_buffer_count',
+          'max_write_buffer_size',
+          'max_write_request_operation_count',
+          'max_write_request_size'
+        ],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.resume_auto_follow_pattern': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.resume_follow': {
+        path: [
+          'index'
+        ],
+        body: [
+          'max_outstanding_read_requests',
+          'max_outstanding_write_requests',
+          'max_read_request_operation_count',
+          'max_read_request_size',
+          'max_retry_delay',
+          'max_write_buffer_count',
+          'max_write_buffer_size',
+          'max_write_request_operation_count',
+          'max_write_request_size',
+          'read_poll_timeout'
+        ],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.stats': {
+        path: [],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'ccr.unfollow': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      }
+    }
   }
 
   /**
@@ -51,7 +224,10 @@ export default class Ccr {
   async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrDeleteAutoFollowPatternResponse, unknown>>
   async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrDeleteAutoFollowPatternResponse>
   async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.delete_auto_follow_pattern']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -93,8 +269,12 @@ export default class Ccr {
   async follow (this: That, params: T.CcrFollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrFollowResponse, unknown>>
   async follow (this: That, params: T.CcrFollowRequest, options?: TransportRequestOptions): Promise<T.CcrFollowResponse>
   async follow (this: That, params: T.CcrFollowRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['data_stream_name', 'leader_index', 'max_outstanding_read_requests', 'max_outstanding_write_requests', 'max_read_request_operation_count', 'max_read_request_size', 'max_retry_delay', 'max_write_buffer_count', 'max_write_buffer_size', 'max_write_request_operation_count', 'max_write_request_size', 'read_poll_timeout', 'remote_cluster', 'settings']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ccr.follow']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -116,8 +296,14 @@ export default class Ccr {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -140,7 +326,10 @@ export default class Ccr {
   async followInfo (this: That, params: T.CcrFollowInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrFollowInfoResponse, unknown>>
   async followInfo (this: That, params: T.CcrFollowInfoRequest, options?: TransportRequestOptions): Promise<T.CcrFollowInfoResponse>
   async followInfo (this: That, params: T.CcrFollowInfoRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.follow_info']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -182,7 +371,10 @@ export default class Ccr {
   async followStats (this: That, params: T.CcrFollowStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrFollowStatsResponse, unknown>>
   async followStats (this: That, params: T.CcrFollowStatsRequest, options?: TransportRequestOptions): Promise<T.CcrFollowStatsResponse>
   async followStats (this: That, params: T.CcrFollowStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.follow_stats']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -224,8 +416,12 @@ export default class Ccr {
   async forgetFollower (this: That, params: T.CcrForgetFollowerRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrForgetFollowerResponse, unknown>>
   async forgetFollower (this: That, params: T.CcrForgetFollowerRequest, options?: TransportRequestOptions): Promise<T.CcrForgetFollowerResponse>
   async forgetFollower (this: That, params: T.CcrForgetFollowerRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['follower_cluster', 'follower_index', 'follower_index_uuid', 'leader_remote_cluster']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ccr.forget_follower']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -247,8 +443,14 @@ export default class Ccr {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -271,7 +473,10 @@ export default class Ccr {
   async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrGetAutoFollowPatternResponse, unknown>>
   async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrGetAutoFollowPatternResponse>
   async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.get_auto_follow_pattern']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -321,7 +526,10 @@ export default class Ccr {
   async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrPauseAutoFollowPatternResponse, unknown>>
   async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrPauseAutoFollowPatternResponse>
   async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.pause_auto_follow_pattern']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -363,7 +571,10 @@ export default class Ccr {
   async pauseFollow (this: That, params: T.CcrPauseFollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrPauseFollowResponse, unknown>>
   async pauseFollow (this: That, params: T.CcrPauseFollowRequest, options?: TransportRequestOptions): Promise<T.CcrPauseFollowResponse>
   async pauseFollow (this: That, params: T.CcrPauseFollowRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.pause_follow']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -405,8 +616,12 @@ export default class Ccr {
   async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrPutAutoFollowPatternResponse, unknown>>
   async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrPutAutoFollowPatternResponse>
   async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['remote_cluster', 'follow_index_pattern', 'leader_index_patterns', 'leader_index_exclusion_patterns', 'max_outstanding_read_requests', 'settings', 'max_outstanding_write_requests', 'read_poll_timeout', 'max_read_request_operation_count', 'max_read_request_size', 'max_retry_delay', 'max_write_buffer_count', 'max_write_buffer_size', 'max_write_request_operation_count', 'max_write_request_size']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ccr.put_auto_follow_pattern']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -428,8 +643,14 @@ export default class Ccr {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -452,7 +673,10 @@ export default class Ccr {
   async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrResumeAutoFollowPatternResponse, unknown>>
   async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrResumeAutoFollowPatternResponse>
   async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.resume_auto_follow_pattern']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -494,8 +718,12 @@ export default class Ccr {
   async resumeFollow (this: That, params: T.CcrResumeFollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrResumeFollowResponse, unknown>>
   async resumeFollow (this: That, params: T.CcrResumeFollowRequest, options?: TransportRequestOptions): Promise<T.CcrResumeFollowResponse>
   async resumeFollow (this: That, params: T.CcrResumeFollowRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['max_outstanding_read_requests', 'max_outstanding_write_requests', 'max_read_request_operation_count', 'max_read_request_size', 'max_retry_delay', 'max_write_buffer_count', 'max_write_buffer_size', 'max_write_request_operation_count', 'max_write_request_size', 'read_poll_timeout']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ccr.resume_follow']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -517,8 +745,14 @@ export default class Ccr {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -541,7 +775,10 @@ export default class Ccr {
   async stats (this: That, params?: T.CcrStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrStatsResponse, unknown>>
   async stats (this: That, params?: T.CcrStatsRequest, options?: TransportRequestOptions): Promise<T.CcrStatsResponse>
   async stats (this: That, params?: T.CcrStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.stats']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -581,7 +818,10 @@ export default class Ccr {
   async unfollow (this: That, params: T.CcrUnfollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrUnfollowResponse, unknown>>
   async unfollow (this: That, params: T.CcrUnfollowRequest, options?: TransportRequestOptions): Promise<T.CcrUnfollowResponse>
   async unfollow (this: That, params: T.CcrUnfollowRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.unfollow']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

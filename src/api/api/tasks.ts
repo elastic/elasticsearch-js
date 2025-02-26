@@ -35,12 +35,54 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
 
 export default class Tasks {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'tasks.cancel': {
+        path: [
+          'task_id'
+        ],
+        body: [],
+        query: [
+          'actions',
+          'nodes',
+          'parent_task_id',
+          'wait_for_completion'
+        ]
+      },
+      'tasks.get': {
+        path: [
+          'task_id'
+        ],
+        body: [],
+        query: [
+          'timeout',
+          'wait_for_completion'
+        ]
+      },
+      'tasks.list': {
+        path: [],
+        body: [],
+        query: [
+          'actions',
+          'detailed',
+          'group_by',
+          'nodes',
+          'parent_task_id',
+          'timeout',
+          'wait_for_completion'
+        ]
+      }
+    }
   }
 
   /**
@@ -51,7 +93,10 @@ export default class Tasks {
   async cancel (this: That, params?: T.TasksCancelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TasksCancelResponse, unknown>>
   async cancel (this: That, params?: T.TasksCancelRequest, options?: TransportRequestOptions): Promise<T.TasksCancelResponse>
   async cancel (this: That, params?: T.TasksCancelRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['tasks.cancel']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -101,7 +146,10 @@ export default class Tasks {
   async get (this: That, params: T.TasksGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TasksGetResponse, unknown>>
   async get (this: That, params: T.TasksGetRequest, options?: TransportRequestOptions): Promise<T.TasksGetResponse>
   async get (this: That, params: T.TasksGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['tasks.get']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -143,7 +191,10 @@ export default class Tasks {
   async list (this: That, params?: T.TasksListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TasksListResponse, unknown>>
   async list (this: That, params?: T.TasksListRequest, options?: TransportRequestOptions): Promise<T.TasksListResponse>
   async list (this: That, params?: T.TasksListRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['tasks.list']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

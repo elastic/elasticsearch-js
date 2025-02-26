@@ -35,12 +35,120 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Ilm {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'ilm.delete_lifecycle': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'ilm.explain_lifecycle': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'only_errors',
+          'only_managed',
+          'master_timeout'
+        ]
+      },
+      'ilm.get_lifecycle': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'ilm.get_status': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'ilm.migrate_to_data_tiers': {
+        path: [],
+        body: [
+          'legacy_template_to_delete',
+          'node_attribute'
+        ],
+        query: [
+          'dry_run',
+          'master_timeout'
+        ]
+      },
+      'ilm.move_to_step': {
+        path: [
+          'index'
+        ],
+        body: [
+          'current_step',
+          'next_step'
+        ],
+        query: []
+      },
+      'ilm.put_lifecycle': {
+        path: [
+          'name'
+        ],
+        body: [
+          'policy'
+        ],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'ilm.remove_policy': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: []
+      },
+      'ilm.retry': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: []
+      },
+      'ilm.start': {
+        path: [],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'ilm.stop': {
+        path: [],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      }
+    }
   }
 
   /**
@@ -51,7 +159,10 @@ export default class Ilm {
   async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmDeleteLifecycleResponse, unknown>>
   async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmDeleteLifecycleResponse>
   async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ilm.delete_lifecycle']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -93,7 +204,10 @@ export default class Ilm {
   async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmExplainLifecycleResponse, unknown>>
   async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmExplainLifecycleResponse>
   async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ilm.explain_lifecycle']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -135,7 +249,10 @@ export default class Ilm {
   async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmGetLifecycleResponse, unknown>>
   async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmGetLifecycleResponse>
   async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ilm.get_lifecycle']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -185,7 +302,10 @@ export default class Ilm {
   async getStatus (this: That, params?: T.IlmGetStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmGetStatusResponse, unknown>>
   async getStatus (this: That, params?: T.IlmGetStatusRequest, options?: TransportRequestOptions): Promise<T.IlmGetStatusResponse>
   async getStatus (this: That, params?: T.IlmGetStatusRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ilm.get_status']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -225,8 +345,12 @@ export default class Ilm {
   async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmMigrateToDataTiersResponse, unknown>>
   async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest, options?: TransportRequestOptions): Promise<T.IlmMigrateToDataTiersResponse>
   async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['legacy_template_to_delete', 'node_attribute']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ilm.migrate_to_data_tiers']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -249,8 +373,14 @@ export default class Ilm {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -270,8 +400,12 @@ export default class Ilm {
   async moveToStep (this: That, params: T.IlmMoveToStepRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmMoveToStepResponse, unknown>>
   async moveToStep (this: That, params: T.IlmMoveToStepRequest, options?: TransportRequestOptions): Promise<T.IlmMoveToStepResponse>
   async moveToStep (this: That, params: T.IlmMoveToStepRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['current_step', 'next_step']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ilm.move_to_step']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -293,8 +427,14 @@ export default class Ilm {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -317,8 +457,12 @@ export default class Ilm {
   async putLifecycle (this: That, params: T.IlmPutLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmPutLifecycleResponse, unknown>>
   async putLifecycle (this: That, params: T.IlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmPutLifecycleResponse>
   async putLifecycle (this: That, params: T.IlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['policy']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ilm.put_lifecycle']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -340,8 +484,14 @@ export default class Ilm {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -364,7 +514,10 @@ export default class Ilm {
   async removePolicy (this: That, params: T.IlmRemovePolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmRemovePolicyResponse, unknown>>
   async removePolicy (this: That, params: T.IlmRemovePolicyRequest, options?: TransportRequestOptions): Promise<T.IlmRemovePolicyResponse>
   async removePolicy (this: That, params: T.IlmRemovePolicyRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ilm.remove_policy']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -406,7 +559,10 @@ export default class Ilm {
   async retry (this: That, params: T.IlmRetryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmRetryResponse, unknown>>
   async retry (this: That, params: T.IlmRetryRequest, options?: TransportRequestOptions): Promise<T.IlmRetryResponse>
   async retry (this: That, params: T.IlmRetryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ilm.retry']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -448,7 +604,10 @@ export default class Ilm {
   async start (this: That, params?: T.IlmStartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmStartResponse, unknown>>
   async start (this: That, params?: T.IlmStartRequest, options?: TransportRequestOptions): Promise<T.IlmStartResponse>
   async start (this: That, params?: T.IlmStartRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ilm.start']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -488,7 +647,10 @@ export default class Ilm {
   async stop (this: That, params?: T.IlmStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmStopResponse, unknown>>
   async stop (this: That, params?: T.IlmStopRequest, options?: TransportRequestOptions): Promise<T.IlmStopResponse>
   async stop (this: That, params?: T.IlmStopRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ilm.stop']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

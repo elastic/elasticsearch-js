@@ -35,7 +35,25 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  render_search_template: {
+    path: [],
+    body: [
+      'id',
+      'file',
+      'params',
+      'source'
+    ],
+    query: []
+  }
+}
 
 /**
   * Render a search template. Render a search template as a search request body.
@@ -45,8 +63,12 @@ export default async function RenderSearchTemplateApi (this: That, params?: T.Re
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RenderSearchTemplateResponse, unknown>>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<T.RenderSearchTemplateResponse>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = []
-  const acceptedBody: string[] = ['id', 'file', 'params', 'source']
+  const {
+    path: acceptedPath,
+    body: acceptedBody,
+    query: acceptedQuery
+  } = acceptedParams.render_search_template
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -69,8 +91,14 @@ export default async function RenderSearchTemplateApi (this: That, params?: T.Re
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      // @ts-expect-error
-      querystring[key] = params[key]
+      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      } else {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     }
   }
 

@@ -35,7 +35,22 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  update_by_query_rethrottle: {
+    path: [
+      'task_id'
+    ],
+    body: [],
+    query: [
+      'requests_per_second'
+    ]
+  }
+}
 
 /**
   * Throttle an update by query operation. Change the number of requests per second for a particular update by query operation. Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
@@ -45,7 +60,10 @@ export default async function UpdateByQueryRethrottleApi (this: That, params: T.
 export default async function UpdateByQueryRethrottleApi (this: That, params: T.UpdateByQueryRethrottleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.UpdateByQueryRethrottleResponse, unknown>>
 export default async function UpdateByQueryRethrottleApi (this: That, params: T.UpdateByQueryRethrottleRequest, options?: TransportRequestOptions): Promise<T.UpdateByQueryRethrottleResponse>
 export default async function UpdateByQueryRethrottleApi (this: That, params: T.UpdateByQueryRethrottleRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['task_id']
+  const {
+    path: acceptedPath
+  } = acceptedParams.update_by_query_rethrottle
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
