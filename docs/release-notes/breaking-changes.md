@@ -5,7 +5,7 @@ navigation_title: "Elasticsearch JavaScript Client"
 # Elasticsearch JavaScript Client breaking changes [elasticsearch-javascript-client-breaking-changes]
 Before you upgrade, carefully review the Elasticsearch JavaScript Client breaking changes and take the necessary steps to mitigate any issues. 
 
-To learn how to upgrade, check out <uprade docs>.
+To learn how to upgrade, check out <upgrade docs>.
 
 % ## Next version [elasticsearch-javascript-client-versionnext-breaking-changes]
 % **Release date:** Month day, year
