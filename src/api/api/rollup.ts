@@ -35,12 +35,97 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Rollup {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'rollup.delete_job': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'rollup.get_jobs': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'rollup.get_rollup_caps': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'rollup.get_rollup_index_caps': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: []
+      },
+      'rollup.put_job': {
+        path: [
+          'id'
+        ],
+        body: [
+          'cron',
+          'groups',
+          'index_pattern',
+          'metrics',
+          'page_size',
+          'rollup_index',
+          'timeout',
+          'headers'
+        ],
+        query: []
+      },
+      'rollup.rollup_search': {
+        path: [
+          'index'
+        ],
+        body: [
+          'aggregations',
+          'aggs',
+          'query',
+          'size'
+        ],
+        query: [
+          'rest_total_hits_as_int',
+          'typed_keys'
+        ]
+      },
+      'rollup.start_job': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'rollup.stop_job': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'timeout',
+          'wait_for_completion'
+        ]
+      }
+    }
   }
 
   /**
@@ -51,7 +136,10 @@ export default class Rollup {
   async deleteJob (this: That, params: T.RollupDeleteJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupDeleteJobResponse, unknown>>
   async deleteJob (this: That, params: T.RollupDeleteJobRequest, options?: TransportRequestOptions): Promise<T.RollupDeleteJobResponse>
   async deleteJob (this: That, params: T.RollupDeleteJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['rollup.delete_job']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -93,7 +181,10 @@ export default class Rollup {
   async getJobs (this: That, params?: T.RollupGetJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetJobsResponse, unknown>>
   async getJobs (this: That, params?: T.RollupGetJobsRequest, options?: TransportRequestOptions): Promise<T.RollupGetJobsResponse>
   async getJobs (this: That, params?: T.RollupGetJobsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['rollup.get_jobs']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -143,7 +234,10 @@ export default class Rollup {
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetRollupCapsResponse, unknown>>
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest, options?: TransportRequestOptions): Promise<T.RollupGetRollupCapsResponse>
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['rollup.get_rollup_caps']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -193,7 +287,10 @@ export default class Rollup {
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetRollupIndexCapsResponse, unknown>>
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptions): Promise<T.RollupGetRollupIndexCapsResponse>
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['rollup.get_rollup_index_caps']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -235,8 +332,12 @@ export default class Rollup {
   async putJob (this: That, params: T.RollupPutJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupPutJobResponse, unknown>>
   async putJob (this: That, params: T.RollupPutJobRequest, options?: TransportRequestOptions): Promise<T.RollupPutJobResponse>
   async putJob (this: That, params: T.RollupPutJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['cron', 'groups', 'index_pattern', 'metrics', 'page_size', 'rollup_index', 'timeout', 'headers']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['rollup.put_job']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -258,8 +359,14 @@ export default class Rollup {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -282,8 +389,12 @@ export default class Rollup {
   async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupRollupSearchResponse<TDocument, TAggregations>, unknown>>
   async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<T.RollupRollupSearchResponse<TDocument, TAggregations>>
   async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['aggregations', 'aggs', 'query', 'size']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['rollup.rollup_search']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -305,8 +416,14 @@ export default class Rollup {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -329,7 +446,10 @@ export default class Rollup {
   async startJob (this: That, params: T.RollupStartJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupStartJobResponse, unknown>>
   async startJob (this: That, params: T.RollupStartJobRequest, options?: TransportRequestOptions): Promise<T.RollupStartJobResponse>
   async startJob (this: That, params: T.RollupStartJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['rollup.start_job']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -371,7 +491,10 @@ export default class Rollup {
   async stopJob (this: That, params: T.RollupStopJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupStopJobResponse, unknown>>
   async stopJob (this: That, params: T.RollupStopJobRequest, options?: TransportRequestOptions): Promise<T.RollupStopJobResponse>
   async stopJob (this: That, params: T.RollupStopJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['rollup.stop_job']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

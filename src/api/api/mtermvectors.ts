@@ -35,7 +35,38 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  mtermvectors: {
+    path: [
+      'index'
+    ],
+    body: [
+      'docs',
+      'ids'
+    ],
+    query: [
+      'ids',
+      'fields',
+      'field_statistics',
+      'offsets',
+      'payloads',
+      'positions',
+      'preference',
+      'realtime',
+      'routing',
+      'term_statistics',
+      'version',
+      'version_type'
+    ]
+  }
+}
 
 /**
   * Get multiple term vectors. Get multiple term vectors with a single request. You can specify existing documents by index and ID or provide artificial documents in the body of the request. You can specify the index in the request body or request URI. The response contains a `docs` array with all the fetched termvectors. Each element has the structure provided by the termvectors API. **Artificial documents** You can also use `mtermvectors` to generate term vectors for artificial documents provided in the body of the request. The mapping used is determined by the specified `_index`.
@@ -45,8 +76,12 @@ export default async function MtermvectorsApi (this: That, params?: T.Mtermvecto
 export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MtermvectorsResponse, unknown>>
 export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest, options?: TransportRequestOptions): Promise<T.MtermvectorsResponse>
 export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['docs', 'ids']
+  const {
+    path: acceptedPath,
+    body: acceptedBody,
+    query: acceptedQuery
+  } = acceptedParams.mtermvectors
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -69,8 +104,14 @@ export default async function MtermvectorsApi (this: That, params?: T.Mtermvecto
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      // @ts-expect-error
-      querystring[key] = params[key]
+      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      } else {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     }
   }
 

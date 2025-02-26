@@ -35,7 +35,18 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  get_script_languages: {
+    path: [],
+    body: [],
+    query: []
+  }
+}
 
 /**
   * Get script languages. Get a list of available script types, languages, and contexts.
@@ -45,7 +56,10 @@ export default async function GetScriptLanguagesApi (this: That, params?: T.GetS
 export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptLanguagesResponse, unknown>>
 export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptions): Promise<T.GetScriptLanguagesResponse>
 export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = []
+  const {
+    path: acceptedPath
+  } = acceptedParams.get_script_languages
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
