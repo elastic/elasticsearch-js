@@ -1,0 +1,34 @@
+toc:
+  - file: index.md
+  - file: getting-started.md
+  - file: installation.md
+  - file: connecting.md
+  - file: configuration.md
+    children:
+      - file: basic-config.md
+      - file: advanced-config.md
+      - file: child.md
+      - file: client-testing.md
+  - file: integrations.md
+    children:
+      - file: observability.md
+      - file: transport.md
+      - file: typescript.md
+  - file: api-reference.md
+  - file: examples.md
+    children:
+      - file: as_stream_examples.md
+      - file: bulk_examples.md
+      - file: exists_examples.md
+      - file: get_examples.md
+      - file: ignore_examples.md
+      - file: msearch_examples.md
+      - file: scroll_examples.md
+      - file: search_examples.md
+      - file: suggest_examples.md
+      - file: transport_request_examples.md
+      - file: sql_query_examples.md
+      - file: update_examples.md
+      - file: update_by_query_examples.md
+      - file: reindex_examples.md
+  - file: client-helpers.md
