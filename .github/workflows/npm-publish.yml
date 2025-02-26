@@ -23,19 +23,38 @@ jobs:
       - run: npm install -g npm
       - run: npm install
       - run: npm test
-      - run: npm publish --provenance --access public --tag alpha
+      - name: npm publish
+        run: |
+          version=$(jq -r .version package.json)
+          tag_meta=$(echo "$version" | cut -s -d '-' -f2)
+          if [[ -z "$tag_meta" ]]; then
+            npm publish --provenance --access public
+          else
+            tag=$(echo "$tag_meta" | cut -d '.' -f1)
+            npm publish --provenance --access public --tag "$tag"
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish version on GitHub
         run: |
           version=$(jq -r .version package.json)
-          gh release create \
-            -n "This is a 9.0.0 pre-release alpha. Changes may not be stable." \
-            --latest=false \
-            --prerelease \
-            --target "$BRANCH_NAME" \
-            --title "v$version" \
-            "v$version"
+          tag_meta=$(echo "$version" | cut -s -d '-' -f2)
+          if [[ -z "$tag_meta" ]]; then
+            gh release create \
+              -n "[Changelog](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/$BRANCH_NAME/changelog-client.html)"
+              --target "$BRANCH_NAME" \
+              --title "v$version" \
+              "v$version"
+          else
+            tag_main=$(echo "$version" | cut -d '-' -f1)
+            gh release create \
+              -n "This is a $tag_main pre-release. Changes may not be stable." \
+              --latest=false \
+              --prerelease \
+              --target "$BRANCH_NAME" \
+              --title "v$version" \
+              "v$version"
+          fi
         env:
           BRANCH_NAME: ${{ github.event.inputs.branch }}
           GH_TOKEN: ${{ github.token }}
