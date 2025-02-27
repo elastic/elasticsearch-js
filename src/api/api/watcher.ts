@@ -35,148 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+interface That { transport: Transport }
 
 export default class Watcher {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'watcher.ack_watch': {
-        path: [
-          'watch_id',
-          'action_id'
-        ],
-        body: [],
-        query: []
-      },
-      'watcher.activate_watch': {
-        path: [
-          'watch_id'
-        ],
-        body: [],
-        query: []
-      },
-      'watcher.deactivate_watch': {
-        path: [
-          'watch_id'
-        ],
-        body: [],
-        query: []
-      },
-      'watcher.delete_watch': {
-        path: [
-          'id'
-        ],
-        body: [],
-        query: []
-      },
-      'watcher.execute_watch': {
-        path: [
-          'id'
-        ],
-        body: [
-          'action_modes',
-          'alternative_input',
-          'ignore_condition',
-          'record_execution',
-          'simulated_actions',
-          'trigger_data',
-          'watch'
-        ],
-        query: [
-          'debug'
-        ]
-      },
-      'watcher.get_settings': {
-        path: [],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      },
-      'watcher.get_watch': {
-        path: [
-          'id'
-        ],
-        body: [],
-        query: []
-      },
-      'watcher.put_watch': {
-        path: [
-          'id'
-        ],
-        body: [
-          'actions',
-          'condition',
-          'input',
-          'metadata',
-          'throttle_period',
-          'throttle_period_in_millis',
-          'transform',
-          'trigger'
-        ],
-        query: [
-          'active',
-          'if_primary_term',
-          'if_seq_no',
-          'version'
-        ]
-      },
-      'watcher.query_watches': {
-        path: [],
-        body: [
-          'from',
-          'size',
-          'query',
-          'sort',
-          'search_after'
-        ],
-        query: []
-      },
-      'watcher.start': {
-        path: [],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      },
-      'watcher.stats': {
-        path: [
-          'metric'
-        ],
-        body: [],
-        query: [
-          'emit_stacktraces',
-          'metric'
-        ]
-      },
-      'watcher.stop': {
-        path: [],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      },
-      'watcher.update_settings': {
-        path: [],
-        body: [
-          'index.auto_expand_replicas',
-          'index.number_of_replicas'
-        ],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      }
-    }
   }
 
   /**
@@ -187,10 +51,7 @@ export default class Watcher {
   async ackWatch (this: That, params: T.WatcherAckWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherAckWatchResponse, unknown>>
   async ackWatch (this: That, params: T.WatcherAckWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherAckWatchResponse>
   async ackWatch (this: That, params: T.WatcherAckWatchRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['watcher.ack_watch']
-
+    const acceptedPath: string[] = ['watch_id', 'action_id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -240,10 +101,7 @@ export default class Watcher {
   async activateWatch (this: That, params: T.WatcherActivateWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherActivateWatchResponse, unknown>>
   async activateWatch (this: That, params: T.WatcherActivateWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherActivateWatchResponse>
   async activateWatch (this: That, params: T.WatcherActivateWatchRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['watcher.activate_watch']
-
+    const acceptedPath: string[] = ['watch_id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -285,10 +143,7 @@ export default class Watcher {
   async deactivateWatch (this: That, params: T.WatcherDeactivateWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherDeactivateWatchResponse, unknown>>
   async deactivateWatch (this: That, params: T.WatcherDeactivateWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherDeactivateWatchResponse>
   async deactivateWatch (this: That, params: T.WatcherDeactivateWatchRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['watcher.deactivate_watch']
-
+    const acceptedPath: string[] = ['watch_id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -330,10 +185,7 @@ export default class Watcher {
   async deleteWatch (this: That, params: T.WatcherDeleteWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherDeleteWatchResponse, unknown>>
   async deleteWatch (this: That, params: T.WatcherDeleteWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherDeleteWatchResponse>
   async deleteWatch (this: That, params: T.WatcherDeleteWatchRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['watcher.delete_watch']
-
+    const acceptedPath: string[] = ['id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -375,12 +227,8 @@ export default class Watcher {
   async executeWatch (this: That, params?: T.WatcherExecuteWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherExecuteWatchResponse, unknown>>
   async executeWatch (this: That, params?: T.WatcherExecuteWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherExecuteWatchResponse>
   async executeWatch (this: That, params?: T.WatcherExecuteWatchRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['watcher.execute_watch']
-
+    const acceptedPath: string[] = ['id']
+    const acceptedBody: string[] = ['action_modes', 'alternative_input', 'ignore_condition', 'record_execution', 'simulated_actions', 'trigger_data', 'watch']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -403,14 +251,8 @@ export default class Watcher {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -440,10 +282,7 @@ export default class Watcher {
   async getSettings (this: That, params?: T.WatcherGetSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherGetSettingsResponse, unknown>>
   async getSettings (this: That, params?: T.WatcherGetSettingsRequest, options?: TransportRequestOptions): Promise<T.WatcherGetSettingsResponse>
   async getSettings (this: That, params?: T.WatcherGetSettingsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['watcher.get_settings']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -483,10 +322,7 @@ export default class Watcher {
   async getWatch (this: That, params: T.WatcherGetWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherGetWatchResponse, unknown>>
   async getWatch (this: That, params: T.WatcherGetWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherGetWatchResponse>
   async getWatch (this: That, params: T.WatcherGetWatchRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['watcher.get_watch']
-
+    const acceptedPath: string[] = ['id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -528,12 +364,8 @@ export default class Watcher {
   async putWatch (this: That, params: T.WatcherPutWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherPutWatchResponse, unknown>>
   async putWatch (this: That, params: T.WatcherPutWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherPutWatchResponse>
   async putWatch (this: That, params: T.WatcherPutWatchRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['watcher.put_watch']
-
+    const acceptedPath: string[] = ['id']
+    const acceptedBody: string[] = ['actions', 'condition', 'input', 'metadata', 'throttle_period', 'throttle_period_in_millis', 'transform', 'trigger']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -555,14 +387,8 @@ export default class Watcher {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -585,12 +411,8 @@ export default class Watcher {
   async queryWatches (this: That, params?: T.WatcherQueryWatchesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherQueryWatchesResponse, unknown>>
   async queryWatches (this: That, params?: T.WatcherQueryWatchesRequest, options?: TransportRequestOptions): Promise<T.WatcherQueryWatchesResponse>
   async queryWatches (this: That, params?: T.WatcherQueryWatchesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['watcher.query_watches']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['from', 'size', 'query', 'sort', 'search_after']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -613,14 +435,8 @@ export default class Watcher {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -640,10 +456,7 @@ export default class Watcher {
   async start (this: That, params?: T.WatcherStartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherStartResponse, unknown>>
   async start (this: That, params?: T.WatcherStartRequest, options?: TransportRequestOptions): Promise<T.WatcherStartResponse>
   async start (this: That, params?: T.WatcherStartRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['watcher.start']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -683,10 +496,7 @@ export default class Watcher {
   async stats (this: That, params?: T.WatcherStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherStatsResponse, unknown>>
   async stats (this: That, params?: T.WatcherStatsRequest, options?: TransportRequestOptions): Promise<T.WatcherStatsResponse>
   async stats (this: That, params?: T.WatcherStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['watcher.stats']
-
+    const acceptedPath: string[] = ['metric']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -736,10 +546,7 @@ export default class Watcher {
   async stop (this: That, params?: T.WatcherStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherStopResponse, unknown>>
   async stop (this: That, params?: T.WatcherStopRequest, options?: TransportRequestOptions): Promise<T.WatcherStopResponse>
   async stop (this: That, params?: T.WatcherStopRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['watcher.stop']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -779,12 +586,8 @@ export default class Watcher {
   async updateSettings (this: That, params?: T.WatcherUpdateSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherUpdateSettingsResponse, unknown>>
   async updateSettings (this: That, params?: T.WatcherUpdateSettingsRequest, options?: TransportRequestOptions): Promise<T.WatcherUpdateSettingsResponse>
   async updateSettings (this: That, params?: T.WatcherUpdateSettingsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['watcher.update_settings']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['index.auto_expand_replicas', 'index.number_of_replicas']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -807,14 +610,8 @@ export default class Watcher {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

@@ -35,79 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+interface That { transport: Transport }
 
 export default class Eql {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'eql.delete': {
-        path: [
-          'id'
-        ],
-        body: [],
-        query: []
-      },
-      'eql.get': {
-        path: [
-          'id'
-        ],
-        body: [],
-        query: [
-          'keep_alive',
-          'wait_for_completion_timeout'
-        ]
-      },
-      'eql.get_status': {
-        path: [
-          'id'
-        ],
-        body: [],
-        query: []
-      },
-      'eql.search': {
-        path: [
-          'index'
-        ],
-        body: [
-          'query',
-          'case_sensitive',
-          'event_category_field',
-          'tiebreaker_field',
-          'timestamp_field',
-          'fetch_size',
-          'filter',
-          'keep_alive',
-          'keep_on_completion',
-          'wait_for_completion_timeout',
-          'allow_partial_search_results',
-          'allow_partial_sequence_results',
-          'size',
-          'fields',
-          'result_position',
-          'runtime_mappings',
-          'max_samples_per_key'
-        ],
-        query: [
-          'allow_no_indices',
-          'allow_partial_search_results',
-          'allow_partial_sequence_results',
-          'expand_wildcards',
-          'ignore_unavailable',
-          'keep_alive',
-          'keep_on_completion',
-          'wait_for_completion_timeout'
-        ]
-      }
-    }
   }
 
   /**
@@ -118,10 +51,7 @@ export default class Eql {
   async delete (this: That, params: T.EqlDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlDeleteResponse, unknown>>
   async delete (this: That, params: T.EqlDeleteRequest, options?: TransportRequestOptions): Promise<T.EqlDeleteResponse>
   async delete (this: That, params: T.EqlDeleteRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['eql.delete']
-
+    const acceptedPath: string[] = ['id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -163,10 +93,7 @@ export default class Eql {
   async get<TEvent = unknown> (this: That, params: T.EqlGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlGetResponse<TEvent>, unknown>>
   async get<TEvent = unknown> (this: That, params: T.EqlGetRequest, options?: TransportRequestOptions): Promise<T.EqlGetResponse<TEvent>>
   async get<TEvent = unknown> (this: That, params: T.EqlGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['eql.get']
-
+    const acceptedPath: string[] = ['id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -208,10 +135,7 @@ export default class Eql {
   async getStatus (this: That, params: T.EqlGetStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlGetStatusResponse, unknown>>
   async getStatus (this: That, params: T.EqlGetStatusRequest, options?: TransportRequestOptions): Promise<T.EqlGetStatusResponse>
   async getStatus (this: That, params: T.EqlGetStatusRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['eql.get_status']
-
+    const acceptedPath: string[] = ['id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -253,12 +177,8 @@ export default class Eql {
   async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlSearchResponse<TEvent>, unknown>>
   async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest, options?: TransportRequestOptions): Promise<T.EqlSearchResponse<TEvent>>
   async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['eql.search']
-
+    const acceptedPath: string[] = ['index']
+    const acceptedBody: string[] = ['query', 'case_sensitive', 'event_category_field', 'tiebreaker_field', 'timestamp_field', 'fetch_size', 'filter', 'keep_alive', 'keep_on_completion', 'wait_for_completion_timeout', 'allow_partial_search_results', 'allow_partial_sequence_results', 'size', 'fields', 'result_position', 'runtime_mappings', 'max_samples_per_key']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -280,14 +200,8 @@ export default class Eql {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

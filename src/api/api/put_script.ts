@@ -35,29 +35,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
-
-const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  put_script: {
-    path: [
-      'id',
-      'context'
-    ],
-    body: [
-      'script'
-    ],
-    query: [
-      'context',
-      'master_timeout',
-      'timeout'
-    ]
-  }
-}
+interface That { transport: Transport }
 
 /**
   * Create or update a script or search template. Creates or updates a stored script or search template.
@@ -67,12 +45,8 @@ export default async function PutScriptApi (this: That, params: T.PutScriptReque
 export default async function PutScriptApi (this: That, params: T.PutScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.PutScriptResponse, unknown>>
 export default async function PutScriptApi (this: That, params: T.PutScriptRequest, options?: TransportRequestOptions): Promise<T.PutScriptResponse>
 export default async function PutScriptApi (this: That, params: T.PutScriptRequest, options?: TransportRequestOptions): Promise<any> {
-  const {
-    path: acceptedPath,
-    body: acceptedBody,
-    query: acceptedQuery
-  } = acceptedParams.put_script
-
+  const acceptedPath: string[] = ['id', 'context']
+  const acceptedBody: string[] = ['script']
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -94,14 +68,8 @@ export default async function PutScriptApi (this: That, params: T.PutScriptReque
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      }
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

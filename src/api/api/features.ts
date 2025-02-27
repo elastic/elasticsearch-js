@@ -35,33 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
+interface That { transport: Transport }
 
 export default class Features {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'features.get_features': {
-        path: [],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      },
-      'features.reset_features': {
-        path: [],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      }
-    }
   }
 
   /**
@@ -72,10 +51,7 @@ export default class Features {
   async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FeaturesGetFeaturesResponse, unknown>>
   async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest, options?: TransportRequestOptions): Promise<T.FeaturesGetFeaturesResponse>
   async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['features.get_features']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -115,10 +91,7 @@ export default class Features {
   async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FeaturesResetFeaturesResponse, unknown>>
   async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest, options?: TransportRequestOptions): Promise<T.FeaturesResetFeaturesResponse>
   async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['features.reset_features']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

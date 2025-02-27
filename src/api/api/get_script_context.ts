@@ -35,18 +35,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-}
-
-const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  get_script_context: {
-    path: [],
-    body: [],
-    query: []
-  }
-}
+interface That { transport: Transport }
 
 /**
   * Get script contexts. Get a list of supported script contexts and their methods.
@@ -56,10 +45,7 @@ export default async function GetScriptContextApi (this: That, params?: T.GetScr
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptContextResponse, unknown>>
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest, options?: TransportRequestOptions): Promise<T.GetScriptContextResponse>
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest, options?: TransportRequestOptions): Promise<any> {
-  const {
-    path: acceptedPath
-  } = acceptedParams.get_script_context
-
+  const acceptedPath: string[] = []
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

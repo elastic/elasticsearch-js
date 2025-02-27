@@ -35,59 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+interface That { transport: Transport }
 
 export default class Autoscaling {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'autoscaling.delete_autoscaling_policy': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'autoscaling.get_autoscaling_capacity': {
-        path: [],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      },
-      'autoscaling.get_autoscaling_policy': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      },
-      'autoscaling.put_autoscaling_policy': {
-        path: [
-          'name'
-        ],
-        body: [
-          'policy'
-        ],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      }
-    }
   }
 
   /**
@@ -98,10 +51,7 @@ export default class Autoscaling {
   async deleteAutoscalingPolicy (this: That, params: T.AutoscalingDeleteAutoscalingPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AutoscalingDeleteAutoscalingPolicyResponse, unknown>>
   async deleteAutoscalingPolicy (this: That, params: T.AutoscalingDeleteAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<T.AutoscalingDeleteAutoscalingPolicyResponse>
   async deleteAutoscalingPolicy (this: That, params: T.AutoscalingDeleteAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['autoscaling.delete_autoscaling_policy']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -143,10 +93,7 @@ export default class Autoscaling {
   async getAutoscalingCapacity (this: That, params?: T.AutoscalingGetAutoscalingCapacityRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AutoscalingGetAutoscalingCapacityResponse, unknown>>
   async getAutoscalingCapacity (this: That, params?: T.AutoscalingGetAutoscalingCapacityRequest, options?: TransportRequestOptions): Promise<T.AutoscalingGetAutoscalingCapacityResponse>
   async getAutoscalingCapacity (this: That, params?: T.AutoscalingGetAutoscalingCapacityRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['autoscaling.get_autoscaling_capacity']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -186,10 +133,7 @@ export default class Autoscaling {
   async getAutoscalingPolicy (this: That, params: T.AutoscalingGetAutoscalingPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AutoscalingGetAutoscalingPolicyResponse, unknown>>
   async getAutoscalingPolicy (this: That, params: T.AutoscalingGetAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<T.AutoscalingGetAutoscalingPolicyResponse>
   async getAutoscalingPolicy (this: That, params: T.AutoscalingGetAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['autoscaling.get_autoscaling_policy']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -231,12 +175,8 @@ export default class Autoscaling {
   async putAutoscalingPolicy (this: That, params: T.AutoscalingPutAutoscalingPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AutoscalingPutAutoscalingPolicyResponse, unknown>>
   async putAutoscalingPolicy (this: That, params: T.AutoscalingPutAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<T.AutoscalingPutAutoscalingPolicyResponse>
   async putAutoscalingPolicy (this: That, params: T.AutoscalingPutAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['autoscaling.put_autoscaling_policy']
-
+    const acceptedPath: string[] = ['name']
+    const acceptedBody: string[] = ['policy']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -248,14 +188,8 @@ export default class Autoscaling {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

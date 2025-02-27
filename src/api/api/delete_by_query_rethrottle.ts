@@ -35,22 +35,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-}
-
-const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  delete_by_query_rethrottle: {
-    path: [
-      'task_id'
-    ],
-    body: [],
-    query: [
-      'requests_per_second'
-    ]
-  }
-}
+interface That { transport: Transport }
 
 /**
   * Throttle a delete by query operation. Change the number of requests per second for a particular delete by query operation. Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
@@ -60,10 +45,7 @@ export default async function DeleteByQueryRethrottleApi (this: That, params: T.
 export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteByQueryRethrottleResponse, unknown>>
 export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest, options?: TransportRequestOptions): Promise<T.DeleteByQueryRethrottleResponse>
 export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest, options?: TransportRequestOptions): Promise<any> {
-  const {
-    path: acceptedPath
-  } = acceptedParams.delete_by_query_rethrottle
-
+  const acceptedPath: string[] = ['task_id']
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

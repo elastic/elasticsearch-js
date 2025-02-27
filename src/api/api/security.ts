@@ -35,648 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+interface That { transport: Transport }
 
 export default class Security {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'security.activate_user_profile': {
-        path: [],
-        body: [
-          'access_token',
-          'grant_type',
-          'password',
-          'username'
-        ],
-        query: []
-      },
-      'security.authenticate': {
-        path: [],
-        body: [],
-        query: []
-      },
-      'security.bulk_delete_role': {
-        path: [],
-        body: [
-          'names'
-        ],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.bulk_put_role': {
-        path: [],
-        body: [
-          'roles'
-        ],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.bulk_update_api_keys': {
-        path: [],
-        body: [
-          'expiration',
-          'ids',
-          'metadata',
-          'role_descriptors'
-        ],
-        query: []
-      },
-      'security.change_password': {
-        path: [
-          'username'
-        ],
-        body: [
-          'password',
-          'password_hash'
-        ],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.clear_api_key_cache': {
-        path: [
-          'ids'
-        ],
-        body: [],
-        query: []
-      },
-      'security.clear_cached_privileges': {
-        path: [
-          'application'
-        ],
-        body: [],
-        query: []
-      },
-      'security.clear_cached_realms': {
-        path: [
-          'realms'
-        ],
-        body: [],
-        query: [
-          'usernames'
-        ]
-      },
-      'security.clear_cached_roles': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: []
-      },
-      'security.clear_cached_service_tokens': {
-        path: [
-          'namespace',
-          'service',
-          'name'
-        ],
-        body: [],
-        query: []
-      },
-      'security.create_api_key': {
-        path: [],
-        body: [
-          'expiration',
-          'name',
-          'role_descriptors',
-          'metadata'
-        ],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.create_cross_cluster_api_key': {
-        path: [],
-        body: [
-          'access',
-          'expiration',
-          'metadata',
-          'name'
-        ],
-        query: []
-      },
-      'security.create_service_token': {
-        path: [
-          'namespace',
-          'service',
-          'name'
-        ],
-        body: [],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.delegate_pki': {
-        path: [],
-        body: [
-          'x509_certificate_chain'
-        ],
-        query: []
-      },
-      'security.delete_privileges': {
-        path: [
-          'application',
-          'name'
-        ],
-        body: [],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.delete_role': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.delete_role_mapping': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.delete_service_token': {
-        path: [
-          'namespace',
-          'service',
-          'name'
-        ],
-        body: [],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.delete_user': {
-        path: [
-          'username'
-        ],
-        body: [],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.disable_user': {
-        path: [
-          'username'
-        ],
-        body: [],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.disable_user_profile': {
-        path: [
-          'uid'
-        ],
-        body: [],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.enable_user': {
-        path: [
-          'username'
-        ],
-        body: [],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.enable_user_profile': {
-        path: [
-          'uid'
-        ],
-        body: [],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.enroll_kibana': {
-        path: [],
-        body: [],
-        query: []
-      },
-      'security.enroll_node': {
-        path: [],
-        body: [],
-        query: []
-      },
-      'security.get_api_key': {
-        path: [],
-        body: [],
-        query: [
-          'id',
-          'name',
-          'owner',
-          'realm_name',
-          'username',
-          'with_limited_by',
-          'active_only',
-          'with_profile_uid'
-        ]
-      },
-      'security.get_builtin_privileges': {
-        path: [],
-        body: [],
-        query: []
-      },
-      'security.get_privileges': {
-        path: [
-          'application',
-          'name'
-        ],
-        body: [],
-        query: []
-      },
-      'security.get_role': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: []
-      },
-      'security.get_role_mapping': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: []
-      },
-      'security.get_service_accounts': {
-        path: [
-          'namespace',
-          'service'
-        ],
-        body: [],
-        query: []
-      },
-      'security.get_service_credentials': {
-        path: [
-          'namespace',
-          'service'
-        ],
-        body: [],
-        query: []
-      },
-      'security.get_settings': {
-        path: [],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      },
-      'security.get_token': {
-        path: [],
-        body: [
-          'grant_type',
-          'scope',
-          'password',
-          'kerberos_ticket',
-          'refresh_token',
-          'username'
-        ],
-        query: []
-      },
-      'security.get_user': {
-        path: [
-          'username'
-        ],
-        body: [],
-        query: [
-          'with_profile_uid'
-        ]
-      },
-      'security.get_user_privileges': {
-        path: [],
-        body: [],
-        query: [
-          'application',
-          'priviledge',
-          'username'
-        ]
-      },
-      'security.get_user_profile': {
-        path: [
-          'uid'
-        ],
-        body: [],
-        query: [
-          'data'
-        ]
-      },
-      'security.grant_api_key': {
-        path: [],
-        body: [
-          'api_key',
-          'grant_type',
-          'access_token',
-          'username',
-          'password',
-          'run_as'
-        ],
-        query: []
-      },
-      'security.has_privileges': {
-        path: [
-          'user'
-        ],
-        body: [
-          'application',
-          'cluster',
-          'index'
-        ],
-        query: []
-      },
-      'security.has_privileges_user_profile': {
-        path: [],
-        body: [
-          'uids',
-          'privileges'
-        ],
-        query: []
-      },
-      'security.invalidate_api_key': {
-        path: [],
-        body: [
-          'id',
-          'ids',
-          'name',
-          'owner',
-          'realm_name',
-          'username'
-        ],
-        query: []
-      },
-      'security.invalidate_token': {
-        path: [],
-        body: [
-          'token',
-          'refresh_token',
-          'realm_name',
-          'username'
-        ],
-        query: []
-      },
-      'security.oidc_authenticate': {
-        path: [],
-        body: [
-          'nonce',
-          'realm',
-          'redirect_uri',
-          'state'
-        ],
-        query: []
-      },
-      'security.oidc_logout': {
-        path: [],
-        body: [
-          'access_token',
-          'refresh_token'
-        ],
-        query: []
-      },
-      'security.oidc_prepare_authentication': {
-        path: [],
-        body: [
-          'iss',
-          'login_hint',
-          'nonce',
-          'realm',
-          'state'
-        ],
-        query: []
-      },
-      'security.put_privileges': {
-        path: [],
-        body: [
-          'privileges'
-        ],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.put_role': {
-        path: [
-          'name'
-        ],
-        body: [
-          'applications',
-          'cluster',
-          'global',
-          'indices',
-          'remote_indices',
-          'remote_cluster',
-          'metadata',
-          'run_as',
-          'description',
-          'transient_metadata'
-        ],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.put_role_mapping': {
-        path: [
-          'name'
-        ],
-        body: [
-          'enabled',
-          'metadata',
-          'roles',
-          'role_templates',
-          'rules',
-          'run_as'
-        ],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.put_user': {
-        path: [],
-        body: [
-          'username',
-          'email',
-          'full_name',
-          'metadata',
-          'password',
-          'password_hash',
-          'roles',
-          'enabled'
-        ],
-        query: [
-          'refresh'
-        ]
-      },
-      'security.query_api_keys': {
-        path: [],
-        body: [
-          'aggregations',
-          'aggs',
-          'query',
-          'from',
-          'sort',
-          'size',
-          'search_after'
-        ],
-        query: [
-          'with_limited_by',
-          'with_profile_uid',
-          'typed_keys'
-        ]
-      },
-      'security.query_role': {
-        path: [],
-        body: [
-          'query',
-          'from',
-          'sort',
-          'size',
-          'search_after'
-        ],
-        query: []
-      },
-      'security.query_user': {
-        path: [],
-        body: [
-          'query',
-          'from',
-          'sort',
-          'size',
-          'search_after'
-        ],
-        query: [
-          'with_profile_uid'
-        ]
-      },
-      'security.saml_authenticate': {
-        path: [],
-        body: [
-          'content',
-          'ids',
-          'realm'
-        ],
-        query: []
-      },
-      'security.saml_complete_logout': {
-        path: [],
-        body: [
-          'realm',
-          'ids',
-          'query_string',
-          'content'
-        ],
-        query: []
-      },
-      'security.saml_invalidate': {
-        path: [],
-        body: [
-          'acs',
-          'query_string',
-          'realm'
-        ],
-        query: []
-      },
-      'security.saml_logout': {
-        path: [],
-        body: [
-          'token',
-          'refresh_token'
-        ],
-        query: []
-      },
-      'security.saml_prepare_authentication': {
-        path: [],
-        body: [
-          'acs',
-          'realm',
-          'relay_state'
-        ],
-        query: []
-      },
-      'security.saml_service_provider_metadata': {
-        path: [
-          'realm_name'
-        ],
-        body: [],
-        query: []
-      },
-      'security.suggest_user_profiles': {
-        path: [],
-        body: [
-          'name',
-          'size',
-          'data',
-          'hint'
-        ],
-        query: [
-          'data'
-        ]
-      },
-      'security.update_api_key': {
-        path: [
-          'id'
-        ],
-        body: [
-          'role_descriptors',
-          'metadata',
-          'expiration'
-        ],
-        query: []
-      },
-      'security.update_cross_cluster_api_key': {
-        path: [
-          'id'
-        ],
-        body: [
-          'access',
-          'expiration',
-          'metadata'
-        ],
-        query: []
-      },
-      'security.update_settings': {
-        path: [],
-        body: [
-          'security',
-          'security-profile',
-          'security-tokens'
-        ],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'security.update_user_profile_data': {
-        path: [
-          'uid'
-        ],
-        body: [
-          'labels',
-          'data'
-        ],
-        query: [
-          'if_seq_no',
-          'if_primary_term',
-          'refresh'
-        ]
-      }
-    }
   }
 
   /**
@@ -687,12 +51,8 @@ export default class Security {
   async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityActivateUserProfileResponse, unknown>>
   async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityActivateUserProfileResponse>
   async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.activate_user_profile']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['access_token', 'grant_type', 'password', 'username']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -714,14 +74,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -741,10 +95,7 @@ export default class Security {
   async authenticate (this: That, params?: T.SecurityAuthenticateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityAuthenticateResponse, unknown>>
   async authenticate (this: That, params?: T.SecurityAuthenticateRequest, options?: TransportRequestOptions): Promise<T.SecurityAuthenticateResponse>
   async authenticate (this: That, params?: T.SecurityAuthenticateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.authenticate']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -784,12 +135,8 @@ export default class Security {
   async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityBulkDeleteRoleResponse, unknown>>
   async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityBulkDeleteRoleResponse>
   async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.bulk_delete_role']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['names']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -811,14 +158,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -838,12 +179,8 @@ export default class Security {
   async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityBulkPutRoleResponse, unknown>>
   async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityBulkPutRoleResponse>
   async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.bulk_put_role']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['roles']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -865,14 +202,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -892,12 +223,8 @@ export default class Security {
   async bulkUpdateApiKeys (this: That, params: T.SecurityBulkUpdateApiKeysRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityBulkUpdateApiKeysResponse, unknown>>
   async bulkUpdateApiKeys (this: That, params: T.SecurityBulkUpdateApiKeysRequest, options?: TransportRequestOptions): Promise<T.SecurityBulkUpdateApiKeysResponse>
   async bulkUpdateApiKeys (this: That, params: T.SecurityBulkUpdateApiKeysRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.bulk_update_api_keys']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['expiration', 'ids', 'metadata', 'role_descriptors']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -919,14 +246,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -946,12 +267,8 @@ export default class Security {
   async changePassword (this: That, params?: T.SecurityChangePasswordRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityChangePasswordResponse, unknown>>
   async changePassword (this: That, params?: T.SecurityChangePasswordRequest, options?: TransportRequestOptions): Promise<T.SecurityChangePasswordResponse>
   async changePassword (this: That, params?: T.SecurityChangePasswordRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.change_password']
-
+    const acceptedPath: string[] = ['username']
+    const acceptedBody: string[] = ['password', 'password_hash']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -974,14 +291,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -1011,10 +322,7 @@ export default class Security {
   async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearApiKeyCacheResponse, unknown>>
   async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptions): Promise<T.SecurityClearApiKeyCacheResponse>
   async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.clear_api_key_cache']
-
+    const acceptedPath: string[] = ['ids']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1056,10 +364,7 @@ export default class Security {
   async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedPrivilegesResponse, unknown>>
   async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedPrivilegesResponse>
   async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.clear_cached_privileges']
-
+    const acceptedPath: string[] = ['application']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1101,10 +406,7 @@ export default class Security {
   async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedRealmsResponse, unknown>>
   async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedRealmsResponse>
   async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.clear_cached_realms']
-
+    const acceptedPath: string[] = ['realms']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1146,10 +448,7 @@ export default class Security {
   async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedRolesResponse, unknown>>
   async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedRolesResponse>
   async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.clear_cached_roles']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1191,10 +490,7 @@ export default class Security {
   async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedServiceTokensResponse, unknown>>
   async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedServiceTokensResponse>
   async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.clear_cached_service_tokens']
-
+    const acceptedPath: string[] = ['namespace', 'service', 'name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1238,12 +534,8 @@ export default class Security {
   async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateApiKeyResponse, unknown>>
   async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateApiKeyResponse>
   async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.create_api_key']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['expiration', 'name', 'role_descriptors', 'metadata']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1266,14 +558,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -1293,12 +579,8 @@ export default class Security {
   async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateCrossClusterApiKeyResponse, unknown>>
   async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateCrossClusterApiKeyResponse>
   async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.create_cross_cluster_api_key']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['access', 'expiration', 'metadata', 'name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1320,14 +602,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -1347,10 +623,7 @@ export default class Security {
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateServiceTokenResponse, unknown>>
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateServiceTokenResponse>
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.create_service_token']
-
+    const acceptedPath: string[] = ['namespace', 'service', 'name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1401,12 +674,8 @@ export default class Security {
   async delegatePki (this: That, params: T.SecurityDelegatePkiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDelegatePkiResponse, unknown>>
   async delegatePki (this: That, params: T.SecurityDelegatePkiRequest, options?: TransportRequestOptions): Promise<T.SecurityDelegatePkiResponse>
   async delegatePki (this: That, params: T.SecurityDelegatePkiRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.delegate_pki']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['x509_certificate_chain']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1428,14 +697,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -1455,10 +718,7 @@ export default class Security {
   async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeletePrivilegesResponse, unknown>>
   async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityDeletePrivilegesResponse>
   async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.delete_privileges']
-
+    const acceptedPath: string[] = ['application', 'name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1501,10 +761,7 @@ export default class Security {
   async deleteRole (this: That, params: T.SecurityDeleteRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteRoleResponse, unknown>>
   async deleteRole (this: That, params: T.SecurityDeleteRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteRoleResponse>
   async deleteRole (this: That, params: T.SecurityDeleteRoleRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.delete_role']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1546,10 +803,7 @@ export default class Security {
   async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteRoleMappingResponse, unknown>>
   async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteRoleMappingResponse>
   async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.delete_role_mapping']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1591,10 +845,7 @@ export default class Security {
   async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteServiceTokenResponse, unknown>>
   async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteServiceTokenResponse>
   async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.delete_service_token']
-
+    const acceptedPath: string[] = ['namespace', 'service', 'name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1638,10 +889,7 @@ export default class Security {
   async deleteUser (this: That, params: T.SecurityDeleteUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteUserResponse, unknown>>
   async deleteUser (this: That, params: T.SecurityDeleteUserRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteUserResponse>
   async deleteUser (this: That, params: T.SecurityDeleteUserRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.delete_user']
-
+    const acceptedPath: string[] = ['username']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1683,10 +931,7 @@ export default class Security {
   async disableUser (this: That, params: T.SecurityDisableUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDisableUserResponse, unknown>>
   async disableUser (this: That, params: T.SecurityDisableUserRequest, options?: TransportRequestOptions): Promise<T.SecurityDisableUserResponse>
   async disableUser (this: That, params: T.SecurityDisableUserRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.disable_user']
-
+    const acceptedPath: string[] = ['username']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1728,10 +973,7 @@ export default class Security {
   async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDisableUserProfileResponse, unknown>>
   async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityDisableUserProfileResponse>
   async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.disable_user_profile']
-
+    const acceptedPath: string[] = ['uid']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1773,10 +1015,7 @@ export default class Security {
   async enableUser (this: That, params: T.SecurityEnableUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnableUserResponse, unknown>>
   async enableUser (this: That, params: T.SecurityEnableUserRequest, options?: TransportRequestOptions): Promise<T.SecurityEnableUserResponse>
   async enableUser (this: That, params: T.SecurityEnableUserRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.enable_user']
-
+    const acceptedPath: string[] = ['username']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1818,10 +1057,7 @@ export default class Security {
   async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnableUserProfileResponse, unknown>>
   async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityEnableUserProfileResponse>
   async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.enable_user_profile']
-
+    const acceptedPath: string[] = ['uid']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1863,10 +1099,7 @@ export default class Security {
   async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnrollKibanaResponse, unknown>>
   async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest, options?: TransportRequestOptions): Promise<T.SecurityEnrollKibanaResponse>
   async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.enroll_kibana']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1906,10 +1139,7 @@ export default class Security {
   async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnrollNodeResponse, unknown>>
   async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest, options?: TransportRequestOptions): Promise<T.SecurityEnrollNodeResponse>
   async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.enroll_node']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1949,10 +1179,7 @@ export default class Security {
   async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetApiKeyResponse, unknown>>
   async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityGetApiKeyResponse>
   async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.get_api_key']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1992,10 +1219,7 @@ export default class Security {
   async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetBuiltinPrivilegesResponse, unknown>>
   async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetBuiltinPrivilegesResponse>
   async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.get_builtin_privileges']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2035,10 +1259,7 @@ export default class Security {
   async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetPrivilegesResponse, unknown>>
   async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetPrivilegesResponse>
   async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.get_privileges']
-
+    const acceptedPath: string[] = ['application', 'name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2092,10 +1313,7 @@ export default class Security {
   async getRole (this: That, params?: T.SecurityGetRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetRoleResponse, unknown>>
   async getRole (this: That, params?: T.SecurityGetRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityGetRoleResponse>
   async getRole (this: That, params?: T.SecurityGetRoleRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.get_role']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2145,10 +1363,7 @@ export default class Security {
   async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetRoleMappingResponse, unknown>>
   async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityGetRoleMappingResponse>
   async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.get_role_mapping']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2198,10 +1413,7 @@ export default class Security {
   async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetServiceAccountsResponse, unknown>>
   async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest, options?: TransportRequestOptions): Promise<T.SecurityGetServiceAccountsResponse>
   async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.get_service_accounts']
-
+    const acceptedPath: string[] = ['namespace', 'service']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2255,10 +1467,7 @@ export default class Security {
   async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetServiceCredentialsResponse, unknown>>
   async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptions): Promise<T.SecurityGetServiceCredentialsResponse>
   async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.get_service_credentials']
-
+    const acceptedPath: string[] = ['namespace', 'service']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2301,10 +1510,7 @@ export default class Security {
   async getSettings (this: That, params?: T.SecurityGetSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetSettingsResponse, unknown>>
   async getSettings (this: That, params?: T.SecurityGetSettingsRequest, options?: TransportRequestOptions): Promise<T.SecurityGetSettingsResponse>
   async getSettings (this: That, params?: T.SecurityGetSettingsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.get_settings']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2344,12 +1550,8 @@ export default class Security {
   async getToken (this: That, params?: T.SecurityGetTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetTokenResponse, unknown>>
   async getToken (this: That, params?: T.SecurityGetTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityGetTokenResponse>
   async getToken (this: That, params?: T.SecurityGetTokenRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.get_token']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['grant_type', 'scope', 'password', 'kerberos_ticket', 'refresh_token', 'username']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2372,14 +1574,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -2399,10 +1595,7 @@ export default class Security {
   async getUser (this: That, params?: T.SecurityGetUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetUserResponse, unknown>>
   async getUser (this: That, params?: T.SecurityGetUserRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserResponse>
   async getUser (this: That, params?: T.SecurityGetUserRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.get_user']
-
+    const acceptedPath: string[] = ['username']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2452,10 +1645,7 @@ export default class Security {
   async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetUserPrivilegesResponse, unknown>>
   async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserPrivilegesResponse>
   async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.get_user_privileges']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2495,10 +1685,7 @@ export default class Security {
   async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetUserProfileResponse, unknown>>
   async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserProfileResponse>
   async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.get_user_profile']
-
+    const acceptedPath: string[] = ['uid']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2540,12 +1727,8 @@ export default class Security {
   async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGrantApiKeyResponse, unknown>>
   async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityGrantApiKeyResponse>
   async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.grant_api_key']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['api_key', 'grant_type', 'access_token', 'username', 'password', 'run_as']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2567,14 +1750,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -2594,12 +1771,8 @@ export default class Security {
   async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityHasPrivilegesResponse, unknown>>
   async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityHasPrivilegesResponse>
   async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.has_privileges']
-
+    const acceptedPath: string[] = ['user']
+    const acceptedBody: string[] = ['application', 'cluster', 'index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2622,14 +1795,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -2659,12 +1826,8 @@ export default class Security {
   async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityHasPrivilegesUserProfileResponse, unknown>>
   async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityHasPrivilegesUserProfileResponse>
   async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.has_privileges_user_profile']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['uids', 'privileges']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2686,14 +1849,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -2713,12 +1870,8 @@ export default class Security {
   async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityInvalidateApiKeyResponse, unknown>>
   async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityInvalidateApiKeyResponse>
   async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.invalidate_api_key']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['id', 'ids', 'name', 'owner', 'realm_name', 'username']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2741,14 +1894,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -2768,12 +1915,8 @@ export default class Security {
   async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityInvalidateTokenResponse, unknown>>
   async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityInvalidateTokenResponse>
   async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.invalidate_token']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['token', 'refresh_token', 'realm_name', 'username']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2796,14 +1939,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -2823,12 +1960,8 @@ export default class Security {
   async oidcAuthenticate (this: That, params: T.SecurityOidcAuthenticateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityOidcAuthenticateResponse, unknown>>
   async oidcAuthenticate (this: That, params: T.SecurityOidcAuthenticateRequest, options?: TransportRequestOptions): Promise<T.SecurityOidcAuthenticateResponse>
   async oidcAuthenticate (this: That, params: T.SecurityOidcAuthenticateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.oidc_authenticate']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['nonce', 'realm', 'redirect_uri', 'state']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2850,14 +1983,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -2877,12 +2004,8 @@ export default class Security {
   async oidcLogout (this: That, params: T.SecurityOidcLogoutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityOidcLogoutResponse, unknown>>
   async oidcLogout (this: That, params: T.SecurityOidcLogoutRequest, options?: TransportRequestOptions): Promise<T.SecurityOidcLogoutResponse>
   async oidcLogout (this: That, params: T.SecurityOidcLogoutRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.oidc_logout']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['access_token', 'refresh_token']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2904,14 +2027,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -2931,12 +2048,8 @@ export default class Security {
   async oidcPrepareAuthentication (this: That, params?: T.SecurityOidcPrepareAuthenticationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityOidcPrepareAuthenticationResponse, unknown>>
   async oidcPrepareAuthentication (this: That, params?: T.SecurityOidcPrepareAuthenticationRequest, options?: TransportRequestOptions): Promise<T.SecurityOidcPrepareAuthenticationResponse>
   async oidcPrepareAuthentication (this: That, params?: T.SecurityOidcPrepareAuthenticationRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.oidc_prepare_authentication']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['iss', 'login_hint', 'nonce', 'realm', 'state']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2959,14 +2072,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -2986,12 +2093,8 @@ export default class Security {
   async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutPrivilegesResponse, unknown>>
   async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityPutPrivilegesResponse>
   async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.put_privileges']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['privileges']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3003,14 +2106,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3030,12 +2127,8 @@ export default class Security {
   async putRole (this: That, params: T.SecurityPutRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutRoleResponse, unknown>>
   async putRole (this: That, params: T.SecurityPutRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityPutRoleResponse>
   async putRole (this: That, params: T.SecurityPutRoleRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.put_role']
-
+    const acceptedPath: string[] = ['name']
+    const acceptedBody: string[] = ['applications', 'cluster', 'global', 'indices', 'remote_indices', 'remote_cluster', 'metadata', 'run_as', 'description', 'transient_metadata']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3057,14 +2150,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3087,12 +2174,8 @@ export default class Security {
   async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutRoleMappingResponse, unknown>>
   async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityPutRoleMappingResponse>
   async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.put_role_mapping']
-
+    const acceptedPath: string[] = ['name']
+    const acceptedBody: string[] = ['enabled', 'metadata', 'roles', 'role_templates', 'rules', 'run_as']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3114,14 +2197,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3144,12 +2221,8 @@ export default class Security {
   async putUser (this: That, params: T.SecurityPutUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutUserResponse, unknown>>
   async putUser (this: That, params: T.SecurityPutUserRequest, options?: TransportRequestOptions): Promise<T.SecurityPutUserResponse>
   async putUser (this: That, params: T.SecurityPutUserRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.put_user']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['username', 'email', 'full_name', 'metadata', 'password', 'password_hash', 'roles', 'enabled']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3171,14 +2244,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3201,12 +2268,8 @@ export default class Security {
   async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryApiKeysResponse, unknown>>
   async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryApiKeysResponse>
   async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.query_api_keys']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['aggregations', 'aggs', 'query', 'from', 'sort', 'size', 'search_after']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3229,14 +2292,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3256,12 +2313,8 @@ export default class Security {
   async queryRole (this: That, params?: T.SecurityQueryRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryRoleResponse, unknown>>
   async queryRole (this: That, params?: T.SecurityQueryRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryRoleResponse>
   async queryRole (this: That, params?: T.SecurityQueryRoleRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.query_role']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['query', 'from', 'sort', 'size', 'search_after']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3284,14 +2337,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3311,12 +2358,8 @@ export default class Security {
   async queryUser (this: That, params?: T.SecurityQueryUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryUserResponse, unknown>>
   async queryUser (this: That, params?: T.SecurityQueryUserRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryUserResponse>
   async queryUser (this: That, params?: T.SecurityQueryUserRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.query_user']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['query', 'from', 'sort', 'size', 'search_after']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3339,14 +2382,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3366,12 +2403,8 @@ export default class Security {
   async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlAuthenticateResponse, unknown>>
   async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlAuthenticateResponse>
   async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.saml_authenticate']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['content', 'ids', 'realm']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3393,14 +2426,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3420,12 +2447,8 @@ export default class Security {
   async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlCompleteLogoutResponse, unknown>>
   async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlCompleteLogoutResponse>
   async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.saml_complete_logout']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['realm', 'ids', 'query_string', 'content']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3447,14 +2470,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3474,12 +2491,8 @@ export default class Security {
   async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlInvalidateResponse, unknown>>
   async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlInvalidateResponse>
   async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.saml_invalidate']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['acs', 'query_string', 'realm']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3501,14 +2514,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3528,12 +2535,8 @@ export default class Security {
   async samlLogout (this: That, params: T.SecuritySamlLogoutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlLogoutResponse, unknown>>
   async samlLogout (this: That, params: T.SecuritySamlLogoutRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlLogoutResponse>
   async samlLogout (this: That, params: T.SecuritySamlLogoutRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.saml_logout']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['token', 'refresh_token']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3555,14 +2558,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3582,12 +2579,8 @@ export default class Security {
   async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlPrepareAuthenticationResponse, unknown>>
   async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlPrepareAuthenticationResponse>
   async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.saml_prepare_authentication']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['acs', 'realm', 'relay_state']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3610,14 +2603,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3637,10 +2624,7 @@ export default class Security {
   async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlServiceProviderMetadataResponse, unknown>>
   async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlServiceProviderMetadataResponse>
   async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['security.saml_service_provider_metadata']
-
+    const acceptedPath: string[] = ['realm_name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3682,12 +2666,8 @@ export default class Security {
   async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySuggestUserProfilesResponse, unknown>>
   async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptions): Promise<T.SecuritySuggestUserProfilesResponse>
   async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.suggest_user_profiles']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['name', 'size', 'data', 'hint']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3710,14 +2690,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3737,12 +2711,8 @@ export default class Security {
   async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityUpdateApiKeyResponse, unknown>>
   async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateApiKeyResponse>
   async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.update_api_key']
-
+    const acceptedPath: string[] = ['id']
+    const acceptedBody: string[] = ['role_descriptors', 'metadata', 'expiration']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3764,14 +2734,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3794,12 +2758,8 @@ export default class Security {
   async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityUpdateCrossClusterApiKeyResponse, unknown>>
   async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateCrossClusterApiKeyResponse>
   async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.update_cross_cluster_api_key']
-
+    const acceptedPath: string[] = ['id']
+    const acceptedBody: string[] = ['access', 'expiration', 'metadata']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3821,14 +2781,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3851,12 +2805,8 @@ export default class Security {
   async updateSettings (this: That, params?: T.SecurityUpdateSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityUpdateSettingsResponse, unknown>>
   async updateSettings (this: That, params?: T.SecurityUpdateSettingsRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateSettingsResponse>
   async updateSettings (this: That, params?: T.SecurityUpdateSettingsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.update_settings']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['security', 'security-profile', 'security-tokens']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3879,14 +2829,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3906,12 +2850,8 @@ export default class Security {
   async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityUpdateUserProfileDataResponse, unknown>>
   async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateUserProfileDataResponse>
   async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['security.update_user_profile_data']
-
+    const acceptedPath: string[] = ['uid']
+    const acceptedBody: string[] = ['labels', 'data']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3933,14 +2873,8 @@ export default class Security {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

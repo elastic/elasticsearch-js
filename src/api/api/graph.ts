@@ -35,36 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+interface That { transport: Transport }
 
 export default class Graph {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'graph.explore': {
-        path: [
-          'index'
-        ],
-        body: [
-          'connections',
-          'controls',
-          'query',
-          'vertices'
-        ],
-        query: [
-          'routing',
-          'timeout'
-        ]
-      }
-    }
   }
 
   /**
@@ -75,12 +51,8 @@ export default class Graph {
   async explore (this: That, params: T.GraphExploreRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GraphExploreResponse, unknown>>
   async explore (this: That, params: T.GraphExploreRequest, options?: TransportRequestOptions): Promise<T.GraphExploreResponse>
   async explore (this: That, params: T.GraphExploreRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['graph.explore']
-
+    const acceptedPath: string[] = ['index']
+    const acceptedBody: string[] = ['connections', 'controls', 'query', 'vertices']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -102,14 +74,8 @@ export default class Graph {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

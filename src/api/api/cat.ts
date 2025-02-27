@@ -35,336 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
+interface That { transport: Transport }
 
 export default class Cat {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'cat.aliases': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'h',
-          's',
-          'expand_wildcards',
-          'master_timeout'
-        ]
-      },
-      'cat.allocation': {
-        path: [
-          'node_id'
-        ],
-        body: [],
-        query: [
-          'bytes',
-          'h',
-          's',
-          'local',
-          'master_timeout'
-        ]
-      },
-      'cat.component_templates': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'h',
-          's',
-          'local',
-          'master_timeout'
-        ]
-      },
-      'cat.count': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'h',
-          's'
-        ]
-      },
-      'cat.fielddata': {
-        path: [
-          'fields'
-        ],
-        body: [],
-        query: [
-          'bytes',
-          'fields',
-          'h',
-          's'
-        ]
-      },
-      'cat.health': {
-        path: [],
-        body: [],
-        query: [
-          'time',
-          'ts',
-          'h',
-          's'
-        ]
-      },
-      'cat.help': {
-        path: [],
-        body: [],
-        query: []
-      },
-      'cat.indices': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'bytes',
-          'expand_wildcards',
-          'health',
-          'include_unloaded_segments',
-          'pri',
-          'time',
-          'master_timeout',
-          'h',
-          's'
-        ]
-      },
-      'cat.master': {
-        path: [],
-        body: [],
-        query: [
-          'h',
-          's',
-          'local',
-          'master_timeout'
-        ]
-      },
-      'cat.ml_data_frame_analytics': {
-        path: [
-          'id'
-        ],
-        body: [],
-        query: [
-          'allow_no_match',
-          'bytes',
-          'h',
-          's',
-          'time'
-        ]
-      },
-      'cat.ml_datafeeds': {
-        path: [
-          'datafeed_id'
-        ],
-        body: [],
-        query: [
-          'allow_no_match',
-          'h',
-          's',
-          'time'
-        ]
-      },
-      'cat.ml_jobs': {
-        path: [
-          'job_id'
-        ],
-        body: [],
-        query: [
-          'allow_no_match',
-          'bytes',
-          'h',
-          's',
-          'time'
-        ]
-      },
-      'cat.ml_trained_models': {
-        path: [
-          'model_id'
-        ],
-        body: [],
-        query: [
-          'allow_no_match',
-          'bytes',
-          'h',
-          's',
-          'from',
-          'size',
-          'time'
-        ]
-      },
-      'cat.nodeattrs': {
-        path: [],
-        body: [],
-        query: [
-          'h',
-          's',
-          'local',
-          'master_timeout'
-        ]
-      },
-      'cat.nodes': {
-        path: [],
-        body: [],
-        query: [
-          'bytes',
-          'full_id',
-          'include_unloaded_segments',
-          'h',
-          's',
-          'master_timeout',
-          'time'
-        ]
-      },
-      'cat.pending_tasks': {
-        path: [],
-        body: [],
-        query: [
-          'h',
-          's',
-          'local',
-          'master_timeout',
-          'time'
-        ]
-      },
-      'cat.plugins': {
-        path: [],
-        body: [],
-        query: [
-          'h',
-          's',
-          'include_bootstrap',
-          'local',
-          'master_timeout'
-        ]
-      },
-      'cat.recovery': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'active_only',
-          'bytes',
-          'detailed',
-          'index',
-          'h',
-          's',
-          'time'
-        ]
-      },
-      'cat.repositories': {
-        path: [],
-        body: [],
-        query: [
-          'h',
-          's',
-          'local',
-          'master_timeout'
-        ]
-      },
-      'cat.segments': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'bytes',
-          'h',
-          's',
-          'local',
-          'master_timeout'
-        ]
-      },
-      'cat.shards': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'bytes',
-          'h',
-          's',
-          'master_timeout',
-          'time'
-        ]
-      },
-      'cat.snapshots': {
-        path: [
-          'repository'
-        ],
-        body: [],
-        query: [
-          'ignore_unavailable',
-          'h',
-          's',
-          'master_timeout',
-          'time'
-        ]
-      },
-      'cat.tasks': {
-        path: [],
-        body: [],
-        query: [
-          'actions',
-          'detailed',
-          'nodes',
-          'parent_task_id',
-          'h',
-          's',
-          'time',
-          'timeout',
-          'wait_for_completion'
-        ]
-      },
-      'cat.templates': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'h',
-          's',
-          'local',
-          'master_timeout'
-        ]
-      },
-      'cat.thread_pool': {
-        path: [
-          'thread_pool_patterns'
-        ],
-        body: [],
-        query: [
-          'h',
-          's',
-          'time',
-          'local',
-          'master_timeout'
-        ]
-      },
-      'cat.transforms': {
-        path: [
-          'transform_id'
-        ],
-        body: [],
-        query: [
-          'allow_no_match',
-          'from',
-          'h',
-          's',
-          'time',
-          'size'
-        ]
-      }
-    }
   }
 
   /**
@@ -375,10 +51,7 @@ export default class Cat {
   async aliases (this: That, params?: T.CatAliasesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatAliasesResponse, unknown>>
   async aliases (this: That, params?: T.CatAliasesRequest, options?: TransportRequestOptions): Promise<T.CatAliasesResponse>
   async aliases (this: That, params?: T.CatAliasesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.aliases']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -428,10 +101,7 @@ export default class Cat {
   async allocation (this: That, params?: T.CatAllocationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatAllocationResponse, unknown>>
   async allocation (this: That, params?: T.CatAllocationRequest, options?: TransportRequestOptions): Promise<T.CatAllocationResponse>
   async allocation (this: That, params?: T.CatAllocationRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.allocation']
-
+    const acceptedPath: string[] = ['node_id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -481,10 +151,7 @@ export default class Cat {
   async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatComponentTemplatesResponse, unknown>>
   async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest, options?: TransportRequestOptions): Promise<T.CatComponentTemplatesResponse>
   async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.component_templates']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -534,10 +201,7 @@ export default class Cat {
   async count (this: That, params?: T.CatCountRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatCountResponse, unknown>>
   async count (this: That, params?: T.CatCountRequest, options?: TransportRequestOptions): Promise<T.CatCountResponse>
   async count (this: That, params?: T.CatCountRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.count']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -587,10 +251,7 @@ export default class Cat {
   async fielddata (this: That, params?: T.CatFielddataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatFielddataResponse, unknown>>
   async fielddata (this: That, params?: T.CatFielddataRequest, options?: TransportRequestOptions): Promise<T.CatFielddataResponse>
   async fielddata (this: That, params?: T.CatFielddataRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.fielddata']
-
+    const acceptedPath: string[] = ['fields']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -640,10 +301,7 @@ export default class Cat {
   async health (this: That, params?: T.CatHealthRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatHealthResponse, unknown>>
   async health (this: That, params?: T.CatHealthRequest, options?: TransportRequestOptions): Promise<T.CatHealthResponse>
   async health (this: That, params?: T.CatHealthRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.health']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -683,10 +341,7 @@ export default class Cat {
   async help (this: That, params?: T.CatHelpRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatHelpResponse, unknown>>
   async help (this: That, params?: T.CatHelpRequest, options?: TransportRequestOptions): Promise<T.CatHelpResponse>
   async help (this: That, params?: T.CatHelpRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.help']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -726,10 +381,7 @@ export default class Cat {
   async indices (this: That, params?: T.CatIndicesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatIndicesResponse, unknown>>
   async indices (this: That, params?: T.CatIndicesRequest, options?: TransportRequestOptions): Promise<T.CatIndicesResponse>
   async indices (this: That, params?: T.CatIndicesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.indices']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -779,10 +431,7 @@ export default class Cat {
   async master (this: That, params?: T.CatMasterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMasterResponse, unknown>>
   async master (this: That, params?: T.CatMasterRequest, options?: TransportRequestOptions): Promise<T.CatMasterResponse>
   async master (this: That, params?: T.CatMasterRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.master']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -822,10 +471,7 @@ export default class Cat {
   async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlDataFrameAnalyticsResponse, unknown>>
   async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.CatMlDataFrameAnalyticsResponse>
   async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.ml_data_frame_analytics']
-
+    const acceptedPath: string[] = ['id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -875,10 +521,7 @@ export default class Cat {
   async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlDatafeedsResponse, unknown>>
   async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest, options?: TransportRequestOptions): Promise<T.CatMlDatafeedsResponse>
   async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.ml_datafeeds']
-
+    const acceptedPath: string[] = ['datafeed_id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -928,10 +571,7 @@ export default class Cat {
   async mlJobs (this: That, params?: T.CatMlJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlJobsResponse, unknown>>
   async mlJobs (this: That, params?: T.CatMlJobsRequest, options?: TransportRequestOptions): Promise<T.CatMlJobsResponse>
   async mlJobs (this: That, params?: T.CatMlJobsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.ml_jobs']
-
+    const acceptedPath: string[] = ['job_id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -981,10 +621,7 @@ export default class Cat {
   async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlTrainedModelsResponse, unknown>>
   async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest, options?: TransportRequestOptions): Promise<T.CatMlTrainedModelsResponse>
   async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.ml_trained_models']
-
+    const acceptedPath: string[] = ['model_id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1034,10 +671,7 @@ export default class Cat {
   async nodeattrs (this: That, params?: T.CatNodeattrsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatNodeattrsResponse, unknown>>
   async nodeattrs (this: That, params?: T.CatNodeattrsRequest, options?: TransportRequestOptions): Promise<T.CatNodeattrsResponse>
   async nodeattrs (this: That, params?: T.CatNodeattrsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.nodeattrs']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1077,10 +711,7 @@ export default class Cat {
   async nodes (this: That, params?: T.CatNodesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatNodesResponse, unknown>>
   async nodes (this: That, params?: T.CatNodesRequest, options?: TransportRequestOptions): Promise<T.CatNodesResponse>
   async nodes (this: That, params?: T.CatNodesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.nodes']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1120,10 +751,7 @@ export default class Cat {
   async pendingTasks (this: That, params?: T.CatPendingTasksRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatPendingTasksResponse, unknown>>
   async pendingTasks (this: That, params?: T.CatPendingTasksRequest, options?: TransportRequestOptions): Promise<T.CatPendingTasksResponse>
   async pendingTasks (this: That, params?: T.CatPendingTasksRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.pending_tasks']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1163,10 +791,7 @@ export default class Cat {
   async plugins (this: That, params?: T.CatPluginsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatPluginsResponse, unknown>>
   async plugins (this: That, params?: T.CatPluginsRequest, options?: TransportRequestOptions): Promise<T.CatPluginsResponse>
   async plugins (this: That, params?: T.CatPluginsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.plugins']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1206,10 +831,7 @@ export default class Cat {
   async recovery (this: That, params?: T.CatRecoveryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatRecoveryResponse, unknown>>
   async recovery (this: That, params?: T.CatRecoveryRequest, options?: TransportRequestOptions): Promise<T.CatRecoveryResponse>
   async recovery (this: That, params?: T.CatRecoveryRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.recovery']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1259,10 +881,7 @@ export default class Cat {
   async repositories (this: That, params?: T.CatRepositoriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatRepositoriesResponse, unknown>>
   async repositories (this: That, params?: T.CatRepositoriesRequest, options?: TransportRequestOptions): Promise<T.CatRepositoriesResponse>
   async repositories (this: That, params?: T.CatRepositoriesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.repositories']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1302,10 +921,7 @@ export default class Cat {
   async segments (this: That, params?: T.CatSegmentsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatSegmentsResponse, unknown>>
   async segments (this: That, params?: T.CatSegmentsRequest, options?: TransportRequestOptions): Promise<T.CatSegmentsResponse>
   async segments (this: That, params?: T.CatSegmentsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.segments']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1355,10 +971,7 @@ export default class Cat {
   async shards (this: That, params?: T.CatShardsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatShardsResponse, unknown>>
   async shards (this: That, params?: T.CatShardsRequest, options?: TransportRequestOptions): Promise<T.CatShardsResponse>
   async shards (this: That, params?: T.CatShardsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.shards']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1408,10 +1021,7 @@ export default class Cat {
   async snapshots (this: That, params?: T.CatSnapshotsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatSnapshotsResponse, unknown>>
   async snapshots (this: That, params?: T.CatSnapshotsRequest, options?: TransportRequestOptions): Promise<T.CatSnapshotsResponse>
   async snapshots (this: That, params?: T.CatSnapshotsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.snapshots']
-
+    const acceptedPath: string[] = ['repository']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1461,10 +1071,7 @@ export default class Cat {
   async tasks (this: That, params?: T.CatTasksRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTasksResponse, unknown>>
   async tasks (this: That, params?: T.CatTasksRequest, options?: TransportRequestOptions): Promise<T.CatTasksResponse>
   async tasks (this: That, params?: T.CatTasksRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.tasks']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1504,10 +1111,7 @@ export default class Cat {
   async templates (this: That, params?: T.CatTemplatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTemplatesResponse, unknown>>
   async templates (this: That, params?: T.CatTemplatesRequest, options?: TransportRequestOptions): Promise<T.CatTemplatesResponse>
   async templates (this: That, params?: T.CatTemplatesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.templates']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1557,10 +1161,7 @@ export default class Cat {
   async threadPool (this: That, params?: T.CatThreadPoolRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatThreadPoolResponse, unknown>>
   async threadPool (this: That, params?: T.CatThreadPoolRequest, options?: TransportRequestOptions): Promise<T.CatThreadPoolResponse>
   async threadPool (this: That, params?: T.CatThreadPoolRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.thread_pool']
-
+    const acceptedPath: string[] = ['thread_pool_patterns']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1610,10 +1211,7 @@ export default class Cat {
   async transforms (this: That, params?: T.CatTransformsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTransformsResponse, unknown>>
   async transforms (this: That, params?: T.CatTransformsRequest, options?: TransportRequestOptions): Promise<T.CatTransformsResponse>
   async transforms (this: That, params?: T.CatTransformsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['cat.transforms']
-
+    const acceptedPath: string[] = ['transform_id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

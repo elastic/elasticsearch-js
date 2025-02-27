@@ -35,35 +35,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
-
-const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  mget: {
-    path: [
-      'index'
-    ],
-    body: [
-      'docs',
-      'ids'
-    ],
-    query: [
-      'force_synthetic_source',
-      'preference',
-      'realtime',
-      'refresh',
-      'routing',
-      '_source',
-      '_source_excludes',
-      '_source_includes',
-      'stored_fields'
-    ]
-  }
-}
+interface That { transport: Transport }
 
 /**
   * Get multiple documents. Get multiple JSON documents by ID from one or more indices. If you specify an index in the request URI, you only need to specify the document IDs in the request body. To ensure fast responses, this multi get (mget) API responds with partial results if one or more shards fail. **Filter source fields** By default, the `_source` field is returned for every document (if stored). Use the `_source` and `_source_include` or `source_exclude` attributes to filter what fields are returned for a particular document. You can include the `_source`, `_source_includes`, and `_source_excludes` query parameters in the request URI to specify the defaults to use when there are no per-document instructions. **Get stored fields** Use the `stored_fields` attribute to specify the set of stored fields you want to retrieve. Any requested fields that are not stored are ignored. You can include the `stored_fields` query parameter in the request URI to specify the defaults to use when there are no per-document instructions.
@@ -73,12 +45,8 @@ export default async function MgetApi<TDocument = unknown> (this: That, params?:
 export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MgetResponse<TDocument>, unknown>>
 export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest, options?: TransportRequestOptions): Promise<T.MgetResponse<TDocument>>
 export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest, options?: TransportRequestOptions): Promise<any> {
-  const {
-    path: acceptedPath,
-    body: acceptedBody,
-    query: acceptedQuery
-  } = acceptedParams.mget
-
+  const acceptedPath: string[] = ['index']
+  const acceptedBody: string[] = ['docs', 'ids']
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -101,14 +69,8 @@ export default async function MgetApi<TDocument = unknown> (this: That, params?:
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      }
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

@@ -35,89 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+interface That { transport: Transport }
 
 export default class Sql {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'sql.clear_cursor': {
-        path: [],
-        body: [
-          'cursor'
-        ],
-        query: []
-      },
-      'sql.delete_async': {
-        path: [
-          'id'
-        ],
-        body: [],
-        query: []
-      },
-      'sql.get_async': {
-        path: [
-          'id'
-        ],
-        body: [],
-        query: [
-          'delimiter',
-          'format',
-          'keep_alive',
-          'wait_for_completion_timeout'
-        ]
-      },
-      'sql.get_async_status': {
-        path: [
-          'id'
-        ],
-        body: [],
-        query: []
-      },
-      'sql.query': {
-        path: [],
-        body: [
-          'allow_partial_search_results',
-          'catalog',
-          'columnar',
-          'cursor',
-          'fetch_size',
-          'field_multi_value_leniency',
-          'filter',
-          'index_using_frozen',
-          'keep_alive',
-          'keep_on_completion',
-          'page_timeout',
-          'params',
-          'query',
-          'request_timeout',
-          'runtime_mappings',
-          'time_zone',
-          'wait_for_completion_timeout'
-        ],
-        query: [
-          'format'
-        ]
-      },
-      'sql.translate': {
-        path: [],
-        body: [
-          'fetch_size',
-          'filter',
-          'query',
-          'time_zone'
-        ],
-        query: []
-      }
-    }
   }
 
   /**
@@ -128,12 +51,8 @@ export default class Sql {
   async clearCursor (this: That, params: T.SqlClearCursorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlClearCursorResponse, unknown>>
   async clearCursor (this: That, params: T.SqlClearCursorRequest, options?: TransportRequestOptions): Promise<T.SqlClearCursorResponse>
   async clearCursor (this: That, params: T.SqlClearCursorRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['sql.clear_cursor']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['cursor']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -155,14 +74,8 @@ export default class Sql {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -182,10 +95,7 @@ export default class Sql {
   async deleteAsync (this: That, params: T.SqlDeleteAsyncRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlDeleteAsyncResponse, unknown>>
   async deleteAsync (this: That, params: T.SqlDeleteAsyncRequest, options?: TransportRequestOptions): Promise<T.SqlDeleteAsyncResponse>
   async deleteAsync (this: That, params: T.SqlDeleteAsyncRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['sql.delete_async']
-
+    const acceptedPath: string[] = ['id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -227,10 +137,7 @@ export default class Sql {
   async getAsync (this: That, params: T.SqlGetAsyncRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlGetAsyncResponse, unknown>>
   async getAsync (this: That, params: T.SqlGetAsyncRequest, options?: TransportRequestOptions): Promise<T.SqlGetAsyncResponse>
   async getAsync (this: That, params: T.SqlGetAsyncRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['sql.get_async']
-
+    const acceptedPath: string[] = ['id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -272,10 +179,7 @@ export default class Sql {
   async getAsyncStatus (this: That, params: T.SqlGetAsyncStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlGetAsyncStatusResponse, unknown>>
   async getAsyncStatus (this: That, params: T.SqlGetAsyncStatusRequest, options?: TransportRequestOptions): Promise<T.SqlGetAsyncStatusResponse>
   async getAsyncStatus (this: That, params: T.SqlGetAsyncStatusRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['sql.get_async_status']
-
+    const acceptedPath: string[] = ['id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -317,12 +221,8 @@ export default class Sql {
   async query (this: That, params?: T.SqlQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlQueryResponse, unknown>>
   async query (this: That, params?: T.SqlQueryRequest, options?: TransportRequestOptions): Promise<T.SqlQueryResponse>
   async query (this: That, params?: T.SqlQueryRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['sql.query']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['allow_partial_search_results', 'catalog', 'columnar', 'cursor', 'fetch_size', 'field_multi_value_leniency', 'filter', 'index_using_frozen', 'keep_alive', 'keep_on_completion', 'page_timeout', 'params', 'query', 'request_timeout', 'runtime_mappings', 'time_zone', 'wait_for_completion_timeout']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -345,14 +245,8 @@ export default class Sql {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -372,12 +266,8 @@ export default class Sql {
   async translate (this: That, params: T.SqlTranslateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlTranslateResponse, unknown>>
   async translate (this: That, params: T.SqlTranslateRequest, options?: TransportRequestOptions): Promise<T.SqlTranslateResponse>
   async translate (this: That, params: T.SqlTranslateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['sql.translate']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['fetch_size', 'filter', 'query', 'time_zone']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -399,14 +289,8 @@ export default class Sql {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

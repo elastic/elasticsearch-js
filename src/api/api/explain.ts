@@ -35,38 +35,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
-
-const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  explain: {
-    path: [
-      'id',
-      'index'
-    ],
-    body: [
-      'query'
-    ],
-    query: [
-      'analyzer',
-      'analyze_wildcard',
-      'default_operator',
-      'df',
-      'lenient',
-      'preference',
-      'routing',
-      '_source',
-      '_source_excludes',
-      '_source_includes',
-      'stored_fields',
-      'q'
-    ]
-  }
-}
+interface That { transport: Transport }
 
 /**
   * Explain a document match result. Get information about why a specific document matches, or doesn't match, a query. It computes a score explanation for a query and a specific document.
@@ -76,12 +45,8 @@ export default async function ExplainApi<TDocument = unknown> (this: That, param
 export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ExplainResponse<TDocument>, unknown>>
 export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest, options?: TransportRequestOptions): Promise<T.ExplainResponse<TDocument>>
 export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest, options?: TransportRequestOptions): Promise<any> {
-  const {
-    path: acceptedPath,
-    body: acceptedBody,
-    query: acceptedQuery
-  } = acceptedParams.explain
-
+  const acceptedPath: string[] = ['id', 'index']
+  const acceptedBody: string[] = ['query']
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -103,14 +68,8 @@ export default async function ExplainApi<TDocument = unknown> (this: That, param
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      }
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

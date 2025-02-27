@@ -35,30 +35,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
-
-const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  rank_eval: {
-    path: [
-      'index'
-    ],
-    body: [
-      'requests',
-      'metric'
-    ],
-    query: [
-      'allow_no_indices',
-      'expand_wildcards',
-      'ignore_unavailable',
-      'search_type'
-    ]
-  }
-}
+interface That { transport: Transport }
 
 /**
   * Evaluate ranked search results. Evaluate the quality of ranked search results over a set of typical search queries.
@@ -68,12 +45,8 @@ export default async function RankEvalApi (this: That, params: T.RankEvalRequest
 export default async function RankEvalApi (this: That, params: T.RankEvalRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RankEvalResponse, unknown>>
 export default async function RankEvalApi (this: That, params: T.RankEvalRequest, options?: TransportRequestOptions): Promise<T.RankEvalResponse>
 export default async function RankEvalApi (this: That, params: T.RankEvalRequest, options?: TransportRequestOptions): Promise<any> {
-  const {
-    path: acceptedPath,
-    body: acceptedBody,
-    query: acceptedQuery
-  } = acceptedParams.rank_eval
-
+  const acceptedPath: string[] = ['index']
+  const acceptedBody: string[] = ['requests', 'metric']
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -95,14 +68,8 @@ export default async function RankEvalApi (this: That, params: T.RankEvalRequest
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      }
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

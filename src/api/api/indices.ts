@@ -35,834 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+interface That { transport: Transport }
 
 export default class Indices {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'indices.add_block': {
-        path: [
-          'index',
-          'block'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable',
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'indices.analyze': {
-        path: [
-          'index'
-        ],
-        body: [
-          'analyzer',
-          'attributes',
-          'char_filter',
-          'explain',
-          'field',
-          'filter',
-          'normalizer',
-          'text',
-          'tokenizer'
-        ],
-        query: []
-      },
-      'indices.cancel_migrate_reindex': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: []
-      },
-      'indices.clear_cache': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'fielddata',
-          'fields',
-          'ignore_unavailable',
-          'query',
-          'request'
-        ]
-      },
-      'indices.clone': {
-        path: [
-          'index',
-          'target'
-        ],
-        body: [
-          'aliases',
-          'settings'
-        ],
-        query: [
-          'master_timeout',
-          'timeout',
-          'wait_for_active_shards'
-        ]
-      },
-      'indices.close': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable',
-          'master_timeout',
-          'timeout',
-          'wait_for_active_shards'
-        ]
-      },
-      'indices.create': {
-        path: [
-          'index'
-        ],
-        body: [
-          'aliases',
-          'mappings',
-          'settings'
-        ],
-        query: [
-          'master_timeout',
-          'timeout',
-          'wait_for_active_shards'
-        ]
-      },
-      'indices.create_data_stream': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'indices.create_from': {
-        path: [
-          'source',
-          'dest'
-        ],
-        body: [
-          'create_from'
-        ],
-        query: []
-      },
-      'indices.data_streams_stats': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'expand_wildcards'
-        ]
-      },
-      'indices.delete': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable',
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'indices.delete_alias': {
-        path: [
-          'index',
-          'name'
-        ],
-        body: [],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'indices.delete_data_lifecycle': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'expand_wildcards',
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'indices.delete_data_stream': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'master_timeout',
-          'expand_wildcards'
-        ]
-      },
-      'indices.delete_index_template': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'indices.delete_template': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'indices.disk_usage': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'flush',
-          'ignore_unavailable',
-          'run_expensive_tasks'
-        ]
-      },
-      'indices.downsample': {
-        path: [
-          'index',
-          'target_index'
-        ],
-        body: [
-          'config'
-        ],
-        query: []
-      },
-      'indices.exists': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'flat_settings',
-          'ignore_unavailable',
-          'include_defaults',
-          'local'
-        ]
-      },
-      'indices.exists_alias': {
-        path: [
-          'name',
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable',
-          'master_timeout'
-        ]
-      },
-      'indices.exists_index_template': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      },
-      'indices.exists_template': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'flat_settings',
-          'local',
-          'master_timeout'
-        ]
-      },
-      'indices.explain_data_lifecycle': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'include_defaults',
-          'master_timeout'
-        ]
-      },
-      'indices.field_usage_stats': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable',
-          'fields',
-          'wait_for_active_shards'
-        ]
-      },
-      'indices.flush': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'force',
-          'ignore_unavailable',
-          'wait_if_ongoing'
-        ]
-      },
-      'indices.forcemerge': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'flush',
-          'ignore_unavailable',
-          'max_num_segments',
-          'only_expunge_deletes',
-          'wait_for_completion'
-        ]
-      },
-      'indices.get': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'flat_settings',
-          'ignore_unavailable',
-          'include_defaults',
-          'local',
-          'master_timeout',
-          'features'
-        ]
-      },
-      'indices.get_alias': {
-        path: [
-          'name',
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable',
-          'master_timeout'
-        ]
-      },
-      'indices.get_data_lifecycle': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'expand_wildcards',
-          'include_defaults',
-          'master_timeout'
-        ]
-      },
-      'indices.get_data_lifecycle_stats': {
-        path: [],
-        body: [],
-        query: []
-      },
-      'indices.get_data_stream': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'expand_wildcards',
-          'include_defaults',
-          'master_timeout',
-          'verbose'
-        ]
-      },
-      'indices.get_field_mapping': {
-        path: [
-          'fields',
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable',
-          'include_defaults'
-        ]
-      },
-      'indices.get_index_template': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'local',
-          'flat_settings',
-          'master_timeout',
-          'include_defaults'
-        ]
-      },
-      'indices.get_mapping': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable',
-          'local',
-          'master_timeout'
-        ]
-      },
-      'indices.get_migrate_reindex_status': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: []
-      },
-      'indices.get_settings': {
-        path: [
-          'index',
-          'name'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'flat_settings',
-          'ignore_unavailable',
-          'include_defaults',
-          'local',
-          'master_timeout'
-        ]
-      },
-      'indices.get_template': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'flat_settings',
-          'local',
-          'master_timeout'
-        ]
-      },
-      'indices.migrate_reindex': {
-        path: [],
-        body: [
-          'reindex'
-        ],
-        query: []
-      },
-      'indices.migrate_to_data_stream': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'indices.modify_data_stream': {
-        path: [],
-        body: [
-          'actions'
-        ],
-        query: []
-      },
-      'indices.open': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable',
-          'master_timeout',
-          'timeout',
-          'wait_for_active_shards'
-        ]
-      },
-      'indices.promote_data_stream': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      },
-      'indices.put_alias': {
-        path: [
-          'index',
-          'name'
-        ],
-        body: [
-          'filter',
-          'index_routing',
-          'is_write_index',
-          'routing',
-          'search_routing'
-        ],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'indices.put_data_lifecycle': {
-        path: [
-          'name'
-        ],
-        body: [
-          'data_retention',
-          'downsampling',
-          'enabled'
-        ],
-        query: [
-          'expand_wildcards',
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'indices.put_index_template': {
-        path: [
-          'name'
-        ],
-        body: [
-          'index_patterns',
-          'composed_of',
-          'template',
-          'data_stream',
-          'priority',
-          'version',
-          '_meta',
-          'allow_auto_create',
-          'ignore_missing_component_templates',
-          'deprecated'
-        ],
-        query: [
-          'create',
-          'master_timeout',
-          'cause'
-        ]
-      },
-      'indices.put_mapping': {
-        path: [
-          'index'
-        ],
-        body: [
-          'date_detection',
-          'dynamic',
-          'dynamic_date_formats',
-          'dynamic_templates',
-          '_field_names',
-          '_meta',
-          'numeric_detection',
-          'properties',
-          '_routing',
-          '_source',
-          'runtime'
-        ],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable',
-          'master_timeout',
-          'timeout',
-          'write_index_only'
-        ]
-      },
-      'indices.put_settings': {
-        path: [
-          'index'
-        ],
-        body: [
-          'settings'
-        ],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'flat_settings',
-          'ignore_unavailable',
-          'master_timeout',
-          'preserve_existing',
-          'timeout'
-        ]
-      },
-      'indices.put_template': {
-        path: [
-          'name'
-        ],
-        body: [
-          'aliases',
-          'index_patterns',
-          'mappings',
-          'order',
-          'settings',
-          'version'
-        ],
-        query: [
-          'create',
-          'master_timeout',
-          'order',
-          'cause'
-        ]
-      },
-      'indices.recovery': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'active_only',
-          'detailed'
-        ]
-      },
-      'indices.refresh': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable'
-        ]
-      },
-      'indices.reload_search_analyzers': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable'
-        ]
-      },
-      'indices.resolve_cluster': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_throttled',
-          'ignore_unavailable',
-          'timeout'
-        ]
-      },
-      'indices.resolve_index': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'expand_wildcards',
-          'ignore_unavailable',
-          'allow_no_indices'
-        ]
-      },
-      'indices.rollover': {
-        path: [
-          'alias',
-          'new_index'
-        ],
-        body: [
-          'aliases',
-          'conditions',
-          'mappings',
-          'settings'
-        ],
-        query: [
-          'dry_run',
-          'master_timeout',
-          'timeout',
-          'wait_for_active_shards'
-        ]
-      },
-      'indices.segments': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable'
-        ]
-      },
-      'indices.shard_stores': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'allow_no_indices',
-          'expand_wildcards',
-          'ignore_unavailable',
-          'status'
-        ]
-      },
-      'indices.shrink': {
-        path: [
-          'index',
-          'target'
-        ],
-        body: [
-          'aliases',
-          'settings'
-        ],
-        query: [
-          'master_timeout',
-          'timeout',
-          'wait_for_active_shards'
-        ]
-      },
-      'indices.simulate_index_template': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'master_timeout',
-          'include_defaults'
-        ]
-      },
-      'indices.simulate_template': {
-        path: [
-          'name'
-        ],
-        body: [
-          'allow_auto_create',
-          'index_patterns',
-          'composed_of',
-          'template',
-          'data_stream',
-          'priority',
-          'version',
-          '_meta',
-          'ignore_missing_component_templates',
-          'deprecated'
-        ],
-        query: [
-          'create',
-          'master_timeout',
-          'include_defaults'
-        ]
-      },
-      'indices.split': {
-        path: [
-          'index',
-          'target'
-        ],
-        body: [
-          'aliases',
-          'settings'
-        ],
-        query: [
-          'master_timeout',
-          'timeout',
-          'wait_for_active_shards'
-        ]
-      },
-      'indices.stats': {
-        path: [
-          'metric',
-          'index'
-        ],
-        body: [],
-        query: [
-          'completion_fields',
-          'expand_wildcards',
-          'fielddata_fields',
-          'fields',
-          'forbid_closed_indices',
-          'groups',
-          'include_segment_file_sizes',
-          'include_unloaded_segments',
-          'level'
-        ]
-      },
-      'indices.update_aliases': {
-        path: [],
-        body: [
-          'actions'
-        ],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'indices.validate_query': {
-        path: [
-          'index'
-        ],
-        body: [
-          'query'
-        ],
-        query: [
-          'allow_no_indices',
-          'all_shards',
-          'analyzer',
-          'analyze_wildcard',
-          'default_operator',
-          'df',
-          'expand_wildcards',
-          'explain',
-          'ignore_unavailable',
-          'lenient',
-          'rewrite',
-          'q'
-        ]
-      }
-    }
   }
 
   /**
@@ -873,10 +51,7 @@ export default class Indices {
   async addBlock (this: That, params: T.IndicesAddBlockRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesAddBlockResponse, unknown>>
   async addBlock (this: That, params: T.IndicesAddBlockRequest, options?: TransportRequestOptions): Promise<T.IndicesAddBlockResponse>
   async addBlock (this: That, params: T.IndicesAddBlockRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.add_block']
-
+    const acceptedPath: string[] = ['index', 'block']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -919,12 +94,8 @@ export default class Indices {
   async analyze (this: That, params?: T.IndicesAnalyzeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesAnalyzeResponse, unknown>>
   async analyze (this: That, params?: T.IndicesAnalyzeRequest, options?: TransportRequestOptions): Promise<T.IndicesAnalyzeResponse>
   async analyze (this: That, params?: T.IndicesAnalyzeRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.analyze']
-
+    const acceptedPath: string[] = ['index']
+    const acceptedBody: string[] = ['analyzer', 'attributes', 'char_filter', 'explain', 'field', 'filter', 'normalizer', 'text', 'tokenizer']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -947,14 +118,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -984,10 +149,7 @@ export default class Indices {
   async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCancelMigrateReindexResponse, unknown>>
   async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptions): Promise<T.IndicesCancelMigrateReindexResponse>
   async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.cancel_migrate_reindex']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1029,10 +191,7 @@ export default class Indices {
   async clearCache (this: That, params?: T.IndicesClearCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesClearCacheResponse, unknown>>
   async clearCache (this: That, params?: T.IndicesClearCacheRequest, options?: TransportRequestOptions): Promise<T.IndicesClearCacheResponse>
   async clearCache (this: That, params?: T.IndicesClearCacheRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.clear_cache']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1082,12 +241,8 @@ export default class Indices {
   async clone (this: That, params: T.IndicesCloneRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCloneResponse, unknown>>
   async clone (this: That, params: T.IndicesCloneRequest, options?: TransportRequestOptions): Promise<T.IndicesCloneResponse>
   async clone (this: That, params: T.IndicesCloneRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.clone']
-
+    const acceptedPath: string[] = ['index', 'target']
+    const acceptedBody: string[] = ['aliases', 'settings']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1109,14 +264,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -1140,10 +289,7 @@ export default class Indices {
   async close (this: That, params: T.IndicesCloseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCloseResponse, unknown>>
   async close (this: That, params: T.IndicesCloseRequest, options?: TransportRequestOptions): Promise<T.IndicesCloseResponse>
   async close (this: That, params: T.IndicesCloseRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.close']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1185,12 +331,8 @@ export default class Indices {
   async create (this: That, params: T.IndicesCreateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateResponse, unknown>>
   async create (this: That, params: T.IndicesCreateRequest, options?: TransportRequestOptions): Promise<T.IndicesCreateResponse>
   async create (this: That, params: T.IndicesCreateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.create']
-
+    const acceptedPath: string[] = ['index']
+    const acceptedBody: string[] = ['aliases', 'mappings', 'settings']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1212,14 +354,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -1242,10 +378,7 @@ export default class Indices {
   async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateDataStreamResponse, unknown>>
   async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesCreateDataStreamResponse>
   async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.create_data_stream']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1287,12 +420,8 @@ export default class Indices {
   async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateFromResponse, unknown>>
   async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptions): Promise<T.IndicesCreateFromResponse>
   async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.create_from']
-
+    const acceptedPath: string[] = ['source', 'dest']
+    const acceptedBody: string[] = ['create_from']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1304,14 +433,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -1335,10 +458,7 @@ export default class Indices {
   async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDataStreamsStatsResponse, unknown>>
   async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesDataStreamsStatsResponse>
   async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.data_streams_stats']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1388,10 +508,7 @@ export default class Indices {
   async delete (this: That, params: T.IndicesDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteResponse, unknown>>
   async delete (this: That, params: T.IndicesDeleteRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteResponse>
   async delete (this: That, params: T.IndicesDeleteRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.delete']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1433,10 +550,7 @@ export default class Indices {
   async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteAliasResponse, unknown>>
   async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteAliasResponse>
   async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.delete_alias']
-
+    const acceptedPath: string[] = ['index', 'name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1486,10 +600,7 @@ export default class Indices {
   async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteDataLifecycleResponse, unknown>>
   async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteDataLifecycleResponse>
   async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.delete_data_lifecycle']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1531,10 +642,7 @@ export default class Indices {
   async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteDataStreamResponse, unknown>>
   async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteDataStreamResponse>
   async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.delete_data_stream']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1576,10 +684,7 @@ export default class Indices {
   async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteIndexTemplateResponse, unknown>>
   async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteIndexTemplateResponse>
   async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.delete_index_template']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1621,10 +726,7 @@ export default class Indices {
   async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteTemplateResponse, unknown>>
   async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteTemplateResponse>
   async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.delete_template']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1666,10 +768,7 @@ export default class Indices {
   async diskUsage (this: That, params: T.IndicesDiskUsageRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDiskUsageResponse, unknown>>
   async diskUsage (this: That, params: T.IndicesDiskUsageRequest, options?: TransportRequestOptions): Promise<T.IndicesDiskUsageResponse>
   async diskUsage (this: That, params: T.IndicesDiskUsageRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.disk_usage']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1711,12 +810,8 @@ export default class Indices {
   async downsample (this: That, params: T.IndicesDownsampleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDownsampleResponse, unknown>>
   async downsample (this: That, params: T.IndicesDownsampleRequest, options?: TransportRequestOptions): Promise<T.IndicesDownsampleResponse>
   async downsample (this: That, params: T.IndicesDownsampleRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.downsample']
-
+    const acceptedPath: string[] = ['index', 'target_index']
+    const acceptedBody: string[] = ['config']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1728,14 +823,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -1759,10 +848,7 @@ export default class Indices {
   async exists (this: That, params: T.IndicesExistsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsResponse, unknown>>
   async exists (this: That, params: T.IndicesExistsRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsResponse>
   async exists (this: That, params: T.IndicesExistsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.exists']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1804,10 +890,7 @@ export default class Indices {
   async existsAlias (this: That, params: T.IndicesExistsAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsAliasResponse, unknown>>
   async existsAlias (this: That, params: T.IndicesExistsAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsAliasResponse>
   async existsAlias (this: That, params: T.IndicesExistsAliasRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.exists_alias']
-
+    const acceptedPath: string[] = ['name', 'index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1857,10 +940,7 @@ export default class Indices {
   async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsIndexTemplateResponse, unknown>>
   async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsIndexTemplateResponse>
   async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.exists_index_template']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1902,10 +982,7 @@ export default class Indices {
   async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsTemplateResponse, unknown>>
   async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsTemplateResponse>
   async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.exists_template']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1947,10 +1024,7 @@ export default class Indices {
   async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExplainDataLifecycleResponse, unknown>>
   async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesExplainDataLifecycleResponse>
   async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.explain_data_lifecycle']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1992,10 +1066,7 @@ export default class Indices {
   async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesFieldUsageStatsResponse, unknown>>
   async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesFieldUsageStatsResponse>
   async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.field_usage_stats']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2037,10 +1108,7 @@ export default class Indices {
   async flush (this: That, params?: T.IndicesFlushRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesFlushResponse, unknown>>
   async flush (this: That, params?: T.IndicesFlushRequest, options?: TransportRequestOptions): Promise<T.IndicesFlushResponse>
   async flush (this: That, params?: T.IndicesFlushRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.flush']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2090,10 +1158,7 @@ export default class Indices {
   async forcemerge (this: That, params?: T.IndicesForcemergeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesForcemergeResponse, unknown>>
   async forcemerge (this: That, params?: T.IndicesForcemergeRequest, options?: TransportRequestOptions): Promise<T.IndicesForcemergeResponse>
   async forcemerge (this: That, params?: T.IndicesForcemergeRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.forcemerge']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2143,10 +1208,7 @@ export default class Indices {
   async get (this: That, params: T.IndicesGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetResponse, unknown>>
   async get (this: That, params: T.IndicesGetRequest, options?: TransportRequestOptions): Promise<T.IndicesGetResponse>
   async get (this: That, params: T.IndicesGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.get']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2188,10 +1250,7 @@ export default class Indices {
   async getAlias (this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetAliasResponse, unknown>>
   async getAlias (this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesGetAliasResponse>
   async getAlias (this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.get_alias']
-
+    const acceptedPath: string[] = ['name', 'index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2248,10 +1307,7 @@ export default class Indices {
   async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataLifecycleResponse, unknown>>
   async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataLifecycleResponse>
   async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.get_data_lifecycle']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2293,10 +1349,7 @@ export default class Indices {
   async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataLifecycleStatsResponse, unknown>>
   async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataLifecycleStatsResponse>
   async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.get_data_lifecycle_stats']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2336,10 +1389,7 @@ export default class Indices {
   async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataStreamResponse, unknown>>
   async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataStreamResponse>
   async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.get_data_stream']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2389,10 +1439,7 @@ export default class Indices {
   async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetFieldMappingResponse, unknown>>
   async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest, options?: TransportRequestOptions): Promise<T.IndicesGetFieldMappingResponse>
   async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.get_field_mapping']
-
+    const acceptedPath: string[] = ['fields', 'index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2442,10 +1489,7 @@ export default class Indices {
   async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetIndexTemplateResponse, unknown>>
   async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesGetIndexTemplateResponse>
   async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.get_index_template']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2495,10 +1539,7 @@ export default class Indices {
   async getMapping (this: That, params?: T.IndicesGetMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetMappingResponse, unknown>>
   async getMapping (this: That, params?: T.IndicesGetMappingRequest, options?: TransportRequestOptions): Promise<T.IndicesGetMappingResponse>
   async getMapping (this: That, params?: T.IndicesGetMappingRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.get_mapping']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2548,10 +1589,7 @@ export default class Indices {
   async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetMigrateReindexStatusResponse, unknown>>
   async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptions): Promise<T.IndicesGetMigrateReindexStatusResponse>
   async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.get_migrate_reindex_status']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2593,10 +1631,7 @@ export default class Indices {
   async getSettings (this: That, params?: T.IndicesGetSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetSettingsResponse, unknown>>
   async getSettings (this: That, params?: T.IndicesGetSettingsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetSettingsResponse>
   async getSettings (this: That, params?: T.IndicesGetSettingsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.get_settings']
-
+    const acceptedPath: string[] = ['index', 'name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2653,10 +1688,7 @@ export default class Indices {
   async getTemplate (this: That, params?: T.IndicesGetTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetTemplateResponse, unknown>>
   async getTemplate (this: That, params?: T.IndicesGetTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesGetTemplateResponse>
   async getTemplate (this: That, params?: T.IndicesGetTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.get_template']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2706,12 +1738,8 @@ export default class Indices {
   async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesMigrateReindexResponse, unknown>>
   async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptions): Promise<T.IndicesMigrateReindexResponse>
   async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.migrate_reindex']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['reindex']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2723,14 +1751,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -2750,10 +1772,7 @@ export default class Indices {
   async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesMigrateToDataStreamResponse, unknown>>
   async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesMigrateToDataStreamResponse>
   async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.migrate_to_data_stream']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2795,12 +1814,8 @@ export default class Indices {
   async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesModifyDataStreamResponse, unknown>>
   async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesModifyDataStreamResponse>
   async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.modify_data_stream']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['actions']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2822,14 +1837,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -2849,10 +1858,7 @@ export default class Indices {
   async open (this: That, params: T.IndicesOpenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesOpenResponse, unknown>>
   async open (this: That, params: T.IndicesOpenRequest, options?: TransportRequestOptions): Promise<T.IndicesOpenResponse>
   async open (this: That, params: T.IndicesOpenRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.open']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2894,10 +1900,7 @@ export default class Indices {
   async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPromoteDataStreamResponse, unknown>>
   async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesPromoteDataStreamResponse>
   async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.promote_data_stream']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2939,12 +1942,8 @@ export default class Indices {
   async putAlias (this: That, params: T.IndicesPutAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutAliasResponse, unknown>>
   async putAlias (this: That, params: T.IndicesPutAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesPutAliasResponse>
   async putAlias (this: That, params: T.IndicesPutAliasRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.put_alias']
-
+    const acceptedPath: string[] = ['index', 'name']
+    const acceptedBody: string[] = ['filter', 'index_routing', 'is_write_index', 'routing', 'search_routing']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2966,14 +1965,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3004,12 +1997,8 @@ export default class Indices {
   async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutDataLifecycleResponse, unknown>>
   async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesPutDataLifecycleResponse>
   async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.put_data_lifecycle']
-
+    const acceptedPath: string[] = ['name']
+    const acceptedBody: string[] = ['data_retention', 'downsampling', 'enabled']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3031,14 +2020,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3061,12 +2044,8 @@ export default class Indices {
   async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutIndexTemplateResponse, unknown>>
   async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesPutIndexTemplateResponse>
   async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.put_index_template']
-
+    const acceptedPath: string[] = ['name']
+    const acceptedBody: string[] = ['index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta', 'allow_auto_create', 'ignore_missing_component_templates', 'deprecated']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3088,14 +2067,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3118,12 +2091,8 @@ export default class Indices {
   async putMapping (this: That, params: T.IndicesPutMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutMappingResponse, unknown>>
   async putMapping (this: That, params: T.IndicesPutMappingRequest, options?: TransportRequestOptions): Promise<T.IndicesPutMappingResponse>
   async putMapping (this: That, params: T.IndicesPutMappingRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.put_mapping']
-
+    const acceptedPath: string[] = ['index']
+    const acceptedBody: string[] = ['date_detection', 'dynamic', 'dynamic_date_formats', 'dynamic_templates', '_field_names', '_meta', 'numeric_detection', 'properties', '_routing', '_source', 'runtime']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3145,14 +2114,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3175,12 +2138,8 @@ export default class Indices {
   async putSettings (this: That, params: T.IndicesPutSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutSettingsResponse, unknown>>
   async putSettings (this: That, params: T.IndicesPutSettingsRequest, options?: TransportRequestOptions): Promise<T.IndicesPutSettingsResponse>
   async putSettings (this: That, params: T.IndicesPutSettingsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.put_settings']
-
+    const acceptedPath: string[] = ['index']
+    const acceptedBody: string[] = ['settings']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3192,14 +2151,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3229,12 +2182,8 @@ export default class Indices {
   async putTemplate (this: That, params: T.IndicesPutTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutTemplateResponse, unknown>>
   async putTemplate (this: That, params: T.IndicesPutTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesPutTemplateResponse>
   async putTemplate (this: That, params: T.IndicesPutTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.put_template']
-
+    const acceptedPath: string[] = ['name']
+    const acceptedBody: string[] = ['aliases', 'index_patterns', 'mappings', 'order', 'settings', 'version']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3256,14 +2205,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3286,10 +2229,7 @@ export default class Indices {
   async recovery (this: That, params?: T.IndicesRecoveryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesRecoveryResponse, unknown>>
   async recovery (this: That, params?: T.IndicesRecoveryRequest, options?: TransportRequestOptions): Promise<T.IndicesRecoveryResponse>
   async recovery (this: That, params?: T.IndicesRecoveryRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.recovery']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3339,10 +2279,7 @@ export default class Indices {
   async refresh (this: That, params?: T.IndicesRefreshRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesRefreshResponse, unknown>>
   async refresh (this: That, params?: T.IndicesRefreshRequest, options?: TransportRequestOptions): Promise<T.IndicesRefreshResponse>
   async refresh (this: That, params?: T.IndicesRefreshRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.refresh']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3392,10 +2329,7 @@ export default class Indices {
   async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesReloadSearchAnalyzersResponse, unknown>>
   async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptions): Promise<T.IndicesReloadSearchAnalyzersResponse>
   async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.reload_search_analyzers']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3437,10 +2371,7 @@ export default class Indices {
   async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesResolveClusterResponse, unknown>>
   async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest, options?: TransportRequestOptions): Promise<T.IndicesResolveClusterResponse>
   async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.resolve_cluster']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3490,10 +2421,7 @@ export default class Indices {
   async resolveIndex (this: That, params: T.IndicesResolveIndexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesResolveIndexResponse, unknown>>
   async resolveIndex (this: That, params: T.IndicesResolveIndexRequest, options?: TransportRequestOptions): Promise<T.IndicesResolveIndexResponse>
   async resolveIndex (this: That, params: T.IndicesResolveIndexRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.resolve_index']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3535,12 +2463,8 @@ export default class Indices {
   async rollover (this: That, params: T.IndicesRolloverRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesRolloverResponse, unknown>>
   async rollover (this: That, params: T.IndicesRolloverRequest, options?: TransportRequestOptions): Promise<T.IndicesRolloverResponse>
   async rollover (this: That, params: T.IndicesRolloverRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.rollover']
-
+    const acceptedPath: string[] = ['alias', 'new_index']
+    const acceptedBody: string[] = ['aliases', 'conditions', 'mappings', 'settings']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3562,14 +2486,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3600,10 +2518,7 @@ export default class Indices {
   async segments (this: That, params?: T.IndicesSegmentsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSegmentsResponse, unknown>>
   async segments (this: That, params?: T.IndicesSegmentsRequest, options?: TransportRequestOptions): Promise<T.IndicesSegmentsResponse>
   async segments (this: That, params?: T.IndicesSegmentsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.segments']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3653,10 +2568,7 @@ export default class Indices {
   async shardStores (this: That, params?: T.IndicesShardStoresRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesShardStoresResponse, unknown>>
   async shardStores (this: That, params?: T.IndicesShardStoresRequest, options?: TransportRequestOptions): Promise<T.IndicesShardStoresResponse>
   async shardStores (this: That, params?: T.IndicesShardStoresRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.shard_stores']
-
+    const acceptedPath: string[] = ['index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3706,12 +2618,8 @@ export default class Indices {
   async shrink (this: That, params: T.IndicesShrinkRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesShrinkResponse, unknown>>
   async shrink (this: That, params: T.IndicesShrinkRequest, options?: TransportRequestOptions): Promise<T.IndicesShrinkResponse>
   async shrink (this: That, params: T.IndicesShrinkRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.shrink']
-
+    const acceptedPath: string[] = ['index', 'target']
+    const acceptedBody: string[] = ['aliases', 'settings']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3733,14 +2641,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3764,10 +2666,7 @@ export default class Indices {
   async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSimulateIndexTemplateResponse, unknown>>
   async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesSimulateIndexTemplateResponse>
   async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.simulate_index_template']
-
+    const acceptedPath: string[] = ['name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3809,12 +2708,8 @@ export default class Indices {
   async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSimulateTemplateResponse, unknown>>
   async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesSimulateTemplateResponse>
   async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.simulate_template']
-
+    const acceptedPath: string[] = ['name']
+    const acceptedBody: string[] = ['allow_auto_create', 'index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta', 'ignore_missing_component_templates', 'deprecated']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3837,14 +2732,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3874,12 +2763,8 @@ export default class Indices {
   async split (this: That, params: T.IndicesSplitRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSplitResponse, unknown>>
   async split (this: That, params: T.IndicesSplitRequest, options?: TransportRequestOptions): Promise<T.IndicesSplitResponse>
   async split (this: That, params: T.IndicesSplitRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.split']
-
+    const acceptedPath: string[] = ['index', 'target']
+    const acceptedBody: string[] = ['aliases', 'settings']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3901,14 +2786,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -3932,10 +2811,7 @@ export default class Indices {
   async stats (this: That, params?: T.IndicesStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesStatsResponse, unknown>>
   async stats (this: That, params?: T.IndicesStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesStatsResponse>
   async stats (this: That, params?: T.IndicesStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.stats']
-
+    const acceptedPath: string[] = ['metric', 'index']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3992,12 +2868,8 @@ export default class Indices {
   async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesUpdateAliasesResponse, unknown>>
   async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest, options?: TransportRequestOptions): Promise<T.IndicesUpdateAliasesResponse>
   async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.update_aliases']
-
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['actions']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -4020,14 +2892,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -4047,12 +2913,8 @@ export default class Indices {
   async validateQuery (this: That, params?: T.IndicesValidateQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesValidateQueryResponse, unknown>>
   async validateQuery (this: That, params?: T.IndicesValidateQueryRequest, options?: TransportRequestOptions): Promise<T.IndicesValidateQueryResponse>
   async validateQuery (this: That, params?: T.IndicesValidateQueryRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.validate_query']
-
+    const acceptedPath: string[] = ['index']
+    const acceptedBody: string[] = ['query']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -4075,14 +2937,8 @@ export default class Indices {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

@@ -35,22 +35,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-}
-
-const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  reindex_rethrottle: {
-    path: [
-      'task_id'
-    ],
-    body: [],
-    query: [
-      'requests_per_second'
-    ]
-  }
-}
+interface That { transport: Transport }
 
 /**
   * Throttle a reindex operation. Change the number of requests per second for a particular reindex operation. For example: ``` POST _reindex/r1A2WoRbTwKZ516z6NEs5A:36619/_rethrottle?requests_per_second=-1 ``` Rethrottling that speeds up the query takes effect immediately. Rethrottling that slows down the query will take effect after completing the current batch. This behavior prevents scroll timeouts.
@@ -60,10 +45,7 @@ export default async function ReindexRethrottleApi (this: That, params: T.Reinde
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ReindexRethrottleResponse, unknown>>
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest, options?: TransportRequestOptions): Promise<T.ReindexRethrottleResponse>
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest, options?: TransportRequestOptions): Promise<any> {
-  const {
-    path: acceptedPath
-  } = acceptedParams.reindex_rethrottle
-
+  const acceptedPath: string[] = ['task_id']
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

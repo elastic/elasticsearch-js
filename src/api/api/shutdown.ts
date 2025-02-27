@@ -35,55 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+interface That { transport: Transport }
 
 export default class Shutdown {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'shutdown.delete_node': {
-        path: [
-          'node_id'
-        ],
-        body: [],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'shutdown.get_node': {
-        path: [
-          'node_id'
-        ],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      },
-      'shutdown.put_node': {
-        path: [
-          'node_id'
-        ],
-        body: [
-          'type',
-          'reason',
-          'allocation_delay',
-          'target_node_name'
-        ],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      }
-    }
   }
 
   /**
@@ -94,10 +51,7 @@ export default class Shutdown {
   async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownDeleteNodeResponse, unknown>>
   async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownDeleteNodeResponse>
   async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['shutdown.delete_node']
-
+    const acceptedPath: string[] = ['node_id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -139,10 +93,7 @@ export default class Shutdown {
   async getNode (this: That, params?: T.ShutdownGetNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownGetNodeResponse, unknown>>
   async getNode (this: That, params?: T.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownGetNodeResponse>
   async getNode (this: That, params?: T.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['shutdown.get_node']
-
+    const acceptedPath: string[] = ['node_id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -192,12 +143,8 @@ export default class Shutdown {
   async putNode (this: That, params: T.ShutdownPutNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownPutNodeResponse, unknown>>
   async putNode (this: That, params: T.ShutdownPutNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownPutNodeResponse>
   async putNode (this: That, params: T.ShutdownPutNodeRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['shutdown.put_node']
-
+    const acceptedPath: string[] = ['node_id']
+    const acceptedBody: string[] = ['type', 'reason', 'allocation_delay', 'target_node_name']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -219,14 +166,8 @@ export default class Shutdown {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

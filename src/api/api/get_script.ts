@@ -35,22 +35,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-}
-
-const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  get_script: {
-    path: [
-      'id'
-    ],
-    body: [],
-    query: [
-      'master_timeout'
-    ]
-  }
-}
+interface That { transport: Transport }
 
 /**
   * Get a script or search template. Retrieves a stored script or search template.
@@ -60,10 +45,7 @@ export default async function GetScriptApi (this: That, params: T.GetScriptReque
 export default async function GetScriptApi (this: That, params: T.GetScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptResponse, unknown>>
 export default async function GetScriptApi (this: That, params: T.GetScriptRequest, options?: TransportRequestOptions): Promise<T.GetScriptResponse>
 export default async function GetScriptApi (this: That, params: T.GetScriptRequest, options?: TransportRequestOptions): Promise<any> {
-  const {
-    path: acceptedPath
-  } = acceptedParams.get_script
-
+  const acceptedPath: string[] = ['id']
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

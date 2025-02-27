@@ -35,39 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
+interface That { transport: Transport }
 
 export default class Profiling {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'profiling.flamegraph': {
-        path: [],
-        body: [],
-        query: []
-      },
-      'profiling.stacktraces': {
-        path: [],
-        body: [],
-        query: []
-      },
-      'profiling.status': {
-        path: [],
-        body: [],
-        query: []
-      },
-      'profiling.topn_functions': {
-        path: [],
-        body: [],
-        query: []
-      }
-    }
   }
 
   /**
@@ -78,10 +51,7 @@ export default class Profiling {
   async flamegraph (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async flamegraph (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async flamegraph (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['profiling.flamegraph']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -120,10 +90,7 @@ export default class Profiling {
   async stacktraces (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async stacktraces (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async stacktraces (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['profiling.stacktraces']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -162,10 +129,7 @@ export default class Profiling {
   async status (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async status (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async status (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['profiling.status']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -204,10 +168,7 @@ export default class Profiling {
   async topnFunctions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async topnFunctions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async topnFunctions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['profiling.topn_functions']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

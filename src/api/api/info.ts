@@ -35,18 +35,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-}
-
-const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  info: {
-    path: [],
-    body: [],
-    query: []
-  }
-}
+interface That { transport: Transport }
 
 /**
   * Get cluster info. Get basic build, version, and cluster information.
@@ -56,10 +45,7 @@ export default async function InfoApi (this: That, params?: T.InfoRequest, optio
 export default async function InfoApi (this: That, params?: T.InfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InfoResponse, unknown>>
 export default async function InfoApi (this: That, params?: T.InfoRequest, options?: TransportRequestOptions): Promise<T.InfoResponse>
 export default async function InfoApi (this: That, params?: T.InfoRequest, options?: TransportRequestOptions): Promise<any> {
-  const {
-    path: acceptedPath
-  } = acceptedParams.info
-
+  const acceptedPath: string[] = []
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

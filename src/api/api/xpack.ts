@@ -35,35 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
+interface That { transport: Transport }
 
 export default class Xpack {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'xpack.info': {
-        path: [],
-        body: [],
-        query: [
-          'categories',
-          'accept_enterprise',
-          'human'
-        ]
-      },
-      'xpack.usage': {
-        path: [],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      }
-    }
   }
 
   /**
@@ -74,10 +51,7 @@ export default class Xpack {
   async info (this: That, params?: T.XpackInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.XpackInfoResponse, unknown>>
   async info (this: That, params?: T.XpackInfoRequest, options?: TransportRequestOptions): Promise<T.XpackInfoResponse>
   async info (this: That, params?: T.XpackInfoRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['xpack.info']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -117,10 +91,7 @@ export default class Xpack {
   async usage (this: That, params?: T.XpackUsageRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.XpackUsageResponse, unknown>>
   async usage (this: That, params?: T.XpackUsageRequest, options?: TransportRequestOptions): Promise<T.XpackUsageResponse>
   async usage (this: That, params?: T.XpackUsageRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['xpack.usage']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

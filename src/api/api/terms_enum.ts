@@ -35,30 +35,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
-
-const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  terms_enum: {
-    path: [
-      'index'
-    ],
-    body: [
-      'field',
-      'size',
-      'timeout',
-      'case_insensitive',
-      'index_filter',
-      'string',
-      'search_after'
-    ],
-    query: []
-  }
-}
+interface That { transport: Transport }
 
 /**
   * Get terms in an index. Discover terms that match a partial string in an index. This API is designed for low-latency look-ups used in auto-complete scenarios. > info > The terms enum API may return terms from deleted documents. Deleted documents are initially only marked as deleted. It is not until their segments are merged that documents are actually deleted. Until that happens, the terms enum API will return terms from these documents.
@@ -68,12 +45,8 @@ export default async function TermsEnumApi (this: That, params: T.TermsEnumReque
 export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TermsEnumResponse, unknown>>
 export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest, options?: TransportRequestOptions): Promise<T.TermsEnumResponse>
 export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest, options?: TransportRequestOptions): Promise<any> {
-  const {
-    path: acceptedPath,
-    body: acceptedBody,
-    query: acceptedQuery
-  } = acceptedParams.terms_enum
-
+  const acceptedPath: string[] = ['index']
+  const acceptedBody: string[] = ['field', 'size', 'timeout', 'case_insensitive', 'index_filter', 'string', 'search_after']
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -95,14 +68,8 @@ export default async function TermsEnumApi (this: That, params: T.TermsEnumReque
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      }
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

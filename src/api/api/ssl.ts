@@ -35,24 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
+interface That { transport: Transport }
 
 export default class Ssl {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'ssl.certificates': {
-        path: [],
-        body: [],
-        query: []
-      }
-    }
   }
 
   /**
@@ -63,10 +51,7 @@ export default class Ssl {
   async certificates (this: That, params?: T.SslCertificatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SslCertificatesResponse, unknown>>
   async certificates (this: That, params?: T.SslCertificatesRequest, options?: TransportRequestOptions): Promise<T.SslCertificatesResponse>
   async certificates (this: That, params?: T.SslCertificatesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['ssl.certificates']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

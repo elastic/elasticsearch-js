@@ -35,18 +35,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-}
-
-const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  capabilities: {
-    path: [],
-    body: [],
-    query: []
-  }
-}
+interface That { transport: Transport }
 
 /**
   * Checks if the specified combination of method, API, parameters, and arbitrary capabilities are supported
@@ -56,10 +45,7 @@ export default async function CapabilitiesApi (this: That, params?: T.TODO, opti
 export default async function CapabilitiesApi (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
 export default async function CapabilitiesApi (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
 export default async function CapabilitiesApi (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
-  const {
-    path: acceptedPath
-  } = acceptedParams.capabilities
-
+  const acceptedPath: string[] = []
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

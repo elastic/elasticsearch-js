@@ -35,18 +35,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-}
-
-const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  ping: {
-    path: [],
-    body: [],
-    query: []
-  }
-}
+interface That { transport: Transport }
 
 /**
   * Ping the cluster. Get information about whether the cluster is running.
@@ -56,10 +45,7 @@ export default async function PingApi (this: That, params?: T.PingRequest, optio
 export default async function PingApi (this: That, params?: T.PingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.PingResponse, unknown>>
 export default async function PingApi (this: That, params?: T.PingRequest, options?: TransportRequestOptions): Promise<T.PingResponse>
 export default async function PingApi (this: That, params?: T.PingRequest, options?: TransportRequestOptions): Promise<any> {
-  const {
-    path: acceptedPath
-  } = acceptedParams.ping
-
+  const acceptedPath: string[] = []
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

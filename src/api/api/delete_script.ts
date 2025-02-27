@@ -35,23 +35,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-}
-
-const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  delete_script: {
-    path: [
-      'id'
-    ],
-    body: [],
-    query: [
-      'master_timeout',
-      'timeout'
-    ]
-  }
-}
+interface That { transport: Transport }
 
 /**
   * Delete a script or search template. Deletes a stored script or search template.
@@ -61,10 +45,7 @@ export default async function DeleteScriptApi (this: That, params: T.DeleteScrip
 export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteScriptResponse, unknown>>
 export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest, options?: TransportRequestOptions): Promise<T.DeleteScriptResponse>
 export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest, options?: TransportRequestOptions): Promise<any> {
-  const {
-    path: acceptedPath
-  } = acceptedParams.delete_script
-
+  const acceptedPath: string[] = ['id']
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

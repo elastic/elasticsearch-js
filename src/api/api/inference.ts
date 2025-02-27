@@ -35,103 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
-
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+interface That { transport: Transport }
 
 export default class Inference {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'inference.delete': {
-        path: [
-          'task_type',
-          'inference_id'
-        ],
-        body: [],
-        query: [
-          'dry_run',
-          'force'
-        ]
-      },
-      'inference.get': {
-        path: [
-          'task_type',
-          'inference_id'
-        ],
-        body: [],
-        query: []
-      },
-      'inference.inference': {
-        path: [
-          'task_type',
-          'inference_id'
-        ],
-        body: [
-          'query',
-          'input',
-          'task_settings'
-        ],
-        query: [
-          'timeout'
-        ]
-      },
-      'inference.put': {
-        path: [
-          'task_type',
-          'inference_id'
-        ],
-        body: [
-          'inference_config'
-        ],
-        query: []
-      },
-      'inference.stream_inference': {
-        path: [
-          'inference_id',
-          'task_type'
-        ],
-        body: [
-          'input'
-        ],
-        query: []
-      },
-      'inference.unified_inference': {
-        path: [
-          'task_type',
-          'inference_id'
-        ],
-        body: [
-          'messages',
-          'model',
-          'max_completion_tokens',
-          'stop',
-          'temperature',
-          'tool_choice',
-          'tools',
-          'top_p'
-        ],
-        query: [
-          'timeout'
-        ]
-      },
-      'inference.update': {
-        path: [
-          'inference_id',
-          'task_type'
-        ],
-        body: [
-          'inference_config'
-        ],
-        query: []
-      }
-    }
   }
 
   /**
@@ -142,10 +51,7 @@ export default class Inference {
   async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceDeleteResponse, unknown>>
   async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<T.InferenceDeleteResponse>
   async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['inference.delete']
-
+    const acceptedPath: string[] = ['task_type', 'inference_id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -195,10 +101,7 @@ export default class Inference {
   async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceGetResponse, unknown>>
   async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptions): Promise<T.InferenceGetResponse>
   async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['inference.get']
-
+    const acceptedPath: string[] = ['task_type', 'inference_id']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -252,12 +155,8 @@ export default class Inference {
   async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceInferenceResponse, unknown>>
   async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<T.InferenceInferenceResponse>
   async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['inference.inference']
-
+    const acceptedPath: string[] = ['task_type', 'inference_id']
+    const acceptedBody: string[] = ['query', 'input', 'task_settings']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -279,14 +178,8 @@ export default class Inference {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -317,12 +210,8 @@ export default class Inference {
   async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutResponse, unknown>>
   async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptions): Promise<T.InferencePutResponse>
   async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['inference.put']
-
+    const acceptedPath: string[] = ['task_type', 'inference_id']
+    const acceptedBody: string[] = ['inference_config']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -334,14 +223,8 @@ export default class Inference {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -372,12 +255,8 @@ export default class Inference {
   async streamInference (this: That, params: T.InferenceStreamInferenceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceStreamInferenceResponse, unknown>>
   async streamInference (this: That, params: T.InferenceStreamInferenceRequest, options?: TransportRequestOptions): Promise<T.InferenceStreamInferenceResponse>
   async streamInference (this: That, params: T.InferenceStreamInferenceRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['inference.stream_inference']
-
+    const acceptedPath: string[] = ['inference_id', 'task_type']
+    const acceptedBody: string[] = ['input']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -399,14 +278,8 @@ export default class Inference {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -437,12 +310,8 @@ export default class Inference {
   async unifiedInference (this: That, params: T.InferenceUnifiedInferenceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceUnifiedInferenceResponse, unknown>>
   async unifiedInference (this: That, params: T.InferenceUnifiedInferenceRequest, options?: TransportRequestOptions): Promise<T.InferenceUnifiedInferenceResponse>
   async unifiedInference (this: That, params: T.InferenceUnifiedInferenceRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['inference.unified_inference']
-
+    const acceptedPath: string[] = ['task_type', 'inference_id']
+    const acceptedBody: string[] = ['messages', 'model', 'max_completion_tokens', 'stop', 'temperature', 'tool_choice', 'tools', 'top_p']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -464,14 +333,8 @@ export default class Inference {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -502,12 +365,8 @@ export default class Inference {
   async update (this: That, params: T.InferenceUpdateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceUpdateResponse, unknown>>
   async update (this: That, params: T.InferenceUpdateRequest, options?: TransportRequestOptions): Promise<T.InferenceUpdateResponse>
   async update (this: That, params: T.InferenceUpdateRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['inference.update']
-
+    const acceptedPath: string[] = ['inference_id', 'task_type']
+    const acceptedBody: string[] = ['inference_config']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -519,14 +378,8 @@ export default class Inference {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

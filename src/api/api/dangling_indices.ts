@@ -35,46 +35,12 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-
-interface That {
-  transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
-}
+interface That { transport: Transport }
 
 export default class DanglingIndices {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
-      'dangling_indices.delete_dangling_index': {
-        path: [
-          'index_uuid'
-        ],
-        body: [],
-        query: [
-          'accept_data_loss',
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'dangling_indices.import_dangling_index': {
-        path: [
-          'index_uuid'
-        ],
-        body: [],
-        query: [
-          'accept_data_loss',
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'dangling_indices.list_dangling_indices': {
-        path: [],
-        body: [],
-        query: []
-      }
-    }
   }
 
   /**
@@ -85,10 +51,7 @@ export default class DanglingIndices {
   async deleteDanglingIndex (this: That, params: T.DanglingIndicesDeleteDanglingIndexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DanglingIndicesDeleteDanglingIndexResponse, unknown>>
   async deleteDanglingIndex (this: That, params: T.DanglingIndicesDeleteDanglingIndexRequest, options?: TransportRequestOptions): Promise<T.DanglingIndicesDeleteDanglingIndexResponse>
   async deleteDanglingIndex (this: That, params: T.DanglingIndicesDeleteDanglingIndexRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['dangling_indices.delete_dangling_index']
-
+    const acceptedPath: string[] = ['index_uuid']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -130,10 +93,7 @@ export default class DanglingIndices {
   async importDanglingIndex (this: That, params: T.DanglingIndicesImportDanglingIndexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DanglingIndicesImportDanglingIndexResponse, unknown>>
   async importDanglingIndex (this: That, params: T.DanglingIndicesImportDanglingIndexRequest, options?: TransportRequestOptions): Promise<T.DanglingIndicesImportDanglingIndexResponse>
   async importDanglingIndex (this: That, params: T.DanglingIndicesImportDanglingIndexRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['dangling_indices.import_dangling_index']
-
+    const acceptedPath: string[] = ['index_uuid']
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -175,10 +135,7 @@ export default class DanglingIndices {
   async listDanglingIndices (this: That, params?: T.DanglingIndicesListDanglingIndicesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DanglingIndicesListDanglingIndicesResponse, unknown>>
   async listDanglingIndices (this: That, params?: T.DanglingIndicesListDanglingIndicesRequest, options?: TransportRequestOptions): Promise<T.DanglingIndicesListDanglingIndicesResponse>
   async listDanglingIndices (this: That, params?: T.DanglingIndicesListDanglingIndicesRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['dangling_indices.list_dangling_indices']
-
+    const acceptedPath: string[] = []
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
