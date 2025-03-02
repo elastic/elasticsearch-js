@@ -56,7 +56,7 @@
     "node": ">=18"
   },
   "devDependencies": {
-    "@elastic/request-converter": "8.17.0",
+    "@elastic/request-converter": "8.18.0",
     "@sinonjs/fake-timers": "14.0.0",
     "@types/debug": "4.1.12",
     "@types/ms": "0.7.34",
