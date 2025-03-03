@@ -3,10 +3,11 @@
 
 [source, js]
 ----
-const response = await client.searchApplication.renderQuery({
-  name: "my_search_application",
-  params: {
-    query_string: "rock climbing",
+const response = await client.indices.createFrom({
+  source: "my-index",
+  dest: "my-new-index",
+  create_from: {
+    remove_index_blocks: false,
   },
 });
 console.log(response);

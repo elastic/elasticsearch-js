@@ -3,10 +3,10 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_application/analytics/my_analytics_collection/event/search_click",
-  body: {
+const response = await client.searchApplication.postBehavioralAnalyticsEvent({
+  collection_name: "my_analytics_collection",
+  event_type: "search_click",
+  payload: {
     session: {
       id: "1797ca95-91c9-4e2e-b1bd-9c38e6f386a9",
     },

@@ -3,32 +3,30 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_inference/chat_completion/openai-completion/_stream",
-  body: {
-    messages: [
-      {
-        role: "assistant",
-        content: "Let's find out what the weather is",
-        tool_calls: [
-          {
-            id: "call_KcAjWtAww20AihPHphUh46Gd",
-            type: "function",
-            function: {
-              name: "get_current_weather",
-              arguments: '{"location":"Boston, MA"}',
-            },
+const response = await client.inference.streamInference({
+  task_type: "chat_completion",
+  inference_id: "openai-completion",
+  messages: [
+    {
+      role: "assistant",
+      content: "Let's find out what the weather is",
+      tool_calls: [
+        {
+          id: "call_KcAjWtAww20AihPHphUh46Gd",
+          type: "function",
+          function: {
+            name: "get_current_weather",
+            arguments: '{"location":"Boston, MA"}',
           },
-        ],
-      },
-      {
-        role: "tool",
-        content: "The weather is cold",
-        tool_call_id: "call_KcAjWtAww20AihPHphUh46Gd",
-      },
-    ],
-  },
+        },
+      ],
+    },
+    {
+      role: "tool",
+      content: "The weather is cold",
+      tool_call_id: "call_KcAjWtAww20AihPHphUh46Gd",
+    },
+  ],
 });
 console.log(response);
 ----

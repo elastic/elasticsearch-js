@@ -3,11 +3,8 @@
 
 [source, js]
 ----
-const response = await client.searchApplication.renderQuery({
-  name: "my_search_application",
-  params: {
-    query_string: "rock climbing",
-  },
+const response = await client.esql.asyncQueryStop({
+  id: "FkpMRkJGS1gzVDRlM3g4ZzMyRGlLbkEaTXlJZHdNT09TU2VTZVBoNDM3cFZMUToxMDM=",
 });
 console.log(response);
 ----

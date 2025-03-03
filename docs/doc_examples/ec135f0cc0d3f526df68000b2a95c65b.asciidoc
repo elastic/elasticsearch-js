@@ -3,11 +3,10 @@
 
 [source, js]
 ----
-const response = await client.searchApplication.renderQuery({
-  name: "my_search_application",
-  params: {
-    query_string: "rock climbing",
-  },
+const response = await client.indices.createFrom({
+  source: ".ml-anomalies-custom-example",
+  dest: ".reindexed-v9-ml-anomalies-custom-example",
+  create_from: null,
 });
 console.log(response);
 ----
