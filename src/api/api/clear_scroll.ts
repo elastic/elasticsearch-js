@@ -35,7 +35,22 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  clear_scroll: {
+    path: [],
+    body: [
+      'scroll_id'
+    ],
+    query: []
+  }
+}
 
 /**
   * Clear a scrolling search. Clear the search context and results for a scrolling search.
@@ -45,8 +60,12 @@ export default async function ClearScrollApi (this: That, params?: T.ClearScroll
 export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClearScrollResponse, unknown>>
 export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest, options?: TransportRequestOptions): Promise<T.ClearScrollResponse>
 export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = []
-  const acceptedBody: string[] = ['scroll_id']
+  const {
+    path: acceptedPath,
+    body: acceptedBody,
+    query: acceptedQuery
+  } = acceptedParams.clear_scroll
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -69,8 +88,14 @@ export default async function ClearScrollApi (this: That, params?: T.ClearScroll
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      // @ts-expect-error
-      querystring[key] = params[key]
+      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      } else {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     }
   }
 

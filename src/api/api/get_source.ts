@@ -35,7 +35,32 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  get_source: {
+    path: [
+      'id',
+      'index'
+    ],
+    body: [],
+    query: [
+      'preference',
+      'realtime',
+      'refresh',
+      'routing',
+      '_source',
+      '_source_excludes',
+      '_source_includes',
+      'stored_fields',
+      'version',
+      'version_type'
+    ]
+  }
+}
 
 /**
   * Get a document's source. Get the source of a document. For example: ``` GET my-index-000001/_source/1 ``` You can use the source filtering parameters to control which parts of the `_source` are returned: ``` GET my-index-000001/_source/1/?_source_includes=*.id&_source_excludes=entities ```
@@ -45,7 +70,10 @@ export default async function GetSourceApi<TDocument = unknown> (this: That, par
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetSourceResponse<TDocument>, unknown>>
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest, options?: TransportRequestOptions): Promise<T.GetSourceResponse<TDocument>>
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['id', 'index']
+  const {
+    path: acceptedPath
+  } = acceptedParams.get_source
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
