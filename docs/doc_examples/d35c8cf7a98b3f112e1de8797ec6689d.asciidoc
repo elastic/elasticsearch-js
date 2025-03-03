@@ -3,13 +3,9 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_security/oidc/prepare",
-  body: {
-    iss: "http://127.0.0.1:8080",
-    login_hint: "this_is_an_opaque_string",
-  },
+const response = await client.security.oidcPrepareAuthentication({
+  iss: "http://127.0.0.1:8080",
+  login_hint: "this_is_an_opaque_string",
 });
 console.log(response);
 ----

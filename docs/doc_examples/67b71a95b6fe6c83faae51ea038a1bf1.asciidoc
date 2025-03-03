@@ -3,11 +3,8 @@
 
 [source, js]
 ----
-const response = await client.searchApplication.renderQuery({
-  name: "my_search_application",
-  params: {
-    query_string: "rock climbing",
-  },
+const response = await client.esql.asyncQueryDelete({
+  id: "FmdMX2pIang3UWhLRU5QS0lqdlppYncaMUpYQ05oSkpTc3kwZ21EdC1tbFJXQToxOTI=",
 });
 console.log(response);
 ----
