@@ -764,7 +764,7 @@ Get script contexts.
 
 Get a list of supported script contexts and their methods.
 
-[Endpoint documentation](elasticsearch://docs/reference/scripting-languages/painless/painless-contexts.md)
+[Endpoint documentation](elasticsearch://reference/scripting-languages/painless/painless-contexts.md)
 
 ```ts
 client.getScriptContext()
@@ -1534,7 +1534,7 @@ The API uses several *contexts*, which control how scripts are run, what variabl
 
 Each context requires a script, but additional parameters depend on the context you’re using for that script.
 
-[Endpoint documentation](elasticsearch://docs/reference/scripting-languages/painless/painless-api-examples.md)
+[Endpoint documentation](elasticsearch://reference/scripting-languages/painless/painless-api-examples.md)
 
 ```ts
 client.scriptsPainlessExecute({ ... })
@@ -5261,7 +5261,7 @@ client.ilm.stop({ ... })
 
 Add an index block. Limits the operations allowed on an index by blocking specific operation types.
 
-[Index block settings](elasticsearch://docs/reference/elasticsearch/index-settings/index-block.md)
+[Index block settings](elasticsearch://reference/elasticsearch/index-settings/index-block.md)
 
 ```ts
 client.indices.addBlock({ index, block })
@@ -7375,7 +7375,7 @@ client.ingest.deletePipeline({ id })
 
 Get GeoIP statistics. Get download statistics for GeoIP2 databases that are used with the GeoIP processor.
 
-[Endpoint documentation](elasticsearch://docs/reference/ingestion-tools/enrich-processor/geoip-processor.md)
+[Endpoint documentation](elasticsearch://reference/ingestion-tools/enrich-processor/geoip-processor.md)
 
 ```ts
 client.ingest.geoIpStats()
@@ -7446,7 +7446,7 @@ client.ingest.getPipeline({ ... })
 
 Run a grok processor. Extract structured fields out of a single text field within a document. You must choose which field to extract matched fields from, as well as the grok pattern you expect will match. A grok pattern is like a regular expression that supports aliased expressions that can be reused.
 
-[Endpoint documentation](elasticsearch://docs/reference/ingestion-tools/enrich-processor/grok-processor.md)
+[Endpoint documentation](elasticsearch://reference/ingestion-tools/enrich-processor/grok-processor.md)
 
 ```ts
 client.ingest.processorGrok()

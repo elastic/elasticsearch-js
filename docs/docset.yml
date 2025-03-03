@@ -2,6 +2,7 @@ project: 'Node.js client'
 exclude:
   - examples/proxy/README.md
 cross_links:
+  - docs-content
   - elasticsearch
 toc:
   - toc: reference

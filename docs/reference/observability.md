@@ -312,7 +312,7 @@ child.search({
 
 ## X-Opaque-Id support [_x_opaque_id_support]
 
-To improve observability, the client offers an easy way to configure the `X-Opaque-Id` header. If you set the `X-Opaque-Id` in a specific request, this allows you to discover this identifier in the [deprecation logs](docs-content://deploy-manage/monitor/logging-configuration/update-elasticsearch-logging-levels.md#deprecation-logging), helps you with [identifying search slow log origin](elasticsearch://docs/reference/elasticsearch/index-settings/slow-log.md) as well as [identifying running tasks](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks).
+To improve observability, the client offers an easy way to configure the `X-Opaque-Id` header. If you set the `X-Opaque-Id` in a specific request, this allows you to discover this identifier in the [deprecation logs](docs-content://deploy-manage/monitor/logging-configuration/update-elasticsearch-logging-levels.md#deprecation-logging), helps you with [identifying search slow log origin](elasticsearch://reference/elasticsearch/index-settings/slow-log.md) as well as [identifying running tasks](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks).
 
 The `X-Opaque-Id` should be configured in each request, for doing that you can use the `opaqueId` option, as you can see in the following example. The resulting header will be `{ 'X-Opaque-Id': 'my-search' }`.
 
