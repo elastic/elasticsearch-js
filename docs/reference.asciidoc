@@ -3866,6 +3866,7 @@ If no response is received before the timeout expires, the request fails and ret
 [discrete]
 ==== health
 Get the cluster health status.
+
 You can also use the API to get the health status of only specified data streams and indices.
 For data streams, the API retrieves the health status of the stream’s backing indices.
 
@@ -4036,6 +4037,7 @@ If no response is received before the timeout expires, the request fails and ret
 [discrete]
 ==== put_settings
 Update the cluster settings.
+
 Configure and update dynamic settings on a running cluster.
 You can also configure dynamic settings locally on an unstarted or shut down node in `elasticsearch.yml`.
 
@@ -7146,7 +7148,7 @@ client.indices.putMapping({ index })
 ** *`dynamic_date_formats` (Optional, string[])*: If date detection is enabled then new string fields are checked
 against 'dynamic_date_formats' and if the value matches then
 a new date field is added instead of string.
-** *`dynamic_templates` (Optional, Record<string, { mapping, runtime, match, path_match, unmatch, path_unmatch, match_mapping_type, unmatch_mapping_type, match_pattern }> | Record<string, { mapping, runtime, match, path_match, unmatch, path_unmatch, match_mapping_type, unmatch_mapping_type, match_pattern }>[])*: Specify dynamic templates for the mapping.
+** *`dynamic_templates` (Optional, Record<string, { mapping, runtime, match, path_match, unmatch, path_unmatch, match_mapping_type, unmatch_mapping_type, match_pattern }>[])*: Specify dynamic templates for the mapping.
 ** *`_field_names` (Optional, { enabled })*: Control whether field names are enabled for the index.
 ** *`_meta` (Optional, Record<string, User-defined value>)*: A mapping type can have custom meta data associated with it. These are
 not used at all by Elasticsearch, but can be used to store
@@ -10385,6 +10387,9 @@ client.ml.startTrainedModelDeployment({ model_id })
 
 * *Request (object):*
 ** *`model_id` (string)*: The unique identifier of the trained model. Currently, only PyTorch models are supported.
+** *`adaptive_allocations` (Optional, { enabled, min_number_of_allocations, max_number_of_allocations })*: Adaptive allocations configuration. When enabled, the number of allocations
+is set based on the current load.
+If adaptive_allocations is enabled, do not set the number of allocations manually.
 ** *`cache_size` (Optional, number | string)*: The inference cache size (in memory outside the JVM heap) per node for the model.
 The default value is the same size as the `model_size_bytes`. To disable the cache,
 `0b` can be provided.
@@ -10395,6 +10400,7 @@ a separate set of threads to evaluate the model.
 Increasing this value generally increases the throughput.
 If this setting is greater than the number of hardware threads
 it will automatically be changed to a value less than the number of hardware threads.
+If adaptive_allocations is enabled, do not set this value, because it’s automatically set.
 ** *`priority` (Optional, Enum("normal" | "low"))*: The deployment priority.
 ** *`queue_capacity` (Optional, number)*: Specifies the number of inference requests that are allowed in the queue. After the number of requests exceeds
 this value, new requests are rejected with a 429 error.
@@ -10717,6 +10723,10 @@ a separate set of threads to evaluate the model.
 Increasing this value generally increases the throughput.
 If this setting is greater than the number of hardware threads
 it will automatically be changed to a value less than the number of hardware threads.
+If adaptive_allocations is enabled, do not set this value, because it’s automatically set.
+** *`adaptive_allocations` (Optional, { enabled, min_number_of_allocations, max_number_of_allocations })*: Adaptive allocations configuration. When enabled, the number of allocations
+is set based on the current load.
+If adaptive_allocations is enabled, do not set the number of allocations manually.
 
 [discrete]
 ==== upgrade_job_snapshot
