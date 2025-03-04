@@ -35,12 +35,81 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Synonyms {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'synonyms.delete_synonym': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'synonyms.delete_synonym_rule': {
+        path: [
+          'set_id',
+          'rule_id'
+        ],
+        body: [],
+        query: []
+      },
+      'synonyms.get_synonym': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'from',
+          'size'
+        ]
+      },
+      'synonyms.get_synonym_rule': {
+        path: [
+          'set_id',
+          'rule_id'
+        ],
+        body: [],
+        query: []
+      },
+      'synonyms.get_synonyms_sets': {
+        path: [],
+        body: [],
+        query: [
+          'from',
+          'size'
+        ]
+      },
+      'synonyms.put_synonym': {
+        path: [
+          'id'
+        ],
+        body: [
+          'synonyms_set'
+        ],
+        query: []
+      },
+      'synonyms.put_synonym_rule': {
+        path: [
+          'set_id',
+          'rule_id'
+        ],
+        body: [
+          'synonyms'
+        ],
+        query: []
+      }
+    }
   }
 
   /**
@@ -51,7 +120,10 @@ export default class Synonyms {
   async deleteSynonym (this: That, params: T.SynonymsDeleteSynonymRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsDeleteSynonymResponse, unknown>>
   async deleteSynonym (this: That, params: T.SynonymsDeleteSynonymRequest, options?: TransportRequestOptions): Promise<T.SynonymsDeleteSynonymResponse>
   async deleteSynonym (this: That, params: T.SynonymsDeleteSynonymRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['synonyms.delete_synonym']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -93,7 +165,10 @@ export default class Synonyms {
   async deleteSynonymRule (this: That, params: T.SynonymsDeleteSynonymRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsDeleteSynonymRuleResponse, unknown>>
   async deleteSynonymRule (this: That, params: T.SynonymsDeleteSynonymRuleRequest, options?: TransportRequestOptions): Promise<T.SynonymsDeleteSynonymRuleResponse>
   async deleteSynonymRule (this: That, params: T.SynonymsDeleteSynonymRuleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['set_id', 'rule_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['synonyms.delete_synonym_rule']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -136,7 +211,10 @@ export default class Synonyms {
   async getSynonym (this: That, params: T.SynonymsGetSynonymRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsGetSynonymResponse, unknown>>
   async getSynonym (this: That, params: T.SynonymsGetSynonymRequest, options?: TransportRequestOptions): Promise<T.SynonymsGetSynonymResponse>
   async getSynonym (this: That, params: T.SynonymsGetSynonymRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['synonyms.get_synonym']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -178,7 +256,10 @@ export default class Synonyms {
   async getSynonymRule (this: That, params: T.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsGetSynonymRuleResponse, unknown>>
   async getSynonymRule (this: That, params: T.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptions): Promise<T.SynonymsGetSynonymRuleResponse>
   async getSynonymRule (this: That, params: T.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['set_id', 'rule_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['synonyms.get_synonym_rule']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -221,7 +302,10 @@ export default class Synonyms {
   async getSynonymsSets (this: That, params?: T.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsGetSynonymsSetsResponse, unknown>>
   async getSynonymsSets (this: That, params?: T.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptions): Promise<T.SynonymsGetSynonymsSetsResponse>
   async getSynonymsSets (this: That, params?: T.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['synonyms.get_synonyms_sets']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -261,8 +345,12 @@ export default class Synonyms {
   async putSynonym (this: That, params: T.SynonymsPutSynonymRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsPutSynonymResponse, unknown>>
   async putSynonym (this: That, params: T.SynonymsPutSynonymRequest, options?: TransportRequestOptions): Promise<T.SynonymsPutSynonymResponse>
   async putSynonym (this: That, params: T.SynonymsPutSynonymRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['synonyms_set']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['synonyms.put_synonym']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -284,8 +372,14 @@ export default class Synonyms {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -308,8 +402,12 @@ export default class Synonyms {
   async putSynonymRule (this: That, params: T.SynonymsPutSynonymRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsPutSynonymRuleResponse, unknown>>
   async putSynonymRule (this: That, params: T.SynonymsPutSynonymRuleRequest, options?: TransportRequestOptions): Promise<T.SynonymsPutSynonymRuleResponse>
   async putSynonymRule (this: That, params: T.SynonymsPutSynonymRuleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['set_id', 'rule_id']
-    const acceptedBody: string[] = ['synonyms']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['synonyms.put_synonym_rule']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -331,8 +429,14 @@ export default class Synonyms {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
