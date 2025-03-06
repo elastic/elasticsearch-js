@@ -406,9 +406,9 @@ module.exports = async function (context, req) {
 Resources used to assess these recommendations:
 
 * [GCP Cloud Functions: Tips & Tricks](https://cloud.google.com/functions/docs/bestpractices/tips#use_global_variables_to_reuse_objects_in_future_invocations)
-* [Best practices for working with AWS Lambda functions](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.md)
+* [Best practices for working with AWS Lambda functions](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)
 * [Azure Functions Python developer guide](https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-python?tabs=azurecli-linux%2Capplication-level#global-variables)
-* [AWS Lambda: Comparing the effect of global scope](https://docs.aws.amazon.com/lambda/latest/operatorguide/global-scope.md)
+* [AWS Lambda: Comparing the effect of global scope](https://docs.aws.amazon.com/lambda/latest/operatorguide/global-scope.html)
 
 
 ## Connecting through a proxy [client-connect-proxy]
