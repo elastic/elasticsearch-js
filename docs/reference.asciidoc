@@ -6844,7 +6844,7 @@ client.indices.putMapping({ index })
 ** *`dynamic_date_formats` (Optional, string[])*: If date detection is enabled then new string fields are checked
 against 'dynamic_date_formats' and if the value matches then
 a new date field is added instead of string.
-** *`dynamic_templates` (Optional, Record<string, { mapping, runtime, match, path_match, unmatch, path_unmatch, match_mapping_type, unmatch_mapping_type, match_pattern }> | Record<string, { mapping, runtime, match, path_match, unmatch, path_unmatch, match_mapping_type, unmatch_mapping_type, match_pattern }>[])*: Specify dynamic templates for the mapping.
+** *`dynamic_templates` (Optional, Record<string, { mapping, runtime, match, path_match, unmatch, path_unmatch, match_mapping_type, unmatch_mapping_type, match_pattern }>[])*: Specify dynamic templates for the mapping.
 ** *`_field_names` (Optional, { enabled })*: Control whether field names are enabled for the index.
 ** *`_meta` (Optional, Record<string, User-defined value>)*: A mapping type can have custom meta data associated with it. These are
 not used at all by Elasticsearch, but can be used to store
