@@ -3,10 +3,12 @@
 
 [source, js]
 ----
-const response = await client.searchApplication.renderQuery({
-  name: "my_search_application",
-  params: {
-    query_string: "rock climbing",
+const response = await client.indices.migrateReindex({
+  reindex: {
+    source: {
+      index: "my-data-stream",
+    },
+    mode: "upgrade",
   },
 });
 console.log(response);
