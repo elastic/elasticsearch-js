@@ -60,7 +60,7 @@
     "@sinonjs/fake-timers": "14.0.0",
     "@types/debug": "4.1.12",
     "@types/ms": "0.7.34",
-    "@types/node": "22.13.9",
+    "@types/node": "22.13.10",
     "@types/sinonjs__fake-timers": "8.1.5",
     "@types/split2": "4.2.3",
     "@types/stoppable": "1.1.3",
