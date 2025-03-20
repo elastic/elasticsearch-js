@@ -3,69 +3,65 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_ingest/_simulate",
-  body: {
-    docs: [
-      {
-        _index: "my-index",
-        _id: "id",
-        _source: {
-          foo: "bar",
-        },
-      },
-      {
-        _index: "my-index",
-        _id: "id",
-        _source: {
-          foo: "rab",
-        },
-      },
-    ],
-    pipeline_substitutions: {
-      "my-pipeline": {
-        processors: [
-          {
-            set: {
-              field: "field3",
-              value: "value3",
-            },
-          },
-        ],
+const response = await client.simulate.ingest({
+  docs: [
+    {
+      _index: "my-index",
+      _id: "id",
+      _source: {
+        foo: "bar",
       },
     },
-    component_template_substitutions: {
-      "my-component-template": {
-        template: {
-          mappings: {
-            dynamic: "true",
-            properties: {
-              field3: {
-                type: "keyword",
-              },
+    {
+      _index: "my-index",
+      _id: "id",
+      _source: {
+        foo: "rab",
+      },
+    },
+  ],
+  pipeline_substitutions: {
+    "my-pipeline": {
+      processors: [
+        {
+          set: {
+            field: "field3",
+            value: "value3",
+          },
+        },
+      ],
+    },
+  },
+  component_template_substitutions: {
+    "my-component-template": {
+      template: {
+        mappings: {
+          dynamic: "true",
+          properties: {
+            field3: {
+              type: "keyword",
             },
           },
-          settings: {
-            index: {
-              default_pipeline: "my-pipeline",
-            },
+        },
+        settings: {
+          index: {
+            default_pipeline: "my-pipeline",
           },
         },
       },
     },
-    index_template_substitutions: {
-      "my-index-template": {
-        index_patterns: ["my-index-*"],
-        composed_of: ["component_template_1", "component_template_2"],
-      },
+  },
+  index_template_substitutions: {
+    "my-index-template": {
+      index_patterns: ["my-index-*"],
+      composed_of: ["component_template_1", "component_template_2"],
     },
-    mapping_addition: {
-      dynamic: "strict",
-      properties: {
-        foo: {
-          type: "keyword",
-        },
+  },
+  mapping_addition: {
+    dynamic: "strict",
+    properties: {
+      foo: {
+        type: "keyword",
       },
     },
   },

@@ -3,43 +3,41 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_inference/chat_completion/openai-completion/_stream",
-  body: {
-    messages: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "text",
-            text: "What's the price of a scarf?",
-          },
-        ],
-      },
-    ],
-    tools: [
-      {
-        type: "function",
-        function: {
-          name: "get_current_price",
-          description: "Get the current price of a item",
-          parameters: {
-            type: "object",
-            properties: {
-              item: {
-                id: "123",
-              },
+const response = await client.inference.streamInference({
+  task_type: "chat_completion",
+  inference_id: "openai-completion",
+  messages: [
+    {
+      role: "user",
+      content: [
+        {
+          type: "text",
+          text: "What's the price of a scarf?",
+        },
+      ],
+    },
+  ],
+  tools: [
+    {
+      type: "function",
+      function: {
+        name: "get_current_price",
+        description: "Get the current price of a item",
+        parameters: {
+          type: "object",
+          properties: {
+            item: {
+              id: "123",
             },
           },
         },
       },
-    ],
-    tool_choice: {
-      type: "function",
-      function: {
-        name: "get_current_price",
-      },
+    },
+  ],
+  tool_choice: {
+    type: "function",
+    function: {
+      name: "get_current_price",
     },
   },
 });

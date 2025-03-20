@@ -1671,7 +1671,7 @@ export default class Security {
   async oidcLogout (this: That, params: T.SecurityOidcLogoutRequest | TB.SecurityOidcLogoutRequest, options?: TransportRequestOptions): Promise<T.SecurityOidcLogoutResponse>
   async oidcLogout (this: That, params: T.SecurityOidcLogoutRequest | TB.SecurityOidcLogoutRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['access_token', 'refresh_token']
+    const acceptedBody: string[] = ['token', 'refresh_token']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
