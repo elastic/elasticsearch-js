@@ -35,12 +35,67 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class SearchableSnapshots {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'searchable_snapshots.cache_stats': {
+        path: [
+          'node_id'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'searchable_snapshots.clear_cache': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'expand_wildcards',
+          'allow_no_indices',
+          'ignore_unavailable'
+        ]
+      },
+      'searchable_snapshots.mount': {
+        path: [
+          'repository',
+          'snapshot'
+        ],
+        body: [
+          'index',
+          'renamed_index',
+          'index_settings',
+          'ignore_index_settings'
+        ],
+        query: [
+          'master_timeout',
+          'wait_for_completion',
+          'storage'
+        ]
+      },
+      'searchable_snapshots.stats': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'level'
+        ]
+      }
+    }
   }
 
   /**
@@ -51,7 +106,10 @@ export default class SearchableSnapshots {
   async cacheStats (this: That, params?: T.SearchableSnapshotsCacheStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchableSnapshotsCacheStatsResponse, unknown>>
   async cacheStats (this: That, params?: T.SearchableSnapshotsCacheStatsRequest, options?: TransportRequestOptions): Promise<T.SearchableSnapshotsCacheStatsResponse>
   async cacheStats (this: That, params?: T.SearchableSnapshotsCacheStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['node_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['searchable_snapshots.cache_stats']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -101,7 +159,10 @@ export default class SearchableSnapshots {
   async clearCache (this: That, params?: T.SearchableSnapshotsClearCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchableSnapshotsClearCacheResponse, unknown>>
   async clearCache (this: That, params?: T.SearchableSnapshotsClearCacheRequest, options?: TransportRequestOptions): Promise<T.SearchableSnapshotsClearCacheResponse>
   async clearCache (this: That, params?: T.SearchableSnapshotsClearCacheRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['searchable_snapshots.clear_cache']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -151,8 +212,12 @@ export default class SearchableSnapshots {
   async mount (this: That, params: T.SearchableSnapshotsMountRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchableSnapshotsMountResponse, unknown>>
   async mount (this: That, params: T.SearchableSnapshotsMountRequest, options?: TransportRequestOptions): Promise<T.SearchableSnapshotsMountResponse>
   async mount (this: That, params: T.SearchableSnapshotsMountRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedBody: string[] = ['index', 'renamed_index', 'index_settings', 'ignore_index_settings']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['searchable_snapshots.mount']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -174,8 +239,14 @@ export default class SearchableSnapshots {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -199,7 +270,10 @@ export default class SearchableSnapshots {
   async stats (this: That, params?: T.SearchableSnapshotsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchableSnapshotsStatsResponse, unknown>>
   async stats (this: That, params?: T.SearchableSnapshotsStatsRequest, options?: TransportRequestOptions): Promise<T.SearchableSnapshotsStatsResponse>
   async stats (this: That, params?: T.SearchableSnapshotsStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['searchable_snapshots.stats']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

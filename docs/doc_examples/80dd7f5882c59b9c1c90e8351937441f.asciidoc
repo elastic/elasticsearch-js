@@ -3,30 +3,26 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_security/api_key/_bulk_update",
-  body: {
-    ids: ["VuaCfGcBCdbkQm-e5aOx", "H3_AhoIBA9hmeQJdg7ij"],
-    role_descriptors: {
-      "role-a": {
-        indices: [
-          {
-            names: ["*"],
-            privileges: ["write"],
-          },
-        ],
-      },
+const response = await client.security.bulkUpdateApiKeys({
+  ids: ["VuaCfGcBCdbkQm-e5aOx", "H3_AhoIBA9hmeQJdg7ij"],
+  role_descriptors: {
+    "role-a": {
+      indices: [
+        {
+          names: ["*"],
+          privileges: ["write"],
+        },
+      ],
     },
-    metadata: {
-      environment: {
-        level: 2,
-        trusted: true,
-        tags: ["production"],
-      },
-    },
-    expiration: "30d",
   },
+  metadata: {
+    environment: {
+      level: 2,
+      trusted: true,
+      tags: ["production"],
+    },
+  },
+  expiration: "30d",
 });
 console.log(response);
 ----

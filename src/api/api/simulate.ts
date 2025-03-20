@@ -35,12 +35,36 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Simulate {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'simulate.ingest': {
+        path: [
+          'index'
+        ],
+        body: [
+          'docs',
+          'component_template_substitutions',
+          'index_template_substitutions',
+          'mapping_addition',
+          'pipeline_substitutions'
+        ],
+        query: [
+          'pipeline'
+        ]
+      }
+    }
   }
 
   /**
@@ -51,8 +75,12 @@ export default class Simulate {
   async ingest (this: That, params: T.SimulateIngestRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SimulateIngestResponse, unknown>>
   async ingest (this: That, params: T.SimulateIngestRequest, options?: TransportRequestOptions): Promise<T.SimulateIngestResponse>
   async ingest (this: That, params: T.SimulateIngestRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['docs', 'component_template_substitutions', 'index_template_subtitutions', 'mapping_addition', 'pipeline_substitutions']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['simulate.ingest']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -74,8 +102,14 @@ export default class Simulate {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
