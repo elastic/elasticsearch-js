@@ -1064,7 +1064,7 @@ However, certain sections have a meaning specific to kNN search:
 * The document `_score` is determined by the similarity between the query and document vector.
 * The `hits.total` object contains the total number of nearest neighbor candidates considered, which is `num_candidates * num_shards`. The `hits.total.relation` will always be `eq`, indicating an exact value.
 
-[Endpoint documentation]({ref}/knn-search-api.html)
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/knn-search-api.html)
 
 ```ts
 client.knnSearch({ index, knn })
@@ -1611,7 +1611,7 @@ The API uses several _contexts_, which control how scripts are run, what variabl
 
 Each context requires a script, but additional parameters depend on the context you're using for that script.
 
-[Endpoint documentation]({painless}/painless-execute-api.html)
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/painless/current/painless-execute-api.html)
 
 ```ts
 client.scriptsPainlessExecute({ ... })
@@ -4793,7 +4793,7 @@ Stop async ES|QL query.
 This API interrupts the query execution and returns the results so far.
 If the Elasticsearch security features are enabled, only the user who first submitted the ES|QL query can stop it.
 
-[Endpoint documentation]({ref}/esql-async-query-stop-api.html)
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-async-query-stop-api.html)
 ```ts
 client.esql.asyncQueryStop({ id })
 ```
@@ -4811,7 +4811,7 @@ If `true`, the response will include an extra section under the name `all_column
 Run an ES|QL query.
 Get search results for an ES|QL (Elasticsearch query language) query.
 
-[Endpoint documentation]({ref}/esql-rest.html)
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-rest.html)
 ```ts
 client.esql.query({ query })
 ```
@@ -7420,7 +7420,7 @@ Create an Elastic Inference Service (EIS) inference endpoint.
 
 Create an inference endpoint to perform an inference task through the Elastic Inference Service (EIS).
 
-[Endpoint documentation]({ref}/infer-service-eis.html)
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/infer-service-eis.html)
 ```ts
 client.inference.putEis({ task_type, eis_inference_id, service, service_settings })
 ```
@@ -7437,7 +7437,7 @@ NOTE: The `chat_completion` task type only supports streaming and only through t
 ### put_mistral [_put_mistral]
 Configure a Mistral inference endpoint
 
-[Endpoint documentation]({ref}/infer-service-mistral.html)
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/infer-service-mistral.html)
 ```ts
 client.inference.putMistral()
 ```
@@ -7454,7 +7454,7 @@ To verify the deployment status, use the get trained model statistics API.
 Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
 Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
-[Endpoint documentation]({ref}/infer-service-openai.html)
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/infer-service-openai.html)
 ```ts
 client.inference.putOpenai({ task_type, openai_inference_id, service, service_settings })
 ```
@@ -7683,7 +7683,7 @@ If no response is received before the timeout expires, the request fails and ret
 Get GeoIP statistics.
 Get download statistics for GeoIP2 databases that are used with the GeoIP processor.
 
-[Endpoint documentation]({ref}/geoip-processor.html)
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/geoip-processor.html)
 ```ts
 client.ingest.geoIpStats()
 ```
@@ -7751,7 +7751,7 @@ Extract structured fields out of a single text field within a document.
 You must choose which field to extract matched fields from, as well as the grok pattern you expect will match.
 A grok pattern is like a regular expression that supports aliased expressions that can be reused.
 
-[Endpoint documentation]({ref}/grok-processor.html)
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/grok-processor.html)
 ```ts
 client.ingest.processorGrok()
 ```
@@ -7802,7 +7802,7 @@ A value of `-1` indicates that the request should never time out.
 Create or update a pipeline.
 Changes made using this API take effect immediately.
 
-[Endpoint documentation]({ref}/ingest.html)
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/ingest.html)
 ```ts
 client.ingest.putPipeline({ id })
 ```
