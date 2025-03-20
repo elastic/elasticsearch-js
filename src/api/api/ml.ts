@@ -2478,11 +2478,23 @@ export default class Ml {
   async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlStartTrainedModelDeploymentResponse>
   async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
+    const acceptedBody: string[] = ['adaptive_allocations']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
         // @ts-expect-error
@@ -2839,7 +2851,7 @@ export default class Ml {
   async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest | TB.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlUpdateTrainedModelDeploymentResponse>
   async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest | TB.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['number_of_allocations']
+    const acceptedBody: string[] = ['number_of_allocations', 'adaptive_allocations']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body

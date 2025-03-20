@@ -1438,7 +1438,7 @@ export default class Indices {
 
   /**
     * Convert an index alias to a data stream. Converts an index alias to a data stream. You must have a matching index template that is data stream enabled. The alias must meet the following criteria: The alias must have a write index; All indices for the alias must have a `@timestamp` field mapping of a `date` or `date_nanos` field type; The alias must not have any filters; The alias must not use custom routing. If successful, the request removes the alias and creates a data stream with the same name. The indices for the alias become hidden backing indices for the stream. The write index for the alias becomes the write index for the stream.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/data-streams.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-migrate-to-data-stream | Elasticsearch API documentation}
     */
   async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest | TB.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesMigrateToDataStreamResponse>
   async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest | TB.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesMigrateToDataStreamResponse, unknown>>
@@ -1470,7 +1470,7 @@ export default class Indices {
 
   /**
     * Update data streams. Performs one or more data stream modification actions in a single atomic operation.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/data-streams.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-modify-data-stream | Elasticsearch API documentation}
     */
   async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest | TB.IndicesModifyDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesModifyDataStreamResponse>
   async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest | TB.IndicesModifyDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesModifyDataStreamResponse, unknown>>
@@ -1543,7 +1543,7 @@ export default class Indices {
 
   /**
     * Promote a data stream. Promote a data stream from a replicated data stream managed by cross-cluster replication (CCR) to a regular data stream. With CCR auto following, a data stream from a remote cluster can be replicated to the local cluster. These data streams can't be rolled over in the local cluster. These replicated data streams roll over only if the upstream data stream rolls over. In the event that the remote cluster is no longer available, the data stream in the local cluster can be promoted to a regular data stream, which allows these data streams to be rolled over in the local cluster. NOTE: When promoting a data stream, ensure the local cluster has a data stream enabled index template that matches the data stream. If this is missing, the data stream will not be able to roll over until a matching index template is created. This will affect the lifecycle management of the data stream and interfere with the data stream size and retention.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/data-streams.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-promote-data-stream | Elasticsearch API documentation}
     */
   async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest | TB.IndicesPromoteDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPromoteDataStreamResponse>
   async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest | TB.IndicesPromoteDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPromoteDataStreamResponse, unknown>>
@@ -1575,7 +1575,7 @@ export default class Indices {
 
   /**
     * Create or update an alias. Adds a data stream or index to an alias.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-aliases.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-put-alias | Elasticsearch API documentation}
     */
   async putAlias (this: That, params: T.IndicesPutAliasRequest | TB.IndicesPutAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutAliasResponse>
   async putAlias (this: That, params: T.IndicesPutAliasRequest | TB.IndicesPutAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutAliasResponse, unknown>>
@@ -1627,7 +1627,7 @@ export default class Indices {
 
   /**
     * Update data stream lifecycles. Update the data stream lifecycle of the specified data streams.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/data-streams-put-lifecycle.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-put-data-lifecycle | Elasticsearch API documentation}
     */
   async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest | TB.IndicesPutDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataLifecycleResponse>
   async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest | TB.IndicesPutDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutDataLifecycleResponse, unknown>>
@@ -1671,7 +1671,7 @@ export default class Indices {
 
   /**
     * Create or update an index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices. Elasticsearch applies templates to new indices based on an wildcard pattern that matches the index name. Index templates are applied during data stream or index creation. For data streams, these settings and mappings are applied when the stream's backing indices are created. Settings and mappings specified in a create index API request override any settings or mappings specified in an index template. Changes to index templates do not affect existing indices, including the existing backing indices of a data stream. You can use C-style `/* *\/` block comments in index templates. You can include comments anywhere in the request body, except before the opening curly bracket. **Multiple matching templates** If multiple index templates match the name of a new index or data stream, the template with the highest priority is used. Multiple templates with overlapping index patterns at the same priority are not allowed and an error will be thrown when attempting to create a template matching an existing index template at identical priorities. **Composing aliases, mappings, and settings** When multiple component templates are specified in the `composed_of` field for an index template, they are merged in the order specified, meaning that later component templates override earlier component templates. Any mappings, settings, or aliases from the parent index template are merged in next. Finally, any configuration on the index request itself is merged. Mapping definitions are merged recursively, which means that later mapping components can introduce new field mappings and update the mapping configuration. If a field mapping is already contained in an earlier component, its definition will be completely overwritten by the later one. This recursive merging strategy applies not only to field mappings, but also root options like `dynamic_templates` and `meta`. If an earlier component contains a `dynamic_templates` block, then by default new `dynamic_templates` entries are appended onto the end. If an entry already exists with the same key, then it is overwritten by the new definition.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-put-template.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-put-index-template | Elasticsearch API documentation}
     */
   async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest | TB.IndicesPutIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutIndexTemplateResponse>
   async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest | TB.IndicesPutIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutIndexTemplateResponse, unknown>>
@@ -2416,7 +2416,7 @@ export default class Indices {
 
   /**
     * Create or update an alias. Adds a data stream or index to an alias.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-aliases.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-update-aliases | Elasticsearch API documentation}
     */
   async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest | TB.IndicesUpdateAliasesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesUpdateAliasesResponse>
   async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest | TB.IndicesUpdateAliasesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesUpdateAliasesResponse, unknown>>

@@ -3,14 +3,10 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_security/oidc/logout",
-  body: {
-    token:
-      "dGhpcyBpcyBub3QgYSByZWFsIHRva2VuIGJ1dCBpdCBpcyBvbmx5IHRlc3QgZGF0YS4gZG8gbm90IHRyeSB0byByZWFkIHRva2VuIQ==",
-    refresh_token: "vLBPvmAB6KvwvJZr27cS",
-  },
+const response = await client.security.oidcLogout({
+  token:
+    "dGhpcyBpcyBub3QgYSByZWFsIHRva2VuIGJ1dCBpdCBpcyBvbmx5IHRlc3QgZGF0YS4gZG8gbm90IHRyeSB0byByZWFkIHRva2VuIQ==",
+  refresh_token: "vLBPvmAB6KvwvJZr27cS",
 });
 console.log(response);
 ----

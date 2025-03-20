@@ -3,11 +3,9 @@
 
 [source, js]
 ----
-const response = await client.searchApplication.renderQuery({
-  name: "my_search_application",
-  params: {
-    query_string: "rock climbing",
-  },
+const response = await client.indices.getDataLifecycleStats({
+  human: "true",
+  pretty: "true",
 });
 console.log(response);
 ----

@@ -47,7 +47,7 @@ export default async function TermvectorsApi<TDocument = unknown> (this: That, p
 export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument> | TB.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): Promise<T.TermvectorsResponse>
 export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument> | TB.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index', 'id']
-  const acceptedBody: string[] = ['doc', 'filter', 'per_field_analyzer']
+  const acceptedBody: string[] = ['doc', 'filter', 'per_field_analyzer', 'fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'term_statistics', 'routing', 'version', 'version_type']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   const userBody: any = params?.body
