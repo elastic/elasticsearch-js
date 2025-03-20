@@ -212,12 +212,22 @@ export interface CreateRequest<TDocument = unknown> extends RequestBase {
   id: Id
   /** The name of the data stream or index to target. If the target doesn't exist and matches the name or wildcard (`*`) pattern of an index template with a `data_stream` definition, this request creates the data stream. If the target doesn't exist and doesn’t match a data stream template, this request creates the index. */
   index: IndexName
+  /** Only perform the operation if the document has this primary term. */
+  if_primary_term?: long
+  /** Only perform the operation if the document has this sequence number. */
+  if_seq_no?: SequenceNumber
   /** True or false if to include the document source in the error message in case of parsing errors. */
   include_source_on_error?: boolean
+  /** Set to `create` to only index the document if it does not already exist (put if absent). If a document with the specified `_id` already exists, the indexing operation will fail. The behavior is the same as using the `<index>/_create` endpoint. If a document ID is specified, this paramater defaults to `index`. Otherwise, it defaults to `create`. If the request targets a data stream, an `op_type` of `create` is required. */
+  op_type?: OpType
   /** The ID of the pipeline to use to preprocess incoming documents. If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request. If a final pipeline is configured, it will always run regardless of the value of this parameter. */
   pipeline?: string
   /** If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes. */
   refresh?: Refresh
+  /** If `true`, the destination must be an index alias. */
+  require_alias?: boolean
+  /** If `true`, the request's actions must target a data stream (existing or to be created). */
+  require_data_stream?: boolean
   /** A custom value that is used to route operations to a specific shard. */
   routing?: Routing
   /** The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards. Elasticsearch waits for at least the specified timeout period before failing. The actual wait time could be longer, particularly when multiple waits occur. This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs. Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation. By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error. The actual wait time could be longer, particularly when multiple waits occur. */
@@ -230,9 +240,9 @@ export interface CreateRequest<TDocument = unknown> extends RequestBase {
   wait_for_active_shards?: WaitForActiveShards
   document?: TDocument
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, include_source_on_error?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, require_alias?: never, require_data_stream?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, include_source_on_error?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, require_alias?: never, require_data_stream?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }
 }
 
 export type CreateResponse = WriteResponseBase
@@ -2514,7 +2524,17 @@ export interface TermvectorsRequest<TDocument = unknown> extends RequestBase {
   index: IndexName
   /** A unique identifier for the document. */
   id?: Id
-  /** A comma-separated list or wildcard expressions of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters. */
+  /** The node or shard the operation should be performed on. It is random by default. */
+  preference?: string
+  /** If true, the request is real-time as opposed to near-real-time. */
+  realtime?: boolean
+  /** An artificial document (a document not present in the index) for which you want to retrieve term vectors. */
+  doc?: TDocument
+  /** Filter terms based on their tf-idf scores. This could be useful in order find out a good characteristic vector of a document. This feature works in a similar manner to the second phase of the More Like This Query. */
+  filter?: TermvectorsFilter
+  /** Override the default per-field analyzer. This is useful in order to generate term vectors in any fashion, especially when using artificial documents. When providing an analyzer for a field that already stores term vectors, the term vectors will be regenerated. */
+  per_field_analyzer?: Record<Field, string>
+  /** A list of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters. */
   fields?: Fields
   /** If `true`, the response includes: * The document count (how many documents contain this field). * The sum of document frequencies (the sum of document frequencies for all terms in this field). * The sum of total term frequencies (the sum of total term frequencies of each term in this field). */
   field_statistics?: boolean
@@ -2524,28 +2544,18 @@ export interface TermvectorsRequest<TDocument = unknown> extends RequestBase {
   payloads?: boolean
   /** If `true`, the response includes term positions. */
   positions?: boolean
-  /** The node or shard the operation should be performed on. It is random by default. */
-  preference?: string
-  /** If true, the request is real-time as opposed to near-real-time. */
-  realtime?: boolean
-  /** A custom value that is used to route operations to a specific shard. */
-  routing?: Routing
   /** If `true`, the response includes: * The total term frequency (how often a term occurs in all documents). * The document frequency (the number of documents containing the current term). By default these values are not returned since term statistics can have a serious performance impact. */
   term_statistics?: boolean
+  /** A custom value that is used to route operations to a specific shard. */
+  routing?: Routing
   /** If `true`, returns the document version as part of a hit. */
   version?: VersionNumber
   /** The version type. */
   version_type?: VersionType
-  /** An artificial document (a document not present in the index) for which you want to retrieve term vectors. */
-  doc?: TDocument
-  /** Filter terms based on their tf-idf scores. This could be useful in order find out a good characteristic vector of a document. This feature works in a similar manner to the second phase of the More Like This Query. */
-  filter?: TermvectorsFilter
-  /** Override the default per-field analyzer. This is useful in order to generate term vectors in any fashion, especially when using artificial documents. When providing an analyzer for a field that already stores term vectors, the term vectors will be regenerated. */
-  per_field_analyzer?: Record<Field, string>
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, id?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, term_statistics?: never, version?: never, version_type?: never, doc?: never, filter?: never, per_field_analyzer?: never }
+  body?: string | { [key: string]: any } & { index?: never, id?: never, preference?: never, realtime?: never, doc?: never, filter?: never, per_field_analyzer?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, term_statistics?: never, routing?: never, version?: never, version_type?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, id?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, term_statistics?: never, version?: never, version_type?: never, doc?: never, filter?: never, per_field_analyzer?: never }
+  querystring?: { [key: string]: any } & { index?: never, id?: never, preference?: never, realtime?: never, doc?: never, filter?: never, per_field_analyzer?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, term_statistics?: never, routing?: never, version?: never, version_type?: never }
 }
 
 export interface TermvectorsResponse {
@@ -2775,7 +2785,6 @@ export interface BulkIndexByScrollFailure {
   id: Id
   index: IndexName
   status: integer
-  type: string
 }
 
 export interface BulkStats {
@@ -5045,7 +5054,7 @@ export interface AggregationsWeightedAverageValue {
 export interface AggregationsWeightedAvgAggregate extends AggregationsSingleMetricAggregateBase {
 }
 
-export type AnalysisAnalyzer = AnalysisCustomAnalyzer | AnalysisFingerprintAnalyzer | AnalysisKeywordAnalyzer | AnalysisLanguageAnalyzer | AnalysisNoriAnalyzer | AnalysisPatternAnalyzer | AnalysisSimpleAnalyzer | AnalysisStandardAnalyzer | AnalysisStopAnalyzer | AnalysisWhitespaceAnalyzer | AnalysisIcuAnalyzer | AnalysisKuromojiAnalyzer | AnalysisSnowballAnalyzer | AnalysisArabicAnalyzer | AnalysisArmenianAnalyzer | AnalysisBasqueAnalyzer | AnalysisBengaliAnalyzer | AnalysisBrazilianAnalyzer | AnalysisBulgarianAnalyzer | AnalysisCatalanAnalyzer | AnalysisChineseAnalyzer | AnalysisCjkAnalyzer | AnalysisCzechAnalyzer | AnalysisDanishAnalyzer | AnalysisDutchAnalyzer | AnalysisEnglishAnalyzer | AnalysisEstonianAnalyzer | AnalysisFinnishAnalyzer | AnalysisFrenchAnalyzer | AnalysisGalicianAnalyzer | AnalysisGermanAnalyzer | AnalysisGreekAnalyzer | AnalysisHindiAnalyzer | AnalysisHungarianAnalyzer | AnalysisIndonesianAnalyzer | AnalysisIrishAnalyzer | AnalysisItalianAnalyzer | AnalysisLatvianAnalyzer | AnalysisLithuanianAnalyzer | AnalysisNorwegianAnalyzer | AnalysisPersianAnalyzer | AnalysisPortugueseAnalyzer | AnalysisRomanianAnalyzer | AnalysisRussianAnalyzer | AnalysisSerbianAnalyzer | AnalysisSoraniAnalyzer | AnalysisSpanishAnalyzer | AnalysisSwedishAnalyzer | AnalysisTurkishAnalyzer | AnalysisThaiAnalyzer
+export type AnalysisAnalyzer = AnalysisCustomAnalyzer | AnalysisFingerprintAnalyzer | AnalysisKeywordAnalyzer | AnalysisNoriAnalyzer | AnalysisPatternAnalyzer | AnalysisSimpleAnalyzer | AnalysisStandardAnalyzer | AnalysisStopAnalyzer | AnalysisWhitespaceAnalyzer | AnalysisIcuAnalyzer | AnalysisKuromojiAnalyzer | AnalysisSnowballAnalyzer | AnalysisArabicAnalyzer | AnalysisArmenianAnalyzer | AnalysisBasqueAnalyzer | AnalysisBengaliAnalyzer | AnalysisBrazilianAnalyzer | AnalysisBulgarianAnalyzer | AnalysisCatalanAnalyzer | AnalysisChineseAnalyzer | AnalysisCjkAnalyzer | AnalysisCzechAnalyzer | AnalysisDanishAnalyzer | AnalysisDutchAnalyzer | AnalysisEnglishAnalyzer | AnalysisEstonianAnalyzer | AnalysisFinnishAnalyzer | AnalysisFrenchAnalyzer | AnalysisGalicianAnalyzer | AnalysisGermanAnalyzer | AnalysisGreekAnalyzer | AnalysisHindiAnalyzer | AnalysisHungarianAnalyzer | AnalysisIndonesianAnalyzer | AnalysisIrishAnalyzer | AnalysisItalianAnalyzer | AnalysisLatvianAnalyzer | AnalysisLithuanianAnalyzer | AnalysisNorwegianAnalyzer | AnalysisPersianAnalyzer | AnalysisPortugueseAnalyzer | AnalysisRomanianAnalyzer | AnalysisRussianAnalyzer | AnalysisSerbianAnalyzer | AnalysisSoraniAnalyzer | AnalysisSpanishAnalyzer | AnalysisSwedishAnalyzer | AnalysisTurkishAnalyzer | AnalysisThaiAnalyzer
 
 export interface AnalysisArabicAnalyzer {
   type: 'arabic'
@@ -5479,17 +5488,6 @@ export interface AnalysisKuromojiTokenizer extends AnalysisTokenizerBase {
   user_dictionary?: string
   user_dictionary_rules?: string[]
   discard_compound_token?: boolean
-}
-
-export type AnalysisLanguage = 'Arabic' | 'Armenian' | 'Basque' | 'Brazilian' | 'Bulgarian' | 'Catalan' | 'Chinese' | 'Cjk' | 'Czech' | 'Danish' | 'Dutch' | 'English' | 'Estonian' | 'Finnish' | 'French' | 'Galician' | 'German' | 'Greek' | 'Hindi' | 'Hungarian' | 'Indonesian' | 'Irish' | 'Italian' | 'Latvian' | 'Norwegian' | 'Persian' | 'Portuguese' | 'Romanian' | 'Russian' | 'Sorani' | 'Spanish' | 'Swedish' | 'Turkish' | 'Thai'
-
-export interface AnalysisLanguageAnalyzer {
-  type: 'language'
-  version?: VersionString
-  language: AnalysisLanguage
-  stem_exclusion: string[]
-  stopwords?: AnalysisStopWords
-  stopwords_path?: string
 }
 
 export interface AnalysisLatvianAnalyzer {
@@ -6016,6 +6014,8 @@ export interface MappingDateNanosProperty extends MappingDocValuesPropertyBase {
   format?: string
   ignore_malformed?: boolean
   index?: boolean
+  script?: Script | string
+  on_script_error?: MappingOnScriptError
   null_value?: DateTime
   precision_step?: integer
   type: 'date_nanos'
@@ -6027,6 +6027,8 @@ export interface MappingDateProperty extends MappingDocValuesPropertyBase {
   format?: string
   ignore_malformed?: boolean
   index?: boolean
+  script?: Script | string
+  on_script_error?: MappingOnScriptError
   null_value?: DateTime
   precision_step?: integer
   locale?: string
@@ -6103,7 +6105,7 @@ export interface MappingDynamicProperty extends MappingDocValuesPropertyBase {
 
 export interface MappingDynamicTemplate {
   mapping?: MappingProperty
-  runtime?: MappingProperty
+  runtime?: MappingRuntimeField
   match?: string | string[]
   path_match?: string | string[]
   unmatch?: string | string[]
@@ -6167,6 +6169,7 @@ export interface MappingGeoShapeProperty extends MappingDocValuesPropertyBase {
   coerce?: boolean
   ignore_malformed?: boolean
   ignore_z_value?: boolean
+  index?: boolean
   orientation?: MappingGeoOrientation
   strategy?: MappingGeoStrategy
   type: 'geo_shape'
@@ -6298,7 +6301,7 @@ export interface MappingNumberPropertyBase extends MappingDocValuesPropertyBase 
 
 export interface MappingObjectProperty extends MappingCorePropertyBase {
   enabled?: boolean
-  subobjects?: boolean
+  subobjects?: MappingSubobjects
   type?: 'object'
 }
 
@@ -6369,7 +6372,7 @@ export interface MappingRuntimeFieldFetchFields {
   format?: string
 }
 
-export type MappingRuntimeFieldType = 'boolean' | 'composite' | 'date' | 'double' | 'geo_point' | 'ip' | 'keyword' | 'long' | 'lookup'
+export type MappingRuntimeFieldType = 'boolean' | 'composite' | 'date' | 'double' | 'geo_point' | 'geo_shape' | 'ip' | 'keyword' | 'long' | 'lookup'
 
 export type MappingRuntimeFields = Record<Field, MappingRuntimeField>
 
@@ -6395,7 +6398,8 @@ export interface MappingSearchAsYouTypeProperty extends MappingCorePropertyBase 
 export interface MappingSemanticTextProperty {
   type: 'semantic_text'
   meta?: Record<string, string>
-  inference_id: Id
+  inference_id?: Id
+  search_inference_id?: Id
 }
 
 export interface MappingShapeProperty extends MappingDocValuesPropertyBase {
@@ -6429,6 +6433,8 @@ export type MappingSourceFieldMode = 'disabled' | 'stored' | 'synthetic'
 export interface MappingSparseVectorProperty extends MappingPropertyBase {
   type: 'sparse_vector'
 }
+
+export type MappingSubobjects = boolean | 'true' | 'false' | 'auto'
 
 export interface MappingSuggestContext {
   name: Name
@@ -6481,7 +6487,7 @@ export interface MappingTypeMapping {
   date_detection?: boolean
   dynamic?: MappingDynamicMapping
   dynamic_date_formats?: string[]
-  dynamic_templates?: Record<string, MappingDynamicTemplate>[]
+  dynamic_templates?: Partial<Record<string, MappingDynamicTemplate>>[]
   _field_names?: MappingFieldNamesField
   index_field?: MappingIndexField
   _meta?: Metadata
@@ -6492,7 +6498,7 @@ export interface MappingTypeMapping {
   _source?: MappingSourceField
   runtime?: Record<string, MappingRuntimeField>
   enabled?: boolean
-  subobjects?: boolean
+  subobjects?: MappingSubobjects
   _data_stream_timestamp?: MappingDataStreamTimestamp
 }
 
@@ -6676,6 +6682,12 @@ export type QueryDslGeoDistanceQuery = QueryDslGeoDistanceQueryKeys
 & { [property: string]: GeoLocation | Distance | GeoDistanceType | QueryDslGeoValidationMethod | boolean | float | string }
 
 export type QueryDslGeoExecution = 'memory' | 'indexed'
+
+export interface QueryDslGeoGridQuery extends QueryDslQueryBase {
+  geogrid?: GeoTile
+  geohash?: GeoHash
+  geohex?: GeoHexCell
+}
 
 export interface QueryDslGeoPolygonPoints {
   points: GeoLocation[]
@@ -6972,6 +6984,7 @@ export interface QueryDslQueryContainer {
   fuzzy?: Partial<Record<Field, QueryDslFuzzyQuery | string | double | boolean>>
   geo_bounding_box?: QueryDslGeoBoundingBoxQuery
   geo_distance?: QueryDslGeoDistanceQuery
+  geo_grid?: Partial<Record<Field, QueryDslGeoGridQuery>>
   geo_polygon?: QueryDslGeoPolygonQuery
   geo_shape?: QueryDslGeoShapeQuery
   has_child?: QueryDslHasChildQuery
@@ -11937,8 +11950,6 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   keep_alive?: Duration
   /** Indicates whether the query and its results are stored in the cluster. If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter. */
   keep_on_completion?: boolean
-  /** The period to wait for the request to finish. By default, the request waits for 1 second for the query results. If the query completes during this period, results are returned Otherwise, a query ID is returned that can later be used to retrieve the results. */
-  wait_for_completion_timeout?: Duration
   /** By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results. */
   columnar?: boolean
   /** Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on. */
@@ -11954,10 +11965,12 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   tables?: Record<string, Record<string, EsqlTableValuesContainer>>
   /** When set to `true` and performing a cross-cluster query, the response will include an extra `_clusters` object with information about the clusters that participated in the search along with info such as shards count. */
   include_ccs_metadata?: boolean
+  /** The period to wait for the request to finish. By default, the request waits for 1 second for the query results. If the query completes during this period, results are returned Otherwise, a query ID is returned that can later be used to retrieve the results. */
+  wait_for_completion_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never }
+  body?: string | { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, wait_for_completion_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never }
+  querystring?: { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, wait_for_completion_timeout?: never }
 }
 
 export type EsqlAsyncQueryResponse = EsqlResult
@@ -12800,7 +12813,7 @@ export interface IndicesIndexSettingsKeys {
   routing_partition_size?: SpecUtilsStringified<integer>
   load_fixed_bitset_filters_eagerly?: boolean
   hidden?: boolean | string
-  auto_expand_replicas?: string
+  auto_expand_replicas?: SpecUtilsWithNullValue<string>
   merge?: IndicesMerge
   search?: IndicesSettingsSearch
   refresh_interval?: Duration
@@ -13097,7 +13110,7 @@ export interface IndicesSoftDeletes {
   retention_lease?: IndicesRetentionLease
 }
 
-export type IndicesSourceMode = 'DISABLED' | 'STORED' | 'SYNTHETIC'
+export type IndicesSourceMode = 'disabled' | 'stored' | 'synthetic'
 
 export interface IndicesStorage {
   type: IndicesStorageType
@@ -13618,12 +13631,16 @@ export type IndicesExistsAliasResponse = boolean
 export interface IndicesExistsIndexTemplateRequest extends RequestBase {
 /** Comma-separated list of index template names used to limit the request. Wildcard (*) expressions are supported. */
   name: Name
+  /** If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node. */
+  local?: boolean
+  /** If true, returns settings in flat format. */
+  flat_settings?: boolean
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { name?: never, local?: never, flat_settings?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { name?: never, local?: never, flat_settings?: never, master_timeout?: never }
 }
 
 export type IndicesExistsIndexTemplateResponse = boolean
@@ -13712,12 +13729,10 @@ export interface IndicesFieldUsageStatsRequest extends RequestBase {
   ignore_unavailable?: boolean
   /** Comma-separated list or wildcard expressions of fields to include in the statistics. */
   fields?: Fields
-  /** The number of shard copies that must be active before proceeding with the operation. Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
-  wait_for_active_shards?: WaitForActiveShards
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, fields?: never, wait_for_active_shards?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, fields?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, fields?: never, wait_for_active_shards?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, fields?: never }
 }
 
 export type IndicesFieldUsageStatsResponse = IndicesFieldUsageStatsFieldsUsageBody
@@ -13922,10 +13937,12 @@ export interface IndicesGetFieldMappingRequest extends RequestBase {
   ignore_unavailable?: boolean
   /** If `true`, return all default settings in the response. */
   include_defaults?: boolean
+  /** If `true`, the request retrieves information from the local node only. */
+  local?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { fields?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_defaults?: never }
+  body?: string | { [key: string]: any } & { fields?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_defaults?: never, local?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { fields?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_defaults?: never }
+  querystring?: { [key: string]: any } & { fields?: never, index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_defaults?: never, local?: never }
 }
 
 export type IndicesGetFieldMappingResponse = Record<IndexName, IndicesGetFieldMappingTypeFieldMappings>
@@ -14275,7 +14292,7 @@ export interface IndicesPutMappingRequest extends RequestBase {
   /** If date detection is enabled then new string fields are checked against 'dynamic_date_formats' and if the value matches then a new date field is added instead of string. */
   dynamic_date_formats?: string[]
   /** Specify dynamic templates for the mapping. */
-  dynamic_templates?: Record<string, MappingDynamicTemplate> | Record<string, MappingDynamicTemplate>[]
+  dynamic_templates?: Partial<Record<string, MappingDynamicTemplate>>[]
   /** Control whether field names are enabled for the index. */
   _field_names?: MappingFieldNamesField
   /** A mapping type can have custom meta data associated with it. These are not used at all by Elasticsearch, but can be used to store application-specific metadata. */
@@ -14313,13 +14330,15 @@ export interface IndicesPutSettingsRequest extends RequestBase {
   master_timeout?: Duration
   /** If `true`, existing index settings remain unchanged. */
   preserve_existing?: boolean
+  /** Whether to close and reopen the index to apply non-dynamic settings. If set to `true` the indices to which the settings are being applied will be closed temporarily and then reopened in order to apply the changes. */
+  reopen?: boolean
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   settings?: IndicesIndexSettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, master_timeout?: never, preserve_existing?: never, timeout?: never, settings?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, master_timeout?: never, preserve_existing?: never, reopen?: never, timeout?: never, settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, master_timeout?: never, preserve_existing?: never, timeout?: never, settings?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, master_timeout?: never, preserve_existing?: never, reopen?: never, timeout?: never, settings?: never }
 }
 
 export type IndicesPutSettingsResponse = AcknowledgedResponseBase
@@ -14503,10 +14522,12 @@ export interface IndicesReloadSearchAnalyzersRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
   ignore_unavailable?: boolean
+  /** Changed resource to reload analyzers from if applicable */
+  resource?: string
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, resource?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, resource?: never }
 }
 
 export type IndicesReloadSearchAnalyzersResponse = IndicesReloadSearchAnalyzersReloadResult
@@ -14592,6 +14613,8 @@ export interface IndicesRolloverRequest extends RequestBase {
   timeout?: Duration
   /** The number of shard copies that must be active before proceeding with the operation. Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
   wait_for_active_shards?: WaitForActiveShards
+  /** If set to true, the rollover action will only mark a data stream to signal that it needs to be rolled over at the next write. Only allowed on data streams. */
+  lazy?: boolean
   /** Aliases for the target index. Data streams do not support this parameter. */
   aliases?: Record<IndexName, IndicesAlias>
   /** Conditions for the rollover. If specified, Elasticsearch only performs the rollover if the current index satisfies these conditions. If this parameter is not specified, Elasticsearch performs the rollover unconditionally. If conditions are specified, at least one of them must be a `max_*` condition. The index will rollover if any `max_*` condition is satisfied and all `min_*` conditions are satisfied. */
@@ -14601,9 +14624,9 @@ export interface IndicesRolloverRequest extends RequestBase {
   /** Configuration options for the index. Data streams do not support this parameter. */
   settings?: Record<string, any>
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { alias?: never, new_index?: never, dry_run?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, aliases?: never, conditions?: never, mappings?: never, settings?: never }
+  body?: string | { [key: string]: any } & { alias?: never, new_index?: never, dry_run?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, lazy?: never, aliases?: never, conditions?: never, mappings?: never, settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { alias?: never, new_index?: never, dry_run?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, aliases?: never, conditions?: never, mappings?: never, settings?: never }
+  querystring?: { [key: string]: any } & { alias?: never, new_index?: never, dry_run?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never, lazy?: never, aliases?: never, conditions?: never, mappings?: never, settings?: never }
 }
 
 export interface IndicesRolloverResponse {
@@ -14768,14 +14791,18 @@ export interface IndicesShrinkResponse {
 export interface IndicesSimulateIndexTemplateRequest extends RequestBase {
 /** Name of the index to simulate */
   name: Name
+  /** Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one */
+  create?: boolean
+  /** User defined reason for dry-run creating the new template for simulation purposes */
+  cause?: string
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
   /** If true, returns all relevant default configurations for the index template. */
   include_defaults?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, include_defaults?: never }
+  body?: string | { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, include_defaults?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, include_defaults?: never }
+  querystring?: { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, include_defaults?: never }
 }
 
 export interface IndicesSimulateIndexTemplateResponse {
@@ -14793,6 +14820,8 @@ export interface IndicesSimulateTemplateRequest extends RequestBase {
   name?: Name
   /** If true, the template passed in the body is only used if no existing templates match the same index patterns. If false, the simulation uses the template with the highest priority. Note that the template is not permanently added or updated in either case; it is only used for the simulation. */
   create?: boolean
+  /** User defined reason for dry-run creating the new template for simulation purposes */
+  cause?: string
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
   /** If true, returns all relevant default configurations for the index template. */
@@ -14818,9 +14847,9 @@ export interface IndicesSimulateTemplateRequest extends RequestBase {
   /** Marks this index template as deprecated. When creating or updating a non-deprecated index template that uses deprecated components, Elasticsearch will emit a deprecation warning. */
   deprecated?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, include_defaults?: never, allow_auto_create?: never, index_patterns?: never, composed_of?: never, template?: never, data_stream?: never, priority?: never, version?: never, _meta?: never, ignore_missing_component_templates?: never, deprecated?: never }
+  body?: string | { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, include_defaults?: never, allow_auto_create?: never, index_patterns?: never, composed_of?: never, template?: never, data_stream?: never, priority?: never, version?: never, _meta?: never, ignore_missing_component_templates?: never, deprecated?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, include_defaults?: never, allow_auto_create?: never, index_patterns?: never, composed_of?: never, template?: never, data_stream?: never, priority?: never, version?: never, _meta?: never, ignore_missing_component_templates?: never, deprecated?: never }
+  querystring?: { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, include_defaults?: never, allow_auto_create?: never, index_patterns?: never, composed_of?: never, template?: never, data_stream?: never, priority?: never, version?: never, _meta?: never, ignore_missing_component_templates?: never, deprecated?: never }
 }
 
 export interface IndicesSimulateTemplateResponse {
@@ -15126,6 +15155,10 @@ export interface IndicesValidateQueryResponse {
   error?: string
 }
 
+export interface InferenceCompletionInferenceResult {
+  completion: InferenceCompletionResult[]
+}
+
 export interface InferenceCompletionResult {
   result: string
 }
@@ -15157,22 +15190,25 @@ export interface InferenceInferenceEndpointInfo extends InferenceInferenceEndpoi
   task_type: InferenceTaskType
 }
 
-export interface InferenceInferenceResult {
-  text_embedding_bytes?: InferenceTextEmbeddingByteResult[]
-  text_embedding_bits?: InferenceTextEmbeddingByteResult[]
-  text_embedding?: InferenceTextEmbeddingResult[]
-  sparse_embedding?: InferenceSparseEmbeddingResult[]
-  completion?: InferenceCompletionResult[]
-  rerank?: InferenceRankedDocument[]
-}
-
 export interface InferenceRankedDocument {
   index: integer
   relevance_score: float
   text?: string
 }
 
+export interface InferenceRateLimitSetting {
+  requests_per_minute?: integer
+}
+
+export interface InferenceRerankedInferenceResult {
+  rerank: InferenceRankedDocument[]
+}
+
 export type InferenceServiceSettings = any
+
+export interface InferenceSparseEmbeddingInferenceResult {
+  sparse_embedding: InferenceSparseEmbeddingResult[]
+}
 
 export interface InferenceSparseEmbeddingResult {
   embedding: InferenceSparseVector
@@ -15182,15 +15218,115 @@ export type InferenceSparseVector = Record<string, float>
 
 export type InferenceTaskSettings = any
 
-export type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank' | 'completion'
+export type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank' | 'completion' | 'chat_completion'
 
 export interface InferenceTextEmbeddingByteResult {
   embedding: InferenceDenseByteVector
 }
 
+export interface InferenceTextEmbeddingInferenceResult {
+  text_embedding_bytes?: InferenceTextEmbeddingByteResult[]
+  text_embedding_bits?: InferenceTextEmbeddingByteResult[]
+  text_embedding?: InferenceTextEmbeddingResult[]
+}
+
 export interface InferenceTextEmbeddingResult {
   embedding: InferenceDenseVector
 }
+
+export interface InferenceChatCompletionUnifiedCompletionTool {
+  type: string
+  function: InferenceChatCompletionUnifiedCompletionToolFunction
+}
+
+export interface InferenceChatCompletionUnifiedCompletionToolChoice {
+  type: string
+  function: InferenceChatCompletionUnifiedCompletionToolChoiceFunction
+}
+
+export interface InferenceChatCompletionUnifiedCompletionToolChoiceFunction {
+  name: string
+}
+
+export interface InferenceChatCompletionUnifiedCompletionToolFunction {
+  description?: string
+  name: string
+  parameters?: any
+  strict?: boolean
+}
+
+export type InferenceChatCompletionUnifiedCompletionToolType = string | InferenceChatCompletionUnifiedCompletionToolChoice
+
+export interface InferenceChatCompletionUnifiedContentObject {
+  text: string
+  type: string
+}
+
+export interface InferenceChatCompletionUnifiedMessage {
+  content?: InferenceChatCompletionUnifiedMessageContent
+  role: string
+  tool_call_id?: Id
+  tool_calls?: InferenceChatCompletionUnifiedToolCall[]
+}
+
+export type InferenceChatCompletionUnifiedMessageContent = string | InferenceChatCompletionUnifiedContentObject[]
+
+export interface InferenceChatCompletionUnifiedRequest extends RequestBase {
+/** The inference Id */
+  inference_id: Id
+  /** Specifies the amount of time to wait for the inference request to complete. */
+  timeout?: Duration
+  /** A list of objects representing the conversation. */
+  messages: InferenceChatCompletionUnifiedMessage[]
+  /** The ID of the model to use. */
+  model?: string
+  /** The upper bound limit for the number of tokens that can be generated for a completion request. */
+  max_completion_tokens?: long
+  /** A sequence of strings to control when the model should stop generating additional tokens. */
+  stop?: string[]
+  /** The sampling temperature to use. */
+  temperature?: float
+  /** Controls which tool is called by the model. */
+  tool_choice?: InferenceChatCompletionUnifiedCompletionToolType
+  /** A list of tools that the model can call. */
+  tools?: InferenceChatCompletionUnifiedCompletionTool[]
+  /** Nucleus sampling, an alternative to sampling with temperature. */
+  top_p?: float
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, messages?: never, model?: never, max_completion_tokens?: never, stop?: never, temperature?: never, tool_choice?: never, tools?: never, top_p?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never, messages?: never, model?: never, max_completion_tokens?: never, stop?: never, temperature?: never, tool_choice?: never, tools?: never, top_p?: never }
+}
+
+export type InferenceChatCompletionUnifiedResponse = StreamResult
+
+export interface InferenceChatCompletionUnifiedToolCall {
+  id: Id
+  function: InferenceChatCompletionUnifiedToolCallFunction
+  type: string
+}
+
+export interface InferenceChatCompletionUnifiedToolCallFunction {
+  arguments: string
+  name: string
+}
+
+export interface InferenceCompletionRequest extends RequestBase {
+/** The inference Id */
+  inference_id: Id
+  /** Specifies the amount of time to wait for the inference request to complete. */
+  timeout?: Duration
+  /** Inference input. Either a string or an array of strings. */
+  input: string | string[]
+  /** Optional task settings */
+  task_settings?: InferenceTaskSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, task_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, task_settings?: never }
+}
+
+export type InferenceCompletionResponse = InferenceCompletionInferenceResult
 
 export interface InferenceDeleteRequest extends RequestBase {
 /** The task type */
@@ -15224,27 +15360,6 @@ export interface InferenceGetResponse {
   endpoints: InferenceInferenceEndpointInfo[]
 }
 
-export interface InferenceInferenceRequest extends RequestBase {
-/** The type of inference task that the model performs. */
-  task_type?: InferenceTaskType
-  /** The unique identifier for the inference endpoint. */
-  inference_id: Id
-  /** The amount of time to wait for the inference request to complete. */
-  timeout?: Duration
-  /** The query input, which is required only for the `rerank` task. It is not required for other tasks. */
-  query?: string
-  /** The text on which you want to perform the inference task. It can be a single string or an array. > info > Inference endpoints for the `completion` task type currently only support a single string as input. */
-  input: string | string[]
-  /** Task settings for the individual inference request. These settings are specific to the task type you specified and override the task settings specified when initializing the service. */
-  task_settings?: InferenceTaskSettings
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, query?: never, input?: never, task_settings?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, query?: never, input?: never, task_settings?: never }
-}
-
-export type InferenceInferenceResponse = InferenceInferenceResult
-
 export interface InferencePutRequest extends RequestBase {
 /** The task type */
   task_type?: InferenceTaskType
@@ -15259,99 +15374,141 @@ export interface InferencePutRequest extends RequestBase {
 
 export type InferencePutResponse = InferenceInferenceEndpointInfo
 
-export interface InferenceStreamInferenceRequest extends RequestBase {
+export interface InferencePutOpenaiOpenAIServiceSettings {
+  api_key: string
+  dimensions?: integer
+  model_id: string
+  organization_id?: string
+  rate_limit?: InferenceRateLimitSetting
+  url?: string
+}
+
+export interface InferencePutOpenaiOpenAITaskSettings {
+  user?: string
+}
+
+export type InferencePutOpenaiOpenAITaskType = 'chat_completion' | 'completion' | 'text_embedding'
+
+export interface InferencePutOpenaiRequest extends RequestBase {
+/** The type of the inference task that the model will perform. NOTE: The `chat_completion` task type only supports streaming and only through the _stream API. */
+  task_type: InferencePutOpenaiOpenAITaskType
+  /** The unique identifier of the inference endpoint. */
+  openai_inference_id: Id
+  /** The chunking configuration object. */
+  chunking_settings?: InferenceInferenceChunkingSettings
+  /** The type of service supported for the specified task type. In this case, `openai`. */
+  service: InferencePutOpenaiServiceType
+  /** Settings used to install the inference model. These settings are specific to the `openai` service. */
+  service_settings: InferencePutOpenaiOpenAIServiceSettings
+  /** Settings to configure the inference task. These settings are specific to the task type you specified. */
+  task_settings?: InferencePutOpenaiOpenAITaskSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, openai_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, openai_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+}
+
+export type InferencePutOpenaiResponse = InferenceInferenceEndpointInfo
+
+export type InferencePutOpenaiServiceType = 'openai'
+
+export interface InferencePutWatsonxRequest extends RequestBase {
+/** The task type. The only valid task type for the model to perform is `text_embedding`. */
+  task_type: InferencePutWatsonxWatsonxTaskType
+  /** The unique identifier of the inference endpoint. */
+  watsonx_inference_id: Id
+  /** The type of service supported for the specified task type. In this case, `watsonxai`. */
+  service: InferencePutWatsonxServiceType
+  /** Settings used to install the inference model. These settings are specific to the `watsonxai` service. */
+  service_settings: InferencePutWatsonxWatsonxServiceSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, watsonx_inference_id?: never, service?: never, service_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, watsonx_inference_id?: never, service?: never, service_settings?: never }
+}
+
+export type InferencePutWatsonxResponse = InferenceInferenceEndpointInfo
+
+export type InferencePutWatsonxServiceType = 'watsonxai'
+
+export interface InferencePutWatsonxWatsonxServiceSettings {
+  api_key: string
+  api_version: string
+  model_id: string
+  project_id: string
+  rate_limit?: InferenceRateLimitSetting
+  url: string
+}
+
+export type InferencePutWatsonxWatsonxTaskType = 'text_embedding'
+
+export interface InferenceRerankRequest extends RequestBase {
 /** The unique identifier for the inference endpoint. */
   inference_id: Id
-  /** The type of task that the model performs. */
-  task_type?: InferenceTaskType
-  /** The text on which you want to perform the inference task. It can be a single string or an array. NOTE: Inference endpoints for the completion task type currently only support a single string as input. */
+  /** The amount of time to wait for the inference request to complete. */
+  timeout?: Duration
+  /** Query input. */
+  query: string
+  /** The text on which you want to perform the inference task. It can be a single string or an array. > info > Inference endpoints for the `completion` task type currently only support a single string as input. */
   input: string | string[]
+  /** Task settings for the individual inference request. These settings are specific to the task type you specified and override the task settings specified when initializing the service. */
+  task_settings?: InferenceTaskSettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { inference_id?: never, task_type?: never, input?: never }
+  body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, query?: never, input?: never, task_settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { inference_id?: never, task_type?: never, input?: never }
+  querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never, query?: never, input?: never, task_settings?: never }
 }
 
-export type InferenceStreamInferenceResponse = StreamResult
+export type InferenceRerankResponse = InferenceRerankedInferenceResult
 
-export interface InferenceUnifiedInferenceCompletionTool {
-  type: string
-  function: InferenceUnifiedInferenceCompletionToolFunction
-}
-
-export interface InferenceUnifiedInferenceCompletionToolChoice {
-  type: string
-  function: InferenceUnifiedInferenceCompletionToolChoiceFunction
-}
-
-export interface InferenceUnifiedInferenceCompletionToolChoiceFunction {
-  name: string
-}
-
-export interface InferenceUnifiedInferenceCompletionToolFunction {
-  description?: string
-  name: string
-  parameters?: any
-  strict?: boolean
-}
-
-export type InferenceUnifiedInferenceCompletionToolType = string | InferenceUnifiedInferenceCompletionToolChoice
-
-export interface InferenceUnifiedInferenceContentObject {
-  text: string
-  type: string
-}
-
-export interface InferenceUnifiedInferenceMessage {
-  content?: InferenceUnifiedInferenceMessageContent
-  role: string
-  tool_call_id?: Id
-  tool_calls?: InferenceUnifiedInferenceToolCall[]
-}
-
-export type InferenceUnifiedInferenceMessageContent = string | InferenceUnifiedInferenceContentObject[]
-
-export interface InferenceUnifiedInferenceRequest extends RequestBase {
-/** The task type */
-  task_type?: InferenceTaskType
-  /** The inference Id */
+export interface InferenceSparseEmbeddingRequest extends RequestBase {
+/** The inference Id */
   inference_id: Id
   /** Specifies the amount of time to wait for the inference request to complete. */
   timeout?: Duration
-  /** A list of objects representing the conversation. */
-  messages: InferenceUnifiedInferenceMessage[]
-  /** The ID of the model to use. */
-  model?: string
-  /** The upper bound limit for the number of tokens that can be generated for a completion request. */
-  max_completion_tokens?: long
-  /** A sequence of strings to control when the model should stop generating additional tokens. */
-  stop?: string[]
-  /** The sampling temperature to use. */
-  temperature?: float
-  /** Controls which tool is called by the model. */
-  tool_choice?: InferenceUnifiedInferenceCompletionToolType
-  /** A list of tools that the model can call. */
-  tools?: InferenceUnifiedInferenceCompletionTool[]
-  /** Nucleus sampling, an alternative to sampling with temperature. */
-  top_p?: float
+  /** Inference input. Either a string or an array of strings. */
+  input: string | string[]
+  /** Optional task settings */
+  task_settings?: InferenceTaskSettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, messages?: never, model?: never, max_completion_tokens?: never, stop?: never, temperature?: never, tool_choice?: never, tools?: never, top_p?: never }
+  body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, task_settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, messages?: never, model?: never, max_completion_tokens?: never, stop?: never, temperature?: never, tool_choice?: never, tools?: never, top_p?: never }
+  querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, task_settings?: never }
 }
 
-export type InferenceUnifiedInferenceResponse = StreamResult
+export type InferenceSparseEmbeddingResponse = InferenceSparseEmbeddingInferenceResult
 
-export interface InferenceUnifiedInferenceToolCall {
-  id: Id
-  function: InferenceUnifiedInferenceToolCallFunction
-  type: string
+export interface InferenceStreamCompletionRequest extends RequestBase {
+/** The unique identifier for the inference endpoint. */
+  inference_id: Id
+  /** The text on which you want to perform the inference task. It can be a single string or an array. NOTE: Inference endpoints for the completion task type currently only support a single string as input. */
+  input: string | string[]
+  /** Optional task settings */
+  task_settings?: InferenceTaskSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { inference_id?: never, input?: never, task_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { inference_id?: never, input?: never, task_settings?: never }
 }
 
-export interface InferenceUnifiedInferenceToolCallFunction {
-  arguments: string
-  name: string
+export type InferenceStreamCompletionResponse = StreamResult
+
+export interface InferenceTextEmbeddingRequest extends RequestBase {
+/** The inference Id */
+  inference_id: Id
+  /** Specifies the amount of time to wait for the inference request to complete. */
+  timeout?: Duration
+  /** Inference input. Either a string or an array of strings. */
+  input: string | string[]
+  /** Optional task settings */
+  task_settings?: InferenceTaskSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, task_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, task_settings?: never }
 }
+
+export type InferenceTextEmbeddingResponse = InferenceTextEmbeddingInferenceResult
 
 export interface InferenceUpdateRequest extends RequestBase {
 /** The unique identifier of the inference endpoint. */
@@ -18530,16 +18687,14 @@ export interface MlGetTrainedModelsRequest extends RequestBase {
   from?: integer
   /** A comma delimited string of optional fields to include in the response body. */
   include?: MlInclude
-  /** parameter is deprecated! Use [include=definition] instead */
-  include_model_definition?: boolean
   /** Specifies the maximum number of models to obtain. */
   size?: integer
   /** A comma delimited string of tags. A trained model can have many tags, or none. When supplied, only trained models that contain all the supplied tags are returned. */
   tags?: string | string[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { model_id?: never, allow_no_match?: never, decompress_definition?: never, exclude_generated?: never, from?: never, include?: never, include_model_definition?: never, size?: never, tags?: never }
+  body?: string | { [key: string]: any } & { model_id?: never, allow_no_match?: never, decompress_definition?: never, exclude_generated?: never, from?: never, include?: never, size?: never, tags?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { model_id?: never, allow_no_match?: never, decompress_definition?: never, exclude_generated?: never, from?: never, include?: never, include_model_definition?: never, size?: never, tags?: never }
+  querystring?: { [key: string]: any } & { model_id?: never, allow_no_match?: never, decompress_definition?: never, exclude_generated?: never, from?: never, include?: never, size?: never, tags?: never }
 }
 
 export interface MlGetTrainedModelsResponse {
@@ -18840,10 +18995,10 @@ export interface MlPutDatafeedRequest extends RequestBase {
   delayed_data_check_config?: MlDelayedDataCheckConfig
   /** The interval at which scheduled queries are made while the datafeed runs in real time. The default value is either the bucket span for short bucket spans, or, for longer bucket spans, a sensible fraction of the bucket span. When `frequency` is shorter than the bucket span, interim results for the last (partial) bucket are written then eventually overwritten by the full bucket results. If the datafeed uses aggregations, this value must be divisible by the interval of the date histogram aggregation. */
   frequency?: Duration
-  /** An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the machine learning nodes must have the `remote_cluster_client` role. */
+  /** An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the master nodes and the machine learning nodes must have the `remote_cluster_client` role. */
   indices?: Indices
   /** @alias indices */
-  /** An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the machine learning nodes must have the `remote_cluster_client` role. */
+  /** An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the master nodes and the machine learning nodes must have the `remote_cluster_client` role. */
   indexes?: Indices
   /** Specifies index expansion options that are used during search */
   indices_options?: IndicesOptions
@@ -19887,12 +20042,10 @@ export interface NodesNodeBufferPool {
   used_in_bytes?: long
 }
 
-export interface NodesNodeReloadError {
+export interface NodesNodeReloadResult {
   name: Name
   reload_exception?: ErrorCause
 }
-
-export type NodesNodeReloadResult = NodesStats | NodesNodeReloadError
 
 export interface NodesNodesResponseBase {
   _nodes?: NodeStatistics
@@ -21310,12 +21463,6 @@ export interface SecurityCreatedStatus {
   created: boolean
 }
 
-export interface SecurityFieldRule {
-  username?: Names
-  dn?: Names
-  groups?: Names
-}
-
 export interface SecurityFieldSecurity {
   except?: Fields
   grant?: Fields
@@ -21362,6 +21509,15 @@ export interface SecurityRemoteIndicesPrivileges {
   privileges: SecurityIndexPrivilege[]
   query?: SecurityIndicesPrivilegesQuery
   allow_restricted_indices?: boolean
+}
+
+export interface SecurityRemoteUserIndicesPrivileges {
+  field_security?: SecurityFieldSecurity[]
+  names: IndexName | IndexName[]
+  privileges: SecurityIndexPrivilege[]
+  query?: SecurityIndicesPrivilegesQuery[]
+  allow_restricted_indices: boolean
+  clusters: string[]
 }
 
 export interface SecurityReplicationAccess {
@@ -21416,7 +21572,7 @@ export interface SecurityRoleMapping {
 export interface SecurityRoleMappingRule {
   any?: SecurityRoleMappingRule[]
   all?: SecurityRoleMappingRule[]
-  field?: SecurityFieldRule
+  field?: Partial<Record<Field, FieldValue | FieldValue[]>>
   except?: SecurityRoleMappingRule
 }
 
@@ -22051,7 +22207,8 @@ export interface SecurityGetRoleRole {
   remote_indices?: SecurityRemoteIndicesPrivileges[]
   remote_cluster?: SecurityRemoteClusterPrivileges[]
   metadata: Metadata
-  run_as: string[]
+  description?: string
+  run_as?: string[]
   transient_metadata?: Record<string, any>
   applications: SecurityApplicationPrivileges[]
   role_templates?: SecurityRoleTemplate[]
@@ -22204,8 +22361,10 @@ export interface SecurityGetUserPrivilegesRequest extends RequestBase {
 export interface SecurityGetUserPrivilegesResponse {
   applications: SecurityApplicationPrivileges[]
   cluster: string[]
+  remote_cluster?: SecurityRemoteClusterPrivileges[]
   global: SecurityGlobalPrivilege[]
   indices: SecurityUserIndicesPrivileges[]
+  remote_indices?: SecurityRemoteUserIndicesPrivileges[]
   run_as: string[]
 }
 
@@ -22403,13 +22562,13 @@ export interface SecurityOidcAuthenticateResponse {
 
 export interface SecurityOidcLogoutRequest extends RequestBase {
 /** The access token to be invalidated. */
-  access_token: string
+  token: string
   /** The refresh token to be invalidated. */
   refresh_token?: string
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { access_token?: never, refresh_token?: never }
+  body?: string | { [key: string]: any } & { token?: never, refresh_token?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { access_token?: never, refresh_token?: never }
+  querystring?: { [key: string]: any } & { token?: never, refresh_token?: never }
 }
 
 export interface SecurityOidcLogoutResponse {
@@ -23027,14 +23186,14 @@ export interface SimulateIngestRequest extends RequestBase {
   /** A map of component template names to substitute component template definition objects. */
   component_template_substitutions?: Record<string, ClusterComponentTemplateNode>
   /** A map of index template names to substitute index template definition objects. */
-  index_template_subtitutions?: Record<string, IndicesIndexTemplate>
+  index_template_substitutions?: Record<string, IndicesIndexTemplate>
   mapping_addition?: MappingTypeMapping
   /** Pipelines to test. If you don’t specify the `pipeline` request path parameter, this parameter is required. If you specify both this and the request path parameter, the API only uses the request path parameter. */
   pipeline_substitutions?: Record<string, IngestPipeline>
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, pipeline?: never, docs?: never, component_template_substitutions?: never, index_template_subtitutions?: never, mapping_addition?: never, pipeline_substitutions?: never }
+  body?: string | { [key: string]: any } & { index?: never, pipeline?: never, docs?: never, component_template_substitutions?: never, index_template_substitutions?: never, mapping_addition?: never, pipeline_substitutions?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, pipeline?: never, docs?: never, component_template_substitutions?: never, index_template_subtitutions?: never, mapping_addition?: never, pipeline_substitutions?: never }
+  querystring?: { [key: string]: any } & { index?: never, pipeline?: never, docs?: never, component_template_substitutions?: never, index_template_substitutions?: never, mapping_addition?: never, pipeline_substitutions?: never }
 }
 
 export interface SimulateIngestResponse {

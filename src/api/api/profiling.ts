@@ -35,23 +35,53 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
 
 export default class Profiling {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'profiling.flamegraph': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'profiling.stacktraces': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'profiling.status': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'profiling.topn_functions': {
+        path: [],
+        body: [],
+        query: []
+      }
+    }
   }
 
   /**
     * Extracts a UI-optimized structure to render flamegraphs from Universal Profiling.
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/9.0/universal-profiling.html | Elasticsearch API documentation}
     */
   async flamegraph (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async flamegraph (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async flamegraph (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async flamegraph (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['profiling.flamegraph']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -84,13 +114,16 @@ export default class Profiling {
 
   /**
     * Extracts raw stacktrace information from Universal Profiling.
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/9.0/universal-profiling.html | Elasticsearch API documentation}
     */
   async stacktraces (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async stacktraces (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async stacktraces (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async stacktraces (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['profiling.stacktraces']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -123,13 +156,16 @@ export default class Profiling {
 
   /**
     * Returns basic information about the status of Universal Profiling.
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/9.0/universal-profiling.html | Elasticsearch API documentation}
     */
   async status (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async status (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async status (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async status (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['profiling.status']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -162,13 +198,16 @@ export default class Profiling {
 
   /**
     * Extracts a list of topN functions from Universal Profiling.
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/9.0/universal-profiling.html | Elasticsearch API documentation}
     */
   async topnFunctions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async topnFunctions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async topnFunctions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async topnFunctions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['profiling.topn_functions']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

@@ -35,7 +35,42 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  search_template: {
+    path: [
+      'index'
+    ],
+    body: [
+      'explain',
+      'id',
+      'params',
+      'profile',
+      'source'
+    ],
+    query: [
+      'allow_no_indices',
+      'ccs_minimize_roundtrips',
+      'expand_wildcards',
+      'explain',
+      'ignore_throttled',
+      'ignore_unavailable',
+      'preference',
+      'profile',
+      'routing',
+      'scroll',
+      'search_type',
+      'rest_total_hits_as_int',
+      'typed_keys'
+    ]
+  }
+}
 
 /**
   * Run a search with a search template.
@@ -45,8 +80,12 @@ export default async function SearchTemplateApi<TDocument = unknown> (this: That
 export default async function SearchTemplateApi<TDocument = unknown> (this: That, params?: T.SearchTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchTemplateResponse<TDocument>, unknown>>
 export default async function SearchTemplateApi<TDocument = unknown> (this: That, params?: T.SearchTemplateRequest, options?: TransportRequestOptions): Promise<T.SearchTemplateResponse<TDocument>>
 export default async function SearchTemplateApi<TDocument = unknown> (this: That, params?: T.SearchTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['explain', 'id', 'params', 'profile', 'source']
+  const {
+    path: acceptedPath,
+    body: acceptedBody,
+    query: acceptedQuery
+  } = acceptedParams.search_template
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -69,8 +108,14 @@ export default async function SearchTemplateApi<TDocument = unknown> (this: That
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      // @ts-expect-error
-      querystring[key] = params[key]
+      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      } else {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     }
   }
 
