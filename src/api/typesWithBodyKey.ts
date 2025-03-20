@@ -5437,21 +5437,27 @@ export interface MappingDateRangeProperty extends MappingRangePropertyBase {
   type: 'date_range'
 }
 
+export type MappingDenseVectorElementType = 'bit' | 'byte' | 'float'
+
 export interface MappingDenseVectorIndexOptions {
-  type: string
-  m?: integer
-  ef_construction?: integer
   confidence_interval?: float
+  ef_construction?: integer
+  m?: integer
+  type: MappingDenseVectorIndexOptionsType
 }
+
+export type MappingDenseVectorIndexOptionsType = 'flat' | 'hnsw' | 'int4_flat' | 'int4_hnsw' | 'int8_flat' | 'int8_hnsw'
 
 export interface MappingDenseVectorProperty extends MappingPropertyBase {
   type: 'dense_vector'
-  element_type?: string
   dims?: integer
-  similarity?: string
+  element_type?: MappingDenseVectorElementType
   index?: boolean
   index_options?: MappingDenseVectorIndexOptions
+  similarity?: MappingDenseVectorSimilarity
 }
+
+export type MappingDenseVectorSimilarity = 'cosine' | 'dot_product' | 'l2_norm' | 'max_inner_product'
 
 export interface MappingDocValuesPropertyBase extends MappingCorePropertyBase {
   doc_values?: boolean
@@ -5560,6 +5566,7 @@ export interface MappingGeoShapeProperty extends MappingDocValuesPropertyBase {
   coerce?: boolean
   ignore_malformed?: boolean
   ignore_z_value?: boolean
+  index?: boolean
   orientation?: MappingGeoOrientation
   strategy?: MappingGeoStrategy
   type: 'geo_shape'
@@ -5755,7 +5762,7 @@ export interface MappingRuntimeFieldFetchFields {
   format?: string
 }
 
-export type MappingRuntimeFieldType = 'boolean' | 'composite' | 'date' | 'double' | 'geo_point' | 'ip' | 'keyword' | 'long' | 'lookup'
+export type MappingRuntimeFieldType = 'boolean' | 'composite' | 'date' | 'double' | 'geo_point' | 'geo_shape' | 'ip' | 'keyword' | 'long' | 'lookup'
 
 export type MappingRuntimeFields = Record<Field, MappingRuntimeField>
 
@@ -5781,7 +5788,8 @@ export interface MappingSearchAsYouTypeProperty extends MappingCorePropertyBase 
 export interface MappingSemanticTextProperty {
   type: 'semantic_text'
   meta?: Record<string, string>
-  inference_id: Id
+  inference_id?: Id
+  search_inference_id?: Id
 }
 
 export interface MappingShapeProperty extends MappingDocValuesPropertyBase {
@@ -6062,6 +6070,12 @@ export type QueryDslGeoDistanceQuery = QueryDslGeoDistanceQueryKeys
 & { [property: string]: GeoLocation | Distance | GeoDistanceType | QueryDslGeoValidationMethod | boolean | float | string }
 
 export type QueryDslGeoExecution = 'memory' | 'indexed'
+
+export interface QueryDslGeoGridQuery extends QueryDslQueryBase {
+  geogrid?: GeoTile
+  geohash?: GeoHash
+  geohex?: GeoHexCell
+}
 
 export interface QueryDslGeoPolygonPoints {
   points: GeoLocation[]
@@ -6358,6 +6372,7 @@ export interface QueryDslQueryContainer {
   fuzzy?: Partial<Record<Field, QueryDslFuzzyQuery | string | double | boolean>>
   geo_bounding_box?: QueryDslGeoBoundingBoxQuery
   geo_distance?: QueryDslGeoDistanceQuery
+  geo_grid?: Partial<Record<Field, QueryDslGeoGridQuery>>
   geo_polygon?: QueryDslGeoPolygonQuery
   geo_shape?: QueryDslGeoShapeQuery
   has_child?: QueryDslHasChildQuery
@@ -16846,12 +16861,10 @@ export interface NodesNodeBufferPool {
   used_in_bytes?: long
 }
 
-export interface NodesNodeReloadError {
+export interface NodesNodeReloadResult {
   name: Name
   reload_exception?: ErrorCause
 }
-
-export type NodesNodeReloadResult = NodesStats | NodesNodeReloadError
 
 export interface NodesNodesResponseBase {
   _nodes?: NodeStatistics
@@ -19398,7 +19411,7 @@ export interface SimulateIngestRequest extends RequestBase {
   body?: {
     docs: IngestDocument[]
     component_template_substitutions?: Record<string, ClusterComponentTemplateNode>
-    index_template_subtitutions?: Record<string, IndicesIndexTemplate>
+    index_template_substitutions?: Record<string, IndicesIndexTemplate>
     mapping_addition?: MappingTypeMapping
     pipeline_substitutions?: Record<string, IngestPipeline>
   }

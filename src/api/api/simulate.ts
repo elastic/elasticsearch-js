@@ -53,7 +53,7 @@ export default class Simulate {
   async ingest (this: That, params: T.SimulateIngestRequest | TB.SimulateIngestRequest, options?: TransportRequestOptions): Promise<T.SimulateIngestResponse>
   async ingest (this: That, params: T.SimulateIngestRequest | TB.SimulateIngestRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['docs', 'component_template_substitutions', 'index_template_subtitutions', 'mapping_addition', 'pipeline_substitutions']
+    const acceptedBody: string[] = ['docs', 'component_template_substitutions', 'index_template_substitutions', 'mapping_addition', 'pipeline_substitutions']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
