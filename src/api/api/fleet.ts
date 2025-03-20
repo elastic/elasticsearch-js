@@ -107,8 +107,8 @@ export default class Fleet {
   }
 
   /**
-    * Returns the current global checkpoints for an index. This API is design for internal use by the fleet server project.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/get-global-checkpoints.html | Elasticsearch API documentation}
+    * Get global checkpoints. Get the current global checkpoints for an index. This API is designed for internal use by the Fleet server project.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/get-global-checkpoints.html | Elasticsearch API documentation}
     */
   async globalCheckpoints (this: That, params: T.FleetGlobalCheckpointsRequest | TB.FleetGlobalCheckpointsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetGlobalCheckpointsResponse>
   async globalCheckpoints (this: That, params: T.FleetGlobalCheckpointsRequest | TB.FleetGlobalCheckpointsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FleetGlobalCheckpointsResponse, unknown>>
@@ -140,6 +140,7 @@ export default class Fleet {
 
   /**
     * Executes several [fleet searches](https://www.elastic.co/guide/en/elasticsearch/reference/current/fleet-search.html) with a single API request. The API follows the same structure as the [multi search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html) API. However, similar to the fleet search API, it supports the wait_for_checkpoints parameter.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/fleet-multi-search.html | Elasticsearch API documentation}
     */
   async msearch<TDocument = unknown> (this: That, params: T.FleetMsearchRequest | TB.FleetMsearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetMsearchResponse<TDocument>>
   async msearch<TDocument = unknown> (this: That, params: T.FleetMsearchRequest | TB.FleetMsearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FleetMsearchResponse<TDocument>, unknown>>
@@ -211,6 +212,7 @@ export default class Fleet {
 
   /**
     * The purpose of the fleet search api is to provide a search api where the search will only be executed after provided checkpoint has been processed and is visible for searches inside of Elasticsearch.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/fleet-search.html | Elasticsearch API documentation}
     */
   async search<TDocument = unknown> (this: That, params: T.FleetSearchRequest | TB.FleetSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetSearchResponse<TDocument>>
   async search<TDocument = unknown> (this: That, params: T.FleetSearchRequest | TB.FleetSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FleetSearchResponse<TDocument>, unknown>>

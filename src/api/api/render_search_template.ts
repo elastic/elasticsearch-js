@@ -40,14 +40,14 @@ interface That { transport: Transport }
 
 /**
   * Render a search template. Render a search template as a search request body.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/render-search-template-api.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/render-search-template-api.html | Elasticsearch API documentation}
   */
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RenderSearchTemplateResponse>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RenderSearchTemplateResponse, unknown>>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<T.RenderSearchTemplateResponse>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['id']
-  const acceptedBody: string[] = ['file', 'params', 'source']
+  const acceptedPath: string[] = []
+  const acceptedBody: string[] = ['id', 'file', 'params', 'source']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   const userBody: any = params?.body
