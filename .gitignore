@@ -68,3 +68,4 @@ bun.lockb
 test-results
 processinfo
 .tap
+esm

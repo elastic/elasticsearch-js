@@ -6,3 +6,4 @@ elasticsearch
 lib
 junit-output
 .tap
+esm

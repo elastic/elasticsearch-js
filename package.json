@@ -3,13 +3,18 @@
   "version": "9.0.0-alpha.4",
   "versionCanary": "9.0.0-canary.0",
   "description": "The official Elasticsearch client for Node.js",
+  "type": "module",
   "main": "./index.js",
-  "types": "index.d.ts",
+  "module": "./index.mjs",
   "exports": {
-    "require": "./index.js",
-    "import": "./index.js",
-    "types": "./index.d.ts"
+    ".": {
+      "require": "./index.js",
+      "import": "./index.mjs"
+    },
+    "./lib/*": "./lib/*.js",
+    "./esm/*": "./esm/*.js"
   },
+  "types": "index.d.ts",
   "scripts": {
     "test": "npm run build && npm run lint && tap",
     "test:unit": "npm run build && tap",
@@ -23,8 +28,10 @@
     "lint:fix": "ts-standard --fix src",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
     "prebuild": "npm run clean-build && npm run lint",
-    "build": "tsc && rm lib/package.json && mv lib/src/* lib/ && rm -rf lib/src",
-    "clean-build": "rimraf ./lib && mkdir lib",
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc --project ./tsconfig.cjs.json && rm lib/package.json && mv lib/src/* lib/ && rm -rf lib/src",
+    "build:esm": "tsc --project ./tsconfig.esm.json && rm esm/package.json && mv esm/src/* esm/ && rm -rf esm/src",
+    "clean-build": "rimraf ./lib && mkdir lib; rimraf ./esm && mkdir esm",
     "prepublishOnly": "npm run build"
   },
   "keywords": [

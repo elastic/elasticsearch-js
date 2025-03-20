@@ -1,8 +1,7 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "target": "ES2019",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "es2022",
     "declaration": true,
     "pretty": true,
     "noEmitOnError": true,
@@ -15,13 +14,12 @@
     "noFallthroughCasesInSwitch": true,
     "useDefineForClassFields": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "isolatedModules": true,
     "importHelpers": true,
-    "outDir": "lib",
     "lib": [
-      "ES2019",
+      "es2023",
       "dom"
     ]
   },
