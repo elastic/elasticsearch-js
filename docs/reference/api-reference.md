@@ -3432,7 +3432,7 @@ client.ccr.putAutoFollowPattern({ name, remote_cluster })
 #### Request (object) [_request]
 - **`name` (string)**: The name of the collection of auto-follow patterns.
 - **`remote_cluster` (string)**: The remote cluster containing the leader indices to match against.
-- **`follow_index_pattern` (Optional, string)**: The name of follower index. The template {{leader_index}} can be used to derive the name of the follower index from the name of the leader index. When following a data stream, use {{leader_index}}; CCR does not support changes to the names of a follower data stream’s backing indices.
+- **`follow_index_pattern` (Optional, string)**: The name of follower index. The template `leader_index` can be used to derive the name of the follower index from the name of the leader index. When following a data stream, use `leader_index`; CCR does not support changes to the names of a follower data stream’s backing indices.
 - **`leader_index_patterns` (Optional, string[])**: An array of simple index patterns to match against indices in the remote cluster specified by the remote_cluster field.
 - **`leader_index_exclusion_patterns` (Optional, string[])**: An array of simple index patterns that can be used to exclude indices from being auto-followed. Indices in the remote cluster whose names are matching one or more leader_index_patterns and one or more leader_index_exclusion_patterns won’t be followed.
 - **`max_outstanding_read_requests` (Optional, number)**: The maximum number of outstanding reads requests from the remote cluster.
