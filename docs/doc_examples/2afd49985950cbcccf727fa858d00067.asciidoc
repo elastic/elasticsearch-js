@@ -6,13 +6,13 @@
 const response = await client.indices.create({
   index: "test-index",
   query: {
-    semantic: {
-      field: "my_semantic_field",
+    match: {
+      my_field: "Which country is Paris in?",
     },
   },
   highlight: {
     fields: {
-      my_semantic_field: {
+      my_field: {
         type: "semantic",
         number_of_fragments: 2,
         order: "score",

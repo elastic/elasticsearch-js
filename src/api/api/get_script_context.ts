@@ -40,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Get script contexts. Get a list of supported script contexts and their methods.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/painless/8.x/painless-contexts.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/get-script-contexts-api.html | Elasticsearch API documentation}
   */
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptContextResponse>
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptContextResponse, unknown>>

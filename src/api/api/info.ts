@@ -40,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Get cluster info. Get basic build, version, and cluster information.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/rest-api-root.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/rest-api-root.html | Elasticsearch API documentation}
   */
 export default async function InfoApi (this: That, params?: T.InfoRequest | TB.InfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InfoResponse>
 export default async function InfoApi (this: That, params?: T.InfoRequest | TB.InfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InfoResponse, unknown>>

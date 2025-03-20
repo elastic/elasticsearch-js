@@ -46,7 +46,7 @@ export default class Cluster {
 
   /**
     * Explain the shard allocations. Get explanations for shard allocations in the cluster. For unassigned shards, it provides an explanation for why the shard is unassigned. For assigned shards, it provides an explanation for why the shard is remaining on its current node and has not moved or rebalanced to another node. This API can be very useful when attempting to diagnose why a shard is unassigned or why a shard continues to remain on its current node when you might expect otherwise.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/cluster-allocation-explain.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/cluster-allocation-explain.html | Elasticsearch API documentation}
     */
   async allocationExplain (this: That, params?: T.ClusterAllocationExplainRequest | TB.ClusterAllocationExplainRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterAllocationExplainResponse>
   async allocationExplain (this: That, params?: T.ClusterAllocationExplainRequest | TB.ClusterAllocationExplainRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterAllocationExplainResponse, unknown>>
@@ -88,7 +88,7 @@ export default class Cluster {
 
   /**
     * Delete component templates. Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-component-template.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/indices-component-template.html | Elasticsearch API documentation}
     */
   async deleteComponentTemplate (this: That, params: T.ClusterDeleteComponentTemplateRequest | TB.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterDeleteComponentTemplateResponse>
   async deleteComponentTemplate (this: That, params: T.ClusterDeleteComponentTemplateRequest | TB.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterDeleteComponentTemplateResponse, unknown>>
@@ -120,7 +120,7 @@ export default class Cluster {
 
   /**
     * Clear cluster voting config exclusions. Remove master-eligible nodes from the voting configuration exclusion list.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/voting-config-exclusions.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/voting-config-exclusions.html | Elasticsearch API documentation}
     */
   async deleteVotingConfigExclusions (this: That, params?: T.ClusterDeleteVotingConfigExclusionsRequest | TB.ClusterDeleteVotingConfigExclusionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterDeleteVotingConfigExclusionsResponse>
   async deleteVotingConfigExclusions (this: That, params?: T.ClusterDeleteVotingConfigExclusionsRequest | TB.ClusterDeleteVotingConfigExclusionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterDeleteVotingConfigExclusionsResponse, unknown>>
@@ -150,7 +150,7 @@ export default class Cluster {
 
   /**
     * Check component templates. Returns information about whether a particular component template exists.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-component-template.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/indices-component-template.html | Elasticsearch API documentation}
     */
   async existsComponentTemplate (this: That, params: T.ClusterExistsComponentTemplateRequest | TB.ClusterExistsComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterExistsComponentTemplateResponse>
   async existsComponentTemplate (this: That, params: T.ClusterExistsComponentTemplateRequest | TB.ClusterExistsComponentTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterExistsComponentTemplateResponse, unknown>>
@@ -182,7 +182,7 @@ export default class Cluster {
 
   /**
     * Get component templates. Get information about component templates.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-component-template.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/indices-component-template.html | Elasticsearch API documentation}
     */
   async getComponentTemplate (this: That, params?: T.ClusterGetComponentTemplateRequest | TB.ClusterGetComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterGetComponentTemplateResponse>
   async getComponentTemplate (this: That, params?: T.ClusterGetComponentTemplateRequest | TB.ClusterGetComponentTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterGetComponentTemplateResponse, unknown>>
@@ -222,7 +222,7 @@ export default class Cluster {
 
   /**
     * Get cluster-wide settings. By default, it returns only settings that have been explicitly defined.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/cluster-get-settings.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/cluster-get-settings.html | Elasticsearch API documentation}
     */
   async getSettings (this: That, params?: T.ClusterGetSettingsRequest | TB.ClusterGetSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterGetSettingsResponse>
   async getSettings (this: That, params?: T.ClusterGetSettingsRequest | TB.ClusterGetSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterGetSettingsResponse, unknown>>
@@ -252,7 +252,7 @@ export default class Cluster {
 
   /**
     * Get the cluster health status. You can also use the API to get the health status of only specified data streams and indices. For data streams, the API retrieves the health status of the stream’s backing indices. The cluster health status is: green, yellow or red. On the shard level, a red status indicates that the specific shard is not allocated in the cluster. Yellow means that the primary shard is allocated but replicas are not. Green means that all shards are allocated. The index level status is controlled by the worst shard status. One of the main benefits of the API is the ability to wait until the cluster reaches a certain high watermark health level. The cluster status is controlled by the worst index status.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/cluster-health.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/cluster-health.html | Elasticsearch API documentation}
     */
   async health (this: That, params?: T.ClusterHealthRequest | TB.ClusterHealthRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterHealthResponse>
   async health (this: That, params?: T.ClusterHealthRequest | TB.ClusterHealthRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterHealthResponse, unknown>>
@@ -292,7 +292,7 @@ export default class Cluster {
 
   /**
     * Get cluster info. Returns basic information about the cluster.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/cluster-info.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/cluster-info.html | Elasticsearch API documentation}
     */
   async info (this: That, params: T.ClusterInfoRequest | TB.ClusterInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterInfoResponse>
   async info (this: That, params: T.ClusterInfoRequest | TB.ClusterInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterInfoResponse, unknown>>
@@ -324,7 +324,7 @@ export default class Cluster {
 
   /**
     * Get the pending cluster tasks. Get information about cluster-level changes (such as create index, update mapping, allocate or fail shard) that have not yet taken effect. NOTE: This API returns a list of any pending updates to the cluster state. These are distinct from the tasks reported by the task management API which include periodic tasks and tasks initiated by the user, such as node stats, search queries, or create index requests. However, if a user-initiated task such as a create index command causes a cluster state update, the activity of this task might be reported by both task api and pending cluster tasks API.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/cluster-pending.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/cluster-pending.html | Elasticsearch API documentation}
     */
   async pendingTasks (this: That, params?: T.ClusterPendingTasksRequest | TB.ClusterPendingTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterPendingTasksResponse>
   async pendingTasks (this: That, params?: T.ClusterPendingTasksRequest | TB.ClusterPendingTasksRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterPendingTasksResponse, unknown>>
@@ -354,7 +354,7 @@ export default class Cluster {
 
   /**
     * Update voting configuration exclusions. Update the cluster voting config exclusions by node IDs or node names. By default, if there are more than three master-eligible nodes in the cluster and you remove fewer than half of the master-eligible nodes in the cluster at once, the voting configuration automatically shrinks. If you want to shrink the voting configuration to contain fewer than three nodes or to remove half or more of the master-eligible nodes in the cluster at once, use this API to remove departing nodes from the voting configuration manually. The API adds an entry for each specified node to the cluster’s voting configuration exclusions list. It then waits until the cluster has reconfigured its voting configuration to exclude the specified nodes. Clusters should have no voting configuration exclusions in normal operation. Once the excluded nodes have stopped, clear the voting configuration exclusions with `DELETE /_cluster/voting_config_exclusions`. This API waits for the nodes to be fully removed from the cluster before it returns. If your cluster has voting configuration exclusions for nodes that you no longer intend to remove, use `DELETE /_cluster/voting_config_exclusions?wait_for_removal=false` to clear the voting configuration exclusions without waiting for the nodes to leave the cluster. A response to `POST /_cluster/voting_config_exclusions` with an HTTP status code of 200 OK guarantees that the node has been removed from the voting configuration and will not be reinstated until the voting configuration exclusions are cleared by calling `DELETE /_cluster/voting_config_exclusions`. If the call to `POST /_cluster/voting_config_exclusions` fails or returns a response with an HTTP status code other than 200 OK then the node may not have been removed from the voting configuration. In that case, you may safely retry the call. NOTE: Voting exclusions are required only when you remove at least half of the master-eligible nodes from a cluster in a short time period. They are not required when removing master-ineligible nodes or when removing fewer than half of the master-eligible nodes.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/voting-config-exclusions.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/voting-config-exclusions.html | Elasticsearch API documentation}
     */
   async postVotingConfigExclusions (this: That, params?: T.ClusterPostVotingConfigExclusionsRequest | TB.ClusterPostVotingConfigExclusionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterPostVotingConfigExclusionsResponse>
   async postVotingConfigExclusions (this: That, params?: T.ClusterPostVotingConfigExclusionsRequest | TB.ClusterPostVotingConfigExclusionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterPostVotingConfigExclusionsResponse, unknown>>
@@ -384,7 +384,7 @@ export default class Cluster {
 
   /**
     * Create or update a component template. Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases. An index template can be composed of multiple component templates. To use a component template, specify it in an index template’s `composed_of` list. Component templates are only applied to new data streams and indices as part of a matching index template. Settings and mappings specified directly in the index template or the create index request override any settings or mappings specified in a component template. Component templates are only used during index creation. For data streams, this includes data stream creation and the creation of a stream’s backing indices. Changes to component templates do not affect existing indices, including a stream’s backing indices. You can use C-style `/* *\/` block comments in component templates. You can include comments anywhere in the request body except before the opening curly bracket. **Applying component templates** You cannot directly apply a component template to a data stream or index. To be applied, a component template must be included in an index template's `composed_of` list.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-component-template.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/indices-component-template.html | Elasticsearch API documentation}
     */
   async putComponentTemplate (this: That, params: T.ClusterPutComponentTemplateRequest | TB.ClusterPutComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterPutComponentTemplateResponse>
   async putComponentTemplate (this: That, params: T.ClusterPutComponentTemplateRequest | TB.ClusterPutComponentTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterPutComponentTemplateResponse, unknown>>
@@ -428,7 +428,7 @@ export default class Cluster {
 
   /**
     * Update the cluster settings. Configure and update dynamic settings on a running cluster. You can also configure dynamic settings locally on an unstarted or shut down node in `elasticsearch.yml`. Updates made with this API can be persistent, which apply across cluster restarts, or transient, which reset after a cluster restart. You can also reset transient or persistent settings by assigning them a null value. If you configure the same setting using multiple methods, Elasticsearch applies the settings in following order of precedence: 1) Transient setting; 2) Persistent setting; 3) `elasticsearch.yml` setting; 4) Default setting value. For example, you can apply a transient setting to override a persistent setting or `elasticsearch.yml` setting. However, a change to an `elasticsearch.yml` setting will not override a defined transient or persistent setting. TIP: In Elastic Cloud, use the user settings feature to configure all cluster settings. This method automatically rejects unsafe settings that could break your cluster. If you run Elasticsearch on your own hardware, use this API to configure dynamic cluster settings. Only use `elasticsearch.yml` for static cluster settings and node settings. The API doesn’t require a restart and ensures a setting’s value is the same on all nodes. WARNING: Transient cluster settings are no longer recommended. Use persistent cluster settings instead. If a cluster becomes unstable, transient settings can clear unexpectedly, resulting in a potentially undesired cluster configuration.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/cluster-update-settings.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/cluster-update-settings.html | Elasticsearch API documentation}
     */
   async putSettings (this: That, params?: T.ClusterPutSettingsRequest | TB.ClusterPutSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterPutSettingsResponse>
   async putSettings (this: That, params?: T.ClusterPutSettingsRequest | TB.ClusterPutSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterPutSettingsResponse, unknown>>
@@ -469,8 +469,8 @@ export default class Cluster {
   }
 
   /**
-    * Get remote cluster information. Get all of the configured remote cluster information. This API returns connection and endpoint information keyed by the configured remote cluster alias.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/cluster-remote-info.html | Elasticsearch API documentation}
+    * Get remote cluster information. Get information about configured remote clusters. The API returns connection and endpoint information keyed by the configured remote cluster alias. > info > This API returns information that reflects current state on the local cluster. > The `connected` field does not necessarily reflect whether a remote cluster is down or unavailable, only whether there is currently an open connection to it. > Elasticsearch does not spontaneously try to reconnect to a disconnected remote cluster. > To trigger a reconnection, attempt a cross-cluster search, ES|QL cross-cluster search, or try the [resolve cluster endpoint](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-resolve-cluster).
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/cluster-remote-info.html | Elasticsearch API documentation}
     */
   async remoteInfo (this: That, params?: T.ClusterRemoteInfoRequest | TB.ClusterRemoteInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterRemoteInfoResponse>
   async remoteInfo (this: That, params?: T.ClusterRemoteInfoRequest | TB.ClusterRemoteInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterRemoteInfoResponse, unknown>>
@@ -500,7 +500,7 @@ export default class Cluster {
 
   /**
     * Reroute the cluster. Manually change the allocation of individual shards in the cluster. For example, a shard can be moved from one node to another explicitly, an allocation can be canceled, and an unassigned shard can be explicitly allocated to a specific node. It is important to note that after processing any reroute commands Elasticsearch will perform rebalancing as normal (respecting the values of settings such as `cluster.routing.rebalance.enable`) in order to remain in a balanced state. For example, if the requested allocation includes moving a shard from node1 to node2 then this may cause a shard to be moved from node2 back to node1 to even things out. The cluster can be set to disable allocations using the `cluster.routing.allocation.enable` setting. If allocations are disabled then the only allocations that will be performed are explicit ones given using the reroute command, and consequent allocations due to rebalancing. The cluster will attempt to allocate a shard a maximum of `index.allocation.max_retries` times in a row (defaults to `5`), before giving up and leaving the shard unallocated. This scenario can be caused by structural problems such as having an analyzer which refers to a stopwords file which doesn’t exist on all nodes. Once the problem has been corrected, allocation can be manually retried by calling the reroute API with the `?retry_failed` URI query parameter, which will attempt a single retry round for these shards.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/cluster-reroute.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/cluster-reroute.html | Elasticsearch API documentation}
     */
   async reroute (this: That, params?: T.ClusterRerouteRequest | TB.ClusterRerouteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterRerouteResponse>
   async reroute (this: That, params?: T.ClusterRerouteRequest | TB.ClusterRerouteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterRerouteResponse, unknown>>
@@ -542,7 +542,7 @@ export default class Cluster {
 
   /**
     * Get the cluster state. Get comprehensive information about the state of the cluster. The cluster state is an internal data structure which keeps track of a variety of information needed by every node, including the identity and attributes of the other nodes in the cluster; cluster-wide settings; index metadata, including the mapping and settings for each index; the location and status of every shard copy in the cluster. The elected master node ensures that every node in the cluster has a copy of the same cluster state. This API lets you retrieve a representation of this internal state for debugging or diagnostic purposes. You may need to consult the Elasticsearch source code to determine the precise meaning of the response. By default the API will route requests to the elected master node since this node is the authoritative source of cluster states. You can also retrieve the cluster state held on the node handling the API request by adding the `?local=true` query parameter. Elasticsearch may need to expend significant effort to compute a response to this API in larger clusters, and the response may comprise a very large quantity of data. If you use this API repeatedly, your cluster may become unstable. WARNING: The response is a representation of an internal data structure. Its format is not subject to the same compatibility guarantees as other more stable APIs and may change from version to version. Do not query this API using external monitoring tools. Instead, obtain the information you require using other more stable cluster APIs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/cluster-state.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/cluster-state.html | Elasticsearch API documentation}
     */
   async state (this: That, params?: T.ClusterStateRequest | TB.ClusterStateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterStateResponse>
   async state (this: That, params?: T.ClusterStateRequest | TB.ClusterStateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterStateResponse, unknown>>
@@ -586,7 +586,7 @@ export default class Cluster {
 
   /**
     * Get cluster statistics. Get basic index metrics (shard numbers, store size, memory usage) and information about the current nodes that form the cluster (number, roles, os, jvm versions, memory usage, cpu and installed plugins).
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/cluster-stats.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/cluster-stats.html | Elasticsearch API documentation}
     */
   async stats (this: That, params?: T.ClusterStatsRequest | TB.ClusterStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterStatsResponse>
   async stats (this: That, params?: T.ClusterStatsRequest | TB.ClusterStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterStatsResponse, unknown>>

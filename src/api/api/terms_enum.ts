@@ -39,8 +39,8 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Get terms in an index. Discover terms that match a partial string in an index. This "terms enum" API is designed for low-latency look-ups used in auto-complete scenarios. If the `complete` property in the response is false, the returned terms set may be incomplete and should be treated as approximate. This can occur due to a few reasons, such as a request timeout or a node error. NOTE: The terms enum API may return terms from deleted documents. Deleted documents are initially only marked as deleted. It is not until their segments are merged that documents are actually deleted. Until that happens, the terms enum API will return terms from these documents.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/search-terms-enum.html | Elasticsearch API documentation}
+  * Get terms in an index. Discover terms that match a partial string in an index. This API is designed for low-latency look-ups used in auto-complete scenarios. > info > The terms enum API may return terms from deleted documents. Deleted documents are initially only marked as deleted. It is not until their segments are merged that documents are actually deleted. Until that happens, the terms enum API will return terms from these documents.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/search-terms-enum.html | Elasticsearch API documentation}
   */
 export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest | TB.TermsEnumRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TermsEnumResponse>
 export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest | TB.TermsEnumRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TermsEnumResponse, unknown>>
