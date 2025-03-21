@@ -140,7 +140,7 @@ const client = new Client({
 
 |
 
-| `nodeFilter` | `function` - Filters which node not to use for a request.
+| `nodeFilter` | `function` - Takes a `Connection` and returns `true` if it can be sent a request, otherwise `false`.
 _Default:_
 
 ```js
