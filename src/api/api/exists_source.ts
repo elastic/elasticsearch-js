@@ -35,7 +35,31 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  exists_source: {
+    path: [
+      'id',
+      'index'
+    ],
+    body: [],
+    query: [
+      'preference',
+      'realtime',
+      'refresh',
+      'routing',
+      '_source',
+      '_source_excludes',
+      '_source_includes',
+      'version',
+      'version_type'
+    ]
+  }
+}
 
 /**
   * Check for a document source. Check whether a document source exists in an index. For example: ``` HEAD my-index-000001/_source/1 ``` A document's source is not available if it is disabled in the mapping.
@@ -45,7 +69,10 @@ export default async function ExistsSourceApi (this: That, params: T.ExistsSourc
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ExistsSourceResponse, unknown>>
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest, options?: TransportRequestOptions): Promise<T.ExistsSourceResponse>
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['id', 'index']
+  const {
+    path: acceptedPath
+  } = acceptedParams.exists_source
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

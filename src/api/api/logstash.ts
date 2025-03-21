@@ -35,12 +35,44 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Logstash {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'logstash.delete_pipeline': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'logstash.get_pipeline': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'logstash.put_pipeline': {
+        path: [
+          'id'
+        ],
+        body: [
+          'pipeline'
+        ],
+        query: []
+      }
+    }
   }
 
   /**
@@ -51,7 +83,10 @@ export default class Logstash {
   async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashDeletePipelineResponse, unknown>>
   async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashDeletePipelineResponse>
   async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['logstash.delete_pipeline']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -93,7 +128,10 @@ export default class Logstash {
   async getPipeline (this: That, params?: T.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashGetPipelineResponse, unknown>>
   async getPipeline (this: That, params?: T.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashGetPipelineResponse>
   async getPipeline (this: That, params?: T.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['logstash.get_pipeline']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -143,8 +181,12 @@ export default class Logstash {
   async putPipeline (this: That, params: T.LogstashPutPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashPutPipelineResponse, unknown>>
   async putPipeline (this: That, params: T.LogstashPutPipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashPutPipelineResponse>
   async putPipeline (this: That, params: T.LogstashPutPipelineRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['pipeline']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['logstash.put_pipeline']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -156,8 +198,14 @@ export default class Logstash {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

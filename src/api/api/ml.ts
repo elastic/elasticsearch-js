@@ -35,12 +35,957 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Ml {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'ml.clear_trained_model_deployment_cache': {
+        path: [
+          'model_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.close_job': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'allow_no_match',
+          'force',
+          'timeout'
+        ],
+        query: [
+          'allow_no_match',
+          'force',
+          'timeout'
+        ]
+      },
+      'ml.delete_calendar': {
+        path: [
+          'calendar_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.delete_calendar_event': {
+        path: [
+          'calendar_id',
+          'event_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.delete_calendar_job': {
+        path: [
+          'calendar_id',
+          'job_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.delete_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'force',
+          'timeout'
+        ]
+      },
+      'ml.delete_datafeed': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [],
+        query: [
+          'force'
+        ]
+      },
+      'ml.delete_expired_data': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'requests_per_second',
+          'timeout'
+        ],
+        query: [
+          'requests_per_second',
+          'timeout'
+        ]
+      },
+      'ml.delete_filter': {
+        path: [
+          'filter_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.delete_forecast': {
+        path: [
+          'job_id',
+          'forecast_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_forecasts',
+          'timeout'
+        ]
+      },
+      'ml.delete_job': {
+        path: [
+          'job_id'
+        ],
+        body: [],
+        query: [
+          'force',
+          'delete_user_annotations',
+          'wait_for_completion'
+        ]
+      },
+      'ml.delete_model_snapshot': {
+        path: [
+          'job_id',
+          'snapshot_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.delete_trained_model': {
+        path: [
+          'model_id'
+        ],
+        body: [],
+        query: [
+          'force',
+          'timeout'
+        ]
+      },
+      'ml.delete_trained_model_alias': {
+        path: [
+          'model_alias',
+          'model_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.estimate_model_memory': {
+        path: [],
+        body: [
+          'analysis_config',
+          'max_bucket_cardinality',
+          'overall_cardinality'
+        ],
+        query: []
+      },
+      'ml.evaluate_data_frame': {
+        path: [],
+        body: [
+          'evaluation',
+          'index',
+          'query'
+        ],
+        query: []
+      },
+      'ml.explain_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [
+          'source',
+          'dest',
+          'analysis',
+          'description',
+          'model_memory_limit',
+          'max_num_threads',
+          'analyzed_fields',
+          'allow_lazy_start'
+        ],
+        query: []
+      },
+      'ml.flush_job': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'advance_time',
+          'calc_interim',
+          'end',
+          'skip_time',
+          'start'
+        ],
+        query: [
+          'advance_time',
+          'calc_interim',
+          'end',
+          'skip_time',
+          'start'
+        ]
+      },
+      'ml.forecast': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'duration',
+          'expires_in',
+          'max_model_memory'
+        ],
+        query: [
+          'duration',
+          'expires_in',
+          'max_model_memory'
+        ]
+      },
+      'ml.get_buckets': {
+        path: [
+          'job_id',
+          'timestamp'
+        ],
+        body: [
+          'anomaly_score',
+          'desc',
+          'end',
+          'exclude_interim',
+          'expand',
+          'page',
+          'sort',
+          'start'
+        ],
+        query: [
+          'anomaly_score',
+          'desc',
+          'end',
+          'exclude_interim',
+          'expand',
+          'from',
+          'size',
+          'sort',
+          'start'
+        ]
+      },
+      'ml.get_calendar_events': {
+        path: [
+          'calendar_id'
+        ],
+        body: [],
+        query: [
+          'end',
+          'from',
+          'job_id',
+          'size',
+          'start'
+        ]
+      },
+      'ml.get_calendars': {
+        path: [
+          'calendar_id'
+        ],
+        body: [
+          'page'
+        ],
+        query: [
+          'from',
+          'size'
+        ]
+      },
+      'ml.get_categories': {
+        path: [
+          'job_id',
+          'category_id'
+        ],
+        body: [
+          'page'
+        ],
+        query: [
+          'from',
+          'partition_field_value',
+          'size'
+        ]
+      },
+      'ml.get_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'from',
+          'size',
+          'exclude_generated'
+        ]
+      },
+      'ml.get_data_frame_analytics_stats': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'from',
+          'size',
+          'verbose'
+        ]
+      },
+      'ml.get_datafeed_stats': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match'
+        ]
+      },
+      'ml.get_datafeeds': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'exclude_generated'
+        ]
+      },
+      'ml.get_filters': {
+        path: [
+          'filter_id'
+        ],
+        body: [],
+        query: [
+          'from',
+          'size'
+        ]
+      },
+      'ml.get_influencers': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'page'
+        ],
+        query: [
+          'desc',
+          'end',
+          'exclude_interim',
+          'influencer_score',
+          'from',
+          'size',
+          'sort',
+          'start'
+        ]
+      },
+      'ml.get_job_stats': {
+        path: [
+          'job_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match'
+        ]
+      },
+      'ml.get_jobs': {
+        path: [
+          'job_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'exclude_generated'
+        ]
+      },
+      'ml.get_memory_stats': {
+        path: [
+          'node_id'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'ml.get_model_snapshot_upgrade_stats': {
+        path: [
+          'job_id',
+          'snapshot_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match'
+        ]
+      },
+      'ml.get_model_snapshots': {
+        path: [
+          'job_id',
+          'snapshot_id'
+        ],
+        body: [
+          'desc',
+          'end',
+          'page',
+          'sort',
+          'start'
+        ],
+        query: [
+          'desc',
+          'end',
+          'from',
+          'size',
+          'sort',
+          'start'
+        ]
+      },
+      'ml.get_overall_buckets': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'allow_no_match',
+          'bucket_span',
+          'end',
+          'exclude_interim',
+          'overall_score',
+          'start',
+          'top_n'
+        ],
+        query: [
+          'allow_no_match',
+          'bucket_span',
+          'end',
+          'exclude_interim',
+          'overall_score',
+          'start',
+          'top_n'
+        ]
+      },
+      'ml.get_records': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'desc',
+          'end',
+          'exclude_interim',
+          'page',
+          'record_score',
+          'sort',
+          'start'
+        ],
+        query: [
+          'desc',
+          'end',
+          'exclude_interim',
+          'from',
+          'record_score',
+          'size',
+          'sort',
+          'start'
+        ]
+      },
+      'ml.get_trained_models': {
+        path: [
+          'model_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'decompress_definition',
+          'exclude_generated',
+          'from',
+          'include',
+          'size',
+          'tags'
+        ]
+      },
+      'ml.get_trained_models_stats': {
+        path: [
+          'model_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'from',
+          'size'
+        ]
+      },
+      'ml.infer_trained_model': {
+        path: [
+          'model_id'
+        ],
+        body: [
+          'docs',
+          'inference_config'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'ml.info': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'ml.open_job': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'timeout'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'ml.post_calendar_events': {
+        path: [
+          'calendar_id'
+        ],
+        body: [
+          'events'
+        ],
+        query: []
+      },
+      'ml.post_data': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'data'
+        ],
+        query: [
+          'reset_end',
+          'reset_start'
+        ]
+      },
+      'ml.preview_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [
+          'config'
+        ],
+        query: []
+      },
+      'ml.preview_datafeed': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [
+          'datafeed_config',
+          'job_config'
+        ],
+        query: [
+          'start',
+          'end'
+        ]
+      },
+      'ml.put_calendar': {
+        path: [
+          'calendar_id'
+        ],
+        body: [
+          'job_ids',
+          'description'
+        ],
+        query: []
+      },
+      'ml.put_calendar_job': {
+        path: [
+          'calendar_id',
+          'job_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.put_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [
+          'allow_lazy_start',
+          'analysis',
+          'analyzed_fields',
+          'description',
+          'dest',
+          'max_num_threads',
+          '_meta',
+          'model_memory_limit',
+          'source',
+          'headers',
+          'version'
+        ],
+        query: []
+      },
+      'ml.put_datafeed': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [
+          'aggregations',
+          'aggs',
+          'chunking_config',
+          'delayed_data_check_config',
+          'frequency',
+          'indices',
+          'indexes',
+          'indices_options',
+          'job_id',
+          'max_empty_searches',
+          'query',
+          'query_delay',
+          'runtime_mappings',
+          'script_fields',
+          'scroll_size',
+          'headers'
+        ],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_throttled',
+          'ignore_unavailable'
+        ]
+      },
+      'ml.put_filter': {
+        path: [
+          'filter_id'
+        ],
+        body: [
+          'description',
+          'items'
+        ],
+        query: []
+      },
+      'ml.put_job': {
+        path: [],
+        body: [
+          'allow_lazy_open',
+          'analysis_config',
+          'analysis_limits',
+          'background_persist_interval',
+          'custom_settings',
+          'daily_model_snapshot_retention_after_days',
+          'data_description',
+          'datafeed_config',
+          'description',
+          'job_id',
+          'groups',
+          'model_plot_config',
+          'model_snapshot_retention_days',
+          'renormalization_window_days',
+          'results_index_name',
+          'results_retention_days'
+        ],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_throttled',
+          'ignore_unavailable'
+        ]
+      },
+      'ml.put_trained_model': {
+        path: [
+          'model_id'
+        ],
+        body: [
+          'compressed_definition',
+          'definition',
+          'description',
+          'inference_config',
+          'input',
+          'metadata',
+          'model_type',
+          'model_size_bytes',
+          'platform_architecture',
+          'tags',
+          'prefix_strings'
+        ],
+        query: [
+          'defer_definition_decompression',
+          'wait_for_completion'
+        ]
+      },
+      'ml.put_trained_model_alias': {
+        path: [
+          'model_alias',
+          'model_id'
+        ],
+        body: [],
+        query: [
+          'reassign'
+        ]
+      },
+      'ml.put_trained_model_definition_part': {
+        path: [
+          'model_id',
+          'part'
+        ],
+        body: [
+          'definition',
+          'total_definition_length',
+          'total_parts'
+        ],
+        query: []
+      },
+      'ml.put_trained_model_vocabulary': {
+        path: [
+          'model_id'
+        ],
+        body: [
+          'vocabulary',
+          'merges',
+          'scores'
+        ],
+        query: []
+      },
+      'ml.reset_job': {
+        path: [
+          'job_id'
+        ],
+        body: [],
+        query: [
+          'wait_for_completion',
+          'delete_user_annotations'
+        ]
+      },
+      'ml.revert_model_snapshot': {
+        path: [
+          'job_id',
+          'snapshot_id'
+        ],
+        body: [
+          'delete_intervening_results'
+        ],
+        query: [
+          'delete_intervening_results'
+        ]
+      },
+      'ml.set_upgrade_mode': {
+        path: [],
+        body: [],
+        query: [
+          'enabled',
+          'timeout'
+        ]
+      },
+      'ml.start_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'timeout'
+        ]
+      },
+      'ml.start_datafeed': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [
+          'end',
+          'start',
+          'timeout'
+        ],
+        query: [
+          'end',
+          'start',
+          'timeout'
+        ]
+      },
+      'ml.start_trained_model_deployment': {
+        path: [
+          'model_id'
+        ],
+        body: [
+          'adaptive_allocations'
+        ],
+        query: [
+          'cache_size',
+          'deployment_id',
+          'number_of_allocations',
+          'priority',
+          'queue_capacity',
+          'threads_per_allocation',
+          'timeout',
+          'wait_for'
+        ]
+      },
+      'ml.stop_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'force',
+          'timeout'
+        ]
+      },
+      'ml.stop_datafeed': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [
+          'allow_no_match',
+          'force',
+          'timeout'
+        ],
+        query: [
+          'allow_no_match',
+          'force',
+          'timeout'
+        ]
+      },
+      'ml.stop_trained_model_deployment': {
+        path: [
+          'model_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'force'
+        ]
+      },
+      'ml.update_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [
+          'description',
+          'model_memory_limit',
+          'max_num_threads',
+          'allow_lazy_start'
+        ],
+        query: []
+      },
+      'ml.update_datafeed': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [
+          'aggregations',
+          'chunking_config',
+          'delayed_data_check_config',
+          'frequency',
+          'indices',
+          'indexes',
+          'indices_options',
+          'job_id',
+          'max_empty_searches',
+          'query',
+          'query_delay',
+          'runtime_mappings',
+          'script_fields',
+          'scroll_size'
+        ],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_throttled',
+          'ignore_unavailable'
+        ]
+      },
+      'ml.update_filter': {
+        path: [
+          'filter_id'
+        ],
+        body: [
+          'add_items',
+          'description',
+          'remove_items'
+        ],
+        query: []
+      },
+      'ml.update_job': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'allow_lazy_open',
+          'analysis_limits',
+          'background_persist_interval',
+          'custom_settings',
+          'categorization_filters',
+          'description',
+          'model_plot_config',
+          'model_prune_window',
+          'daily_model_snapshot_retention_after_days',
+          'model_snapshot_retention_days',
+          'renormalization_window_days',
+          'results_retention_days',
+          'groups',
+          'detectors',
+          'per_partition_categorization'
+        ],
+        query: []
+      },
+      'ml.update_model_snapshot': {
+        path: [
+          'job_id',
+          'snapshot_id'
+        ],
+        body: [
+          'description',
+          'retain'
+        ],
+        query: []
+      },
+      'ml.update_trained_model_deployment': {
+        path: [
+          'model_id'
+        ],
+        body: [
+          'number_of_allocations',
+          'adaptive_allocations'
+        ],
+        query: [
+          'number_of_allocations'
+        ]
+      },
+      'ml.upgrade_job_snapshot': {
+        path: [
+          'job_id',
+          'snapshot_id'
+        ],
+        body: [],
+        query: [
+          'wait_for_completion',
+          'timeout'
+        ]
+      },
+      'ml.validate': {
+        path: [],
+        body: [
+          'job_id',
+          'analysis_config',
+          'analysis_limits',
+          'data_description',
+          'description',
+          'model_plot',
+          'model_snapshot_id',
+          'model_snapshot_retention_days',
+          'results_index_name'
+        ],
+        query: []
+      },
+      'ml.validate_detector': {
+        path: [],
+        body: [
+          'detector'
+        ],
+        query: []
+      }
+    }
   }
 
   /**
@@ -51,7 +996,10 @@ export default class Ml {
   async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlClearTrainedModelDeploymentCacheResponse, unknown>>
   async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptions): Promise<T.MlClearTrainedModelDeploymentCacheResponse>
   async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.clear_trained_model_deployment_cache']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -93,8 +1041,12 @@ export default class Ml {
   async closeJob (this: That, params: T.MlCloseJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlCloseJobResponse, unknown>>
   async closeJob (this: That, params: T.MlCloseJobRequest, options?: TransportRequestOptions): Promise<T.MlCloseJobResponse>
   async closeJob (this: That, params: T.MlCloseJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['allow_no_match', 'force', 'timeout']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.close_job']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -116,8 +1068,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -140,7 +1098,10 @@ export default class Ml {
   async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteCalendarResponse, unknown>>
   async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest, options?: TransportRequestOptions): Promise<T.MlDeleteCalendarResponse>
   async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_calendar']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -182,7 +1143,10 @@ export default class Ml {
   async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteCalendarEventResponse, unknown>>
   async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest, options?: TransportRequestOptions): Promise<T.MlDeleteCalendarEventResponse>
   async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id', 'event_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_calendar_event']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -225,7 +1189,10 @@ export default class Ml {
   async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteCalendarJobResponse, unknown>>
   async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest, options?: TransportRequestOptions): Promise<T.MlDeleteCalendarJobResponse>
   async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id', 'job_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_calendar_job']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -268,7 +1235,10 @@ export default class Ml {
   async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteDataFrameAnalyticsResponse, unknown>>
   async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlDeleteDataFrameAnalyticsResponse>
   async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_data_frame_analytics']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -310,7 +1280,10 @@ export default class Ml {
   async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteDatafeedResponse, unknown>>
   async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlDeleteDatafeedResponse>
   async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_datafeed']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -352,8 +1325,12 @@ export default class Ml {
   async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteExpiredDataResponse, unknown>>
   async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest, options?: TransportRequestOptions): Promise<T.MlDeleteExpiredDataResponse>
   async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['requests_per_second', 'timeout']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.delete_expired_data']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -376,8 +1353,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -407,7 +1390,10 @@ export default class Ml {
   async deleteFilter (this: That, params: T.MlDeleteFilterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteFilterResponse, unknown>>
   async deleteFilter (this: That, params: T.MlDeleteFilterRequest, options?: TransportRequestOptions): Promise<T.MlDeleteFilterResponse>
   async deleteFilter (this: That, params: T.MlDeleteFilterRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['filter_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_filter']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -449,7 +1435,10 @@ export default class Ml {
   async deleteForecast (this: That, params: T.MlDeleteForecastRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteForecastResponse, unknown>>
   async deleteForecast (this: That, params: T.MlDeleteForecastRequest, options?: TransportRequestOptions): Promise<T.MlDeleteForecastResponse>
   async deleteForecast (this: That, params: T.MlDeleteForecastRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'forecast_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_forecast']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -499,7 +1488,10 @@ export default class Ml {
   async deleteJob (this: That, params: T.MlDeleteJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteJobResponse, unknown>>
   async deleteJob (this: That, params: T.MlDeleteJobRequest, options?: TransportRequestOptions): Promise<T.MlDeleteJobResponse>
   async deleteJob (this: That, params: T.MlDeleteJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_job']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -541,7 +1533,10 @@ export default class Ml {
   async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteModelSnapshotResponse, unknown>>
   async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlDeleteModelSnapshotResponse>
   async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'snapshot_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_model_snapshot']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -584,7 +1579,10 @@ export default class Ml {
   async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteTrainedModelResponse, unknown>>
   async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlDeleteTrainedModelResponse>
   async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_trained_model']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -626,7 +1624,10 @@ export default class Ml {
   async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteTrainedModelAliasResponse, unknown>>
   async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<T.MlDeleteTrainedModelAliasResponse>
   async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_alias', 'model_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_trained_model_alias']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -669,8 +1670,12 @@ export default class Ml {
   async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlEstimateModelMemoryResponse, unknown>>
   async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest, options?: TransportRequestOptions): Promise<T.MlEstimateModelMemoryResponse>
   async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['analysis_config', 'max_bucket_cardinality', 'overall_cardinality']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.estimate_model_memory']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -693,8 +1698,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -714,8 +1725,12 @@ export default class Ml {
   async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlEvaluateDataFrameResponse, unknown>>
   async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest, options?: TransportRequestOptions): Promise<T.MlEvaluateDataFrameResponse>
   async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['evaluation', 'index', 'query']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.evaluate_data_frame']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -737,8 +1752,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -758,8 +1779,12 @@ export default class Ml {
   async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlExplainDataFrameAnalyticsResponse, unknown>>
   async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlExplainDataFrameAnalyticsResponse>
   async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['source', 'dest', 'analysis', 'description', 'model_memory_limit', 'max_num_threads', 'analyzed_fields', 'allow_lazy_start']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.explain_data_frame_analytics']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -782,8 +1807,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -813,8 +1844,12 @@ export default class Ml {
   async flushJob (this: That, params: T.MlFlushJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlFlushJobResponse, unknown>>
   async flushJob (this: That, params: T.MlFlushJobRequest, options?: TransportRequestOptions): Promise<T.MlFlushJobResponse>
   async flushJob (this: That, params: T.MlFlushJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['advance_time', 'calc_interim', 'end', 'skip_time', 'start']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.flush_job']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -836,8 +1871,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -860,8 +1901,12 @@ export default class Ml {
   async forecast (this: That, params: T.MlForecastRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlForecastResponse, unknown>>
   async forecast (this: That, params: T.MlForecastRequest, options?: TransportRequestOptions): Promise<T.MlForecastResponse>
   async forecast (this: That, params: T.MlForecastRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['duration', 'expires_in', 'max_model_memory']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.forecast']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -883,8 +1928,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -907,8 +1958,12 @@ export default class Ml {
   async getBuckets (this: That, params: T.MlGetBucketsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetBucketsResponse, unknown>>
   async getBuckets (this: That, params: T.MlGetBucketsRequest, options?: TransportRequestOptions): Promise<T.MlGetBucketsResponse>
   async getBuckets (this: That, params: T.MlGetBucketsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'timestamp']
-    const acceptedBody: string[] = ['anomaly_score', 'desc', 'end', 'exclude_interim', 'expand', 'page', 'sort', 'start']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_buckets']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -930,8 +1985,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -962,7 +2023,10 @@ export default class Ml {
   async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetCalendarEventsResponse, unknown>>
   async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest, options?: TransportRequestOptions): Promise<T.MlGetCalendarEventsResponse>
   async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_calendar_events']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1004,8 +2068,12 @@ export default class Ml {
   async getCalendars (this: That, params?: T.MlGetCalendarsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetCalendarsResponse, unknown>>
   async getCalendars (this: That, params?: T.MlGetCalendarsRequest, options?: TransportRequestOptions): Promise<T.MlGetCalendarsResponse>
   async getCalendars (this: That, params?: T.MlGetCalendarsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id']
-    const acceptedBody: string[] = ['page']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_calendars']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1028,8 +2096,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1059,8 +2133,12 @@ export default class Ml {
   async getCategories (this: That, params: T.MlGetCategoriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetCategoriesResponse, unknown>>
   async getCategories (this: That, params: T.MlGetCategoriesRequest, options?: TransportRequestOptions): Promise<T.MlGetCategoriesResponse>
   async getCategories (this: That, params: T.MlGetCategoriesRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'category_id']
-    const acceptedBody: string[] = ['page']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_categories']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1082,8 +2160,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1114,7 +2198,10 @@ export default class Ml {
   async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDataFrameAnalyticsResponse, unknown>>
   async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlGetDataFrameAnalyticsResponse>
   async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_data_frame_analytics']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1164,7 +2251,10 @@ export default class Ml {
   async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDataFrameAnalyticsStatsResponse, unknown>>
   async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetDataFrameAnalyticsStatsResponse>
   async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_data_frame_analytics_stats']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1214,7 +2304,10 @@ export default class Ml {
   async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDatafeedStatsResponse, unknown>>
   async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetDatafeedStatsResponse>
   async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_datafeed_stats']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1264,7 +2357,10 @@ export default class Ml {
   async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDatafeedsResponse, unknown>>
   async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest, options?: TransportRequestOptions): Promise<T.MlGetDatafeedsResponse>
   async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_datafeeds']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1314,7 +2410,10 @@ export default class Ml {
   async getFilters (this: That, params?: T.MlGetFiltersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetFiltersResponse, unknown>>
   async getFilters (this: That, params?: T.MlGetFiltersRequest, options?: TransportRequestOptions): Promise<T.MlGetFiltersResponse>
   async getFilters (this: That, params?: T.MlGetFiltersRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['filter_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_filters']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1364,8 +2463,12 @@ export default class Ml {
   async getInfluencers (this: That, params: T.MlGetInfluencersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetInfluencersResponse, unknown>>
   async getInfluencers (this: That, params: T.MlGetInfluencersRequest, options?: TransportRequestOptions): Promise<T.MlGetInfluencersResponse>
   async getInfluencers (this: That, params: T.MlGetInfluencersRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['page']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_influencers']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1387,8 +2490,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1411,7 +2520,10 @@ export default class Ml {
   async getJobStats (this: That, params?: T.MlGetJobStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetJobStatsResponse, unknown>>
   async getJobStats (this: That, params?: T.MlGetJobStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetJobStatsResponse>
   async getJobStats (this: That, params?: T.MlGetJobStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_job_stats']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1461,7 +2573,10 @@ export default class Ml {
   async getJobs (this: That, params?: T.MlGetJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetJobsResponse, unknown>>
   async getJobs (this: That, params?: T.MlGetJobsRequest, options?: TransportRequestOptions): Promise<T.MlGetJobsResponse>
   async getJobs (this: That, params?: T.MlGetJobsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_jobs']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1511,7 +2626,10 @@ export default class Ml {
   async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetMemoryStatsResponse, unknown>>
   async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetMemoryStatsResponse>
   async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['node_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_memory_stats']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1561,7 +2679,10 @@ export default class Ml {
   async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetModelSnapshotUpgradeStatsResponse, unknown>>
   async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetModelSnapshotUpgradeStatsResponse>
   async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'snapshot_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_model_snapshot_upgrade_stats']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1604,8 +2725,12 @@ export default class Ml {
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetModelSnapshotsResponse, unknown>>
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<T.MlGetModelSnapshotsResponse>
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'snapshot_id']
-    const acceptedBody: string[] = ['desc', 'end', 'page', 'sort', 'start']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_model_snapshots']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1627,8 +2752,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1659,8 +2790,12 @@ export default class Ml {
   async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetOverallBucketsResponse, unknown>>
   async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest, options?: TransportRequestOptions): Promise<T.MlGetOverallBucketsResponse>
   async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['allow_no_match', 'bucket_span', 'end', 'exclude_interim', 'overall_score', 'start', 'top_n']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_overall_buckets']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1682,8 +2817,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1706,8 +2847,12 @@ export default class Ml {
   async getRecords (this: That, params: T.MlGetRecordsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetRecordsResponse, unknown>>
   async getRecords (this: That, params: T.MlGetRecordsRequest, options?: TransportRequestOptions): Promise<T.MlGetRecordsResponse>
   async getRecords (this: That, params: T.MlGetRecordsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['desc', 'end', 'exclude_interim', 'page', 'record_score', 'sort', 'start']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_records']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1729,8 +2874,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1753,7 +2904,10 @@ export default class Ml {
   async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetTrainedModelsResponse, unknown>>
   async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest, options?: TransportRequestOptions): Promise<T.MlGetTrainedModelsResponse>
   async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_trained_models']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1803,7 +2957,10 @@ export default class Ml {
   async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetTrainedModelsStatsResponse, unknown>>
   async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetTrainedModelsStatsResponse>
   async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_trained_models_stats']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1853,8 +3010,12 @@ export default class Ml {
   async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlInferTrainedModelResponse, unknown>>
   async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlInferTrainedModelResponse>
   async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['docs', 'inference_config']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.infer_trained_model']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1876,8 +3037,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1900,7 +3067,10 @@ export default class Ml {
   async info (this: That, params?: T.MlInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlInfoResponse, unknown>>
   async info (this: That, params?: T.MlInfoRequest, options?: TransportRequestOptions): Promise<T.MlInfoResponse>
   async info (this: That, params?: T.MlInfoRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.info']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1940,8 +3110,12 @@ export default class Ml {
   async openJob (this: That, params: T.MlOpenJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlOpenJobResponse, unknown>>
   async openJob (this: That, params: T.MlOpenJobRequest, options?: TransportRequestOptions): Promise<T.MlOpenJobResponse>
   async openJob (this: That, params: T.MlOpenJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['timeout']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.open_job']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1963,8 +3137,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1987,8 +3167,12 @@ export default class Ml {
   async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPostCalendarEventsResponse, unknown>>
   async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest, options?: TransportRequestOptions): Promise<T.MlPostCalendarEventsResponse>
   async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id']
-    const acceptedBody: string[] = ['events']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.post_calendar_events']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2010,8 +3194,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2034,8 +3224,12 @@ export default class Ml {
   async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPostDataResponse, unknown>>
   async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData>, options?: TransportRequestOptions): Promise<T.MlPostDataResponse>
   async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData>, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['data']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.post_data']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2047,8 +3241,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2071,8 +3271,12 @@ export default class Ml {
   async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPreviewDataFrameAnalyticsResponse, unknown>>
   async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlPreviewDataFrameAnalyticsResponse>
   async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['config']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.preview_data_frame_analytics']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2095,8 +3299,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2126,8 +3336,12 @@ export default class Ml {
   async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPreviewDatafeedResponse<TDocument>, unknown>>
   async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlPreviewDatafeedResponse<TDocument>>
   async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['datafeed_config', 'job_config']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.preview_datafeed']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2150,8 +3364,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2181,8 +3401,12 @@ export default class Ml {
   async putCalendar (this: That, params: T.MlPutCalendarRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutCalendarResponse, unknown>>
   async putCalendar (this: That, params: T.MlPutCalendarRequest, options?: TransportRequestOptions): Promise<T.MlPutCalendarResponse>
   async putCalendar (this: That, params: T.MlPutCalendarRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id']
-    const acceptedBody: string[] = ['job_ids', 'description']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_calendar']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2204,8 +3428,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2228,7 +3458,10 @@ export default class Ml {
   async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutCalendarJobResponse, unknown>>
   async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest, options?: TransportRequestOptions): Promise<T.MlPutCalendarJobResponse>
   async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id', 'job_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.put_calendar_job']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2271,8 +3504,12 @@ export default class Ml {
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutDataFrameAnalyticsResponse, unknown>>
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlPutDataFrameAnalyticsResponse>
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['allow_lazy_start', 'analysis', 'analyzed_fields', 'description', 'dest', 'max_num_threads', '_meta', 'model_memory_limit', 'source', 'headers', 'version']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_data_frame_analytics']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2294,8 +3531,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2318,8 +3561,12 @@ export default class Ml {
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutDatafeedResponse, unknown>>
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlPutDatafeedResponse>
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['aggregations', 'aggs', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', 'headers']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_datafeed']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2341,8 +3588,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2365,8 +3618,12 @@ export default class Ml {
   async putFilter (this: That, params: T.MlPutFilterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutFilterResponse, unknown>>
   async putFilter (this: That, params: T.MlPutFilterRequest, options?: TransportRequestOptions): Promise<T.MlPutFilterResponse>
   async putFilter (this: That, params: T.MlPutFilterRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['filter_id']
-    const acceptedBody: string[] = ['description', 'items']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_filter']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2388,8 +3645,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2412,8 +3675,12 @@ export default class Ml {
   async putJob (this: That, params: T.MlPutJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutJobResponse, unknown>>
   async putJob (this: That, params: T.MlPutJobRequest, options?: TransportRequestOptions): Promise<T.MlPutJobResponse>
   async putJob (this: That, params: T.MlPutJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['allow_lazy_open', 'analysis_config', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'daily_model_snapshot_retention_after_days', 'data_description', 'datafeed_config', 'description', 'job_id', 'groups', 'model_plot_config', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_index_name', 'results_retention_days']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_job']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2435,8 +3702,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2459,8 +3732,12 @@ export default class Ml {
   async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelResponse, unknown>>
   async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelResponse>
   async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['compressed_definition', 'definition', 'description', 'inference_config', 'input', 'metadata', 'model_type', 'model_size_bytes', 'platform_architecture', 'tags', 'prefix_strings']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_trained_model']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2482,8 +3759,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2506,7 +3789,10 @@ export default class Ml {
   async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelAliasResponse, unknown>>
   async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelAliasResponse>
   async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_alias', 'model_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.put_trained_model_alias']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2549,8 +3835,12 @@ export default class Ml {
   async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelDefinitionPartResponse, unknown>>
   async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelDefinitionPartResponse>
   async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id', 'part']
-    const acceptedBody: string[] = ['definition', 'total_definition_length', 'total_parts']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_trained_model_definition_part']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2572,8 +3862,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2597,8 +3893,12 @@ export default class Ml {
   async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelVocabularyResponse, unknown>>
   async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelVocabularyResponse>
   async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['vocabulary', 'merges', 'scores']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_trained_model_vocabulary']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2620,8 +3920,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2644,7 +3950,10 @@ export default class Ml {
   async resetJob (this: That, params: T.MlResetJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlResetJobResponse, unknown>>
   async resetJob (this: That, params: T.MlResetJobRequest, options?: TransportRequestOptions): Promise<T.MlResetJobResponse>
   async resetJob (this: That, params: T.MlResetJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.reset_job']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2686,8 +3995,12 @@ export default class Ml {
   async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlRevertModelSnapshotResponse, unknown>>
   async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlRevertModelSnapshotResponse>
   async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'snapshot_id']
-    const acceptedBody: string[] = ['delete_intervening_results']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.revert_model_snapshot']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2709,8 +4022,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2734,7 +4053,10 @@ export default class Ml {
   async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlSetUpgradeModeResponse, unknown>>
   async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<T.MlSetUpgradeModeResponse>
   async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.set_upgrade_mode']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2774,7 +4096,10 @@ export default class Ml {
   async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartDataFrameAnalyticsResponse, unknown>>
   async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlStartDataFrameAnalyticsResponse>
   async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.start_data_frame_analytics']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2816,8 +4141,12 @@ export default class Ml {
   async startDatafeed (this: That, params: T.MlStartDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartDatafeedResponse, unknown>>
   async startDatafeed (this: That, params: T.MlStartDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlStartDatafeedResponse>
   async startDatafeed (this: That, params: T.MlStartDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['end', 'start', 'timeout']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.start_datafeed']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2839,8 +4168,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2863,8 +4198,12 @@ export default class Ml {
   async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartTrainedModelDeploymentResponse, unknown>>
   async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlStartTrainedModelDeploymentResponse>
   async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['adaptive_allocations']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.start_trained_model_deployment']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2886,8 +4225,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2910,7 +4255,10 @@ export default class Ml {
   async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopDataFrameAnalyticsResponse, unknown>>
   async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlStopDataFrameAnalyticsResponse>
   async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.stop_data_frame_analytics']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2952,8 +4300,12 @@ export default class Ml {
   async stopDatafeed (this: That, params: T.MlStopDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopDatafeedResponse, unknown>>
   async stopDatafeed (this: That, params: T.MlStopDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlStopDatafeedResponse>
   async stopDatafeed (this: That, params: T.MlStopDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['allow_no_match', 'force', 'timeout']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.stop_datafeed']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -2975,8 +4327,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2999,7 +4357,10 @@ export default class Ml {
   async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopTrainedModelDeploymentResponse, unknown>>
   async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlStopTrainedModelDeploymentResponse>
   async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.stop_trained_model_deployment']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3041,8 +4402,12 @@ export default class Ml {
   async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateDataFrameAnalyticsResponse, unknown>>
   async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlUpdateDataFrameAnalyticsResponse>
   async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['description', 'model_memory_limit', 'max_num_threads', 'allow_lazy_start']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.update_data_frame_analytics']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3064,8 +4429,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -3088,8 +4459,12 @@ export default class Ml {
   async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateDatafeedResponse, unknown>>
   async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlUpdateDatafeedResponse>
   async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.update_datafeed']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3111,8 +4486,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -3135,8 +4516,12 @@ export default class Ml {
   async updateFilter (this: That, params: T.MlUpdateFilterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateFilterResponse, unknown>>
   async updateFilter (this: That, params: T.MlUpdateFilterRequest, options?: TransportRequestOptions): Promise<T.MlUpdateFilterResponse>
   async updateFilter (this: That, params: T.MlUpdateFilterRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['filter_id']
-    const acceptedBody: string[] = ['add_items', 'description', 'remove_items']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.update_filter']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3158,8 +4543,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -3182,8 +4573,12 @@ export default class Ml {
   async updateJob (this: That, params: T.MlUpdateJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateJobResponse, unknown>>
   async updateJob (this: That, params: T.MlUpdateJobRequest, options?: TransportRequestOptions): Promise<T.MlUpdateJobResponse>
   async updateJob (this: That, params: T.MlUpdateJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['allow_lazy_open', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'categorization_filters', 'description', 'model_plot_config', 'model_prune_window', 'daily_model_snapshot_retention_after_days', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_retention_days', 'groups', 'detectors', 'per_partition_categorization']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.update_job']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3205,8 +4600,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -3229,8 +4630,12 @@ export default class Ml {
   async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateModelSnapshotResponse, unknown>>
   async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlUpdateModelSnapshotResponse>
   async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'snapshot_id']
-    const acceptedBody: string[] = ['description', 'retain']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.update_model_snapshot']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3252,8 +4657,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -3277,8 +4688,12 @@ export default class Ml {
   async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateTrainedModelDeploymentResponse, unknown>>
   async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlUpdateTrainedModelDeploymentResponse>
   async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['number_of_allocations', 'adaptive_allocations']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.update_trained_model_deployment']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3300,8 +4715,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -3324,7 +4745,10 @@ export default class Ml {
   async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpgradeJobSnapshotResponse, unknown>>
   async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlUpgradeJobSnapshotResponse>
   async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'snapshot_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.upgrade_job_snapshot']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3361,14 +4785,18 @@ export default class Ml {
 
   /**
     * Validate an anomaly detection job.
-    * @see {@link https://www.elastic.co/guide/en/machine-learning/master/ml-jobs.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/machine-learning/9.0/ml-jobs.html | Elasticsearch API documentation}
     */
   async validate (this: That, params?: T.MlValidateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateResponse>
   async validate (this: That, params?: T.MlValidateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlValidateResponse, unknown>>
   async validate (this: That, params?: T.MlValidateRequest, options?: TransportRequestOptions): Promise<T.MlValidateResponse>
   async validate (this: That, params?: T.MlValidateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['job_id', 'analysis_config', 'analysis_limits', 'data_description', 'description', 'model_plot', 'model_snapshot_id', 'model_snapshot_retention_days', 'results_index_name']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.validate']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3391,8 +4819,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -3412,8 +4846,12 @@ export default class Ml {
   async validateDetector (this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlValidateDetectorResponse, unknown>>
   async validateDetector (this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptions): Promise<T.MlValidateDetectorResponse>
   async validateDetector (this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['detector']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.validate_detector']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -3425,8 +4863,14 @@ export default class Ml {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
