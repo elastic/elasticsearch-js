@@ -1,3 +1,8 @@
+/*
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 'use strict'
 
 /**
@@ -130,9 +135,9 @@ release(
       'dry-run',
 
       // help text
-      'help',
+      'help'
     ],
-    alias: { help: 'h' },
+    alias: { help: 'h' }
   })
 )
   .catch(err => {

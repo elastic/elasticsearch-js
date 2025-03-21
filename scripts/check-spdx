@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Copyright Elasticsearch B.V. and contributors
+# SPDX-License-Identifier: Apache-2.0
+
+correct='/*
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */'
+
+the_exit=0
+
+check_file() {
+  if $(diff <(head -n4 "$1") <(echo "$correct") &>/dev/null); then
+    echo "Correct: $1"
+  else
+    echo "Incorrect: $1"
+    the_exit=1
+  fi
+}
+
+echo "SPDX license header check"
+for file in $(git ls-files | grep -E '\.(ts|js|mjs)$'); do
+  check_file "$file"
+done
+
+exit "$the_exit"
