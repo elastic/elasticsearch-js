@@ -1,5 +1,5 @@
 ---
-navigation_title: "Elasticsearch JavaScript Client"
+navigation_title: "Known issues"
 
 ---
 
