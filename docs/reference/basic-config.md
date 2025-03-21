@@ -8,8 +8,6 @@ mapped_pages:
 This page shows you the possible basic configuration options that the clients offers.
 
 ```js
-```
-
 const { Client } = require('@elastic/elasticsearch')
 
 const client = new Client({
@@ -18,7 +16,6 @@ const client = new Client({
   maxRetries: 5,
   sniffOnStart: true
 })
-
 ```
 
 |     |     |
