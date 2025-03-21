@@ -123,7 +123,7 @@ async function codegen (args) {
   await $`rm -rf ${join(import.meta.url, '..', 'src', 'api')}`
   await $`mkdir ${join(import.meta.url, '..', 'src', 'api')}`
   await $`cp -R ${join(import.meta.url, '..', '..', 'elastic-client-generator-js', 'output')}/* ${join(import.meta.url, '..', 'src', 'api')}`
-  await $`mv ${join(import.meta.url, '..', 'src', 'api', 'reference.asciidoc')} ${join(import.meta.url, '..', 'docs', 'reference.asciidoc')}`
+  await $`mv ${join(import.meta.url, '..', 'src', 'api', 'reference.md')} ${join(import.meta.url, '..', 'docs', 'reference', 'api-reference.md')}`
   await $`npm run build`
 
   // run docs example generation
