@@ -113,7 +113,7 @@ async function codegen (args) {
 
   // generate elasticsearch client. this command will take a while!
   if (version === 'main') {
-    await $`npm run elasticsearch --prefix ${clientGeneratorPath} -- --version main --specDir /usr/src/schema.json`
+    await $`npm run elasticsearch --prefix ${clientGeneratorPath} -- --version main`
   } else {
     await $`npm run elasticsearch --prefix ${clientGeneratorPath} -- --version ${version.split('.').slice(0, 2).join('.')}`
   }
