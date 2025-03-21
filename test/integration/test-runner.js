@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 'use strict'
@@ -168,25 +154,25 @@ function build (opts = {}) {
     if (isXPack) {
       // delete ilm policies
       const preserveIlmPolicies = [
-        "ilm-history-ilm-policy",
-        "slm-history-ilm-policy",
-        "watch-history-ilm-policy",
-        "watch-history-ilm-policy-16",
-        "ml-size-based-ilm-policy",
-        "logs",
-        "metrics",
-        "synthetics",
-        "7-days-default",
-        "30-days-default",
-        "90-days-default",
-        "180-days-default",
-        "365-days-default",
-        ".fleet-actions-results-ilm-policy",
-        ".fleet-file-data-ilm-policy",
-        ".fleet-files-ilm-policy",
-        ".deprecation-indexing-ilm-policy",
-        ".monitoring-8-ilm-policy",
-        "behavioral_analytics-events-default_policy",
+        'ilm-history-ilm-policy',
+        'slm-history-ilm-policy',
+        'watch-history-ilm-policy',
+        'watch-history-ilm-policy-16',
+        'ml-size-based-ilm-policy',
+        'logs',
+        'metrics',
+        'synthetics',
+        '7-days-default',
+        '30-days-default',
+        '90-days-default',
+        '180-days-default',
+        '365-days-default',
+        '.fleet-actions-results-ilm-policy',
+        '.fleet-file-data-ilm-policy',
+        '.fleet-files-ilm-policy',
+        '.deprecation-indexing-ilm-policy',
+        '.monitoring-8-ilm-policy',
+        'behavioral_analytics-events-default_policy'
       ]
       const policies = await client.ilm.getLifecycle()
       for (const policy in policies) {
@@ -488,7 +474,7 @@ function build (opts = {}) {
       cmd.params.body = JSON.parse(cmd.params.body)
     }
 
-    let err, result;
+    let err, result
     try {
       [err, result] = await to(api(cmd.params, options))
     } catch (exc) {
@@ -873,7 +859,7 @@ function length (val, len, response) {
 function parseDo (action) {
   action = JSON.parse(JSON.stringify(action))
 
-  if (typeof action === 'string') action = {[action]: {}}
+  if (typeof action === 'string') action = { [action]: {} }
   if (Array.isArray(action)) action = action[0]
 
   return Object.keys(action).reduce((acc, val) => {
