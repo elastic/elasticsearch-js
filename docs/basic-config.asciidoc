@@ -167,19 +167,11 @@ const client = new Client({
 ----
 
 |`nodeFilter`
-a|`function` - Filters which node not to use for a request. +
+a|`function` - Takes a `Connection` and returns `true` if it can be sent a request, otherwise `false`. +
 _Default:_
 [source,js]
 ----
-function defaultNodeFilter (node) {
-  // avoid master only nodes
-  if (node.roles.master === true &&
-      node.roles.data === false &&
-      node.roles.ingest === false) {
-    return false
-  }
-  return true
-}
+() => true
 ----
 
 |`nodeSelector`
