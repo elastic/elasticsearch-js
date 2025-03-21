@@ -22,6 +22,7 @@
     "lint": "ts-standard src",
     "lint:fix": "ts-standard --fix src",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
+    "license-header": "./scripts/check-spdx",
     "prebuild": "npm run clean-build && npm run lint",
     "build": "tsc && rm lib/package.json && mv lib/src/* lib/ && rm -rf lib/src",
     "clean-build": "rimraf ./lib && mkdir lib",
