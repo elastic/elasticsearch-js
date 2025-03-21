@@ -1,14 +1,11 @@
 ---
-navigation_title: "Elasticsearch JavaScript Client"
+navigation_title: "Breaking changes"
 ---
 
 # Elasticsearch JavaScript Client breaking changes [elasticsearch-javascript-client-breaking-changes]
-Before you upgrade, carefully review the Elasticsearch JavaScript Client breaking changes and take the necessary steps to mitigate any issues. 
-
-To learn how to upgrade, check out <upgrade docs>.
+Breaking changes can impact your Elastic applications, potentially disrupting normal operations. Before you upgrade, carefully review the Elasticsearch JavaScript Client breaking changes and take the necessary steps to mitigate any issues. To learn how to upgrade, check [Upgrade](docs-content://deploy-manage/upgrade.md).
 
 % ## Next version [elasticsearch-javascript-client-versionnext-breaking-changes]
-% **Release date:** Month day, year
 
 % ::::{dropdown} Title of breaking change 
 % Description of the breaking change.
@@ -18,7 +15,6 @@ To learn how to upgrade, check out <upgrade docs>.
 % ::::
 
 % ## 9.0.0 [elasticsearch-javascript-client-900-breaking-changes]
-% **Release date:** March 25, 2025
 
 % ::::{dropdown} Title of breaking change 
 % Description of the breaking change.
