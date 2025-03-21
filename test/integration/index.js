@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 'use strict'
@@ -44,7 +30,7 @@ const MAX_TEST_TIME = 1000 * 3
 
 const options = minimist(process.argv.slice(2), {
   boolean: ['bail'],
-  string: ['suite', 'test'],
+  string: ['suite', 'test']
 })
 
 const freeSkips = {
@@ -90,7 +76,7 @@ const freeSkips = {
   // the yaml runner assumes that null means "does not exists",
   // while null is a valid json value, so the check will fail
   'search/320_disallow_queries.yml': ['Test disallow expensive queries'],
-  'free/tsdb/90_unsupported_operations.yml': ['noop update'],
+  'free/tsdb/90_unsupported_operations.yml': ['noop update']
 }
 
 const platinumDenyList = {
@@ -186,7 +172,7 @@ const platinumDenyList = {
   'platinum/ml/get_datafeed_stats.yml': ['*'],
 
   // start should be a string in the yaml test
-  'platinum/ml/start_stop_datafeed.yml': ['*'],
+  'platinum/ml/start_stop_datafeed.yml': ['*']
 }
 
 function runner (opts = {}) {
