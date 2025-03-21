@@ -6,6 +6,11 @@
 const response = await client.ml.startTrainedModelDeployment({
   model_id: "my_model",
   deployment_id: "my_model_for_search",
+  adaptive_allocations: {
+    enabled: true,
+    min_number_of_allocations: 3,
+    max_number_of_allocations: 10,
+  },
 });
 console.log(response);
 ----

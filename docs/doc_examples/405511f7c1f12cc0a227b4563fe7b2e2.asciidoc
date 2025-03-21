@@ -3,9 +3,8 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "GET",
-  path: "/_query/async/FkpMRkJGS1gzVDRlM3g4ZzMyRGlLbkEaTXlJZHdNT09TU2VTZVBoNDM3cFZMUToxMDM&#x3D;",
+const response = await client.esql.asyncQueryGet({
+  id: "FkpMRkJGS1gzVDRlM3g4ZzMyRGlLbkEaTXlJZHdNT09TU2VTZVBoNDM3cFZMUToxMDM=",
 });
 console.log(response);
 ----

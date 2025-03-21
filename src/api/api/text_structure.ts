@@ -35,12 +35,93 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class TextStructure {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'text_structure.find_field_structure': {
+        path: [],
+        body: [],
+        query: [
+          'column_names',
+          'delimiter',
+          'documents_to_sample',
+          'ecs_compatibility',
+          'explain',
+          'field',
+          'format',
+          'grok_pattern',
+          'index',
+          'quote',
+          'should_trim_fields',
+          'timeout',
+          'timestamp_field',
+          'timestamp_format'
+        ]
+      },
+      'text_structure.find_message_structure': {
+        path: [],
+        body: [
+          'messages'
+        ],
+        query: [
+          'column_names',
+          'delimiter',
+          'ecs_compatibility',
+          'explain',
+          'format',
+          'grok_pattern',
+          'quote',
+          'should_trim_fields',
+          'timeout',
+          'timestamp_field',
+          'timestamp_format'
+        ]
+      },
+      'text_structure.find_structure': {
+        path: [],
+        body: [
+          'text_files'
+        ],
+        query: [
+          'charset',
+          'column_names',
+          'delimiter',
+          'ecs_compatibility',
+          'explain',
+          'format',
+          'grok_pattern',
+          'has_header_row',
+          'line_merge_size_limit',
+          'lines_to_sample',
+          'quote',
+          'should_trim_fields',
+          'timeout',
+          'timestamp_field',
+          'timestamp_format'
+        ]
+      },
+      'text_structure.test_grok_pattern': {
+        path: [],
+        body: [
+          'grok_pattern',
+          'text'
+        ],
+        query: [
+          'ecs_compatibility'
+        ]
+      }
+    }
   }
 
   /**
@@ -51,7 +132,10 @@ export default class TextStructure {
   async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindFieldStructureResponse, unknown>>
   async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest, options?: TransportRequestOptions): Promise<T.TextStructureFindFieldStructureResponse>
   async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['text_structure.find_field_structure']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -90,8 +174,12 @@ export default class TextStructure {
   async findMessageStructure (this: That, params: T.TextStructureFindMessageStructureRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindMessageStructureResponse, unknown>>
   async findMessageStructure (this: That, params: T.TextStructureFindMessageStructureRequest, options?: TransportRequestOptions): Promise<T.TextStructureFindMessageStructureResponse>
   async findMessageStructure (this: That, params: T.TextStructureFindMessageStructureRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['messages']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['text_structure.find_message_structure']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -113,8 +201,14 @@ export default class TextStructure {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -134,8 +228,12 @@ export default class TextStructure {
   async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindStructureResponse, unknown>>
   async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptions): Promise<T.TextStructureFindStructureResponse>
   async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['text_files']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['text_structure.find_structure']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -147,8 +245,14 @@ export default class TextStructure {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -168,8 +272,12 @@ export default class TextStructure {
   async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureTestGrokPatternResponse, unknown>>
   async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest, options?: TransportRequestOptions): Promise<T.TextStructureTestGrokPatternResponse>
   async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['grok_pattern', 'text']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['text_structure.test_grok_pattern']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -191,8 +299,14 @@ export default class TextStructure {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

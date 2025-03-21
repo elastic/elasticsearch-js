@@ -3,38 +3,34 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_ingest/_simulate",
-  body: {
-    docs: [
-      {
-        _index: "my-index",
-        _id: "123",
-        _source: {
-          foo: "foo",
-        },
+const response = await client.simulate.ingest({
+  docs: [
+    {
+      _index: "my-index",
+      _id: "123",
+      _source: {
+        foo: "foo",
       },
-      {
-        _index: "my-index",
-        _id: "456",
-        _source: {
-          bar: "rab",
-        },
+    },
+    {
+      _index: "my-index",
+      _id: "456",
+      _source: {
+        bar: "rab",
       },
-    ],
-    component_template_substitutions: {
-      "my-mappings_template": {
-        template: {
-          mappings: {
-            dynamic: "strict",
-            properties: {
-              foo: {
-                type: "keyword",
-              },
-              bar: {
-                type: "keyword",
-              },
+    },
+  ],
+  component_template_substitutions: {
+    "my-mappings_template": {
+      template: {
+        mappings: {
+          dynamic: "strict",
+          properties: {
+            foo: {
+              type: "keyword",
+            },
+            bar: {
+              type: "keyword",
             },
           },
         },

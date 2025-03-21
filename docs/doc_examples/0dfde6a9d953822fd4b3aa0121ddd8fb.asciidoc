@@ -3,23 +3,20 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_application/search_application/my-app/_render_query",
-  body: {
-    params: {
-      query_string: "my first query",
-      text_fields: [
-        {
-          name: "title",
-          boost: 5,
-        },
-        {
-          name: "description",
-          boost: 1,
-        },
-      ],
-    },
+const response = await client.searchApplication.renderQuery({
+  name: "my-app",
+  params: {
+    query_string: "my first query",
+    text_fields: [
+      {
+        name: "title",
+        boost: 5,
+      },
+      {
+        name: "description",
+        boost: 1,
+      },
+    ],
   },
 });
 console.log(response);

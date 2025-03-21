@@ -3,17 +3,11 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_query/async",
-  querystring: {
-    format: "json",
-  },
-  body: {
-    query:
-      "\n    FROM cluster_one:my-index*,cluster_two:logs*\n    | STATS COUNT(http.response.status_code) BY user.id\n    | LIMIT 2\n  ",
-    include_ccs_metadata: true,
-  },
+const response = await client.esql.asyncQuery({
+  format: "json",
+  query:
+    "\n    FROM cluster_one:my-index*,cluster_two:logs*\n    | STATS COUNT(http.response.status_code) BY user.id\n    | LIMIT 2\n  ",
+  include_ccs_metadata: true,
 });
 console.log(response);
 ----

@@ -3,10 +3,9 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_ingest/ip_location/database/my-database-2",
-  body: {
+const response = await client.ingest.putIpLocationDatabase({
+  id: "my-database-2",
+  configuration: {
     name: "standard_location",
     ipinfo: {},
   },
