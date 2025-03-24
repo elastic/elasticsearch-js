@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,7 +21,30 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  msearch_template: {
+    path: [
+      'index'
+    ],
+    body: [
+      'search_templates'
+    ],
+    query: [
+      'ccs_minimize_roundtrips',
+      'max_concurrent_searches',
+      'search_type',
+      'rest_total_hits_as_int',
+      'typed_keys'
+    ]
+  }
+}
 
 /**
   * Run multiple templated searches. Run multiple templated searches with a single request. If you are providing a text file or text input to `curl`, use the `--data-binary` flag instead of `-d` to preserve newlines. For example: ``` $ cat requests { "index": "my-index" } { "id": "my-search-template", "params": { "query_string": "hello world", "from": 0, "size": 10 }} { "index": "my-other-index" } { "id": "my-other-search-template", "params": { "query_type": "match_all" }} $ curl -H "Content-Type: application/x-ndjson" -XGET localhost:9200/_msearch/template --data-binary "@requests"; echo ```
@@ -45,8 +54,12 @@ export default async function MsearchTemplateApi<TDocument = unknown, TAggregati
 export default async function MsearchTemplateApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.MsearchTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MsearchTemplateResponse<TDocument, TAggregations>, unknown>>
 export default async function MsearchTemplateApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.MsearchTemplateRequest, options?: TransportRequestOptions): Promise<T.MsearchTemplateResponse<TDocument, TAggregations>>
 export default async function MsearchTemplateApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.MsearchTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['search_templates']
+  const {
+    path: acceptedPath,
+    body: acceptedBody,
+    query: acceptedQuery
+  } = acceptedParams.msearch_template
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -58,8 +71,14 @@ export default async function MsearchTemplateApi<TDocument = unknown, TAggregati
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      // @ts-expect-error
-      querystring[key] = params[key]
+      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      } else {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     }
   }
 

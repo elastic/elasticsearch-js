@@ -3,12 +3,8 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_security/oidc/prepare",
-  body: {
-    realm: "oidc1",
-  },
+const response = await client.security.oidcPrepareAuthentication({
+  realm: "oidc1",
 });
 console.log(response);
 ----

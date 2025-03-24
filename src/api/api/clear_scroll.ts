@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,7 +21,22 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  clear_scroll: {
+    path: [],
+    body: [
+      'scroll_id'
+    ],
+    query: []
+  }
+}
 
 /**
   * Clear a scrolling search. Clear the search context and results for a scrolling search.
@@ -45,8 +46,12 @@ export default async function ClearScrollApi (this: That, params?: T.ClearScroll
 export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClearScrollResponse, unknown>>
 export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest, options?: TransportRequestOptions): Promise<T.ClearScrollResponse>
 export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = []
-  const acceptedBody: string[] = ['scroll_id']
+  const {
+    path: acceptedPath,
+    body: acceptedBody,
+    query: acceptedQuery
+  } = acceptedParams.clear_scroll
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -69,8 +74,14 @@ export default async function ClearScrollApi (this: That, params?: T.ClearScroll
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      // @ts-expect-error
-      querystring[key] = params[key]
+      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      } else {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     }
   }
 

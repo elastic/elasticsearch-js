@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,12 +21,107 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Slm {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'slm.delete_lifecycle': {
+        path: [
+          'policy_id'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'slm.execute_lifecycle': {
+        path: [
+          'policy_id'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'slm.execute_retention': {
+        path: [],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'slm.get_lifecycle': {
+        path: [
+          'policy_id'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'slm.get_stats': {
+        path: [],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'slm.get_status': {
+        path: [],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'slm.put_lifecycle': {
+        path: [
+          'policy_id'
+        ],
+        body: [
+          'config',
+          'name',
+          'repository',
+          'retention',
+          'schedule'
+        ],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'slm.start': {
+        path: [],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'slm.stop': {
+        path: [],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      }
+    }
   }
 
   /**
@@ -51,7 +132,10 @@ export default class Slm {
   async deleteLifecycle (this: That, params: T.SlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmDeleteLifecycleResponse, unknown>>
   async deleteLifecycle (this: That, params: T.SlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<T.SlmDeleteLifecycleResponse>
   async deleteLifecycle (this: That, params: T.SlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['policy_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['slm.delete_lifecycle']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -93,7 +177,10 @@ export default class Slm {
   async executeLifecycle (this: That, params: T.SlmExecuteLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmExecuteLifecycleResponse, unknown>>
   async executeLifecycle (this: That, params: T.SlmExecuteLifecycleRequest, options?: TransportRequestOptions): Promise<T.SlmExecuteLifecycleResponse>
   async executeLifecycle (this: That, params: T.SlmExecuteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['policy_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['slm.execute_lifecycle']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -135,7 +222,10 @@ export default class Slm {
   async executeRetention (this: That, params?: T.SlmExecuteRetentionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmExecuteRetentionResponse, unknown>>
   async executeRetention (this: That, params?: T.SlmExecuteRetentionRequest, options?: TransportRequestOptions): Promise<T.SlmExecuteRetentionResponse>
   async executeRetention (this: That, params?: T.SlmExecuteRetentionRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['slm.execute_retention']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -175,7 +265,10 @@ export default class Slm {
   async getLifecycle (this: That, params?: T.SlmGetLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmGetLifecycleResponse, unknown>>
   async getLifecycle (this: That, params?: T.SlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<T.SlmGetLifecycleResponse>
   async getLifecycle (this: That, params?: T.SlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['policy_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['slm.get_lifecycle']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -225,7 +318,10 @@ export default class Slm {
   async getStats (this: That, params?: T.SlmGetStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmGetStatsResponse, unknown>>
   async getStats (this: That, params?: T.SlmGetStatsRequest, options?: TransportRequestOptions): Promise<T.SlmGetStatsResponse>
   async getStats (this: That, params?: T.SlmGetStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['slm.get_stats']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -265,7 +361,10 @@ export default class Slm {
   async getStatus (this: That, params?: T.SlmGetStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmGetStatusResponse, unknown>>
   async getStatus (this: That, params?: T.SlmGetStatusRequest, options?: TransportRequestOptions): Promise<T.SlmGetStatusResponse>
   async getStatus (this: That, params?: T.SlmGetStatusRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['slm.get_status']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -305,8 +404,12 @@ export default class Slm {
   async putLifecycle (this: That, params: T.SlmPutLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmPutLifecycleResponse, unknown>>
   async putLifecycle (this: That, params: T.SlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<T.SlmPutLifecycleResponse>
   async putLifecycle (this: That, params: T.SlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['policy_id']
-    const acceptedBody: string[] = ['config', 'name', 'repository', 'retention', 'schedule']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['slm.put_lifecycle']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -328,8 +431,14 @@ export default class Slm {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -352,7 +461,10 @@ export default class Slm {
   async start (this: That, params?: T.SlmStartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmStartResponse, unknown>>
   async start (this: That, params?: T.SlmStartRequest, options?: TransportRequestOptions): Promise<T.SlmStartResponse>
   async start (this: That, params?: T.SlmStartRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['slm.start']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -392,7 +504,10 @@ export default class Slm {
   async stop (this: That, params?: T.SlmStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmStopResponse, unknown>>
   async stop (this: That, params?: T.SlmStopRequest, options?: TransportRequestOptions): Promise<T.SlmStopResponse>
   async stop (this: That, params?: T.SlmStopRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['slm.stop']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

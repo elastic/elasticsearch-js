@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,7 +21,45 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  update: {
+    path: [
+      'id',
+      'index'
+    ],
+    body: [
+      'detect_noop',
+      'doc',
+      'doc_as_upsert',
+      'script',
+      'scripted_upsert',
+      '_source',
+      'upsert'
+    ],
+    query: [
+      'if_primary_term',
+      'if_seq_no',
+      'include_source_on_error',
+      'lang',
+      'refresh',
+      'require_alias',
+      'retry_on_conflict',
+      'routing',
+      'timeout',
+      'wait_for_active_shards',
+      '_source',
+      '_source_excludes',
+      '_source_includes'
+    ]
+  }
+}
 
 /**
   * Update a document. Update a document by running a script or passing a partial document. If the Elasticsearch security features are enabled, you must have the `index` or `write` index privilege for the target index or index alias. The script can update, delete, or skip modifying the document. The API also supports passing a partial document, which is merged into the existing document. To fully replace an existing document, use the index API. This operation: * Gets the document (collocated with the shard) from the index. * Runs the specified script. * Indexes the result. The document must still be reindexed, but using this API removes some network roundtrips and reduces chances of version conflicts between the GET and the index operation. The `_source` field must be enabled to use this API. In addition to `_source`, you can access the following variables through the `ctx` map: `_index`, `_type`, `_id`, `_version`, `_routing`, and `_now` (the current timestamp).
@@ -45,8 +69,12 @@ export default async function UpdateApi<TDocument = unknown, TPartialDocument = 
 export default async function UpdateApi<TDocument = unknown, TPartialDocument = unknown, TDocumentR = unknown> (this: That, params: T.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.UpdateResponse<TDocumentR>, unknown>>
 export default async function UpdateApi<TDocument = unknown, TPartialDocument = unknown, TDocumentR = unknown> (this: That, params: T.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<T.UpdateResponse<TDocumentR>>
 export default async function UpdateApi<TDocument = unknown, TPartialDocument = unknown, TDocumentR = unknown> (this: That, params: T.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['id', 'index']
-  const acceptedBody: string[] = ['detect_noop', 'doc', 'doc_as_upsert', 'script', 'scripted_upsert', '_source', 'upsert']
+  const {
+    path: acceptedPath,
+    body: acceptedBody,
+    query: acceptedQuery
+  } = acceptedParams.update
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -68,8 +96,14 @@ export default async function UpdateApi<TDocument = unknown, TPartialDocument = 
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      // @ts-expect-error
-      querystring[key] = params[key]
+      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      } else {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     }
   }
 

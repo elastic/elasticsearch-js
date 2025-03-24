@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,7 +21,22 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  reindex_rethrottle: {
+    path: [
+      'task_id'
+    ],
+    body: [],
+    query: [
+      'requests_per_second'
+    ]
+  }
+}
 
 /**
   * Throttle a reindex operation. Change the number of requests per second for a particular reindex operation. For example: ``` POST _reindex/r1A2WoRbTwKZ516z6NEs5A:36619/_rethrottle?requests_per_second=-1 ``` Rethrottling that speeds up the query takes effect immediately. Rethrottling that slows down the query will take effect after completing the current batch. This behavior prevents scroll timeouts.
@@ -45,7 +46,10 @@ export default async function ReindexRethrottleApi (this: That, params: T.Reinde
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ReindexRethrottleResponse, unknown>>
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest, options?: TransportRequestOptions): Promise<T.ReindexRethrottleResponse>
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['task_id']
+  const {
+    path: acceptedPath
+  } = acceptedParams.reindex_rethrottle
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

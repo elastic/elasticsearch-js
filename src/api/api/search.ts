@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,7 +21,103 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  search: {
+    path: [
+      'index'
+    ],
+    body: [
+      'aggregations',
+      'aggs',
+      'collapse',
+      'explain',
+      'ext',
+      'from',
+      'highlight',
+      'track_total_hits',
+      'indices_boost',
+      'docvalue_fields',
+      'knn',
+      'rank',
+      'min_score',
+      'post_filter',
+      'profile',
+      'query',
+      'rescore',
+      'retriever',
+      'script_fields',
+      'search_after',
+      'size',
+      'slice',
+      'sort',
+      '_source',
+      'fields',
+      'suggest',
+      'terminate_after',
+      'timeout',
+      'track_scores',
+      'version',
+      'seq_no_primary_term',
+      'stored_fields',
+      'pit',
+      'runtime_mappings',
+      'stats'
+    ],
+    query: [
+      'allow_no_indices',
+      'allow_partial_search_results',
+      'analyzer',
+      'analyze_wildcard',
+      'batched_reduce_size',
+      'ccs_minimize_roundtrips',
+      'default_operator',
+      'df',
+      'docvalue_fields',
+      'expand_wildcards',
+      'explain',
+      'ignore_throttled',
+      'ignore_unavailable',
+      'include_named_queries_score',
+      'lenient',
+      'max_concurrent_shard_requests',
+      'preference',
+      'pre_filter_shard_size',
+      'request_cache',
+      'routing',
+      'scroll',
+      'search_type',
+      'stats',
+      'stored_fields',
+      'suggest_field',
+      'suggest_mode',
+      'suggest_size',
+      'suggest_text',
+      'terminate_after',
+      'timeout',
+      'track_total_hits',
+      'track_scores',
+      'typed_keys',
+      'rest_total_hits_as_int',
+      'version',
+      '_source',
+      '_source_excludes',
+      '_source_includes',
+      'seq_no_primary_term',
+      'q',
+      'size',
+      'from',
+      'sort',
+      'force_synthetic_source'
+    ]
+  }
+}
 
 /**
   * Run a search. Get search hits that match the query defined in the request. You can provide search queries using the `q` query string parameter or the request body. If both are specified, only the query parameter is used. If the Elasticsearch security features are enabled, you must have the read index privilege for the target data stream, index, or alias. For cross-cluster search, refer to the documentation about configuring CCS privileges. To search a point in time (PIT) for an alias, you must have the `read` index privilege for the alias's data streams or indices. **Search slicing** When paging through a large number of documents, it can be helpful to split the search into multiple slices to consume them independently with the `slice` and `pit` properties. By default the splitting is done first on the shards, then locally on each shard. The local splitting partitions the shard into contiguous ranges based on Lucene document IDs. For instance if the number of shards is equal to 2 and you request 4 slices, the slices 0 and 2 are assigned to the first shard and the slices 1 and 3 are assigned to the second shard. IMPORTANT: The same point-in-time ID should be used for all slices. If different PIT IDs are used, slices can overlap and miss documents. This situation can occur because the splitting criterion is based on Lucene document IDs, which are not stable across changes to the index.
@@ -45,8 +127,12 @@ export default async function SearchApi<TDocument = unknown, TAggregations = Rec
 export default async function SearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.SearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchResponse<TDocument, TAggregations>, unknown>>
 export default async function SearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.SearchRequest, options?: TransportRequestOptions): Promise<T.SearchResponse<TDocument, TAggregations>>
 export default async function SearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.SearchRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['aggregations', 'aggs', 'collapse', 'explain', 'ext', 'from', 'highlight', 'track_total_hits', 'indices_boost', 'docvalue_fields', 'knn', 'rank', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'retriever', 'script_fields', 'search_after', 'size', 'slice', 'sort', '_source', 'fields', 'suggest', 'terminate_after', 'timeout', 'track_scores', 'version', 'seq_no_primary_term', 'stored_fields', 'pit', 'runtime_mappings', 'stats']
+  const {
+    path: acceptedPath,
+    body: acceptedBody,
+    query: acceptedQuery
+  } = acceptedParams.search
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -73,8 +159,14 @@ export default async function SearchApi<TDocument = unknown, TAggregations = Rec
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      // @ts-expect-error
-      querystring[key] = params[key]
+      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      } else {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     }
   }
 

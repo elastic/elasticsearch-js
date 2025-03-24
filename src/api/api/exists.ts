@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,7 +21,32 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  exists: {
+    path: [
+      'id',
+      'index'
+    ],
+    body: [],
+    query: [
+      'preference',
+      'realtime',
+      'refresh',
+      'routing',
+      '_source',
+      '_source_excludes',
+      '_source_includes',
+      'stored_fields',
+      'version',
+      'version_type'
+    ]
+  }
+}
 
 /**
   * Check a document. Verify that a document exists. For example, check to see if a document with the `_id` 0 exists: ``` HEAD my-index-000001/_doc/0 ``` If the document exists, the API returns a status code of `200 - OK`. If the document doesn’t exist, the API returns `404 - Not Found`. **Versioning support** You can use the `version` parameter to check the document only if its current version is equal to the specified one. Internally, Elasticsearch has marked the old document as deleted and added an entirely new document. The old version of the document doesn't disappear immediately, although you won't be able to access it. Elasticsearch cleans up deleted documents in the background as you continue to index more data.
@@ -45,7 +56,10 @@ export default async function ExistsApi (this: That, params: T.ExistsRequest, op
 export default async function ExistsApi (this: That, params: T.ExistsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ExistsResponse, unknown>>
 export default async function ExistsApi (this: That, params: T.ExistsRequest, options?: TransportRequestOptions): Promise<T.ExistsResponse>
 export default async function ExistsApi (this: That, params: T.ExistsRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['id', 'index']
+  const {
+    path: acceptedPath
+  } = acceptedParams.exists
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

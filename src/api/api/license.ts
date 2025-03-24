@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,12 +21,77 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class License {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'license.delete': {
+        path: [],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'license.get': {
+        path: [],
+        body: [],
+        query: [
+          'accept_enterprise',
+          'local'
+        ]
+      },
+      'license.get_basic_status': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'license.get_trial_status': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'license.post': {
+        path: [],
+        body: [
+          'license',
+          'licenses'
+        ],
+        query: [
+          'acknowledge',
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'license.post_start_basic': {
+        path: [],
+        body: [],
+        query: [
+          'acknowledge',
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'license.post_start_trial': {
+        path: [],
+        body: [],
+        query: [
+          'acknowledge',
+          'type_query_string',
+          'master_timeout'
+        ]
+      }
+    }
   }
 
   /**
@@ -51,7 +102,10 @@ export default class License {
   async delete (this: That, params?: T.LicenseDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicenseDeleteResponse, unknown>>
   async delete (this: That, params?: T.LicenseDeleteRequest, options?: TransportRequestOptions): Promise<T.LicenseDeleteResponse>
   async delete (this: That, params?: T.LicenseDeleteRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['license.delete']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -91,7 +145,10 @@ export default class License {
   async get (this: That, params?: T.LicenseGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicenseGetResponse, unknown>>
   async get (this: That, params?: T.LicenseGetRequest, options?: TransportRequestOptions): Promise<T.LicenseGetResponse>
   async get (this: That, params?: T.LicenseGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['license.get']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -131,7 +188,10 @@ export default class License {
   async getBasicStatus (this: That, params?: T.LicenseGetBasicStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicenseGetBasicStatusResponse, unknown>>
   async getBasicStatus (this: That, params?: T.LicenseGetBasicStatusRequest, options?: TransportRequestOptions): Promise<T.LicenseGetBasicStatusResponse>
   async getBasicStatus (this: That, params?: T.LicenseGetBasicStatusRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['license.get_basic_status']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -171,7 +231,10 @@ export default class License {
   async getTrialStatus (this: That, params?: T.LicenseGetTrialStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicenseGetTrialStatusResponse, unknown>>
   async getTrialStatus (this: That, params?: T.LicenseGetTrialStatusRequest, options?: TransportRequestOptions): Promise<T.LicenseGetTrialStatusResponse>
   async getTrialStatus (this: That, params?: T.LicenseGetTrialStatusRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['license.get_trial_status']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -211,8 +274,12 @@ export default class License {
   async post (this: That, params?: T.LicensePostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicensePostResponse, unknown>>
   async post (this: That, params?: T.LicensePostRequest, options?: TransportRequestOptions): Promise<T.LicensePostResponse>
   async post (this: That, params?: T.LicensePostRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['license', 'licenses']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['license.post']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -235,8 +302,14 @@ export default class License {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -256,7 +329,10 @@ export default class License {
   async postStartBasic (this: That, params?: T.LicensePostStartBasicRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicensePostStartBasicResponse, unknown>>
   async postStartBasic (this: That, params?: T.LicensePostStartBasicRequest, options?: TransportRequestOptions): Promise<T.LicensePostStartBasicResponse>
   async postStartBasic (this: That, params?: T.LicensePostStartBasicRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['license.post_start_basic']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -296,7 +372,10 @@ export default class License {
   async postStartTrial (this: That, params?: T.LicensePostStartTrialRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicensePostStartTrialResponse, unknown>>
   async postStartTrial (this: That, params?: T.LicensePostStartTrialRequest, options?: TransportRequestOptions): Promise<T.LicensePostStartTrialResponse>
   async postStartTrial (this: That, params?: T.LicensePostStartTrialRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['license.post_start_trial']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 

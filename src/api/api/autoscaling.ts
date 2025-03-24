@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,12 +21,59 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Autoscaling {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'autoscaling.delete_autoscaling_policy': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'autoscaling.get_autoscaling_capacity': {
+        path: [],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'autoscaling.get_autoscaling_policy': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'autoscaling.put_autoscaling_policy': {
+        path: [
+          'name'
+        ],
+        body: [
+          'policy'
+        ],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      }
+    }
   }
 
   /**
@@ -51,7 +84,10 @@ export default class Autoscaling {
   async deleteAutoscalingPolicy (this: That, params: T.AutoscalingDeleteAutoscalingPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AutoscalingDeleteAutoscalingPolicyResponse, unknown>>
   async deleteAutoscalingPolicy (this: That, params: T.AutoscalingDeleteAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<T.AutoscalingDeleteAutoscalingPolicyResponse>
   async deleteAutoscalingPolicy (this: That, params: T.AutoscalingDeleteAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['autoscaling.delete_autoscaling_policy']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -93,7 +129,10 @@ export default class Autoscaling {
   async getAutoscalingCapacity (this: That, params?: T.AutoscalingGetAutoscalingCapacityRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AutoscalingGetAutoscalingCapacityResponse, unknown>>
   async getAutoscalingCapacity (this: That, params?: T.AutoscalingGetAutoscalingCapacityRequest, options?: TransportRequestOptions): Promise<T.AutoscalingGetAutoscalingCapacityResponse>
   async getAutoscalingCapacity (this: That, params?: T.AutoscalingGetAutoscalingCapacityRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['autoscaling.get_autoscaling_capacity']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -133,7 +172,10 @@ export default class Autoscaling {
   async getAutoscalingPolicy (this: That, params: T.AutoscalingGetAutoscalingPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AutoscalingGetAutoscalingPolicyResponse, unknown>>
   async getAutoscalingPolicy (this: That, params: T.AutoscalingGetAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<T.AutoscalingGetAutoscalingPolicyResponse>
   async getAutoscalingPolicy (this: That, params: T.AutoscalingGetAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['autoscaling.get_autoscaling_policy']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -175,8 +217,12 @@ export default class Autoscaling {
   async putAutoscalingPolicy (this: That, params: T.AutoscalingPutAutoscalingPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AutoscalingPutAutoscalingPolicyResponse, unknown>>
   async putAutoscalingPolicy (this: That, params: T.AutoscalingPutAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<T.AutoscalingPutAutoscalingPolicyResponse>
   async putAutoscalingPolicy (this: That, params: T.AutoscalingPutAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['policy']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['autoscaling.put_autoscaling_policy']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -188,8 +234,14 @@ export default class Autoscaling {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

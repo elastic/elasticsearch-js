@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,12 +21,36 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
 
 export default class Migration {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'migration.deprecations': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: []
+      },
+      'migration.get_feature_upgrade_status': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'migration.post_feature_upgrade': {
+        path: [],
+        body: [],
+        query: []
+      }
+    }
   }
 
   /**
@@ -51,7 +61,10 @@ export default class Migration {
   async deprecations (this: That, params?: T.MigrationDeprecationsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MigrationDeprecationsResponse, unknown>>
   async deprecations (this: That, params?: T.MigrationDeprecationsRequest, options?: TransportRequestOptions): Promise<T.MigrationDeprecationsResponse>
   async deprecations (this: That, params?: T.MigrationDeprecationsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['migration.deprecations']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -101,7 +114,10 @@ export default class Migration {
   async getFeatureUpgradeStatus (this: That, params?: T.MigrationGetFeatureUpgradeStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MigrationGetFeatureUpgradeStatusResponse, unknown>>
   async getFeatureUpgradeStatus (this: That, params?: T.MigrationGetFeatureUpgradeStatusRequest, options?: TransportRequestOptions): Promise<T.MigrationGetFeatureUpgradeStatusResponse>
   async getFeatureUpgradeStatus (this: That, params?: T.MigrationGetFeatureUpgradeStatusRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['migration.get_feature_upgrade_status']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -141,7 +157,10 @@ export default class Migration {
   async postFeatureUpgrade (this: That, params?: T.MigrationPostFeatureUpgradeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MigrationPostFeatureUpgradeResponse, unknown>>
   async postFeatureUpgrade (this: That, params?: T.MigrationPostFeatureUpgradeRequest, options?: TransportRequestOptions): Promise<T.MigrationPostFeatureUpgradeResponse>
   async postFeatureUpgrade (this: That, params?: T.MigrationPostFeatureUpgradeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['migration.post_feature_upgrade']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
