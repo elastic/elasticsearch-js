@@ -307,6 +307,39 @@ export default class Inference {
   }
 
   /**
+    * Configure a Mistral inference endpoint
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/infer-service-mistral.html | Elasticsearch API documentation}
+    */
+  async putMistral (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putMistral (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putMistral (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putMistral (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['task_type', 'mistral_inference_id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.mistral_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_mistral',
+      pathParts: {
+        task_type: params.task_type,
+        mistral_inference_id: params.mistral_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Create an OpenAI inference endpoint. Create an inference endpoint to perform an inference task with the `openai` service. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/infer-service-openai.html | Elasticsearch API documentation}
     */
