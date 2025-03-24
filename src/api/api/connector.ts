@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,12 +21,342 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Connector {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'connector.check_in': {
+        path: [
+          'connector_id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.delete': {
+        path: [
+          'connector_id'
+        ],
+        body: [],
+        query: [
+          'delete_sync_jobs',
+          'hard'
+        ]
+      },
+      'connector.get': {
+        path: [
+          'connector_id'
+        ],
+        body: [],
+        query: [
+          'include_deleted'
+        ]
+      },
+      'connector.last_sync': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'last_access_control_sync_error',
+          'last_access_control_sync_scheduled_at',
+          'last_access_control_sync_status',
+          'last_deleted_document_count',
+          'last_incremental_sync_scheduled_at',
+          'last_indexed_document_count',
+          'last_seen',
+          'last_sync_error',
+          'last_sync_scheduled_at',
+          'last_sync_status',
+          'last_synced',
+          'sync_cursor'
+        ],
+        query: []
+      },
+      'connector.list': {
+        path: [],
+        body: [],
+        query: [
+          'from',
+          'size',
+          'index_name',
+          'connector_name',
+          'service_type',
+          'include_deleted',
+          'query'
+        ]
+      },
+      'connector.post': {
+        path: [],
+        body: [
+          'description',
+          'index_name',
+          'is_native',
+          'language',
+          'name',
+          'service_type'
+        ],
+        query: []
+      },
+      'connector.put': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'description',
+          'index_name',
+          'is_native',
+          'language',
+          'name',
+          'service_type'
+        ],
+        query: []
+      },
+      'connector.secret_delete': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.secret_get': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.secret_post': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'connector.secret_put': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.sync_job_cancel': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.sync_job_check_in': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.sync_job_claim': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [
+          'sync_cursor',
+          'worker_hostname'
+        ],
+        query: []
+      },
+      'connector.sync_job_delete': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.sync_job_error': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [
+          'error'
+        ],
+        query: []
+      },
+      'connector.sync_job_get': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.sync_job_list': {
+        path: [],
+        body: [],
+        query: [
+          'from',
+          'size',
+          'status',
+          'connector_id',
+          'job_type'
+        ]
+      },
+      'connector.sync_job_post': {
+        path: [],
+        body: [
+          'id',
+          'job_type',
+          'trigger_method'
+        ],
+        query: []
+      },
+      'connector.sync_job_update_stats': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [
+          'deleted_document_count',
+          'indexed_document_count',
+          'indexed_document_volume',
+          'last_seen',
+          'metadata',
+          'total_document_count'
+        ],
+        query: []
+      },
+      'connector.update_active_filtering': {
+        path: [
+          'connector_id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.update_api_key_id': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'api_key_id',
+          'api_key_secret_id'
+        ],
+        query: []
+      },
+      'connector.update_configuration': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'configuration',
+          'values'
+        ],
+        query: []
+      },
+      'connector.update_error': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'error'
+        ],
+        query: []
+      },
+      'connector.update_features': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'features'
+        ],
+        query: []
+      },
+      'connector.update_filtering': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'filtering',
+          'rules',
+          'advanced_snippet'
+        ],
+        query: []
+      },
+      'connector.update_filtering_validation': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'validation'
+        ],
+        query: []
+      },
+      'connector.update_index_name': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'index_name'
+        ],
+        query: []
+      },
+      'connector.update_name': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'name',
+          'description'
+        ],
+        query: []
+      },
+      'connector.update_native': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'is_native'
+        ],
+        query: []
+      },
+      'connector.update_pipeline': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'pipeline'
+        ],
+        query: []
+      },
+      'connector.update_scheduling': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'scheduling'
+        ],
+        query: []
+      },
+      'connector.update_service_type': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'service_type'
+        ],
+        query: []
+      },
+      'connector.update_status': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'status'
+        ],
+        query: []
+      }
+    }
   }
 
   /**
@@ -51,7 +367,10 @@ export default class Connector {
   async checkIn (this: That, params: T.ConnectorCheckInRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorCheckInResponse, unknown>>
   async checkIn (this: That, params: T.ConnectorCheckInRequest, options?: TransportRequestOptions): Promise<T.ConnectorCheckInResponse>
   async checkIn (this: That, params: T.ConnectorCheckInRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.check_in']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -93,7 +412,10 @@ export default class Connector {
   async delete (this: That, params: T.ConnectorDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorDeleteResponse, unknown>>
   async delete (this: That, params: T.ConnectorDeleteRequest, options?: TransportRequestOptions): Promise<T.ConnectorDeleteResponse>
   async delete (this: That, params: T.ConnectorDeleteRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.delete']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -135,7 +457,10 @@ export default class Connector {
   async get (this: That, params: T.ConnectorGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorGetResponse, unknown>>
   async get (this: That, params: T.ConnectorGetRequest, options?: TransportRequestOptions): Promise<T.ConnectorGetResponse>
   async get (this: That, params: T.ConnectorGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.get']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -177,8 +502,12 @@ export default class Connector {
   async lastSync (this: That, params: T.ConnectorLastSyncRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorLastSyncResponse, unknown>>
   async lastSync (this: That, params: T.ConnectorLastSyncRequest, options?: TransportRequestOptions): Promise<T.ConnectorLastSyncResponse>
   async lastSync (this: That, params: T.ConnectorLastSyncRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['last_access_control_sync_error', 'last_access_control_sync_scheduled_at', 'last_access_control_sync_status', 'last_deleted_document_count', 'last_incremental_sync_scheduled_at', 'last_indexed_document_count', 'last_seen', 'last_sync_error', 'last_sync_scheduled_at', 'last_sync_status', 'last_synced', 'sync_cursor']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.last_sync']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -200,8 +529,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -224,7 +559,10 @@ export default class Connector {
   async list (this: That, params?: T.ConnectorListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorListResponse, unknown>>
   async list (this: That, params?: T.ConnectorListRequest, options?: TransportRequestOptions): Promise<T.ConnectorListResponse>
   async list (this: That, params?: T.ConnectorListRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.list']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -264,8 +602,12 @@ export default class Connector {
   async post (this: That, params?: T.ConnectorPostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorPostResponse, unknown>>
   async post (this: That, params?: T.ConnectorPostRequest, options?: TransportRequestOptions): Promise<T.ConnectorPostResponse>
   async post (this: That, params?: T.ConnectorPostRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['description', 'index_name', 'is_native', 'language', 'name', 'service_type']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.post']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -288,8 +630,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -309,8 +657,12 @@ export default class Connector {
   async put (this: That, params?: T.ConnectorPutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorPutResponse, unknown>>
   async put (this: That, params?: T.ConnectorPutRequest, options?: TransportRequestOptions): Promise<T.ConnectorPutResponse>
   async put (this: That, params?: T.ConnectorPutRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['description', 'index_name', 'is_native', 'language', 'name', 'service_type']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.put']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -333,8 +685,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -363,7 +721,10 @@ export default class Connector {
   async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.secret_delete']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -404,7 +765,10 @@ export default class Connector {
   async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.secret_get']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -445,7 +809,10 @@ export default class Connector {
   async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.secret_post']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -483,7 +850,10 @@ export default class Connector {
   async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.secret_put']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -525,7 +895,10 @@ export default class Connector {
   async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobCancelResponse, unknown>>
   async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobCancelResponse>
   async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.sync_job_cancel']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -567,7 +940,10 @@ export default class Connector {
   async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobCheckInResponse, unknown>>
   async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobCheckInResponse>
   async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.sync_job_check_in']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -609,8 +985,12 @@ export default class Connector {
   async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobClaimResponse, unknown>>
   async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobClaimResponse>
   async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
-    const acceptedBody: string[] = ['sync_cursor', 'worker_hostname']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.sync_job_claim']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -632,8 +1012,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -656,7 +1042,10 @@ export default class Connector {
   async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobDeleteResponse, unknown>>
   async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobDeleteResponse>
   async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.sync_job_delete']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -698,8 +1087,12 @@ export default class Connector {
   async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobErrorResponse, unknown>>
   async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobErrorResponse>
   async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
-    const acceptedBody: string[] = ['error']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.sync_job_error']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -721,8 +1114,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -745,7 +1144,10 @@ export default class Connector {
   async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobGetResponse, unknown>>
   async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobGetResponse>
   async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.sync_job_get']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -787,7 +1189,10 @@ export default class Connector {
   async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobListResponse, unknown>>
   async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobListResponse>
   async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.sync_job_list']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -827,8 +1232,12 @@ export default class Connector {
   async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobPostResponse, unknown>>
   async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobPostResponse>
   async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['id', 'job_type', 'trigger_method']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.sync_job_post']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -850,8 +1259,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -871,8 +1286,12 @@ export default class Connector {
   async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobUpdateStatsResponse, unknown>>
   async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobUpdateStatsResponse>
   async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
-    const acceptedBody: string[] = ['deleted_document_count', 'indexed_document_count', 'indexed_document_volume', 'last_seen', 'metadata', 'total_document_count']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.sync_job_update_stats']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -894,8 +1313,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -918,7 +1343,10 @@ export default class Connector {
   async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateActiveFilteringResponse, unknown>>
   async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateActiveFilteringResponse>
   async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.update_active_filtering']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -960,8 +1388,12 @@ export default class Connector {
   async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateApiKeyIdResponse, unknown>>
   async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateApiKeyIdResponse>
   async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['api_key_id', 'api_key_secret_id']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_api_key_id']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -983,8 +1415,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1007,8 +1445,12 @@ export default class Connector {
   async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateConfigurationResponse, unknown>>
   async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateConfigurationResponse>
   async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['configuration', 'values']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_configuration']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1030,8 +1472,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1054,8 +1502,12 @@ export default class Connector {
   async updateError (this: That, params: T.ConnectorUpdateErrorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateErrorResponse, unknown>>
   async updateError (this: That, params: T.ConnectorUpdateErrorRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateErrorResponse>
   async updateError (this: That, params: T.ConnectorUpdateErrorRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['error']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_error']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1077,8 +1529,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1101,8 +1559,12 @@ export default class Connector {
   async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFeaturesResponse, unknown>>
   async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateFeaturesResponse>
   async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['features']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_features']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1124,8 +1586,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1148,8 +1616,12 @@ export default class Connector {
   async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFilteringResponse, unknown>>
   async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateFilteringResponse>
   async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['filtering', 'rules', 'advanced_snippet']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_filtering']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1171,8 +1643,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1195,8 +1673,12 @@ export default class Connector {
   async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFilteringValidationResponse, unknown>>
   async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateFilteringValidationResponse>
   async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['validation']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_filtering_validation']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1218,8 +1700,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1242,8 +1730,12 @@ export default class Connector {
   async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateIndexNameResponse, unknown>>
   async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateIndexNameResponse>
   async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['index_name']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_index_name']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1265,8 +1757,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1289,8 +1787,12 @@ export default class Connector {
   async updateName (this: That, params: T.ConnectorUpdateNameRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateNameResponse, unknown>>
   async updateName (this: That, params: T.ConnectorUpdateNameRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateNameResponse>
   async updateName (this: That, params: T.ConnectorUpdateNameRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['name', 'description']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_name']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1312,8 +1814,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1336,8 +1844,12 @@ export default class Connector {
   async updateNative (this: That, params: T.ConnectorUpdateNativeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateNativeResponse, unknown>>
   async updateNative (this: That, params: T.ConnectorUpdateNativeRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateNativeResponse>
   async updateNative (this: That, params: T.ConnectorUpdateNativeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['is_native']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_native']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1359,8 +1871,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1383,8 +1901,12 @@ export default class Connector {
   async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdatePipelineResponse, unknown>>
   async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdatePipelineResponse>
   async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['pipeline']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_pipeline']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1406,8 +1928,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1430,8 +1958,12 @@ export default class Connector {
   async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateSchedulingResponse, unknown>>
   async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateSchedulingResponse>
   async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['scheduling']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_scheduling']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1453,8 +1985,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1477,8 +2015,12 @@ export default class Connector {
   async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateServiceTypeResponse, unknown>>
   async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateServiceTypeResponse>
   async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['service_type']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_service_type']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1500,8 +2042,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1524,8 +2072,12 @@ export default class Connector {
   async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateStatusResponse, unknown>>
   async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateStatusResponse>
   async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['status']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_status']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -1547,8 +2099,14 @@ export default class Connector {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

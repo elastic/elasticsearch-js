@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,7 +21,31 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  open_point_in_time: {
+    path: [
+      'index'
+    ],
+    body: [
+      'index_filter'
+    ],
+    query: [
+      'keep_alive',
+      'ignore_unavailable',
+      'preference',
+      'routing',
+      'expand_wildcards',
+      'allow_partial_search_results'
+    ]
+  }
+}
 
 /**
   * Open a point in time. A search request by default runs against the most recent visible data of the target indices, which is called point in time. Elasticsearch pit (point in time) is a lightweight view into the state of the data as it existed when initiated. In some cases, it’s preferred to perform multiple search requests using the same point in time. For example, if refreshes happen between `search_after` requests, then the results of those requests might not be consistent as changes happening between searches are only visible to the more recent point in time. A point in time must be opened explicitly before being used in search requests. A subsequent search request with the `pit` parameter must not specify `index`, `routing`, or `preference` values as these parameters are copied from the point in time. Just like regular searches, you can use `from` and `size` to page through point in time search results, up to the first 10,000 hits. If you want to retrieve more hits, use PIT with `search_after`. IMPORTANT: The open point in time request and each subsequent search request can return different identifiers; always use the most recently received ID for the next search request. When a PIT that contains shard failures is used in a search request, the missing are always reported in the search response as a `NoShardAvailableActionException` exception. To get rid of these exceptions, a new PIT needs to be created so that shards missing from the previous PIT can be handled, assuming they become available in the meantime. **Keeping point in time alive** The `keep_alive` parameter, which is passed to a open point in time request and search request, extends the time to live of the corresponding point in time. The value does not need to be long enough to process all data — it just needs to be long enough for the next request. Normally, the background merge process optimizes the index by merging together smaller segments to create new, bigger segments. Once the smaller segments are no longer needed they are deleted. However, open point-in-times prevent the old segments from being deleted since they are still in use. TIP: Keeping older segments alive means that more disk space and file handles are needed. Ensure that you have configured your nodes to have ample free file handles. Additionally, if a segment contains deleted or updated documents then the point in time must keep track of whether each document in the segment was live at the time of the initial search request. Ensure that your nodes have sufficient heap space if you have many open point-in-times on an index that is subject to ongoing deletes or updates. Note that a point-in-time doesn't prevent its associated indices from being deleted. You can check how many point-in-times (that is, search contexts) are open with the nodes stats API.
@@ -45,8 +55,12 @@ export default async function OpenPointInTimeApi (this: That, params: T.OpenPoin
 export default async function OpenPointInTimeApi (this: That, params: T.OpenPointInTimeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.OpenPointInTimeResponse, unknown>>
 export default async function OpenPointInTimeApi (this: That, params: T.OpenPointInTimeRequest, options?: TransportRequestOptions): Promise<T.OpenPointInTimeResponse>
 export default async function OpenPointInTimeApi (this: That, params: T.OpenPointInTimeRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['index_filter']
+  const {
+    path: acceptedPath,
+    body: acceptedBody,
+    query: acceptedQuery
+  } = acceptedParams.open_point_in_time
+
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -68,8 +82,14 @@ export default async function OpenPointInTimeApi (this: That, params: T.OpenPoin
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      // @ts-expect-error
-      querystring[key] = params[key]
+      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      } else {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     }
   }
 

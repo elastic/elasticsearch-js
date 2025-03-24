@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,12 +21,90 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Esql {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'esql.async_query': {
+        path: [],
+        body: [
+          'columnar',
+          'filter',
+          'locale',
+          'params',
+          'profile',
+          'query',
+          'tables',
+          'include_ccs_metadata',
+          'wait_for_completion_timeout'
+        ],
+        query: [
+          'allow_partial_results',
+          'delimiter',
+          'drop_null_columns',
+          'format',
+          'keep_alive',
+          'keep_on_completion',
+          'wait_for_completion_timeout'
+        ]
+      },
+      'esql.async_query_delete': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'esql.async_query_get': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'drop_null_columns',
+          'keep_alive',
+          'wait_for_completion_timeout'
+        ]
+      },
+      'esql.async_query_stop': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'drop_null_columns'
+        ]
+      },
+      'esql.query': {
+        path: [],
+        body: [
+          'columnar',
+          'filter',
+          'locale',
+          'params',
+          'profile',
+          'query',
+          'tables',
+          'include_ccs_metadata'
+        ],
+        query: [
+          'format',
+          'delimiter',
+          'drop_null_columns',
+          'allow_partial_results'
+        ]
+      }
+    }
   }
 
   /**
@@ -51,8 +115,12 @@ export default class Esql {
   async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryResponse, unknown>>
   async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryResponse>
   async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['esql.async_query']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -74,8 +142,14 @@ export default class Esql {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -95,7 +169,10 @@ export default class Esql {
   async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryDeleteResponse, unknown>>
   async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryDeleteResponse>
   async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['esql.async_query_delete']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -137,7 +214,10 @@ export default class Esql {
   async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryGetResponse, unknown>>
   async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryGetResponse>
   async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['esql.async_query_get']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -179,7 +259,10 @@ export default class Esql {
   async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryStopResponse, unknown>>
   async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryStopResponse>
   async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['esql.async_query_stop']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -221,8 +304,12 @@ export default class Esql {
   async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlQueryResponse, unknown>>
   async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlQueryResponse>
   async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata']
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['esql.query']
+
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
@@ -244,8 +331,14 @@ export default class Esql {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
