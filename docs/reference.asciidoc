@@ -6973,7 +6973,7 @@ To unset a version, replace the template without specifying one.
 ** *`create` (Optional, boolean)*: If true, this request cannot replace or update existing index templates.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is
 received before the timeout expires, the request fails and returns an error.
-** *`cause` (Optional, string)*
+** *`cause` (Optional, string)*: User defined reason for creating/updating the index template
 
 [discrete]
 ==== recovery
