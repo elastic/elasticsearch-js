@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable @typescript-eslint/array-type */
@@ -14350,6 +14336,7 @@ export interface IndicesPutTemplateRequest extends RequestBase {
   create?: boolean
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
+  /** User defined reason for creating/updating the index template */
   cause?: string
   /** Aliases for the index. */
   aliases?: Record<IndexName, IndicesAlias>
@@ -15200,6 +15187,17 @@ export interface InferenceRateLimitSetting {
   requests_per_minute?: integer
 }
 
+export interface InferenceRequestChatCompletionBase extends RequestBase {
+  messages: InferenceChatCompletionUnifiedMessage[]
+  model?: string
+  max_completion_tokens?: long
+  stop?: string[]
+  temperature?: float
+  tool_choice?: InferenceChatCompletionUnifiedCompletionToolType
+  tools?: InferenceChatCompletionUnifiedCompletionTool[]
+  top_p?: float
+}
+
 export interface InferenceRerankedInferenceResult {
   rerank: InferenceRankedDocument[]
 }
@@ -15271,31 +15269,15 @@ export interface InferenceChatCompletionUnifiedMessage {
 
 export type InferenceChatCompletionUnifiedMessageContent = string | InferenceChatCompletionUnifiedContentObject[]
 
-export interface InferenceChatCompletionUnifiedRequest extends RequestBase {
+export interface InferenceChatCompletionUnifiedRequest extends InferenceRequestChatCompletionBase {
 /** The inference Id */
   inference_id: Id
   /** Specifies the amount of time to wait for the inference request to complete. */
   timeout?: Duration
-  /** A list of objects representing the conversation. */
-  messages: InferenceChatCompletionUnifiedMessage[]
-  /** The ID of the model to use. */
-  model?: string
-  /** The upper bound limit for the number of tokens that can be generated for a completion request. */
-  max_completion_tokens?: long
-  /** A sequence of strings to control when the model should stop generating additional tokens. */
-  stop?: string[]
-  /** The sampling temperature to use. */
-  temperature?: float
-  /** Controls which tool is called by the model. */
-  tool_choice?: InferenceChatCompletionUnifiedCompletionToolType
-  /** A list of tools that the model can call. */
-  tools?: InferenceChatCompletionUnifiedCompletionTool[]
-  /** Nucleus sampling, an alternative to sampling with temperature. */
-  top_p?: float
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, messages?: never, model?: never, max_completion_tokens?: never, stop?: never, temperature?: never, tool_choice?: never, tools?: never, top_p?: never }
+  body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never, messages?: never, model?: never, max_completion_tokens?: never, stop?: never, temperature?: never, tool_choice?: never, tools?: never, top_p?: never }
+  querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never }
 }
 
 export type InferenceChatCompletionUnifiedResponse = StreamResult
@@ -15359,6 +15341,17 @@ export interface InferenceGetRequest extends RequestBase {
 export interface InferenceGetResponse {
   endpoints: InferenceInferenceEndpointInfo[]
 }
+
+export interface InferencePostEisChatCompletionRequest extends InferenceRequestChatCompletionBase {
+/** The unique identifier of the inference endpoint. */
+  eis_inference_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { eis_inference_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { eis_inference_id?: never }
+}
+
+export type InferencePostEisChatCompletionResponse = StreamResult
 
 export interface InferencePutRequest extends RequestBase {
 /** The task type */

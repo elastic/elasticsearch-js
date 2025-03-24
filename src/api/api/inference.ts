@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -53,16 +39,7 @@ export default class Inference {
         path: [
           'inference_id'
         ],
-        body: [
-          'messages',
-          'model',
-          'max_completion_tokens',
-          'stop',
-          'temperature',
-          'tool_choice',
-          'tools',
-          'top_p'
-        ],
+        body: [],
         query: [
           'timeout'
         ]
@@ -98,6 +75,13 @@ export default class Inference {
         body: [],
         query: []
       },
+      'inference.post_eis_chat_completion': {
+        path: [
+          'eis_inference_id'
+        ],
+        body: [],
+        query: []
+      },
       'inference.put': {
         path: [
           'task_type',
@@ -106,6 +90,14 @@ export default class Inference {
         body: [
           'inference_config'
         ],
+        query: []
+      },
+      'inference.put_mistral': {
+        path: [
+          'task_type',
+          'mistral_inference_id'
+        ],
+        body: [],
         query: []
       },
       'inference.put_openai': {
@@ -119,6 +111,14 @@ export default class Inference {
           'service_settings',
           'task_settings'
         ],
+        query: []
+      },
+      'inference.put_voyageai': {
+        path: [
+          'task_type',
+          'voyageai_inference_id'
+        ],
+        body: [],
         query: []
       },
       'inference.put_watsonx': {
@@ -201,9 +201,7 @@ export default class Inference {
   async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptions): Promise<T.InferenceChatCompletionUnifiedResponse>
   async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
+      path: acceptedPath
     } = this.acceptedParams['inference.chat_completion_unified']
 
     const userQuery = params?.querystring
@@ -220,21 +218,11 @@ export default class Inference {
     }
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -417,6 +405,51 @@ export default class Inference {
   }
 
   /**
+    * Perform a chat completion task through the Elastic Inference Service (EIS). Perform a chat completion inference task with the `elastic` service.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-post-eis-chat-completion | Elasticsearch API documentation}
+    */
+  async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePostEisChatCompletionResponse>
+  async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePostEisChatCompletionResponse, unknown>>
+  async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest, options?: TransportRequestOptions): Promise<T.InferencePostEisChatCompletionResponse>
+  async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['inference.post_eis_chat_completion']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = `/_inference/chat_completion/${encodeURIComponent(params.eis_inference_id.toString())}/_stream`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.post_eis_chat_completion',
+      pathParts: {
+        eis_inference_id: params.eis_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Create an inference endpoint. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put | Elasticsearch API documentation}
     */
@@ -466,6 +499,52 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         inference_id: params.inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Configure a Mistral inference endpoint
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.0/infer-service-mistral.html | Elasticsearch API documentation}
+    */
+  async putMistral (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putMistral (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putMistral (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putMistral (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['inference.put_mistral']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.mistral_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_mistral',
+      pathParts: {
+        task_type: params.task_type,
+        mistral_inference_id: params.mistral_inference_id
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -524,6 +603,52 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         openai_inference_id: params.openai_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Configure a VoyageAI inference endpoint
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.0/inference-apis.html | Elasticsearch API documentation}
+    */
+  async putVoyageai (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putVoyageai (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putVoyageai (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putVoyageai (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['inference.put_voyageai']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.voyageai_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_voyageai',
+      pathParts: {
+        task_type: params.task_type,
+        voyageai_inference_id: params.voyageai_inference_id
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
