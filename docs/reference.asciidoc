@@ -503,7 +503,7 @@ client.deleteByQuery({ index })
 ** *`default_operator` (Optional, Enum("and" | "or"))*: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
 ** *`df` (Optional, string)*: The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
-** *`from` (Optional, number)*: Starting offset (default: 0)
+** *`from` (Optional, number)*: Skips the specified number of documents.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`lenient` (Optional, boolean)*: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
 ** *`preference` (Optional, string)*: The node or shard the operation should be performed on. It is random by default.
@@ -1318,6 +1318,7 @@ client.openPointInTime({ index, keep_alive })
 ** *`routing` (Optional, string)*: A custom value that is used to route operations to a specific shard.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`allow_partial_search_results` (Optional, boolean)*: Indicates whether the point in time tolerates unavailable shards or shard failures when initially creating the PIT. If `false`, creating a point in time request when a shard is missing or unavailable will throw an exception. If `true`, the point in time will contain all the shards that are available at the time of the request.
+** *`max_concurrent_shard_requests` (Optional, number)*: Maximum number of concurrent shard requests that each sub-search request executes per node.
 
 [discrete]
 === ping
@@ -2268,7 +2269,7 @@ client.updateByQuery({ index })
 ** *`default_operator` (Optional, Enum("and" | "or"))*: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
 ** *`df` (Optional, string)*: The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
-** *`from` (Optional, number)*: Starting offset (default: 0)
+** *`from` (Optional, number)*: Skips the specified number of documents.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`lenient` (Optional, boolean)*: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
 ** *`pipeline` (Optional, string)*: The ID of the pipeline to use to preprocess incoming documents. If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request. If a final pipeline is configured it will always run, regardless of the value of this parameter.
@@ -3781,7 +3782,7 @@ If no response is received before the timeout expires, the request fails and ret
 Clear cluster voting config exclusions.
 Remove master-eligible nodes from the voting configuration exclusion list.
 
-{ref}/voting-config-exclusions.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-post-voting-config-exclusions[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.deleteVotingConfigExclusions({ ... })
@@ -3967,7 +3968,7 @@ In that case, you may safely retry the call.
 NOTE: Voting exclusions are required only when you remove at least half of the master-eligible nodes from a cluster in a short time period.
 They are not required when removing master-ineligible nodes or when removing fewer than half of the master-eligible nodes.
 
-{ref}/voting-config-exclusions.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-post-voting-config-exclusions[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.postVotingConfigExclusions({ ... })
@@ -7161,7 +7162,7 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 ** *`numeric_detection` (Optional, boolean)*: Automatically map strings into numeric data types for all fields.
-** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { positive_score_impact, type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, dims, element_type, index, index_options, similarity } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, subobjects, type } | { type, enabled, priority, time_series_dimension } | { type, meta, inference_id, search_inference_id } | { type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { type, index } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } | { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type } | { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)*: Mapping for a field. For new fields, this mapping can include:
+** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { positive_score_impact, type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, dims, element_type, index, index_options, similarity } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, subobjects, type } | { type, enabled, priority, time_series_dimension } | { type, meta, inference_id, search_inference_id } | { type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { type, index } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } | { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type } | { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)*: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
@@ -7974,7 +7975,7 @@ Perform chat completion inference
 {ref}/chat-completion-inference-api.html[Endpoint documentation]
 [source,ts]
 ----
-client.inference.chatCompletionUnified({ inference_id, messages })
+client.inference.chatCompletionUnified({ inference_id })
 ----
 
 [discrete]
@@ -7982,14 +7983,7 @@ client.inference.chatCompletionUnified({ inference_id, messages })
 
 * *Request (object):*
 ** *`inference_id` (string)*: The inference Id
-** *`messages` ({ content, role, tool_call_id, tool_calls }[])*: A list of objects representing the conversation.
-** *`model` (Optional, string)*: The ID of the model to use.
-** *`max_completion_tokens` (Optional, number)*: The upper bound limit for the number of tokens that can be generated for a completion request.
-** *`stop` (Optional, string[])*: A sequence of strings to control when the model should stop generating additional tokens.
-** *`temperature` (Optional, float)*: The sampling temperature to use.
-** *`tool_choice` (Optional, string | { type, function })*: Controls which tool is called by the model.
-** *`tools` (Optional, { type, function }[])*: A list of tools that the model can call.
-** *`top_p` (Optional, float)*: Nucleus sampling, an alternative to sampling with temperature.
+** *`chat_completion_request` (Optional, { messages, model, max_completion_tokens, stop, temperature, tool_choice, tools, top_p })*
 ** *`timeout` (Optional, string | -1 | 0)*: Specifies the amount of time to wait for the inference request to complete.
 
 [discrete]
@@ -8049,6 +8043,25 @@ client.inference.get({ ... })
 ** *`inference_id` (Optional, string)*: The inference Id
 
 [discrete]
+==== post_eis_chat_completion
+Perform a chat completion task through the Elastic Inference Service (EIS).
+
+Perform a chat completion inference task with the `elastic` service.
+
+{ref}/post-inference-api.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.postEisChatCompletion({ eis_inference_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`eis_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`chat_completion_request` (Optional, { messages, model, max_completion_tokens, stop, temperature, tool_choice, tools, top_p })*
+
+[discrete]
 ==== put
 Create an inference endpoint.
 When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
@@ -8076,6 +8089,199 @@ client.inference.put({ inference_id })
 ** *`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })*
 
 [discrete]
+==== put_alibabacloud
+Create an AlibabaCloud AI Search inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `alibabacloud-ai-search` service.
+
+When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
+{ref}/infer-service-alibabacloud-ai-search.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.putAlibabacloud({ task_type, alibabacloud_inference_id, service, service_settings })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("completion" | "rerank" | "space_embedding" | "text_embedding"))*: The type of the inference task that the model will perform.
+** *`alibabacloud_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`service` (Enum("alibabacloud-ai-search"))*: The type of service supported for the specified task type. In this case, `alibabacloud-ai-search`.
+** *`service_settings` ({ api_key, host, rate_limit, service_id, workspace })*: Settings used to install the inference model. These settings are specific to the `alibabacloud-ai-search` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
+** *`task_settings` (Optional, { input_type, return_token })*: Settings to configure the inference task.
+These settings are specific to the task type you specified.
+
+[discrete]
+==== put_amazonbedrock
+Create an Amazon Bedrock inference endpoint.
+
+Creates an inference endpoint to perform an inference task with the `amazonbedrock` service.
+
+>info
+> You need to provide the access and secret keys only once, during the inference model creation. The get inference API does not retrieve your access or secret keys. After creating the inference model, you cannot change the associated key pairs. If you want to use a different access and secret key pair, delete the inference model and recreate it with the same name and the updated keys.
+
+When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
+{ref}/infer-service-amazon-bedrock.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.putAmazonbedrock({ task_type, amazonbedrock_inference_id, service, service_settings })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("completion" | "text_embedding"))*: The type of the inference task that the model will perform.
+** *`amazonbedrock_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`service` (Enum("amazonbedrock"))*: The type of service supported for the specified task type. In this case, `amazonbedrock`.
+** *`service_settings` ({ access_key, model, provider, region, rate_limit, secret_key })*: Settings used to install the inference model. These settings are specific to the `amazonbedrock` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
+** *`task_settings` (Optional, { max_new_tokens, temperature, top_k, top_p })*: Settings to configure the inference task.
+These settings are specific to the task type you specified.
+
+[discrete]
+==== put_anthropic
+Create an Anthropic inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `anthropic` service.
+
+When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
+{ref}/infer-service-anthropic.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.putAnthropic({ task_type, anthropic_inference_id, service, service_settings })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("completion"))*: The task type.
+The only valid task type for the model to perform is `completion`.
+** *`anthropic_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`service` (Enum("anthropic"))*: The type of service supported for the specified task type. In this case, `anthropic`.
+** *`service_settings` ({ api_key, model_id, rate_limit })*: Settings used to install the inference model. These settings are specific to the `watsonxai` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
+** *`task_settings` (Optional, { max_tokens, temperature, top_k, top_p })*: Settings to configure the inference task.
+These settings are specific to the task type you specified.
+
+[discrete]
+==== put_azureaistudio
+Create an Azure AI studio inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `azureaistudio` service.
+
+When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
+{ref}/infer-service-azure-ai-studio.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.putAzureaistudio({ task_type, azureaistudio_inference_id, service, service_settings })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("completion" | "text_embedding"))*: The type of the inference task that the model will perform.
+** *`azureaistudio_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`service` (Enum("azureaistudio"))*: The type of service supported for the specified task type. In this case, `azureaistudio`.
+** *`service_settings` ({ api_key, endpoint_type, target, provider, rate_limit })*: Settings used to install the inference model. These settings are specific to the `openai` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
+** *`task_settings` (Optional, { do_sample, max_new_tokens, temperature, top_p, user })*: Settings to configure the inference task.
+These settings are specific to the task type you specified.
+
+[discrete]
+==== put_azureopenai
+Create an Azure OpenAI inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `azureopenai` service.
+
+The list of chat completion models that you can choose from in your Azure OpenAI deployment include:
+
+* [GPT-4 and GPT-4 Turbo models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-4-and-gpt-4-turbo-models)
+* [GPT-3.5](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-35)
+
+The list of embeddings models that you can choose from in your deployment can be found in the [Azure models documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#embeddings).
+
+When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
+{ref}/infer-service-azure-openai.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.putAzureopenai({ task_type, azureopenai_inference_id, service, service_settings })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("completion" | "text_embedding"))*: The type of the inference task that the model will perform.
+NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
+** *`azureopenai_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`service` (Enum("azureopenai"))*: The type of service supported for the specified task type. In this case, `azureopenai`.
+** *`service_settings` ({ api_key, api_version, deployment_id, entra_id, rate_limit, resource_name })*: Settings used to install the inference model. These settings are specific to the `azureopenai` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
+** *`task_settings` (Optional, { user })*: Settings to configure the inference task.
+These settings are specific to the task type you specified.
+
+[discrete]
+==== put_cohere
+Create a Cohere inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `cohere` service.
+
+When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
+{ref}/infer-service-cohere.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.putCohere({ task_type, cohere_inference_id, service, service_settings })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("completion" | "rerank" | "text_embedding"))*: The type of the inference task that the model will perform.
+** *`cohere_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`service` (Enum("cohere"))*: The type of service supported for the specified task type. In this case, `cohere`.
+** *`service_settings` ({ api_key, embedding_type, model_id, rate_limit, similarity })*: Settings used to install the inference model.
+These settings are specific to the `cohere` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
+** *`task_settings` (Optional, { input_type, return_documents, top_n, truncate })*: Settings to configure the inference task.
+These settings are specific to the task type you specified.
+
+[discrete]
 ==== put_eis
 Create an Elastic Inference Service (EIS) inference endpoint.
 
@@ -8098,21 +8304,246 @@ NOTE: The `chat_completion` task type only supports streaming and only through t
 ** *`service_settings` ({ model_id, rate_limit })*: Settings used to install the inference model. These settings are specific to the `elastic` service.
 
 [discrete]
+==== put_elasticsearch
+Create an Elasticsearch inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `elasticsearch` service.
+
+> info
+> Your Elasticsearch deployment contains preconfigured ELSER and E5 inference endpoints, you only need to create the enpoints using the API if you want to customize the settings.
+
+If you use the ELSER or the E5 model through the `elasticsearch` service, the API request will automatically download and deploy the model if it isn't downloaded yet.
+
+> info
+> You might see a 502 bad gateway error in the response when using the Kibana Console. This error usually just reflects a timeout, while the model downloads in the background. You can check the download progress in the Machine Learning UI. If using the Python client, you can set the timeout parameter to a higher value.
+
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
+{ref}/infer-service-elasticsearch.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.putElasticsearch({ task_type, elasticsearch_inference_id, service, service_settings })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("rerank" | "sparse_embedding" | "text_embedding"))*: The type of the inference task that the model will perform.
+** *`elasticsearch_inference_id` (string)*: The unique identifier of the inference endpoint.
+The must not match the `model_id`.
+** *`service` (Enum("elasticsearch"))*: The type of service supported for the specified task type. In this case, `elasticsearch`.
+** *`service_settings` ({ adaptive_allocations, deployment_id, model_id, num_allocations, num_threads })*: Settings used to install the inference model. These settings are specific to the `elasticsearch` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
+** *`task_settings` (Optional, { return_documents })*: Settings to configure the inference task.
+These settings are specific to the task type you specified.
+
+[discrete]
+==== put_elser
+Create an ELSER inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `elser` service.
+You can also deploy ELSER by using the Elasticsearch inference integration.
+
+> info
+> Your Elasticsearch deployment contains a preconfigured ELSER inference endpoint, you only need to create the enpoint using the API if you want to customize the settings.
+
+The API request will automatically download and deploy the ELSER model if it isn't already downloaded.
+
+> info
+> You might see a 502 bad gateway error in the response when using the Kibana Console. This error usually just reflects a timeout, while the model downloads in the background. You can check the download progress in the Machine Learning UI. If using the Python client, you can set the timeout parameter to a higher value.
+
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
+{ref}/infer-service-elser.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.putElser({ task_type, elser_inference_id, service, service_settings })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("sparse_embedding"))*: The type of the inference task that the model will perform.
+** *`elser_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`service` (Enum("elser"))*: The type of service supported for the specified task type. In this case, `elser`.
+** *`service_settings` ({ adaptive_allocations, num_allocations, num_threads })*: Settings used to install the inference model. These settings are specific to the `elser` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
+
+[discrete]
+==== put_googleaistudio
+Create an Google AI Studio inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `googleaistudio` service.
+
+When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
+{ref}/infer-service-google-ai-studio.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.putGoogleaistudio({ task_type, googleaistudio_inference_id, service, service_settings })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("completion" | "text_embedding"))*: The type of the inference task that the model will perform.
+** *`googleaistudio_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`service` (Enum("googleaistudio"))*: The type of service supported for the specified task type. In this case, `googleaistudio`.
+** *`service_settings` ({ api_key, model_id, rate_limit })*: Settings used to install the inference model. These settings are specific to the `googleaistudio` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
+
+[discrete]
+==== put_googlevertexai
+Create a Google Vertex AI inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `googlevertexai` service.
+
+When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
+{ref}/infer-service-google-vertex-ai.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.putGooglevertexai({ task_type, googlevertexai_inference_id, service, service_settings })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("rerank" | "text_embedding"))*: The type of the inference task that the model will perform.
+** *`googlevertexai_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`service` (Enum("googlevertexai"))*: The type of service supported for the specified task type. In this case, `googlevertexai`.
+** *`service_settings` ({ location, model_id, project_id, rate_limit, service_account_json })*: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
+** *`task_settings` (Optional, { auto_truncate, top_n })*: Settings to configure the inference task.
+These settings are specific to the task type you specified.
+
+[discrete]
+==== put_hugging_face
+Create a Hugging Face inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `hugging_face` service.
+
+You must first create an inference endpoint on the Hugging Face endpoint page to get an endpoint URL.
+Select the model you want to use on the new endpoint creation page (for example `intfloat/e5-small-v2`), then select the sentence embeddings task under the advanced configuration section.
+Create the endpoint and copy the URL after the endpoint initialization has been finished.
+
+The following models are recommended for the Hugging Face service:
+
+* `all-MiniLM-L6-v2`
+* `all-MiniLM-L12-v2`
+* `all-mpnet-base-v2`
+* `e5-base-v2`
+* `e5-small-v2`
+* `multilingual-e5-base`
+* `multilingual-e5-small`
+
+When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
+{ref}/infer-service-hugging-face.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.putHuggingFace({ task_type, huggingface_inference_id, service, service_settings })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("text_embedding"))*: The type of the inference task that the model will perform.
+** *`huggingface_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`service` (Enum("hugging_face"))*: The type of service supported for the specified task type. In this case, `hugging_face`.
+** *`service_settings` ({ api_key, rate_limit, url })*: Settings used to install the inference model. These settings are specific to the `hugging_face` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
+
+[discrete]
+==== put_jinaai
+Create an JinaAI inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `jinaai` service.
+
+To review the available `rerank` models, refer to <https://jina.ai/reranker>.
+To review the available `text_embedding` models, refer to the <https://jina.ai/embeddings/>.
+
+When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
+{ref}/infer-service-jinaai.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_settings })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("rerank" | "text_embedding"))*: The type of the inference task that the model will perform.
+** *`jinaai_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`service` (Enum("jinaai"))*: The type of service supported for the specified task type. In this case, `jinaai`.
+** *`service_settings` ({ api_key, model_id, rate_limit, similarity })*: Settings used to install the inference model. These settings are specific to the `jinaai` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
+** *`task_settings` (Optional, { return_documents, task, top_n })*: Settings to configure the inference task.
+These settings are specific to the task type you specified.
+
+[discrete]
 ==== put_mistral
-Configure a Mistral inference endpoint
+Create a Mistral inference endpoint.
+
+Creates an inference endpoint to perform an inference task with the `mistral` service.
+
+When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
+After creating the endpoint, wait for the model deployment to complete before using it.
+To verify the deployment status, use the get trained model statistics API.
+Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
+Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
 {ref}/infer-service-mistral.html[Endpoint documentation]
 [source,ts]
 ----
-client.inference.putMistral()
+client.inference.putMistral({ task_type, mistral_inference_id, service, service_settings })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("text_embedding"))*: The task type.
+The only valid task type for the model to perform is `text_embedding`.
+** *`mistral_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`service` (Enum("mistral"))*: The type of service supported for the specified task type. In this case, `mistral`.
+** *`service_settings` ({ api_key, max_input_tokens, model, rate_limit })*: Settings used to install the inference model. These settings are specific to the `mistral` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
 
 [discrete]
 ==== put_openai
 Create an OpenAI inference endpoint.
 
-Create an inference endpoint to perform an inference task with the `openai` service.
+Create an inference endpoint to perform an inference task with the `openai` service or `openai` compatible APIs.
 
 When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
 After creating the endpoint, wait for the model deployment to complete before using it.
@@ -8133,7 +8564,7 @@ client.inference.putOpenai({ task_type, openai_inference_id, service, service_se
 ** *`task_type` (Enum("chat_completion" | "completion" | "text_embedding"))*: The type of the inference task that the model will perform.
 NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
 ** *`openai_inference_id` (string)*: The unique identifier of the inference endpoint.
-** *`service` (Enum("elastic"))*: The type of service supported for the specified task type. In this case, `openai`.
+** *`service` (Enum("openai"))*: The type of service supported for the specified task type. In this case, `openai`.
 ** *`service_settings` ({ api_key, dimensions, model_id, organization_id, rate_limit, url })*: Settings used to install the inference model. These settings are specific to the `openai` service.
 ** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
 ** *`task_settings` (Optional, { user })*: Settings to configure the inference task.
@@ -8159,7 +8590,7 @@ client.inference.putVoyageai({ task_type, voyageai_inference_id, service, servic
 * *Request (object):*
 ** *`task_type` (Enum("text_embedding" | "rerank"))*: The type of the inference task that the model will perform.
 ** *`voyageai_inference_id` (string)*: The unique identifier of the inference endpoint.
-** *`service` (Enum("elastic"))*: The type of service supported for the specified task type. In this case, `voyageai`.
+** *`service` (Enum("voyageai"))*: The type of service supported for the specified task type. In this case, `voyageai`.
 ** *`service_settings` ({ dimensions, model_id, rate_limit, embedding_type })*: Settings used to install the inference model. These settings are specific to the `voyageai` service.
 ** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
 ** *`task_settings` (Optional, { input_type, return_documents, top_k, truncation })*: Settings to configure the inference task.
@@ -8192,7 +8623,7 @@ client.inference.putWatsonx({ task_type, watsonx_inference_id, service, service_
 ** *`task_type` (Enum("text_embedding"))*: The task type.
 The only valid task type for the model to perform is `text_embedding`.
 ** *`watsonx_inference_id` (string)*: The unique identifier of the inference endpoint.
-** *`service` (Enum("elastic"))*: The type of service supported for the specified task type. In this case, `watsonxai`.
+** *`service` (Enum("watsonxai"))*: The type of service supported for the specified task type. In this case, `watsonxai`.
 ** *`service_settings` ({ api_key, api_version, model_id, project_id, rate_limit, url })*: Settings used to install the inference model. These settings are specific to the `watsonxai` service.
 
 [discrete]
@@ -8649,7 +9080,7 @@ You must then re-submit the API request with the acknowledge parameter set to tr
 NOTE: If Elasticsearch security features are enabled and you are installing a gold or higher license, you must enable TLS on the transport networking layer before you install the license.
 If the operator privileges feature is enabled, only operator users can use this API.
 
-{ref}/update-license.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-post[Endpoint documentation]
 [source,ts]
 ----
 client.license.post({ ... })
@@ -10309,7 +10740,7 @@ specified.
 ** *`definition` (Optional, { preprocessors, trained_model })*: The inference definition for the model. If definition is specified, then
 compressed_definition cannot be specified.
 ** *`description` (Optional, string)*: A human-readable description of the inference trained model.
-** *`inference_config` (Optional, { regression, classification, text_classification, zero_shot_classification, fill_mask, ner, pass_through, text_embedding, text_expansion, question_answering })*: The default configuration for inference. This can be either a regression
+** *`inference_config` (Optional, { regression, classification, text_classification, zero_shot_classification, fill_mask, learning_to_rank, ner, pass_through, text_embedding, text_expansion, question_answering })*: The default configuration for inference. This can be either a regression
 or classification configuration. It must match the underlying
 definition.trained_model's target_type. For pre-packaged models such as
 ELSER the config is not required.
@@ -10683,7 +11114,7 @@ restart the model deployment.
 ==== update_data_frame_analytics
 Update a data frame analytics job.
 
-{ref}/update-dfanalytics.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-data-frame-analytics[Endpoint documentation]
 [source,ts]
 ----
 client.ml.updateDataFrameAnalytics({ id })
@@ -10894,7 +11325,7 @@ snapshot will be deleted when the job is deleted.
 ==== update_trained_model_deployment
 Update a trained model deployment.
 
-{ref}/update-trained-model-deployment.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-trained-model-deployment[Endpoint documentation]
 [source,ts]
 ----
 client.ml.updateTrainedModelDeployment({ model_id })
@@ -15640,7 +16071,7 @@ privileges for the source indices. You must also have `index` and `read` privile
 Elasticsearch security features are enabled, the transform remembers which roles the user who updated it had at the
 time of update and runs with those privileges.
 
-{ref}/update-transform.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-update-transform[Endpoint documentation]
 [source,ts]
 ----
 client.transform.updateTransform({ transform_id })
@@ -15687,7 +16118,7 @@ A summary is returned when the upgrade is finished.
 To ensure continuous transforms remain running during a major version upgrade of the cluster – for example, from 7.16 to 8.0 – it is recommended to upgrade transforms before upgrading the cluster.
 You may want to perform a recent cluster backup prior to the upgrade.
 
-{ref}/upgrade-transforms.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-upgrade-transforms[Endpoint documentation]
 [source,ts]
 ----
 client.transform.upgradeTransforms({ ... })
@@ -15716,7 +16147,7 @@ The reason for this behavior is to prevent overwriting the watch status from a w
 Acknowledging an action throttles further executions of that action until its `ack.state` is reset to `awaits_successful_execution`.
 This happens when the condition of the watch is not met (the condition evaluates to false).
 
-{ref}/watcher-api-ack-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-ack-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.ackWatch({ watch_id })
@@ -15735,7 +16166,7 @@ If you omit this parameter, all of the actions of the watch are acknowledged.
 Activate a watch.
 A watch can be either active or inactive.
 
-{ref}/watcher-api-activate-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-activate-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.activateWatch({ watch_id })
@@ -15752,7 +16183,7 @@ client.watcher.activateWatch({ watch_id })
 Deactivate a watch.
 A watch can be either active or inactive.
 
-{ref}/watcher-api-deactivate-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-deactivate-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.deactivateWatch({ watch_id })
@@ -15775,7 +16206,7 @@ IMPORTANT: Deleting a watch must be done by using only this API.
 Do not delete the watch directly from the `.watches` index using the Elasticsearch delete document API
 When Elasticsearch security features are enabled, make sure no write privileges are granted to anyone for the `.watches` index.
 
-{ref}/watcher-api-delete-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-delete-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.deleteWatch({ id })
@@ -15804,7 +16235,7 @@ If your user is allowed to read index `a`, but not index `b`, then the exact sam
 
 When using the run watch API, the authorization data of the user that called the API will be used as a base, instead of the information who stored the watch.
 
-{ref}/watcher-api-execute-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-execute-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.executeWatch({ ... })
@@ -15833,7 +16264,7 @@ Get Watcher index settings.
 Get settings for the Watcher internal index (`.watches`).
 Only a subset of settings are shown, for example `index.auto_expand_replicas` and `index.number_of_replicas`.
 
-{ref}/watcher-api-get-settings.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-get-settings[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.getSettings({ ... })
@@ -15850,7 +16281,7 @@ If no response is received before the timeout expires, the request fails and ret
 ==== get_watch
 Get a watch.
 
-{ref}/watcher-api-get-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-get-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.getWatch({ id })
@@ -15877,7 +16308,7 @@ When you add a watch you can also define its initial active state by setting the
 When Elasticsearch security features are enabled, your watch can index or search only on indices for which the user that stored the watch has privileges.
 If the user is able to read index `a`, but not index `b`, the same will apply when the watch runs.
 
-{ref}/watcher-api-put-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-put-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.putWatch({ id })
@@ -15912,7 +16343,7 @@ Get all registered watches in a paginated manner and optionally filter watches b
 
 Note that only the `_id` and `metadata.*` fields are queryable or sortable.
 
-{ref}/watcher-api-query-watches.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-query-watches[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.queryWatches({ ... })
@@ -15935,7 +16366,7 @@ It must be non-negative.
 Start the watch service.
 Start the Watcher service if it is not already running.
 
-{ref}/watcher-api-start.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-start[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.start({ ... })
@@ -15953,7 +16384,7 @@ Get Watcher statistics.
 This API always returns basic metrics.
 You retrieve more metrics by using the metric parameter.
 
-{ref}/watcher-api-stats.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-stats[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.stats({ ... })
@@ -15971,7 +16402,7 @@ client.watcher.stats({ ... })
 Stop the watch service.
 Stop the Watcher service if it is running.
 
-{ref}/watcher-api-stop.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-stop[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.stop({ ... })
@@ -15992,7 +16423,7 @@ Update settings for the Watcher internal index (`.watches`).
 Only a subset of settings can be modified.
 This includes `index.auto_expand_replicas` and `index.number_of_replicas`.
 
-{ref}/watcher-api-update-settings.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-update-settings[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.updateSettings({ ... })
@@ -16042,7 +16473,7 @@ Get usage information.
 Get information about the features that are currently enabled and available under the current license.
 The API also provides some usage statistics.
 
-{ref}/usage-api.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-xpack[Endpoint documentation]
 [source,ts]
 ----
 client.xpack.usage({ ... })

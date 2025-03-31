@@ -2623,7 +2623,7 @@ export default class Ml {
 
   /**
     * Update a data frame analytics job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/update-dfanalytics.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-data-frame-analytics | Elasticsearch API documentation}
     */
   async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest | TB.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateDataFrameAnalyticsResponse>
   async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest | TB.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateDataFrameAnalyticsResponse, unknown>>
@@ -2844,7 +2844,7 @@ export default class Ml {
 
   /**
     * Update a trained model deployment.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/update-trained-model-deployment.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-trained-model-deployment | Elasticsearch API documentation}
     */
   async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest | TB.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateTrainedModelDeploymentResponse>
   async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest | TB.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateTrainedModelDeploymentResponse, unknown>>
