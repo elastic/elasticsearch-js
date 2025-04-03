@@ -11,7 +11,6 @@ This page contains the information you need to connect and use the Client with {
 
 This document contains code snippets to show you how to connect to various {{es}} providers.
 
-
 ### Elastic Cloud [auth-ec]
 
 If you are using [Elastic Cloud](https://www.elastic.co/cloud), the client offers an easy way to connect to it via the `cloud` option. You must pass the Cloud ID that you can find in the cloud console, then your username and password inside the `auth` option.
@@ -20,11 +19,9 @@ If you are using [Elastic Cloud](https://www.elastic.co/cloud), the client offer
 When connecting to Elastic Cloud, the client will automatically enable both request and response compression by default, since it yields significant throughput improvements. Moreover, the client will also set the tls option `secureProtocol` to `TLSv1_2_method` unless specified otherwise. You can still override this option by configuring them.
 ::::
 
-
 ::::{important}
 Do not enable sniffing when using Elastic Cloud, since the nodes are behind a load balancer, Elastic Cloud will take care of everything for you. Take a look [here](https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how) to know more.
 ::::
-
 
 ```js
 const { Client } = require('@elastic/elasticsearch')
@@ -39,6 +36,24 @@ const client = new Client({
 })
 ```
 
+## Connecting to an Elastic Cloud Serverless instance [connect-serverless]
+
+The Node.js client is built to support connecting to [Elastic Cloud Serverless](https://www.elastic.co/guide/en/serverless/current/intro.html). By setting the `serverMode` option to `"serverless"`, several default options will be modified to better suit the serverless environment.
+
+```js
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  cloud: {
+    id: '<cloud-id>'
+  },
+  auth: {
+    username: 'elastic',
+    password: 'changeme'
+  },
+  serverMode: 'serverless'
+})
+
+```
 
 ## Connecting to a self-managed cluster [connect-self-managed-new]
 
@@ -62,7 +77,6 @@ When you start {{es}} for the first time you’ll see a distinct block like the 
 
 Depending on the circumstances there are two options for verifying the HTTPS connection, either verifying with the CA certificate itself or via the HTTP CA certificate fingerprint.
 
-
 ### TLS configuration [auth-tls]
 
 The generated root CA certificate can be found in the `certs` directory in your {{es}} config location (`$ES_CONF_PATH/certs/http_ca.crt`). If you’re running {{es}} in Docker there is [additional documentation for retrieving the CA certificate](docs-content://deploy-manage/deploy/self-managed/install-elasticsearch-with-docker.md).
@@ -83,7 +97,6 @@ const client = new Client({
   }
 })
 ```
-
 
 ### CA fingerprint [auth-ca-fingerprint]
 
@@ -125,13 +138,11 @@ The output of `openssl x509` will look something like this:
 SHA256 Fingerprint=A5:2D:D9:35:11:E8:C6:04:5E:21:F1:66:54:B7:7C:9E:E0:F3:4A:EA:26:D9:F4:03:20:B5:31:C4:74:67:62:28
 ```
 
-
 ## Connecting without security enabled [connect-no-security]
 
 ::::{warning}
 Running {{es}} without security enabled is not recommended.
 ::::
-
 
 If your cluster is configured with [security explicitly disabled](elasticsearch://reference/elasticsearch/configuration-reference/security-settings.md) then you can connect via HTTP:
 
@@ -142,11 +153,9 @@ const client = new Client({
 })
 ```
 
-
 ## Authentication strategies [auth-strategies]
 
 Following you can find all the supported authentication strategies.
-
 
 ### ApiKey authentication [auth-apikey]
 
@@ -155,7 +164,6 @@ You can use the [ApiKey](https://www.elastic.co/docs/api/doc/elasticsearch/opera
 ::::{note}
 If you provide both basic authentication credentials and the ApiKey configuration, the ApiKey takes precedence.
 ::::
-
 
 ```js
 const { Client } = require('@elastic/elasticsearch')
@@ -180,7 +188,6 @@ const client = new Client({
 })
 ```
 
-
 ### Bearer authentication [auth-bearer]
 
 You can provide your credentials by passing the `bearer` token parameter via the `auth` option. Useful for [service account tokens](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-create-service-token). Be aware that it does not handle automatic token refresh.
@@ -195,7 +202,6 @@ const client = new Client({
 })
 ```
 
-
 ### Basic authentication [auth-basic]
 
 You can provide your credentials by passing the `username` and `password` parameters via the `auth` option.
@@ -203,7 +209,6 @@ You can provide your credentials by passing the `username` and `password` parame
 ::::{note}
 If you provide both basic authentication credentials and the Api Key configuration, the Api Key will take precedence.
 ::::
-
 
 ```js
 const { Client } = require('@elastic/elasticsearch')
@@ -224,7 +229,6 @@ const client = new Client({
   node: 'https://username:password@localhost:9200'
 })
 ```
-
 
 ## Usage [client-usage]
 
@@ -278,8 +282,6 @@ In this case, the result will be:
 The body is a boolean value when you use `HEAD` APIs.
 ::::
 
-
-
 ### Aborting a request [_aborting_a_request]
 
 If needed, you can abort a running request by using the `AbortController` standard.
@@ -287,7 +289,6 @@ If needed, you can abort a running request by using the `AbortController` standa
 ::::{warning}
 If you abort a request, the request will fail with a `RequestAbortedError`.
 ::::
-
 
 ```js
 const AbortController = require('node-abort-controller')
@@ -307,7 +308,6 @@ const result = await client.search({
   }
 }, { signal: abortController.signal })
 ```
-
 
 ### Request specific options [_request_specific_options]
 
@@ -352,7 +352,6 @@ The supported request specific options are:
 
 This section illustrates the best practices for leveraging the {{es}} client in a Function-as-a-Service (FaaS) environment. The most influential optimization is to initialize the client outside of the function, the global scope. This practice does not only improve performance but also enables background functionality as – for example – [sniffing](https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how). The following examples provide a skeleton for the best practices.
 
-
 ### GCP Cloud Functions [_gcp_cloud_functions]
 
 ```js
@@ -369,7 +368,6 @@ exports.testFunction = async function (req, res) {
 }
 ```
 
-
 ### AWS Lambda [_aws_lambda]
 
 ```js
@@ -385,7 +383,6 @@ exports.handler = async function (event, context) {
   // use the client
 }
 ```
-
 
 ### Azure Functions [_azure_functions]
 
@@ -410,7 +407,6 @@ Resources used to assess these recommendations:
 * [Azure Functions Python developer guide](https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-python?tabs=azurecli-linux%2Capplication-level#global-variables)
 * [AWS Lambda: Comparing the effect of global scope](https://docs.aws.amazon.com/lambda/latest/operatorguide/global-scope.md)
 
-
 ## Connecting through a proxy [client-connect-proxy]
 
 Added in `v7.10.0`
@@ -420,7 +416,6 @@ If you need to pass through an http(s) proxy for connecting to {{es}}, the clien
 ::::{important}
 In versions 8.0+ of the client, the default `Connection` type is set to `UndiciConnection`, which does not support proxy configurations. To use a proxy, you will need to use the `HttpConnection` class from `@elastic/transport` instead.
 ::::
-
 
 ```js
 import { HttpConnection } from '@elastic/transport'
@@ -454,7 +449,6 @@ const client = new Client({
   Connection: HttpConnection,
 })
 ```
-
 
 ## Error handling [client-error-handling]
 
@@ -506,7 +500,6 @@ const client = new Client({
 })
 ```
 
-
 ## Closing a client’s connections [close-connections]
 
 If you would like to close all open connections being managed by an instance of the client, use the `close()` function:
@@ -517,7 +510,6 @@ const client = new Client({
 });
 client.close();
 ```
-
 
 ## Automatic product check [product-check]
 
