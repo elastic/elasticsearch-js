@@ -9,7 +9,7 @@ import { setTimeout } from 'node:timers/promises'
 import { test } from 'tap'
 import FakeTimers from '@sinonjs/fake-timers'
 import { buildServer, connection } from '../utils'
-import { Client, errors } from '../..'
+import { Client, errors, SniffingTransport } from '../..'
 import * as symbols from '@elastic/transport/lib/symbols'
 import { BaseConnectionPool, CloudConnectionPool, WeightedConnectionPool, HttpConnection } from '@elastic/transport'
 
@@ -557,4 +557,69 @@ test('disablePrototypePoisoningProtection is true by default', async t => {
     protoAction: 'ignore',
     constructorAction: 'ignore'
   })
+})
+
+test('serverless defaults', t => {
+  t.test('uses CloudConnectionPool by default', t => {
+    const client = new Client({ node: 'http://localhost:9200', serverMode: 'serverless' })
+    t.ok(client.connectionPool instanceof CloudConnectionPool)
+    t.equal(client.connectionPool.size, 1)
+    t.end()
+  })
+
+  t.test('selects one node if multiple are provided', t => {
+    const client = new Client({ nodes: ['http://localhost:9200', 'http://localhost:9201'], serverMode: 'serverless' })
+    t.equal(client.connectionPool.size, 1)
+    t.end()
+  })
+
+  t.test('uses TLSv1_2_method by default', t => {
+    const client = new Client({
+      node: 'https://localhost:9200',
+      serverMode: 'serverless',
+      auth: {
+        username: 'elastic',
+        password: 'changeme'
+      }
+    })
+
+    const connection = client.connectionPool.connections.find(c => c.id === 'https://localhost:9200/')
+
+    t.equal(connection?.headers?.authorization, `Basic ${Buffer.from('elastic:changeme').toString('base64')}`)
+    t.same(connection?.tls, { secureProtocol: 'TLSv1_2_method' })
+    t.equal(connection?.url.hostname, 'localhost')
+    t.equal(connection?.url.protocol, 'https:')
+
+    t.end()
+  })
+
+  t.test('elastic-api-version header exists on all requests', async t => {
+    t.plan(1)
+
+    const Connection = connection.buildMockConnection({
+      onRequest (opts) {
+        t.equal(opts.headers?.['elastic-api-version'], '2023-10-31')
+        return {
+          statusCode: 200,
+          body: { hello: 'world' }
+        }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      serverMode: 'serverless',
+      Connection,
+    })
+
+    await client.transport.request({ method: 'GET', path: '/' })
+  })
+
+  t.test('sniffing transport not used', t => {
+    const client = new Client({ node: 'http://localhost:9200', serverMode: 'serverless' })
+    t.ok(!(client.transport instanceof SniffingTransport))
+    t.end()
+  })
+
+  t.end()
 })

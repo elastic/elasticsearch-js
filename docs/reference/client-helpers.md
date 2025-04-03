@@ -11,14 +11,11 @@ The client comes with an handy collection of helpers to give you a more comforta
 The client helpers are experimental, and the API may change in the next minor releases. The helpers will not work in any Node.js version lower than 10.
 ::::
 
-
-
 ## Bulk helper [bulk-helper]
 
 Added in `v7.7.0`
 
 Running bulk requests can be complex due to the shape of the API, this helper aims to provide a nicer developer experience around the Bulk API.
-
 
 ### Usage [_usage_3]
 
@@ -67,9 +64,7 @@ To create a new instance of the Bulk helper, access it as shown in the example a
 | `wait` | How much time to wait before retries in milliseconds.<br> *Default:* 5000.<br><br>```js<br>const b = client.helpers.bulk({<br>  wait: 3000<br>})<br>```<br> |
 | `refreshOnCompletion` | If `true`, at the end of the bulk operation it runs a refresh on all indices or on the specified indices.<br> *Default:* false.<br><br>```js<br>const b = client.helpers.bulk({<br>  refreshOnCompletion: true<br>  // or<br>  refreshOnCompletion: 'index-name'<br>})<br>```<br> |
 
-
 ### Supported operations [_supported_operations]
-
 
 #### Index [_index_2]
 
@@ -84,7 +79,6 @@ client.helpers.bulk({
 })
 ```
 
-
 #### Create [_create_4]
 
 ```js
@@ -97,7 +91,6 @@ client.helpers.bulk({
   }
 })
 ```
-
 
 #### Update [_update_3]
 
@@ -116,7 +109,6 @@ client.helpers.bulk({
 })
 ```
 
-
 #### Delete [_delete_10]
 
 ```js
@@ -130,7 +122,6 @@ client.helpers.bulk({
 })
 ```
 
-
 ### Abort a bulk operation [_abort_a_bulk_operation]
 
 If needed, you can abort a bulk operation at any time. The bulk helper returns a [thenable](https://promisesaplus.com/), which has an `abort` method.
@@ -138,7 +129,6 @@ If needed, you can abort a bulk operation at any time. The bulk helper returns a
 ::::{note}
 The abort method stops the execution of the bulk operation, but if you are using a concurrency higher than one, the operations that are already running will not be stopped.
 ::::
-
 
 ```js
 const { createReadStream } = require('fs')
@@ -164,7 +154,6 @@ const b = client.helpers.bulk({
 console.log(await b)
 ```
 
-
 ### Passing custom options to the Bulk API [_passing_custom_options_to_the_bulk_api]
 
 You can pass any option supported by the link: [Bulk API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk) to the helper, and the helper uses those options in conjunction with the Bulk API call.
@@ -180,7 +169,6 @@ const result = await client.helpers.bulk({
   pipeline: 'my-pipeline'
 })
 ```
-
 
 ### Usage with an async generator [_usage_with_an_async_generator]
 
@@ -214,7 +202,6 @@ const result = await client.helpers.bulk({
 console.log(result)
 ```
 
-
 ### Modifying a document before operation [_modifying_a_document_before_operation]
 
 Added in `v8.8.2`
@@ -241,13 +228,11 @@ const result = await client.helpers.bulk({
 console.log(result)
 ```
 
-
 ## Multi search helper [multi-search-helper]
 
 Added in `v7.8.0`
 
 If you send search request at a high rate, this helper might be useful for you. It uses the multi search API under the hood to batch the requests and improve the overall performances of your application. The `result` exposes a `documents` property as well, which allows you to access directly the hits sources.
-
 
 ### Usage [_usage_4]
 
@@ -278,7 +263,6 @@ To create a new instance of the multi search (msearch) helper, you should access
 | `retries` | How many times an operation is retried before to resolve the request. An operation is retried only in case of a 429 error.<br> *Default:* Client max retries.<br><br>```js<br>const m = client.helpers.msearch({<br>  retries: 3<br>})<br>```<br> |
 | `wait` | How much time to wait before retries in milliseconds.<br> *Default:* 5000.<br><br>```js<br>const m = client.helpers.msearch({<br>  wait: 3000<br>})<br>```<br> |
 
-
 ### Stopping the msearch helper [_stopping_the_msearch_helper]
 
 If needed, you can stop an msearch processor at any time. The msearch helper returns a [thenable](https://promisesaplus.com/), which has an `stop` method.
@@ -290,7 +274,6 @@ The `stop` method accepts an optional error, that will be dispatched every subse
 ::::{note}
 The stop method stops the execution of the msearch processor, but if you are using a concurrency higher than one, the operations that are already running will not be stopped.
 ::::
-
 
 ```js
 const { Client } = require('@elastic/elasticsearch')
@@ -318,7 +301,6 @@ m.search(
 setImmediate(() => m.stop())
 ```
 
-
 ## Search helper [search-helper]
 
 Added in `v7.7.0`
@@ -339,7 +321,6 @@ for (const doc of documents) {
   console.log(doc)
 }
 ```
-
 
 ## Scroll search helper [scroll-search-helper]
 
@@ -362,7 +343,6 @@ for await (const result of scrollSearch) {
 }
 ```
 
-
 ### Clear a scroll search [_clear_a_scroll_search]
 
 If needed, you can clear a scroll search by calling `result.clear()`:
@@ -375,7 +355,6 @@ for await (const result of scrollSearch) {
 }
 ```
 
-
 ### Quickly getting the documents [_quickly_getting_the_documents]
 
 If you only need the documents from the result of a scroll search, you can access them via `result.documents`:
@@ -385,7 +364,6 @@ for await (const result of scrollSearch) {
   console.log(result.documents)
 }
 ```
-
 
 ## Scroll documents helper [scroll-documents-helper]
 
@@ -408,14 +386,11 @@ for await (const doc of scrollSearch) {
 }
 ```
 
-
 ## ES|QL helper [esql-helper]
 
 ES|QL queries can return their results in [several formats](docs-content://explore-analyze/query-filter/languages/esql-rest.md#esql-rest-format). The default JSON format returned by ES|QL queries contains arrays of values for each row, with column names and types returned separately:
 
-
 ### Usage [_usage_5]
-
 
 #### `toRecords` [_torecords]
 
@@ -494,7 +469,6 @@ const result = await client.helpers
   .toRecords<EventLog>()
 ```
 
-
 #### `toArrowReader` [_toarrowreader]
 
 Added in `v8.16.0`
@@ -515,7 +489,6 @@ for (const recordBatch of reader) {
   }
 }
 ```
-
 
 #### `toArrowTable` [_toarrowtable]
 

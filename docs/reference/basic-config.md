@@ -20,10 +20,14 @@ const client = new Client({
 
 ### `node` or `nodes`
 
-The Elasticsearch endpoint to use. It can be a single string or an array of strings:
+The {{es}} endpoint to use. It can be a single string or an array of strings:
 
 ```js
 node: 'http://localhost:9200'
+```
+
+```js
+nodes: ['http://localhost:9200', 'http://localhost:9201']
 ```
 
 Or it can be an object (or an array of objects) that represents the node:
@@ -52,7 +56,6 @@ Default: `null`
 
 Your authentication data. You can use both basic authentication and [ApiKey](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-create-api-key).
  See [Authentication](/reference/connecting.md#authentication) for more details.
- 
 
 Basic authentication:
 
@@ -113,7 +116,7 @@ Max ping request timeout in milliseconds for each request.
 Type: `number, boolean`<br>
 Default: `false`
 
-Perform a sniff operation every `n` milliseconds. 
+Perform a sniff operation every `n` milliseconds.
 
 :::{tip}
 Sniffing might not be the best solution. Before using the various `sniff` options, review this [blog post](https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how).
@@ -182,7 +185,7 @@ Options: `'gzip'`, `false`
 Type: `http.SecureContextOptions`<br>
 Default: `null`
 
-The [tls configuraton](https://nodejs.org/api/tls.md).
+The [tls configuraton](https://nodejs.org/api/tls.html).
 
 ---
 
@@ -192,7 +195,6 @@ Type: `string, URL`<br>
 Default: `null`
 
 If you are using an http(s) proxy, you can put its url here. The client will automatically handle the connection to it.
- 
 
 ```js
 const client = new Client({
@@ -213,7 +215,7 @@ const client = new Client({
 Type: `http.AgentOptions, function`<br>
 Default: `null`
 
-http agent [options](https://nodejs.org/api/http.md#http_new_agent_options), or a function that returns an actual http agent instance. If you want to disable the http agent use entirely (and disable the `keep-alive` feature), set the agent to `false`.
+http agent [options](https://nodejs.org/api/http.html#http_new_agent_options), or a function that returns an actual http agent instance. If you want to disable the http agent use entirely (and disable the `keep-alive` feature), set the agent to `false`.
 
 ```js
 const client = new Client({
@@ -395,3 +397,25 @@ Type: `number`<br>
 Default: `null`
 
 When configured, `maxCompressedResponseSize` verifies that the compressed response size is lower than the configured number. If it’s higher, the request will be canceled. The `maxCompressedResponseSize` cannot be higher than the value of `buffer.constants.MAX_STRING_LENGTH`.
+
+---
+
+### `redaction`
+
+Type: `object`<br>
+Default: A configuration that will replace known sources of sensitive data in `Error` metadata
+
+Options for how to redact potentially sensitive data from metadata attached to `Error` objects
+
+::::{note}
+[Read about redaction](/reference/advanced-config.md#redaction) for more details
+::::
+
+---
+
+### `serverMode`
+
+Type: `string`<br>
+Default: `"stack"`
+
+Setting to `"stack"` sets defaults assuming a traditional (non-serverless) {{es}} instance. Setting to `"serverless"` sets defaults to work more seamlessly with [Elastic Cloud Serverless](https://www.elastic.co/guide/en/serverless/current/intro.html), like enabling compression and disabling features that assume the possibility of multiple {{es}} nodes.

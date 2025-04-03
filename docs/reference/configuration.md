@@ -7,13 +7,8 @@ mapped_pages:
 
 The client is designed to be easily configured for your needs. In the following section, you can see the possible options that you can use to configure it.
 
-* [Basic configuration](/reference/basic-config.md)
-* [Advanced configuration](/reference/advanced-config.md)
-* [Timeout best practices](docs-content://troubleshoot/elasticsearch/elasticsearch-client-javascript-api/nodejs.md)
-* [Creating a child client](/reference/child.md)
-* [Testing](/reference/client-testing.md)
-
-
-
-
-
+- [Basic configuration](/reference/basic-config.md)
+- [Advanced configuration](/reference/advanced-config.md)
+- [Timeout best practices](docs-content://troubleshoot/elasticsearch/elasticsearch-client-javascript-api/nodejs.md)
+- [Creating a child client](/reference/child.md)
+- [Testing](/reference/client-testing.md)
