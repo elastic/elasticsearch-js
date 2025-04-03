@@ -10,6 +10,7 @@ import buffer from 'node:buffer'
 import os from 'node:os'
 import {
   Transport,
+  TransportOptions,
   UndiciConnection,
   WeightedConnectionPool,
   CloudConnectionPool,
@@ -53,6 +54,8 @@ if (transportVersion.includes('-')) {
   transportVersion = transportVersion.slice(0, transportVersion.indexOf('-')) + 'p'
 }
 const nodeVersion = process.versions.node
+
+const serverlessApiVersion = '2023-10-31'
 
 export interface NodeOptions {
   /** @property url Elasticsearch node's location */
@@ -180,6 +183,9 @@ export interface ClientOptions {
     * @remarks Read https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/advanced-config.html#redaction for more details
     * @defaultValue Configuration that will replace known sources of sensitive data */
   redaction?: RedactionOptions
+  /** @property serverMode Setting to "serverless" will change some default behavior, like enabling compression and disabling features that assume the possibility of multiple Elasticsearch nodes.
+   * @defaultValue "stack", which sets defaults for a traditional (non-serverless) Elasticsearch instance. */
+  serverMode?: 'stack' | 'serverless'
 }
 
 export default class Client extends API {
@@ -192,15 +198,18 @@ export default class Client extends API {
 
   constructor (opts: ClientOptions) {
     super()
-    // @ts-expect-error kChild symbol is for internal use only
-    if ((opts.cloud != null) && opts[kChild] === undefined) {
-      const { id } = opts.cloud
-      // the cloud id is `cluster-name:base64encodedurl`
-      // the url is a string divided by two '$', the first is the cloud url
-      // the second the elasticsearch instance, the third the kibana instance
-      const cloudUrls = Buffer.from(id.split(':')[1], 'base64').toString().split('$')
 
-      opts.node = `https://${cloudUrls[1]}.${cloudUrls[0]}`
+    // @ts-expect-error kChild symbol is for internal use only
+    if ((opts.cloud != null || opts.serverMode === 'serverless') && opts[kChild] === undefined) {
+      if (opts.cloud != null) {
+        const { id } = opts.cloud
+        // the cloud id is `cluster-name:base64encodedurl`
+        // the url is a string divided by two '$', the first is the cloud url
+        // the second the elasticsearch instance, the third the kibana instance
+        const cloudUrls = Buffer.from(id.split(':')[1], 'base64').toString().split('$')
+
+        opts.node = `https://${cloudUrls[1]}.${cloudUrls[0]}`
+      }
 
       // Cloud has better performance with compression enabled
       // see https://github.com/elastic/elasticsearch-py/pull/704.
@@ -225,11 +234,16 @@ export default class Client extends API {
       }
     }
 
+    const headers: Record<string, any> = {
+      'user-agent': `elasticsearch-js/${clientVersion} (${os.platform()} ${os.release()}-${os.arch()}; Node.js ${nodeVersion}; Transport ${transportVersion})`
+    }
+    if (opts.serverMode === 'serverless') headers['elastic-api-version'] = serverlessApiVersion
+
     const options: Required<ClientOptions> = Object.assign({}, {
       Connection: UndiciConnection,
-      Transport: SniffingTransport,
+      Transport: opts.serverMode === 'serverless' ? Transport : SniffingTransport,
       Serializer,
-      ConnectionPool: (opts.cloud != null) ? CloudConnectionPool : WeightedConnectionPool,
+      ConnectionPool: (opts.cloud != null || opts.serverMode === 'serverless') ? CloudConnectionPool : WeightedConnectionPool,
       maxRetries: 3,
       pingTimeout: 3000,
       sniffInterval: false,
@@ -241,9 +255,7 @@ export default class Client extends API {
       tls: null,
       caFingerprint: null,
       agent: null,
-      headers: {
-        'user-agent': `elasticsearch-js/${clientVersion} (${os.platform()} ${os.release()}-${os.arch()}; Node.js ${nodeVersion}; Transport ${transportVersion})`
-      },
+      headers,
       nodeFilter: null,
       generateRequestId: null,
       name: 'elasticsearch-js',
@@ -257,7 +269,8 @@ export default class Client extends API {
       redaction: {
         type: 'replace',
         additionalKeys: []
-      }
+      },
+      serverMode: 'stack'
     }, opts)
 
     if (options.caFingerprint != null && isHttpConnection(opts.node ?? opts.nodes)) {
@@ -326,7 +339,13 @@ export default class Client extends API {
 
       // ensure default connection values are inherited when creating new connections
       // see https://github.com/elastic/elasticsearch-js/issues/1791
-      const nodes = options.node ?? options.nodes
+      let nodes = options.node ?? options.nodes
+
+      // serverless only supports one node, so pick the first one
+      if (options.serverMode === 'serverless' && Array.isArray(nodes)) {
+        nodes = nodes[0]
+      }
+
       let nodeOptions: Array<string | ConnectionOptions> = Array.isArray(nodes) ? nodes : [nodes]
       type ConnectionDefaults = Record<string, any>
       nodeOptions = nodeOptions.map(opt => {
@@ -354,20 +373,14 @@ export default class Client extends API {
       this.connectionPool.addConnection(nodeOptions)
     }
 
-    this.transport = new options.Transport({
+    let transportOptions: TransportOptions = {
       diagnostic: this.diagnostic,
       connectionPool: this.connectionPool,
       serializer: this.serializer,
       maxRetries: options.maxRetries,
       requestTimeout: options.requestTimeout,
-      sniffInterval: options.sniffInterval,
-      sniffOnStart: options.sniffOnStart,
-      sniffOnConnectionFault: options.sniffOnConnectionFault,
-      sniffEndpoint: options.sniffEndpoint,
       compression: options.compression,
       headers: options.headers,
-      nodeFilter: options.nodeFilter,
-      nodeSelector: options.nodeSelector,
       generateRequestId: options.generateRequestId,
       name: options.name,
       opaqueIdPrefix: options.opaqueIdPrefix,
@@ -375,13 +388,25 @@ export default class Client extends API {
       productCheck: 'Elasticsearch',
       maxResponseSize: options.maxResponseSize,
       maxCompressedResponseSize: options.maxCompressedResponseSize,
-      vendoredHeaders: {
-        jsonContentType: 'application/vnd.elasticsearch+json; compatible-with=9',
-        ndjsonContentType: 'application/vnd.elasticsearch+x-ndjson; compatible-with=9',
-        accept: 'application/vnd.elasticsearch+json; compatible-with=9,text/plain'
-      },
       redaction: options.redaction
-    })
+    }
+    if (options.serverMode !== 'serverless') {
+      transportOptions = Object.assign({}, transportOptions, {
+        sniffInterval: options.sniffInterval,
+        sniffOnStart: options.sniffOnStart,
+        sniffOnConnectionFault: options.sniffOnConnectionFault,
+        sniffEndpoint: options.sniffEndpoint,
+        nodeFilter: options.nodeFilter,
+        nodeSelector: options.nodeSelector,
+        vendoredHeaders: {
+          jsonContentType: 'application/vnd.elasticsearch+json; compatible-with=9',
+          ndjsonContentType: 'application/vnd.elasticsearch+x-ndjson; compatible-with=9',
+          accept: 'application/vnd.elasticsearch+json; compatible-with=9,text/plain'
+        }
+      })
+    }
+
+    this.transport = new options.Transport(transportOptions)
 
     this.helpers = new Helpers({
       client: this,
