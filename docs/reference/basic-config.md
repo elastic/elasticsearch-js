@@ -20,7 +20,7 @@ const client = new Client({
 
 ### `node` or `nodes`
 
-The Elasticsearch endpoint to use. It can be a single string or an array of strings:
+The {{es}} endpoint to use. It can be a single string or an array of strings:
 
 ```js
 node: 'http://localhost:9200'
@@ -418,4 +418,4 @@ Options for how to redact potentially sensitive data from metadata attached to `
 Type: `string`<br>
 Default: `"stack"`
 
-Setting to `"stack"` sets defaults assuming a traditional (non-serverless) Elasticsearch instance. Setting to `"serverless"` sets defaults to work more seamlessly with [Elastic Cloud Serverless](https://www.elastic.co/guide/en/serverless/current/intro.html), like enabling compression and disabling features that assume the possibility of multiple Elasticsearch nodes.
+Setting to `"stack"` sets defaults assuming a traditional (non-serverless) {{es}} instance. Setting to `"serverless"` sets defaults to work more seamlessly with [Elastic Cloud Serverless](https://www.elastic.co/guide/en/serverless/current/intro.html), like enabling compression and disabling features that assume the possibility of multiple {{es}} nodes.
