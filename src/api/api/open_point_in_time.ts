@@ -42,7 +42,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'preference',
       'routing',
       'expand_wildcards',
-      'allow_partial_search_results'
+      'allow_partial_search_results',
+      'max_concurrent_shard_requests'
     ]
   }
 }
