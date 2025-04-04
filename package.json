@@ -1,6 +1,6 @@
 {
   "name": "@elastic/elasticsearch",
-  "version": "9.0.0-alpha.4",
+  "version": "9.0.0-alpha.5",
   "versionCanary": "9.0.0-canary.0",
   "description": "The official Elasticsearch client for Node.js",
   "main": "./index.js",
