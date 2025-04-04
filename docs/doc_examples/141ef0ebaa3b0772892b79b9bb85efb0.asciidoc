@@ -3,8 +3,9 @@
 
 [source, js]
 ----
-const response = await client.inference.update({
-  inference_id: "my-inference-endpoint",
+const response = await client.inference.put({
+  task_type: "my-inference-endpoint",
+  inference_id: "_update",
   inference_config: {
     service_settings: {
       api_key: "<API_KEY>",

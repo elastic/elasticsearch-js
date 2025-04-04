@@ -39,7 +39,9 @@ export default class Inference {
         path: [
           'inference_id'
         ],
-        body: [],
+        body: [
+          'chat_completion_request'
+        ],
         query: [
           'timeout'
         ]
@@ -79,7 +81,9 @@ export default class Inference {
         path: [
           'eis_inference_id'
         ],
-        body: [],
+        body: [
+          'chat_completion_request'
+        ],
         query: []
       },
       'inference.put': {
@@ -89,6 +93,84 @@ export default class Inference {
         ],
         body: [
           'inference_config'
+        ],
+        query: []
+      },
+      'inference.put_alibabacloud': {
+        path: [
+          'task_type',
+          'alibabacloud_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: []
+      },
+      'inference.put_amazonbedrock': {
+        path: [
+          'task_type',
+          'amazonbedrock_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: []
+      },
+      'inference.put_anthropic': {
+        path: [
+          'task_type',
+          'anthropic_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: []
+      },
+      'inference.put_azureaistudio': {
+        path: [
+          'task_type',
+          'azureaistudio_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: []
+      },
+      'inference.put_azureopenai': {
+        path: [
+          'task_type',
+          'azureopenai_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: []
+      },
+      'inference.put_cohere': {
+        path: [
+          'task_type',
+          'cohere_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
         ],
         query: []
       },
@@ -103,12 +185,91 @@ export default class Inference {
         ],
         query: []
       },
+      'inference.put_elasticsearch': {
+        path: [
+          'task_type',
+          'elasticsearch_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: []
+      },
+      'inference.put_elser': {
+        path: [
+          'task_type',
+          'elser_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings'
+        ],
+        query: []
+      },
+      'inference.put_googleaistudio': {
+        path: [
+          'task_type',
+          'googleaistudio_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings'
+        ],
+        query: []
+      },
+      'inference.put_googlevertexai': {
+        path: [
+          'task_type',
+          'googlevertexai_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: []
+      },
+      'inference.put_hugging_face': {
+        path: [
+          'task_type',
+          'huggingface_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings'
+        ],
+        query: []
+      },
+      'inference.put_jinaai': {
+        path: [
+          'task_type',
+          'jinaai_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: []
+      },
       'inference.put_mistral': {
         path: [
           'task_type',
           'mistral_inference_id'
         ],
-        body: [],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings'
+        ],
         query: []
       },
       'inference.put_openai': {
@@ -217,28 +378,30 @@ export default class Inference {
   async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptions): Promise<T.InferenceChatCompletionUnifiedResponse>
   async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this.acceptedParams['inference.chat_completion_unified']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
-    let body: Record<string, any> | string | undefined
-    const userBody = params?.body
-    if (userBody != null) {
-      if (typeof userBody === 'string') {
-        body = userBody
-      } else {
-        body = { ...userBody }
-      }
-    }
-
+    let body: any = params.body ?? undefined
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -429,28 +592,30 @@ export default class Inference {
   async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest, options?: TransportRequestOptions): Promise<T.InferencePostEisChatCompletionResponse>
   async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this.acceptedParams['inference.post_eis_chat_completion']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
-    let body: Record<string, any> | string | undefined
-    const userBody = params?.body
-    if (userBody != null) {
-      if (typeof userBody === 'string') {
-        body = userBody
-      } else {
-        body = { ...userBody }
-      }
-    }
-
+    let body: any = params.body ?? undefined
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -521,8 +686,356 @@ export default class Inference {
   }
 
   /**
+    * Create an AlibabaCloud AI Search inference endpoint. Create an inference endpoint to perform an inference task with the `alibabacloud-ai-search` service. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-alibabacloud | Elasticsearch API documentation}
+    */
+  async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAlibabacloudResponse>
+  async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAlibabacloudResponse, unknown>>
+  async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest, options?: TransportRequestOptions): Promise<T.InferencePutAlibabacloudResponse>
+  async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_alibabacloud']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.alibabacloud_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_alibabacloud',
+      pathParts: {
+        task_type: params.task_type,
+        alibabacloud_inference_id: params.alibabacloud_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create an Amazon Bedrock inference endpoint. Creates an inference endpoint to perform an inference task with the `amazonbedrock` service. >info > You need to provide the access and secret keys only once, during the inference model creation. The get inference API does not retrieve your access or secret keys. After creating the inference model, you cannot change the associated key pairs. If you want to use a different access and secret key pair, delete the inference model and recreate it with the same name and the updated keys. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-amazonbedrock | Elasticsearch API documentation}
+    */
+  async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAmazonbedrockResponse>
+  async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAmazonbedrockResponse, unknown>>
+  async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest, options?: TransportRequestOptions): Promise<T.InferencePutAmazonbedrockResponse>
+  async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_amazonbedrock']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.amazonbedrock_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_amazonbedrock',
+      pathParts: {
+        task_type: params.task_type,
+        amazonbedrock_inference_id: params.amazonbedrock_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create an Anthropic inference endpoint. Create an inference endpoint to perform an inference task with the `anthropic` service. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-anthropic | Elasticsearch API documentation}
+    */
+  async putAnthropic (this: That, params: T.InferencePutAnthropicRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAnthropicResponse>
+  async putAnthropic (this: That, params: T.InferencePutAnthropicRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAnthropicResponse, unknown>>
+  async putAnthropic (this: That, params: T.InferencePutAnthropicRequest, options?: TransportRequestOptions): Promise<T.InferencePutAnthropicResponse>
+  async putAnthropic (this: That, params: T.InferencePutAnthropicRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_anthropic']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.anthropic_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_anthropic',
+      pathParts: {
+        task_type: params.task_type,
+        anthropic_inference_id: params.anthropic_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create an Azure AI studio inference endpoint. Create an inference endpoint to perform an inference task with the `azureaistudio` service. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-azureaistudio | Elasticsearch API documentation}
+    */
+  async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAzureaistudioResponse>
+  async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAzureaistudioResponse, unknown>>
+  async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest, options?: TransportRequestOptions): Promise<T.InferencePutAzureaistudioResponse>
+  async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_azureaistudio']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.azureaistudio_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_azureaistudio',
+      pathParts: {
+        task_type: params.task_type,
+        azureaistudio_inference_id: params.azureaistudio_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create an Azure OpenAI inference endpoint. Create an inference endpoint to perform an inference task with the `azureopenai` service. The list of chat completion models that you can choose from in your Azure OpenAI deployment include: * [GPT-4 and GPT-4 Turbo models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-4-and-gpt-4-turbo-models) * [GPT-3.5](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-35) The list of embeddings models that you can choose from in your deployment can be found in the [Azure models documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#embeddings). When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-azureopenai | Elasticsearch API documentation}
+    */
+  async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAzureopenaiResponse>
+  async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAzureopenaiResponse, unknown>>
+  async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutAzureopenaiResponse>
+  async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_azureopenai']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.azureopenai_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_azureopenai',
+      pathParts: {
+        task_type: params.task_type,
+        azureopenai_inference_id: params.azureopenai_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create a Cohere inference endpoint. Create an inference endpoint to perform an inference task with the `cohere` service. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-cohere | Elasticsearch API documentation}
+    */
+  async putCohere (this: That, params: T.InferencePutCohereRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutCohereResponse>
+  async putCohere (this: That, params: T.InferencePutCohereRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutCohereResponse, unknown>>
+  async putCohere (this: That, params: T.InferencePutCohereRequest, options?: TransportRequestOptions): Promise<T.InferencePutCohereResponse>
+  async putCohere (this: That, params: T.InferencePutCohereRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_cohere']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.cohere_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_cohere',
+      pathParts: {
+        task_type: params.task_type,
+        cohere_inference_id: params.cohere_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Create an Elastic Inference Service (EIS) inference endpoint. Create an inference endpoint to perform an inference task through the Elastic Inference Service (EIS).
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-service-eis.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-eis | Elasticsearch API documentation}
     */
   async putEis (this: That, params: T.InferencePutEisRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutEisResponse>
   async putEis (this: That, params: T.InferencePutEisRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutEisResponse, unknown>>
@@ -579,15 +1092,365 @@ export default class Inference {
   }
 
   /**
-    * Configure a Mistral inference endpoint
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-service-mistral.html | Elasticsearch API documentation}
+    * Create an Elasticsearch inference endpoint. Create an inference endpoint to perform an inference task with the `elasticsearch` service. > info > Your Elasticsearch deployment contains preconfigured ELSER and E5 inference endpoints, you only need to create the enpoints using the API if you want to customize the settings. If you use the ELSER or the E5 model through the `elasticsearch` service, the API request will automatically download and deploy the model if it isn't downloaded yet. > info > You might see a 502 bad gateway error in the response when using the Kibana Console. This error usually just reflects a timeout, while the model downloads in the background. You can check the download progress in the Machine Learning UI. If using the Python client, you can set the timeout parameter to a higher value. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-elasticsearch | Elasticsearch API documentation}
     */
-  async putMistral (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putMistral (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putMistral (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putMistral (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutElasticsearchResponse>
+  async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutElasticsearchResponse, unknown>>
+  async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest, options?: TransportRequestOptions): Promise<T.InferencePutElasticsearchResponse>
+  async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_elasticsearch']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.elasticsearch_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_elasticsearch',
+      pathParts: {
+        task_type: params.task_type,
+        elasticsearch_inference_id: params.elasticsearch_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create an ELSER inference endpoint. Create an inference endpoint to perform an inference task with the `elser` service. You can also deploy ELSER by using the Elasticsearch inference integration. > info > Your Elasticsearch deployment contains a preconfigured ELSER inference endpoint, you only need to create the enpoint using the API if you want to customize the settings. The API request will automatically download and deploy the ELSER model if it isn't already downloaded. > info > You might see a 502 bad gateway error in the response when using the Kibana Console. This error usually just reflects a timeout, while the model downloads in the background. You can check the download progress in the Machine Learning UI. If using the Python client, you can set the timeout parameter to a higher value. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-elser | Elasticsearch API documentation}
+    */
+  async putElser (this: That, params: T.InferencePutElserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutElserResponse>
+  async putElser (this: That, params: T.InferencePutElserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutElserResponse, unknown>>
+  async putElser (this: That, params: T.InferencePutElserRequest, options?: TransportRequestOptions): Promise<T.InferencePutElserResponse>
+  async putElser (this: That, params: T.InferencePutElserRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_elser']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.elser_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_elser',
+      pathParts: {
+        task_type: params.task_type,
+        elser_inference_id: params.elser_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create an Google AI Studio inference endpoint. Create an inference endpoint to perform an inference task with the `googleaistudio` service. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-googleaistudio | Elasticsearch API documentation}
+    */
+  async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutGoogleaistudioResponse>
+  async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutGoogleaistudioResponse, unknown>>
+  async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest, options?: TransportRequestOptions): Promise<T.InferencePutGoogleaistudioResponse>
+  async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_googleaistudio']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.googleaistudio_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_googleaistudio',
+      pathParts: {
+        task_type: params.task_type,
+        googleaistudio_inference_id: params.googleaistudio_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create a Google Vertex AI inference endpoint. Create an inference endpoint to perform an inference task with the `googlevertexai` service. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-googlevertexai | Elasticsearch API documentation}
+    */
+  async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutGooglevertexaiResponse>
+  async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutGooglevertexaiResponse, unknown>>
+  async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutGooglevertexaiResponse>
+  async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_googlevertexai']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.googlevertexai_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_googlevertexai',
+      pathParts: {
+        task_type: params.task_type,
+        googlevertexai_inference_id: params.googlevertexai_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create a Hugging Face inference endpoint. Create an inference endpoint to perform an inference task with the `hugging_face` service. You must first create an inference endpoint on the Hugging Face endpoint page to get an endpoint URL. Select the model you want to use on the new endpoint creation page (for example `intfloat/e5-small-v2`), then select the sentence embeddings task under the advanced configuration section. Create the endpoint and copy the URL after the endpoint initialization has been finished. The following models are recommended for the Hugging Face service: * `all-MiniLM-L6-v2` * `all-MiniLM-L12-v2` * `all-mpnet-base-v2` * `e5-base-v2` * `e5-small-v2` * `multilingual-e5-base` * `multilingual-e5-small` When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-hugging-face | Elasticsearch API documentation}
+    */
+  async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutHuggingFaceResponse>
+  async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutHuggingFaceResponse, unknown>>
+  async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest, options?: TransportRequestOptions): Promise<T.InferencePutHuggingFaceResponse>
+  async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_hugging_face']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.huggingface_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_hugging_face',
+      pathParts: {
+        task_type: params.task_type,
+        huggingface_inference_id: params.huggingface_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create an JinaAI inference endpoint. Create an inference endpoint to perform an inference task with the `jinaai` service. To review the available `rerank` models, refer to <https://jina.ai/reranker>. To review the available `text_embedding` models, refer to the <https://jina.ai/embeddings/>. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-jinaai | Elasticsearch API documentation}
+    */
+  async putJinaai (this: That, params: T.InferencePutJinaaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutJinaaiResponse>
+  async putJinaai (this: That, params: T.InferencePutJinaaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutJinaaiResponse, unknown>>
+  async putJinaai (this: That, params: T.InferencePutJinaaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutJinaaiResponse>
+  async putJinaai (this: That, params: T.InferencePutJinaaiRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_jinaai']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.jinaai_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_jinaai',
+      pathParts: {
+        task_type: params.task_type,
+        jinaai_inference_id: params.jinaai_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create a Mistral inference endpoint. Creates an inference endpoint to perform an inference task with the `mistral` service. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-mistral | Elasticsearch API documentation}
+    */
+  async putMistral (this: That, params: T.InferencePutMistralRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutMistralResponse>
+  async putMistral (this: That, params: T.InferencePutMistralRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutMistralResponse, unknown>>
+  async putMistral (this: That, params: T.InferencePutMistralRequest, options?: TransportRequestOptions): Promise<T.InferencePutMistralResponse>
+  async putMistral (this: That, params: T.InferencePutMistralRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this.acceptedParams['inference.put_mistral']
 
     const userQuery = params?.querystring
@@ -603,12 +1466,22 @@ export default class Inference {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -626,7 +1499,7 @@ export default class Inference {
 
   /**
     * Create an OpenAI inference endpoint. Create an inference endpoint to perform an inference task with the `openai` service or `openai` compatible APIs. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-service-openai.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-openai | Elasticsearch API documentation}
     */
   async putOpenai (this: That, params: T.InferencePutOpenaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutOpenaiResponse>
   async putOpenai (this: That, params: T.InferencePutOpenaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutOpenaiResponse, unknown>>
