@@ -25,6 +25,3 @@ USER ${BUILDER_UID}:${BUILDER_GID}
 # install dependencies
 COPY package.json .
 RUN npm install
-
-# copy project files
-COPY . .
