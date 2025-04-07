@@ -3,8 +3,7 @@
 
 [source, js]
 ----
-const response = await client.inference.inference({
-  task_type: "rerank",
+const response = await client.inference.rerank({
   inference_id: "cohere_rerank",
   input: ["luke", "like", "leia", "chewy", "r2d2", "star", "wars"],
   query: "star wars main character",
