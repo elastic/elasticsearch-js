@@ -1,5 +1,5 @@
 ---
-navigation_title: "JavaScript client release notes"
+navigation_title: "Elasticsearch JavaScript Client"
 mapped_pages:
   - https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/changelog-client.html
 ---
