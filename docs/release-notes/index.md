@@ -25,7 +25,7 @@ To check for security updates, go to [Security announcements for the Elastic sta
 ### Features and enhancements [elasticsearch-javascript-client-900-features-enhancements]
 
 - **Compatibility with Elasticsearch 9.0:** All changes and additions to Elasticsearch APIs for its 9.0 release are reflected in this release.
-- **Serverless client merged in:** the `@elastic/elasticsearch-serverless` client is being deprecated, and its functionality has been merged back into this client. This should have zero impact on the way the client works, except that a new `serverMode` option has been added. When it's explicitly set to `"serverless"` by a user, a few default settings and behaviors are changed:
+- **Serverless client merged in:** the `@elastic/elasticsearch-serverless` client is being deprecated, and its functionality has been merged back into this client. This should have zero impact on the way the client works by default, except that a new `serverMode` option has been added. When it's explicitly set to `"serverless"` by a user, a few default settings and behaviors are changed:
 
   - turns off sniffing and ignores any sniffing-related options
   - ignores all nodes passed in config except the first one, and ignores any node filtering and selecting options
