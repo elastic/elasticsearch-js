@@ -17,11 +17,18 @@ Breaking changes can impact your Elastic applications, potentially disrupting no
 
 ## 9.0.0 [elasticsearch-javascript-client-900-breaking-changes]
 
-::::{dropdown} Improvements to the optional `body` property
+::::{dropdown} Changes to the optional body property
 
 In 8.x, every API function had a `body` property that would provide a place to put arbitrary values that should go in the HTTP request body, even if they were not noted in the specification or documentation. In 9.0, each API function still includes an optional `body` property, but TypeScript's type checker will disallow properties that should go in the root of the object. A `querystring` parameter has also been added that behaves the same as `body`, but inserts its values into the request querystring.
 
-Also, the logic for where each parameter should be added to an API HTTP request has been updated:
+**Impact**<br> Some adjustments to API calls may be necessary for code that used a `body` property 8.x, especially to appease the TypeScript type checker, but it should not have any impact on any code that was not using a `body` property.
+
+**Action**<br> Check existing code for use of the `body` property, and move any properties that should be in the root object according to the API function's request type definition. If using TypeScript, the TypeScript type checker will surface most of these issues for you.
+::::
+
+::::{dropdown} Changes to API parameter collation into an HTTP request
+
+The logic for where each parameter in an API function call should be added to its HTTP request has been updated:
 
 1. If recognized as a `body` parameter according to the Elasticsearch specification, put it in the JSON body
 2. If recognized as a `path` parameter, put it in the URL path
@@ -31,9 +38,9 @@ Also, the logic for where each parameter should be added to an API HTTP request 
 
 The first two steps are identical in 8.x. The final three steps replace the logic from 8.x that put all unrecognized parameters in the querystring.
 
-**Impact**<br> Some adjustments to API calls may be necessary for code that used a `body` property 8.x, especially to appease the TypeScript type checker, but it should not have any impact on any code that was not using a `body` property.
+**Impact**<br> Some parameters that were sent via querystring to Elasticsearch may be sent in the JSON request body, and vice versa.
 
-**Action**<br> Check existing code for use of the `body` property, and move any properties that should be in the root object according to the API function's request type definition. If using TypeScript, the TypeScript type checker will surface most of these issues for you.
+**Action**<br> If Elasticsearch sends back an error response due to a request not being valid, verify with the client's TypeScript type definitions, or via the docs, that the parameters your code passes are correct.
 ::::
 
 ::::{dropdown} Removal of the default 30-second timeout on all API calls
