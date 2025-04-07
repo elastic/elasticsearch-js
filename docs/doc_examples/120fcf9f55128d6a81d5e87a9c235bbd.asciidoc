@@ -3,16 +3,17 @@
 
 [source, js]
 ----
-const response = await client.inference.streamInference({
-  task_type: "chat_completion",
+const response = await client.inference.chatCompletionUnified({
   inference_id: "openai-completion",
-  model: "gpt-4o",
-  messages: [
-    {
-      role: "user",
-      content: "What is Elastic?",
-    },
-  ],
+  chat_completion_request: {
+    model: "gpt-4o",
+    messages: [
+      {
+        role: "user",
+        content: "What is Elastic?",
+      },
+    ],
+  },
 });
 console.log(response);
 ----

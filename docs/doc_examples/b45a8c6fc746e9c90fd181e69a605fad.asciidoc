@@ -3,8 +3,7 @@
 
 [source, js]
 ----
-const response = await client.inference.inference({
-  task_type: "completion",
+const response = await client.inference.completion({
   inference_id: "openai_chat_completions",
   input: "What is Elastic?",
 });

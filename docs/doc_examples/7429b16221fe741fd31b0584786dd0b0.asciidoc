@@ -3,8 +3,7 @@
 
 [source, js]
 ----
-const response = await client.inference.inference({
-  task_type: "text_embedding",
+const response = await client.inference.textEmbedding({
   inference_id: "my-cohere-endpoint",
   input:
     "The sky above the port was the color of television tuned to a dead channel.",
