@@ -15503,8 +15503,10 @@ export interface ClusterHealthHealthResponseBody {
   active_primary_shards: integer
   /** The total number of active primary and replica shards. */
   active_shards: integer
+  /** The ratio of active shards in the cluster expressed as a string formatted percentage. */
+  active_shards_percent?: string
   /** The ratio of active shards in the cluster expressed as a percentage. */
-  active_shards_percent_as_number: Percentage
+  active_shards_percent_as_number: double
   /** The name of the cluster. */
   cluster_name: Name
   /** The number of shards whose allocation has been delayed by the timeout settings. */
@@ -15566,7 +15568,7 @@ export interface ClusterHealthRequest extends RequestBase {
   /** Can be one of immediate, urgent, high, normal, low, languid. Wait until all currently queued events with the given priority are processed. */
   wait_for_events?: WaitForEvents
   /** The request waits until the specified number N of nodes is available. It also accepts >=N, <=N, >N and <N. Alternatively, it is possible to use ge(N), le(N), gt(N) and lt(N) notation. */
-  wait_for_nodes?: string | integer
+  wait_for_nodes?: ClusterHealthWaitForNodes
   /** A boolean value which controls whether to wait (until the timeout provided) for the cluster to have no shard initializations. Defaults to false, which means it will not wait for initializing shards. */
   wait_for_no_initializing_shards?: boolean
   /** A boolean value which controls whether to wait (until the timeout provided) for the cluster to have no shard relocations. Defaults to false, which means it will not wait for relocating shards. */
@@ -15590,6 +15592,8 @@ export interface ClusterHealthShardHealthStats {
   unassigned_shards: integer
   unassigned_primary_shards: integer
 }
+
+export type ClusterHealthWaitForNodes = string | integer
 
 export interface ClusterInfoRequest extends RequestBase {
   /** Limits the information returned to the specific target. Supports a comma-separated list, such as http,ingest. */
@@ -21652,18 +21656,6 @@ export type InferenceDenseByteVector = byte[]
 
 export type InferenceDenseVector = float[]
 
-export interface InferenceEisServiceSettings {
-  /** The name of the model to use for the inference task. */
-  model_id: string
-  /** This setting helps to minimize the number of rate limit errors returned.
-    * By default, the `elastic` service sets the number of requests allowed per minute to `240` in case of `chat_completion`. */
-  rate_limit?: InferenceRateLimitSetting
-}
-
-export type InferenceEisServiceType = 'elastic'
-
-export type InferenceEisTaskType = 'chat_completion'
-
 export interface InferenceElasticsearchServiceSettings {
   /** Adaptive allocations configuration details.
     * If `enabled` is true, the number of allocations of the model is set based on the current load the process gets.
@@ -22154,18 +22146,6 @@ export interface InferenceGetResponse {
   endpoints: InferenceInferenceEndpointInfo[]
 }
 
-export interface InferencePostEisChatCompletionRequest extends RequestBase {
-  /** The unique identifier of the inference endpoint. */
-  eis_inference_id: Id
-  chat_completion_request?: InferenceRequestChatCompletion
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { eis_inference_id?: never, chat_completion_request?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { eis_inference_id?: never, chat_completion_request?: never }
-}
-
-export type InferencePostEisChatCompletionResponse = StreamResult
-
 export interface InferencePutRequest extends RequestBase {
   /** The task type */
   task_type?: InferenceTaskType
@@ -22314,24 +22294,6 @@ export interface InferencePutCohereRequest extends RequestBase {
 }
 
 export type InferencePutCohereResponse = InferenceInferenceEndpointInfo
-
-export interface InferencePutEisRequest extends RequestBase {
-  /** The type of the inference task that the model will perform.
-    * NOTE: The `chat_completion` task type only supports streaming and only through the _stream API. */
-  task_type: InferenceEisTaskType
-  /** The unique identifier of the inference endpoint. */
-  eis_inference_id: Id
-  /** The type of service supported for the specified task type. In this case, `elastic`. */
-  service: InferenceEisServiceType
-  /** Settings used to install the inference model. These settings are specific to the `elastic` service. */
-  service_settings: InferenceEisServiceSettings
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { task_type?: never, eis_inference_id?: never, service?: never, service_settings?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { task_type?: never, eis_inference_id?: never, service?: never, service_settings?: never }
-}
-
-export type InferencePutEisResponse = InferenceInferenceEndpointInfo
 
 export interface InferencePutElasticsearchRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -23044,12 +23006,24 @@ export interface IngestInferenceProcessor extends IngestProcessorBase {
   field_map?: Record<Field, any>
   /** Contains the inference type and its options. */
   inference_config?: IngestInferenceConfig
+  /** Input fields for inference and output (destination) fields for the inference results.
+    * This option is incompatible with the target_field and field_map options. */
+  input_output?: IngestInputConfig | IngestInputConfig[]
+  /** If true and any of the input fields defined in input_ouput are missing
+    * then those missing fields are quietly ignored, otherwise a missing field causes a failure.
+    * Only applies when using input_output configurations to explicitly list the input fields. */
+  ignore_missing?: boolean
 }
 
 export interface IngestIngest {
   _redact?: IngestRedact
   timestamp: DateTime
   pipeline?: Name
+}
+
+export interface IngestInputConfig {
+  input_field: string
+  output_field: string
 }
 
 export interface IngestIpLocationProcessor extends IngestProcessorBase {

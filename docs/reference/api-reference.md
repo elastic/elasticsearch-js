@@ -7552,23 +7552,6 @@ client.inference.get({ ... })
 - **`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion" | "chat_completion"))**: The task type
 - **`inference_id` (Optional, string)**: The inference Id
 
-## client.inference.postEisChatCompletion [_inference.post_eis_chat_completion]
-Perform a chat completion task through the Elastic Inference Service (EIS).
-
-Perform a chat completion inference task with the `elastic` service.
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-post-eis-chat-completion)
-
-```ts
-client.inference.postEisChatCompletion({ eis_inference_id })
-```
-
-### Arguments [_arguments_inference.post_eis_chat_completion]
-
-#### Request (object) [_request_inference.post_eis_chat_completion]
-- **`eis_inference_id` (string)**: The unique identifier of the inference endpoint.
-- **`chat_completion_request` (Optional, { messages, model, max_completion_tokens, stop, temperature, tool_choice, tools, top_p })**
-
 ## client.inference.put [_inference.put]
 Create an inference endpoint.
 When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
@@ -7774,26 +7757,6 @@ These settings are specific to the `cohere` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { input_type, return_documents, top_n, truncate })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
-
-## client.inference.putEis [_inference.put_eis]
-Create an Elastic Inference Service (EIS) inference endpoint.
-
-Create an inference endpoint to perform an inference task through the Elastic Inference Service (EIS).
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-eis)
-
-```ts
-client.inference.putEis({ task_type, eis_inference_id, service, service_settings })
-```
-
-### Arguments [_arguments_inference.put_eis]
-
-#### Request (object) [_request_inference.put_eis]
-- **`task_type` (Enum("chat_completion"))**: The type of the inference task that the model will perform.
-NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
-- **`eis_inference_id` (string)**: The unique identifier of the inference endpoint.
-- **`service` (Enum("elastic"))**: The type of service supported for the specified task type. In this case, `elastic`.
-- **`service_settings` ({ model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `elastic` service.
 
 ## client.inference.putElasticsearch [_inference.put_elasticsearch]
 Create an Elasticsearch inference endpoint.
