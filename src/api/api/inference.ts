@@ -77,15 +77,6 @@ export default class Inference {
         body: [],
         query: []
       },
-      'inference.post_eis_chat_completion': {
-        path: [
-          'eis_inference_id'
-        ],
-        body: [
-          'chat_completion_request'
-        ],
-        query: []
-      },
       'inference.put': {
         path: [
           'task_type',
@@ -171,17 +162,6 @@ export default class Inference {
           'service',
           'service_settings',
           'task_settings'
-        ],
-        query: []
-      },
-      'inference.put_eis': {
-        path: [
-          'task_type',
-          'eis_inference_id'
-        ],
-        body: [
-          'service',
-          'service_settings'
         ],
         query: []
       },
@@ -578,53 +558,6 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         inference_id: params.inference_id
-      }
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
-    * Perform a chat completion task through the Elastic Inference Service (EIS). Perform a chat completion inference task with the `elastic` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-post-eis-chat-completion | Elasticsearch API documentation}
-    */
-  async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePostEisChatCompletionResponse>
-  async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePostEisChatCompletionResponse, unknown>>
-  async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest, options?: TransportRequestOptions): Promise<T.InferencePostEisChatCompletionResponse>
-  async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['inference.post_eis_chat_completion']
-
-    const userQuery = params?.querystring
-    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
-
-    let body: any = params.body ?? undefined
-    for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        body = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
-      }
-    }
-
-    const method = 'POST'
-    const path = `/_inference/chat_completion/${encodeURIComponent(params.eis_inference_id.toString())}/_stream`
-    const meta: TransportRequestMetadata = {
-      name: 'inference.post_eis_chat_completion',
-      pathParts: {
-        eis_inference_id: params.eis_inference_id
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -1028,64 +961,6 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         cohere_inference_id: params.cohere_inference_id
-      }
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
-    * Create an Elastic Inference Service (EIS) inference endpoint. Create an inference endpoint to perform an inference task through the Elastic Inference Service (EIS).
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-eis | Elasticsearch API documentation}
-    */
-  async putEis (this: That, params: T.InferencePutEisRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutEisResponse>
-  async putEis (this: That, params: T.InferencePutEisRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutEisResponse, unknown>>
-  async putEis (this: That, params: T.InferencePutEisRequest, options?: TransportRequestOptions): Promise<T.InferencePutEisResponse>
-  async putEis (this: That, params: T.InferencePutEisRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['inference.put_eis']
-
-    const userQuery = params?.querystring
-    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
-
-    let body: Record<string, any> | string | undefined
-    const userBody = params?.body
-    if (userBody != null) {
-      if (typeof userBody === 'string') {
-        body = userBody
-      } else {
-        body = { ...userBody }
-      }
-    }
-
-    for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
-      }
-    }
-
-    const method = 'PUT'
-    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.eis_inference_id.toString())}`
-    const meta: TransportRequestMetadata = {
-      name: 'inference.put_eis',
-      pathParts: {
-        task_type: params.task_type,
-        eis_inference_id: params.eis_inference_id
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

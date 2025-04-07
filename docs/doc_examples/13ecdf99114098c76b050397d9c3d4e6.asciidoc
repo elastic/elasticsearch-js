@@ -3,8 +3,7 @@
 
 [source, js]
 ----
-const response = await client.inference.inference({
-  task_type: "sparse_embedding",
+const response = await client.inference.sparseEmbedding({
   inference_id: "my-elser-model",
   input:
     "The sky above the port was the color of television tuned to a dead channel.",
