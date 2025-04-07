@@ -13018,12 +13018,19 @@ export interface IngestInferenceProcessor extends IngestProcessorBase {
   target_field?: Field
   field_map?: Record<Field, any>
   inference_config?: IngestInferenceConfig
+  input_output?: IngestInputConfig[]
+  ignore_missing?: boolean
 }
 
 export interface IngestIngest {
   _redact?: IngestRedact
   timestamp: DateTime
   pipeline?: Name
+}
+
+export interface IngestInputConfig {
+  input_field: string
+  output_field: string
 }
 
 export interface IngestIpLocationProcessor extends IngestProcessorBase {
