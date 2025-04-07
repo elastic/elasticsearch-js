@@ -8039,25 +8039,6 @@ client.inference.get({ ... })
 ** *`inference_id` (Optional, string)*: The inference Id
 
 [discrete]
-==== post_eis_chat_completion
-Perform a chat completion task through the Elastic Inference Service (EIS).
-
-Perform a chat completion inference task with the `elastic` service.
-
-{ref}/post-inference-api.html[Endpoint documentation]
-[source,ts]
-----
-client.inference.postEisChatCompletion({ eis_inference_id })
-----
-
-[discrete]
-==== Arguments
-
-* *Request (object):*
-** *`eis_inference_id` (string)*: The unique identifier of the inference endpoint.
-** *`chat_completion_request` (Optional, { messages, model, max_completion_tokens, stop, temperature, tool_choice, tools, top_p })*
-
-[discrete]
 ==== put
 Create an inference endpoint.
 When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
@@ -8276,27 +8257,6 @@ These settings are specific to the `cohere` service.
 ** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
 ** *`task_settings` (Optional, { input_type, return_documents, top_n, truncate })*: Settings to configure the inference task.
 These settings are specific to the task type you specified.
-
-[discrete]
-==== put_eis
-Create an Elastic Inference Service (EIS) inference endpoint.
-
-Create an inference endpoint to perform an inference task through the Elastic Inference Service (EIS).
-
-[source,ts]
-----
-client.inference.putEis({ task_type, eis_inference_id, service, service_settings })
-----
-
-[discrete]
-==== Arguments
-
-* *Request (object):*
-** *`task_type` (Enum("chat_completion"))*: The type of the inference task that the model will perform.
-NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
-** *`eis_inference_id` (string)*: The unique identifier of the inference endpoint.
-** *`service` (Enum("elastic"))*: The type of service supported for the specified task type. In this case, `elastic`.
-** *`service_settings` ({ model_id, rate_limit })*: Settings used to install the inference model. These settings are specific to the `elastic` service.
 
 [discrete]
 ==== put_elasticsearch
