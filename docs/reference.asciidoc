@@ -8287,7 +8287,6 @@ Create an Elastic Inference Service (EIS) inference endpoint.
 
 Create an inference endpoint to perform an inference task through the Elastic Inference Service (EIS).
 
-{ref}/infer-service-elastic.html[Endpoint documentation]
 [source,ts]
 ----
 client.inference.putEis({ task_type, eis_inference_id, service, service_settings })
