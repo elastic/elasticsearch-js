@@ -1,5 +1,5 @@
 ---
-navigation_title: "Elasticsearch JavaScript Client"
+navigation_title: "Release notes"
 ---
 
 # Elasticsearch JavaScript Client release notes [elasticsearch-javascript-client-release-notes]
