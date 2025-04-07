@@ -210,43 +210,6 @@ export default class Inference {
   }
 
   /**
-    * Perform a chat completion task through the Elastic Inference Service (EIS). Perform a chat completion inference task with the `elastic` service.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/post-inference-api.html | Elasticsearch API documentation}
-    */
-  async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest | TB.InferencePostEisChatCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePostEisChatCompletionResponse>
-  async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest | TB.InferencePostEisChatCompletionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePostEisChatCompletionResponse, unknown>>
-  async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest | TB.InferencePostEisChatCompletionRequest, options?: TransportRequestOptions): Promise<T.InferencePostEisChatCompletionResponse>
-  async postEisChatCompletion (this: That, params: T.InferencePostEisChatCompletionRequest | TB.InferencePostEisChatCompletionRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['eis_inference_id']
-    const acceptedBody: string[] = ['chat_completion_request']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
-
-    for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        body = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'POST'
-    const path = `/_inference/chat_completion/${encodeURIComponent(params.eis_inference_id.toString())}/_stream`
-    const meta: TransportRequestMetadata = {
-      name: 'inference.post_eis_chat_completion',
-      pathParts: {
-        eis_inference_id: params.eis_inference_id
-      }
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
     * Create an inference endpoint. When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/put-inference-api.html | Elasticsearch API documentation}
     */
@@ -556,51 +519,6 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         cohere_inference_id: params.cohere_inference_id
-      }
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
-    * Create an Elastic Inference Service (EIS) inference endpoint. Create an inference endpoint to perform an inference task through the Elastic Inference Service (EIS).
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/infer-service-elastic.html | Elasticsearch API documentation}
-    */
-  async putEis (this: That, params: T.InferencePutEisRequest | TB.InferencePutEisRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutEisResponse>
-  async putEis (this: That, params: T.InferencePutEisRequest | TB.InferencePutEisRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutEisResponse, unknown>>
-  async putEis (this: That, params: T.InferencePutEisRequest | TB.InferencePutEisRequest, options?: TransportRequestOptions): Promise<T.InferencePutEisResponse>
-  async putEis (this: That, params: T.InferencePutEisRequest | TB.InferencePutEisRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'eis_inference_id']
-    const acceptedBody: string[] = ['service', 'service_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
-
-    for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'PUT'
-    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.eis_inference_id.toString())}`
-    const meta: TransportRequestMetadata = {
-      name: 'inference.put_eis',
-      pathParts: {
-        task_type: params.task_type,
-        eis_inference_id: params.eis_inference_id
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
