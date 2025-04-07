@@ -36,4 +36,4 @@ To check for security updates, go to [Security announcements for the Elastic sta
 
   Docstrings for types that differ between stack and serverless have also been updated to indicate when that is the case.
 
-### Fixes [elasticsearch-javascript-client-900-fixes]
+% ### Fixes [elasticsearch-javascript-client-900-fixes]
