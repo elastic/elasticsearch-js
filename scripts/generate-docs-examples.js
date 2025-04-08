@@ -77,6 +77,7 @@ ${source.trim()}
 }
 
 const options = minimist(process.argv.slice(2), {
+  boolean: ['debug'],
   string: ['version'],
   default: {
     version: 'master'
@@ -88,7 +89,7 @@ generate(options.version)
   .catch(err => log.fail(err.message))
   .finally(() => {
     const keys = Object.keys(failures)
-    if (keys.length > 0) {
+    if (keys.length > 0 && options.debug) {
       let message = 'Some examples failed to generate:\n\n'
       for (const key of keys) {
         message += `${key}: ${failures[key]}\n`
