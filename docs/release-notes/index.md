@@ -1,5 +1,5 @@
 ---
-navigation_title: "JavaScript client release notes"
+navigation_title: "Elasticsearch JavaScript Client"
 mapped_pages:
   - https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/changelog-client.html
 ---
@@ -36,4 +36,4 @@ To check for security updates, go to [Security announcements for the Elastic sta
 
   Docstrings for types that differ between stack and serverless have also been updated to indicate when that is the case.
 
-### Fixes [elasticsearch-javascript-client-900-fixes]
+% ### Fixes [elasticsearch-javascript-client-900-fixes]
