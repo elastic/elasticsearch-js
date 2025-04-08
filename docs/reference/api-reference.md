@@ -13530,8 +13530,6 @@ Multi-target syntax is supported.
 - **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
-- **`timeout` (Optional, string | -1 | 0)**: The period of time to wait for a response.
-If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.snapshot.create [_snapshot.create]
 Create a snapshot.
