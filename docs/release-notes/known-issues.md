@@ -5,6 +5,10 @@ navigation_title: "Known issues"
 
 # Elasticsearch JavaScript Client known issues [elasticsearch-javascript-client-known-issues]
 
+## 9.0.0 
+
+_No known issues_
+
 % Use the following template to add entries to this page.
 
 % :::{dropdown} Title of known issue
@@ -17,4 +21,4 @@ navigation_title: "Known issues"
 % **Resolved**
 % On [Month/Day/Year], this issue was resolved.
 
-:::
+% :::
