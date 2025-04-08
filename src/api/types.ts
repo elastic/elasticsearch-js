@@ -33924,16 +33924,13 @@ export interface SnapshotCloneRequest extends RequestBase {
     * If the master node is not available before the timeout expires, the request fails and returns an error.
     * To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
-  /** The period of time to wait for a response.
-    * If no response is received before the timeout expires, the request fails and returns an error. */
-  timeout?: Duration
   /** A comma-separated list of indices to include in the snapshot.
     * Multi-target syntax is supported. */
   indices: string
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, target_snapshot?: never, master_timeout?: never, timeout?: never, indices?: never }
+  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, target_snapshot?: never, master_timeout?: never, indices?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, target_snapshot?: never, master_timeout?: never, timeout?: never, indices?: never }
+  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, target_snapshot?: never, master_timeout?: never, indices?: never }
 }
 
 export type SnapshotCloneResponse = AcknowledgedResponseBase
