@@ -569,6 +569,38 @@ export default class Indices {
   }
 
   /**
+    * Deletes the data stream options of the selected data streams.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/index.html | Elasticsearch API documentation}
+    */
+  async deleteDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async deleteDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async deleteDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async deleteDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['name']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_options`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete_data_stream_options',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Delete an index template. The provided <index-template> may contain multiple template names separated by a comma. If multiple template names are specified then there is no wildcard support and the provided names should match completely with existing templates.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-delete-template.html | Elasticsearch API documentation}
     */
@@ -1164,6 +1196,38 @@ export default class Indices {
   }
 
   /**
+    * Returns the data stream options of the selected data streams.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/index.html | Elasticsearch API documentation}
+    */
+  async getDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['name']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_options`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_data_stream_options',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Get mapping definitions. Retrieves mapping definitions for one or more fields. For data streams, the API retrieves field mappings for the stream’s backing indices. This API is useful if you don't need a complete mapping or if an index mapping contains a large number of fields.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/indices-get-field-mapping.html | Elasticsearch API documentation}
     */
@@ -1662,6 +1726,38 @@ export default class Indices {
     const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_lifecycle`
     const meta: TransportRequestMetadata = {
       name: 'indices.put_data_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Updates the data stream options of the selected data streams.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/index.html | Elasticsearch API documentation}
+    */
+  async putDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['name']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_options`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_data_stream_options',
       pathParts: {
         name: params.name
       }
