@@ -1,0 +1,391 @@
+/*
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+'use strict'
+
+const { join, sep } = require('node:path')
+const { readFileSync, writeFileSync, promises } = require('node:fs')
+const yaml = require('js-yaml')
+const { rimraf } = require('rimraf')
+const { mkdir } = promises
+
+const generatedTestsPath = join(__dirname, '..', '..', 'generated-tests')
+
+const stackSkips = [
+  // test builder doesn't support "(local)" or `exists` action
+  'indices/resolve_cluster.yml'
+]
+
+const serverlessSkips = [
+  // TODO: sql.getAsync does not set a content-type header but ES expects one
+  // transport only sets a content-type if the body is not empty
+  'sql/10_basic.yml',
+  // TODO: bulk call in setup fails due to "malformed action/metadata line"
+  // bulk body is being sent as a Buffer, unsure if related.
+  'transform/10_basic.yml',
+  // TODO: scripts_painless_execute expects {"result":"0.1"}, gets {"result":"0"}
+  // body sent as Buffer, unsure if related
+  'script/10_basic.yml',
+  // TODO: expects {"outlier_detection.auc_roc.value":0.99995}, gets {"outlier_detection.auc_roc.value":0.5}
+  // remove if/when https://github.com/elastic/elasticsearch-clients-tests/issues/37 is resolved
+  'machine_learning/data_frame_evaluate.yml',
+  // TODO: Cannot perform requested action because job [job-crud-test-apis] is not open
+  'machine_learning/jobs_crud.yml',
+  // TODO: test runner needs to support ignoring 410 errors
+  'enrich/10_basic.yml',
+  // TODO: parameter `enabled` is not allowed in source
+  // Same underlying problem as https://github.com/elastic/elasticsearch-clients-tests/issues/55
+  'cluster/component_templates.yml',
+  // TODO: expecting `ct_field` field mapping to be returned, but instead only finds `field`
+  'indices/simulate_template.yml',
+  'indices/simulate_index_template.yml',
+  // TODO: test currently times out
+  'inference/10_basic.yml',
+  // TODO: Fix: "Trained model deployment [test_model] is not allocated to any nodes"
+  'machine_learning/20_trained_model_serverless.yml',
+  // TODO: query_rules api not available yet
+  'query_rules/10_query_rules.yml',
+  'query_rules/20_rulesets.yml',
+  'query_rules/30_test.yml',
+  // TODO: security.putRole API not available
+  'security/50_roles_serverless.yml',
+  // TODO: expected undefined to equal 'some_table'
+  'entsearch/50_connector_updates.yml',
+  // TODO: resource_not_found_exception
+  'tasks_serverless.yml',
+]
+
+function parse (data) {
+  let doc
+  try {
+    doc = yaml.load(data, { schema: yaml.CORE_SCHEMA })
+  } catch (err) {
+    console.error(err)
+    return
+  }
+  return doc
+}
+
+async function build (yamlFiles, clientOptions) {
+  await rimraf(generatedTestsPath)
+  await mkdir(generatedTestsPath, { recursive: true })
+
+  for (const file of yamlFiles) {
+    const apiName = file.split(`${sep}tests${sep}`)[1]
+    const data = readFileSync(file, 'utf8')
+
+    const tests = data
+      .split('\n---\n')
+      .map(s => s.trim())
+      // empty strings
+      .filter(Boolean)
+      .map(parse)
+      // null values
+      .filter(Boolean)
+
+    let code = "import { test } from 'tap'\n"
+    code += "import { Client } from '@elastic/elasticsearch'\n\n"
+
+    const requires = tests.find(test => test.requires != null)
+    let skip = new Set()
+    if (requires != null) {
+      const { serverless = true, stack = true } = requires.requires
+      if (!serverless) skip.add('process.env.TEST_ES_SERVERLESS === "1"')
+      if (!stack) skip.add('process.env.TEST_ES_STACK === "1"')
+    }
+
+    if (stackSkips.includes(apiName)) skip.add('process.env.TEST_ES_STACK === "1"')
+    if (serverlessSkips.includes(apiName)) skip.add('process.env.TEST_ES_SERVERLESS === "1"')
+
+    if (skip.size > 0) {
+      code += `test('${apiName}', { skip: ${Array.from(skip).join(' || ')} }, t => {\n`
+    } else {
+      code += `test('${apiName}', t => {\n`
+    }
+
+    for (const test of tests) {
+      if (test.setup != null) {
+        code += '  t.before(async () => {\n'
+        code += indent(buildActions(test.setup), 4)
+        code += '  })\n\n'
+      }
+
+      if (test.teardown != null) {
+        code += '  t.after(async () => {\n'
+        code += indent(buildActions(test.teardown), 4)
+        code += '  })\n\n'
+      }
+
+      for (const key of Object.keys(test).filter(k => !['setup', 'teardown', 'requires'].includes(k))) {
+        if (test[key].find(action => Object.keys(action)[0] === 'skip') != null) {
+          code += `  t.test('${key}', { skip: true }, async t => {\n`
+        } else {
+          code += `  t.test('${key}', async t => {\n`
+        }
+        code += indent(buildActions(test[key]), 4)
+        code += '\n    t.end()\n'
+        code += '  })\n'
+      }
+      // if (test.requires != null) requires = test.requires
+    }
+
+    code += '\n  t.end()\n'
+    code += '})\n'
+
+    const testDir = join(generatedTestsPath, apiName.split(sep).slice(0, -1).join(sep))
+    const testFile = join(testDir, apiName.split(sep).pop().replace(/\.ya?ml$/, '.mjs'))
+    await mkdir(testDir, { recursive: true })
+    writeFileSync(testFile, code, 'utf8')
+  }
+
+  function buildActions (actions) {
+    let code = `const client = new Client(${JSON.stringify(clientOptions, null, 2)})\n`
+    code += 'let response\n\n'
+
+    for (const action of actions) {
+      const key = Object.keys(action)[0]
+      switch (key) {
+        case 'do':
+          code += buildDo(action.do)
+          break
+        case 'set':
+          code += buildSet(action.set)
+          break
+        case 'transform_and_set':
+          code += buildTransformAndSet(action.transform_and_set)
+          break
+        case 'match':
+          code += buildMatch(action.match)
+          break
+        case 'lt':
+          code += buildLt(action.lt)
+          break
+        case 'lte':
+          code += buildLte(action.lte)
+          break
+        case 'gt':
+          code += buildGt(action.gt)
+          break
+        case 'gte':
+          code += buildGte(action.gte)
+          break
+        case 'length':
+          code += buildLength(action.length)
+          break
+        case 'is_true':
+          code += buildIsTrue(action.is_true)
+          break
+        case 'is_false':
+          code += buildIsFalse(action.is_false)
+          break
+        case 'contains':
+          code += buildContains(action.contains)
+        case 'skip':
+          break
+        default:
+          break
+      }
+    }
+    return code
+  }
+}
+
+function buildDo (action) {
+  let code = ''
+  const keys = Object.keys(action)
+  if (keys.includes('catch')) {
+    code += 'try {\n'
+    code += indent(buildRequest(action))
+    code += '} catch (err) {\n'
+    code += `  t.match(err.message, ${buildValLiteral(action.catch)})\n`
+    code += '}\n'
+  } else {
+    code += buildRequest(action)
+  }
+  return code
+}
+
+function buildRequest(action) {
+  let code = ''
+  for (const key of Object.keys(action)) {
+    if (key === 'catch') continue
+    const params = action[key]
+    const options = { meta: true }
+    if (params.ignore != null) {
+      if (Array.isArray(params.ignore)) {
+        options.ignore = params.ignore
+      } else {
+        options.ignore = [params.ignore]
+      }
+    }
+    code += `response = await client.${toCamelCase(key)}(${buildApiParams(action[key])}, ${JSON.stringify(options)})\n`
+  }
+  return code
+}
+
+function buildSet (action) {
+  const key = Object.keys(action)[0]
+  const varName = action[key]
+  const path = buildPath(key)
+  return `let ${varName} = response.body${path}\n`
+}
+
+function buildTransformAndSet (action) {
+  return `// TODO buildTransformAndSet: ${JSON.stringify(action)}\n`
+}
+
+function buildMatch (action) {
+  const key = Object.keys(action)[0]
+  const path = buildPath(key)
+  const val = buildValLiteral(action[key])
+  let lookup = `response.body${path}`
+
+  if (lookup === 'response.body[body]') lookup = 'JSON.stringify(response.body) === "" ? null : JSON.stringify(response.body)'
+  if (lookup === "response.body['']") lookup = 'JSON.stringify(response.body) === "" ? null : JSON.stringify(response.body)'
+
+  if (val.startsWith('/')) {
+    return `t.ok(${lookup}.match(${val}), '${key} should match regex ${val}')\n`
+  } else if (typeof action[key] === 'object') {
+    return `t.match(${lookup}, ${val})\n`
+  } else {
+    return `t.equal(${lookup}, ${val})\n`
+  }
+}
+
+function buildLt (action) {
+  const key = Object.keys(action)[0]
+  const path = buildPath(key)
+  const val = buildValLiteral(action[key])
+  return `t.ok(response.body${path} < ${val})\n`
+}
+
+function buildLte (action) {
+  const key = Object.keys(action)[0]
+  const path = buildPath(key)
+  const val = buildValLiteral(action[key])
+  return `t.ok(response.body${path} <= ${val})\n`
+}
+
+function buildGt (action) {
+  const key = Object.keys(action)[0]
+  const path = buildPath(key)
+  const val = buildValLiteral(action[key])
+  return `t.ok(response.body${path} > ${val})\n`
+}
+
+function buildGte (action) {
+  const key = Object.keys(action)[0]
+  const path = buildPath(key)
+  const val = buildValLiteral(action[key])
+  return `t.ok(response.body${path} >= ${val})\n`
+}
+
+function buildLength (action) {
+  const key = Object.keys(action)[0]
+  const path = buildPath(key)
+  const val = buildValLiteral(action[key])
+  return `t.equal(response.body${path}.length, ${val})\n`
+}
+
+function buildIsTrue (action) {
+  let lookup = `response.body${buildPath(action)}`
+  return `t.ok(${lookup} === "true" || (Boolean(${lookup}) && ${lookup} !== "false"), \`${lookup} should be truthy. found: \$\{JSON.stringify(${lookup})\}\`)\n`
+}
+
+function buildIsFalse (action) {
+  let lookup = `response.body${buildPath(action)}`
+  return `t.ok(${lookup} === "false" || !Boolean(${lookup}), \`${lookup} should be falsy. found: \$\{JSON.stringify(${lookup})\}\`)\n`
+}
+
+function buildContains (action) {
+  const key = Object.keys(action)[0]
+  const path = buildPath(key)
+  const val = buildValLiteral(action[key])
+  return `t.ok(response.body${path}.includes(${val}))\n`
+}
+
+function buildApiParams (params) {
+  if (Object.keys(params).length === 0) {
+    return 'undefined'
+  } else {
+    const out = {}
+    Object.keys(params).filter(k => k !== 'ignore').forEach(k => out[k] = params[k])
+    return buildValLiteral(out)
+  }
+}
+
+function toCamelCase (name) {
+  return name.replace(/_([a-z])/g, g => g[1].toUpperCase())
+}
+
+function indent (str, spaces) {
+  const tabs = ' '.repeat(spaces)
+  return str.replace(/\s+$/, '').split('\n').map(l => `${tabs}${l}`).join('\n') + '\n'
+}
+
+function buildPath (path) {
+  if (path === 'response') return ''
+  return path.split('.').map(step => {
+    if (step === 'response' || step === 'body') {
+      return ''
+    } else if (parseInt(step, 10).toString() === step) {
+      return `[${step}]`
+    } else if (step.match(/^\$[a-zA-Z0-9_]+$/)) {
+      const lookup = step.replace(/^\$/, '')
+      if (lookup === 'body') return ''
+      return `[${lookup}]`
+    } else if (step === '') {
+      return ''
+    } else {
+      return `['${step}']`
+    }
+  }).join('')
+}
+
+function buildValLiteral (val) {
+  if (isRegExp(val)) {
+    return JSON.stringify(val).replace(/^"/, '').replace(/"$/, '').replace(/\\\\/, '\\')
+  } else if (isVariable(val)) {
+    if (val === '$body') return ''
+    return val.replace(/^\$/, '')
+  } else if (isPlainObject(val)) {
+    return JSON.stringify(cleanObject(val), null, 2).replace(/"\$([a-zA-Z0-9_]+)"/g, '$1')
+  } else {
+    return JSON.stringify(val)
+  }
+}
+
+function isRegExp (str) {
+  return typeof str === 'string' && str.startsWith('/') && str.endsWith('/')
+}
+
+function isVariable (str) {
+  return typeof str === 'string' && str.match(/^\$[a-zA-Z0-9_]+$/) != null
+}
+
+function cleanObject (obj) {
+  Object.keys(obj).forEach(key => {
+    let val = obj[key]
+    if (typeof val === 'string' && val.trim().startsWith('{') && val.trim().endsWith('}')) {
+      // attempt to parse as object
+      try {
+        val = JSON.parse(val)
+      } catch {
+      }
+    } else if (isPlainObject(val)) {
+      val = cleanObject(val)
+    } else if (Array.isArray(val)) {
+      val = val.map(item => isPlainObject(item) ? cleanObject(item) : item)
+    }
+    obj[key] = val
+  })
+  return obj
+}
+
+function isPlainObject(obj) {
+  return typeof obj === 'object' && !Array.isArray(obj) && obj != null
+}
+
+module.exports = build
