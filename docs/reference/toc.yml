@@ -32,3 +32,4 @@ toc:
       - file: update_by_query_examples.md
       - file: reindex_examples.md
   - file: client-helpers.md
+  - file: timeout-best-practices.md
