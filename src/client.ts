@@ -35,7 +35,7 @@ import { RedactionOptions } from '@elastic/transport/lib/Transport'
 import BaseConnection, { prepareHeaders, ConnectionOptions } from '@elastic/transport/lib/connection/BaseConnection'
 import SniffingTransport from './sniffingTransport'
 import Helpers from './helpers'
-import API from './api'
+import API from '../src/api/index'
 import packageJson from '../package.json'
 import transportPackageJson from '@elastic/transport/package.json'
 
