@@ -132,15 +132,6 @@ export interface EsqlColumn {
   type: string
 }
 
-export type EsqlValue = any[]
-
-export type EsqlRow = EsqlValue[]
-
-export interface EsqlResponse {
-  columns: EsqlColumn[]
-  values: EsqlRow[]
-}
-
 export interface EsqlHelper {
   toRecords: <TDocument>() => Promise<EsqlToRecords<TDocument>>
   toArrowTable: () => Promise<Table<TypeMap>>
@@ -963,7 +954,7 @@ export default class Helpers {
   esql (params: T.EsqlQueryRequest, reqOptions: TransportRequestOptions = {}): EsqlHelper {
     const client = this[kClient]
 
-    function toRecords<TDocument> (response: EsqlResponse): TDocument[] {
+    function toRecords<TDocument> (response: T.EsqlEsqlResult): TDocument[] {
       const { columns, values } = response
       return values.map(row => {
         const doc: Partial<TDocument> = {}
@@ -990,8 +981,7 @@ export default class Helpers {
 
         params.format = 'json'
         params.columnar = false
-        // @ts-expect-error it's typed as ArrayBuffer but we know it will be JSON
-        const response: EsqlResponse = await client.esql.query(params, reqOptions)
+        const response = await client.esql.query(params, reqOptions)
         const records: TDocument[] = toRecords(response)
         const { columns } = response
         return { records, columns }
@@ -1005,7 +995,8 @@ export default class Helpers {
 
         params.format = 'arrow'
 
-        const response = await client.esql.query(params, reqOptions)
+        // @ts-expect-error the return type will be ArrayBuffer when the format is set to 'arrow'
+        const response: ArrayBuffer = await client.esql.query(params, reqOptions)
         return tableFromIPC(response)
       },
 
@@ -1018,7 +1009,8 @@ export default class Helpers {
 
         params.format = 'arrow'
 
-        const response = await client.esql.query(params, reqOptions)
+        // @ts-expect-error the return type will be ArrayBuffer when the format is set to 'arrow'
+        const response: ArrayBuffer = await client.esql.query(params, reqOptions)
         return RecordBatchStreamReader.from(response)
       }
     }
