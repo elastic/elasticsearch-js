@@ -144,6 +144,8 @@ async function build (yamlFiles, clientOptions) {
     let code = `const client = new Client(${JSON.stringify(clientOptions, null, 2)})\n`
     code += 'let response\n\n'
 
+    const vars = new Set()
+
     for (const action of actions) {
       const key = Object.keys(action)[0]
       switch (key) {
@@ -151,7 +153,9 @@ async function build (yamlFiles, clientOptions) {
           code += buildDo(action.do)
           break
         case 'set':
-          code += buildSet(action.set)
+          const setResult = buildSet(action.set, vars)
+          vars.add(setResult.varName)
+          code += setResult.code
           break
         case 'transform_and_set':
           code += buildTransformAndSet(action.transform_and_set)
@@ -225,11 +229,18 @@ function buildRequest(action) {
   return code
 }
 
-function buildSet (action) {
+function buildSet (action, vars) {
   const key = Object.keys(action)[0]
   const varName = action[key]
-  const path = buildPath(key)
-  return `let ${varName} = response.body${path}\n`
+  const lookup = buildLookup(key)
+
+  let code = ''
+  if (vars.has(varName)) {
+    code = `${varName} = ${lookup}\n`
+  } else {
+    code =`let ${varName} = ${lookup}\n`
+  }
+  return { code, varName }
 }
 
 function buildTransformAndSet (action) {
