@@ -8039,6 +8039,42 @@ client.inference.get({ ... })
 ** *`inference_id` (Optional, string)*: The inference Id
 
 [discrete]
+==== inference
+Perform inference on the service.
+
+This API enables you to use machine learning models to perform specific tasks on data that you provide as an input.
+It returns a response with the results of the tasks.
+The inference endpoint you use can perform one specific task that has been defined when the endpoint was created with the create inference API.
+
+For details about using this API with a service, such as Amazon Bedrock, Anthropic, or HuggingFace, refer to the service-specific documentation.
+
+> info
+> The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
+
+{ref}/post-inference-api.html[Endpoint documentation]
+[source,ts]
+----
+client.inference.inference({ inference_id, input })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`inference_id` (string)*: The unique identifier for the inference endpoint.
+** *`input` (string | string[])*: The text on which you want to perform the inference task.
+It can be a single string or an array.
+
+> info
+> Inference endpoints for the `completion` task type currently only support a single string as input.
+** *`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion" | "chat_completion"))*: The type of inference task that the model performs.
+** *`query` (Optional, string)*: The query input, which is required only for the `rerank` task.
+It is not required for other tasks.
+** *`task_settings` (Optional, User-defined value)*: Task settings for the individual inference request.
+These settings are specific to the task type you specified and override the task settings specified when initializing the service.
+** *`timeout` (Optional, string | -1 | 0)*: The amount of time to wait for the inference request to complete.
+
+[discrete]
 ==== put
 Create an inference endpoint.
 When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.

@@ -13341,6 +13341,15 @@ export interface InferenceInferenceEndpointInfo extends InferenceInferenceEndpoi
   task_type: InferenceTaskType
 }
 
+export interface InferenceInferenceResult {
+  text_embedding_bytes?: InferenceTextEmbeddingByteResult[]
+  text_embedding_bits?: InferenceTextEmbeddingByteResult[]
+  text_embedding?: InferenceTextEmbeddingResult[]
+  sparse_embedding?: InferenceSparseEmbeddingResult[]
+  completion?: InferenceCompletionResult[]
+  rerank?: InferenceRankedDocument[]
+}
+
 export interface InferenceJinaAIServiceSettings {
   api_key: string
   model_id?: string
@@ -13533,6 +13542,20 @@ export interface InferenceGetRequest extends RequestBase {
 export interface InferenceGetResponse {
   endpoints: InferenceInferenceEndpointInfo[]
 }
+
+export interface InferenceInferenceRequest extends RequestBase {
+  task_type?: InferenceTaskType
+  inference_id: Id
+  timeout?: Duration
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    query?: string
+    input: string | string[]
+    task_settings?: InferenceTaskSettings
+  }
+}
+
+export type InferenceInferenceResponse = InferenceInferenceResult
 
 export interface InferencePutRequest extends RequestBase {
   task_type?: InferenceTaskType
