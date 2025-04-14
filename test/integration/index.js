@@ -11,6 +11,9 @@ process.on('unhandledRejection', function (err) {
 })
 
 const assert = require('node:assert')
+const url = require('node:url')
+const fs = require('node:fs')
+const path = require('node:path')
 const globby = require('globby')
 const downloadArtifacts = require('../../scripts/download-artifacts')
 
@@ -43,6 +46,13 @@ if (require.main === module) {
     clientOptions.auth = { apiKey }
   } else {
     clientOptions.auth = { username: 'elastic', password }
+  }
+  const nodeUrl = new url.URL(node)
+  if (nodeUrl.protocol === 'https:') {
+    clientOptions.tls = {
+      ca: fs.readFileSync(path.join(__dirname, '..', '..', '.buildkite', 'certs', 'ca.crt'), 'utf8'),
+      rejectUnauthorized: false
+    }
   }
   doTestBuilder(clientOptions)
     .then(() => process.exit(0))
