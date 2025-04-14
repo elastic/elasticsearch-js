@@ -213,10 +213,18 @@ function buildDo (action) {
 
 function buildRequest(action) {
   let code = ''
+
+  const options = { meta: true }
+
   for (const key of Object.keys(action)) {
     if (key === 'catch') continue
+
+    if (key === 'headers') {
+      options.headers = action.headers
+      continue
+    }
+
     const params = action[key]
-    const options = { meta: true }
     if (params.ignore != null) {
       if (Array.isArray(params.ignore)) {
         options.ignore = params.ignore
@@ -224,6 +232,7 @@ function buildRequest(action) {
         options.ignore = [params.ignore]
       }
     }
+
     code += `response = await client.${toCamelCase(key)}(${buildApiParams(action[key])}, ${JSON.stringify(options)})\n`
   }
   return code
