@@ -54,7 +54,7 @@ export default class Xpack {
 
   /**
     * Get information. The information provided by the API includes: * Build information including the build number and timestamp. * License information about the currently installed license. * Feature information for the features that are currently enabled and available under the current license.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-info | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-info | Elasticsearch API documentation}
     */
   async info (this: That, params?: T.XpackInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.XpackInfoResponse>
   async info (this: That, params?: T.XpackInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.XpackInfoResponse, unknown>>
@@ -97,7 +97,7 @@ export default class Xpack {
 
   /**
     * Get usage information. Get information about the features that are currently enabled and available under the current license. The API also provides some usage statistics.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-xpack | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-xpack | Elasticsearch API documentation}
     */
   async usage (this: That, params?: T.XpackUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.XpackUsageResponse>
   async usage (this: That, params?: T.XpackUsageRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.XpackUsageResponse, unknown>>

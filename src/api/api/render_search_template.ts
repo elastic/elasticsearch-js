@@ -43,7 +43,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 
 /**
   * Render a search template. Render a search template as a search request body.
-  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-render-search-template | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-render-search-template | Elasticsearch API documentation}
   */
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RenderSearchTemplateResponse>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RenderSearchTemplateResponse, unknown>>

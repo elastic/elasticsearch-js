@@ -355,7 +355,7 @@ export default class Cat {
 
   /**
     * Get aliases. Get the cluster's index aliases, including filter and routing information. This API does not return data stream aliases. IMPORTANT: CAT APIs are only intended for human consumption using the command line or the Kibana console. They are not intended for use by applications. For application consumption, use the aliases API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-aliases | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-aliases | Elasticsearch API documentation}
     */
   async aliases (this: That, params?: T.CatAliasesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatAliasesResponse>
   async aliases (this: That, params?: T.CatAliasesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatAliasesResponse, unknown>>
@@ -408,7 +408,7 @@ export default class Cat {
 
   /**
     * Get shard allocation information. Get a snapshot of the number of shards allocated to each data node and their disk space. IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-allocation | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-allocation | Elasticsearch API documentation}
     */
   async allocation (this: That, params?: T.CatAllocationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatAllocationResponse>
   async allocation (this: That, params?: T.CatAllocationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatAllocationResponse, unknown>>
@@ -461,7 +461,7 @@ export default class Cat {
 
   /**
     * Get component templates. Get information about component templates in a cluster. Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases. IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get component template API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-component-templates | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-component-templates | Elasticsearch API documentation}
     */
   async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatComponentTemplatesResponse>
   async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatComponentTemplatesResponse, unknown>>
@@ -514,7 +514,7 @@ export default class Cat {
 
   /**
     * Get a document count. Get quick access to a document count for a data stream, an index, or an entire cluster. The document count only includes live documents, not deleted documents which have not yet been removed by the merge process. IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the count API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-count | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-count | Elasticsearch API documentation}
     */
   async count (this: That, params?: T.CatCountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatCountResponse>
   async count (this: That, params?: T.CatCountRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatCountResponse, unknown>>
@@ -567,7 +567,7 @@ export default class Cat {
 
   /**
     * Get field data cache information. Get the amount of heap memory currently used by the field data cache on every data node in the cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes stats API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-fielddata | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-fielddata | Elasticsearch API documentation}
     */
   async fielddata (this: That, params?: T.CatFielddataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatFielddataResponse>
   async fielddata (this: That, params?: T.CatFielddataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatFielddataResponse, unknown>>
@@ -620,7 +620,7 @@ export default class Cat {
 
   /**
     * Get the cluster health status. IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the cluster health API. This API is often used to check malfunctioning clusters. To help you track cluster health alongside log files and alerting systems, the API returns timestamps in two formats: `HH:MM:SS`, which is human-readable but includes no date information; `Unix epoch time`, which is machine-sortable and includes date information. The latter format is useful for cluster recoveries that take multiple days. You can use the cat health API to verify cluster health across multiple nodes. You also can use the API to track the recovery of a large cluster over a longer period of time.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-health | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-health | Elasticsearch API documentation}
     */
   async health (this: That, params?: T.CatHealthRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatHealthResponse>
   async health (this: That, params?: T.CatHealthRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatHealthResponse, unknown>>
@@ -663,7 +663,7 @@ export default class Cat {
 
   /**
     * Get CAT help. Get help for the CAT APIs.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-cat | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-cat | Elasticsearch API documentation}
     */
   async help (this: That, params?: T.CatHelpRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatHelpResponse>
   async help (this: That, params?: T.CatHelpRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatHelpResponse, unknown>>
@@ -706,7 +706,7 @@ export default class Cat {
 
   /**
     * Get index information. Get high-level information about indices in a cluster, including backing indices for data streams. Use this request to get the following information for each index in a cluster: - shard count - document count - deleted document count - primary store size - total store size of all shards, including shard replicas These metrics are retrieved directly from Lucene, which Elasticsearch uses internally to power indexing and search. As a result, all document counts include hidden nested documents. To get an accurate count of Elasticsearch documents, use the cat count or count APIs. CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use an index endpoint.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-indices | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-indices | Elasticsearch API documentation}
     */
   async indices (this: That, params?: T.CatIndicesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatIndicesResponse>
   async indices (this: That, params?: T.CatIndicesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatIndicesResponse, unknown>>
@@ -759,7 +759,7 @@ export default class Cat {
 
   /**
     * Get master node information. Get information about the master node, including the ID, bound IP address, and name. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-master | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-master | Elasticsearch API documentation}
     */
   async master (this: That, params?: T.CatMasterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMasterResponse>
   async master (this: That, params?: T.CatMasterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMasterResponse, unknown>>
@@ -802,7 +802,7 @@ export default class Cat {
 
   /**
     * Get data frame analytics jobs. Get configuration and usage information about data frame analytics jobs. IMPORTANT: CAT APIs are only intended for human consumption using the Kibana console or command line. They are not intended for use by applications. For application consumption, use the get data frame analytics jobs statistics API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-ml-data-frame-analytics | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-ml-data-frame-analytics | Elasticsearch API documentation}
     */
   async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlDataFrameAnalyticsResponse>
   async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlDataFrameAnalyticsResponse, unknown>>
@@ -855,7 +855,7 @@ export default class Cat {
 
   /**
     * Get datafeeds. Get configuration and usage information about datafeeds. This API returns a maximum of 10,000 datafeeds. If the Elasticsearch security features are enabled, you must have `monitor_ml`, `monitor`, `manage_ml`, or `manage` cluster privileges to use this API. IMPORTANT: CAT APIs are only intended for human consumption using the Kibana console or command line. They are not intended for use by applications. For application consumption, use the get datafeed statistics API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-ml-datafeeds | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-ml-datafeeds | Elasticsearch API documentation}
     */
   async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlDatafeedsResponse>
   async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlDatafeedsResponse, unknown>>
@@ -908,7 +908,7 @@ export default class Cat {
 
   /**
     * Get anomaly detection jobs. Get configuration and usage information for anomaly detection jobs. This API returns a maximum of 10,000 jobs. If the Elasticsearch security features are enabled, you must have `monitor_ml`, `monitor`, `manage_ml`, or `manage` cluster privileges to use this API. IMPORTANT: CAT APIs are only intended for human consumption using the Kibana console or command line. They are not intended for use by applications. For application consumption, use the get anomaly detection job statistics API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-ml-jobs | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-ml-jobs | Elasticsearch API documentation}
     */
   async mlJobs (this: That, params?: T.CatMlJobsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlJobsResponse>
   async mlJobs (this: That, params?: T.CatMlJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlJobsResponse, unknown>>
@@ -961,7 +961,7 @@ export default class Cat {
 
   /**
     * Get trained models. Get configuration and usage information about inference trained models. IMPORTANT: CAT APIs are only intended for human consumption using the Kibana console or command line. They are not intended for use by applications. For application consumption, use the get trained models statistics API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-ml-trained-models | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-ml-trained-models | Elasticsearch API documentation}
     */
   async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlTrainedModelsResponse>
   async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlTrainedModelsResponse, unknown>>
@@ -1014,7 +1014,7 @@ export default class Cat {
 
   /**
     * Get node attribute information. Get information about custom node attributes. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-nodeattrs | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-nodeattrs | Elasticsearch API documentation}
     */
   async nodeattrs (this: That, params?: T.CatNodeattrsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatNodeattrsResponse>
   async nodeattrs (this: That, params?: T.CatNodeattrsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatNodeattrsResponse, unknown>>
@@ -1057,7 +1057,7 @@ export default class Cat {
 
   /**
     * Get node information. Get information about the nodes in a cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-nodes | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-nodes | Elasticsearch API documentation}
     */
   async nodes (this: That, params?: T.CatNodesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatNodesResponse>
   async nodes (this: That, params?: T.CatNodesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatNodesResponse, unknown>>
@@ -1100,7 +1100,7 @@ export default class Cat {
 
   /**
     * Get pending task information. Get information about cluster-level changes that have not yet taken effect. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the pending cluster tasks API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-pending-tasks | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-pending-tasks | Elasticsearch API documentation}
     */
   async pendingTasks (this: That, params?: T.CatPendingTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatPendingTasksResponse>
   async pendingTasks (this: That, params?: T.CatPendingTasksRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatPendingTasksResponse, unknown>>
@@ -1143,7 +1143,7 @@ export default class Cat {
 
   /**
     * Get plugin information. Get a list of plugins running on each node of a cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-plugins | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-plugins | Elasticsearch API documentation}
     */
   async plugins (this: That, params?: T.CatPluginsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatPluginsResponse>
   async plugins (this: That, params?: T.CatPluginsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatPluginsResponse, unknown>>
@@ -1186,7 +1186,7 @@ export default class Cat {
 
   /**
     * Get shard recovery information. Get information about ongoing and completed shard recoveries. Shard recovery is the process of initializing a shard copy, such as restoring a primary shard from a snapshot or syncing a replica shard from a primary shard. When a shard recovery completes, the recovered shard is available for search and indexing. For data streams, the API returns information about the stream’s backing indices. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the index recovery API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-recovery | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-recovery | Elasticsearch API documentation}
     */
   async recovery (this: That, params?: T.CatRecoveryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatRecoveryResponse>
   async recovery (this: That, params?: T.CatRecoveryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatRecoveryResponse, unknown>>
@@ -1239,7 +1239,7 @@ export default class Cat {
 
   /**
     * Get snapshot repository information. Get a list of snapshot repositories for a cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get snapshot repository API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-repositories | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-repositories | Elasticsearch API documentation}
     */
   async repositories (this: That, params?: T.CatRepositoriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatRepositoriesResponse>
   async repositories (this: That, params?: T.CatRepositoriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatRepositoriesResponse, unknown>>
@@ -1282,7 +1282,7 @@ export default class Cat {
 
   /**
     * Get segment information. Get low-level information about the Lucene segments in index shards. For data streams, the API returns information about the backing indices. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the index segments API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-segments | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-segments | Elasticsearch API documentation}
     */
   async segments (this: That, params?: T.CatSegmentsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatSegmentsResponse>
   async segments (this: That, params?: T.CatSegmentsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatSegmentsResponse, unknown>>
@@ -1335,7 +1335,7 @@ export default class Cat {
 
   /**
     * Get shard information. Get information about the shards in a cluster. For data streams, the API returns information about the backing indices. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-shards | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-shards | Elasticsearch API documentation}
     */
   async shards (this: That, params?: T.CatShardsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatShardsResponse>
   async shards (this: That, params?: T.CatShardsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatShardsResponse, unknown>>
@@ -1388,7 +1388,7 @@ export default class Cat {
 
   /**
     * Get snapshot information. Get information about the snapshots stored in one or more repositories. A snapshot is a backup of an index or running Elasticsearch cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get snapshot API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-snapshots | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-snapshots | Elasticsearch API documentation}
     */
   async snapshots (this: That, params?: T.CatSnapshotsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatSnapshotsResponse>
   async snapshots (this: That, params?: T.CatSnapshotsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatSnapshotsResponse, unknown>>
@@ -1441,7 +1441,7 @@ export default class Cat {
 
   /**
     * Get task information. Get information about tasks currently running in the cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the task management API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-tasks | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-tasks | Elasticsearch API documentation}
     */
   async tasks (this: That, params?: T.CatTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTasksResponse>
   async tasks (this: That, params?: T.CatTasksRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTasksResponse, unknown>>
@@ -1484,7 +1484,7 @@ export default class Cat {
 
   /**
     * Get index template information. Get information about the index templates in a cluster. You can use index templates to apply index settings and field mappings to new indices at creation. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get index template API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-templates | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-templates | Elasticsearch API documentation}
     */
   async templates (this: That, params?: T.CatTemplatesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTemplatesResponse>
   async templates (this: That, params?: T.CatTemplatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTemplatesResponse, unknown>>
@@ -1537,7 +1537,7 @@ export default class Cat {
 
   /**
     * Get thread pool statistics. Get thread pool statistics for each node in a cluster. Returned information includes all built-in thread pools and custom thread pools. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-thread-pool | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-thread-pool | Elasticsearch API documentation}
     */
   async threadPool (this: That, params?: T.CatThreadPoolRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatThreadPoolResponse>
   async threadPool (this: That, params?: T.CatThreadPoolRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatThreadPoolResponse, unknown>>
@@ -1590,7 +1590,7 @@ export default class Cat {
 
   /**
     * Get transform information. Get configuration and usage information about transforms. CAT APIs are only intended for human consumption using the Kibana console or command line. They are not intended for use by applications. For application consumption, use the get transform statistics API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-transforms | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-transforms | Elasticsearch API documentation}
     */
   async transforms (this: That, params?: T.CatTransformsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTransformsResponse>
   async transforms (this: That, params?: T.CatTransformsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTransformsResponse, unknown>>

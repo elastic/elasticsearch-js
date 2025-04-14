@@ -108,7 +108,7 @@ export default class Sql {
 
   /**
     * Clear an SQL search cursor.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-clear-cursor | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-sql-clear-cursor | Elasticsearch API documentation}
     */
   async clearCursor (this: That, params: T.SqlClearCursorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlClearCursorResponse>
   async clearCursor (this: That, params: T.SqlClearCursorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlClearCursorResponse, unknown>>
@@ -162,7 +162,7 @@ export default class Sql {
 
   /**
     * Delete an async SQL search. Delete an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it. If the Elasticsearch security features are enabled, only the following users can use this API to delete a search: * Users with the `cancel_task` cluster privilege. * The user who first submitted the search.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-delete-async | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-sql-delete-async | Elasticsearch API documentation}
     */
   async deleteAsync (this: That, params: T.SqlDeleteAsyncRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlDeleteAsyncResponse>
   async deleteAsync (this: That, params: T.SqlDeleteAsyncRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlDeleteAsyncResponse, unknown>>
@@ -207,7 +207,7 @@ export default class Sql {
 
   /**
     * Get async SQL search results. Get the current status and available results for an async SQL search or stored synchronous SQL search. If the Elasticsearch security features are enabled, only the user who first submitted the SQL search can retrieve the search using this API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-get-async | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-sql-get-async | Elasticsearch API documentation}
     */
   async getAsync (this: That, params: T.SqlGetAsyncRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlGetAsyncResponse>
   async getAsync (this: That, params: T.SqlGetAsyncRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlGetAsyncResponse, unknown>>
@@ -252,7 +252,7 @@ export default class Sql {
 
   /**
     * Get the async SQL search status. Get the current status of an async SQL search or a stored synchronous SQL search.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-get-async-status | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-sql-get-async-status | Elasticsearch API documentation}
     */
   async getAsyncStatus (this: That, params: T.SqlGetAsyncStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlGetAsyncStatusResponse>
   async getAsyncStatus (this: That, params: T.SqlGetAsyncStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlGetAsyncStatusResponse, unknown>>
@@ -297,7 +297,7 @@ export default class Sql {
 
   /**
     * Get SQL search results. Run an SQL request.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-query | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-sql-query | Elasticsearch API documentation}
     */
   async query (this: That, params?: T.SqlQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlQueryResponse>
   async query (this: That, params?: T.SqlQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlQueryResponse, unknown>>
@@ -352,7 +352,7 @@ export default class Sql {
 
   /**
     * Translate SQL into Elasticsearch queries. Translate an SQL search into a search API request containing Query DSL. It accepts the same request body parameters as the SQL search API, excluding `cursor`.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-translate | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-sql-translate | Elasticsearch API documentation}
     */
   async translate (this: That, params: T.SqlTranslateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlTranslateResponse>
   async translate (this: That, params: T.SqlTranslateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlTranslateResponse, unknown>>

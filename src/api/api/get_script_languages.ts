@@ -36,7 +36,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 
 /**
   * Get script languages. Get a list of available script types, languages, and contexts.
-  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get-script-languages | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-get-script-languages | Elasticsearch API documentation}
   */
 export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptLanguagesResponse>
 export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptLanguagesResponse, unknown>>

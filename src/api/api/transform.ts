@@ -189,7 +189,7 @@ export default class Transform {
 
   /**
     * Delete a transform.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-delete-transform | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-transform-delete-transform | Elasticsearch API documentation}
     */
   async deleteTransform (this: That, params: T.TransformDeleteTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformDeleteTransformResponse>
   async deleteTransform (this: That, params: T.TransformDeleteTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformDeleteTransformResponse, unknown>>
@@ -276,7 +276,7 @@ export default class Transform {
 
   /**
     * Get transforms. Get configuration information for transforms.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-get-transform | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-transform-get-transform | Elasticsearch API documentation}
     */
   async getTransform (this: That, params?: T.TransformGetTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetTransformResponse>
   async getTransform (this: That, params?: T.TransformGetTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformGetTransformResponse, unknown>>
@@ -329,7 +329,7 @@ export default class Transform {
 
   /**
     * Get transform stats. Get usage information for transforms.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-get-transform-stats | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-transform-get-transform-stats | Elasticsearch API documentation}
     */
   async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetTransformStatsResponse>
   async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformGetTransformStatsResponse, unknown>>
@@ -374,7 +374,7 @@ export default class Transform {
 
   /**
     * Preview a transform. Generates a preview of the results that you will get when you create a transform with the same configuration. It returns a maximum of 100 results. The calculations are based on all the current data in the source index. It also generates a list of mappings and settings for the destination index. These values are determined based on the field types of the source index and the transform aggregations.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-preview-transform | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-transform-preview-transform | Elasticsearch API documentation}
     */
   async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformPreviewTransformResponse<TTransform>>
   async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformPreviewTransformResponse<TTransform>, unknown>>
@@ -439,7 +439,7 @@ export default class Transform {
 
   /**
     * Create a transform. Creates a transform. A transform copies data from source indices, transforms it, and persists it into an entity-centric destination index. You can also think of the destination index as a two-dimensional tabular data structure (known as a data frame). The ID for each document in the data frame is generated from a hash of the entity, so there is a unique row per entity. You must choose either the latest or pivot method for your transform; you cannot use both in a single transform. If you choose to use the pivot method for your transform, the entities are defined by the set of `group_by` fields in the pivot object. If you choose to use the latest method, the entities are defined by the `unique_key` field values in the latest object. You must have `create_index`, `index`, and `read` privileges on the destination index and `read` and `view_index_metadata` privileges on the source indices. When Elasticsearch security features are enabled, the transform remembers which roles the user that created it had at the time of creation and uses those same roles. If those roles do not have the required privileges on the source and destination indices, the transform fails when it attempts unauthorized operations. NOTE: You must use Kibana or this API to create a transform. Do not add a transform directly into any `.transform-internal*` indices using the Elasticsearch index API. If Elasticsearch security features are enabled, do not give users any privileges on `.transform-internal*` indices. If you used transforms prior to 7.5, also do not give users any privileges on `.data-frame-internal*` indices.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-put-transform | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-transform-put-transform | Elasticsearch API documentation}
     */
   async putTransform (this: That, params: T.TransformPutTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformPutTransformResponse>
   async putTransform (this: That, params: T.TransformPutTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformPutTransformResponse, unknown>>
@@ -496,7 +496,7 @@ export default class Transform {
 
   /**
     * Reset a transform. Before you can reset it, you must stop it; alternatively, use the `force` query parameter. If the destination index was created by the transform, it is deleted.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-reset-transform | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-transform-reset-transform | Elasticsearch API documentation}
     */
   async resetTransform (this: That, params: T.TransformResetTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformResetTransformResponse>
   async resetTransform (this: That, params: T.TransformResetTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformResetTransformResponse, unknown>>
@@ -541,7 +541,7 @@ export default class Transform {
 
   /**
     * Schedule a transform to start now. Instantly run a transform to process data. If you run this API, the transform will process the new data instantly, without waiting for the configured frequency interval. After the API is called, the transform will be processed again at `now + frequency` unless the API is called again in the meantime.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-schedule-now-transform | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-transform-schedule-now-transform | Elasticsearch API documentation}
     */
   async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformScheduleNowTransformResponse>
   async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformScheduleNowTransformResponse, unknown>>
@@ -586,7 +586,7 @@ export default class Transform {
 
   /**
     * Start a transform. When you start a transform, it creates the destination index if it does not already exist. The `number_of_shards` is set to `1` and the `auto_expand_replicas` is set to `0-1`. If it is a pivot transform, it deduces the mapping definitions for the destination index from the source indices and the transform aggregations. If fields in the destination index are derived from scripts (as in the case of `scripted_metric` or `bucket_script` aggregations), the transform uses dynamic mappings unless an index template exists. If it is a latest transform, it does not deduce mapping definitions; it uses dynamic mappings. To use explicit mappings, create the destination index before you start the transform. Alternatively, you can create an index template, though it does not affect the deduced mappings in a pivot transform. When the transform starts, a series of validations occur to ensure its success. If you deferred validation when you created the transform, they occur when you start the transform—with the exception of privilege checks. When Elasticsearch security features are enabled, the transform remembers which roles the user that created it had at the time of creation and uses those same roles. If those roles do not have the required privileges on the source and destination indices, the transform fails when it attempts unauthorized operations.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-start-transform | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-transform-start-transform | Elasticsearch API documentation}
     */
   async startTransform (this: That, params: T.TransformStartTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformStartTransformResponse>
   async startTransform (this: That, params: T.TransformStartTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformStartTransformResponse, unknown>>
@@ -631,7 +631,7 @@ export default class Transform {
 
   /**
     * Stop transforms. Stops one or more transforms.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-stop-transform | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-transform-stop-transform | Elasticsearch API documentation}
     */
   async stopTransform (this: That, params: T.TransformStopTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformStopTransformResponse>
   async stopTransform (this: That, params: T.TransformStopTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformStopTransformResponse, unknown>>
@@ -676,7 +676,7 @@ export default class Transform {
 
   /**
     * Update a transform. Updates certain properties of a transform. All updated properties except `description` do not take effect until after the transform starts the next checkpoint, thus there is data consistency in each checkpoint. To use this API, you must have `read` and `view_index_metadata` privileges for the source indices. You must also have `index` and `read` privileges for the destination index. When Elasticsearch security features are enabled, the transform remembers which roles the user who updated it had at the time of update and runs with those privileges.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-update-transform | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-transform-update-transform | Elasticsearch API documentation}
     */
   async updateTransform (this: That, params: T.TransformUpdateTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformUpdateTransformResponse>
   async updateTransform (this: That, params: T.TransformUpdateTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformUpdateTransformResponse, unknown>>
@@ -733,7 +733,7 @@ export default class Transform {
 
   /**
     * Upgrade all transforms. Transforms are compatible across minor versions and between supported major versions. However, over time, the format of transform configuration information may change. This API identifies transforms that have a legacy configuration format and upgrades them to the latest version. It also cleans up the internal data structures that store the transform state and checkpoints. The upgrade does not affect the source and destination indices. The upgrade also does not affect the roles that transforms use when Elasticsearch security features are enabled; the role used to read source data and write to the destination index remains unchanged. If a transform upgrade step fails, the upgrade stops and an error is returned about the underlying issue. Resolve the issue then re-run the process again. A summary is returned when the upgrade is finished. To ensure continuous transforms remain running during a major version upgrade of the cluster – for example, from 7.16 to 8.0 – it is recommended to upgrade transforms before upgrading the cluster. You may want to perform a recent cluster backup prior to the upgrade.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-upgrade-transforms | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-transform-upgrade-transforms | Elasticsearch API documentation}
     */
   async upgradeTransforms (this: That, params?: T.TransformUpgradeTransformsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformUpgradeTransformsResponse>
   async upgradeTransforms (this: That, params?: T.TransformUpgradeTransformsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformUpgradeTransformsResponse, unknown>>

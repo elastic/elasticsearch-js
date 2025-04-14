@@ -361,7 +361,7 @@ export default class Connector {
 
   /**
     * Check in a connector. Update the `last_seen` field in the connector and set it to the current timestamp.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-check-in | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-check-in | Elasticsearch API documentation}
     */
   async checkIn (this: That, params: T.ConnectorCheckInRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorCheckInResponse>
   async checkIn (this: That, params: T.ConnectorCheckInRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorCheckInResponse, unknown>>
@@ -406,7 +406,7 @@ export default class Connector {
 
   /**
     * Delete a connector. Removes a connector and associated sync jobs. This is a destructive action that is not recoverable. NOTE: This action doesn’t delete any API keys, ingest pipelines, or data indices associated with the connector. These need to be removed manually.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-delete | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-delete | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.ConnectorDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorDeleteResponse>
   async delete (this: That, params: T.ConnectorDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorDeleteResponse, unknown>>
@@ -451,7 +451,7 @@ export default class Connector {
 
   /**
     * Get a connector. Get the details about a connector.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-get | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-get | Elasticsearch API documentation}
     */
   async get (this: That, params: T.ConnectorGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorGetResponse>
   async get (this: That, params: T.ConnectorGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorGetResponse, unknown>>
@@ -496,7 +496,7 @@ export default class Connector {
 
   /**
     * Update the connector last sync stats. Update the fields related to the last sync of a connector. This action is used for analytics and monitoring.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-last-sync | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-last-sync | Elasticsearch API documentation}
     */
   async lastSync (this: That, params: T.ConnectorLastSyncRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorLastSyncResponse>
   async lastSync (this: That, params: T.ConnectorLastSyncRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorLastSyncResponse, unknown>>
@@ -553,7 +553,7 @@ export default class Connector {
 
   /**
     * Get all connectors. Get information about all connectors.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-list | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-list | Elasticsearch API documentation}
     */
   async list (this: That, params?: T.ConnectorListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorListResponse>
   async list (this: That, params?: T.ConnectorListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorListResponse, unknown>>
@@ -596,7 +596,7 @@ export default class Connector {
 
   /**
     * Create a connector. Connectors are Elasticsearch integrations that bring content from third-party data sources, which can be deployed on Elastic Cloud or hosted on your own infrastructure. Elastic managed connectors (Native connectors) are a managed service on Elastic Cloud. Self-managed connectors (Connector clients) are self-managed on your infrastructure.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-put | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-put | Elasticsearch API documentation}
     */
   async post (this: That, params?: T.ConnectorPostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorPostResponse>
   async post (this: That, params?: T.ConnectorPostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorPostResponse, unknown>>
@@ -651,7 +651,7 @@ export default class Connector {
 
   /**
     * Create or update a connector.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-put | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-put | Elasticsearch API documentation}
     */
   async put (this: That, params?: T.ConnectorPutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorPutResponse>
   async put (this: That, params?: T.ConnectorPutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorPutResponse, unknown>>
@@ -889,7 +889,7 @@ export default class Connector {
 
   /**
     * Cancel a connector sync job. Cancel a connector sync job, which sets the status to cancelling and updates `cancellation_requested_at` to the current time. The connector service is then responsible for setting the status of connector sync jobs to cancelled.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-cancel | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-sync-job-cancel | Elasticsearch API documentation}
     */
   async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobCancelResponse>
   async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobCancelResponse, unknown>>
@@ -934,7 +934,7 @@ export default class Connector {
 
   /**
     * Check in a connector sync job. Check in a connector sync job and set the `last_seen` field to the current time before updating it in the internal index. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-check-in | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-sync-job-check-in | Elasticsearch API documentation}
     */
   async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobCheckInResponse>
   async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobCheckInResponse, unknown>>
@@ -979,7 +979,7 @@ export default class Connector {
 
   /**
     * Claim a connector sync job. This action updates the job status to `in_progress` and sets the `last_seen` and `started_at` timestamps to the current time. Additionally, it can set the `sync_cursor` property for the sync job. This API is not intended for direct connector management by users. It supports the implementation of services that utilize the connector protocol to communicate with Elasticsearch. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-claim | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-sync-job-claim | Elasticsearch API documentation}
     */
   async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobClaimResponse>
   async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobClaimResponse, unknown>>
@@ -1036,7 +1036,7 @@ export default class Connector {
 
   /**
     * Delete a connector sync job. Remove a connector sync job and its associated data. This is a destructive action that is not recoverable.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-delete | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-sync-job-delete | Elasticsearch API documentation}
     */
   async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobDeleteResponse>
   async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobDeleteResponse, unknown>>
@@ -1081,7 +1081,7 @@ export default class Connector {
 
   /**
     * Set a connector sync job error. Set the `error` field for a connector sync job and set its `status` to `error`. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-error | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-sync-job-error | Elasticsearch API documentation}
     */
   async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobErrorResponse>
   async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobErrorResponse, unknown>>
@@ -1138,7 +1138,7 @@ export default class Connector {
 
   /**
     * Get a connector sync job.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-get | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-sync-job-get | Elasticsearch API documentation}
     */
   async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobGetResponse>
   async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobGetResponse, unknown>>
@@ -1183,7 +1183,7 @@ export default class Connector {
 
   /**
     * Get all connector sync jobs. Get information about all stored connector sync jobs listed by their creation date in ascending order.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-list | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-sync-job-list | Elasticsearch API documentation}
     */
   async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobListResponse>
   async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobListResponse, unknown>>
@@ -1226,7 +1226,7 @@ export default class Connector {
 
   /**
     * Create a connector sync job. Create a connector sync job document in the internal index and initialize its counters and timestamps with default values.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-post | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-sync-job-post | Elasticsearch API documentation}
     */
   async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobPostResponse>
   async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobPostResponse, unknown>>
@@ -1280,7 +1280,7 @@ export default class Connector {
 
   /**
     * Set the connector sync job stats. Stats include: `deleted_document_count`, `indexed_document_count`, `indexed_document_volume`, and `total_document_count`. You can also update `last_seen`. This API is mainly used by the connector service for updating sync job information. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-update-stats | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-sync-job-update-stats | Elasticsearch API documentation}
     */
   async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobUpdateStatsResponse>
   async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobUpdateStatsResponse, unknown>>
@@ -1337,7 +1337,7 @@ export default class Connector {
 
   /**
     * Activate the connector draft filter. Activates the valid draft filtering for a connector.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-filtering | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-filtering | Elasticsearch API documentation}
     */
   async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateActiveFilteringResponse>
   async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateActiveFilteringResponse, unknown>>
@@ -1382,7 +1382,7 @@ export default class Connector {
 
   /**
     * Update the connector API key ID. Update the `api_key_id` and `api_key_secret_id` fields of a connector. You can specify the ID of the API key used for authorization and the ID of the connector secret where the API key is stored. The connector secret ID is required only for Elastic managed (native) connectors. Self-managed connectors (connector clients) do not use this field.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-api-key-id | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-api-key-id | Elasticsearch API documentation}
     */
   async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateApiKeyIdResponse>
   async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateApiKeyIdResponse, unknown>>
@@ -1439,7 +1439,7 @@ export default class Connector {
 
   /**
     * Update the connector configuration. Update the configuration field in the connector document.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-configuration | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-configuration | Elasticsearch API documentation}
     */
   async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateConfigurationResponse>
   async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateConfigurationResponse, unknown>>
@@ -1496,7 +1496,7 @@ export default class Connector {
 
   /**
     * Update the connector error field. Set the error field for the connector. If the error provided in the request body is non-null, the connector’s status is updated to error. Otherwise, if the error is reset to null, the connector status is updated to connected.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-error | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-error | Elasticsearch API documentation}
     */
   async updateError (this: That, params: T.ConnectorUpdateErrorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateErrorResponse>
   async updateError (this: That, params: T.ConnectorUpdateErrorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateErrorResponse, unknown>>
@@ -1553,7 +1553,7 @@ export default class Connector {
 
   /**
     * Update the connector features. Update the connector features in the connector document. This API can be used to control the following aspects of a connector: * document-level security * incremental syncs * advanced sync rules * basic sync rules Normally, the running connector service automatically manages these features. However, you can use this API to override the default behavior. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-features | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-features | Elasticsearch API documentation}
     */
   async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFeaturesResponse>
   async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFeaturesResponse, unknown>>
@@ -1610,7 +1610,7 @@ export default class Connector {
 
   /**
     * Update the connector filtering. Update the draft filtering configuration of a connector and marks the draft validation state as edited. The filtering draft is activated once validated by the running Elastic connector service. The filtering property is used to configure sync rules (both basic and advanced) for a connector.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-filtering | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-filtering | Elasticsearch API documentation}
     */
   async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFilteringResponse>
   async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFilteringResponse, unknown>>
@@ -1667,7 +1667,7 @@ export default class Connector {
 
   /**
     * Update the connector draft filtering validation. Update the draft filtering validation info for a connector.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.0/update-connector-filtering-validation-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-filtering-validation | Elasticsearch API documentation}
     */
   async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFilteringValidationResponse>
   async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFilteringValidationResponse, unknown>>
@@ -1724,7 +1724,7 @@ export default class Connector {
 
   /**
     * Update the connector index name. Update the `index_name` field of a connector, specifying the index where the data ingested by the connector is stored.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-index-name | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-index-name | Elasticsearch API documentation}
     */
   async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateIndexNameResponse>
   async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateIndexNameResponse, unknown>>
@@ -1781,7 +1781,7 @@ export default class Connector {
 
   /**
     * Update the connector name and description.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-name | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-name | Elasticsearch API documentation}
     */
   async updateName (this: That, params: T.ConnectorUpdateNameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateNameResponse>
   async updateName (this: That, params: T.ConnectorUpdateNameRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateNameResponse, unknown>>
@@ -1838,7 +1838,7 @@ export default class Connector {
 
   /**
     * Update the connector is_native flag.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.0/update-connector-native-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-native | Elasticsearch API documentation}
     */
   async updateNative (this: That, params: T.ConnectorUpdateNativeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateNativeResponse>
   async updateNative (this: That, params: T.ConnectorUpdateNativeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateNativeResponse, unknown>>
@@ -1895,7 +1895,7 @@ export default class Connector {
 
   /**
     * Update the connector pipeline. When you create a new connector, the configuration of an ingest pipeline is populated with default settings.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-pipeline | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-pipeline | Elasticsearch API documentation}
     */
   async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdatePipelineResponse>
   async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdatePipelineResponse, unknown>>
@@ -1952,7 +1952,7 @@ export default class Connector {
 
   /**
     * Update the connector scheduling.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-scheduling | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-scheduling | Elasticsearch API documentation}
     */
   async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateSchedulingResponse>
   async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateSchedulingResponse, unknown>>
@@ -2009,7 +2009,7 @@ export default class Connector {
 
   /**
     * Update the connector service type.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-service-type | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-service-type | Elasticsearch API documentation}
     */
   async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateServiceTypeResponse>
   async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateServiceTypeResponse, unknown>>
@@ -2066,7 +2066,7 @@ export default class Connector {
 
   /**
     * Update the connector status.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-status | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-status | Elasticsearch API documentation}
     */
   async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateStatusResponse>
   async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateStatusResponse, unknown>>
