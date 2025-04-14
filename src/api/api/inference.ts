@@ -77,6 +77,20 @@ export default class Inference {
         body: [],
         query: []
       },
+      'inference.inference': {
+        path: [
+          'task_type',
+          'inference_id'
+        ],
+        body: [
+          'query',
+          'input',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
       'inference.put': {
         path: [
           'task_type',
@@ -555,6 +569,71 @@ export default class Inference {
     }
     const meta: TransportRequestMetadata = {
       name: 'inference.get',
+      pathParts: {
+        task_type: params.task_type,
+        inference_id: params.inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Perform inference on the service. This API enables you to use machine learning models to perform specific tasks on data that you provide as an input. It returns a response with the results of the tasks. The inference endpoint you use can perform one specific task that has been defined when the endpoint was created with the create inference API. For details about using this API with a service, such as Amazon Bedrock, Anthropic, or HuggingFace, refer to the service-specific documentation. > info > The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
+    */
+  async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceInferenceResponse>
+  async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceInferenceResponse, unknown>>
+  async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<T.InferenceInferenceResponse>
+  async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.inference']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.task_type != null && params.inference_id != null) {
+      method = 'POST'
+      path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.inference_id.toString())}`
+    } else {
+      method = 'POST'
+      path = `/_inference/${encodeURIComponent(params.inference_id.toString())}`
+    }
+    const meta: TransportRequestMetadata = {
+      name: 'inference.inference',
       pathParts: {
         task_type: params.task_type,
         inference_id: params.inference_id
