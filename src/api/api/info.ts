@@ -36,7 +36,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 
 /**
   * Get cluster info. Get basic build, version, and cluster information.
-  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-info | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-info | Elasticsearch API documentation}
   */
 export default async function InfoApi (this: That, params?: T.InfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InfoResponse>
 export default async function InfoApi (this: That, params?: T.InfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InfoResponse, unknown>>

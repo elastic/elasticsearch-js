@@ -40,7 +40,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 
 /**
   * Get a script or search template. Retrieves a stored script or search template.
-  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get-script | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-get-script | Elasticsearch API documentation}
   */
 export default async function GetScriptApi (this: That, params: T.GetScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptResponse>
 export default async function GetScriptApi (this: That, params: T.GetScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptResponse, unknown>>

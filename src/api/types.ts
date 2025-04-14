@@ -1233,69 +1233,6 @@ export interface InfoResponse {
   version: ElasticsearchVersionInfo
 }
 
-export interface KnnSearchRequest extends RequestBase {
-  /** A comma-separated list of index names to search;
-    * use `_all` or to perform the operation on all indices. */
-  index: Indices
-  /** A comma-separated list of specific routing values. */
-  routing?: Routing
-  /** Indicates which source fields are returned for matching documents. These
-    * fields are returned in the `hits._source` property of the search response. */
-  _source?: SearchSourceConfig
-  /** The request returns doc values for field names matching these patterns
-    * in the `hits.fields` property of the response.
-    * It accepts wildcard (`*`) patterns. */
-  docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
-  /** A list of stored fields to return as part of a hit. If no fields are specified,
-    * no stored fields are included in the response. If this field is specified, the `_source`
-    * parameter defaults to `false`. You can pass `_source: true` to return both source fields
-    * and stored fields in the search response. */
-  stored_fields?: Fields
-  /** The request returns values for field names matching these patterns
-    * in the `hits.fields` property of the response.
-    * It accepts wildcard (`*`) patterns. */
-  fields?: Fields
-  /** A query to filter the documents that can match. The kNN search will return the top
-    * `k` documents that also match this filter. The value can be a single query or a
-    * list of queries. If `filter` isn't provided, all documents are allowed to match. */
-  filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
-  /** The kNN query to run. */
-  knn: KnnSearchQuery
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, routing?: never, _source?: never, docvalue_fields?: never, stored_fields?: never, fields?: never, filter?: never, knn?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, routing?: never, _source?: never, docvalue_fields?: never, stored_fields?: never, fields?: never, filter?: never, knn?: never }
-}
-
-export interface KnnSearchResponse<TDocument = unknown> {
-  /** The milliseconds it took Elasticsearch to run the request. */
-  took: long
-  /** If true, the request timed out before completion;
-    * returned results may be partial or empty. */
-  timed_out: boolean
-  /** A count of shards used for the request. */
-  _shards: ShardStatistics
-  /** The returned documents and metadata. */
-  hits: SearchHitsMetadata<TDocument>
-  /** The field values for the documents. These fields
-    * must be specified in the request using the `fields` parameter. */
-  fields?: Record<string, any>
-  /** The highest returned document score. This value is null for requests
-    * that do not sort by score. */
-  max_score?: double
-}
-
-export interface KnnSearchQuery {
-  /** The name of the vector field to search against */
-  field: Field
-  /** The query vector */
-  query_vector: QueryVector
-  /** The final number of nearest neighbors to return as top hits */
-  k: integer
-  /** The number of nearest neighbor candidates to consider per shard */
-  num_candidates: integer
-}
-
 export interface MgetMultiGetError {
   error: ErrorCause
   _id: Id
@@ -3946,8 +3883,6 @@ export interface ErrorResponseBase {
   status: integer
 }
 
-export type EsqlResult = ArrayBuffer
-
 export type ExpandWildcard = 'all' | 'open' | 'closed' | 'hidden' | 'none'
 
 export type ExpandWildcards = ExpandWildcard | ExpandWildcard[]
@@ -5023,15 +4958,13 @@ export interface AggregationsAggregationContainer {
   variable_width_histogram?: AggregationsVariableWidthHistogramAggregation
 }
 
-export type AggregationsAggregationRange = AggregationsUntypedAggregationRange | AggregationsDateAggregationRange | AggregationsNumberAggregationRange | AggregationsTermAggregationRange
-
-export interface AggregationsAggregationRangeBase<T = unknown> {
+export interface AggregationsAggregationRange {
   /** Start of the range (inclusive). */
-  from?: T
+  from?: double | null
   /** Custom key to return the range with. */
   key?: string
   /** End of the range (exclusive). */
-  to?: T
+  to?: double | null
 }
 
 export interface AggregationsArrayPercentilesItem {
@@ -5222,8 +5155,8 @@ export interface AggregationsCategorizeTextAggregation {
     * use the categorization_analyzer property instead and include the filters as pattern_replace character filters. */
   categorization_filters?: string[]
   /** The categorization analyzer specifies how the text is analyzed and tokenized before being categorized.
-    * The syntax is very similar to that used to define the analyzer in the [Analyze endpoint](https://www.elastic.co/guide/en/elasticsearch/reference/8.0/indices-analyze.html). This property
-    * cannot be used at the same time as categorization_filters. */
+    * The syntax is very similar to that used to define the analyzer in the analyze API. This property
+    * cannot be used at the same time as `categorization_filters`. */
   categorization_analyzer?: AggregationsCategorizeTextAnalyzer
   /** The number of categorization buckets to return from each shard before merging all the results. */
   shard_size?: integer
@@ -5337,9 +5270,6 @@ export interface AggregationsCustomCategorizeTextAnalyzer {
   filter?: string[]
 }
 
-export interface AggregationsDateAggregationRange extends AggregationsAggregationRangeBase<AggregationsFieldDateMath> {
-}
-
 export interface AggregationsDateHistogramAggregate extends AggregationsMultiBucketAggregateBase<AggregationsDateHistogramBucket> {
 }
 
@@ -5397,11 +5327,20 @@ export interface AggregationsDateRangeAggregation extends AggregationsBucketAggr
     * By default, documents without a value are ignored. */
   missing?: AggregationsMissing
   /** Array of date ranges. */
-  ranges?: AggregationsDateAggregationRange[]
+  ranges?: AggregationsDateRangeExpression[]
   /** Time zone used to convert dates from another time zone to UTC. */
   time_zone?: TimeZone
   /** Set to `true` to associate a unique string key with each bucket and returns the ranges as a hash rather than an array. */
   keyed?: boolean
+}
+
+export interface AggregationsDateRangeExpression {
+  /** Start of the range (inclusive). */
+  from?: AggregationsFieldDateMath
+  /** Custom key to return the range with. */
+  key?: string
+  /** End of the range (exclusive). */
+  to?: AggregationsFieldDateMath
 }
 
 export interface AggregationsDerivativeAggregate extends AggregationsSingleMetricAggregateBase {
@@ -6080,9 +6019,6 @@ export interface AggregationsNormalizeAggregation extends AggregationsPipelineAg
 
 export type AggregationsNormalizeMethod = 'rescale_0_1' | 'rescale_0_100' | 'percent_of_sum' | 'mean' | 'z-score' | 'softmax'
 
-export interface AggregationsNumberAggregationRange extends AggregationsAggregationRangeBase<double> {
-}
-
 export interface AggregationsParentAggregateKeys extends AggregationsSingleBucketAggregateBase {
 }
 export type AggregationsParentAggregate = AggregationsParentAggregateKeys
@@ -6503,9 +6439,6 @@ export interface AggregationsTTestAggregation {
 
 export type AggregationsTTestType = 'paired' | 'homoscedastic' | 'heteroscedastic'
 
-export interface AggregationsTermAggregationRange extends AggregationsAggregationRangeBase<string> {
-}
-
 export interface AggregationsTermsAggregateBase<TBucket = unknown> extends AggregationsMultiBucketAggregateBase<TBucket> {
   doc_count_error_upper_bound?: long
   sum_other_doc_count?: long
@@ -6663,9 +6596,6 @@ export interface AggregationsUnmappedSignificantTermsAggregate extends Aggregati
 }
 
 export interface AggregationsUnmappedTermsAggregate extends AggregationsTermsAggregateBase<void> {
-}
-
-export interface AggregationsUntypedAggregationRange extends AggregationsAggregationRangeBase<any> {
 }
 
 export interface AggregationsValueCountAggregate extends AggregationsSingleMetricAggregateBase {
@@ -17331,7 +17261,65 @@ export type EqlSearchResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEven
 
 export type EqlSearchResultPosition = 'tail' | 'head'
 
+export interface EsqlAsyncEsqlResult extends EsqlEsqlResult {
+  id?: string
+  is_running: boolean
+}
+
+export interface EsqlEsqlClusterDetails {
+  status: EsqlEsqlClusterStatus
+  indices: string
+  took?: DurationValue<UnitMillis>
+  _shards?: EsqlEsqlShardInfo
+}
+
+export interface EsqlEsqlClusterInfo {
+  total: integer
+  successful: integer
+  running: integer
+  skipped: integer
+  partial: integer
+  failed: integer
+  details: Record<string, EsqlEsqlClusterDetails>
+}
+
+export type EsqlEsqlClusterStatus = 'running' | 'successful' | 'partial' | 'skipped' | 'failed'
+
+export interface EsqlEsqlColumnInfo {
+  name: string
+  type: string
+}
+
 export type EsqlEsqlFormat = 'csv' | 'json' | 'tsv' | 'txt' | 'yaml' | 'cbor' | 'smile' | 'arrow'
+
+export interface EsqlEsqlResult {
+  took?: DurationValue<UnitMillis>
+  is_partial?: boolean
+  all_columns?: EsqlEsqlColumnInfo[]
+  columns: EsqlEsqlColumnInfo[]
+  values: FieldValue[][]
+  /** Cross-cluster search information. Present if `include_ccs_metadata` was `true` in the request
+    * and a cross-cluster search was performed. */
+  _clusters?: EsqlEsqlClusterInfo
+  /** Profiling information. Present if `profile` was `true` in the request.
+    * The contents of this field are currently unstable. */
+  profile?: any
+}
+
+export interface EsqlEsqlShardFailure {
+  shard: Id
+  index: IndexName
+  node?: NodeId
+  reason: ErrorCause
+}
+
+export interface EsqlEsqlShardInfo {
+  total: integer
+  successful?: integer
+  skipped?: integer
+  failed?: integer
+  failures?: EsqlEsqlShardFailure[]
+}
 
 export interface EsqlTableValuesContainer {
   integer?: EsqlTableValuesIntegerValue[]
@@ -17397,7 +17385,7 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   querystring?: { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, wait_for_completion_timeout?: never }
 }
 
-export type EsqlAsyncQueryResponse = EsqlResult
+export type EsqlAsyncQueryResponse = EsqlAsyncEsqlResult
 
 export interface EsqlAsyncQueryDeleteRequest extends RequestBase {
   /** The unique identifier of the query.
@@ -17434,7 +17422,7 @@ export interface EsqlAsyncQueryGetRequest extends RequestBase {
   querystring?: { [key: string]: any } & { id?: never, drop_null_columns?: never, keep_alive?: never, wait_for_completion_timeout?: never }
 }
 
-export type EsqlAsyncQueryGetResponse = EsqlResult
+export type EsqlAsyncQueryGetResponse = EsqlAsyncEsqlResult
 
 export interface EsqlAsyncQueryStopRequest extends RequestBase {
   /** The unique identifier of the query.
@@ -17450,7 +17438,7 @@ export interface EsqlAsyncQueryStopRequest extends RequestBase {
   querystring?: { [key: string]: any } & { id?: never, drop_null_columns?: never }
 }
 
-export type EsqlAsyncQueryStopResponse = EsqlResult
+export type EsqlAsyncQueryStopResponse = EsqlEsqlResult
 
 export interface EsqlQueryRequest extends RequestBase {
   /** A short version of the Accept header, e.g. json, yaml. */
@@ -17487,7 +17475,7 @@ export interface EsqlQueryRequest extends RequestBase {
   querystring?: { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never }
 }
 
-export type EsqlQueryResponse = EsqlResult
+export type EsqlQueryResponse = EsqlEsqlResult
 
 export interface FeaturesFeature {
   name: string
@@ -17577,9 +17565,9 @@ export interface FleetMsearchRequest extends RequestBase {
     * after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause
     * Elasticsearch to immediately execute the search. */
   wait_for_checkpoints?: FleetCheckpoint[]
-  /** If true, returns partial results if there are shard request timeouts or [shard failures](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html#shard-failures). If false, returns
-    * an error with no partial results. Defaults to the configured cluster setting `search.default_allow_partial_results`
-    * which is true by default. */
+  /** If true, returns partial results if there are shard request timeouts or shard failures.
+    * If false, returns an error with no partial results.
+    * Defaults to the configured cluster setting `search.default_allow_partial_results`, which is true by default. */
   allow_partial_search_results?: boolean
   searches?: MsearchRequestItem[]
   /** All values in `body` will be added to the request body. */
@@ -17628,9 +17616,9 @@ export interface FleetSearchRequest extends RequestBase {
     * after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause
     * Elasticsearch to immediately execute the search. */
   wait_for_checkpoints?: FleetCheckpoint[]
-  /** If true, returns partial results if there are shard request timeouts or [shard failures](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html#shard-failures). If false, returns
-    * an error with no partial results. Defaults to the configured cluster setting `search.default_allow_partial_results`
-    * which is true by default. */
+  /** If true, returns partial results if there are shard request timeouts or shard failures.
+    * If false, returns an error with no partial results.
+    * Defaults to the configured cluster setting `search.default_allow_partial_results`, which is true by default. */
   allow_partial_search_results?: boolean
   aggregations?: Record<string, AggregationsAggregationContainer>
   /** @alias aggregations */
@@ -21812,6 +21800,15 @@ export interface InferenceInferenceEndpointInfo extends InferenceInferenceEndpoi
   task_type: InferenceTaskType
 }
 
+export interface InferenceInferenceResult {
+  text_embedding_bytes?: InferenceTextEmbeddingByteResult[]
+  text_embedding_bits?: InferenceTextEmbeddingByteResult[]
+  text_embedding?: InferenceTextEmbeddingResult[]
+  sparse_embedding?: InferenceSparseEmbeddingResult[]
+  completion?: InferenceCompletionResult[]
+  rerank?: InferenceRankedDocument[]
+}
+
 export interface InferenceJinaAIServiceSettings {
   /** A valid API key of your JinaAI account.
     *
@@ -22145,6 +22142,33 @@ export interface InferenceGetRequest extends RequestBase {
 export interface InferenceGetResponse {
   endpoints: InferenceInferenceEndpointInfo[]
 }
+
+export interface InferenceInferenceRequest extends RequestBase {
+  /** The type of inference task that the model performs. */
+  task_type?: InferenceTaskType
+  /** The unique identifier for the inference endpoint. */
+  inference_id: Id
+  /** The amount of time to wait for the inference request to complete. */
+  timeout?: Duration
+  /** The query input, which is required only for the `rerank` task.
+    * It is not required for other tasks. */
+  query?: string
+  /** The text on which you want to perform the inference task.
+    * It can be a single string or an array.
+    *
+    * > info
+    * > Inference endpoints for the `completion` task type currently only support a single string as input. */
+  input: string | string[]
+  /** Task settings for the individual inference request.
+    * These settings are specific to the task type you specified and override the task settings specified when initializing the service. */
+  task_settings?: InferenceTaskSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, query?: never, input?: never, task_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, query?: never, input?: never, task_settings?: never }
+}
+
+export type InferenceInferenceResponse = InferenceInferenceResult
 
 export interface InferencePutRequest extends RequestBase {
   /** The task type */
@@ -24012,9 +24036,7 @@ export interface LogstashPipelineSettings {
   /** The internal queuing model to use for event buffering. */
   'queue.type': string
   /** The total capacity of the queue (`queue.type: persisted`) in number of bytes. */
-  'queue.max_bytes.number': integer
-  /** The total capacity of the queue (`queue.type: persisted`) in terms of units of bytes. */
-  'queue.max_bytes.units': string
+  'queue.max_bytes': string
   /** The maximum number of written events before forcing a checkpoint when persistent queues are enabled (`queue.type: persisted`). */
   'queue.checkpoint.writes': integer
 }
@@ -29528,8 +29550,7 @@ export interface NodesClearRepositoriesMeteringArchiveResponseBase extends Nodes
 }
 
 export interface NodesGetRepositoriesMeteringInfoRequest extends RequestBase {
-  /** Comma-separated list of node IDs or names used to limit returned information.
-    * All the nodes selective options are explained [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster.html#cluster-nodes). */
+  /** Comma-separated list of node IDs or names used to limit returned information. */
   node_id: NodeIds
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { node_id?: never }
@@ -34803,7 +34824,7 @@ export interface SynonymsSynonymRule {
 export interface SynonymsSynonymRuleRead {
   /** Synonym Rule identifier */
   id: Id
-  /** Synonyms, in Solr format, that conform the synonym rule. See https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-synonym-graph-tokenfilter.html#_solr_synonyms_2 */
+  /** Synonyms, in Solr format, that conform the synonym rule. */
   synonyms: SynonymsSynonymString
 }
 

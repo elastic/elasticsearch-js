@@ -56,7 +56,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 
 /**
   * Explain a document match result. Get information about why a specific document matches, or doesn't match, a query. It computes a score explanation for a query and a specific document.
-  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-explain | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-explain | Elasticsearch API documentation}
   */
 export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExplainResponse<TDocument>>
 export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ExplainResponse<TDocument>, unknown>>

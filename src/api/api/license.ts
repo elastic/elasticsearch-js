@@ -96,7 +96,7 @@ export default class License {
 
   /**
     * Delete the license. When the license expires, your subscription level reverts to Basic. If the operator privileges feature is enabled, only operator users can use this API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-delete | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-license-delete | Elasticsearch API documentation}
     */
   async delete (this: That, params?: T.LicenseDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseDeleteResponse>
   async delete (this: That, params?: T.LicenseDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicenseDeleteResponse, unknown>>
@@ -139,7 +139,7 @@ export default class License {
 
   /**
     * Get license information. Get information about your Elastic license including its type, its status, when it was issued, and when it expires. >info > If the master node is generating a new cluster state, the get license API may return a `404 Not Found` response. > If you receive an unexpected 404 response after cluster startup, wait a short period and retry the request.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-get | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-license-get | Elasticsearch API documentation}
     */
   async get (this: That, params?: T.LicenseGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseGetResponse>
   async get (this: That, params?: T.LicenseGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicenseGetResponse, unknown>>
@@ -182,7 +182,7 @@ export default class License {
 
   /**
     * Get the basic license status.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-get-basic-status | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-license-get-basic-status | Elasticsearch API documentation}
     */
   async getBasicStatus (this: That, params?: T.LicenseGetBasicStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseGetBasicStatusResponse>
   async getBasicStatus (this: That, params?: T.LicenseGetBasicStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicenseGetBasicStatusResponse, unknown>>
@@ -225,7 +225,7 @@ export default class License {
 
   /**
     * Get the trial status.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-get-trial-status | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-license-get-trial-status | Elasticsearch API documentation}
     */
   async getTrialStatus (this: That, params?: T.LicenseGetTrialStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseGetTrialStatusResponse>
   async getTrialStatus (this: That, params?: T.LicenseGetTrialStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicenseGetTrialStatusResponse, unknown>>
@@ -268,7 +268,7 @@ export default class License {
 
   /**
     * Update the license. You can update your license at runtime without shutting down your nodes. License updates take effect immediately. If the license you are installing does not support all of the features that were available with your previous license, however, you are notified in the response. You must then re-submit the API request with the acknowledge parameter set to true. NOTE: If Elasticsearch security features are enabled and you are installing a gold or higher license, you must enable TLS on the transport networking layer before you install the license. If the operator privileges feature is enabled, only operator users can use this API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-post | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-license-post | Elasticsearch API documentation}
     */
   async post (this: That, params?: T.LicensePostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostResponse>
   async post (this: That, params?: T.LicensePostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicensePostResponse, unknown>>
@@ -323,7 +323,7 @@ export default class License {
 
   /**
     * Start a basic license. Start an indefinite basic license, which gives access to all the basic features. NOTE: In order to start a basic license, you must not currently have a basic license. If the basic license does not support all of the features that are available with your current license, however, you are notified in the response. You must then re-submit the API request with the `acknowledge` parameter set to `true`. To check the status of your basic license, use the get basic license API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-post-start-basic | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-license-post-start-basic | Elasticsearch API documentation}
     */
   async postStartBasic (this: That, params?: T.LicensePostStartBasicRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostStartBasicResponse>
   async postStartBasic (this: That, params?: T.LicensePostStartBasicRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicensePostStartBasicResponse, unknown>>
@@ -366,7 +366,7 @@ export default class License {
 
   /**
     * Start a trial. Start a 30-day trial, which gives access to all subscription features. NOTE: You are allowed to start a trial only if your cluster has not already activated a trial for the current major product version. For example, if you have already activated a trial for v8.0, you cannot start a new trial until v9.0. You can, however, request an extended trial at https://www.elastic.co/trialextension. To check the status of your trial, use the get trial status API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-post-start-trial | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-license-post-start-trial | Elasticsearch API documentation}
     */
   async postStartTrial (this: That, params?: T.LicensePostStartTrialRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostStartTrialResponse>
   async postStartTrial (this: That, params?: T.LicensePostStartTrialRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicensePostStartTrialResponse, unknown>>
