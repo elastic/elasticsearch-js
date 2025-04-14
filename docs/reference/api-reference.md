@@ -1023,43 +1023,13 @@ client.info()
 ```
 
 ## client.knnSearch [_knn_search]
-Run a knn search.
+Performs a kNN search.
 
-NOTE: The kNN search API has been replaced by the `knn` option in the search API.
-
-Perform a k-nearest neighbor (kNN) search on a dense_vector field and return the matching documents.
-Given a query vector, the API finds the k closest vectors and returns those documents as search hits.
-
-Elasticsearch uses the HNSW algorithm to support efficient kNN search.
-Like most kNN algorithms, HNSW is an approximate method that sacrifices result accuracy for improved search speed.
-This means the results returned are not always the true k closest neighbors.
-
-The kNN search API supports restricting the search using a filter.
-The search will return the top k documents that also match the filter query.
-
-A kNN search response has the exact same structure as a search API response.
-However, certain sections have a meaning specific to kNN search:
-
-* The document `_score` is determined by the similarity between the query and document vector.
-* The `hits.total` object contains the total number of nearest neighbor candidates considered, which is `num_candidates * num_shards`. The `hits.total.relation` will always be `eq`, indicating an exact value.
-
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/knn-search-api.html)
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html)
 
 ```ts
-client.knnSearch({ index, knn })
+client.knnSearch()
 ```
-### Arguments [_arguments_knn_search]
-
-#### Request (object) [_request_knn_search]
-
-- **`index` (string | string[])**: A list of index names to search; use `_all` or to perform the operation on all indices.
-- **`knn` ({ field, query_vector, k, num_candidates })**: The kNN query to run.
-- **`_source` (Optional, boolean | { excludes, includes })**: Indicates which source fields are returned for matching documents. These fields are returned in the `hits._source` property of the search response.
-- **`docvalue_fields` (Optional, { field, format, include_unmapped }[])**: The request returns doc values for field names matching these patterns in the `hits.fields` property of the response. It accepts wildcard (`*`) patterns.
-- **`stored_fields` (Optional, string | string[])**: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`. You can pass `_source: true` to return both source fields and stored fields in the search response.
-- **`fields` (Optional, string | string[])**: The request returns values for field names matching these patterns in the `hits.fields` property of the response. It accepts wildcard (`*`) patterns.
-- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type } | { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type }[])**: A query to filter the documents that can match. The kNN search will return the top `k` documents that also match this filter. The value can be a single query or a list of queries. If `filter` isn't provided, all documents are allowed to match.
-- **`routing` (Optional, string)**: A list of specific routing values.
 
 ## client.mget [_mget]
 Get multiple documents.
@@ -1591,7 +1561,7 @@ The API uses several _contexts_, which control how scripts are run, what variabl
 
 Each context requires a script, but additional parameters depend on the context you're using for that script.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/painless/current/painless-execute-api.html)
+[Endpoint documentation](https://www.elastic.co/docs/reference/scripting-languages/painless/painless-api-examples)
 
 ```ts
 client.scriptsPainlessExecute({ ... })
@@ -4418,7 +4388,7 @@ Update the connector draft filtering validation.
 
 Update the draft filtering validation info for a connector.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-filtering-validation-api.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-filtering-validation)
 
 ```ts
 client.connector.updateFilteringValidation({ connector_id, validation })
@@ -4466,7 +4436,7 @@ client.connector.updateName({ connector_id })
 ## client.connector.updateNative [_connector.update_native]
 Update the connector is_native flag.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-native-api.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-native)
 
 ```ts
 client.connector.updateNative({ connector_id, is_native })
@@ -4874,7 +4844,7 @@ Stop async ES|QL query.
 This API interrupts the query execution and returns the results so far.
 If the Elasticsearch security features are enabled, only the user who first submitted the ES|QL query can stop it.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-async-query-stop-api.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-async-query-stop)
 
 ```ts
 client.esql.asyncQueryStop({ id })
@@ -4889,11 +4859,25 @@ A query ID is also provided when the request was submitted with the `keep_on_com
 - **`drop_null_columns` (Optional, boolean)**: Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
 If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
 
+## client.esql.getQuery [_esql.get_query]
+Executes a get ESQL query request
+```ts
+client.esql.getQuery()
+```
+
+
+## client.esql.listQueries [_esql.list_queries]
+Executes a list ESQL queries request
+```ts
+client.esql.listQueries()
+```
+
+
 ## client.esql.query [_esql.query]
 Run an ES|QL query.
 Get search results for an ES|QL (Elasticsearch query language) query.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-rest.html)
+[Endpoint documentation](https://www.elastic.co/docs/explore-analyze/query-filter/languages/esql-rest)
 
 ```ts
 client.esql.query({ query })
@@ -5031,9 +5015,9 @@ client.fleet.msearch({ ... })
 - **`wait_for_checkpoints` (Optional, number[])**: A comma separated list of checkpoints. When configured, the search API will only be executed on a shard
 after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause
 Elasticsearch to immediately execute the search.
-- **`allow_partial_search_results` (Optional, boolean)**: If true, returns partial results if there are shard request timeouts or [shard failures](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html#shard-failures). If false, returns
-an error with no partial results. Defaults to the configured cluster setting `search.default_allow_partial_results`
-which is true by default.
+- **`allow_partial_search_results` (Optional, boolean)**: If true, returns partial results if there are shard request timeouts or shard failures.
+If false, returns an error with no partial results.
+Defaults to the configured cluster setting `search.default_allow_partial_results`, which is true by default.
 
 ## client.fleet.search [_fleet.search]
 Run a Fleet search.
@@ -5134,9 +5118,9 @@ the indices stats API.
 - **`wait_for_checkpoints` (Optional, number[])**: A comma separated list of checkpoints. When configured, the search API will only be executed on a shard
 after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause
 Elasticsearch to immediately execute the search.
-- **`allow_partial_search_results` (Optional, boolean)**: If true, returns partial results if there are shard request timeouts or [shard failures](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html#shard-failures). If false, returns
-an error with no partial results. Defaults to the configured cluster setting `search.default_allow_partial_results`
-which is true by default.
+- **`allow_partial_search_results` (Optional, boolean)**: If true, returns partial results if there are shard request timeouts or shard failures.
+If false, returns an error with no partial results.
+Defaults to the configured cluster setting `search.default_allow_partial_results`, which is true by default.
 
 ## client.graph.explore [_graph.explore]
 Explore graph analytics.
@@ -5458,7 +5442,7 @@ Cancel a migration reindex operation.
 
 Cancel a migration reindex attempt for a data stream or index.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/migrate-data-stream.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-cancel-migrate-reindex)
 
 ```ts
 client.indices.cancelMigrateReindex({ index })
@@ -5687,7 +5671,7 @@ Create an index from a source index.
 
 Copy the mappings and settings from the source index to a destination index while allowing request settings and mappings to override the source values.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/migrate-data-stream.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-create-from)
 
 ```ts
 client.indices.createFrom({ source, dest })
@@ -6349,7 +6333,7 @@ Get the migration reindexing status.
 
 Get the status of a migration reindex attempt for a data stream or index.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/migrate-data-stream.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-migration)
 
 ```ts
 client.indices.getMigrateReindexStatus({ index })
@@ -6425,7 +6409,7 @@ Reindex all legacy backing indices for a data stream.
 This operation occurs in a persistent task.
 The persistent task ID is returned immediately and the reindexing work is completed in that task.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/migrate-data-stream.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-migrate-reindex)
 
 ```ts
 client.indices.migrateReindex({ ... })
@@ -7553,6 +7537,40 @@ client.inference.get({ ... })
 - **`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion" | "chat_completion"))**: The task type
 - **`inference_id` (Optional, string)**: The inference Id
 
+## client.inference.inference [_inference.inference]
+Perform inference on the service.
+
+This API enables you to use machine learning models to perform specific tasks on data that you provide as an input.
+It returns a response with the results of the tasks.
+The inference endpoint you use can perform one specific task that has been defined when the endpoint was created with the create inference API.
+
+For details about using this API with a service, such as Amazon Bedrock, Anthropic, or HuggingFace, refer to the service-specific documentation.
+
+> info
+> The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
+
+```ts
+client.inference.inference({ inference_id, input })
+```
+
+### Arguments [_arguments_inference.inference]
+
+#### Request (object) [_request_inference.inference]
+- **`inference_id` (string)**: The unique identifier for the inference endpoint.
+- **`input` (string | string[])**: The text on which you want to perform the inference task.
+It can be a single string or an array.
+
+> info
+> Inference endpoints for the `completion` task type currently only support a single string as input.
+- **`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion" | "chat_completion"))**: The type of inference task that the model performs.
+- **`query` (Optional, string)**: The query input, which is required only for the `rerank` task.
+It is not required for other tasks.
+- **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request.
+These settings are specific to the task type you specified and override the task settings specified when initializing the service.
+- **`timeout` (Optional, string | -1 | 0)**: The amount of time to wait for the inference request to complete.
+
 ## client.inference.put [_inference.put]
 Create an inference endpoint.
 When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
@@ -8231,7 +8249,7 @@ If no response is received before the timeout expires, the request fails and ret
 Get GeoIP statistics.
 Get download statistics for GeoIP2 databases that are used with the GeoIP processor.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/geoip-processor.html)
+[Endpoint documentation](https://www.elastic.co/docs/reference/enrich-processor/geoip-processor)
 
 ```ts
 client.ingest.geoIpStats()
@@ -8303,7 +8321,7 @@ Extract structured fields out of a single text field within a document.
 You must choose which field to extract matched fields from, as well as the grok pattern you expect will match.
 A grok pattern is like a regular expression that supports aliased expressions that can be reused.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/grok-processor.html)
+[Endpoint documentation](https://www.elastic.co/docs/reference/enrich-processor/grok-processor)
 
 ```ts
 client.ingest.processorGrok()
@@ -8357,7 +8375,7 @@ A value of `-1` indicates that the request should never time out.
 Create or update a pipeline.
 Changes made using this API take effect immediately.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/ingest.html)
+[Endpoint documentation](https://www.elastic.co/docs/manage-data/ingest/transform-enrich/ingest-pipelines)
 
 ```ts
 client.ingest.putPipeline({ id })
@@ -10638,7 +10656,6 @@ client.nodes.getRepositoriesMeteringInfo({ node_id })
 
 #### Request (object) [_request_nodes.get_repositories_metering_info]
 - **`node_id` (string | string[])**: List of node IDs or names used to limit returned information.
-All the nodes selective options are explained [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster.html#cluster-nodes).
 
 ## client.nodes.hotThreads [_nodes.hot_threads]
 Get the hot threads for nodes.

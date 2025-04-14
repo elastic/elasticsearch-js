@@ -85,6 +85,18 @@ export default class Esql {
           'drop_null_columns'
         ]
       },
+      'esql.get_query': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'esql.list_queries': {
+        path: [],
+        body: [],
+        query: []
+      },
       'esql.query': {
         path: [],
         body: [
@@ -253,7 +265,7 @@ export default class Esql {
 
   /**
     * Stop async ES|QL query. This API interrupts the query execution and returns the results so far. If the Elasticsearch security features are enabled, only the user who first submitted the ES|QL query can stop it.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-async-query-stop-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-async-query-stop | Elasticsearch API documentation}
     */
   async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryStopResponse>
   async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryStopResponse, unknown>>
@@ -297,8 +309,93 @@ export default class Esql {
   }
 
   /**
+    * Executes a get ESQL query request
+    */
+  async getQuery (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getQuery (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getQuery (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getQuery (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['esql.get_query']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/_query/queries/${encodeURIComponent(params.id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'esql.get_query',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Executes a list ESQL queries request
+    */
+  async listQueries (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async listQueries (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async listQueries (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async listQueries (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['esql.list_queries']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = '/_query/queries'
+    const meta: TransportRequestMetadata = {
+      name: 'esql.list_queries'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query language) query.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-rest.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/explore-analyze/query-filter/languages/esql-rest | Elasticsearch API documentation}
     */
   async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlQueryResponse>
   async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlQueryResponse, unknown>>

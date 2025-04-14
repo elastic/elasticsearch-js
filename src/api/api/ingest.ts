@@ -296,7 +296,7 @@ export default class Ingest {
 
   /**
     * Get GeoIP statistics. Get download statistics for GeoIP2 databases that are used with the GeoIP processor.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/geoip-processor.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/reference/enrich-processor/geoip-processor | Elasticsearch API documentation}
     */
   async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGeoIpStatsResponse>
   async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGeoIpStatsResponse, unknown>>
@@ -498,7 +498,7 @@ export default class Ingest {
 
   /**
     * Run a grok processor. Extract structured fields out of a single text field within a document. You must choose which field to extract matched fields from, as well as the grok pattern you expect will match. A grok pattern is like a regular expression that supports aliased expressions that can be reused.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/grok-processor.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/reference/enrich-processor/grok-processor | Elasticsearch API documentation}
     */
   async processorGrok (this: That, params?: T.IngestProcessorGrokRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestProcessorGrokResponse>
   async processorGrok (this: That, params?: T.IngestProcessorGrokRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestProcessorGrokResponse, unknown>>
@@ -645,7 +645,7 @@ export default class Ingest {
 
   /**
     * Create or update a pipeline. Changes made using this API take effect immediately.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ingest.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/manage-data/ingest/transform-enrich/ingest-pipelines | Elasticsearch API documentation}
     */
   async putPipeline (this: That, params: T.IngestPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutPipelineResponse>
   async putPipeline (this: That, params: T.IngestPutPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestPutPipelineResponse, unknown>>
