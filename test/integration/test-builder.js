@@ -256,9 +256,9 @@ function buildDo (action) {
   const keys = Object.keys(action)
   if (keys.includes('catch')) {
     code += 'try {\n'
-    code += indent(buildRequest(action))
+    code += indent(buildRequest(action), 2)
     code += '} catch (err) {\n'
-    code += `  t.match(err.message, ${buildValLiteral(action.catch)})\n`
+    code += `  t.match(err.toString(), ${buildValLiteral(action.catch)})\n`
     code += '}\n'
   } else {
     code += buildRequest(action)
