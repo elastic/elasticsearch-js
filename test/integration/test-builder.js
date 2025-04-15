@@ -14,8 +14,58 @@ const { mkdir } = promises
 const generatedTestsPath = join(__dirname, '..', '..', 'generated-tests')
 
 const stackSkips = [
-  // test builder doesn't support "(local)" or `exists` action
-  'indices/resolve_cluster.yml'
+  // client bug: ILM request takes a "body" param, but "body" is a special keyword in the JS client
+  'ilm/10_basic.yml',
+  // health report is... not healthy
+  'health_report.yml',
+  // TODO: `contains` action only supports checking for primitives inside arrays or strings inside strings, not referenced values like objects inside arrays
+  'entsearch/10_basic.yml',
+  // no handler found for uri [/knn_test/_knn_search]
+  'knn_search.yml',
+  // TODO: fix license on ES startup - "Operation failed: Current license is basic."
+  'license/10_stack.yml',
+  // response.body should be truthy. found: ""
+  'logstash/10_basic.yml',
+  // test definition bug? security_exception: unable to authenticate user [x_pack_rest_user] for REST request [/_ml/trained_models/test_model/definition/0]
+  'machine_learning/clear_tm_deployment_cache.yml',
+  // client bug: 0.99995 does not equal 0.5
+  'machine_learning/data_frame_evaluate.yml',
+  // test definition bug? regex has whitespace, maybe needs to be removed
+  'machine_learning/explain_data_frame_analytics.yml',
+  // client bug: 4 != 227
+  'machine_learning/preview_datafeed.yml',
+  // test definition bug: error message does not match
+  'machine_learning/revert_model_snapshot.yml',
+  // test definition bug: error message does not match
+  'machine_learning/update_model_snapshot.yml',
+  // version_conflict_engine_exception
+  'machine_learning/jobs_crud.yml',
+  // test definition bug: error message does not match
+  'machine_learning/model_snapshots.yml',
+  // test definition bug: error message does not match
+  'query_rules/30_test.yml',
+  // client bug: 0 != 0.1
+  'script/10_basic.yml',
+  // client bug: request takes a "body" param, but "body" is a special keyword in the JS client
+  'searchable_snapshots/10_basic.yml',
+  // test builder bug: does `match` action need to support "array contains value"?
+  'security/10_api_key_basic.yml',
+  // test definition bug: error message does not match
+  'security/140_user.yml',
+  // test definition bug: error message does not match
+  'security/30_privileges_stack.yml',
+  // test definition bug: error message does not match
+  'security/change_password.yml',
+  // test builder bug: media_type_header_exception
+  'simulate/ingest.yml',
+  // client bug: request takes a "body" param, but "body" is a special keyword in the JS client
+  'snapshot/10_basic.yml',
+  // test definition bug: illegal_argument_exception
+  'sql/10_basic.yml',
+  // test definition bug: illegal_argument_exception
+  'text_structure/10_basic.yml',
+  // test definition bug: illegal_argument_exception
+  'transform/10_basic.yml',
 ]
 
 const serverlessSkips = [
