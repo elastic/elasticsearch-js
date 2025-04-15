@@ -421,10 +421,11 @@ function buildLookup (path) {
 }
 
 function buildValLiteral (val) {
+  if (typeof val === 'string') val = val.trim()
   if (isRegExp(val)) {
-    return JSON.stringify(val).replace(/^"/, '').replace(/"$/, '').replace(/\\\\/, '\\')
+    return JSON.stringify(val).replace(/^"/, '').replace(/"$/, '').replaceAll('\\\\', '\\')
   } else if (isVariable(val)) {
-    if (val === '$body') return ''
+    if (val === '$body') return 'JSON.stringify(response.body)'
     return val.replace(/^\$/, '')
   } else if (isPlainObject(val)) {
     return JSON.stringify(cleanObject(val), null, 2).replace(/"\$([a-zA-Z0-9_]+)"/g, '$1')
