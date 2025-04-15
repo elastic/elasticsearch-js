@@ -186,9 +186,14 @@ async function build (yamlFiles, clientOptions) {
           break
         case 'contains':
           code += buildContains(action.contains)
+          break
+        case 'exists':
+          code += buildExists(action.exists)
+          break
         case 'skip':
           break
         default:
+          console.warn(`Action not supported: ${key}`)
           break
       }
     }
@@ -324,6 +329,11 @@ function buildContains (action) {
   const path = buildPath(key)
   const val = buildValLiteral(action[key])
   return `t.ok(response.body${path}.includes(${val}))\n`
+}
+
+function buildExists (keyName) {
+  const lookup = buildLookup(key)
+  return `t.ok(${lookup} != null, \`Key "${keyName}" not found in response body: \$\{JSON.stringify(response.body, null, 2)\}\`)\n`
 }
 
 function buildApiParams (params) {
