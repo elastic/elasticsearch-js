@@ -313,76 +313,72 @@ function buildTransformAndSet (action) {
 
 function buildMatch (action) {
   const key = Object.keys(action)[0]
-  const path = buildPath(key)
+  let lookup = buildLookup(key)
   const val = buildValLiteral(action[key])
-  let lookup = `response.body${path}`
-
-  if (lookup === 'response.body[body]') lookup = 'JSON.stringify(response.body) === "" ? null : JSON.stringify(response.body)'
-  if (lookup === "response.body['']") lookup = 'JSON.stringify(response.body) === "" ? null : JSON.stringify(response.body)'
-
-  if (val.startsWith('/')) {
-    return `t.ok(${lookup}.match(${val}), '${key} should match regex ${val}')\n`
-  } else if (typeof action[key] === 'object') {
-    return `t.match(${lookup}, ${val})\n`
-  } else {
-    return `t.equal(${lookup}, ${val})\n`
-  }
+  return `t.match(${lookup}, ${val})\n`
 }
 
 function buildLt (action) {
   const key = Object.keys(action)[0]
-  const path = buildPath(key)
+  const lookup = buildLookup(key)
   const val = buildValLiteral(action[key])
-  return `t.ok(response.body${path} < ${val})\n`
+  return `t.ok(${lookup} < ${val})\n`
 }
 
 function buildLte (action) {
   const key = Object.keys(action)[0]
-  const path = buildPath(key)
+  const lookup = buildLookup(key)
   const val = buildValLiteral(action[key])
-  return `t.ok(response.body${path} <= ${val})\n`
+  return `t.ok(${lookup} <= ${val})\n`
 }
 
 function buildGt (action) {
   const key = Object.keys(action)[0]
-  const path = buildPath(key)
+  const lookup = buildLookup(key)
   const val = buildValLiteral(action[key])
-  return `t.ok(response.body${path} > ${val})\n`
+  return `t.ok(${lookup} > ${val})\n`
 }
 
 function buildGte (action) {
   const key = Object.keys(action)[0]
-  const path = buildPath(key)
+  const lookup = buildLookup(key)
   const val = buildValLiteral(action[key])
-  return `t.ok(response.body${path} >= ${val})\n`
+  return `t.ok(${lookup} >= ${val})\n`
 }
 
 function buildLength (action) {
   const key = Object.keys(action)[0]
-  const path = buildPath(key)
+  const lookup = buildLookup(key)
   const val = buildValLiteral(action[key])
-  return `t.equal(response.body${path}.length, ${val})\n`
+
+  let code = ''
+  code += `if (typeof ${lookup} === 'object' && !Array.isArray(${lookup})) {\n`
+  code += `  t.equal(Object.keys(${lookup}).length, ${val})\n`
+  code += `} else {\n`
+  code += `  t.equal(${lookup}.length, ${val})\n`
+  code += `}\n`
+  return code
 }
 
 function buildIsTrue (action) {
-  let lookup = `response.body${buildPath(action)}`
-  return `t.ok(${lookup} === "true" || (Boolean(${lookup}) && ${lookup} !== "false"), \`${lookup} should be truthy. found: \$\{JSON.stringify(${lookup})\}\`)\n`
+  let lookup = `${buildLookup(action)}`
+  return `t.ok(${lookup} === "true" || (Boolean(${lookup}) && ${lookup} !== "false"), \`${action} should be truthy. found: \$\{JSON.stringify(${lookup})\}\`)\n`
 }
 
 function buildIsFalse (action) {
-  let lookup = `response.body${buildPath(action)}`
-  return `t.ok(${lookup} === "false" || !Boolean(${lookup}), \`${lookup} should be falsy. found: \$\{JSON.stringify(${lookup})\}\`)\n`
+  let lookup = `${buildLookup(action)}`
+  return `t.ok(${lookup} === "false" || !Boolean(${lookup}), \`${action} should be falsy. found: \$\{JSON.stringify(${lookup})\}\`)\n`
 }
 
 function buildContains (action) {
   const key = Object.keys(action)[0]
-  const path = buildPath(key)
+  const lookup = buildLookup(key)
   const val = buildValLiteral(action[key])
-  return `t.ok(response.body${path}.includes(${val}))\n`
+  return `t.ok(${lookup}.includes(${val}), '"${val}" not found in ${key}')\n`
 }
 
 function buildExists (keyName) {
-  const lookup = buildLookup(key)
+  const lookup = buildLookup(keyName)
   return `t.ok(${lookup} != null, \`Key "${keyName}" not found in response body: \$\{JSON.stringify(response.body, null, 2)\}\`)\n`
 }
 
@@ -391,7 +387,7 @@ function buildApiParams (params) {
     return 'undefined'
   } else {
     const out = {}
-    Object.keys(params).filter(k => k !== 'ignore').forEach(k => out[k] = params[k])
+    Object.keys(params).filter(k => k !== 'ignore' && k !== 'headers').forEach(k => out[k] = params[k])
     return buildValLiteral(out)
   }
 }
@@ -405,12 +401,11 @@ function indent (str, spaces) {
   return str.replace(/\s+$/, '').split('\n').map(l => `${tabs}${l}`).join('\n') + '\n'
 }
 
-function buildPath (path) {
-  if (path === 'response') return ''
-  return path.split('.').map(step => {
-    if (step === 'response' || step === 'body') {
-      return ''
-    } else if (parseInt(step, 10).toString() === step) {
+function buildLookup (path) {
+  if (path === '$body') return 'JSON.stringify(response.body)'
+
+  const outPath = path.split('.').map(step => {
+    if (parseInt(step, 10).toString() === step) {
       return `[${step}]`
     } else if (step.match(/^\$[a-zA-Z0-9_]+$/)) {
       const lookup = step.replace(/^\$/, '')
@@ -422,6 +417,7 @@ function buildPath (path) {
       return `['${step}']`
     }
   }).join('')
+  return `response.body${outPath}`
 }
 
 function buildValLiteral (val) {
