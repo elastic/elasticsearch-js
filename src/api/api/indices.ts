@@ -209,6 +209,13 @@ export default class Indices {
           'expand_wildcards'
         ]
       },
+      'indices.delete_data_stream_options': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
       'indices.delete_index_template': {
         path: [
           'name'
@@ -408,6 +415,13 @@ export default class Indices {
           'verbose'
         ]
       },
+      'indices.get_data_stream_options': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
       'indices.get_field_mapping': {
         path: [
           'fields',
@@ -558,6 +572,13 @@ export default class Indices {
           'master_timeout',
           'timeout'
         ]
+      },
+      'indices.put_data_stream_options': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
       },
       'indices.put_index_template': {
         path: [
@@ -974,7 +995,7 @@ export default class Indices {
 
   /**
     * Cancel a migration reindex operation. Cancel a migration reindex attempt for a data stream or index.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/migrate-data-stream.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-cancel-migrate-reindex | Elasticsearch API documentation}
     */
   async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCancelMigrateReindexResponse>
   async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCancelMigrateReindexResponse, unknown>>
@@ -1277,7 +1298,7 @@ export default class Indices {
 
   /**
     * Create an index from a source index. Copy the mappings and settings from the source index to a destination index while allowing request settings and mappings to override the source values.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/migrate-data-stream.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-create-from | Elasticsearch API documentation}
     */
   async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateFromResponse>
   async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateFromResponse, unknown>>
@@ -1557,6 +1578,51 @@ export default class Indices {
     const path = `/_data_stream/${encodeURIComponent(params.name.toString())}`
     const meta: TransportRequestMetadata = {
       name: 'indices.delete_data_stream',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Deletes the data stream options of the selected data streams.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html | Elasticsearch API documentation}
+    */
+  async deleteDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async deleteDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async deleteDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async deleteDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.delete_data_stream_options']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_options`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete_data_stream_options',
       pathParts: {
         name: params.name
       }
@@ -2378,6 +2444,51 @@ export default class Indices {
   }
 
   /**
+    * Returns the data stream options of the selected data streams.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html | Elasticsearch API documentation}
+    */
+  async getDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_data_stream_options']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_options`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_data_stream_options',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Get mapping definitions. Retrieves mapping definitions for one or more fields. For data streams, the API retrieves field mappings for the stream’s backing indices. This API is useful if you don't need a complete mapping or if an index mapping contains a large number of fields.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-mapping | Elasticsearch API documentation}
     */
@@ -2538,7 +2649,7 @@ export default class Indices {
 
   /**
     * Get the migration reindexing status. Get the status of a migration reindex attempt for a data stream or index.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/migrate-data-stream.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-migration | Elasticsearch API documentation}
     */
   async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetMigrateReindexStatusResponse>
   async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetMigrateReindexStatusResponse, unknown>>
@@ -2696,7 +2807,7 @@ export default class Indices {
 
   /**
     * Reindex legacy backing indices. Reindex all legacy backing indices for a data stream. This operation occurs in a persistent task. The persistent task ID is returned immediately and the reindexing work is completed in that task.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/migrate-data-stream.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-migrate-reindex | Elasticsearch API documentation}
     */
   async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesMigrateReindexResponse>
   async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesMigrateReindexResponse, unknown>>
@@ -3042,6 +3153,51 @@ export default class Indices {
     const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_lifecycle`
     const meta: TransportRequestMetadata = {
       name: 'indices.put_data_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Updates the data stream options of the selected data streams.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html | Elasticsearch API documentation}
+    */
+  async putDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.put_data_stream_options']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_options`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_data_stream_options',
       pathParts: {
         name: params.name
       }

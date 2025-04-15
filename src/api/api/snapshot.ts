@@ -55,8 +55,7 @@ export default class Snapshot {
           'indices'
         ],
         query: [
-          'master_timeout',
-          'timeout'
+          'master_timeout'
         ]
       },
       'snapshot.create': {

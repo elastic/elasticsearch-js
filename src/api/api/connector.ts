@@ -1667,7 +1667,7 @@ export default class Connector {
 
   /**
     * Update the connector draft filtering validation. Update the draft filtering validation info for a connector.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-filtering-validation-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-filtering-validation | Elasticsearch API documentation}
     */
   async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFilteringValidationResponse>
   async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFilteringValidationResponse, unknown>>
@@ -1838,7 +1838,7 @@ export default class Connector {
 
   /**
     * Update the connector is_native flag.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-native-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-native | Elasticsearch API documentation}
     */
   async updateNative (this: That, params: T.ConnectorUpdateNativeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateNativeResponse>
   async updateNative (this: That, params: T.ConnectorUpdateNativeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateNativeResponse, unknown>>
