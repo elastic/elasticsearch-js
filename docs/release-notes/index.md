@@ -38,4 +38,6 @@ To check for security updates, go to [Security announcements for the Elastic sta
 
   Docstrings for types that differ between stack and serverless have also been updated to indicate when that is the case.
 
+- **Improved Cloud ID parsing:** when using a Cloud ID as the `cloud` parameter to instantiate the client, that ID was assumed to be in the correct format. New assertions have been added to verify that format and throw a `ConfigurationError` if it is invalid. See [#2694](https://github.com/elastic/elasticsearch-js/issues/2694).
+
 % ### Fixes [elasticsearch-javascript-client-900-fixes]
