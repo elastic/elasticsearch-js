@@ -1,6 +1,25 @@
 [[changelog-client]]
 == Release notes
 
+=== 8.18.0
+
+[discrete]
+==== Features
+
+[discrete]
+===== Support for Elasticsearch `v8.18`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.18/release-notes-8.18.0.html[here].
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Improved Cloud ID parsing
+
+When using a Cloud ID as the `cloud` parameter to instantiate the client, that ID was assumed to be in the correct format. New assertions have been added to verify that format and throw a `ConfigurationError` if it is invalid. See https://github.com/elastic/elasticsearch-js/issues/2694[#2694].
+
 [discrete]
 === 8.17.0
 
