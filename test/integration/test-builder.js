@@ -362,19 +362,23 @@ function buildLength (action) {
 
 function buildIsTrue (action) {
   let lookup = `${buildLookup(action)}`
-  return `t.ok(${lookup} === "true" || (Boolean(${lookup}) && ${lookup} !== "false"), \`${action} should be truthy. found: \$\{JSON.stringify(${lookup})\}\`)\n`
+  let errMessage = `\`${action} should be truthy. found: '\$\{JSON.stringify(${lookup})\}'\``
+  if (lookup.includes('JSON.stringify')) errMessage = `\`${action} should be truthy. found: '\$\{${lookup}\}'\``
+  return `t.ok(${lookup} === "true" || (Boolean(${lookup}) && ${lookup} !== "false"), ${errMessage})\n`
 }
 
 function buildIsFalse (action) {
   let lookup = `${buildLookup(action)}`
-  return `t.ok(${lookup} === "false" || !Boolean(${lookup}), \`${action} should be falsy. found: \$\{JSON.stringify(${lookup})\}\`)\n`
+  let errMessage = `\`${action} should be falsy. found: '\$\{JSON.stringify(${lookup})\}'\``
+  if (lookup.includes('JSON.stringify')) errMessage = `\`${action} should be falsy. found: '\$\{${lookup}\}'\``
+  return `t.ok(${lookup} === "false" || !Boolean(${lookup}), ${errMessage})\n`
 }
 
 function buildContains (action) {
   const key = Object.keys(action)[0]
   const lookup = buildLookup(key)
   const val = buildValLiteral(action[key])
-  return `t.ok(${lookup}.includes(${val}), '"${val}" not found in ${key}')\n`
+  return `t.ok(${lookup}.includes(${val}), '${JSON.stringify(val)} not found in ${key}')\n`
 }
 
 function buildExists (keyName) {
@@ -402,7 +406,7 @@ function indent (str, spaces) {
 }
 
 function buildLookup (path) {
-  if (path === '$body') return 'JSON.stringify(response.body)'
+  if (path === '$body') return '(typeof response.body === "string" ? response.body : JSON.stringify(response.body))'
 
   const outPath = path.split('.').map(step => {
     if (parseInt(step, 10).toString() === step) {
