@@ -300,8 +300,24 @@ test('Elastic Cloud config', t => {
   t.equal(connection?.url.hostname, 'abcd.localhost')
   t.equal(connection?.url.protocol, 'https:')
 
+  t.test('Invalid Cloud ID will throw ConfigurationError', t => {
+    t.throws(() => new Client({
+      cloud : {
+        id : 'invalidCloudIdThatIsNotBase64'
+      },
+      auth : {
+        username: 'elastic',
+        password: 'changeme'
+      }
+
+    }), errors.ConfigurationError)
+    t.end()
+  })
+
   t.end()
 })
+
+
 
 test('Override default Elastic Cloud options', t => {
   const client = new Client({
