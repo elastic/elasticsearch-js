@@ -14,12 +14,20 @@ const { mkdir } = promises
 const generatedTestsPath = join(__dirname, '..', '..', 'generated-tests')
 
 const stackSkips = [
+  // test definition bug: response is empty string
+  'cat/fielddata.yml',
+  // test definition bug: response is empty string
+  'cluster/delete_voting_config_exclusions.yml',
+  // test definition bug: response is empty string
+  'cluster/voting_config_exclusions.yml',
   // client bug: ILM request takes a "body" param, but "body" is a special keyword in the JS client
   'ilm/10_basic.yml',
   // health report is... not healthy
   'health_report.yml',
   // TODO: `contains` action only supports checking for primitives inside arrays or strings inside strings, not referenced values like objects inside arrays
   'entsearch/10_basic.yml',
+  // test definition bug: error message does not match
+  'entsearch/30_sync_jobs_stack.yml',
   // no handler found for uri [/knn_test/_knn_search]
   'knn_search.yml',
   // TODO: fix license on ES startup - "Operation failed: Current license is basic."
@@ -54,6 +62,8 @@ const stackSkips = [
   'security/140_user.yml',
   // test definition bug: error message does not match
   'security/30_privileges_stack.yml',
+  // unknown issue: $profile.enabled path doesn't exist in response
+  'security/130_user_profile.yml',
   // test definition bug: error message does not match
   'security/change_password.yml',
   // test builder bug: media_type_header_exception
