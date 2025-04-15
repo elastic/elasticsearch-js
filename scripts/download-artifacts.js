@@ -27,11 +27,15 @@ async function downloadArtifacts (localTests, version = 'main') {
 
   const { GITHUB_TOKEN } = process.env
 
+  if (version !== 'main') {
+    version = version.split('.').slice(0, 2).join('.')
+  }
+
   log.text = 'Clean tests folder'
   await rimraf(testYamlFolder)
   await mkdir(testYamlFolder, { recursive: true })
 
-  log.text = 'Fetching test YAML files'
+  log.text = `Fetch test YAML files for version ${version}`
 
   if (localTests) {
     log.text = `Copying local tests from ${localTests}`
@@ -42,7 +46,7 @@ async function downloadArtifacts (localTests, version = 'main') {
       process.exit(1)
     }
 
-    const response = await fetch('https://api.github.com/repos/elastic/elasticsearch-clients-tests/zipball/main', {
+    const response = await fetch(`https://api.github.com/repos/elastic/elasticsearch-clients-tests/zipball/${version}`, {
       headers: {
         Authorization: `Bearer ${GITHUB_TOKEN}`,
         Accept: 'application/vnd.github+json'
@@ -68,12 +72,7 @@ async function downloadArtifacts (localTests, version = 'main') {
   await rimraf(schemaFolder)
   await mkdir(schemaFolder, { recursive: true })
 
-  let specVersion = version
-  if (version !== 'main') {
-    specVersion = version.split('.').slice(0, 2).join('.')
-  }
-
-  const response = await fetch(`https://raw.githubusercontent.com/elastic/elasticsearch-specification/${specVersion}/output/schema/schema.json`)
+  const response = await fetch(`https://raw.githubusercontent.com/elastic/elasticsearch-specification/${version}/output/schema/schema.json`)
   if (!response.ok) {
     log.fail(`unexpected response ${response.statusText}`)
     process.exit(1)
