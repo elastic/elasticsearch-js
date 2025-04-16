@@ -135,7 +135,7 @@ export interface ClientOptions {
     * @defaultValue null */
   agent?: HttpAgentOptions | UndiciAgentOptions | agentFn | false
   /** @property nodeFilter A custom function used by the connection pool to determine which nodes are qualified to receive a request
-    * @defaultValue () => true */
+    * @defaultValue A function that uses the Connection `roles` property to avoid master-only nodes */
   nodeFilter?: nodeFilterFn
   /** @property nodeSelector A custom function used by the connection pool to determine which node should receive the next request
     * @defaultValue A "round robin" function that loops sequentially through each node in the pool. */
