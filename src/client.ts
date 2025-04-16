@@ -78,6 +78,13 @@ export interface NodeOptions {
   ssl?: TlsConnectionOptions
   /** @property headers Custom HTTP headers that should be sent with each request */
   headers?: Record<string, any>
+  /** @property roles Common Elasticsearch roles that can be assigned to this node. Can be helpful when writing custom nodeFilter or nodeSelector functions. */
+  roles?: {
+    master: boolean
+    data: boolean
+    ingest: boolean
+    ml: boolean
+  }
 }
 
 export interface ClientOptions {
