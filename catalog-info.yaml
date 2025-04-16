@@ -37,8 +37,9 @@ spec:
         everyone:
           access_level: READ_ONLY
       provider_settings:
-        build_pull_requests: false
+        build_pull_requests: true
         build_branches: false
+        separate_pull_request_statuses: true
       cancel_intermediate_builds: true
       cancel_intermediate_builds_branch_filter: "!main"
       schedules:
@@ -47,10 +48,4 @@ spec:
           cronline: "@daily"
         8_x:
           branch: "8.x"
-          cronline: "@daily"
-        8_17:
-          branch: "8.17"
-          cronline: "@daily"
-        8_18:
-          branch: "8.18"
           cronline: "@daily"
