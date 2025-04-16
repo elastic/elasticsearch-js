@@ -246,12 +246,15 @@ Type: `function`
 Filter that indicates whether a node should be used for a request. Default function definition:
 
 ```js
-function defaultNodeFilter (node) {
-  // avoid master only nodes
-  if (node.roles.master === true &&
-      node.roles.data === false &&
-      node.roles.ingest === false) {
-    return false
+function defaultNodeFilter (conn) {
+  if (conn.roles != null) {
+    if (
+      // avoid master-only nodes
+      conn.roles.master &&
+      !conn.roles.data &&
+      !conn.roles.ingest &&
+      !conn.roles.ml
+    ) return false
   }
   return true
 }
