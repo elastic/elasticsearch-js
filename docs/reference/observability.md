@@ -15,7 +15,6 @@ Correlating events can be hard, especially if your applications have a large cod
 
 All of these observability features are documented below.
 
-
 ## OpenTelemetry [_opentelemetry]
 
 The client supports OpenTelemetry’s [zero-code instrumentation](https://opentelemetry.io/docs/zero-code/js/) to enable tracking each client request as an [OpenTelemetry span](https://opentelemetry.io/docs/concepts/signals/traces/#spans). These spans follow all of the [semantic OpenTelemetry conventions for Elasticsearch](https://opentelemetry.io/docs/specs/semconv/database/elasticsearch/) except for `db.query.text`.
@@ -35,7 +34,6 @@ To start sending Elasticsearch trace data to your OpenTelemetry endpoint, follow
 ```
 node --require '@opentelemetry/auto-instrumentations-node/register' index.js
 ```
-
 
 ## Events [_events]
 
@@ -65,16 +63,75 @@ client.diagnostic.on('response', (err, result) => {
 })
 ```
 
+### Event types
+
 The client emits the following events:
 
-|     |     |
-| --- | --- |
-| `serialization` | Emitted before starting serialization and compression. If you want to measure this phase duration, you should measure the time elapsed between this event and `request`.<br><br>```js<br>client.diagnostic.on('serialization', (err, result) => {<br>  console.log(err, result)<br>})<br>```<br> |
-| `request` | Emitted before sending the actual request to {{es}} *(emitted multiple times in case of retries)*.<br><br>```js<br>client.diagnostic.on('request', (err, result) => {<br>  console.log(err, result)<br>})<br>```<br> |
-| `deserialization` | Emitted before starting deserialization and decompression. If you want to measure this phase duration, you should measure the time elapsed between this event and `response`. *(This event might not be emitted in certain situations)*.<br><br>```js<br>client.diagnostic.on('deserialization', (err, result) => {<br>  console.log(err, result)<br>})<br>```<br> |
-| `response` | Emitted once {{es}} response has been received and parsed.<br><br>```js<br>client.diagnostic.on('response', (err, result) => {<br>  console.log(err, result)<br>})<br>```<br> |
-| `sniff` | Emitted when the client ends a sniffing request.<br><br>```js<br>client.diagnostic.on('sniff', (err, result) => {<br>  console.log(err, result)<br>})<br>```<br> |
-| `resurrect` | Emitted if the client is able to resurrect a dead node.<br><br>```js<br>client.diagnostic.on('resurrect', (err, result) => {<br>  console.log(err, result)<br>})<br>```<br> |
+#### `serialization`
+
+Emitted before starting serialization and compression. If you want to measure this phase duration, you should measure the time elapsed between this event and `request`.
+
+```js
+client.diagnostic.on("serialization", (err, result) => {
+  console.log(err, result)
+})
+```
+
+#### `request`
+
+Emitted before sending the actual request to {{es}} _(emitted multiple times in case of retries)_.
+
+```js
+client.diagnostic.on("request", (err, result) => {
+  console.log(err, result)
+})
+```
+
+#### `deserialization`
+
+Emitted before starting deserialization and decompression. If you want to measure this phase duration, you should measure the time elapsed between this event and `response`.
+
+This event might not be emitted in certain situations:
+
+* When `asStream` is set to true, the response is returned in its raw stream form before deserialization occurs
+* When a response is terminated early due to content length being too large
+* When a response is terminated early by an `AbortController`
+
+```js
+client.diagnostic.on("deserialization", (err, result) => {
+  console.log(err, result)
+})
+```
+
+#### `response`
+
+Emitted once {{es}} response has been received and parsed.
+
+```js
+client.diagnostic.on("response", (err, result) => {
+  console.log(err, result)
+})
+```
+
+#### `sniff`
+
+Emitted when the client ends a sniffing request.
+
+```js
+client.diagnostic.on("sniff", (err, result) => {
+  console.log(err, result)
+})
+```
+
+#### `resurrect`
+
+Emitted if the client is able to resurrect a dead node.
+
+```js
+client.diagnostic.on("resurrect", (err, result) => {
+  console.log(err, result)
+})
+```
 
 The values of `result` in `serialization`, `request`, `deserialization`, `response` and `sniff` are:
 
@@ -113,7 +170,6 @@ request: {
 };
 ```
 
-
 ### Events order [_events_order]
 
 The event order is described in the following graph, in some edge cases, the order is not guaranteed. You can find in [`test/acceptance/events-order.test.js`](https://github.com/elastic/elasticsearch-js/blob/main/test/acceptance/events-order.test.js) how the order changes based on the situation.
@@ -133,7 +189,6 @@ serialization
               │
               └─▶ response
 ```
-
 
 ## Correlation ID [_correlation_id]
 
@@ -176,7 +231,7 @@ const client = new Client({
   // it takes two parameters, the request parameters and options
   generateRequestId: function (params, options) {
     // your id generation logic
-    // must be syncronous
+    // must be synchronous
     return 'id'
   }
 })
@@ -192,7 +247,6 @@ client.search({
   id: 'custom-id'
 }).then(console.log, console.log)
 ```
-
 
 ## Context object [_context_object]
 
@@ -263,10 +317,9 @@ client.search({
 }).then(console.log, console.log)
 ```
 
-
 ## Client name [_client_name]
 
-If you are using multiple instances of the client or if you are using multiple child clients *(which is the recommended way to have multiple instances of the client)*, you might need to recognize which client you are using. The `name` options help you in this regard.
+If you are using multiple instances of the client or if you are using multiple child clients _(which is the recommended way to have multiple instances of the client)_, you might need to recognize which client you are using. The `name` options help you in this regard.
 
 ```js
 const { Client } = require('@elastic/elasticsearch')
@@ -309,7 +362,6 @@ child.search({
 }).then(console.log, console.log)
 ```
 
-
 ## X-Opaque-Id support [_x_opaque_id_support]
 
 To improve observability, the client offers an easy way to configure the `X-Opaque-Id` header. If you set the `X-Opaque-Id` in a specific request, this allows you to discover this identifier in the [deprecation logs](docs-content://deploy-manage/monitor/logging-configuration/update-elasticsearch-logging-levels.md#deprecation-logging), helps you with [identifying search slow log origin](elasticsearch://reference/elasticsearch/index-settings/slow-log.md) as well as [identifying running tasks](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks).
@@ -348,4 +400,3 @@ client.search({
   opaqueId: 'my-search'
 }).then(console.log, console.log)
 ```
-
