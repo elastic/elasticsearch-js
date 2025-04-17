@@ -78,6 +78,13 @@ export interface NodeOptions {
   ssl?: TlsConnectionOptions
   /** @property headers Custom HTTP headers that should be sent with each request */
   headers?: Record<string, any>
+  /** @property roles Common Elasticsearch roles that can be assigned to this node. Can be helpful when writing custom nodeFilter or nodeSelector functions. */
+  roles?: {
+    master: boolean
+    data: boolean
+    ingest: boolean
+    ml: boolean
+  }
 }
 
 export interface ClientOptions {
@@ -135,7 +142,7 @@ export interface ClientOptions {
     * @defaultValue null */
   agent?: HttpAgentOptions | UndiciAgentOptions | agentFn | false
   /** @property nodeFilter A custom function used by the connection pool to determine which nodes are qualified to receive a request
-    * @defaultValue () => true */
+    * @defaultValue A function that uses the Connection `roles` property to avoid master-only nodes */
   nodeFilter?: nodeFilterFn
   /** @property nodeSelector A custom function used by the connection pool to determine which node should receive the next request
     * @defaultValue A "round robin" function that loops sequentially through each node in the pool. */
