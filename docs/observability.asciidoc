@@ -97,7 +97,7 @@ client.diagnostic.on('request', (err, result) => {
 ----
 
 |`deserialization`
-a|Emitted before starting deserialization and decompression. If you want to measure this phase duration, you should measure the time elapsed between this event and `response`. _(This event might not be emitted in certain situations)_.
+a|Emitted before starting deserialization and decompression. If you want to measure this phase duration, you should measure the time elapsed between this event and `response`. This event might not be emitted in certain situations, like: when `asStream` is set to true; a response is terminated early due to content length being too large; or a response is terminated early by an `AbortController`.
 [source,js]
 ----
 client.diagnostic.on('deserialization', (err, result) => {
