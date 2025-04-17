@@ -171,7 +171,18 @@ a|`function` - Takes a `Connection` and returns `true` if it can be sent a reque
 _Default:_
 [source,js]
 ----
-() => true
+function defaultNodeFilter (conn) {
+  if (conn.roles != null) {
+    if (
+      // avoid master-only nodes
+      conn.roles.master &&
+      !conn.roles.data &&
+      !conn.roles.ingest &&
+      !conn.roles.ml
+    ) return false
+  }
+  return true
+}
 ----
 
 |`nodeSelector`
