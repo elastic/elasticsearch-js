@@ -6,3 +6,6 @@ elasticsearch
 lib
 junit-output
 .tap
+rest-api-spec
+yaml-rest-tests
+generated-tests

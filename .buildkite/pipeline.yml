@@ -1,17 +1,15 @@
 ---
 steps:
-  - label: ":elasticsearch: :javascript: ES JavaScript ({{ matrix.nodejs }}) Test Suite: {{ matrix.suite }}"
+  - label: ":elasticsearch: :javascript: ES JavaScript ({{ matrix.nodejs }})"
     agents:
       provider: "gcp"
     env:
       NODE_VERSION: "{{ matrix.nodejs }}"
-      TEST_SUITE: "{{ matrix.suite }}"
-      STACK_VERSION: 8.16.0
+      TEST_SUITE: "platinum"
+      STACK_VERSION: 9.0.0
+      GITHUB_TOKEN_PATH: "secret/ci/elastic-elasticsearch-js/github-token"
     matrix:
       setup:
-        suite:
-          - "free"
-          - "platinum"
         nodejs:
           - "18"
           - "20"
