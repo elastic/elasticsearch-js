@@ -1,6 +1,18 @@
 [[changelog-client]]
 == Release notes
 
+[discrete]
+=== 8.18.1
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Fix broken node roles and node filter
+
+The docs note a `nodeFilter` option on the client that will, by default, filter the nodes based on any `roles` values that are set at instantition. At some point, this functionality was partially disabled. This brings the feature back, ensuring that it matches what the documentation has said it does all along.
+
+[discrete]
 === 8.18.0
 
 [discrete]
