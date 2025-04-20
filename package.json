@@ -91,7 +91,7 @@
   },
   "dependencies": {
     "@elastic/transport": "^9.0.1",
-    "apache-arrow": "^18.0.0",
+    "apache-arrow": "^19.0.0",
     "tslib": "^2.4.0"
   },
   "tap": {
