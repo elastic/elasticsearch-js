@@ -1,8 +1,11 @@
 ---
+agents:
+  image: family/core-ubuntu-2204
+  memory: "8G"
+  cpu: "2"
+
 steps:
   - label: ":elasticsearch: :javascript: ES JavaScript ({{ matrix.nodejs }})"
-    agents:
-      provider: "gcp"
     env:
       NODE_VERSION: "{{ matrix.nodejs }}"
       TEST_SUITE: "platinum"
@@ -20,9 +23,6 @@ steps:
   - wait: ~
     continue_on_failure: true
   - label: ":junit: Test results"
-    agents:
-      provider: "gcp"
-      image: family/core-ubuntu-2204
     plugins:
       - junit-annotate#v2.6.0:
           artifacts: "junit-output/junit-*.xml"
