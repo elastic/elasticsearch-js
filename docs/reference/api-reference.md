@@ -5426,7 +5426,7 @@ Cancel a migration reindex operation.
 
 Cancel a migration reindex attempt for a data stream or index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-migration)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-cancel-migrate-reindex)
 
 ```ts
 client.indices.cancelMigrateReindex({ index })
@@ -5655,7 +5655,7 @@ Create an index from a source index.
 
 Copy the mappings and settings from the source index to a destination index while allowing request settings and mappings to override the source values.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-migration)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-create-from)
 
 ```ts
 client.indices.createFrom({ source, dest })
@@ -6394,7 +6394,7 @@ Reindex all legacy backing indices for a data stream.
 This operation occurs in a persistent task.
 The persistent task ID is returned immediately and the reindexing work is completed in that task.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-migration)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-migrate-reindex)
 
 ```ts
 client.indices.migrateReindex({ ... })

@@ -975,7 +975,7 @@ export default class Indices {
 
   /**
     * Cancel a migration reindex operation. Cancel a migration reindex attempt for a data stream or index.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-migration | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-cancel-migrate-reindex | Elasticsearch API documentation}
     */
   async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCancelMigrateReindexResponse>
   async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCancelMigrateReindexResponse, unknown>>
@@ -1278,7 +1278,7 @@ export default class Indices {
 
   /**
     * Create an index from a source index. Copy the mappings and settings from the source index to a destination index while allowing request settings and mappings to override the source values.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-migration | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-create-from | Elasticsearch API documentation}
     */
   async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateFromResponse>
   async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateFromResponse, unknown>>
@@ -2697,7 +2697,7 @@ export default class Indices {
 
   /**
     * Reindex legacy backing indices. Reindex all legacy backing indices for a data stream. This operation occurs in a persistent task. The persistent task ID is returned immediately and the reindexing work is completed in that task.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-migration | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-migrate-reindex | Elasticsearch API documentation}
     */
   async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesMigrateReindexResponse>
   async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesMigrateReindexResponse, unknown>>
