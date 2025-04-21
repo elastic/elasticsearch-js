@@ -34,4 +34,4 @@ docker run \
   --name elasticsearch-js \
   --rm \
   elastic/elasticsearch-js \
-  bash -c "pwd; ls -la; npm run test:integration; [ -f ./report-junit.xml ] && mv ./report-junit.xml /junit-output/junit-$BUILDKITE_JOB_ID.xml || echo 'No JUnit artifact found'"
+  bash -c "npm run test:integration; [ -f ./report-junit.xml ] && mv ./report-junit.xml /junit-output/junit-$BUILDKITE_JOB_ID.xml || echo 'No JUnit artifact found'"
