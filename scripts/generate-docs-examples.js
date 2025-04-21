@@ -20,7 +20,7 @@
 const { join } = require('path')
 const { writeFile } = require('fs/promises')
 const fetch = require('node-fetch')
-const rimraf = require('rimraf')
+const { rimraf } = require('rimraf')
 const ora = require('ora')
 const { convertRequests } = require('@elastic/request-converter')
 const minimist = require('minimist')
