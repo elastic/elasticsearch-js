@@ -67,14 +67,53 @@ client.diagnostic.on('response', (err, result) => {
 
 The client emits the following events:
 
-|     |     |
-| --- | --- |
-| `serialization` | Emitted before starting serialization and compression. If you want to measure this phase duration, you should measure the time elapsed between this event and `request`.<br><br>```js<br>client.diagnostic.on('serialization', (err, result) => {<br>  console.log(err, result)<br>})<br>```<br> |
-| `request` | Emitted before sending the actual request to {{es}} *(emitted multiple times in case of retries)*.<br><br>```js<br>client.diagnostic.on('request', (err, result) => {<br>  console.log(err, result)<br>})<br>```<br> |
-| `deserialization` | Emitted before starting deserialization and decompression. If you want to measure this phase duration, you should measure the time elapsed between this event and `response`. *(This event might not be emitted in certain situations)*.<br><br>```js<br>client.diagnostic.on('deserialization', (err, result) => {<br>  console.log(err, result)<br>})<br>```<br> |
-| `response` | Emitted once {{es}} response has been received and parsed.<br><br>```js<br>client.diagnostic.on('response', (err, result) => {<br>  console.log(err, result)<br>})<br>```<br> |
-| `sniff` | Emitted when the client ends a sniffing request.<br><br>```js<br>client.diagnostic.on('sniff', (err, result) => {<br>  console.log(err, result)<br>})<br>```<br> |
-| `resurrect` | Emitted if the client is able to resurrect a dead node.<br><br>```js<br>client.diagnostic.on('resurrect', (err, result) => {<br>  console.log(err, result)<br>})<br>```<br> |
+`serialization`
+:   Emitted before starting serialization and compression. If you want to measure this phase duration, you should measure the time elapsed between this event and `request`.
+    ```js
+    client.diagnostic.on('serialization', (err, result) => {
+      console.log(err, result)
+    })
+    ```
+
+`request`
+:   Emitted before sending the actual request to {{es}} *(emitted multiple times in case of retries)*.
+    ```js
+    client.diagnostic.on('request', (err, result) => {
+      console.log(err, result)
+    })
+    ```
+
+`deserialization`
+:   Emitted before starting deserialization and decompression. If you want to measure this phase duration, you should measure the time elapsed between this event and `response`. *(This event might not be emitted in certain situations)*.
+    ```js
+    client.diagnostic.on('deserialization', (err, result) => {
+      console.log(err, result)
+    })
+    ```
+
+`response`
+:   Emitted once {{es}} response has been received and parsed.
+    ```js
+    client.diagnostic.on('response', (err, result) => {
+      console.log(err, result)
+    })
+    ```
+
+`sniff`
+:   Emitted when the client ends a sniffing request.
+    ```js
+    client.diagnostic.on('sniff', (err, result) => {
+      console.log(err, result)
+    })
+    ```
+
+`resurrect`
+:   Emitted if the client is able to resurrect a dead node.
+    ```js
+    client.diagnostic.on('resurrect', (err, result) => {
+      console.log(err, result)
+    })
+    ```
 
 The values of `result` in `serialization`, `request`, `deserialization`, `response` and `sniff` are:
 

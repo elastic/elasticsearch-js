@@ -980,6 +980,7 @@ PUT my-index-000001/_doc/1?version=2&version_type=external
     "id": "elkbee"
   }
 }
+```
 
 In this example, the operation will succeed since the supplied version of 2 is higher than the current document version of 1.
 If the document was already updated and its version was set to 2 or higher, the indexing command will fail and result in a conflict (409 HTTP status code).
