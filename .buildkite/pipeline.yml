@@ -1,17 +1,20 @@
 ---
+agents:
+  provider: "gcp"
+  image: family/core-ubuntu-2204
+  memory: "8G"
+  cpu: "2"
+
 steps:
-  - label: ":elasticsearch: :javascript: ES JavaScript ({{ matrix.nodejs }}) Test Suite: {{ matrix.suite }}"
-    agents:
-      provider: "gcp"
+  - label: ":elasticsearch: :javascript: ES JavaScript ({{ matrix.nodejs }})"
     env:
       NODE_VERSION: "{{ matrix.nodejs }}"
-      TEST_SUITE: "{{ matrix.suite }}"
-      STACK_VERSION: 8.16.0
+      TEST_SUITE: "platinum"
+      STACK_VERSION: 9.0.0
+      GITHUB_TOKEN_PATH: "secret/ci/elastic-elasticsearch-js/github-token"
+      TEST_ES_STACK: "1"
     matrix:
       setup:
-        suite:
-          - "free"
-          - "platinum"
         nodejs:
           - "18"
           - "20"
@@ -21,9 +24,6 @@ steps:
   - wait: ~
     continue_on_failure: true
   - label: ":junit: Test results"
-    agents:
-      provider: "gcp"
-      image: family/core-ubuntu-2204
     plugins:
       - junit-annotate#v2.6.0:
           artifacts: "junit-output/junit-*.xml"
