@@ -132,7 +132,7 @@ export interface ClientOptions {
     * @defaultValue null */
   agent?: HttpAgentOptions | UndiciAgentOptions | agentFn | false
   /** @property nodeFilter A custom function used by the connection pool to determine which nodes are qualified to receive a request
-    * @defaultValue () => true */
+    * @defaultValue A function that uses the Connection `roles` property to avoid master-only nodes */
   nodeFilter?: nodeFilterFn
   /** @property nodeSelector A custom function used by the connection pool to determine which node should receive the next request
     * @defaultValue A "round robin" function that loops sequentially through each node in the pool. */
@@ -203,10 +203,32 @@ export default class Client extends API {
     if ((opts.cloud != null || opts.serverMode === 'serverless') && opts[kChild] === undefined) {
       if (opts.cloud != null) {
         const { id } = opts.cloud
+        if (typeof id !== 'string') {
+          throw new errors.ConfigurationError('Cloud ID must be a string.')
+        }
+
+        const parts = id.split(':')
+        if (parts.length !== 2 || parts[1] === '') {
+          throw new errors.ConfigurationError(
+            'Cloud ID must be in the format "name:base64string".'
+          )
+        }
+
         // the cloud id is `cluster-name:base64encodedurl`
         // the url is a string divided by two '$', the first is the cloud url
         // the second the elasticsearch instance, the third the kibana instance
-        const cloudUrls = Buffer.from(id.split(':')[1], 'base64').toString().split('$')
+
+        let cloudUrls
+        try {
+          cloudUrls = Buffer.from(parts[1], 'base64').toString().split('$')
+        } catch (err) {
+          throw new errors.ConfigurationError('Cloud ID base64 decoding failed.')
+        }
+        if (cloudUrls.length < 2 || cloudUrls[0] === '' || cloudUrls[1] === '') {
+          throw new errors.ConfigurationError(
+            'Cloud ID base64 must contain at least two "$" separated parts: "<cloudUrl>$<esId>[$<kibanaId>]".'
+          )
+        }
 
         opts.node = `https://${cloudUrls[1]}.${cloudUrls[0]}`
       }

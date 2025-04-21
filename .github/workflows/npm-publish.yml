@@ -27,9 +27,20 @@ jobs:
         run: |
           version=$(jq -r .version package.json)
           tag_meta=$(echo "$version" | cut -s -d '-' -f2)
+          # if no meta info on the version (e.g. a '-alpha.1' prefix), publish as a stable release
           if [[ -z "$tag_meta" ]]; then
-            npm publish --provenance --access public
+            # get latest version on npm
+            latest=$(npm view @elastic/elasticsearch --json | jq -r '.["dist-tags"].latest')
+
+            # if $version is higher than the most recently published version, publish as-is
+            if [[ $(yes | npx semver "$version" "$latest" | tail -n1) == "$version" ]]; then
+              npm publish --provenance --access public
+            else
+              # otherwise, publish with "previous" tag
+              npm publish --provenance --access public --tag "previous"
+            fi
           else
+            # publish as a non-stable release using the meta name (e.g. 'alpha') as the tag
             tag=$(echo "$tag_meta" | cut -d '.' -f1)
             npm publish --provenance --access public --tag "$tag"
           fi

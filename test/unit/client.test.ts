@@ -64,6 +64,31 @@ test('Missing node(s)', t => {
   t.end()
 })
 
+test('multi nodes with roles, using default node filter', async t => {
+  const client = new Client({
+    nodes: [
+      {
+        url: new URL('http://node1:9200'),
+        roles: { master: true, data: false, ingest: false, ml: false }
+      },
+      {
+        url: new URL('http://node2:9200'),
+        roles: { master: true, data: true, ingest: false, ml: false }
+      },
+    ]
+  })
+  const conn = client.connectionPool.getConnection({
+    now: Date.now() + 1000 * 60 * 3,
+    requestId: 1,
+    name: 'elasticsearch-js',
+    context: null
+  })
+
+  t.equal(conn?.url.hostname, 'node2')
+
+  t.end()
+})
+
 test('Custom headers', t => {
   const client = new Client({
     node: 'http://localhost:9200',
@@ -287,8 +312,24 @@ test('Elastic Cloud config', t => {
   t.equal(connection?.url.hostname, 'abcd.localhost')
   t.equal(connection?.url.protocol, 'https:')
 
+  t.test('Invalid Cloud ID will throw ConfigurationError', t => {
+    t.throws(() => new Client({
+      cloud : {
+        id : 'invalidCloudIdThatIsNotBase64'
+      },
+      auth : {
+        username: 'elastic',
+        password: 'changeme'
+      }
+
+    }), errors.ConfigurationError)
+    t.end()
+  })
+
   t.end()
 })
+
+
 
 test('Override default Elastic Cloud options', t => {
   const client = new Client({
