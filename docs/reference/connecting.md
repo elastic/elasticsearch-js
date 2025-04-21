@@ -332,21 +332,22 @@ The supported request specific options are:
 | Option | Description |
 | --- | ----------- |
 | `ignore` | `number[]` -  HTTP status codes which should not be considered errors for this request.<br>*Default:* `null` |
-| `requestTimeout` | `number` or `string` - Max request timeout for the request in milliseconds. This overrides the client default, which is to not time out at all. See [Elasticsearch best practices for HTML clients](elasticsearch://reference/elasticsearch/configuration-reference/networking-settings.md#_http_client_configuration) for more info.<br>_Default:* No timeout |
+| `requestTimeout` | `number` or `string` - Max request timeout for the request in milliseconds. This overrides the client default, which is to not time out at all. See [Elasticsearch best practices for HTML clients](elasticsearch://reference/elasticsearch/configuration-reference/networking-settings.md#_http_client_configuration) for more info.<br>_Default:_ No timeout |
 | `retryOnTimeout` | `boolean` - Retry requests that have timed out.*Default:* `false` |
 | `maxRetries` | `number` - Max number of retries for the request, it overrides the client default.<br>*Default:* `3` |
 | `compression` | `string` or  `boolean` - Enables body compression for the request.<br>*Options:* `false`, `'gzip'`<br>*Default:* `false` |
 | `asStream` | `boolean` - Instead of getting the parsed body back, you get the raw Node.js stream of data.<br>*Default:* `false` |
 | `headers` | `object` - Custom headers for the request.<br>*Default:* `null` |
-|`querystring` | `object` - Custom querystring for the request.<br>*Default:* `null` |
+| `querystring` | `object` - Custom querystring for the request.<br>*Default:* `null` |
 | `id` | `any` - Custom request ID. *(overrides the top level request id generator)*<br>*Default:* `null` |
 | `context` | `any` - Custom object per request. *(you can use it to pass data to the clients events)*<br>*Default:* `null` |
-| `opaqueId` | `string` - Set the `X-Opaque-Id` HTTP header. See [X-Opaque-Id HTTP header](elasticsearch://reference/elasticsearch/rest-apis/api-conventions.md#x-opaque-id) *Default:* `null` |
+| `opaqueId` | `string` - Set the `X-Opaque-Id` HTTP header. See [X-Opaque-Id HTTP header](elasticsearch://reference/elasticsearch/rest-apis/api-conventions.md#x-opaque-id)<br>*Default:* `null` |
 | `maxResponseSize` | `number` - When configured, it verifies that the uncompressed response size is lower than the configured number, if it’s higher it will abort the request. It cannot be higher than buffer.constants.MAX_STRING_LENTGH<br>*Default:* `null` |
 | `maxCompressedResponseSize` | `number` - When configured, it verifies that the compressed response size is lower than the configured number, if it’s higher it will abort the request. It cannot be higher than buffer.constants.MAX_LENTGH<br>*Default:* `null` |
 | `signal` | `AbortSignal` - The AbortSignal instance to allow request abortion.<br>*Default:* `null` |
 | `meta` | `boolean` - Rather than returning the body, return an object containing `body`, `statusCode`, `headers` and `meta` keys<br>*Default*: `false` |
-| `redaction` | `object` - Options for redacting potentially sensitive data from error metadata. See [Redaction of potentially sensitive data](/reference/advanced-config.md#redaction). | `retryBackoff` |
+| `redaction` | `object` - Options for redacting potentially sensitive data from error metadata. See [Redaction of potentially sensitive data](/reference/advanced-config.md#redaction). |
+| `retryBackoff` | `(min: number, max: number, attempt: number) => number;` - A function that calculates how long to sleep, in seconds, before the next request retry<br>_Default:_ A built-in function that uses exponential backoff with jitter. |
 
 ## Using the Client in a Function-as-a-Service Environment [client-faas-env]
 
