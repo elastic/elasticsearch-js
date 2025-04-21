@@ -8,6 +8,7 @@ steps:
       TEST_SUITE: "platinum"
       STACK_VERSION: 9.0.0
       GITHUB_TOKEN_PATH: "secret/ci/elastic-elasticsearch-js/github-token"
+      TEST_ES_STACK: "1"
     matrix:
       setup:
         nodejs:

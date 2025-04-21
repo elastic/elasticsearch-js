@@ -22,10 +22,11 @@ echo "--- :javascript: Running tests"
 mkdir -p "$repo/junit-output"
 docker run \
   --network="${network_name}" \
+  --env TEST_ES_STACK \
+  --env STACK_VERSION \
+  --env GITHUB_TOKEN \
   --env "TEST_ES_SERVER=${elasticsearch_url}" \
   --env "ELASTIC_PASSWORD=${elastic_password}" \
-  --env "STACK_VERSION=$STACK_VERSION" \
-  --env "GITHUB_TOKEN=$GITHUB_TOKEN" \
   --env "ELASTIC_USER=elastic" \
   --env "BUILDKITE=true" \
   --volume "/usr/src/app/node_modules" \
