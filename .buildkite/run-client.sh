@@ -28,6 +28,8 @@ docker run \
   --env "GITHUB_TOKEN=$GITHUB_TOKEN" \
   --env "ELASTIC_USER=elastic" \
   --env "BUILDKITE=true" \
+  --volume "/usr/src/app/node_modules" \
+  --volume "$repo:/usr/src/app" \
   --volume "$repo/junit-output:/junit-output" \
   --name elasticsearch-js \
   --rm \
