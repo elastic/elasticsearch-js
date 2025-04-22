@@ -68,3 +68,7 @@ bun.lockb
 test-results
 processinfo
 .tap
+rest-api-spec
+yaml-rest-tests
+generated-tests
+schema
