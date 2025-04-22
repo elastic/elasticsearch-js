@@ -121,11 +121,35 @@ test('ES|QL helper', t => {
       const result = await client.helpers.esql({ query: 'FROM sample_data' }).toArrowTable()
       t.ok(result instanceof arrow.Table)
 
+      const testRecords = [
+        [
+          ['amount', 4.900000095367432],
+          ['date', 1729532586965]
+        ],
+        [
+          ['amount', 8.199999809265137],
+          ['date', 1729446186965],
+        ],
+        [
+          ['amount', 15.5],
+          ['date', 1729359786965],
+        ],
+        [
+          ['amount', 9.899999618530273],
+          ['date', 1729273386965],
+        ],
+        [
+          ['amount', 13.899999618530273],
+          ['date', 1729186986965],
+        ]
+      ]
+
+      let count = 0
       const table = [...result]
-      t.same(table[0], [
-        ["amount", 4.900000095367432],
-        ["date", 1729532586965],
-      ])
+      for (const record of table) {
+        t.same(record, testRecords[count])
+        count++
+      }
       t.end()
     })
 
@@ -182,11 +206,36 @@ test('ES|QL helper', t => {
       const result = await client.helpers.esql({ query: 'FROM sample_data' }).toArrowReader()
       t.ok(result.isStream())
 
-      const recordBatch = result.next().value
-      t.same(recordBatch.get(0)?.toJSON(), {
-        amount: 4.900000095367432,
-        date: 1729532586965,
-      })
+      const testRecords = [
+        {
+          amount: 4.900000095367432,
+          date: 1729532586965,
+        },
+        {
+          amount: 8.199999809265137,
+          date: 1729446186965,
+        },
+        {
+          amount: 15.5,
+          date: 1729359786965,
+        },
+        {
+          amount: 9.899999618530273,
+          date: 1729273386965,
+        },
+        {
+          amount: 13.899999618530273,
+          date: 1729186986965,
+        },
+      ]
+      let count = 0
+      for (const recordBatch of result) {
+        for (const record of recordBatch) {
+          t.same(record.toJSON(), testRecords[count])
+          count++
+        }
+      }
+
       t.end()
     })
 
