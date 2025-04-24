@@ -82,16 +82,12 @@ auth: {
 }
 ```
 
----
-
 ### `maxRetries`
 
 Type: `number`<br>
 Default: `3`
 
 Max number of retries for each request.
-
----
 
 ### `requestTimeout`
 
@@ -100,16 +96,12 @@ Default: `No value`
 
 Max request timeout in milliseconds for each request.
 
----
-
 ### `pingTimeout`
 
 Type: `number`<br>
 Default: `3000`
 
 Max ping request timeout in milliseconds for each request.
-
----
 
 ### `sniffInterval`
 
@@ -122,16 +114,12 @@ Perform a sniff operation every `n` milliseconds.
 Sniffing might not be the best solution. Before using the various `sniff` options, review this [blog post](https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how).
 :::
 
----
-
 ### `sniffOnStart`
 
 Type: `boolean`<br>
 Default: `false`
 
 Perform a sniff once the client is started. Be sure to review the sniffing best practices [blog post](https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how).
-
----
 
 ### `sniffEndpoint`
 
@@ -140,16 +128,12 @@ Default: `'_nodes/_all/http'`
 
 Endpoint to ping during a sniff. Be sure to review the sniffing best practices [blog post](https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how).
 
----
-
 ### `sniffOnConnectionFault`
 
 Type: `boolean`<br>
 Default: `false`
 
 Perform a sniff on connection fault. Be sure to review the sniffing best practices [blog post](https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how).
-
----
 
 ### `resurrectStrategy`
 
@@ -159,16 +143,12 @@ Default: `'ping'`
 Configure the node resurrection strategy.<br>
 Options: `'ping'`, `'optimistic'`, `'none'`
 
----
-
 ### `suggestCompression`
 
 Type: `boolean`<br>
 Default: `false`
 
 Adds an `accept-encoding` header to every request.
-
----
 
 ### `compression`
 
@@ -178,16 +158,12 @@ Default: `false`
 Enables gzip request body compression.<br>
 Options: `'gzip'`, `false`
 
----
-
 ### `tls`
 
 Type: `http.SecureContextOptions`<br>
 Default: `null`
 
 The [tls configuraton](https://nodejs.org/api/tls.html).
-
----
 
 ### `proxy`
 
@@ -207,8 +183,6 @@ const client = new Client({
   proxy: 'http://user:pwd@localhost:8080'
 })
 ```
-
----
 
 ### `agent`
 
@@ -237,8 +211,6 @@ const client = new Client({
 })
 ```
 
----
-
 ### `nodeFilter`
 
 Type: `function`
@@ -260,8 +232,6 @@ function defaultNodeFilter (conn) {
 }
 ```
 
----
-
 ### `nodeSelector`
 
 Type: `function`<br>
@@ -279,8 +249,6 @@ function nodeSelector (connections) {
 }
 ```
 
----
-
 ### `generateRequestId`
 
 Type: `function`<br>
@@ -297,16 +265,12 @@ function generateRequestId (params, options) {
 }
 ```
 
----
-
 ### `name`
 
 Type: `string, symbol`<br>
 Default: `elasticsearch-js`
 
 The name to identify the client instance in the events.
-
----
 
 ### `opaqueIdPrefix`
 
@@ -316,16 +280,12 @@ Default: `null`
 A string that will be use to prefix any `X-Opaque-Id` header.
 See [`X-Opaque-Id` support](/reference/observability.md#_x_opaque_id_support) for more details.
 
----
-
 ### `headers`
 
 Type: `object`<br>
 Default: `{}`
 
 A set of custom headers to send in every request.
-
----
 
 ### `context`
 
@@ -334,16 +294,12 @@ Default: `null`
 
 A custom object that you can use for observability in your events. It will be merged with the API level context option.
 
----
-
 ### `enableMetaHeader`
 
 Type: `boolean`<br>
 Default: `true`
 
 If true, adds an header named `'x-elastic-client-meta'`, containing some minimal telemetry data, such as the client and platform version.
-
----
 
 ### `cloud`
 
@@ -366,15 +322,11 @@ const client = new Client({
 })
 ```
 
----
-
 ### `disablePrototypePoisoningProtection`
 
 Default: `true`
 
 `boolean`, `'proto'`, `'constructor'` - The client can protect you against prototype poisoning attacks. For more information, refer to [Square Brackets are the Enemy](https://web.archive.org/web/20200319091159/https://hueniverse.com/square-brackets-are-the-enemy-ff5b9fd8a3e8?gi=184a27ee2a08). If needed, you can enable prototype poisoning protection entirely (`false`) or one of the two checks (`'proto'` or `'constructor'`). For performance reasons, it is disabled by default. To learn more, refer to the [`secure-json-parse` documentation](https://github.com/fastify/secure-json-parse).
-
----
 
 ### `caFingerprint`
 
@@ -383,8 +335,6 @@ Default: `null`
 
 If configured, verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied fingerprint. Only accepts SHA256 digest fingerprints.
 
----
-
 ### `maxResponseSize`
 
 Type: `number`<br>
@@ -392,16 +342,12 @@ Default: `null`
 
 When configured, `maxResponseSize` verifies that the uncompressed response size is lower than the configured number. If it’s higher, the request will be canceled. The `maxResponseSize` cannot be higher than the value of `buffer.constants.MAX_STRING_LENGTH`.
 
----
-
 ### `maxCompressedResponseSize`
 
 Type: `number`<br>
 Default: `null`
 
 When configured, `maxCompressedResponseSize` verifies that the compressed response size is lower than the configured number. If it’s higher, the request will be canceled. The `maxCompressedResponseSize` cannot be higher than the value of `buffer.constants.MAX_STRING_LENGTH`.
-
----
 
 ### `redaction`
 
@@ -413,8 +359,6 @@ Options for how to redact potentially sensitive data from metadata attached to `
 ::::{note}
 [Read about redaction](/reference/advanced-config.md#redaction) for more details
 ::::
-
----
 
 ### `serverMode`
 
