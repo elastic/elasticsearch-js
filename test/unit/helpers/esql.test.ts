@@ -172,17 +172,28 @@ test('ES|QL helper', t => {
     t.end()
   })
 
-  test('toArrowReader', t => {
-    t.test('Parses a binary response into an Arrow stream reader', async t => {
-      const binaryContent = '/////zABAAAQAAAAAAAKAA4ABgANAAgACgAAAAAABAAQAAAAAAEKAAwAAAAIAAQACgAAAAgAAAAIAAAAAAAAAAIAAAB8AAAABAAAAJ7///8UAAAARAAAAEQAAAAAAAoBRAAAAAEAAAAEAAAAjP///wgAAAAQAAAABAAAAGRhdGUAAAAADAAAAGVsYXN0aWM6dHlwZQAAAAAAAAAAgv///wAAAQAEAAAAZGF0ZQAAEgAYABQAEwASAAwAAAAIAAQAEgAAABQAAABMAAAAVAAAAAAAAwFUAAAAAQAAAAwAAAAIAAwACAAEAAgAAAAIAAAAEAAAAAYAAABkb3VibGUAAAwAAABlbGFzdGljOnR5cGUAAAAAAAAAAAAABgAIAAYABgAAAAAAAgAGAAAAYW1vdW50AAAAAAAA/////7gAAAAUAAAAAAAAAAwAFgAOABUAEAAEAAwAAABgAAAAAAAAAAAABAAQAAAAAAMKABgADAAIAAQACgAAABQAAABYAAAABQAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAQAAAAAAAAAIAAAAAAAAACgAAAAAAAAAMAAAAAAAAAABAAAAAAAAADgAAAAAAAAAKAAAAAAAAAAAAAAAAgAAAAUAAAAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAAAAAAHwAAAAAAAAAAAACgmZkTQAAAAGBmZiBAAAAAAAAAL0AAAADAzMwjQAAAAMDMzCtAHwAAAAAAAADV6yywkgEAANWPBquSAQAA1TPgpZIBAADV17mgkgEAANV7k5uSAQAA/////wAAAAA='
+  test('toArrowReader', async t => {
+    const testRecords = [
+      { amount: 4.900000095367432, },
+      { amount: 8.199999809265137, },
+      { amount: 15.5, },
+      { amount: 9.899999618530273, },
+      { amount: 13.899999618530273, },
+    ]
 
+    // build reusable Arrow table
+    const table = arrow.tableFromJSON(testRecords)
+    const rawData = await arrow.RecordBatchStreamWriter.writeAll(table).toUint8Array()
+
+    t.test('Parses a binary response into an Arrow stream reader', async t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (_params) {
           return {
-            body: Buffer.from(binaryContent, 'base64'),
+            body: Buffer.from(rawData),
             statusCode: 200,
             headers: {
-              'content-type': 'application/vnd.elasticsearch+arrow+stream'
+              'content-type': 'application/vnd.elasticsearch+arrow+stream',
+              'transfer-encoding': 'chunked'
             }
           }
         }
@@ -196,26 +207,28 @@ test('ES|QL helper', t => {
       const result = await client.helpers.esql({ query: 'FROM sample_data' }).toArrowReader()
       t.ok(result.isStream())
 
-      const recordBatch = result.next().value
-      t.same(recordBatch.get(0)?.toJSON(), {
-        amount: 4.900000095367432,
-        date: 1729532586965,
-      })
+      let count = 0
+      for await (const recordBatch of result) {
+        for (const record of recordBatch) {
+          t.same(record.toJSON(), testRecords[count])
+          count++
+        }
+      }
+
       t.end()
     })
 
     t.test('ESQL helper uses correct x-elastic-client-meta helper value', async t => {
-      const binaryContent = '/////zABAAAQAAAAAAAKAA4ABgANAAgACgAAAAAABAAQAAAAAAEKAAwAAAAIAAQACgAAAAgAAAAIAAAAAAAAAAIAAAB8AAAABAAAAJ7///8UAAAARAAAAEQAAAAAAAoBRAAAAAEAAAAEAAAAjP///wgAAAAQAAAABAAAAGRhdGUAAAAADAAAAGVsYXN0aWM6dHlwZQAAAAAAAAAAgv///wAAAQAEAAAAZGF0ZQAAEgAYABQAEwASAAwAAAAIAAQAEgAAABQAAABMAAAAVAAAAAAAAwFUAAAAAQAAAAwAAAAIAAwACAAEAAgAAAAIAAAAEAAAAAYAAABkb3VibGUAAAwAAABlbGFzdGljOnR5cGUAAAAAAAAAAAAABgAIAAYABgAAAAAAAgAGAAAAYW1vdW50AAAAAAAA/////7gAAAAUAAAAAAAAAAwAFgAOABUAEAAEAAwAAABgAAAAAAAAAAAABAAQAAAAAAMKABgADAAIAAQACgAAABQAAABYAAAABQAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAQAAAAAAAAAIAAAAAAAAACgAAAAAAAAAMAAAAAAAAAABAAAAAAAAADgAAAAAAAAAKAAAAAAAAAAAAAAAAgAAAAUAAAAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAAAAAAHwAAAAAAAAAAAACgmZkTQAAAAGBmZiBAAAAAAAAAL0AAAADAzMwjQAAAAMDMzCtAHwAAAAAAAADV6yywkgEAANWPBquSAQAA1TPgpZIBAADV17mgkgEAANV7k5uSAQAA/////wAAAAA='
-
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           const header = params.headers?.['x-elastic-client-meta'] ?? ''
           t.ok(header.includes('h=qa'), `Client meta header does not include ESQL helper value: ${header}`)
           return {
-            body: Buffer.from(binaryContent, 'base64'),
+            body: Buffer.from(rawData),
             statusCode: 200,
             headers: {
-              'content-type': 'application/vnd.elasticsearch+arrow+stream'
+              'content-type': 'application/vnd.elasticsearch+arrow+stream',
+              'transfer-encoding': 'chunked'
             }
           }
         }
@@ -254,10 +267,12 @@ test('ES|QL helper', t => {
         new arrow.RecordBatch(schema, batch3.data),
       ])
 
+      const rawData = await arrow.RecordBatchStreamWriter.writeAll(table).toUint8Array()
+
       const MockConnection = connection.buildMockConnection({
         onRequest (_params) {
           return {
-            body: Buffer.from(arrow.tableToIPC(table, "stream")),
+            body: Buffer.from(rawData),
             statusCode: 200,
             headers: {
               'content-type': 'application/vnd.elasticsearch+arrow+stream'
@@ -275,7 +290,7 @@ test('ES|QL helper', t => {
       t.ok(result.isStream())
 
       let counter = 0
-      for (const batch of result) {
+      for await (const batch of result) {
         for (const row of batch) {
           counter++
           const { id, val } = row.toJSON()
