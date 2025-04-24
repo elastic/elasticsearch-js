@@ -8,7 +8,6 @@ mapped_pages:
 
 This is the official Node.js client for {{es}}. This page gives a quick overview about the features of the client.
 
-
 ## Features [_features]
 
 * One-to-one mapping with REST API.
@@ -18,7 +17,6 @@ This is the official Node.js client for {{es}}. This page gives a quick overview
 * Load balancing across all available nodes.
 * Child client support.
 * TypeScript support out of the box.
-
 
 ### Install multiple versions [_install_multiple_versions]
 
@@ -74,5 +72,3 @@ npm install esmain@github:elastic/elasticsearch-js
 ::::{warning}
 This command installs the main branch of the client which is not considered stable.
 ::::
-
-
