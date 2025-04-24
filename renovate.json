@@ -20,13 +20,15 @@
       "matchManagers": [
         "dockerfile"
       ],
-      "pinDigests": false
+      "pinDigests": false,
+      "automerge": true
     },
     {
       "matchDatasources": [
         "docker"
       ],
-      "pinDigests": false
+      "pinDigests": false,
+      "automerge": true
     }
   ]
 }

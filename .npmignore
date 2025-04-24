@@ -74,3 +74,6 @@ CONTRIBUTING.md
 src
 bun.lockb
 .tap
+rest-api-spec
+yaml-rest-tests
+generated-tests
