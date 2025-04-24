@@ -475,7 +475,7 @@ Added in `v8.16.0`
 
 ES|QL can return results in multiple binary formats, including [Apache Arrow](https://arrow.apache.org/)'s streaming format. Because it is a very efficient format to read, it can be valuable for performing high-performance in-memory analytics. And, because the response is streamed as batches of records, it can be used to produce aggregations and other calculations on larger-than-memory data sets.
 
-`toArrowReader` returns a [`RecordBatchStreamReader`](https://arrow.apache.org/docs/js/classes/Arrow_dom.RecordBatchReader.md).
+`toArrowReader` returns an [`AsyncRecordBatchStreamReader`](https://github.com/apache/arrow/blob/520ae44272d491bbb52eb3c9b84864ed7088f11a/js/src/ipc/reader.ts#L216).
 
 ```ts
 const reader = await client.helpers
@@ -483,7 +483,7 @@ const reader = await client.helpers
   .toArrowReader()
 
 // print each record as JSON
-for (const recordBatch of reader) {
+for await (const recordBatch of reader) {
   for (const record of recordBatch) {
     console.log(record.toJSON())
   }
