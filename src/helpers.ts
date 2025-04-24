@@ -11,7 +11,7 @@ import assert from 'node:assert'
 import * as timersPromises from 'node:timers/promises'
 import { Readable } from 'node:stream'
 import { errors, TransportResult, TransportRequestOptions, TransportRequestOptionsWithMeta } from '@elastic/transport'
-import { Table, TypeMap, tableFromIPC, RecordBatchStreamReader } from 'apache-arrow/Arrow.node'
+import { Table, TypeMap, tableFromIPC, AsyncRecordBatchStreamReader } from 'apache-arrow/Arrow.node'
 import Client from './client'
 import * as T from './api/types'
 import { Id } from './api/types'
@@ -135,7 +135,7 @@ export interface EsqlColumn {
 export interface EsqlHelper {
   toRecords: <TDocument>() => Promise<EsqlToRecords<TDocument>>
   toArrowTable: () => Promise<Table<TypeMap>>
-  toArrowReader: () => Promise<RecordBatchStreamReader>
+  toArrowReader: () => Promise<AsyncRecordBatchStreamReader>
 }
 
 export interface EsqlToRecords<TDocument> {
@@ -1000,7 +1000,7 @@ export default class Helpers {
         return tableFromIPC(response)
       },
 
-      async toArrowReader (): Promise<RecordBatchStreamReader> {
+      async toArrowReader (): Promise<AsyncRecordBatchStreamReader> {
         if (metaHeader !== null) {
           reqOptions.headers = reqOptions.headers ?? {}
           reqOptions.headers['x-elastic-client-meta'] = `${metaHeader as string},h=qa`
@@ -1009,9 +1009,9 @@ export default class Helpers {
 
         params.format = 'arrow'
 
-        // @ts-expect-error the return type will be ArrayBuffer when the format is set to 'arrow'
-        const response: ArrayBuffer = await client.esql.query(params, reqOptions)
-        return RecordBatchStreamReader.from(response)
+        // @ts-expect-error response is a Readable when asStream is true
+        const response: Readable = await client.esql.query(params, reqOptions)
+        return await AsyncRecordBatchStreamReader.from(Readable.from(response))
       }
     }
 
