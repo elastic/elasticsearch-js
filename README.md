@@ -2,7 +2,7 @@
 
 # Elasticsearch Node.js client
 
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)  [![Build Status](https://badge.buildkite.com/15e4246eb268ea78f6e10aa90bce38c1abb0a4489e79f5a0ac.svg)](https://buildkite.com/elastic/elasticsearch-javascript-client-integration-tests/builds?branch=main)  [![Node CI](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml/badge.svg)](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml)  [![codecov](https://codecov.io/gh/elastic/elasticsearch-js/branch/master/graph/badge.svg)](https://codecov.io/gh/elastic/elasticsearch-js)  [![NPM downloads](https://img.shields.io/npm/dm/@elastic/elasticsearch.svg?style=flat)](https://www.npmjs.com/package/@elastic/elasticsearch)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://badge.buildkite.com/15e4246eb268ea78f6e10aa90bce38c1abb0a4489e79f5a0ac.svg)](https://buildkite.com/elastic/elasticsearch-javascript-client-integration-tests/builds?branch=main) [![Node CI](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml/badge.svg)](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml) [![codecov](https://codecov.io/gh/elastic/elasticsearch-js/branch/master/graph/badge.svg)](https://codecov.io/gh/elastic/elasticsearch-js) [![NPM downloads](https://img.shields.io/npm/dm/@elastic/elasticsearch.svg?style=flat)](https://www.npmjs.com/package/@elastic/elasticsearch)
 
 **[Download the latest version of Elasticsearch](https://www.elastic.co/downloads/elasticsearch)**
 or
@@ -34,11 +34,12 @@ the new features of the 8.13 version of Elasticsearch, the 8.13 client version
 is required for that. Elasticsearch language clients are only backwards
 compatible with default distributions and without guarantees made.
 
-| Elasticsearch Version | Elasticsearch-JS Branch  | Supported |
-| --------------------- | ------------------------ | --------- |
-| main                  | main                     |           |
-| 8.x                   | 8.x                      | 8.x       |
-| 7.x                   | 7.x                      | 7.17      |
+| Elasticsearch Version | Elasticsearch-JS Branch |
+| --------------------- | ----------------------- |
+| main                  | main                    |
+| 9.x                   | 9.x                     |
+| 8.x                   | 8.x                     |
+| 7.x                   | 7.x                     |
 
 ## Usage
 
@@ -65,36 +66,20 @@ to support that version for at least another minor release. If you are using the
 with a version of Node.js that will be unsupported soon, you will see a warning
 in your logs (the client will start logging the warning with two minors in advance).
 
-Unless you are **always** using a supported version of Node.js, 
+Unless you are **always** using a supported version of Node.js,
 we recommend defining the client dependency in your
 `package.json` with the `~` instead of `^`. In this way, you will lock the
 dependency on the minor release and not the major. (for example, `~7.10.0` instead
 of `^7.10.0`).
 
-| Node.js Version | Node.js EOL date | End of support         |
-| --------------- |------------------| ---------------------- |
-| `8.x`           | `December 2019`  | `7.11` (early 2021)    |
-| `10.x`          | `April 2021`     | `7.12` (mid 2021)      |
-| `12.x`          | `April 2022`     | `8.2` (early 2022)     |
-| `14.x`          | `April 2023`     | `8.8` (early 2023)     |
-| `16.x`          | `September 2023` | `8.11` (late 2023)     |
-
-### Compatibility
-
-Language clients are forward compatible; meaning that clients support communicating with greater or equal minor versions of Elasticsearch.
-Elasticsearch language clients are only backwards compatible with default distributions and without guarantees made.
-
-| Elasticsearch Version | Client Version |
-| --------------------- |----------------|
-| `8.x`                 | `8.x`          |
-| `7.x`                 | `7.x`          |
-| `6.x`                 | `6.x`          |
-| `5.x`                 | `5.x`          |
-
-To install a specific major of the client, run the following command:
-```
-npm install @elastic/elasticsearch@<major>
-```
+| Node.js Version | Node.js EOL date | End of support      |
+| --------------- | ---------------- | ------------------- |
+| `8.x`           | `December 2019`  | `7.11` (early 2021) |
+| `10.x`          | `April 2021`     | `7.12` (mid 2021)   |
+| `12.x`          | `April 2022`     | `8.2` (early 2022)  |
+| `14.x`          | `April 2023`     | `8.8` (early 2023)  |
+| `16.x`          | `September 2023` | `8.11` (late 2023)  |
+| `18.x`          | `April 2025`     | `9.2` (late 2025)   |
 
 #### Browser
 
@@ -117,6 +102,7 @@ We recommend that you write a lightweight proxy that uses this client instead, y
 * [Examples](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/examples.html)
 
 ## Install multiple versions
+
 If you are using multiple versions of Elasticsearch, you need to use multiple versions of the client. In the past, install multiple versions of the same package was not possible, but with `npm v6.9`, you can do that via aliasing.
 
 The command you must run to install different version of the client is:

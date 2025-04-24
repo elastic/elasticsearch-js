@@ -51,7 +51,6 @@ console.log(result)
 
 To create a new instance of the Bulk helper, access it as shown in the example above, the configuration options are:
 
-
 `datasource`
 :   An array, async generator or a readable stream with the data you need to index/create/update/delete. It can be an array of strings or objects, but also a stream of json strings or JavaScript objects.
     If it is a stream, we recommend to use the [`split2`](https://www.npmjs.com/package/split2) package, that splits the stream on new lines delimiters.
