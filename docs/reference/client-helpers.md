@@ -51,18 +51,119 @@ console.log(result)
 
 To create a new instance of the Bulk helper, access it as shown in the example above, the configuration options are:
 
-|     |     |
-| --- | --- |
-| `datasource` | An array, async generator or a readable stream with the data you need to index/create/update/delete. It can be an array of strings or objects, but also a stream of json strings or JavaScript objects.<br> If it is a stream, we recommend to use the [`split2`](https://www.npmjs.com/package/split2) package, that splits the stream on new lines delimiters.<br> This parameter is mandatory.<br><br>```js<br>const { createReadStream } = require('fs')<br>const split = require('split2')<br>const b = client.helpers.bulk({<br>  // if you just use split(), the data will be used as array of strings<br>  datasource: createReadStream('./dataset.ndjson').pipe(split())<br>  // if you need to manipulate the data, you can pass JSON.parse to split<br>  datasource: createReadStream('./dataset.ndjson').pipe(split(JSON.parse))<br>})<br>```<br> |
-| `onDocument` | A function that is called for each document of the datasource. Inside this function you can manipulate the document and you must return the operation you want to execute with the document. Look at the [Bulk API documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk) to see the supported operations.<br> This parameter is mandatory.<br><br>```js<br>const b = client.helpers.bulk({<br>  onDocument (doc) {<br>    return {<br>      index: { _index: 'my-index' }<br>    }<br>  }<br>})<br>```<br> |
-| `onDrop` | A function that is called for everytime a document can’t be indexed and it has reached the maximum amount of retries.<br><br>```js<br>const b = client.helpers.bulk({<br>  onDrop (doc) {<br>    console.log(doc)<br>  }<br>})<br>```<br> |
-| `onSuccess` | A function that is called for each successful operation in the bulk request, which includes the result from Elasticsearch along with the original document that was sent, or `null` for delete operations.<br><br>```js<br>const b = client.helpers.bulk({<br>  onSuccess ({ result, document }) {<br>    console.log(`SUCCESS: Document ${result.index._id} indexed to ${result.index._index}`)<br>  }<br>})<br>```<br> |
-| `flushBytes` | The size of the bulk body in bytes to reach before to send it. Default of 5MB.<br> *Default:* `5000000`<br><br>```js<br>const b = client.helpers.bulk({<br>  flushBytes: 1000000<br>})<br>```<br> |
-| `flushInterval` | How much time (in milliseconds) the helper waits before flushing the body from the last document read.<br> *Default:* `30000`<br><br>```js<br>const b = client.helpers.bulk({<br>  flushInterval: 30000<br>})<br>```<br> |
-| `concurrency` | How many request is executed at the same time.<br> *Default:* `5`<br><br>```js<br>const b = client.helpers.bulk({<br>  concurrency: 10<br>})<br>```<br> |
-| `retries` | How many times a document is retried before to call the `onDrop` callback.<br> *Default:* Client max retries.<br><br>```js<br>const b = client.helpers.bulk({<br>  retries: 3<br>})<br>```<br> |
-| `wait` | How much time to wait before retries in milliseconds.<br> *Default:* 5000.<br><br>```js<br>const b = client.helpers.bulk({<br>  wait: 3000<br>})<br>```<br> |
-| `refreshOnCompletion` | If `true`, at the end of the bulk operation it runs a refresh on all indices or on the specified indices.<br> *Default:* false.<br><br>```js<br>const b = client.helpers.bulk({<br>  refreshOnCompletion: true<br>  // or<br>  refreshOnCompletion: 'index-name'<br>})<br>```<br> |
+`datasource`
+:   An array, async generator or a readable stream with the data you need to index/create/update/delete. It can be an array of strings or objects, but also a stream of json strings or JavaScript objects.
+    If it is a stream, we recommend to use the [`split2`](https://www.npmjs.com/package/split2) package, that splits the stream on new lines delimiters.
+    This parameter is mandatory.
+
+    ```js
+    const { createReadStream } = require('fs')
+    const split = require('split2')
+    const b = client.helpers.bulk({
+      // if you just use split(), the data will be used as array of strings
+      datasource: createReadStream('./dataset.ndjson').pipe(split())
+      // if you need to manipulate the data, you can pass JSON.parse to split
+      datasource: createReadStream('./dataset.ndjson').pipe(split(JSON.parse))
+    })
+    ```
+
+`onDocument`
+:   A function that is called for each document of the datasource. Inside this function you can manipulate the document and you must return the operation you want to execute with the document. Look at the [Bulk API documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk) to see the supported operations.
+    This parameter is mandatory.
+
+    ```js
+    const b = client.helpers.bulk({
+      onDocument (doc) {
+        return {
+          index: { _index: 'my-index' }
+        }
+      }
+    })
+    ```
+
+`onDrop`
+:   A function that is called for everytime a document can’t be indexed and it has reached the maximum amount of retries.
+
+    ```js
+    const b = client.helpers.bulk({
+      onDrop (doc) {
+        console.log(doc)
+      }
+    })
+    ```
+
+`onSuccess`
+:   A function that is called for each successful operation in the bulk request, which includes the result from Elasticsearch along with the original document that was sent, or `null` for delete operations.
+
+    ```js
+    const b = client.helpers.bulk({
+      onSuccess ({ result, document }) {
+        console.log(`SUCCESS: Document ${result.index._id} indexed to ${result.index._index}`)
+      }
+    })
+    ```
+
+`flushBytes`
+:   The size of the bulk body in bytes to reach before to send it. Default of 5MB.
+    *Default:* `5000000`
+
+    ```js
+    const b = client.helpers.bulk({
+      flushBytes: 1000000
+    })
+    ```
+
+`flushInterval`
+:   How much time (in milliseconds) the helper waits before flushing the body from the last document read.
+    *Default:* `30000`
+
+    ```js
+    const b = client.helpers.bulk({
+      flushInterval: 30000
+    })
+    ```
+
+`concurrency`
+:   How many request is executed at the same time.
+    *Default:* `5`
+
+    ```js
+    const b = client.helpers.bulk({
+      concurrency: 10
+    })
+    ```
+
+`retries`
+:   How many times a document is retried before to call the `onDrop` callback.
+    *Default:* Client max retries.
+
+    ```js
+    const b = client.helpers.bulk({
+      retries: 3
+    })
+    ```
+
+`wait`
+:   How much time to wait before retries in milliseconds.
+    *Default:* 5000.
+
+    ```js
+    const b = client.helpers.bulk({
+      wait: 3000
+    })
+    ```
+
+`refreshOnCompletion`
+:   If `true`, at the end of the bulk operation it runs a refresh on all indices or on the specified indices.
+    *Default:* false.
+
+    ```js
+    const b = client.helpers.bulk({
+      refreshOnCompletion: true
+      // or
+      refreshOnCompletion: 'index-name'
+    })
+    ```
 
 ### Supported operations [_supported_operations]
 
@@ -255,13 +356,55 @@ m.search(
 
 To create a new instance of the multi search (msearch) helper, you should access it as shown in the example above, the configuration options are:
 
-|     |     |
-| --- | --- |
-| `operations` | How many search operations should be sent in a single msearch request.<br> *Default:* `5`<br><br>```js<br>const m = client.helpers.msearch({<br>  operations: 10<br>})<br>```<br> |
-| `flushInterval` | How much time (in milliseconds) the helper waits before flushing the operations from the last operation read.<br> *Default:* `500`<br><br>```js<br>const m = client.helpers.msearch({<br>  flushInterval: 500<br>})<br>```<br> |
-| `concurrency` | How many request is executed at the same time.<br> *Default:* `5`<br><br>```js<br>const m = client.helpers.msearch({<br>  concurrency: 10<br>})<br>```<br> |
-| `retries` | How many times an operation is retried before to resolve the request. An operation is retried only in case of a 429 error.<br> *Default:* Client max retries.<br><br>```js<br>const m = client.helpers.msearch({<br>  retries: 3<br>})<br>```<br> |
-| `wait` | How much time to wait before retries in milliseconds.<br> *Default:* 5000.<br><br>```js<br>const m = client.helpers.msearch({<br>  wait: 3000<br>})<br>```<br> |
+`operations`
+:   How many search operations should be sent in a single msearch request.
+    *Default:* `5`
+
+    ```js
+    const m = client.helpers.msearch({
+      operations: 10
+    })
+    ```
+
+`flushInterval`
+:   How much time (in milliseconds) the helper waits before flushing the operations from the last operation read.
+    *Default:* `500`
+
+    ```js
+    const m = client.helpers.msearch({
+      flushInterval: 500
+    })
+    ```
+
+`concurrency`
+:   How many request is executed at the same time.
+    *Default:* `5`
+
+    ```js
+    const m = client.helpers.msearch({
+      concurrency: 10
+    })
+    ```
+
+`retries`
+:   How many times an operation is retried before to resolve the request. An operation is retried only in case of a 429 error.
+    *Default:* Client max retries.
+
+    ```js
+    const m = client.helpers.msearch({
+      retries: 3
+    })
+    ```
+
+`wait`
+:   How much time to wait before retries in milliseconds.
+    *Default:* 5000.
+
+    ```js
+    const m = client.helpers.msearch({
+      wait: 3000
+    })
+    ```
 
 ### Stopping the msearch helper [_stopping_the_msearch_helper]
 
@@ -475,7 +618,7 @@ Added in `v8.16.0`
 
 ES|QL can return results in multiple binary formats, including [Apache Arrow](https://arrow.apache.org/)'s streaming format. Because it is a very efficient format to read, it can be valuable for performing high-performance in-memory analytics. And, because the response is streamed as batches of records, it can be used to produce aggregations and other calculations on larger-than-memory data sets.
 
-`toArrowReader` returns a [`RecordBatchStreamReader`](https://arrow.apache.org/docs/js/classes/Arrow_dom.RecordBatchReader.md).
+`toArrowReader` returns an [`AsyncRecordBatchStreamReader`](https://github.com/apache/arrow/blob/520ae44272d491bbb52eb3c9b84864ed7088f11a/js/src/ipc/reader.ts#L216).
 
 ```ts
 const reader = await client.helpers
@@ -483,7 +626,7 @@ const reader = await client.helpers
   .toArrowReader()
 
 // print each record as JSON
-for (const recordBatch of reader) {
+for await (const recordBatch of reader) {
   for (const record of recordBatch) {
     console.log(record.toJSON())
   }

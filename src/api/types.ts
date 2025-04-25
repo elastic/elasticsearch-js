@@ -7606,6 +7606,22 @@ export interface MappingByteNumberProperty extends MappingNumberPropertyBase {
   null_value?: byte
 }
 
+export interface MappingChunkingSettings {
+  /** The chunking strategy: `sentence` or `word`. */
+  strategy: string
+  /** The maximum size of a chunk in words.
+    * This value cannot be higher than `300` or lower than `20` (for `sentence` strategy) or `10` (for `word` strategy). */
+  max_chunk_size: integer
+  /** The number of overlapping words for chunks.
+    * It is applicable only to a `word` chunking strategy.
+    * This value cannot be higher than half the `max_chunk_size` value. */
+  overlap?: integer
+  /** The number of overlapping sentences for chunks.
+    * It is applicable only for a `sentence` chunking strategy.
+    * It can be either `1` or `0`. */
+  sentence_overlap?: integer
+}
+
 export interface MappingCompletionProperty extends MappingDocValuesPropertyBase {
   analyzer?: string
   contexts?: MappingSuggestContext[]
@@ -8108,6 +8124,10 @@ export interface MappingSemanticTextProperty {
     * You can update this parameter by using the Update mapping API. Use the Create inference API to create the endpoint.
     * If not specified, the inference endpoint defined by inference_id will be used at both index and query time. */
   search_inference_id?: Id
+  /** Settings for chunking text into smaller passages. If specified, these will override the
+    * chunking settings sent in the inference endpoint associated with inference_id. If chunking settings are updated,
+    * they will not be applied to existing documents until they are reindexed. */
+  chunking_settings?: MappingChunkingSettings
 }
 
 export interface MappingShapeProperty extends MappingDocValuesPropertyBase {
@@ -17450,6 +17470,44 @@ export interface EsqlAsyncQueryStopRequest extends RequestBase {
 }
 
 export type EsqlAsyncQueryStopResponse = EsqlEsqlResult
+
+export interface EsqlGetQueryRequest extends RequestBase {
+  /** The query ID */
+  id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
+}
+
+export interface EsqlGetQueryResponse {
+  id: long
+  node: NodeId
+  start_time_millis: long
+  running_time_nanos: long
+  query: string
+  coordinating_node: NodeId
+  data_nodes: NodeId[]
+}
+
+export interface EsqlListQueriesBody {
+  id: long
+  node: NodeId
+  start_time_millis: long
+  running_time_nanos: long
+  query: string
+}
+
+export interface EsqlListQueriesRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
+}
+
+export interface EsqlListQueriesResponse {
+  queries: Record<TaskId, EsqlListQueriesBody>
+}
 
 export interface EsqlQueryRequest extends RequestBase {
   /** A short version of the Accept header, e.g. json, yaml. */
@@ -30949,7 +31007,7 @@ export interface SecurityClusterNode {
   name: Name
 }
 
-export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'cross_cluster_replication' | 'cross_cluster_search' | 'delegate_pki' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_autoscaling' | 'manage_behavioral_analytics' | 'manage_ccr' | 'manage_data_frame_transforms' | 'manage_data_stream_global_retention' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_inference' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_search_application' | 'manage_search_query_rules' | 'manage_search_synonyms' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_data_frame_transforms' | 'monitor_data_stream_global_retention' | 'monitor_enrich' | 'monitor_inference' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_stats' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'none' | 'post_behavioral_analytics_event' | 'read_ccr' | 'read_fleet_secrets' | 'read_ilm' | 'read_pipeline' | 'read_security' | 'read_slm' | 'transport_client' | 'write_connector_secrets' | 'write_fleet_secrets' | string
+export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'cross_cluster_replication' | 'cross_cluster_search' | 'delegate_pki' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_autoscaling' | 'manage_behavioral_analytics' | 'manage_ccr' | 'manage_data_frame_transforms' | 'manage_data_stream_global_retention' | 'manage_enrich' | 'manage_esql' | 'manage_ilm' | 'manage_index_templates' | 'manage_inference' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_search_application' | 'manage_search_query_rules' | 'manage_search_synonyms' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_data_frame_transforms' | 'monitor_data_stream_global_retention' | 'monitor_enrich' | 'monitor_esql' | 'monitor_inference' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_stats' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'none' | 'post_behavioral_analytics_event' | 'read_ccr' | 'read_fleet_secrets' | 'read_ilm' | 'read_pipeline' | 'read_security' | 'read_slm' | 'transport_client' | 'write_connector_secrets' | 'write_fleet_secrets' | string
 
 export interface SecurityCreatedStatus {
   created: boolean
@@ -37459,6 +37517,9 @@ export interface SpecUtilsCommonQueryParameters {
   pretty?: boolean
 }
 
+export interface SpecUtilsOverloadOf<TDefinition = unknown> {
+}
+
 export interface SpecUtilsCommonCatQueryParameters {
   /** Specifies the format to return the columnar data in, can be set to
     * `text`, `json`, `cbor`, `yaml`, or `smile`. */
@@ -37468,7 +37529,4 @@ export interface SpecUtilsCommonCatQueryParameters {
   help?: boolean
   /** When set to `true` will enable verbose output. */
   v?: boolean
-}
-
-export interface SpecUtilsOverloadOf<TDefinition = unknown> {
 }

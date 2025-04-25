@@ -309,12 +309,12 @@ export default class Esql {
   }
 
   /**
-    * Executes a get ESQL query request
+    * Get a specific running ES|QL query information. Returns an object extended information about a running ES|QL query.
     */
-  async getQuery (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getQuery (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getQuery (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getQuery (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getQuery (this: That, params: T.EsqlGetQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlGetQueryResponse>
+  async getQuery (this: That, params: T.EsqlGetQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlGetQueryResponse, unknown>>
+  async getQuery (this: That, params: T.EsqlGetQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlGetQueryResponse>
+  async getQuery (this: That, params: T.EsqlGetQueryRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this.acceptedParams['esql.get_query']
@@ -332,11 +332,11 @@ export default class Esql {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -353,12 +353,12 @@ export default class Esql {
   }
 
   /**
-    * Executes a list ESQL queries request
+    * Get running ES|QL queries information. Returns an object containing IDs and other information about the running ES|QL queries.
     */
-  async listQueries (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async listQueries (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async listQueries (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async listQueries (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async listQueries (this: That, params?: T.EsqlListQueriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlListQueriesResponse>
+  async listQueries (this: That, params?: T.EsqlListQueriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlListQueriesResponse, unknown>>
+  async listQueries (this: That, params?: T.EsqlListQueriesRequest, options?: TransportRequestOptions): Promise<T.EsqlListQueriesResponse>
+  async listQueries (this: That, params?: T.EsqlListQueriesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this.acceptedParams['esql.list_queries']
@@ -381,6 +381,7 @@ export default class Esql {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
