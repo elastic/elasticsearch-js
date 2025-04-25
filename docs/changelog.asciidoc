@@ -2,6 +2,17 @@
 == Release notes
 
 [discrete]
+=== 8.18.2
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Ensure Apache Arrow ES|QL helper uses async iterator
+
+The `esql.toArrowReader()` helper function was trying to return `RecordBatchStreamReader`, a synchronous iterator, despite the fact that the `apache-arrow` package was, in most cases, automatically coercing it to `AsyncRecordBatchStreamReader`, its asynchronous counterpart. It now is always returned as an async iterator.
+
+[discrete]
 === 8.18.1
 
 [discrete]
