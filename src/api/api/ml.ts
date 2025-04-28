@@ -988,7 +988,7 @@ export default class Ml {
   }
 
   /**
-    * Get data frame analytics jobs usage info.
+    * Get data frame analytics job stats.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/get-dfanalytics-stats.html | Elasticsearch API documentation}
     */
   async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest | TB.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDataFrameAnalyticsStatsResponse>
@@ -1028,7 +1028,7 @@ export default class Ml {
   }
 
   /**
-    * Get datafeeds usage info. You can get statistics for multiple datafeeds in a single API request by using a comma-separated list of datafeeds or a wildcard expression. You can get statistics for all datafeeds by using `_all`, by specifying `*` as the `<feed_id>`, or by omitting the `<feed_id>`. If the datafeed is stopped, the only information you receive is the `datafeed_id` and the `state`. This API returns a maximum of 10,000 datafeeds.
+    * Get datafeeds stats. You can get statistics for multiple datafeeds in a single API request by using a comma-separated list of datafeeds or a wildcard expression. You can get statistics for all datafeeds by using `_all`, by specifying `*` as the `<feed_id>`, or by omitting the `<feed_id>`. If the datafeed is stopped, the only information you receive is the `datafeed_id` and the `state`. This API returns a maximum of 10,000 datafeeds.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/ml-get-datafeed-stats.html | Elasticsearch API documentation}
     */
   async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest | TB.MlGetDatafeedStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDatafeedStatsResponse>
@@ -1192,7 +1192,7 @@ export default class Ml {
   }
 
   /**
-    * Get anomaly detection jobs usage info.
+    * Get anomaly detection job stats.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/ml-get-job-stats.html | Elasticsearch API documentation}
     */
   async getJobStats (this: That, params?: T.MlGetJobStatsRequest | TB.MlGetJobStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetJobStatsResponse>
