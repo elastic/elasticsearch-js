@@ -9189,7 +9189,7 @@ retrieval. This allows the configuration to be in an acceptable format to
 be retrieved and then added to another cluster.
 
 ## client.ml.getDataFrameAnalyticsStats [_ml.get_data_frame_analytics_stats]
-Get data frame analytics jobs usage info.
+Get data frame analytics job stats.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-get-data-frame-analytics-stats)
 
@@ -9219,7 +9219,7 @@ there are no matches or only partial matches.
 - **`verbose` (Optional, boolean)**: Defines whether the stats response should be verbose.
 
 ## client.ml.getDatafeedStats [_ml.get_datafeed_stats]
-Get datafeeds usage info.
+Get datafeed stats.
 You can get statistics for multiple datafeeds in a single API request by
 using a list of datafeeds or a wildcard expression. You can
 get statistics for all datafeeds by using `_all`, by specifying `*` as the
@@ -9335,7 +9335,7 @@ influencers are sorted by the `influencer_score` value.
 means it is unset and results are not limited to specific timestamps.
 
 ## client.ml.getJobStats [_ml.get_job_stats]
-Get anomaly detection jobs usage info.
+Get anomaly detection job stats.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-get-job-stats)
 
