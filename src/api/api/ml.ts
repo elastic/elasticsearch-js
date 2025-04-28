@@ -2230,7 +2230,7 @@ export default class Ml {
   }
 
   /**
-    * Get data frame analytics jobs usage info.
+    * Get data frame analytics job stats.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-data-frame-analytics-stats | Elasticsearch API documentation}
     */
   async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDataFrameAnalyticsStatsResponse>
@@ -2283,7 +2283,7 @@ export default class Ml {
   }
 
   /**
-    * Get datafeeds usage info. You can get statistics for multiple datafeeds in a single API request by using a comma-separated list of datafeeds or a wildcard expression. You can get statistics for all datafeeds by using `_all`, by specifying `*` as the `<feed_id>`, or by omitting the `<feed_id>`. If the datafeed is stopped, the only information you receive is the `datafeed_id` and the `state`. This API returns a maximum of 10,000 datafeeds.
+    * Get datafeed stats. You can get statistics for multiple datafeeds in a single API request by using a comma-separated list of datafeeds or a wildcard expression. You can get statistics for all datafeeds by using `_all`, by specifying `*` as the `<feed_id>`, or by omitting the `<feed_id>`. If the datafeed is stopped, the only information you receive is the `datafeed_id` and the `state`. This API returns a maximum of 10,000 datafeeds.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-datafeed-stats | Elasticsearch API documentation}
     */
   async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDatafeedStatsResponse>
@@ -2499,7 +2499,7 @@ export default class Ml {
   }
 
   /**
-    * Get anomaly detection jobs usage info.
+    * Get anomaly detection job stats.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-job-stats | Elasticsearch API documentation}
     */
   async getJobStats (this: That, params?: T.MlGetJobStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetJobStatsResponse>
