@@ -34908,9 +34908,9 @@ export type SynonymsSynonymString = string
 export interface SynonymsSynonymsUpdateResult {
   /** The update operation result. */
   result: Result
-  /** Updating synonyms in a synonym set reloads the associated analyzers.
+  /** Updating synonyms in a synonym set can reload the associated analyzers in case refresh is set to true.
     * This information is the analyzers reloading result. */
-  reload_analyzers_details: IndicesReloadSearchAnalyzersReloadResult
+  reload_analyzers_details?: IndicesReloadSearchAnalyzersReloadResult
 }
 
 export interface SynonymsDeleteSynonymRequest extends RequestBase {
@@ -34929,10 +34929,14 @@ export interface SynonymsDeleteSynonymRuleRequest extends RequestBase {
   set_id: Id
   /** The ID of the synonym rule to delete. */
   rule_id: Id
+  /** If `true`, the request will refresh the analyzers with the deleted synonym rule and wait for the new synonyms to be available before returning.
+    * If `false`, analyzers will not be reloaded with the deleted synonym rule
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  refresh?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { set_id?: never, rule_id?: never }
+  body?: string | { [key: string]: any } & { set_id?: never, rule_id?: never, refresh?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { set_id?: never, rule_id?: never }
+  querystring?: { [key: string]: any } & { set_id?: never, rule_id?: never, refresh?: never }
 }
 
 export type SynonymsDeleteSynonymRuleResponse = SynonymsSynonymsUpdateResult
@@ -34998,17 +35002,24 @@ export interface SynonymsGetSynonymsSetsSynonymsSetItem {
 export interface SynonymsPutSynonymRequest extends RequestBase {
   /** The ID of the synonyms set to be created or updated. */
   id: Id
+  /** If `true`, the request will refresh the analyzers with the new synonyms set and wait for the new synonyms to be available before returning.
+    * If `false`, analyzers will not be reloaded with the new synonym set
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  refresh?: boolean
   /** The synonym rules definitions for the synonyms set. */
   synonyms_set: SynonymsSynonymRule | SynonymsSynonymRule[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, synonyms_set?: never }
+  body?: string | { [key: string]: any } & { id?: never, refresh?: never, synonyms_set?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, synonyms_set?: never }
+  querystring?: { [key: string]: any } & { id?: never, refresh?: never, synonyms_set?: never }
 }
 
 export interface SynonymsPutSynonymResponse {
+  /** The update operation result. */
   result: Result
-  reload_analyzers_details: IndicesReloadSearchAnalyzersReloadResult
+  /** Updating a synonyms set can reload the associated analyzers in case refresh is set to true.
+    * This information is the analyzers reloading result. */
+  reload_analyzers_details?: IndicesReloadSearchAnalyzersReloadResult
 }
 
 export interface SynonymsPutSynonymRuleRequest extends RequestBase {
@@ -35016,12 +35027,16 @@ export interface SynonymsPutSynonymRuleRequest extends RequestBase {
   set_id: Id
   /** The ID of the synonym rule to be updated or created. */
   rule_id: Id
+  /** If `true`, the request will refresh the analyzers with the new synonym rule and wait for the new synonyms to be available before returning.
+    * If `false`, analyzers will not be reloaded with the new synonym rule
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  refresh?: boolean
   /** The synonym rule information definition, which must be in Solr format. */
   synonyms: SynonymsSynonymString
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { set_id?: never, rule_id?: never, synonyms?: never }
+  body?: string | { [key: string]: any } & { set_id?: never, rule_id?: never, refresh?: never, synonyms?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { set_id?: never, rule_id?: never, synonyms?: never }
+  querystring?: { [key: string]: any } & { set_id?: never, rule_id?: never, refresh?: never, synonyms?: never }
 }
 
 export type SynonymsPutSynonymRuleResponse = SynonymsSynonymsUpdateResult

@@ -980,7 +980,6 @@ PUT my-index-000001/_doc/1?version=2&version_type=external
     "id": "elkbee"
   }
 }
-```
 
 In this example, the operation will succeed since the supplied version of 2 is higher than the current document version of 1.
 If the document was already updated and its version was set to 2 or higher, the indexing command will fail and result in a conflict (409 HTTP status code).
@@ -9211,7 +9210,7 @@ retrieval. This allows the configuration to be in an acceptable format to
 be retrieved and then added to another cluster.
 
 ## client.ml.getDataFrameAnalyticsStats [_ml.get_data_frame_analytics_stats]
-Get data frame analytics jobs usage info.
+Get data frame analytics job stats.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-data-frame-analytics-stats)
 
@@ -9241,7 +9240,7 @@ there are no matches or only partial matches.
 - **`verbose` (Optional, boolean)**: Defines whether the stats response should be verbose.
 
 ## client.ml.getDatafeedStats [_ml.get_datafeed_stats]
-Get datafeeds usage info.
+Get datafeed stats.
 You can get statistics for multiple datafeeds in a single API request by
 using a list of datafeeds or a wildcard expression. You can
 get statistics for all datafeeds by using `_all`, by specifying `*` as the
@@ -9357,7 +9356,7 @@ influencers are sorted by the `influencer_score` value.
 means it is unset and results are not limited to specific timestamps.
 
 ## client.ml.getJobStats [_ml.get_job_stats]
-Get anomaly detection jobs usage info.
+Get anomaly detection job stats.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-job-stats)
 
@@ -14245,6 +14244,8 @@ client.synonyms.deleteSynonymRule({ set_id, rule_id })
 #### Request (object) [_request_synonyms.delete_synonym_rule]
 - **`set_id` (string)**: The ID of the synonym set to update.
 - **`rule_id` (string)**: The ID of the synonym rule to delete.
+- **`refresh` (Optional, boolean)**: If `true`, the request will refresh the analyzers with the deleted synonym rule and wait for the new synonyms to be available before returning.
+If `false`, analyzers will not be reloaded with the deleted synonym rule
 
 ## client.synonyms.getSynonym [_synonyms.get_synonym]
 Get a synonym set.
@@ -14313,6 +14314,8 @@ client.synonyms.putSynonym({ id, synonyms_set })
 #### Request (object) [_request_synonyms.put_synonym]
 - **`id` (string)**: The ID of the synonyms set to be created or updated.
 - **`synonyms_set` ({ id, synonyms } | { id, synonyms }[])**: The synonym rules definitions for the synonyms set.
+- **`refresh` (Optional, boolean)**: If `true`, the request will refresh the analyzers with the new synonyms set and wait for the new synonyms to be available before returning.
+If `false`, analyzers will not be reloaded with the new synonym set
 
 ## client.synonyms.putSynonymRule [_synonyms.put_synonym_rule]
 Create or update a synonym rule.
@@ -14334,6 +14337,8 @@ client.synonyms.putSynonymRule({ set_id, rule_id, synonyms })
 - **`set_id` (string)**: The ID of the synonym set.
 - **`rule_id` (string)**: The ID of the synonym rule to be updated or created.
 - **`synonyms` (string)**: The synonym rule information definition, which must be in Solr format.
+- **`refresh` (Optional, boolean)**: If `true`, the request will refresh the analyzers with the new synonym rule and wait for the new synonyms to be available before returning.
+If `false`, analyzers will not be reloaded with the new synonym rule
 
 ## client.tasks.cancel [_tasks.cancel]
 Cancel a task.

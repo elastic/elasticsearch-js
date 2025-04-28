@@ -48,7 +48,9 @@ export default class Synonyms {
           'rule_id'
         ],
         body: [],
-        query: []
+        query: [
+          'refresh'
+        ]
       },
       'synonyms.get_synonym': {
         path: [
@@ -83,7 +85,9 @@ export default class Synonyms {
         body: [
           'synonyms_set'
         ],
-        query: []
+        query: [
+          'refresh'
+        ]
       },
       'synonyms.put_synonym_rule': {
         path: [
@@ -93,7 +97,9 @@ export default class Synonyms {
         body: [
           'synonyms'
         ],
-        query: []
+        query: [
+          'refresh'
+        ]
       }
     }
   }
