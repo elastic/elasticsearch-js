@@ -166,7 +166,7 @@ export default class License {
 
   /**
     * Update the license. You can update your license at runtime without shutting down your nodes. License updates take effect immediately. If the license you are installing does not support all of the features that were available with your previous license, however, you are notified in the response. You must then re-submit the API request with the acknowledge parameter set to true. NOTE: If Elasticsearch security features are enabled and you are installing a gold or higher license, you must enable TLS on the transport networking layer before you install the license. If the operator privileges feature is enabled, only operator users can use this API.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/update-license.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-license-post | Elasticsearch API documentation}
     */
   async post (this: That, params?: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostResponse>
   async post (this: That, params?: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicensePostResponse, unknown>>
