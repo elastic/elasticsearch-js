@@ -3782,7 +3782,7 @@ If no response is received before the timeout expires, the request fails and ret
 Clear cluster voting config exclusions.
 Remove master-eligible nodes from the voting configuration exclusion list.
 
-{ref}/voting-config-exclusions.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-cluster-post-voting-config-exclusions[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.deleteVotingConfigExclusions({ ... })
@@ -3967,7 +3967,7 @@ In that case, you may safely retry the call.
 NOTE: Voting exclusions are required only when you remove at least half of the master-eligible nodes from a cluster in a short time period.
 They are not required when removing master-ineligible nodes or when removing fewer than half of the master-eligible nodes.
 
-{ref}/voting-config-exclusions.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-cluster-post-voting-config-exclusions[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.postVotingConfigExclusions({ ... })
@@ -9069,7 +9069,7 @@ You must then re-submit the API request with the acknowledge parameter set to tr
 NOTE: If Elasticsearch security features are enabled and you are installing a gold or higher license, you must enable TLS on the transport networking layer before you install the license.
 If the operator privileges feature is enabled, only operator users can use this API.
 
-{ref}/update-license.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-license-post[Endpoint documentation]
 [source,ts]
 ----
 client.license.post({ ... })
@@ -9852,7 +9852,7 @@ be retrieved and then added to another cluster.
 
 [discrete]
 ==== get_data_frame_analytics_stats
-Get data frame analytics jobs usage info.
+Get data frame analytics job stats.
 
 {ref}/get-dfanalytics-stats.html[Endpoint documentation]
 [source,ts]
@@ -9884,7 +9884,7 @@ there are no matches or only partial matches.
 
 [discrete]
 ==== get_datafeed_stats
-Get datafeeds usage info.
+Get datafeed stats.
 You can get statistics for multiple datafeeds in a single API request by
 using a list of datafeeds or a wildcard expression. You can
 get statistics for all datafeeds by using `_all`, by specifying `*` as the
@@ -10008,7 +10008,7 @@ means it is unset and results are not limited to specific timestamps.
 
 [discrete]
 ==== get_job_stats
-Get anomaly detection jobs usage info.
+Get anomaly detection job stats.
 
 {ref}/ml-get-job-stats.html[Endpoint documentation]
 [source,ts]
@@ -11103,7 +11103,7 @@ restart the model deployment.
 ==== update_data_frame_analytics
 Update a data frame analytics job.
 
-{ref}/update-dfanalytics.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ml-update-data-frame-analytics[Endpoint documentation]
 [source,ts]
 ----
 client.ml.updateDataFrameAnalytics({ id })
@@ -11314,7 +11314,7 @@ snapshot will be deleted when the job is deleted.
 ==== update_trained_model_deployment
 Update a trained model deployment.
 
-{ref}/update-trained-model-deployment.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ml-update-trained-model-deployment[Endpoint documentation]
 [source,ts]
 ----
 client.ml.updateTrainedModelDeployment({ model_id })
@@ -16060,7 +16060,7 @@ privileges for the source indices. You must also have `index` and `read` privile
 Elasticsearch security features are enabled, the transform remembers which roles the user who updated it had at the
 time of update and runs with those privileges.
 
-{ref}/update-transform.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-transform-update-transform[Endpoint documentation]
 [source,ts]
 ----
 client.transform.updateTransform({ transform_id })
@@ -16107,7 +16107,7 @@ A summary is returned when the upgrade is finished.
 To ensure continuous transforms remain running during a major version upgrade of the cluster – for example, from 7.16 to 8.0 – it is recommended to upgrade transforms before upgrading the cluster.
 You may want to perform a recent cluster backup prior to the upgrade.
 
-{ref}/upgrade-transforms.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-transform-upgrade-transforms[Endpoint documentation]
 [source,ts]
 ----
 client.transform.upgradeTransforms({ ... })
@@ -16136,7 +16136,7 @@ The reason for this behavior is to prevent overwriting the watch status from a w
 Acknowledging an action throttles further executions of that action until its `ack.state` is reset to `awaits_successful_execution`.
 This happens when the condition of the watch is not met (the condition evaluates to false).
 
-{ref}/watcher-api-ack-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-ack-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.ackWatch({ watch_id })
@@ -16155,7 +16155,7 @@ If you omit this parameter, all of the actions of the watch are acknowledged.
 Activate a watch.
 A watch can be either active or inactive.
 
-{ref}/watcher-api-activate-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-activate-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.activateWatch({ watch_id })
@@ -16172,7 +16172,7 @@ client.watcher.activateWatch({ watch_id })
 Deactivate a watch.
 A watch can be either active or inactive.
 
-{ref}/watcher-api-deactivate-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-deactivate-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.deactivateWatch({ watch_id })
@@ -16195,7 +16195,7 @@ IMPORTANT: Deleting a watch must be done by using only this API.
 Do not delete the watch directly from the `.watches` index using the Elasticsearch delete document API
 When Elasticsearch security features are enabled, make sure no write privileges are granted to anyone for the `.watches` index.
 
-{ref}/watcher-api-delete-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-delete-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.deleteWatch({ id })
@@ -16224,7 +16224,7 @@ If your user is allowed to read index `a`, but not index `b`, then the exact sam
 
 When using the run watch API, the authorization data of the user that called the API will be used as a base, instead of the information who stored the watch.
 
-{ref}/watcher-api-execute-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-execute-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.executeWatch({ ... })
@@ -16253,7 +16253,7 @@ Get Watcher index settings.
 Get settings for the Watcher internal index (`.watches`).
 Only a subset of settings are shown, for example `index.auto_expand_replicas` and `index.number_of_replicas`.
 
-{ref}/watcher-api-get-settings.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-get-settings[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.getSettings({ ... })
@@ -16270,7 +16270,7 @@ If no response is received before the timeout expires, the request fails and ret
 ==== get_watch
 Get a watch.
 
-{ref}/watcher-api-get-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-get-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.getWatch({ id })
@@ -16297,7 +16297,7 @@ When you add a watch you can also define its initial active state by setting the
 When Elasticsearch security features are enabled, your watch can index or search only on indices for which the user that stored the watch has privileges.
 If the user is able to read index `a`, but not index `b`, the same will apply when the watch runs.
 
-{ref}/watcher-api-put-watch.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-put-watch[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.putWatch({ id })
@@ -16332,7 +16332,7 @@ Get all registered watches in a paginated manner and optionally filter watches b
 
 Note that only the `_id` and `metadata.*` fields are queryable or sortable.
 
-{ref}/watcher-api-query-watches.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-query-watches[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.queryWatches({ ... })
@@ -16355,7 +16355,7 @@ It must be non-negative.
 Start the watch service.
 Start the Watcher service if it is not already running.
 
-{ref}/watcher-api-start.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-start[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.start({ ... })
@@ -16373,7 +16373,7 @@ Get Watcher statistics.
 This API always returns basic metrics.
 You retrieve more metrics by using the metric parameter.
 
-{ref}/watcher-api-stats.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-stats[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.stats({ ... })
@@ -16391,7 +16391,7 @@ client.watcher.stats({ ... })
 Stop the watch service.
 Stop the Watcher service if it is running.
 
-{ref}/watcher-api-stop.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-stop[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.stop({ ... })
@@ -16415,7 +16415,7 @@ This includes `index.auto_expand_replicas`, `index.number_of_replicas`, `index.r
 Modification of `index.routing.allocation.include._tier_preference` is an exception and is not allowed as the
 Watcher shards must always be in the `data_content` tier.
 
-{ref}/watcher-api-update-settings.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-update-settings[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.updateSettings({ ... })
@@ -16465,7 +16465,7 @@ Get usage information.
 Get information about the features that are currently enabled and available under the current license.
 The API also provides some usage statistics.
 
-{ref}/usage-api.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/group/endpoint-xpack[Endpoint documentation]
 [source,ts]
 ----
 client.xpack.usage({ ... })

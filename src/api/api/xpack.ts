@@ -76,7 +76,7 @@ export default class Xpack {
 
   /**
     * Get usage information. Get information about the features that are currently enabled and available under the current license. The API also provides some usage statistics.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/usage-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/group/endpoint-xpack | Elasticsearch API documentation}
     */
   async usage (this: That, params?: T.XpackUsageRequest | TB.XpackUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.XpackUsageResponse>
   async usage (this: That, params?: T.XpackUsageRequest | TB.XpackUsageRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.XpackUsageResponse, unknown>>
