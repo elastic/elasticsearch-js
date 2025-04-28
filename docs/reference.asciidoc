@@ -9858,7 +9858,7 @@ be retrieved and then added to another cluster.
 
 [discrete]
 ==== get_data_frame_analytics_stats
-Get data frame analytics jobs usage info.
+Get data frame analytics job stats.
 
 {ref}/get-dfanalytics-stats.html[Endpoint documentation]
 [source,ts]
@@ -9890,7 +9890,7 @@ there are no matches or only partial matches.
 
 [discrete]
 ==== get_datafeed_stats
-Get datafeeds usage info.
+Get datafeed stats.
 You can get statistics for multiple datafeeds in a single API request by
 using a list of datafeeds or a wildcard expression. You can
 get statistics for all datafeeds by using `_all`, by specifying `*` as the
@@ -10014,7 +10014,7 @@ means it is unset and results are not limited to specific timestamps.
 
 [discrete]
 ==== get_job_stats
-Get anomaly detection jobs usage info.
+Get anomaly detection job stats.
 
 {ref}/ml-get-job-stats.html[Endpoint documentation]
 [source,ts]
