@@ -76,7 +76,7 @@
     "node-abort-controller": "3.1.1",
     "node-fetch": "2.7.0",
     "ora": "5.4.1",
-    "proxy": "1.0.2",
+    "proxy": "2.2.0",
     "rimraf": "5.0.10",
     "semver": "7.7.1",
     "split2": "4.2.0",
