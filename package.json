@@ -78,7 +78,7 @@
     "node-fetch": "2.7.0",
     "ora": "5.4.1",
     "proxy": "2.2.0",
-    "rimraf": "5.0.10",
+    "rimraf": "6.0.1",
     "semver": "7.7.1",
     "split2": "4.2.0",
     "stoppable": "1.1.0",
