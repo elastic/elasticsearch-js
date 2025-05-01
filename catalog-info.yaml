@@ -41,11 +41,3 @@ spec:
         build_branches: false
         separate_pull_request_statuses: true
       cancel_intermediate_builds: true
-      cancel_intermediate_builds_branch_filter: "!main"
-      schedules:
-        main:
-          branch: "main"
-          cronline: "@daily"
-        8_x:
-          branch: "8.x"
-          cronline: "@daily"
