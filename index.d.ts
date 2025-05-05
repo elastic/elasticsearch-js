@@ -10,3 +10,4 @@ export * from '@elastic/transport'
 export * as estypes from './lib/api/types'
 export { Client, SniffingTransport }
 export type { ClientOptions, NodeOptions } from './lib/client'
+export * as helpers from './lib/helpers'
