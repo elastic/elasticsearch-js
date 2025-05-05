@@ -13,8 +13,6 @@ The types are not 100% complete yet. Some APIs are missing (the newest ones, e.g
 The client is developed against the [latest](https://www.npmjs.com/package/typescript?activeTab=versions) version of TypeScript. Furthermore, unless you have set `skipLibCheck` to `true`, you should configure `esModuleInterop` to `true`.
 ::::
 
-
-
 ## Example [_example]
 
 ```ts
@@ -74,7 +72,6 @@ async function run () {
 run().catch(console.log)
 ```
 
-
 ## Request & Response types [_request_response_types]
 
 You can import the full TypeScript requests & responses definitions as it follows:
@@ -82,10 +79,3 @@ You can import the full TypeScript requests & responses definitions as it follow
 ```ts
 import { estypes } from '@elastic/elasticsearch'
 ```
-
-If you need the legacy definitions with the body, you can do the following:
-
-```ts
-import { estypesWithBody } from '@elastic/elasticsearch'
-```
-
