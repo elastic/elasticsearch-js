@@ -46,7 +46,7 @@ export default class Esql {
 
   /**
     * Run an async ES|QL query. Asynchronously run an ES|QL (Elasticsearch query language) query, monitor its progress, and retrieve results when they become available. The API accepts the same parameters and request body as the synchronous query API, along with additional async related properties.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/esql-async-query-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/esql-async-query-api.html | Elasticsearch API documentation}
     */
   async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest | TB.EsqlAsyncQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryResponse>
   async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest | TB.EsqlAsyncQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryResponse, unknown>>
@@ -87,7 +87,7 @@ export default class Esql {
 
   /**
     * Delete an async ES|QL query. If the query is still running, it is cancelled. Otherwise, the stored results are deleted. If the Elasticsearch security features are enabled, only the following users can use this API to delete a query: * The authenticated user that submitted the original query request * Users with the `cancel_task` cluster privilege
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/esql-async-query-delete-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/esql-async-query-delete-api.html | Elasticsearch API documentation}
     */
   async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest | TB.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryDeleteResponse>
   async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest | TB.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryDeleteResponse, unknown>>
@@ -119,7 +119,7 @@ export default class Esql {
 
   /**
     * Get async ES|QL query results. Get the current status and available results or stored results for an ES|QL asynchronous query. If the Elasticsearch security features are enabled, only the user who first submitted the ES|QL query can retrieve the results using this API.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/esql-async-query-get-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/esql-async-query-get-api.html | Elasticsearch API documentation}
     */
   async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest | TB.EsqlAsyncQueryGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryGetResponse>
   async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest | TB.EsqlAsyncQueryGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryGetResponse, unknown>>
@@ -151,7 +151,7 @@ export default class Esql {
 
   /**
     * Stop async ES|QL query. This API interrupts the query execution and returns the results so far. If the Elasticsearch security features are enabled, only the user who first submitted the ES|QL query can stop it.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/esql-async-query-stop-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/esql-async-query-stop-api.html | Elasticsearch API documentation}
     */
   async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest | TB.EsqlAsyncQueryStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryStopResponse>
   async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest | TB.EsqlAsyncQueryStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryStopResponse, unknown>>
@@ -183,7 +183,7 @@ export default class Esql {
 
   /**
     * Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query language) query.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/esql-rest.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/esql-rest.html | Elasticsearch API documentation}
     */
   async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlQueryResponse>
   async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlQueryResponse, unknown>>
