@@ -25,3 +25,4 @@ export * as estypes from './lib/api/types'
 export * as estypesWithBody from './lib/api/typesWithBodyKey'
 export { Client, SniffingTransport }
 export type { ClientOptions, NodeOptions } from './lib/client'
+export * as helpers from './lib/helpers'
