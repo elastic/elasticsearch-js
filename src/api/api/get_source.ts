@@ -40,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Get a document's source. Get the source of a document. For example: ``` GET my-index-000001/_source/1 ``` You can use the source filtering parameters to control which parts of the `_source` are returned: ``` GET my-index-000001/_source/1/?_source_includes=*.id&_source_excludes=entities ```
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/docs-get.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/docs-get.html | Elasticsearch API documentation}
   */
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest | TB.GetSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetSourceResponse<TDocument>>
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest | TB.GetSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetSourceResponse<TDocument>, unknown>>

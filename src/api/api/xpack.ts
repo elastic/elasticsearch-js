@@ -46,7 +46,7 @@ export default class Xpack {
 
   /**
     * Get information. The information provided by the API includes: * Build information including the build number and timestamp. * License information about the currently installed license. * Feature information for the features that are currently enabled and available under the current license.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.x/info-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/info-api.html | Elasticsearch API documentation}
     */
   async info (this: That, params?: T.XpackInfoRequest | TB.XpackInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.XpackInfoResponse>
   async info (this: That, params?: T.XpackInfoRequest | TB.XpackInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.XpackInfoResponse, unknown>>
