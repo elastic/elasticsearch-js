@@ -40,7 +40,7 @@ body:
     id: node-js-version
     attributes:
       label: Node.js version
-      placeholder: 18.x, 20.x, etc.
+      placeholder: 20.x, 22.x, etc.
     validations:
       required: true
 

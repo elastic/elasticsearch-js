@@ -43,17 +43,17 @@ compatible with default distributions and without guarantees made.
 
 ## Usage
 
-* [Creating an index](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_creating_an_index)
-* [Indexing a document](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_indexing_documents)
-* [Getting documents](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_getting_documents)
-* [Searching documents](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_searching_documents)
-* [Updating documents](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_updating_documents)
-* [Deleting documents](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_deleting_documents)
-* [Deleting an index](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_deleting_an_index)
+- [Creating an index](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_creating_an_index)
+- [Indexing a document](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_indexing_documents)
+- [Getting documents](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_getting_documents)
+- [Searching documents](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_searching_documents)
+- [Updating documents](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_updating_documents)
+- [Deleting documents](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_deleting_documents)
+- [Deleting an index](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_deleting_an_index)
 
 ### Node.js support
 
-NOTE: The minimum supported version of Node.js is `v18`.
+NOTE: The minimum supported version of Node.js is `v20`.
 
 The client versioning follows the Elastic Stack versioning, this means that
 major, minor, and patch releases are done following a precise schedule that
@@ -79,27 +79,27 @@ of `^7.10.0`).
 | `12.x`          | `April 2022`     | `8.2` (early 2022)  |
 | `14.x`          | `April 2023`     | `8.8` (early 2023)  |
 | `16.x`          | `September 2023` | `8.11` (late 2023)  |
-| `18.x`          | `April 2025`     | `9.2` (late 2025)   |
+| `18.x`          | `April 2025`     | `9.1` (mid 2025)    |
 
 #### Browser
 
 > [!WARNING]
 > There is no official support for the browser environment. It exposes your Elasticsearch instance to everyone, which could lead to security issues.
-We recommend that you write a lightweight proxy that uses this client instead, you can see a proxy example [here](./docs/examples/proxy).
+> We recommend that you write a lightweight proxy that uses this client instead, you can see a proxy example [here](./docs/examples/proxy).
 
 ## Documentation
 
-* [Introduction](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/introduction.html)
-* [Usage](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-connecting.html#client-usage)
-* [Client configuration](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-configuration.html)
-* [API reference](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference.html)
-* [Authentication](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-connecting.html#authentication)
-* [Observability](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/observability.html)
-* [Creating a child client](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/child.html)
-* [Client helpers](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-helpers.html)
-* [Typescript support](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/typescript.html)
-* [Testing](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-testing.html)
-* [Examples](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/examples.html)
+- [Introduction](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/introduction.html)
+- [Usage](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-connecting.html#client-usage)
+- [Client configuration](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-configuration.html)
+- [API reference](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference.html)
+- [Authentication](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-connecting.html#authentication)
+- [Observability](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/observability.html)
+- [Creating a child client](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/child.html)
+- [Client helpers](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-helpers.html)
+- [Typescript support](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/typescript.html)
+- [Testing](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-testing.html)
+- [Examples](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/examples.html)
 
 ## Install multiple versions
 
@@ -147,7 +147,7 @@ client7.info().then(console.log, console.log)
 ```
 
 Finally, if you want to install the client for the next version of Elasticsearch
-*(the one that lives in Elasticsearch’s main branch)*, you can use the following
+_(the one that lives in Elasticsearch’s main branch)_, you can use the following
 command:
 
 ```sh
