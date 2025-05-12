@@ -4765,6 +4765,7 @@ export interface AnalysisIcuNormalizationCharFilter extends AnalysisCharFilterBa
   type: 'icu_normalizer'
   mode?: AnalysisIcuNormalizationMode
   name?: AnalysisIcuNormalizationType
+  unicode_set_filter?: string
 }
 
 export type AnalysisIcuNormalizationMode = 'decompose' | 'compose'
