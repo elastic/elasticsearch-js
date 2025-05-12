@@ -2895,12 +2895,13 @@ client.cat.nodes({ ... })
 - **`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))**: The unit used to display byte values.
 - **`full_id` (Optional, boolean | string)**: If `true`, return the full node ID. If `false`, return the shortened node ID.
 - **`include_unloaded_segments` (Optional, boolean)**: If true, the response includes information from segments that are not loaded into memory.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, Enum("build" | "completion.size" | "cpu" | "disk.avail" | "disk.total" | "disk.used" | "disk.used_percent" | "fielddata.evictions" | "fielddata.memory_size" | "file_desc.current" | "file_desc.max" | "file_desc.percent" | "flush.total" | "flush.total_time" | "get.current" | "get.exists_time" | "get.exists_total" | "get.missing_time" | "get.missing_total" | "get.time" | "get.total" | "heap.current" | "heap.max" | "heap.percent" | "http_address" | "id" | "indexing.delete_current" | "indexing.delete_time" | "indexing.delete_total" | "indexing.index_current" | "indexing.index_failed" | "indexing.index_failed_due_to_version_conflict" | "indexing.index_time" | "indexing.index_total" | "ip" | "jdk" | "load_1m" | "load_5m" | "load_15m" | "mappings.total_count" | "mappings.total_estimated_overhead_in_bytes" | "master" | "merges.current" | "merges.current_docs" | "merges.current_size" | "merges.total" | "merges.total_docs" | "merges.total_size" | "merges.total_time" | "name" | "node.role" | "pid" | "port" | "query_cache.memory_size" | "query_cache.evictions" | "query_cache.hit_count" | "query_cache.miss_count" | "ram.current" | "ram.max" | "ram.percent" | "refresh.total" | "refresh.time" | "request_cache.memory_size" | "request_cache.evictions" | "request_cache.hit_count" | "request_cache.miss_count" | "script.compilations" | "script.cache_evictions" | "search.fetch_current" | "search.fetch_time" | "search.fetch_total" | "search.open_contexts" | "search.query_current" | "search.query_time" | "search.query_total" | "search.scroll_current" | "search.scroll_time" | "search.scroll_total" | "segments.count" | "segments.fixed_bitset_memory" | "segments.index_writer_memory" | "segments.memory" | "segments.version_map_memory" | "shard_stats.total_count" | "suggest.current" | "suggest.time" | "suggest.total" | "uptime" | "version") | Enum("build" | "completion.size" | "cpu" | "disk.avail" | "disk.total" | "disk.used" | "disk.used_percent" | "fielddata.evictions" | "fielddata.memory_size" | "file_desc.current" | "file_desc.max" | "file_desc.percent" | "flush.total" | "flush.total_time" | "get.current" | "get.exists_time" | "get.exists_total" | "get.missing_time" | "get.missing_total" | "get.time" | "get.total" | "heap.current" | "heap.max" | "heap.percent" | "http_address" | "id" | "indexing.delete_current" | "indexing.delete_time" | "indexing.delete_total" | "indexing.index_current" | "indexing.index_failed" | "indexing.index_failed_due_to_version_conflict" | "indexing.index_time" | "indexing.index_total" | "ip" | "jdk" | "load_1m" | "load_5m" | "load_15m" | "mappings.total_count" | "mappings.total_estimated_overhead_in_bytes" | "master" | "merges.current" | "merges.current_docs" | "merges.current_size" | "merges.total" | "merges.total_docs" | "merges.total_size" | "merges.total_time" | "name" | "node.role" | "pid" | "port" | "query_cache.memory_size" | "query_cache.evictions" | "query_cache.hit_count" | "query_cache.miss_count" | "ram.current" | "ram.max" | "ram.percent" | "refresh.total" | "refresh.time" | "request_cache.memory_size" | "request_cache.evictions" | "request_cache.hit_count" | "request_cache.miss_count" | "script.compilations" | "script.cache_evictions" | "search.fetch_current" | "search.fetch_time" | "search.fetch_total" | "search.open_contexts" | "search.query_current" | "search.query_time" | "search.query_total" | "search.scroll_current" | "search.scroll_time" | "search.scroll_total" | "segments.count" | "segments.fixed_bitset_memory" | "segments.index_writer_memory" | "segments.memory" | "segments.version_map_memory" | "shard_stats.total_count" | "suggest.current" | "suggest.time" | "suggest.total" | "uptime" | "version")[])**: A list of columns names to display.
+It supports simple wildcards.
+- **`s` (Optional, string | string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: Unit used to display time values.
+- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: The unit used to display time values.
 
 ## client.cat.pendingTasks [_cat.pending_tasks]
 Get pending task information.
@@ -5410,12 +5411,12 @@ If no index is specified or the index does not have a default analyzer, the anal
 - **`analyzer` (Optional, string)**: The name of the analyzer that should be applied to the provided `text`.
 This could be a built-in analyzer, or an analyzer that’s been configured in the index.
 - **`attributes` (Optional, string[])**: Array of token attributes used to filter the output of the `explain` parameter.
-- **`char_filter` (Optional, string | { type, escaped_tags } | { type, mappings, mappings_path } | { type, flags, pattern, replacement } | { type, mode, name } | { type, normalize_kana, normalize_kanji }[])**: Array of character filters used to preprocess characters before the tokenizer.
+- **`char_filter` (Optional, string | { type, escaped_tags } | { type, mappings, mappings_path } | { type, flags, pattern, replacement } | { type, mode, name, unicode_set_filter } | { type, normalize_kana, normalize_kanji }[])**: Array of character filters used to preprocess characters before the tokenizer.
 - **`explain` (Optional, boolean)**: If `true`, the response includes token attributes and additional details.
 - **`field` (Optional, string)**: Field used to derive the analyzer.
 To use this parameter, you must specify an index.
 If specified, the `analyzer` parameter overrides this value.
-- **`filter` (Optional, string | { type, preserve_original } | { type, common_words, common_words_path, ignore_case, query_mode } | { type, filter, script } | { type, delimiter, encoding } | { type, max_gram, min_gram, side, preserve_original } | { type, articles, articles_path, articles_case } | { type, max_output_size, separator } | { type, dedup, dictionary, locale, longest_only } | { type } | { type, mode, types } | { type, keep_words, keep_words_case, keep_words_path } | { type, ignore_case, keywords, keywords_path, keywords_pattern } | { type } | { type, max, min } | { type, consume_all_tokens, max_token_count } | { type, language } | { type, filters, preserve_original } | { type, max_gram, min_gram, preserve_original } | { type, stoptags } | { type, patterns, preserve_original } | { type, all, flags, pattern, replacement } | { type } | { type, script } | { type } | { type } | { type, filler_token, max_shingle_size, min_shingle_size, output_unigrams, output_unigrams_if_no_shingles, token_separator } | { type, language } | { type, rules, rules_path } | { type, language } | { type, ignore_case, remove_trailing, stopwords, stopwords_path } | { type, expand, format, lenient, synonyms, synonyms_path, synonyms_set, tokenizer, updateable } | { type, expand, format, lenient, synonyms, synonyms_path, synonyms_set, tokenizer, updateable } | { type } | { type, length } | { type, only_on_same_position } | { type } | { type, adjust_offsets, catenate_all, catenate_numbers, catenate_words, generate_number_parts, generate_word_parts, ignore_keywords, preserve_original, protected_words, protected_words_path, split_on_case_change, split_on_numerics, stem_english_possessive, type_table, type_table_path } | { type, catenate_all, catenate_numbers, catenate_words, generate_number_parts, generate_word_parts, preserve_original, protected_words, protected_words_path, split_on_case_change, split_on_numerics, stem_english_possessive, type_table, type_table_path } | { type, minimum_length } | { type, use_romaji } | { type, stoptags } | { type, alternate, case_first, case_level, country, decomposition, hiragana_quaternary_mode, language, numeric, rules, strength, variable_top, variant } | { type, unicode_set_filter } | { type, name } | { type, dir, id } | { type, encoder, languageset, max_code_len, name_type, replace, rule_type } | { type }[])**: Array of token filters used to apply after the tokenizer.
+- **`filter` (Optional, string | { type } | { type } | { type, preserve_original } | { type, ignored_scripts, output_unigrams } | { type } | { type } | { type, common_words, common_words_path, ignore_case, query_mode } | { type, filter, script } | { type } | { type, delimiter, encoding } | { type, max_gram, min_gram, side, preserve_original } | { type, articles, articles_path, articles_case } | { type, max_output_size, separator } | { type } | { type } | { type } | { type, dedup, dictionary, locale, longest_only } | { type, hyphenation_patterns_path, no_sub_matches, no_overlapping_matches } | { type } | { type, mode, types } | { type, keep_words, keep_words_case, keep_words_path } | { type, ignore_case, keywords, keywords_path, keywords_pattern } | { type } | { type } | { type, max, min } | { type, consume_all_tokens, max_token_count } | { type, language } | { type, bucket_count, hash_count, hash_set_size, with_rotation } | { type, filters, preserve_original } | { type, max_gram, min_gram, preserve_original } | { type, stoptags } | { type, patterns, preserve_original } | { type, all, pattern, replacement } | { type } | { type } | { type, script } | { type } | { type } | { type } | { type } | { type } | { type, filler_token, max_shingle_size, min_shingle_size, output_unigrams, output_unigrams_if_no_shingles, token_separator } | { type, language } | { type } | { type, rules, rules_path } | { type, language } | { type, ignore_case, remove_trailing, stopwords, stopwords_path } | { type } | { type } | { type } | { type, length } | { type, only_on_same_position } | { type } | { type, adjust_offsets, ignore_keywords } | { type } | { type, stopwords } | { type, minimum_length } | { type, use_romaji } | { type, stoptags } | { type, alternate, case_first, case_level, country, decomposition, hiragana_quaternary_mode, language, numeric, rules, strength, variable_top, variant } | { type, unicode_set_filter } | { type, name } | { type, dir, id } | { type, encoder, languageset, max_code_len, name_type, replace, rule_type } | { type }[])**: Array of token filters used to apply after the tokenizer.
 - **`normalizer` (Optional, string)**: Normalizer to use to convert text into a single token.
 - **`text` (Optional, string | string[])**: Text to analyze.
 If an array of strings is provided, it is analyzed as a multi-value field.
@@ -7468,6 +7469,17 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ## client.inference.chatCompletionUnified [_inference.chat_completion_unified]
 Perform chat completion inference
 
+The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. 
+It only works with the `chat_completion` task type for `openai` and `elastic` inference services.
+
+IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face.
+For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
+
+NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.
+The Chat completion inference API and the Stream inference API differ in their response structure and capabilities.
+The Chat completion inference API provides more comprehensive customization options through more fields and function calling support.
+If you use the `openai` service or the `elastic` service, use the Chat completion inference API.
+
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-unified-inference)
 
 ```ts
@@ -7567,11 +7579,6 @@ These settings are specific to the task type you specified and override the task
 
 ## client.inference.put [_inference.put]
 Create an inference endpoint.
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
 IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face.
 For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models.
@@ -7594,12 +7601,6 @@ client.inference.put({ inference_id })
 Create an AlibabaCloud AI Search inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `alibabacloud-ai-search` service.
-
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-alibabacloud)
 
@@ -7626,12 +7627,6 @@ Creates an inference endpoint to perform an inference task with the `amazonbedro
 >info
 > You need to provide the access and secret keys only once, during the inference model creation. The get inference API does not retrieve your access or secret keys. After creating the inference model, you cannot change the associated key pairs. If you want to use a different access and secret key pair, delete the inference model and recreate it with the same name and the updated keys.
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-amazonbedrock)
 
 ```ts
@@ -7653,12 +7648,6 @@ These settings are specific to the task type you specified.
 Create an Anthropic inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `anthropic` service.
-
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-anthropic)
 
@@ -7682,12 +7671,6 @@ These settings are specific to the task type you specified.
 Create an Azure AI studio inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `azureaistudio` service.
-
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-azureaistudio)
 
@@ -7718,12 +7701,6 @@ The list of chat completion models that you can choose from in your Azure OpenAI
 
 The list of embeddings models that you can choose from in your deployment can be found in the [Azure models documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#embeddings).
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-azureopenai)
 
 ```ts
@@ -7746,12 +7723,6 @@ These settings are specific to the task type you specified.
 Create a Cohere inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `cohere` service.
-
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-cohere)
 
@@ -7846,12 +7817,6 @@ Create an Google AI Studio inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `googleaistudio` service.
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-googleaistudio)
 
 ```ts
@@ -7871,12 +7836,6 @@ client.inference.putGoogleaistudio({ task_type, googleaistudio_inference_id, ser
 Create a Google Vertex AI inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `googlevertexai` service.
-
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-googlevertexai)
 
@@ -7914,12 +7873,6 @@ The following models are recommended for the Hugging Face service:
 * `multilingual-e5-base`
 * `multilingual-e5-small`
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-hugging-face)
 
 ```ts
@@ -7943,12 +7896,6 @@ Create an inference endpoint to perform an inference task with the `jinaai` serv
 To review the available `rerank` models, refer to <https://jina.ai/reranker>.
 To review the available `text_embedding` models, refer to the <https://jina.ai/embeddings/>.
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-jinaai)
 
 ```ts
@@ -7971,12 +7918,6 @@ Create a Mistral inference endpoint.
 
 Creates an inference endpoint to perform an inference task with the `mistral` service.
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-mistral)
 
 ```ts
@@ -7996,13 +7937,7 @@ The only valid task type for the model to perform is `text_embedding`.
 ## client.inference.putOpenai [_inference.put_openai]
 Create an OpenAI inference endpoint.
 
-Create an inference endpoint to perform an inference task with the `openai` service.
-
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+Create an inference endpoint to perform an inference task with the `openai` service or `openai` compatible APIs.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-openai)
 
@@ -8052,12 +7987,6 @@ Create a Watsonx inference endpoint.
 Create an inference endpoint to perform an inference task with the `watsonxai` service.
 You need an IBM Cloud Databases for Elasticsearch deployment to use the `watsonxai` inference service.
 You can provision one through the IBM catalog, the Cloud Databases CLI plug-in, the Cloud Databases API, or Terraform.
-
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-watsonx)
 
