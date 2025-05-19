@@ -6657,11 +6657,19 @@ export interface AggregationsWeightedAvgAggregate extends AggregationsSingleMetr
 
 export type AnalysisAnalyzer = AnalysisCustomAnalyzer | AnalysisFingerprintAnalyzer | AnalysisKeywordAnalyzer | AnalysisNoriAnalyzer | AnalysisPatternAnalyzer | AnalysisSimpleAnalyzer | AnalysisStandardAnalyzer | AnalysisStopAnalyzer | AnalysisWhitespaceAnalyzer | AnalysisIcuAnalyzer | AnalysisKuromojiAnalyzer | AnalysisSnowballAnalyzer | AnalysisArabicAnalyzer | AnalysisArmenianAnalyzer | AnalysisBasqueAnalyzer | AnalysisBengaliAnalyzer | AnalysisBrazilianAnalyzer | AnalysisBulgarianAnalyzer | AnalysisCatalanAnalyzer | AnalysisChineseAnalyzer | AnalysisCjkAnalyzer | AnalysisCzechAnalyzer | AnalysisDanishAnalyzer | AnalysisDutchAnalyzer | AnalysisEnglishAnalyzer | AnalysisEstonianAnalyzer | AnalysisFinnishAnalyzer | AnalysisFrenchAnalyzer | AnalysisGalicianAnalyzer | AnalysisGermanAnalyzer | AnalysisGreekAnalyzer | AnalysisHindiAnalyzer | AnalysisHungarianAnalyzer | AnalysisIndonesianAnalyzer | AnalysisIrishAnalyzer | AnalysisItalianAnalyzer | AnalysisLatvianAnalyzer | AnalysisLithuanianAnalyzer | AnalysisNorwegianAnalyzer | AnalysisPersianAnalyzer | AnalysisPortugueseAnalyzer | AnalysisRomanianAnalyzer | AnalysisRussianAnalyzer | AnalysisSerbianAnalyzer | AnalysisSoraniAnalyzer | AnalysisSpanishAnalyzer | AnalysisSwedishAnalyzer | AnalysisTurkishAnalyzer | AnalysisThaiAnalyzer
 
+export interface AnalysisApostropheTokenFilter extends AnalysisTokenFilterBase {
+  type: 'apostrophe'
+}
+
 export interface AnalysisArabicAnalyzer {
   type: 'arabic'
   stopwords?: AnalysisStopWords
   stopwords_path?: string
   stem_exclusion?: string[]
+}
+
+export interface AnalysisArabicNormalizationTokenFilter extends AnalysisTokenFilterBase {
+  type: 'arabic_normalization'
 }
 
 export interface AnalysisArmenianAnalyzer {
@@ -6673,6 +6681,7 @@ export interface AnalysisArmenianAnalyzer {
 
 export interface AnalysisAsciiFoldingTokenFilter extends AnalysisTokenFilterBase {
   type: 'asciifolding'
+  /** If `true`, emit both original tokens and folded tokens. Defaults to `false`. */
   preserve_original?: SpecUtilsStringified<boolean>
 }
 
@@ -6736,6 +6745,24 @@ export interface AnalysisCjkAnalyzer {
   stopwords_path?: string
 }
 
+export type AnalysisCjkBigramIgnoredScript = 'han' | 'hangul' | 'hiragana' | 'katakana'
+
+export interface AnalysisCjkBigramTokenFilter extends AnalysisTokenFilterBase {
+  type: 'cjk_bigram'
+  /** Array of character scripts for which to disable bigrams. */
+  ignored_scripts?: AnalysisCjkBigramIgnoredScript[]
+  /** If `true`, emit tokens in both bigram and unigram form. If `false`, a CJK character is output in unigram form when it has no adjacent characters. Defaults to `false`. */
+  output_unigrams?: boolean
+}
+
+export interface AnalysisCjkWidthTokenFilter extends AnalysisTokenFilterBase {
+  type: 'cjk_width'
+}
+
+export interface AnalysisClassicTokenFilter extends AnalysisTokenFilterBase {
+  type: 'classic'
+}
+
 export interface AnalysisClassicTokenizer extends AnalysisTokenizerBase {
   type: 'classic'
   max_token_length?: integer
@@ -6743,25 +6770,45 @@ export interface AnalysisClassicTokenizer extends AnalysisTokenizerBase {
 
 export interface AnalysisCommonGramsTokenFilter extends AnalysisTokenFilterBase {
   type: 'common_grams'
+  /** A list of tokens. The filter generates bigrams for these tokens.
+    * Either this or the `common_words_path` parameter is required. */
   common_words?: string[]
+  /** Path to a file containing a list of tokens. The filter generates bigrams for these tokens.
+    * This path must be absolute or relative to the `config` location. The file must be UTF-8 encoded. Each token in the file must be separated by a line break.
+    * Either this or the `common_words` parameter is required. */
   common_words_path?: string
+  /** If `true`, matches for common words matching are case-insensitive. Defaults to `false`. */
   ignore_case?: boolean
+  /** If `true`, the filter excludes the following tokens from the output:
+    * - Unigrams for common words
+    * - Unigrams for terms followed by common words
+    * Defaults to `false`. We recommend enabling this parameter for search analyzers. */
   query_mode?: boolean
 }
 
 export interface AnalysisCompoundWordTokenFilterBase extends AnalysisTokenFilterBase {
-  hyphenation_patterns_path?: string
+  /** Maximum subword character length. Longer subword tokens are excluded from the output. Defaults to `15`. */
   max_subword_size?: integer
+  /** Minimum subword character length. Shorter subword tokens are excluded from the output. Defaults to `2`. */
   min_subword_size?: integer
+  /** Minimum word character length. Shorter word tokens are excluded from the output. Defaults to `5`. */
   min_word_size?: integer
+  /** If `true`, only include the longest matching subword. Defaults to `false`. */
   only_longest_match?: boolean
+  /** A list of subwords to look for in the token stream. If found, the subword is included in the token output.
+    * Either this parameter or `word_list_path` must be specified. */
   word_list?: string[]
+  /** Path to a file that contains a list of subwords to find in the token stream. If found, the subword is included in the token output.
+    * This path must be absolute or relative to the config location, and the file must be UTF-8 encoded. Each token in the file must be separated by a line break.
+    * Either this parameter or `word_list` must be specified. */
   word_list_path?: string
 }
 
 export interface AnalysisConditionTokenFilter extends AnalysisTokenFilterBase {
   type: 'condition'
+  /** Array of token filters. If a token matches the predicate script in the `script` parameter, these filters are applied to the token in the order provided. */
   filter: string[]
+  /** Predicate script used to apply token filters. If a token matches this script, the filters in the `filter` parameter are applied to the token. */
   script: Script | ScriptSource
 }
 
@@ -6793,11 +6840,17 @@ export interface AnalysisDanishAnalyzer {
   stopwords_path?: string
 }
 
+export interface AnalysisDecimalDigitTokenFilter extends AnalysisTokenFilterBase {
+  type: 'decimal_digit'
+}
+
 export type AnalysisDelimitedPayloadEncoding = 'int' | 'float' | 'identity'
 
 export interface AnalysisDelimitedPayloadTokenFilter extends AnalysisTokenFilterBase {
   type: 'delimited_payload'
+  /** Character used to separate tokens from payloads. Defaults to `|`. */
   delimiter?: string
+  /** Data type for the stored payload. */
   encoding?: AnalysisDelimitedPayloadEncoding
 }
 
@@ -6816,9 +6869,13 @@ export type AnalysisEdgeNGramSide = 'front' | 'back'
 
 export interface AnalysisEdgeNGramTokenFilter extends AnalysisTokenFilterBase {
   type: 'edge_ngram'
+  /** Maximum character length of a gram. For custom token filters, defaults to `2`. For the built-in edge_ngram filter, defaults to `1`. */
   max_gram?: integer
+  /** Minimum character length of a gram. Defaults to `1`. */
   min_gram?: integer
+  /** Indicates whether to truncate tokens from the `front` or `back`. Defaults to `front`. */
   side?: AnalysisEdgeNGramSide
+  /** Emits original token when set to `true`. Defaults to `false`. */
   preserve_original?: SpecUtilsStringified<boolean>
 }
 
@@ -6832,8 +6889,16 @@ export interface AnalysisEdgeNGramTokenizer extends AnalysisTokenizerBase {
 
 export interface AnalysisElisionTokenFilter extends AnalysisTokenFilterBase {
   type: 'elision'
+  /** List of elisions to remove.
+    * To be removed, the elision must be at the beginning of a token and be immediately followed by an apostrophe. Both the elision and apostrophe are removed.
+    * For custom `elision` filters, either this parameter or `articles_path` must be specified. */
   articles?: string[]
+  /** Path to a file that contains a list of elisions to remove.
+    * This path must be absolute or relative to the `config` location, and the file must be UTF-8 encoded. Each elision in the file must be separated by a line break.
+    * To be removed, the elision must be at the beginning of a token and be immediately followed by an apostrophe. Both the elision and apostrophe are removed.
+    * For custom `elision` filters, either this parameter or `articles` must be specified. */
   articles_path?: string
+  /** If `true`, elision matching is case insensitive. If `false`, elision matching is case sensitive. Defaults to `false`. */
   articles_case?: SpecUtilsStringified<boolean>
 }
 
@@ -6868,7 +6933,9 @@ export interface AnalysisFingerprintAnalyzer {
 
 export interface AnalysisFingerprintTokenFilter extends AnalysisTokenFilterBase {
   type: 'fingerprint'
+  /** Maximum character length, including whitespace, of the output token. Defaults to `255`. Concatenated tokens longer than this will result in no token output. */
   max_output_size?: integer
+  /** Character to use to concatenate the token stream input. Defaults to a space. */
   separator?: string
 }
 
@@ -6877,6 +6944,10 @@ export interface AnalysisFinnishAnalyzer {
   stopwords?: AnalysisStopWords
   stopwords_path?: string
   stem_exclusion?: string[]
+}
+
+export interface AnalysisFlattenGraphTokenFilter extends AnalysisTokenFilterBase {
+  type: 'flatten_graph'
 }
 
 export interface AnalysisFrenchAnalyzer {
@@ -6900,6 +6971,10 @@ export interface AnalysisGermanAnalyzer {
   stem_exclusion?: string[]
 }
 
+export interface AnalysisGermanNormalizationTokenFilter extends AnalysisTokenFilterBase {
+  type: 'german_normalization'
+}
+
 export interface AnalysisGreekAnalyzer {
   type: 'greek'
   stopwords?: AnalysisStopWords
@@ -6911,6 +6986,10 @@ export interface AnalysisHindiAnalyzer {
   stopwords?: AnalysisStopWords
   stopwords_path?: string
   stem_exclusion?: string[]
+}
+
+export interface AnalysisHindiNormalizationTokenFilter extends AnalysisTokenFilterBase {
+  type: 'hindi_normalization'
 }
 
 export interface AnalysisHtmlStripCharFilter extends AnalysisCharFilterBase {
@@ -6927,14 +7006,32 @@ export interface AnalysisHungarianAnalyzer {
 
 export interface AnalysisHunspellTokenFilter extends AnalysisTokenFilterBase {
   type: 'hunspell'
+  /** If `true`, duplicate tokens are removed from the filter’s output. Defaults to `true`. */
   dedup?: boolean
+  /** One or more `.dic` files (e.g, `en_US.dic`, my_custom.dic) to use for the Hunspell dictionary.
+    * By default, the `hunspell` filter uses all `.dic` files in the `<$ES_PATH_CONF>/hunspell/<locale>` directory specified using the `lang`, `language`, or `locale` parameter. */
   dictionary?: string
+  /** Locale directory used to specify the `.aff` and `.dic` files for a Hunspell dictionary. */
   locale: string
+  /** Locale directory used to specify the `.aff` and `.dic` files for a Hunspell dictionary.
+    * @alias locale */
+  lang: string
+  /** Locale directory used to specify the `.aff` and `.dic` files for a Hunspell dictionary.
+    * @alias locale */
+  language: string
+  /** If `true`, only the longest stemmed version of each token is included in the output. If `false`, all stemmed versions of the token are included. Defaults to `false`. */
   longest_only?: boolean
 }
 
 export interface AnalysisHyphenationDecompounderTokenFilter extends AnalysisCompoundWordTokenFilterBase {
   type: 'hyphenation_decompounder'
+  /** Path to an Apache FOP (Formatting Objects Processor) XML hyphenation pattern file.
+    * This path must be absolute or relative to the `config` location. Only FOP v1.2 compatible files are supported. */
+  hyphenation_patterns_path: string
+  /** If `true`, do not match sub tokens in tokens that are in the word list. Defaults to `false`. */
+  no_sub_matches?: boolean
+  /** If `true`, do not allow overlapping tokens. Defaults to `false`. */
+  no_overlapping_matches?: boolean
 }
 
 export interface AnalysisIcuAnalyzer {
@@ -6976,6 +7073,7 @@ export interface AnalysisIcuNormalizationCharFilter extends AnalysisCharFilterBa
   type: 'icu_normalizer'
   mode?: AnalysisIcuNormalizationMode
   name?: AnalysisIcuNormalizationType
+  unicode_set_filter?: string
 }
 
 export type AnalysisIcuNormalizationMode = 'decompose' | 'compose'
@@ -7000,6 +7098,10 @@ export interface AnalysisIcuTransformTokenFilter extends AnalysisTokenFilterBase
   id: string
 }
 
+export interface AnalysisIndicNormalizationTokenFilter extends AnalysisTokenFilterBase {
+  type: 'indic_normalization'
+}
+
 export interface AnalysisIndonesianAnalyzer {
   type: 'indonesian'
   stopwords?: AnalysisStopWords
@@ -7021,6 +7123,11 @@ export interface AnalysisItalianAnalyzer {
   stem_exclusion?: string[]
 }
 
+export interface AnalysisJaStopTokenFilter extends AnalysisTokenFilterBase {
+  type: 'ja_stop'
+  stopwords?: AnalysisStopWords
+}
+
 export interface AnalysisKStemTokenFilter extends AnalysisTokenFilterBase {
   type: 'kstem'
 }
@@ -7029,14 +7136,22 @@ export type AnalysisKeepTypesMode = 'include' | 'exclude'
 
 export interface AnalysisKeepTypesTokenFilter extends AnalysisTokenFilterBase {
   type: 'keep_types'
+  /** Indicates whether to keep or remove the specified token types. */
   mode?: AnalysisKeepTypesMode
-  types?: string[]
+  /** List of token types to keep or remove. */
+  types: string[]
 }
 
 export interface AnalysisKeepWordsTokenFilter extends AnalysisTokenFilterBase {
   type: 'keep'
+  /** List of words to keep. Only tokens that match words in this list are included in the output.
+    * Either this parameter or `keep_words_path` must be specified. */
   keep_words?: string[]
+  /** If `true`, lowercase all keep words. Defaults to `false`. */
   keep_words_case?: boolean
+  /** Path to a file that contains a list of words to keep. Only tokens that match words in this list are included in the output.
+    * This path must be absolute or relative to the `config` location, and the file must be UTF-8 encoded. Each word in the file must be separated by a line break.
+    * Either this parameter or `keep_words` must be specified. */
   keep_words_path?: string
 }
 
@@ -7047,10 +7162,22 @@ export interface AnalysisKeywordAnalyzer {
 
 export interface AnalysisKeywordMarkerTokenFilter extends AnalysisTokenFilterBase {
   type: 'keyword_marker'
+  /** If `true`, matching for the `keywords` and `keywords_path` parameters ignores letter case. Defaults to `false`. */
   ignore_case?: boolean
+  /** Array of keywords. Tokens that match these keywords are not stemmed.
+    * This parameter, `keywords_path`, or `keywords_pattern` must be specified. You cannot specify this parameter and `keywords_pattern`. */
   keywords?: string | string[]
+  /** Path to a file that contains a list of keywords. Tokens that match these keywords are not stemmed.
+    * This path must be absolute or relative to the `config` location, and the file must be UTF-8 encoded. Each word in the file must be separated by a line break.
+    * This parameter, `keywords`, or `keywords_pattern` must be specified. You cannot specify this parameter and `keywords_pattern`. */
   keywords_path?: string
+  /** Java regular expression used to match tokens. Tokens that match this expression are marked as keywords and not stemmed.
+    * This parameter, `keywords`, or `keywords_path` must be specified. You cannot specify this parameter and `keywords` or `keywords_pattern`. */
   keywords_pattern?: string
+}
+
+export interface AnalysisKeywordRepeatTokenFilter extends AnalysisTokenFilterBase {
+  type: 'keyword_repeat'
 }
 
 export interface AnalysisKeywordTokenizer extends AnalysisTokenizerBase {
@@ -7107,7 +7234,9 @@ export interface AnalysisLatvianAnalyzer {
 
 export interface AnalysisLengthTokenFilter extends AnalysisTokenFilterBase {
   type: 'length'
+  /** Maximum character length of a token. Longer tokens are excluded from the output. Defaults to `Integer.MAX_VALUE`, which is `2^31-1` or `2147483647`. */
   max?: integer
+  /** Minimum character length of a token. Shorter tokens are excluded from the output. Defaults to `0`. */
   min?: integer
 }
 
@@ -7117,7 +7246,9 @@ export interface AnalysisLetterTokenizer extends AnalysisTokenizerBase {
 
 export interface AnalysisLimitTokenCountTokenFilter extends AnalysisTokenFilterBase {
   type: 'limit'
+  /** If `true`, the limit filter exhausts the token stream, even if the `max_token_count` has already been reached. Defaults to `false`. */
   consume_all_tokens?: boolean
+  /** Maximum number of tokens to keep. Once this limit is reached, any remaining tokens are excluded from the output. Defaults to `1`. */
   max_token_count?: SpecUtilsStringified<integer>
 }
 
@@ -7134,8 +7265,11 @@ export interface AnalysisLowercaseNormalizer {
 
 export interface AnalysisLowercaseTokenFilter extends AnalysisTokenFilterBase {
   type: 'lowercase'
-  language?: string
+  /** Language-specific lowercase token filter to use. */
+  language?: AnalysisLowercaseTokenFilterLanguages
 }
+
+export type AnalysisLowercaseTokenFilterLanguages = 'greek' | 'irish' | 'turkish'
 
 export interface AnalysisLowercaseTokenizer extends AnalysisTokenizerBase {
   type: 'lowercase'
@@ -7147,16 +7281,34 @@ export interface AnalysisMappingCharFilter extends AnalysisCharFilterBase {
   mappings_path?: string
 }
 
+export interface AnalysisMinHashTokenFilter extends AnalysisTokenFilterBase {
+  type: 'min_hash'
+  /** Number of buckets to which hashes are assigned. Defaults to `512`. */
+  bucket_count?: integer
+  /** Number of ways to hash each token in the stream. Defaults to `1`. */
+  hash_count?: integer
+  /** Number of hashes to keep from each bucket. Defaults to `1`.
+    * Hashes are retained by ascending size, starting with the bucket’s smallest hash first. */
+  hash_set_size?: integer
+  /** If `true`, the filter fills empty buckets with the value of the first non-empty bucket to its circular right if the `hash_set_size` is `1`. If the `bucket_count` argument is greater than 1, this parameter defaults to `true`. Otherwise, this parameter defaults to `false`. */
+  with_rotation?: boolean
+}
+
 export interface AnalysisMultiplexerTokenFilter extends AnalysisTokenFilterBase {
   type: 'multiplexer'
+  /** A list of token filters to apply to incoming tokens. */
   filters: string[]
+  /** If `true` (the default) then emit the original token in addition to the filtered tokens. */
   preserve_original?: SpecUtilsStringified<boolean>
 }
 
 export interface AnalysisNGramTokenFilter extends AnalysisTokenFilterBase {
   type: 'ngram'
+  /** Maximum length of characters in a gram. Defaults to `2`. */
   max_gram?: integer
+  /** Minimum length of characters in a gram. Defaults to `1`. */
   min_gram?: integer
+  /** Emits original token when set to `true`. Defaults to `false`. */
   preserve_original?: SpecUtilsStringified<boolean>
 }
 
@@ -7180,6 +7332,7 @@ export type AnalysisNoriDecompoundMode = 'discard' | 'none' | 'mixed'
 
 export interface AnalysisNoriPartOfSpeechTokenFilter extends AnalysisTokenFilterBase {
   type: 'nori_part_of_speech'
+  /** An array of part-of-speech tags that should be removed. */
   stoptags?: string[]
 }
 
@@ -7229,7 +7382,9 @@ export interface AnalysisPatternAnalyzer {
 
 export interface AnalysisPatternCaptureTokenFilter extends AnalysisTokenFilterBase {
   type: 'pattern_capture'
+  /** A list of regular expressions to match. */
   patterns: string[]
+  /** If set to `true` (the default) it will emit the original token. */
   preserve_original?: SpecUtilsStringified<boolean>
 }
 
@@ -7242,9 +7397,11 @@ export interface AnalysisPatternReplaceCharFilter extends AnalysisCharFilterBase
 
 export interface AnalysisPatternReplaceTokenFilter extends AnalysisTokenFilterBase {
   type: 'pattern_replace'
+  /** If `true`, all substrings matching the pattern parameter’s regular expression are replaced. If `false`, the filter replaces only the first matching substring in each token. Defaults to `true`. */
   all?: boolean
-  flags?: string
+  /** Regular expression, written in Java’s regular expression syntax. The filter replaces token substrings matching this pattern with the substring in the `replacement` parameter. */
   pattern: string
+  /** Replacement substring. Defaults to an empty substring (`""`). */
   replacement?: string
 }
 
@@ -7259,6 +7416,10 @@ export interface AnalysisPersianAnalyzer {
   type: 'persian'
   stopwords?: AnalysisStopWords
   stopwords_path?: string
+}
+
+export interface AnalysisPersianNormalizationTokenFilter extends AnalysisTokenFilterBase {
+  type: 'persian_normalization'
 }
 
 export type AnalysisPhoneticEncoder = 'metaphone' | 'double_metaphone' | 'soundex' | 'refined_soundex' | 'caverphone1' | 'caverphone2' | 'cologne' | 'nysiis' | 'koelnerphonetik' | 'haasephonetik' | 'beider_morse' | 'daitch_mokotoff'
@@ -7292,6 +7453,7 @@ export interface AnalysisPortugueseAnalyzer {
 
 export interface AnalysisPredicateTokenFilter extends AnalysisTokenFilterBase {
   type: 'predicate_token_filter'
+  /** Script containing a condition used to filter incoming tokens. Only tokens that match this script are included in the output. */
   script: Script | ScriptSource
 }
 
@@ -7317,6 +7479,14 @@ export interface AnalysisRussianAnalyzer {
   stem_exclusion?: string[]
 }
 
+export interface AnalysisScandinavianFoldingTokenFilter extends AnalysisTokenFilterBase {
+  type: 'scandinavian_folding'
+}
+
+export interface AnalysisScandinavianNormalizationTokenFilter extends AnalysisTokenFilterBase {
+  type: 'scandinavian_normalization'
+}
+
 export interface AnalysisSerbianAnalyzer {
   type: 'serbian'
   stopwords?: AnalysisStopWords
@@ -7324,13 +7494,23 @@ export interface AnalysisSerbianAnalyzer {
   stem_exclusion?: string[]
 }
 
+export interface AnalysisSerbianNormalizationTokenFilter extends AnalysisTokenFilterBase {
+  type: 'serbian_normalization'
+}
+
 export interface AnalysisShingleTokenFilter extends AnalysisTokenFilterBase {
   type: 'shingle'
+  /** String used in shingles as a replacement for empty positions that do not contain a token. This filler token is only used in shingles, not original unigrams. Defaults to an underscore (`_`). */
   filler_token?: string
-  max_shingle_size?: integer | string
-  min_shingle_size?: integer | string
+  /** Maximum number of tokens to concatenate when creating shingles. Defaults to `2`. */
+  max_shingle_size?: SpecUtilsStringified<integer>
+  /** Minimum number of tokens to concatenate when creating shingles. Defaults to `2`. */
+  min_shingle_size?: SpecUtilsStringified<integer>
+  /** If `true`, the output includes the original input tokens. If `false`, the output only includes shingles; the original input tokens are removed. Defaults to `true`. */
   output_unigrams?: boolean
+  /** If `true`, the output includes the original input tokens only if no shingles are produced; if shingles are produced, the output only includes shingles. Defaults to `false`. */
   output_unigrams_if_no_shingles?: boolean
+  /** Separator used to concatenate adjacent tokens to form a shingle. Defaults to a space (`" "`). */
   token_separator?: string
 }
 
@@ -7356,10 +7536,11 @@ export interface AnalysisSnowballAnalyzer {
   stopwords?: AnalysisStopWords
 }
 
-export type AnalysisSnowballLanguage = 'Armenian' | 'Basque' | 'Catalan' | 'Danish' | 'Dutch' | 'English' | 'Finnish' | 'French' | 'German' | 'German2' | 'Hungarian' | 'Italian' | 'Kp' | 'Lovins' | 'Norwegian' | 'Porter' | 'Portuguese' | 'Romanian' | 'Russian' | 'Spanish' | 'Swedish' | 'Turkish'
+export type AnalysisSnowballLanguage = 'Arabic' | 'Armenian' | 'Basque' | 'Catalan' | 'Danish' | 'Dutch' | 'English' | 'Estonian' | 'Finnish' | 'French' | 'German' | 'German2' | 'Hungarian' | 'Italian' | 'Irish' | 'Kp' | 'Lithuanian' | 'Lovins' | 'Norwegian' | 'Porter' | 'Portuguese' | 'Romanian' | 'Russian' | 'Serbian' | 'Spanish' | 'Swedish' | 'Turkish'
 
 export interface AnalysisSnowballTokenFilter extends AnalysisTokenFilterBase {
   type: 'snowball'
+  /** Controls the language used by the stemmer. */
   language?: AnalysisSnowballLanguage
 }
 
@@ -7368,6 +7549,10 @@ export interface AnalysisSoraniAnalyzer {
   stopwords?: AnalysisStopWords
   stopwords_path?: string
   stem_exclusion?: string[]
+}
+
+export interface AnalysisSoraniNormalizationTokenFilter extends AnalysisTokenFilterBase {
+  type: 'sorani_normalization'
 }
 
 export interface AnalysisSpanishAnalyzer {
@@ -7396,7 +7581,9 @@ export interface AnalysisStandardTokenizer extends AnalysisTokenizerBase {
 
 export interface AnalysisStemmerOverrideTokenFilter extends AnalysisTokenFilterBase {
   type: 'stemmer_override'
+  /** A list of mapping rules to use. */
   rules?: string[]
+  /** A path (either relative to `config` location, or absolute) to a list of mappings. */
   rules_path?: string
 }
 
@@ -7419,13 +7606,20 @@ export interface AnalysisStopAnalyzer {
 
 export interface AnalysisStopTokenFilter extends AnalysisTokenFilterBase {
   type: 'stop'
+  /** If `true`, stop word matching is case insensitive. For example, if `true`, a stop word of the matches and removes `The`, `THE`, or `the`. Defaults to `false`. */
   ignore_case?: boolean
+  /** If `true`, the last token of a stream is removed if it’s a stop word. Defaults to `true`. */
   remove_trailing?: boolean
+  /** Language value, such as `_arabic_` or `_thai_`. Defaults to `_english_`. */
   stopwords?: AnalysisStopWords
+  /** Path to a file that contains a list of stop words to remove.
+    * This path must be absolute or relative to the `config` location, and the file must be UTF-8 encoded. Each stop word in the file must be separated by a line break. */
   stopwords_path?: string
 }
 
-export type AnalysisStopWords = string | string[]
+export type AnalysisStopWordLanguage = '_arabic_' | '_armenian_' | '_basque_' | '_bengali_' | '_brazilian_' | '_bulgarian_' | '_catalan_' | '_cjk_' | '_czech_' | '_danish_' | '_dutch_' | '_english_' | '_estonian_' | '_finnish_' | '_french_' | '_galician_' | '_german_' | '_greek_' | '_hindi_' | '_hungarian_' | '_indonesian_' | '_irish_' | '_italian_' | '_latvian_' | '_lithuanian_' | '_norwegian_' | '_persian_' | '_portuguese_' | '_romanian_' | '_russian_' | '_serbian_' | '_sorani_' | '_spanish_' | '_swedish_' | '_thai_' | '_turkish_' | '_none_'
+
+export type AnalysisStopWords = AnalysisStopWordLanguage | string[]
 
 export interface AnalysisSwedishAnalyzer {
   type: 'swedish'
@@ -7436,27 +7630,30 @@ export interface AnalysisSwedishAnalyzer {
 
 export type AnalysisSynonymFormat = 'solr' | 'wordnet'
 
-export interface AnalysisSynonymGraphTokenFilter extends AnalysisTokenFilterBase {
+export interface AnalysisSynonymGraphTokenFilter extends AnalysisSynonymTokenFilterBase {
   type: 'synonym_graph'
-  expand?: boolean
-  format?: AnalysisSynonymFormat
-  lenient?: boolean
-  synonyms?: string[]
-  synonyms_path?: string
-  synonyms_set?: string
-  tokenizer?: string
-  updateable?: boolean
 }
 
-export interface AnalysisSynonymTokenFilter extends AnalysisTokenFilterBase {
+export interface AnalysisSynonymTokenFilter extends AnalysisSynonymTokenFilterBase {
   type: 'synonym'
+}
+
+export interface AnalysisSynonymTokenFilterBase extends AnalysisTokenFilterBase {
+  /** Expands definitions for equivalent synonym rules. Defaults to `true`. */
   expand?: boolean
+  /** Sets the synonym rules format. */
   format?: AnalysisSynonymFormat
+  /** If `true` ignores errors while parsing the synonym rules. It is important to note that only those synonym rules which cannot get parsed are ignored. Defaults to the value of the `updateable` setting. */
   lenient?: boolean
+  /** Used to define inline synonyms. */
   synonyms?: string[]
+  /** Used to provide a synonym file. This path must be absolute or relative to the `config` location. */
   synonyms_path?: string
+  /** Provide a synonym set created via Synonyms Management APIs. */
   synonyms_set?: string
+  /** Controls the tokenizers that will be used to tokenize the synonym, this parameter is for backwards compatibility for indices that created before 6.0. */
   tokenizer?: string
+  /** If `true` allows reloading search analyzers to pick up changes to synonym files. Only to be used for search analyzers. Defaults to `false`. */
   updateable?: boolean
 }
 
@@ -7478,7 +7675,7 @@ export interface AnalysisTokenFilterBase {
   version?: VersionString
 }
 
-export type AnalysisTokenFilterDefinition = AnalysisAsciiFoldingTokenFilter | AnalysisCommonGramsTokenFilter | AnalysisConditionTokenFilter | AnalysisDelimitedPayloadTokenFilter | AnalysisEdgeNGramTokenFilter | AnalysisElisionTokenFilter | AnalysisFingerprintTokenFilter | AnalysisHunspellTokenFilter | AnalysisHyphenationDecompounderTokenFilter | AnalysisKeepTypesTokenFilter | AnalysisKeepWordsTokenFilter | AnalysisKeywordMarkerTokenFilter | AnalysisKStemTokenFilter | AnalysisLengthTokenFilter | AnalysisLimitTokenCountTokenFilter | AnalysisLowercaseTokenFilter | AnalysisMultiplexerTokenFilter | AnalysisNGramTokenFilter | AnalysisNoriPartOfSpeechTokenFilter | AnalysisPatternCaptureTokenFilter | AnalysisPatternReplaceTokenFilter | AnalysisPorterStemTokenFilter | AnalysisPredicateTokenFilter | AnalysisRemoveDuplicatesTokenFilter | AnalysisReverseTokenFilter | AnalysisShingleTokenFilter | AnalysisSnowballTokenFilter | AnalysisStemmerOverrideTokenFilter | AnalysisStemmerTokenFilter | AnalysisStopTokenFilter | AnalysisSynonymGraphTokenFilter | AnalysisSynonymTokenFilter | AnalysisTrimTokenFilter | AnalysisTruncateTokenFilter | AnalysisUniqueTokenFilter | AnalysisUppercaseTokenFilter | AnalysisWordDelimiterGraphTokenFilter | AnalysisWordDelimiterTokenFilter | AnalysisKuromojiStemmerTokenFilter | AnalysisKuromojiReadingFormTokenFilter | AnalysisKuromojiPartOfSpeechTokenFilter | AnalysisIcuCollationTokenFilter | AnalysisIcuFoldingTokenFilter | AnalysisIcuNormalizationTokenFilter | AnalysisIcuTransformTokenFilter | AnalysisPhoneticTokenFilter | AnalysisDictionaryDecompounderTokenFilter
+export type AnalysisTokenFilterDefinition = AnalysisApostropheTokenFilter | AnalysisArabicNormalizationTokenFilter | AnalysisAsciiFoldingTokenFilter | AnalysisCjkBigramTokenFilter | AnalysisCjkWidthTokenFilter | AnalysisClassicTokenFilter | AnalysisCommonGramsTokenFilter | AnalysisConditionTokenFilter | AnalysisDecimalDigitTokenFilter | AnalysisDelimitedPayloadTokenFilter | AnalysisEdgeNGramTokenFilter | AnalysisElisionTokenFilter | AnalysisFingerprintTokenFilter | AnalysisFlattenGraphTokenFilter | AnalysisGermanNormalizationTokenFilter | AnalysisHindiNormalizationTokenFilter | AnalysisHunspellTokenFilter | AnalysisHyphenationDecompounderTokenFilter | AnalysisIndicNormalizationTokenFilter | AnalysisKeepTypesTokenFilter | AnalysisKeepWordsTokenFilter | AnalysisKeywordMarkerTokenFilter | AnalysisKeywordRepeatTokenFilter | AnalysisKStemTokenFilter | AnalysisLengthTokenFilter | AnalysisLimitTokenCountTokenFilter | AnalysisLowercaseTokenFilter | AnalysisMinHashTokenFilter | AnalysisMultiplexerTokenFilter | AnalysisNGramTokenFilter | AnalysisNoriPartOfSpeechTokenFilter | AnalysisPatternCaptureTokenFilter | AnalysisPatternReplaceTokenFilter | AnalysisPersianNormalizationTokenFilter | AnalysisPorterStemTokenFilter | AnalysisPredicateTokenFilter | AnalysisRemoveDuplicatesTokenFilter | AnalysisReverseTokenFilter | AnalysisScandinavianFoldingTokenFilter | AnalysisScandinavianNormalizationTokenFilter | AnalysisSerbianNormalizationTokenFilter | AnalysisShingleTokenFilter | AnalysisSnowballTokenFilter | AnalysisSoraniNormalizationTokenFilter | AnalysisStemmerOverrideTokenFilter | AnalysisStemmerTokenFilter | AnalysisStopTokenFilter | AnalysisSynonymGraphTokenFilter | AnalysisSynonymTokenFilter | AnalysisTrimTokenFilter | AnalysisTruncateTokenFilter | AnalysisUniqueTokenFilter | AnalysisUppercaseTokenFilter | AnalysisWordDelimiterGraphTokenFilter | AnalysisWordDelimiterTokenFilter | AnalysisJaStopTokenFilter | AnalysisKuromojiStemmerTokenFilter | AnalysisKuromojiReadingFormTokenFilter | AnalysisKuromojiPartOfSpeechTokenFilter | AnalysisIcuCollationTokenFilter | AnalysisIcuFoldingTokenFilter | AnalysisIcuNormalizationTokenFilter | AnalysisIcuTransformTokenFilter | AnalysisPhoneticTokenFilter | AnalysisDictionaryDecompounderTokenFilter
 
 export type AnalysisTokenizer = string | AnalysisTokenizerDefinition
 
@@ -7494,6 +7691,7 @@ export interface AnalysisTrimTokenFilter extends AnalysisTokenFilterBase {
 
 export interface AnalysisTruncateTokenFilter extends AnalysisTokenFilterBase {
   type: 'truncate'
+  /** Character limit for each token. Tokens exceeding this limit are truncated. Defaults to `10`. */
   length?: integer
 }
 
@@ -7511,6 +7709,7 @@ export interface AnalysisUaxEmailUrlTokenizer extends AnalysisTokenizerBase {
 
 export interface AnalysisUniqueTokenFilter extends AnalysisTokenFilterBase {
   type: 'unique'
+  /** If `true`, only remove duplicate tokens in the same position. Defaults to `false`. */
   only_on_same_position?: boolean
 }
 
@@ -7528,39 +7727,45 @@ export interface AnalysisWhitespaceTokenizer extends AnalysisTokenizerBase {
   max_token_length?: integer
 }
 
-export interface AnalysisWordDelimiterGraphTokenFilter extends AnalysisTokenFilterBase {
+export interface AnalysisWordDelimiterGraphTokenFilter extends AnalysisWordDelimiterTokenFilterBase {
   type: 'word_delimiter_graph'
+  /** If `true`, the filter adjusts the offsets of split or catenated tokens to better reflect their actual position in the token stream. Defaults to `true`. */
   adjust_offsets?: boolean
-  catenate_all?: boolean
-  catenate_numbers?: boolean
-  catenate_words?: boolean
-  generate_number_parts?: boolean
-  generate_word_parts?: boolean
+  /** If `true`, the filter skips tokens with a keyword attribute of true. Defaults to `false`. */
   ignore_keywords?: boolean
-  preserve_original?: SpecUtilsStringified<boolean>
-  protected_words?: string[]
-  protected_words_path?: string
-  split_on_case_change?: boolean
-  split_on_numerics?: boolean
-  stem_english_possessive?: boolean
-  type_table?: string[]
-  type_table_path?: string
 }
 
-export interface AnalysisWordDelimiterTokenFilter extends AnalysisTokenFilterBase {
+export interface AnalysisWordDelimiterTokenFilter extends AnalysisWordDelimiterTokenFilterBase {
   type: 'word_delimiter'
+}
+
+export interface AnalysisWordDelimiterTokenFilterBase extends AnalysisTokenFilterBase {
+  /** If `true`, the filter produces catenated tokens for chains of alphanumeric characters separated by non-alphabetic delimiters. Defaults to `false`. */
   catenate_all?: boolean
+  /** If `true`, the filter produces catenated tokens for chains of numeric characters separated by non-alphabetic delimiters. Defaults to `false`. */
   catenate_numbers?: boolean
+  /** If `true`, the filter produces catenated tokens for chains of alphabetical characters separated by non-alphabetic delimiters. Defaults to `false`. */
   catenate_words?: boolean
+  /** If `true`, the filter includes tokens consisting of only numeric characters in the output. If `false`, the filter excludes these tokens from the output. Defaults to `true`. */
   generate_number_parts?: boolean
+  /** If `true`, the filter includes tokens consisting of only alphabetical characters in the output. If `false`, the filter excludes these tokens from the output. Defaults to `true`. */
   generate_word_parts?: boolean
+  /** If `true`, the filter includes the original version of any split tokens in the output. This original version includes non-alphanumeric delimiters. Defaults to `false`. */
   preserve_original?: SpecUtilsStringified<boolean>
+  /** Array of tokens the filter won’t split. */
   protected_words?: string[]
+  /** Path to a file that contains a list of tokens the filter won’t split.
+    * This path must be absolute or relative to the `config` location, and the file must be UTF-8 encoded. Each token in the file must be separated by a line break. */
   protected_words_path?: string
+  /** If `true`, the filter splits tokens at letter case transitions. For example: camelCase -> [ camel, Case ]. Defaults to `true`. */
   split_on_case_change?: boolean
+  /** If `true`, the filter splits tokens at letter-number transitions. For example: j2se -> [ j, 2, se ]. Defaults to `true`. */
   split_on_numerics?: boolean
+  /** If `true`, the filter removes the English possessive (`'s`) from the end of each token. For example: O'Neil's -> [ O, Neil ]. Defaults to `true`. */
   stem_english_possessive?: boolean
+  /** Array of custom type mappings for characters. This allows you to map non-alphanumeric characters as numeric or alphanumeric to avoid splitting on those characters. */
   type_table?: string[]
+  /** Path to a file that contains custom type mappings for characters. This allows you to map non-alphanumeric characters as numeric or alphanumeric to avoid splitting on those characters. */
   type_table_path?: string
 }
 
@@ -9883,6 +10088,10 @@ export type CatCatDatafeedColumns = CatCatDatafeedColumn | CatCatDatafeedColumn[
 export type CatCatDfaColumn = 'assignment_explanation' | 'ae' | 'create_time' | 'ct' | 'createTime' | 'description' | 'd' | 'dest_index' | 'di' | 'destIndex' | 'failure_reason' | 'fr' | 'failureReason' | 'id' | 'model_memory_limit' | 'mml' | 'modelMemoryLimit' | 'node.address' | 'na' | 'nodeAddress' | 'node.ephemeral_id' | 'ne' | 'nodeEphemeralId' | 'node.id' | 'ni' | 'nodeId' | 'node.name' | 'nn' | 'nodeName' | 'progress' | 'p' | 'source_index' | 'si' | 'sourceIndex' | 'state' | 's' | 'type' | 't' | 'version' | 'v'
 
 export type CatCatDfaColumns = CatCatDfaColumn | CatCatDfaColumn[]
+
+export type CatCatNodeColumn = 'build' | 'b' | 'completion.size' | 'cs' | 'completionSize' | 'cpu' | 'disk.avail' | 'd' | 'disk' | 'diskAvail' | 'disk.total' | 'dt' | 'diskTotal' | 'disk.used' | 'du' | 'diskUsed' | 'disk.used_percent' | 'dup' | 'diskUsedPercent' | 'fielddata.evictions' | 'fe' | 'fielddataEvictions' | 'fielddata.memory_size' | 'fm' | 'fielddataMemory' | 'file_desc.current' | 'fdc' | 'fileDescriptorCurrent' | 'file_desc.max' | 'fdm' | 'fileDescriptorMax' | 'file_desc.percent' | 'fdp' | 'fileDescriptorPercent' | 'flush.total' | 'ft' | 'flushTotal' | 'flush.total_time' | 'ftt' | 'flushTotalTime' | 'get.current' | 'gc' | 'getCurrent' | 'get.exists_time' | 'geti' | 'getExistsTime' | 'get.exists_total' | 'geto' | 'getExistsTotal' | 'get.missing_time' | 'gmti' | 'getMissingTime' | 'get.missing_total' | 'gmto' | 'getMissingTotal' | 'get.time' | 'gti' | 'getTime' | 'get.total' | 'gto' | 'getTotal' | 'heap.current' | 'hc' | 'heapCurrent' | 'heap.max' | 'hm' | 'heapMax' | 'heap.percent' | 'hp' | 'heapPercent' | 'http_address' | 'http' | 'id' | 'nodeId' | 'indexing.delete_current' | 'idc' | 'indexingDeleteCurrent' | 'indexing.delete_time' | 'idti' | 'indexingDeleteTime' | 'indexing.delete_total' | 'idto' | 'indexingDeleteTotal' | 'indexing.index_current' | 'iic' | 'indexingIndexCurrent' | 'indexing.index_failed' | 'iif' | 'indexingIndexFailed' | 'indexing.index_failed_due_to_version_conflict' | 'iifvc' | 'indexingIndexFailedDueToVersionConflict' | 'indexing.index_time' | 'iiti' | 'indexingIndexTime' | 'indexing.index_total' | 'iito' | 'indexingIndexTotal' | 'ip' | 'i' | 'jdk' | 'j' | 'load_1m' | 'l' | 'load_5m' | 'l' | 'load_15m' | 'l' | 'mappings.total_count' | 'mtc' | 'mappingsTotalCount' | 'mappings.total_estimated_overhead_in_bytes' | 'mteo' | 'mappingsTotalEstimatedOverheadInBytes' | 'master' | 'm' | 'merges.current' | 'mc' | 'mergesCurrent' | 'merges.current_docs' | 'mcd' | 'mergesCurrentDocs' | 'merges.current_size' | 'mcs' | 'mergesCurrentSize' | 'merges.total' | 'mt' | 'mergesTotal' | 'merges.total_docs' | 'mtd' | 'mergesTotalDocs' | 'merges.total_size' | 'mts' | 'mergesTotalSize' | 'merges.total_time' | 'mtt' | 'mergesTotalTime' | 'name' | 'n' | 'node.role' | 'r' | 'role' | 'nodeRole' | 'pid' | 'p' | 'port' | 'po' | 'query_cache.memory_size' | 'qcm' | 'queryCacheMemory' | 'query_cache.evictions' | 'qce' | 'queryCacheEvictions' | 'query_cache.hit_count' | 'qchc' | 'queryCacheHitCount' | 'query_cache.miss_count' | 'qcmc' | 'queryCacheMissCount' | 'ram.current' | 'rc' | 'ramCurrent' | 'ram.max' | 'rm' | 'ramMax' | 'ram.percent' | 'rp' | 'ramPercent' | 'refresh.total' | 'rto' | 'refreshTotal' | 'refresh.time' | 'rti' | 'refreshTime' | 'request_cache.memory_size' | 'rcm' | 'requestCacheMemory' | 'request_cache.evictions' | 'rce' | 'requestCacheEvictions' | 'request_cache.hit_count' | 'rchc' | 'requestCacheHitCount' | 'request_cache.miss_count' | 'rcmc' | 'requestCacheMissCount' | 'script.compilations' | 'scrcc' | 'scriptCompilations' | 'script.cache_evictions' | 'scrce' | 'scriptCacheEvictions' | 'search.fetch_current' | 'sfc' | 'searchFetchCurrent' | 'search.fetch_time' | 'sfti' | 'searchFetchTime' | 'search.fetch_total' | 'sfto' | 'searchFetchTotal' | 'search.open_contexts' | 'so' | 'searchOpenContexts' | 'search.query_current' | 'sqc' | 'searchQueryCurrent' | 'search.query_time' | 'sqti' | 'searchQueryTime' | 'search.query_total' | 'sqto' | 'searchQueryTotal' | 'search.scroll_current' | 'scc' | 'searchScrollCurrent' | 'search.scroll_time' | 'scti' | 'searchScrollTime' | 'search.scroll_total' | 'scto' | 'searchScrollTotal' | 'segments.count' | 'sc' | 'segmentsCount' | 'segments.fixed_bitset_memory' | 'sfbm' | 'fixedBitsetMemory' | 'segments.index_writer_memory' | 'siwm' | 'segmentsIndexWriterMemory' | 'segments.memory' | 'sm' | 'segmentsMemory' | 'segments.version_map_memory' | 'svmm' | 'segmentsVersionMapMemory' | 'shard_stats.total_count' | 'sstc' | 'shards' | 'shardStatsTotalCount' | 'suggest.current' | 'suc' | 'suggestCurrent' | 'suggest.time' | 'suti' | 'suggestTime' | 'suggest.total' | 'suto' | 'suggestTotal' | 'uptime' | 'u' | 'version' | 'v' | string
+
+export type CatCatNodeColumns = CatCatNodeColumn | CatCatNodeColumn[]
 
 export interface CatCatRequestBase extends RequestBase, SpecUtilsCommonCatQueryParameters {
 }
@@ -12940,15 +13149,16 @@ export interface CatNodesRequest extends CatCatRequestBase {
   full_id?: boolean | string
   /** If true, the response includes information from segments that are not loaded into memory. */
   include_unloaded_segments?: boolean
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
-  /** List of columns that determine how the table should be sorted.
+  /** A comma-separated list of columns names to display.
+    * It supports simple wildcards. */
+  h?: CatCatNodeColumns
+  /** A comma-separated list of column names or aliases that determines the sort order.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
   s?: Names
-  /** Period to wait for a connection to the master node. */
+  /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** Unit used to display time values. */
+  /** The unit used to display time values. */
   time?: TimeUnit
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { bytes?: never, full_id?: never, include_unloaded_segments?: never, h?: never, s?: never, master_timeout?: never, time?: never }
@@ -22042,7 +22252,9 @@ export interface InferenceRateLimitSetting {
 }
 
 export interface InferenceRequestChatCompletion {
-  /** A list of objects representing the conversation. */
+  /** A list of objects representing the conversation.
+    * Requests should generally only add new messages from the user (role `user`).
+    * The other message roles (`assistant`, `system`, or `tool`) should generally only be copied from the response to a previous completion request, such that the messages array is built up throughout a conversation. */
   messages: InferenceMessage[]
   /** The ID of the model to use. */
   model?: string
