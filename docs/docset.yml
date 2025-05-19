@@ -1,4 +1,6 @@
 project: 'Node.js client'
+products:
+  - id: elasticsearch-client
 exclude:
   - examples/proxy/README.md
 cross_links:
