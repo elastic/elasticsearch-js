@@ -21,9 +21,9 @@ Breaking changes can impact your Elastic applications, potentially disrupting no
 
 In 8.x, every API function had a `body` property that would provide a place to put arbitrary values that should go in the HTTP request body, even if they were not noted in the specification or documentation. In 9.0, each API function still includes an optional `body` property, but TypeScript's type checker will disallow properties that should go in the root of the object. A `querystring` parameter has also been added that behaves the same as `body`, but inserts its values into the request querystring.
 
-**Impact**<br> Some adjustments to API calls may be necessary for code that used a `body` property 8.x, especially to appease the TypeScript type checker, but it should not have any impact on any code that was not using a `body` property.
+**Impact**<br> Some adjustments to API calls may be necessary for code that used a `body` property 8.x, especially to appease the TypeScript type checker, but it should not have any impact on any code that was not using a `body` property. The `estypesWithBody` export and `typesWithBodyKey` module are no longer available.
 
-**Action**<br> Check existing code for use of the `body` property, and move any properties that should be in the root object according to the API function's request type definition. If using TypeScript, the TypeScript type checker will surface most of these issues for you.
+**Action**<br> Check existing code for use of the `body` property, and move any properties that should be in the root object according to the API function's request type definition. If using TypeScript, the TypeScript type checker will surface most of these issues for you. Also look for any imports of `estypesWithBody` or `typesWithBodyKey` and update them to `estypes` and `types`, respectively.
 ::::
 
 ::::{dropdown} Changes to API parameter collation into an HTTP request
