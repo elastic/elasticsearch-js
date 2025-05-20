@@ -131,17 +131,17 @@ client.bulk({ ... })
 #### Request (object) [_request_bulk]
 
 - **`index` (Optional, string)**: The name of the data stream, index, or index alias to perform bulk actions on.
-- **`operations` (Optional, { index, create, update, delete } | { detect_noop, doc, doc_as_upsert, script, scripted_upsert, _source, upsert } | object[])**
+- **`operations` (Optional, { index, create, update, delete } \| { detect_noop, doc, doc_as_upsert, script, scripted_upsert, _source, upsert } \| object[])**
 - **`include_source_on_error` (Optional, boolean)**: True or false if to include the document source in the error message in case of parsing errors.
 - **`list_executed_pipelines` (Optional, boolean)**: If `true`, the response will include the ingest pipelines that were run for each index or create.
 - **`pipeline` (Optional, string)**: The pipeline identifier to use to preprocess incoming documents. If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request. If a final pipeline is configured, it will always run regardless of the value of this parameter.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, wait for a refresh to make this operation visible to search. If `false`, do nothing with refreshes. Valid values: `true`, `false`, `wait_for`.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, wait for a refresh to make this operation visible to search. If `false`, do nothing with refreshes. Valid values: `true`, `false`, `wait_for`.
 - **`routing` (Optional, string)**: A custom value that is used to route operations to a specific shard.
-- **`_source` (Optional, boolean | string | string[])**: Indicates whether to return the `_source` field (`true` or `false`) or contains a list of fields to return.
-- **`_source_excludes` (Optional, string | string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
-- **`_source_includes` (Optional, string | string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
-- **`timeout` (Optional, string | -1 | 0)**: The period each action waits for the following operations: automatic index creation, dynamic mapping updates, and waiting for active shards. The default is `1m` (one minute), which guarantees Elasticsearch waits for at least the timeout before failing. The actual wait time could be longer, particularly when multiple waits occur.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default is `1`, which waits for each primary shard to be active.
+- **`_source` (Optional, boolean \| string \| string[])**: Indicates whether to return the `_source` field (`true` or `false`) or contains a list of fields to return.
+- **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+- **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period each action waits for the following operations: automatic index creation, dynamic mapping updates, and waiting for active shards. The default is `1m` (one minute), which guarantees Elasticsearch waits for at least the timeout before failing. The actual wait time could be longer, particularly when multiple waits occur.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default is `1`, which waits for each primary shard to be active.
 - **`require_alias` (Optional, boolean)**: If `true`, the request's actions must target an index alias.
 - **`require_data_stream` (Optional, boolean)**: If `true`, the request's actions must target a data stream (existing or to be created).
 
@@ -158,7 +158,7 @@ client.clearScroll({ ... })
 
 #### Request (object) [_request_clear_scroll]
 
-- **`scroll_id` (Optional, string | string[])**: A list of scroll IDs to clear. To clear all scroll IDs, use `_all`. IMPORTANT: Scroll IDs can be long. It is recommended to specify scroll IDs in the request body parameter.
+- **`scroll_id` (Optional, string \| string[])**: A list of scroll IDs to clear. To clear all scroll IDs, use `_all`. IMPORTANT: Scroll IDs can be long. It is recommended to specify scroll IDs in the request body parameter.
 
 ## client.closePointInTime [_close_point_in_time]
 Close a point in time.
@@ -200,14 +200,14 @@ client.count({ ... })
 
 #### Request (object) [_request_count]
 
-- **`index` (Optional, string | string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
+- **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search query using Query DSL. A request body query cannot be used with the `q` query string parameter.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
-- **`default_operator` (Optional, Enum("and" | "or"))**: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
+- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
 - **`df` (Optional, string)**: The field to use as a default when no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
 - **`ignore_throttled` (Optional, boolean)**: If `true`, concrete, expanded, or aliased indices are ignored when frozen.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
@@ -306,16 +306,16 @@ client.create({ id, index })
 - **`if_primary_term` (Optional, number)**: Only perform the operation if the document has this primary term.
 - **`if_seq_no` (Optional, number)**: Only perform the operation if the document has this sequence number.
 - **`include_source_on_error` (Optional, boolean)**: True or false if to include the document source in the error message in case of parsing errors.
-- **`op_type` (Optional, Enum("index" | "create"))**: Set to `create` to only index the document if it does not already exist (put if absent). If a document with the specified `_id` already exists, the indexing operation will fail. The behavior is the same as using the `<index>/_create` endpoint. If a document ID is specified, this paramater defaults to `index`. Otherwise, it defaults to `create`. If the request targets a data stream, an `op_type` of `create` is required.
+- **`op_type` (Optional, Enum("index" \| "create"))**: Set to `create` to only index the document if it does not already exist (put if absent). If a document with the specified `_id` already exists, the indexing operation will fail. The behavior is the same as using the `<index>/_create` endpoint. If a document ID is specified, this paramater defaults to `index`. Otherwise, it defaults to `create`. If the request targets a data stream, an `op_type` of `create` is required.
 - **`pipeline` (Optional, string)**: The ID of the pipeline to use to preprocess incoming documents. If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request. If a final pipeline is configured, it will always run regardless of the value of this parameter.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes.
 - **`require_alias` (Optional, boolean)**: If `true`, the destination must be an index alias.
 - **`require_data_stream` (Optional, boolean)**: If `true`, the request's actions must target a data stream (existing or to be created).
 - **`routing` (Optional, string)**: A custom value that is used to route operations to a specific shard.
-- **`timeout` (Optional, string | -1 | 0)**: The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards. Elasticsearch waits for at least the specified timeout period before failing. The actual wait time could be longer, particularly when multiple waits occur. This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs. Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation. By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error. The actual wait time could be longer, particularly when multiple waits occur.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards. Elasticsearch waits for at least the specified timeout period before failing. The actual wait time could be longer, particularly when multiple waits occur. This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs. Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation. By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error. The actual wait time could be longer, particularly when multiple waits occur.
 - **`version` (Optional, number)**: The explicit version number for concurrency control. It must be a non-negative long number.
-- **`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))**: The version type.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active.
 
 ## client.delete [_delete]
 Delete a document.
@@ -371,12 +371,12 @@ client.delete({ id, index })
 - **`index` (string)**: The name of the target index.
 - **`if_primary_term` (Optional, number)**: Only perform the operation if the document has this primary term.
 - **`if_seq_no` (Optional, number)**: Only perform the operation if the document has this sequence number.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes.
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for active shards. This parameter is useful for situations where the primary shard assigned to perform the delete operation might not be available when the delete operation runs. Some reasons for this might be that the primary shard is currently recovering from a store or undergoing relocation. By default, the delete operation will wait on the primary shard to become available for up to 1 minute before failing and responding with an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for active shards. This parameter is useful for situations where the primary shard assigned to perform the delete operation might not be available when the delete operation runs. Some reasons for this might be that the primary shard is currently recovering from a store or undergoing relocation. By default, the delete operation will wait on the primary shard to become available for up to 1 minute before failing and responding with an error.
 - **`version` (Optional, number)**: An explicit version number for concurrency control. It must match the current version of the document for the request to succeed.
-- **`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))**: The version type.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The minimum number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The minimum number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active.
 
 ## client.deleteByQuery [_delete_by_query]
 Delete documents.
@@ -469,17 +469,17 @@ client.deleteByQuery({ index })
 
 #### Request (object) [_request_delete_by_query]
 
-- **`index` (string | string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams or indices, omit this parameter or use `*` or `_all`.
+- **`index` (string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams or indices, omit this parameter or use `*` or `_all`.
 - **`max_docs` (Optional, number)**: The maximum number of documents to delete.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The documents to delete specified with Query DSL.
 - **`slice` (Optional, { field, id, max })**: Slice the request manually using the provided slice ID and total number of slices.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 - **`analyzer` (Optional, string)**: Analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
-- **`conflicts` (Optional, Enum("abort" | "proceed"))**: What to do if delete by query hits version conflicts: `abort` or `proceed`.
-- **`default_operator` (Optional, Enum("and" | "or"))**: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
+- **`conflicts` (Optional, Enum("abort" \| "proceed"))**: What to do if delete by query hits version conflicts: `abort` or `proceed`.
+- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
 - **`df` (Optional, string)**: The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
 - **`from` (Optional, number)**: Skips the specified number of documents.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
@@ -489,17 +489,17 @@ client.deleteByQuery({ index })
 - **`requests_per_second` (Optional, float)**: The throttle for this request in sub-requests per second.
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
 - **`q` (Optional, string)**: A query in the Lucene query string syntax.
-- **`scroll` (Optional, string | -1 | 0)**: The period to retain the search context for scrolling.
+- **`scroll` (Optional, string \| -1 \| 0)**: The period to retain the search context for scrolling.
 - **`scroll_size` (Optional, number)**: The size of the scroll request that powers the operation.
-- **`search_timeout` (Optional, string | -1 | 0)**: The explicit timeout for each search request. It defaults to no timeout.
-- **`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))**: The type of the search operation. Available options include `query_then_fetch` and `dfs_query_then_fetch`.
-- **`slices` (Optional, number | Enum("auto"))**: The number of slices this task should be divided into.
+- **`search_timeout` (Optional, string \| -1 \| 0)**: The explicit timeout for each search request. It defaults to no timeout.
+- **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: The type of the search operation. Available options include `query_then_fetch` and `dfs_query_then_fetch`.
+- **`slices` (Optional, number \| Enum("auto"))**: The number of slices this task should be divided into.
 - **`sort` (Optional, string[])**: A list of `<field>:<direction>` pairs.
 - **`stats` (Optional, string[])**: The specific `tag` of the request for logging and statistical purposes.
 - **`terminate_after` (Optional, number)**: The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. Use with caution. Elasticsearch applies this parameter to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers.
-- **`timeout` (Optional, string | -1 | 0)**: The period each deletion request waits for active shards.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period each deletion request waits for active shards.
 - **`version` (Optional, boolean)**: If `true`, returns the document version as part of a hit.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The `timeout` value controls how long each write request waits for unavailable shards to become available.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The `timeout` value controls how long each write request waits for unavailable shards to become available.
 - **`wait_for_completion` (Optional, boolean)**: If `true`, the request blocks until the operation is complete. If `false`, Elasticsearch performs some preflight checks, launches the request, and returns a task you can use to cancel or get the status of the task. Elasticsearch creates a record of this task as a document at `.tasks/task/${taskId}`. When you are done with a task, you should delete the task document so Elasticsearch can reclaim the space.
 
 ## client.deleteByQueryRethrottle [_delete_by_query_rethrottle]
@@ -517,7 +517,7 @@ client.deleteByQueryRethrottle({ task_id })
 
 #### Request (object) [_request_delete_by_query_rethrottle]
 
-- **`task_id` (string | number)**: The ID for the task.
+- **`task_id` (string \| number)**: The ID for the task.
 - **`requests_per_second` (Optional, float)**: The throttle for this request in sub-requests per second. To disable throttling, set it to `-1`.
 
 ## client.deleteScript [_delete_script]
@@ -534,8 +534,8 @@ client.deleteScript({ id })
 #### Request (object) [_request_delete_script]
 
 - **`id` (string)**: The identifier for the stored script or search template.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
 
 ## client.exists [_exists]
 Check a document.
@@ -573,12 +573,12 @@ client.exists({ id, index })
 - **`realtime` (Optional, boolean)**: If `true`, the request is real-time as opposed to near-real-time.
 - **`refresh` (Optional, boolean)**: If `true`, the request refreshes the relevant shards before retrieving the document. Setting it to `true` should be done after careful thought and verification that this does not cause a heavy load on the system (and slow down indexing).
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
-- **`_source` (Optional, boolean | string | string[])**: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
-- **`_source_excludes` (Optional, string | string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
-- **`_source_includes` (Optional, string | string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
-- **`stored_fields` (Optional, string | string[])**: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`.
+- **`_source` (Optional, boolean \| string \| string[])**: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
+- **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+- **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+- **`stored_fields` (Optional, string \| string[])**: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`.
 - **`version` (Optional, number)**: Explicit version number for concurrency control. The specified version must match the current version of the document for the request to succeed.
-- **`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
 
 ## client.existsSource [_exists_source]
 Check for a document source.
@@ -607,11 +607,11 @@ client.existsSource({ id, index })
 - **`realtime` (Optional, boolean)**: If `true`, the request is real-time as opposed to near-real-time.
 - **`refresh` (Optional, boolean)**: If `true`, the request refreshes the relevant shards before retrieving the document. Setting it to `true` should be done after careful thought and verification that this does not cause a heavy load on the system (and slow down indexing).
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
-- **`_source` (Optional, boolean | string | string[])**: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
-- **`_source_excludes` (Optional, string | string[])**: A list of source fields to exclude in the response.
-- **`_source_includes` (Optional, string | string[])**: A list of source fields to include in the response.
+- **`_source` (Optional, boolean \| string \| string[])**: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
+- **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude in the response.
+- **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response.
 - **`version` (Optional, number)**: The version number for concurrency control. It must match the current version of the document for the request to succeed.
-- **`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
 
 ## client.explain [_explain]
 Explain a document match result.
@@ -632,15 +632,15 @@ client.explain({ id, index })
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search definition using the Query DSL.
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
-- **`default_operator` (Optional, Enum("and" | "or"))**: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
+- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
 - **`df` (Optional, string)**: The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
-- **`_source` (Optional, boolean | string | string[])**: `True` or `false` to return the `_source` field or not or a list of fields to return.
-- **`_source_excludes` (Optional, string | string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
-- **`_source_includes` (Optional, string | string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
-- **`stored_fields` (Optional, string | string[])**: A list of stored fields to return in the response.
+- **`_source` (Optional, boolean \| string \| string[])**: `True` or `false` to return the `_source` field or not or a list of fields to return.
+- **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+- **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+- **`stored_fields` (Optional, string \| string[])**: A list of stored fields to return in the response.
 - **`q` (Optional, string)**: The query in the Lucene query string syntax.
 
 ## client.fieldCaps [_field_caps]
@@ -661,12 +661,12 @@ client.fieldCaps({ ... })
 
 #### Request (object) [_request_field_caps]
 
-- **`index` (Optional, string | string[])**: A list of data streams, indices, and aliases used to limit the request. Supports wildcards (*). To target all data streams and indices, omit this parameter or use * or _all.
-- **`fields` (Optional, string | string[])**: A list of fields to retrieve capabilities for. Wildcard (`*`) expressions are supported.
+- **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases used to limit the request. Supports wildcards (*). To target all data streams and indices, omit this parameter or use * or _all.
+- **`fields` (Optional, string \| string[])**: A list of fields to retrieve capabilities for. Wildcard (`*`) expressions are supported.
 - **`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Filter indices if the provided query rewrites to `match_none` on every shard. IMPORTANT: The filtering is done on a best-effort basis, it uses index statistics and mappings to rewrite queries to `match_none` instead of fully running the request. For instance a range query over a date field can rewrite to `match_none` if all documents within a shard (including deleted documents) are outside of the provided range. However, not all queries can rewrite to `match_none` so this API may return an index even if the provided filter matches no document.
 - **`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)**: Define ad-hoc runtime fields in the request similar to the way it is done in search requests. These fields exist only as part of the query and take precedence over fields defined with the same name in the index mappings.
 - **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with foo but no index starts with bar.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
 - **`ignore_unavailable` (Optional, boolean)**: If `true`, missing or closed indices are not included in the response.
 - **`include_unmapped` (Optional, boolean)**: If true, unmapped fields are included in the response.
 - **`filters` (Optional, string)**: A list of filters to apply to the response.
@@ -749,12 +749,12 @@ client.get({ id, index })
 - **`realtime` (Optional, boolean)**: If `true`, the request is real-time as opposed to near-real-time.
 - **`refresh` (Optional, boolean)**: If `true`, the request refreshes the relevant shards before retrieving the document. Setting it to `true` should be done after careful thought and verification that this does not cause a heavy load on the system (and slow down indexing).
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
-- **`_source` (Optional, boolean | string | string[])**: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
-- **`_source_excludes` (Optional, string | string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
-- **`_source_includes` (Optional, string | string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
-- **`stored_fields` (Optional, string | string[])**: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`. Only leaf fields can be retrieved with the `stored_field` option. Object fields can't be returned;if specified, the request fails.
+- **`_source` (Optional, boolean \| string \| string[])**: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
+- **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+- **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+- **`stored_fields` (Optional, string \| string[])**: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`. Only leaf fields can be retrieved with the `stored_field` option. Object fields can't be returned;if specified, the request fails.
 - **`version` (Optional, number)**: The version number for concurrency control. It must match the current version of the document for the request to succeed.
-- **`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
 
 ## client.getScript [_get_script]
 Get a script or search template.
@@ -770,7 +770,7 @@ client.getScript({ id })
 #### Request (object) [_request_get_script]
 
 - **`id` (string)**: The identifier for the stored script or search template.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node. If the master node is not available before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
 
 ## client.getScriptContext [_get_script_context]
 Get script contexts.
@@ -825,12 +825,12 @@ client.getSource({ id, index })
 - **`realtime` (Optional, boolean)**: If `true`, the request is real-time as opposed to near-real-time.
 - **`refresh` (Optional, boolean)**: If `true`, the request refreshes the relevant shards before retrieving the document. Setting it to `true` should be done after careful thought and verification that this does not cause a heavy load on the system (and slow down indexing).
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
-- **`_source` (Optional, boolean | string | string[])**: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
-- **`_source_excludes` (Optional, string | string[])**: A list of source fields to exclude in the response.
-- **`_source_includes` (Optional, string | string[])**: A list of source fields to include in the response.
-- **`stored_fields` (Optional, string | string[])**: A list of stored fields to return as part of a hit.
+- **`_source` (Optional, boolean \| string \| string[])**: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
+- **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude in the response.
+- **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response.
+- **`stored_fields` (Optional, string \| string[])**: A list of stored fields to return as part of a hit.
 - **`version` (Optional, number)**: The version number for concurrency control. It must match the current version of the document for the request to succeed.
-- **`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
 
 ## client.healthReport [_health_report]
 Get the cluster health.
@@ -861,8 +861,8 @@ client.healthReport({ ... })
 
 #### Request (object) [_request_health_report]
 
-- **`feature` (Optional, string | string[])**: A feature of the cluster, as returned by the top-level health report API.
-- **`timeout` (Optional, string | -1 | 0)**: Explicit operation timeout.
+- **`feature` (Optional, string \| string[])**: A feature of the cluster, as returned by the top-level health report API.
+- **`timeout` (Optional, string \| -1 \| 0)**: Explicit operation timeout.
 - **`verbose` (Optional, boolean)**: Opt-in for more information about the health of the system.
 - **`size` (Optional, number)**: Limit the number of affected resources the health report API returns.
 
@@ -1002,14 +1002,14 @@ client.index({ index })
 - **`if_primary_term` (Optional, number)**: Only perform the operation if the document has this primary term.
 - **`if_seq_no` (Optional, number)**: Only perform the operation if the document has this sequence number.
 - **`include_source_on_error` (Optional, boolean)**: True or false if to include the document source in the error message in case of parsing errors.
-- **`op_type` (Optional, Enum("index" | "create"))**: Set to `create` to only index the document if it does not already exist (put if absent). If a document with the specified `_id` already exists, the indexing operation will fail. The behavior is the same as using the `<index>/_create` endpoint. If a document ID is specified, this paramater defaults to `index`. Otherwise, it defaults to `create`. If the request targets a data stream, an `op_type` of `create` is required.
+- **`op_type` (Optional, Enum("index" \| "create"))**: Set to `create` to only index the document if it does not already exist (put if absent). If a document with the specified `_id` already exists, the indexing operation will fail. The behavior is the same as using the `<index>/_create` endpoint. If a document ID is specified, this paramater defaults to `index`. Otherwise, it defaults to `create`. If the request targets a data stream, an `op_type` of `create` is required.
 - **`pipeline` (Optional, string)**: The ID of the pipeline to use to preprocess incoming documents. If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request. If a final pipeline is configured it will always run, regardless of the value of this parameter.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes.
 - **`routing` (Optional, string)**: A custom value that is used to route operations to a specific shard.
-- **`timeout` (Optional, string | -1 | 0)**: The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards. This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs. Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation. By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error. The actual wait time could be longer, particularly when multiple waits occur.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards. This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs. Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation. By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error. The actual wait time could be longer, particularly when multiple waits occur.
 - **`version` (Optional, number)**: An explicit version number for concurrency control. It must be a non-negative long number.
-- **`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))**: The version type.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active.
 - **`require_alias` (Optional, boolean)**: If `true`, the destination must be an index alias.
 
 ## client.info [_info]
@@ -1061,16 +1061,16 @@ client.mget({ ... })
 
 - **`index` (Optional, string)**: Name of the index to retrieve documents from when `ids` are specified, or when a document in the `docs` array does not specify an index.
 - **`docs` (Optional, { _id, _index, routing, _source, stored_fields, version, version_type }[])**: The documents you want to retrieve. Required if no index is specified in the request URI.
-- **`ids` (Optional, string | string[])**: The IDs of the documents you want to retrieve. Allowed when the index is specified in the request URI.
+- **`ids` (Optional, string \| string[])**: The IDs of the documents you want to retrieve. Allowed when the index is specified in the request URI.
 - **`force_synthetic_source` (Optional, boolean)**: Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index.
 - **`preference` (Optional, string)**: Specifies the node or shard the operation should be performed on. Random by default.
 - **`realtime` (Optional, boolean)**: If `true`, the request is real-time as opposed to near-real-time.
 - **`refresh` (Optional, boolean)**: If `true`, the request refreshes relevant shards before retrieving documents.
 - **`routing` (Optional, string)**: Custom value used to route operations to a specific shard.
-- **`_source` (Optional, boolean | string | string[])**: True or false to return the `_source` field or not, or a list of fields to return.
-- **`_source_excludes` (Optional, string | string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.
-- **`_source_includes` (Optional, string | string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
-- **`stored_fields` (Optional, string | string[])**: If `true`, retrieves the document fields stored in the index rather than the document `_source`.
+- **`_source` (Optional, boolean \| string \| string[])**: True or false to return the `_source` field or not, or a list of fields to return.
+- **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.
+- **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+- **`stored_fields` (Optional, string \| string[])**: If `true`, retrieves the document fields stored in the index rather than the document `_source`.
 
 ## client.msearch [_msearch]
 Run multiple searches.
@@ -1100,11 +1100,11 @@ client.msearch({ ... })
 
 #### Request (object) [_request_msearch]
 
-- **`index` (Optional, string | string[])**: List of data streams, indices, and index aliases to search.
-- **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } | { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and index aliases to search.
+- **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
 - **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 - **`ignore_throttled` (Optional, boolean)**: If true, concrete, expanded or aliased indices are ignored when frozen.
 - **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
 - **`include_named_queries_score` (Optional, boolean)**: Indicates whether hit.matched_queries should be rendered as a map that includes the name of the matched query associated with its score (true) or as an array containing the name of the matched queries (false) This functionality reruns each named query on every hit in a search response. Typically, this adds a small overhead to a request. However, using computationally expensive named queries on a large number of hits may add significant overhead.
@@ -1113,7 +1113,7 @@ client.msearch({ ... })
 - **`pre_filter_shard_size` (Optional, number)**: Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint.
 - **`rest_total_hits_as_int` (Optional, boolean)**: If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object.
 - **`routing` (Optional, string)**: Custom routing value used to route search operations to a specific shard.
-- **`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))**: Indicates whether global term and document frequencies should be used when scoring returned documents.
+- **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: Indicates whether global term and document frequencies should be used when scoring returned documents.
 - **`typed_keys` (Optional, boolean)**: Specifies whether aggregation and suggester names should be prefixed by their respective types in the response.
 
 ## client.msearchTemplate [_msearch_template]
@@ -1142,11 +1142,11 @@ client.msearchTemplate({ ... })
 
 #### Request (object) [_request_msearch_template]
 
-- **`index` (Optional, string | string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*`.
-- **`search_templates` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } | { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
+- **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*`.
+- **`search_templates` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If `true`, network round-trips are minimized for cross-cluster search requests.
 - **`max_concurrent_searches` (Optional, number)**: The maximum number of concurrent searches the API can run.
-- **`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))**: The type of the search operation.
+- **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: The type of the search operation.
 - **`rest_total_hits_as_int` (Optional, boolean)**: If `true`, the response returns `hits.total` as an integer. If `false`, it returns `hits.total` as an object.
 - **`typed_keys` (Optional, boolean)**: If `true`, the response prefixes aggregation and suggester names with their respective types.
 
@@ -1176,7 +1176,7 @@ client.mtermvectors({ ... })
 - **`index` (Optional, string)**: The name of the index that contains the documents.
 - **`docs` (Optional, { _id, _index, routing, _source, stored_fields, version, version_type }[])**: An array of existing or artificial documents.
 - **`ids` (Optional, string[])**: A simplified syntax to specify documents by their ID if they're in the same index.
-- **`fields` (Optional, string | string[])**: A list or wildcard expressions of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
+- **`fields` (Optional, string \| string[])**: A list or wildcard expressions of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
 - **`field_statistics` (Optional, boolean)**: If `true`, the response includes the document count, sum of document frequencies, and sum of total term frequencies.
 - **`offsets` (Optional, boolean)**: If `true`, the response includes term offsets.
 - **`payloads` (Optional, boolean)**: If `true`, the response includes term payloads.
@@ -1186,7 +1186,7 @@ client.mtermvectors({ ... })
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
 - **`term_statistics` (Optional, boolean)**: If true, the response includes term frequency and document frequency.
 - **`version` (Optional, number)**: If `true`, returns the document version as part of a hit.
-- **`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
 
 ## client.openPointInTime [_open_point_in_time]
 Open a point in time.
@@ -1236,13 +1236,13 @@ client.openPointInTime({ index, keep_alive })
 
 #### Request (object) [_request_open_point_in_time]
 
-- **`index` (string | string[])**: A list of index names to open point in time; use `_all` or empty string to perform the operation on all indices
-- **`keep_alive` (string | -1 | 0)**: Extend the length of time that the point in time persists.
+- **`index` (string \| string[])**: A list of index names to open point in time; use `_all` or empty string to perform the operation on all indices
+- **`keep_alive` (string \| -1 \| 0)**: Extend the length of time that the point in time persists.
 - **`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Filter indices if the provided query rewrites to `match_none` on every shard.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. By default, it is random.
 - **`routing` (Optional, string)**: A custom value that is used to route operations to a specific shard.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 - **`allow_partial_search_results` (Optional, boolean)**: Indicates whether the point in time tolerates unavailable shards or shard failures when initially creating the PIT. If `false`, creating a point in time request when a shard is missing or unavailable will throw an exception. If `true`, the point in time will contain all the shards that are available at the time of the request.
 - **`max_concurrent_shard_requests` (Optional, number)**: Maximum number of concurrent shard requests that each sub-search request executes per node.
 
@@ -1272,8 +1272,8 @@ client.putScript({ id, script })
 - **`id` (string)**: The identifier for the stored script or search template. It must be unique within the cluster.
 - **`script` ({ lang, options, source })**: The script or search template, its parameters, and its language.
 - **`context` (Optional, string)**: The context in which the script or search template should run. To prevent errors, the API immediately compiles the script or template in this context.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. It can also be set to `-1` to indicate that the request should never timeout.
 
 ## client.rankEval [_rank_eval]
 Evaluate ranked search results.
@@ -1290,10 +1290,10 @@ client.rankEval({ requests })
 #### Request (object) [_request_rank_eval]
 
 - **`requests` ({ id, request, ratings, template_id, params }[])**: A set of typical search requests, together with their provided ratings.
-- **`index` (Optional, string | string[])**: A list of data streams, indices, and index aliases used to limit the request. Wildcard (`*`) expressions are supported. To target all data streams and indices in a cluster, omit this parameter or use `_all` or `*`.
+- **`index` (Optional, string \| string[])**: A list of data streams, indices, and index aliases used to limit the request. Wildcard (`*`) expressions are supported. To target all data streams and indices in a cluster, omit this parameter or use `_all` or `*`.
 - **`metric` (Optional, { precision, recall, mean_reciprocal_rank, dcg, expected_reciprocal_rank })**: Definition of the evaluation metric to calculate.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`ignore_unavailable` (Optional, boolean)**: If `true`, missing or closed indices are not included in the response.
 - **`search_type` (Optional, string)**: Search operation type
 
@@ -1492,16 +1492,16 @@ client.reindex({ dest, source })
 
 - **`dest` ({ index, op_type, pipeline, routing, version_type })**: The destination you are copying to.
 - **`source` ({ index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source you are copying from.
-- **`conflicts` (Optional, Enum("abort" | "proceed"))**: Indicates whether to continue reindexing even when there are conflicts.
+- **`conflicts` (Optional, Enum("abort" \| "proceed"))**: Indicates whether to continue reindexing even when there are conflicts.
 - **`max_docs` (Optional, number)**: The maximum number of documents to reindex. By default, all documents are reindexed. If it is a value less then or equal to `scroll_size`, a scroll will not be used to retrieve the results for the operation. If `conflicts` is set to `proceed`, the reindex operation could attempt to reindex more documents from the source than `max_docs` until it has successfully indexed `max_docs` documents into the target or it has gone through every document in the source query.
 - **`script` (Optional, { source, id, params, lang, options })**: The script to run to update the document source or metadata when reindexing.
 - **`size` (Optional, number)**
 - **`refresh` (Optional, boolean)**: If `true`, the request refreshes affected shards to make this operation visible to search.
 - **`requests_per_second` (Optional, float)**: The throttle for this request in sub-requests per second. By default, there is no throttle.
-- **`scroll` (Optional, string | -1 | 0)**: The period of time that a consistent view of the index should be maintained for scrolled search.
-- **`slices` (Optional, number | Enum("auto"))**: The number of slices this task should be divided into. It defaults to one slice, which means the task isn't sliced into subtasks. Reindex supports sliced scroll to parallelize the reindexing process. This parallelization can improve efficiency and provide a convenient way to break the request down into smaller parts. NOTE: Reindexing from remote clusters does not support manual or automatic slicing. If set to `auto`, Elasticsearch chooses the number of slices to use. This setting will use one slice per shard, up to a certain limit. If there are multiple sources, it will choose the number of slices based on the index or backing index with the smallest number of shards.
-- **`timeout` (Optional, string | -1 | 0)**: The period each indexing waits for automatic index creation, dynamic mapping updates, and waiting for active shards. By default, Elasticsearch waits for at least one minute before failing. The actual wait time could be longer, particularly when multiple waits occur.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. Set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value is one, which means it waits for each primary shard to be active.
+- **`scroll` (Optional, string \| -1 \| 0)**: The period of time that a consistent view of the index should be maintained for scrolled search.
+- **`slices` (Optional, number \| Enum("auto"))**: The number of slices this task should be divided into. It defaults to one slice, which means the task isn't sliced into subtasks. Reindex supports sliced scroll to parallelize the reindexing process. This parallelization can improve efficiency and provide a convenient way to break the request down into smaller parts. NOTE: Reindexing from remote clusters does not support manual or automatic slicing. If set to `auto`, Elasticsearch chooses the number of slices to use. This setting will use one slice per shard, up to a certain limit. If there are multiple sources, it will choose the number of slices based on the index or backing index with the smallest number of shards.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period each indexing waits for automatic index creation, dynamic mapping updates, and waiting for active shards. By default, Elasticsearch waits for at least one minute before failing. The actual wait time could be longer, particularly when multiple waits occur.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. Set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value is one, which means it waits for each primary shard to be active.
 - **`wait_for_completion` (Optional, boolean)**: If `true`, the request blocks until the operation is complete.
 - **`require_alias` (Optional, boolean)**: If `true`, the destination must be an index alias.
 
@@ -1548,7 +1548,7 @@ client.renderSearchTemplate({ ... })
 - **`id` (Optional, string)**: The ID of the search template to render. If no `source` is specified, this or the `id` request body parameter is required.
 - **`file` (Optional, string)**
 - **`params` (Optional, Record<string, User-defined value>)**: Key-value pairs used to replace Mustache variables in the template. The key is the variable name. The value is the variable value.
-- **`source` (Optional, string | { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats })**: An inline search template. It supports the same parameters as the search API's request body. These parameters also support Mustache variables. If no `id` or `<templated-id>` is specified, this parameter is required.
+- **`source` (Optional, string \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats })**: An inline search template. It supports the same parameters as the search API's request body. These parameters also support Mustache variables. If no `id` or `<templated-id>` is specified, this parameter is required.
 
 ## client.scriptsPainlessExecute [_scripts_painless_execute]
 Run a script.
@@ -1570,7 +1570,7 @@ client.scriptsPainlessExecute({ ... })
 
 #### Request (object) [_request_scripts_painless_execute]
 
-- **`context` (Optional, Enum("painless_test" | "filter" | "score" | "boolean_field" | "date_field" | "double_field" | "geo_point_field" | "ip_field" | "keyword_field" | "long_field" | "composite_field"))**: The context that the script should run in. NOTE: Result ordering in the field contexts is not guaranteed.
+- **`context` (Optional, Enum("painless_test" \| "filter" \| "score" \| "boolean_field" \| "date_field" \| "double_field" \| "geo_point_field" \| "ip_field" \| "keyword_field" \| "long_field" \| "composite_field"))**: The context that the script should run in. NOTE: Result ordering in the field contexts is not guaranteed.
 - **`context_setup` (Optional, { document, index, query })**: Additional parameters for the `context`. NOTE: This parameter is required for all contexts except `painless_test`, which is the default if no value is provided for `context`.
 - **`script` (Optional, { source, id, params, lang, options })**: The Painless script to run.
 
@@ -1600,7 +1600,7 @@ client.scroll({ scroll_id })
 #### Request (object) [_request_scroll]
 
 - **`scroll_id` (string)**: The scroll ID of the search.
-- **`scroll` (Optional, string | -1 | 0)**: The period to retain the search context for scrolling.
+- **`scroll` (Optional, string \| -1 \| 0)**: The period to retain the search context for scrolling.
 - **`rest_total_hits_as_int` (Optional, boolean)**: If true, the API response’s hit.total property is returned as an integer. If false, the API response’s hit.total property is returned as an object.
 
 ## client.search [_search]
@@ -1634,30 +1634,30 @@ client.search({ ... })
 
 #### Request (object) [_request_search]
 
-- **`index` (Optional, string | string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
+- **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**: Defines the aggregations that are run as part of the search request.
 - **`collapse` (Optional, { field, inner_hits, max_concurrent_group_searches, collapse })**: Collapses search results the values of the specified field.
 - **`explain` (Optional, boolean)**: If `true`, the request returns detailed information about score computation as part of a hit.
 - **`ext` (Optional, Record<string, User-defined value>)**: Configuration of search extensions defined by Elasticsearch plugins.
 - **`from` (Optional, number)**: The starting document offset, which must be non-negative. By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters. To page through more hits, use the `search_after` parameter.
 - **`highlight` (Optional, { encoder, fields })**: Specifies the highlighter to use for retrieving highlighted snippets from one or more fields in your search results.
-- **`track_total_hits` (Optional, boolean | number)**: Number of hits matching the query to count accurately. If `true`, the exact number of hits is returned at the cost of some performance. If `false`, the response does not include the total number of hits matching the query.
+- **`track_total_hits` (Optional, boolean \| number)**: Number of hits matching the query to count accurately. If `true`, the exact number of hits is returned at the cost of some performance. If `false`, the response does not include the total number of hits matching the query.
 - **`indices_boost` (Optional, Record<string, number>[])**: Boost the `_score` of documents from specified indices. The boost value is the factor by which scores are multiplied. A boost value greater than `1.0` increases the score. A boost value between `0` and `1.0` decreases the score.
 - **`docvalue_fields` (Optional, { field, format, include_unmapped }[])**: An array of wildcard (`*`) field patterns. The request returns doc values for field names matching these patterns in the `hits.fields` property of the response.
-- **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector } | { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector }[])**: The approximate kNN search to run.
+- **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector } \| { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector }[])**: The approximate kNN search to run.
 - **`rank` (Optional, { rrf })**: The Reciprocal Rank Fusion (RRF) to use.
 - **`min_score` (Optional, number)**: The minimum `_score` for matching documents. Documents with a lower `_score` are not included in search results and results collected by aggregations.
 - **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Use the `post_filter` parameter to filter search results. The search hits are filtered after the aggregations are calculated. A post filter has no impact on the aggregation results.
 - **`profile` (Optional, boolean)**: Set to `true` to return detailed timing information about the execution of individual components in a search request. NOTE: This is a debugging tool and adds significant overhead to search execution.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The search definition using the Query DSL.
-- **`rescore` (Optional, { window_size, query, learning_to_rank } | { window_size, query, learning_to_rank }[])**: Can be used to improve precision by reordering just the top (for example 100 - 500) documents returned by the `query` and `post_filter` phases.
+- **`rescore` (Optional, { window_size, query, learning_to_rank } \| { window_size, query, learning_to_rank }[])**: Can be used to improve precision by reordering just the top (for example 100 - 500) documents returned by the `query` and `post_filter` phases.
 - **`retriever` (Optional, { standard, knn, rrf, text_similarity_reranker, rule })**: A retriever is a specification to describe top documents returned from a search. A retriever replaces other elements of the search API that also return top documents such as `query` and `knn`.
 - **`script_fields` (Optional, Record<string, { script, ignore_failure }>)**: Retrieve a script evaluation (based on different fields) for each hit.
-- **`search_after` (Optional, number | number | string | boolean | null[])**: Used to retrieve the next page of hits using a set of sort values from the previous page.
+- **`search_after` (Optional, number \| number \| string \| boolean \| null[])**: Used to retrieve the next page of hits using a set of sort values from the previous page.
 - **`size` (Optional, number)**: The number of hits to return, which must not be negative. By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters. To page through more hits, use the `search_after` property.
 - **`slice` (Optional, { field, id, max })**: Split a scrolled search into multiple slices that can be consumed independently.
-- **`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])**: A list of <field>:<direction> pairs.
-- **`_source` (Optional, boolean | { excludes, includes })**: The source fields that are returned for matching documents. These fields are returned in the `hits._source` property of the search response. If the `stored_fields` property is specified, the `_source` property defaults to `false`. Otherwise, it defaults to `true`.
+- **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: A list of <field>:<direction> pairs.
+- **`_source` (Optional, boolean \| { excludes, includes })**: The source fields that are returned for matching documents. These fields are returned in the `hits._source` property of the search response. If the `stored_fields` property is specified, the `_source` property defaults to `false`. Otherwise, it defaults to `true`.
 - **`fields` (Optional, { field, format, include_unmapped }[])**: An array of wildcard (`*`) field patterns. The request returns values for field names matching these patterns in the `hits.fields` property of the response.
 - **`suggest` (Optional, { text })**: Defines a suggester that provides similar looking terms based on a provided text.
 - **`terminate_after` (Optional, number)**: The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. IMPORTANT: Use with caution. Elasticsearch applies this property to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this property for requests that target data streams with backing indices across multiple data tiers. If set to `0` (default), the query does not terminate early.
@@ -1665,7 +1665,7 @@ client.search({ ... })
 - **`track_scores` (Optional, boolean)**: If `true`, calculate and return document scores, even if the scores are not used for sorting.
 - **`version` (Optional, boolean)**: If `true`, the request returns the document version as part of a hit.
 - **`seq_no_primary_term` (Optional, boolean)**: If `true`, the request returns sequence number and primary term of the last modification of each hit.
-- **`stored_fields` (Optional, string | string[])**: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` property defaults to `false`. You can pass `_source: true` to return both source fields and stored fields in the search response.
+- **`stored_fields` (Optional, string \| string[])**: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` property defaults to `false`. You can pass `_source: true` to return both source fields and stored fields in the search response.
 - **`pit` (Optional, { id, keep_alive })**: Limit the search to a point in time (PIT). If you provide a PIT, you cannot specify an `<index>` in the request path.
 - **`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)**: One or more runtime fields in the search request. These fields take precedence over mapped fields with the same name.
 - **`stats` (Optional, string[])**: The stats groups to associate with the search. Each group maintains a statistics aggregation for its associated searches. You can retrieve these stats using the indices stats API.
@@ -1675,9 +1675,9 @@ client.search({ ... })
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
 - **`batched_reduce_size` (Optional, number)**: The number of shard results that should be reduced at once on the coordinating node. If the potential number of shards in the request can be large, this value should be used as a protection mechanism to reduce the memory overhead per search request.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If `true`, network round-trips between the coordinating node and the remote clusters are minimized when running cross-cluster search (CCS) requests.
-- **`default_operator` (Optional, Enum("and" | "or"))**: The default operator for the query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
+- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for the query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
 - **`df` (Optional, string)**: The field to use as a default when no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values such as `open,hidden`.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values such as `open,hidden`.
 - **`ignore_throttled` (Optional, boolean)**: If `true`, concrete, expanded or aliased indices will be ignored when frozen.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 - **`include_named_queries_score` (Optional, boolean)**: If `true`, the response includes the score contribution from any named queries. This functionality reruns each named query on every hit in a search response. Typically, this adds a small overhead to a request. However, using computationally expensive named queries on a large number of hits may add significant overhead.
@@ -1687,16 +1687,16 @@ client.search({ ... })
 - **`pre_filter_shard_size` (Optional, number)**: A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method (if date filters are mandatory to match but the shard bounds and the query are disjoint). When unspecified, the pre-filter phase is executed if any of these conditions is met: * The request targets more than 128 shards. * The request targets one or more read-only index. * The primary sort of the query targets an indexed field.
 - **`request_cache` (Optional, boolean)**: If `true`, the caching of search results is enabled for requests where `size` is `0`. It defaults to index level settings.
 - **`routing` (Optional, string)**: A custom value that is used to route operations to a specific shard.
-- **`scroll` (Optional, string | -1 | 0)**: The period to retain the search context for scrolling. By default, this value cannot exceed `1d` (24 hours). You can change this limit by using the `search.max_keep_alive` cluster-level setting.
-- **`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))**: Indicates how distributed term frequencies are calculated for relevance scoring.
+- **`scroll` (Optional, string \| -1 \| 0)**: The period to retain the search context for scrolling. By default, this value cannot exceed `1d` (24 hours). You can change this limit by using the `search.max_keep_alive` cluster-level setting.
+- **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: Indicates how distributed term frequencies are calculated for relevance scoring.
 - **`suggest_field` (Optional, string)**: The field to use for suggestions.
-- **`suggest_mode` (Optional, Enum("missing" | "popular" | "always"))**: The suggest mode. This parameter can be used only when the `suggest_field` and `suggest_text` query string parameters are specified.
+- **`suggest_mode` (Optional, Enum("missing" \| "popular" \| "always"))**: The suggest mode. This parameter can be used only when the `suggest_field` and `suggest_text` query string parameters are specified.
 - **`suggest_size` (Optional, number)**: The number of suggestions to return. This parameter can be used only when the `suggest_field` and `suggest_text` query string parameters are specified.
 - **`suggest_text` (Optional, string)**: The source text for which the suggestions should be returned. This parameter can be used only when the `suggest_field` and `suggest_text` query string parameters are specified.
 - **`typed_keys` (Optional, boolean)**: If `true`, aggregation and suggester names are be prefixed by their respective types in the response.
 - **`rest_total_hits_as_int` (Optional, boolean)**: Indicates whether `hits.total` should be rendered as an integer or an object in the rest search response.
-- **`_source_excludes` (Optional, string | string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
-- **`_source_includes` (Optional, string | string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+- **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+- **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
 - **`q` (Optional, string)**: A query in the Lucene query string syntax. Query parameter searches do not support the full Elasticsearch Query DSL but are handy for testing. IMPORTANT: This parameter overrides the query parameter in the request body. If both parameters are specified, documents matching the query request body parameter are not returned.
 - **`force_synthetic_source` (Optional, boolean)**: Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index.
 
@@ -1846,7 +1846,7 @@ client.searchMvt({ index, field, zoom, x, y })
 
 #### Request (object) [_request_search_mvt]
 
-- **`index` (string | string[])**: List of data streams, indices, or aliases to search
+- **`index` (string \| string[])**: List of data streams, indices, or aliases to search
 - **`field` (string)**: Field containing geospatial data to return
 - **`zoom` (number)**: Zoom level for the vector tile to search
 - **`x` (number)**: X coordinate for the vector tile to search
@@ -1855,15 +1855,15 @@ client.searchMvt({ index, field, zoom, x, y })
 - **`buffer` (Optional, number)**: The size, in pixels, of a clipping buffer outside the tile. This allows renderers to avoid outline artifacts from geometries that extend past the extent of the tile.
 - **`exact_bounds` (Optional, boolean)**: If `false`, the meta layer's feature is the bounding box of the tile. If `true`, the meta layer's feature is a bounding box resulting from a `geo_bounds` aggregation. The aggregation runs on <field> values that intersect the `<zoom>/<x>/<y>` tile with `wrap_longitude` set to `false`. The resulting bounding box may be larger than the vector tile.
 - **`extent` (Optional, number)**: The size, in pixels, of a side of the tile. Vector tiles are square with equal sides.
-- **`fields` (Optional, string | string[])**: The fields to return in the `hits` layer. It supports wildcards (`*`). This parameter does not support fields with array values. Fields with array values may return inconsistent results.
-- **`grid_agg` (Optional, Enum("geotile" | "geohex"))**: The aggregation used to create a grid for the `field`.
+- **`fields` (Optional, string \| string[])**: The fields to return in the `hits` layer. It supports wildcards (`*`). This parameter does not support fields with array values. Fields with array values may return inconsistent results.
+- **`grid_agg` (Optional, Enum("geotile" \| "geohex"))**: The aggregation used to create a grid for the `field`.
 - **`grid_precision` (Optional, number)**: Additional zoom levels available through the aggs layer. For example, if `<zoom>` is `7` and `grid_precision` is `8`, you can zoom in up to level 15. Accepts 0-8. If 0, results don't include the aggs layer.
-- **`grid_type` (Optional, Enum("grid" | "point" | "centroid"))**: Determines the geometry type for features in the aggs layer. In the aggs layer, each feature represents a `geotile_grid` cell. If `grid, each feature is a polygon of the cells bounding box. If `point`, each feature is a Point that is the centroid of the cell.
+- **`grid_type` (Optional, Enum("grid" \| "point" \| "centroid"))**: Determines the geometry type for features in the aggs layer. In the aggs layer, each feature represents a `geotile_grid` cell. If `grid, each feature is a polygon of the cells bounding box. If `point`, each feature is a Point that is the centroid of the cell.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The query DSL used to filter documents for the search.
 - **`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)**: Defines one or more runtime fields in the search request. These fields take precedence over mapped fields with the same name.
 - **`size` (Optional, number)**: The maximum number of features to return in the hits layer. Accepts 0-10000. If 0, results don't include the hits layer.
-- **`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])**: Sort the features in the hits layer. By default, the API calculates a bounding box for each feature. It sorts features based on this box's diagonal length, from longest to shortest.
-- **`track_total_hits` (Optional, boolean | number)**: The number of hits matching the query to count accurately. If `true`, the exact number of hits is returned at the cost of some performance. If `false`, the response does not include the total number of hits matching the query.
+- **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: Sort the features in the hits layer. By default, the API calculates a bounding box for each feature. It sorts features based on this box's diagonal length, from longest to shortest.
+- **`track_total_hits` (Optional, boolean \| number)**: The number of hits matching the query to count accurately. If `true`, the exact number of hits is returned at the cost of some performance. If `false`, the response does not include the total number of hits matching the query.
 - **`with_labels` (Optional, boolean)**: If `true`, the hits and aggs layers will contain additional point features representing suggested label positions for the original features. * `Point` and `MultiPoint` features will have one of the points selected. * `Polygon` and `MultiPolygon` features will have a single point generated, either the centroid, if it is within the polygon, or another point within the polygon selected from the sorted triangle-tree. * `LineString` features will likewise provide a roughly central point selected from the triangle-tree. * The aggregation results will provide one central point for each aggregation bucket. All attributes from the original features will also be copied to the new label features. In addition, the new features will be distinguishable using the tag `_mvt_label_position`.
 
 ## client.searchShards [_search_shards]
@@ -1884,12 +1884,12 @@ client.searchShards({ ... })
 
 #### Request (object) [_request_search_shards]
 
-- **`index` (Optional, string | string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
+- **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. IT can also be set to `-1` to indicate that the request should never timeout.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. IT can also be set to `-1` to indicate that the request should never timeout.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
 
@@ -1905,21 +1905,21 @@ client.searchTemplate({ ... })
 
 #### Request (object) [_request_search_template]
 
-- **`index` (Optional, string | string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`).
+- **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`).
 - **`explain` (Optional, boolean)**: If `true`, returns detailed information about score calculation as part of each hit. If you specify both this and the `explain` query parameter, the API uses only the query parameter.
 - **`id` (Optional, string)**: The ID of the search template to use. If no `source` is specified, this parameter is required.
 - **`params` (Optional, Record<string, User-defined value>)**: Key-value pairs used to replace Mustache variables in the template. The key is the variable name. The value is the variable value.
 - **`profile` (Optional, boolean)**: If `true`, the query execution is profiled.
-- **`source` (Optional, string | { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats })**: An inline search template. Supports the same parameters as the search API's request body. It also supports Mustache variables. If no `id` is specified, this parameter is required.
+- **`source` (Optional, string \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats })**: An inline search template. Supports the same parameters as the search API's request body. It also supports Mustache variables. If no `id` is specified, this parameter is required.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If `true`, network round-trips are minimized for cross-cluster search requests.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 - **`ignore_throttled` (Optional, boolean)**: If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
-- **`scroll` (Optional, string | -1 | 0)**: Specifies how long a consistent view of the index should be maintained for scrolled search.
-- **`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))**: The type of the search operation.
+- **`scroll` (Optional, string \| -1 \| 0)**: Specifies how long a consistent view of the index should be maintained for scrolled search.
+- **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: The type of the search operation.
 - **`rest_total_hits_as_int` (Optional, boolean)**: If `true`, `hits.total` is rendered as an integer in the response. If `false`, it is rendered as an object.
 - **`typed_keys` (Optional, boolean)**: If `true`, the response prefixes aggregation and suggester names with their respective types.
 
@@ -1944,7 +1944,7 @@ client.termsEnum({ index, field })
 - **`index` (string)**: A list of data streams, indices, and index aliases to search. Wildcard (`*`) expressions are supported. To search all data streams or indices, omit this parameter or use `*` or `_all`.
 - **`field` (string)**: The string to match at the start of indexed terms. If not provided, all terms in the field are considered.
 - **`size` (Optional, number)**: The number of matching terms to return.
-- **`timeout` (Optional, string | -1 | 0)**: The maximum length of time to spend collecting results. If the timeout is exceeded the `complete` flag set to `false` in the response and the results may be partial or empty.
+- **`timeout` (Optional, string \| -1 \| 0)**: The maximum length of time to spend collecting results. If the timeout is exceeded the `complete` flag set to `false` in the response and the results may be partial or empty.
 - **`case_insensitive` (Optional, boolean)**: When `true`, the provided search string is matched against index terms without case sensitivity.
 - **`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Filter an index shard if the provided query rewrites to `match_none`.
 - **`string` (Optional, string)**: The string to match at the start of indexed terms. If it is not provided, all terms in the field are considered. > info > The prefix string cannot be larger than the largest possible keyword value, which is Lucene's term byte-length limit of 32766.
@@ -2007,7 +2007,7 @@ client.termvectors({ index })
 - **`doc` (Optional, object)**: An artificial document (a document not present in the index) for which you want to retrieve term vectors.
 - **`filter` (Optional, { max_doc_freq, max_num_terms, max_term_freq, max_word_length, min_doc_freq, min_term_freq, min_word_length })**: Filter terms based on their tf-idf scores. This could be useful in order find out a good characteristic vector of a document. This feature works in a similar manner to the second phase of the More Like This Query.
 - **`per_field_analyzer` (Optional, Record<string, string>)**: Override the default per-field analyzer. This is useful in order to generate term vectors in any fashion, especially when using artificial documents. When providing an analyzer for a field that already stores term vectors, the term vectors will be regenerated.
-- **`fields` (Optional, string | string[])**: A list of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
+- **`fields` (Optional, string \| string[])**: A list of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
 - **`field_statistics` (Optional, boolean)**: If `true`, the response includes: * The document count (how many documents contain this field). * The sum of document frequencies (the sum of document frequencies for all terms in this field). * The sum of total term frequencies (the sum of total term frequencies of each term in this field).
 - **`offsets` (Optional, boolean)**: If `true`, the response includes term offsets.
 - **`payloads` (Optional, boolean)**: If `true`, the response includes term payloads.
@@ -2015,7 +2015,7 @@ client.termvectors({ index })
 - **`term_statistics` (Optional, boolean)**: If `true`, the response includes: * The total term frequency (how often a term occurs in all documents). * The document frequency (the number of documents containing the current term). By default these values are not returned since term statistics can have a serious performance impact.
 - **`routing` (Optional, string)**: A custom value that is used to route operations to a specific shard.
 - **`version` (Optional, number)**: If `true`, returns the document version as part of a hit.
-- **`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
 - **`realtime` (Optional, boolean)**: If true, the request is real-time as opposed to near-real-time.
 
@@ -2056,20 +2056,20 @@ client.update({ id, index })
 - **`doc_as_upsert` (Optional, boolean)**: If `true`, use the contents of 'doc' as the value of 'upsert'. NOTE: Using ingest pipelines with `doc_as_upsert` is not supported.
 - **`script` (Optional, { source, id, params, lang, options })**: The script to run to update the document.
 - **`scripted_upsert` (Optional, boolean)**: If `true`, run the script whether or not the document exists.
-- **`_source` (Optional, boolean | { excludes, includes })**: If `false`, turn off source retrieval. You can also specify a list of the fields you want to retrieve.
+- **`_source` (Optional, boolean \| { excludes, includes })**: If `false`, turn off source retrieval. You can also specify a list of the fields you want to retrieve.
 - **`upsert` (Optional, object)**: If the document does not already exist, the contents of 'upsert' are inserted as a new document. If the document exists, the 'script' is run.
 - **`if_primary_term` (Optional, number)**: Only perform the operation if the document has this primary term.
 - **`if_seq_no` (Optional, number)**: Only perform the operation if the document has this sequence number.
 - **`include_source_on_error` (Optional, boolean)**: True or false if to include the document source in the error message in case of parsing errors.
 - **`lang` (Optional, string)**: The script language.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If 'true', Elasticsearch refreshes the affected shards to make this operation visible to search. If 'wait_for', it waits for a refresh to make this operation visible to search. If 'false', it does nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If 'true', Elasticsearch refreshes the affected shards to make this operation visible to search. If 'wait_for', it waits for a refresh to make this operation visible to search. If 'false', it does nothing with refreshes.
 - **`require_alias` (Optional, boolean)**: If `true`, the destination must be an index alias.
 - **`retry_on_conflict` (Optional, number)**: The number of times the operation should be retried when a conflict occurs.
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for the following operations: dynamic mapping updates and waiting for active shards. Elasticsearch waits for at least the timeout period before failing. The actual wait time could be longer, particularly when multiple waits occur.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of copies of each shard that must be active before proceeding with the operation. Set to 'all' or any positive integer up to the total number of shards in the index (`number_of_replicas`+1). The default value of `1` means it waits for each primary shard to be active.
-- **`_source_excludes` (Optional, string | string[])**: The source fields you want to exclude.
-- **`_source_includes` (Optional, string | string[])**: The source fields you want to retrieve.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for the following operations: dynamic mapping updates and waiting for active shards. Elasticsearch waits for at least the timeout period before failing. The actual wait time could be longer, particularly when multiple waits occur.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of copies of each shard that must be active before proceeding with the operation. Set to 'all' or any positive integer up to the total number of shards in the index (`number_of_replicas`+1). The default value of `1` means it waits for each primary shard to be active.
+- **`_source_excludes` (Optional, string \| string[])**: The source fields you want to exclude.
+- **`_source_includes` (Optional, string \| string[])**: The source fields you want to retrieve.
 
 ## client.updateByQuery [_update_by_query]
 Update documents.
@@ -2166,18 +2166,18 @@ client.updateByQuery({ index })
 
 #### Request (object) [_request_update_by_query]
 
-- **`index` (string | string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams or indices, omit this parameter or use `*` or `_all`.
+- **`index` (string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams or indices, omit this parameter or use `*` or `_all`.
 - **`max_docs` (Optional, number)**: The maximum number of documents to update.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The documents to update using the Query DSL.
 - **`script` (Optional, { source, id, params, lang, options })**: The script to run to update the document source or metadata when updating.
 - **`slice` (Optional, { field, id, max })**: Slice the request manually using the provided slice ID and total number of slices.
-- **`conflicts` (Optional, Enum("abort" | "proceed"))**: The preferred behavior when update by query hits version conflicts: `abort` or `proceed`.
+- **`conflicts` (Optional, Enum("abort" \| "proceed"))**: The preferred behavior when update by query hits version conflicts: `abort` or `proceed`.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
-- **`default_operator` (Optional, Enum("and" | "or"))**: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
+- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
 - **`df` (Optional, string)**: The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 - **`from` (Optional, number)**: Skips the specified number of documents.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
@@ -2188,18 +2188,18 @@ client.updateByQuery({ index })
 - **`request_cache` (Optional, boolean)**: If `true`, the request cache is used for this request. It defaults to the index-level setting.
 - **`requests_per_second` (Optional, float)**: The throttle for this request in sub-requests per second.
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
-- **`scroll` (Optional, string | -1 | 0)**: The period to retain the search context for scrolling.
+- **`scroll` (Optional, string \| -1 \| 0)**: The period to retain the search context for scrolling.
 - **`scroll_size` (Optional, number)**: The size of the scroll request that powers the operation.
-- **`search_timeout` (Optional, string | -1 | 0)**: An explicit timeout for each search request. By default, there is no timeout.
-- **`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))**: The type of the search operation. Available options include `query_then_fetch` and `dfs_query_then_fetch`.
-- **`slices` (Optional, number | Enum("auto"))**: The number of slices this task should be divided into.
+- **`search_timeout` (Optional, string \| -1 \| 0)**: An explicit timeout for each search request. By default, there is no timeout.
+- **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: The type of the search operation. Available options include `query_then_fetch` and `dfs_query_then_fetch`.
+- **`slices` (Optional, number \| Enum("auto"))**: The number of slices this task should be divided into.
 - **`sort` (Optional, string[])**: A list of <field>:<direction> pairs.
 - **`stats` (Optional, string[])**: The specific `tag` of the request for logging and statistical purposes.
 - **`terminate_after` (Optional, number)**: The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. IMPORTANT: Use with caution. Elasticsearch applies this parameter to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers.
-- **`timeout` (Optional, string | -1 | 0)**: The period each update request waits for the following operations: dynamic mapping updates, waiting for active shards. By default, it is one minute. This guarantees Elasticsearch waits for at least the timeout before failing. The actual wait time could be longer, particularly when multiple waits occur.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period each update request waits for the following operations: dynamic mapping updates, waiting for active shards. By default, it is one minute. This guarantees Elasticsearch waits for at least the timeout before failing. The actual wait time could be longer, particularly when multiple waits occur.
 - **`version` (Optional, boolean)**: If `true`, returns the document version as part of a hit.
 - **`version_type` (Optional, boolean)**: Should the document increment the version number (internal) on hit or not (reindex)
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The `timeout` parameter controls how long each write request waits for unavailable shards to become available. Both work exactly the way they work in the bulk API.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The `timeout` parameter controls how long each write request waits for unavailable shards to become available. Both work exactly the way they work in the bulk API.
 - **`wait_for_completion` (Optional, boolean)**: If `true`, the request blocks until the operation is complete. If `false`, Elasticsearch performs some preflight checks, launches the request, and returns a task ID that you can use to cancel or get the status of the task. Elasticsearch creates a record of this task as a document at `.tasks/task/${taskId}`.
 
 ## client.updateByQueryRethrottle [_update_by_query_rethrottle]
@@ -2254,13 +2254,13 @@ client.asyncSearch.get({ id })
 
 #### Request (object) [_request_async_search.get]
 - **`id` (string)**: A unique identifier for the async search.
-- **`keep_alive` (Optional, string | -1 | 0)**: The length of time that the async search should be available in the cluster.
+- **`keep_alive` (Optional, string \| -1 \| 0)**: The length of time that the async search should be available in the cluster.
 When not specified, the `keep_alive` set with the corresponding submit async request will be used.
 Otherwise, it is possible to override the value and extend the validity of the request.
 When this period expires, the search, if still running, is cancelled.
 If the search is completed, its saved results are deleted.
 - **`typed_keys` (Optional, boolean)**: Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-- **`wait_for_completion_timeout` (Optional, string | -1 | 0)**: Specifies to wait for the search to be completed up until the provided timeout.
+- **`wait_for_completion_timeout` (Optional, string \| -1 \| 0)**: Specifies to wait for the search to be completed up until the provided timeout.
 Final results will be returned if available before the timeout expires, otherwise the currently available results will be returned once the timeout expires.
 By default no timeout is set meaning that the currently available results will be returned without any additional wait.
 
@@ -2283,7 +2283,7 @@ client.asyncSearch.status({ id })
 
 #### Request (object) [_request_async_search.status]
 - **`id` (string)**: A unique identifier for the async search.
-- **`keep_alive` (Optional, string | -1 | 0)**: The length of time that the async search needs to be available.
+- **`keep_alive` (Optional, string \| -1 \| 0)**: The length of time that the async search needs to be available.
 Ongoing async searches and any saved search results are deleted after this period.
 
 ## client.asyncSearch.submit [_async_search.submit]
@@ -2305,7 +2305,7 @@ client.asyncSearch.submit({ ... })
 ### Arguments [_arguments_async_search.submit]
 
 #### Request (object) [_request_async_search.submit]
-- **`index` (Optional, string | string[])**: A list of index names to search; use `_all` or empty string to perform the operation on all indices
+- **`index` (Optional, string \| string[])**: A list of index names to search; use `_all` or empty string to perform the operation on all indices
 - **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**
 - **`collapse` (Optional, { field, inner_hits, max_concurrent_group_searches, collapse })**
 - **`explain` (Optional, boolean)**: If true, returns detailed information about score computation as part of a hit.
@@ -2314,28 +2314,28 @@ client.asyncSearch.submit({ ... })
 hits using the from and size parameters. To page through more hits, use the
 search_after parameter.
 - **`highlight` (Optional, { encoder, fields })**
-- **`track_total_hits` (Optional, boolean | number)**: Number of hits matching the query to count accurately. If true, the exact
+- **`track_total_hits` (Optional, boolean \| number)**: Number of hits matching the query to count accurately. If true, the exact
 number of hits is returned at the cost of some performance. If false, the
 response does not include the total number of hits matching the query.
 Defaults to 10,000 hits.
 - **`indices_boost` (Optional, Record<string, number>[])**: Boosts the _score of documents from specified indices.
 - **`docvalue_fields` (Optional, { field, format, include_unmapped }[])**: Array of wildcard (*) patterns. The request returns doc values for field
 names matching these patterns in the hits.fields property of the response.
-- **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector } | { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector }[])**: Defines the approximate kNN search to run.
+- **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector } \| { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector }[])**: Defines the approximate kNN search to run.
 - **`min_score` (Optional, number)**: Minimum _score for matching documents. Documents with a lower _score are
 not included in search results and results collected by aggregations.
 - **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**
 - **`profile` (Optional, boolean)**
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search definition using the Query DSL.
-- **`rescore` (Optional, { window_size, query, learning_to_rank } | { window_size, query, learning_to_rank }[])**
+- **`rescore` (Optional, { window_size, query, learning_to_rank } \| { window_size, query, learning_to_rank }[])**
 - **`script_fields` (Optional, Record<string, { script, ignore_failure }>)**: Retrieve a script evaluation (based on different fields) for each hit.
-- **`search_after` (Optional, number | number | string | boolean | null[])**
+- **`search_after` (Optional, number \| number \| string \| boolean \| null[])**
 - **`size` (Optional, number)**: The number of hits to return. By default, you cannot page through more
 than 10,000 hits using the from and size parameters. To page through more
 hits, use the search_after parameter.
 - **`slice` (Optional, { field, id, max })**
-- **`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])**
-- **`_source` (Optional, boolean | { excludes, includes })**: Indicates which source fields are returned for matching documents. These
+- **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**
+- **`_source` (Optional, boolean \| { excludes, includes })**: Indicates which source fields are returned for matching documents. These
 fields are returned in the hits._source property of the search response.
 - **`fields` (Optional, { field, format, include_unmapped }[])**: Array of wildcard (*) patterns. The request returns values for field names
 matching these patterns in the hits.fields property of the response.
@@ -2350,7 +2350,7 @@ Defaults to no timeout.
 - **`version` (Optional, boolean)**: If true, returns document version as part of a hit.
 - **`seq_no_primary_term` (Optional, boolean)**: If true, returns sequence number and primary term of the last modification
 of each hit. See Optimistic concurrency control.
-- **`stored_fields` (Optional, string | string[])**: List of stored fields to return as part of a hit. If no fields are specified,
+- **`stored_fields` (Optional, string \| string[])**: List of stored fields to return as part of a hit. If no fields are specified,
 no stored fields are included in the response. If this field is specified, the _source
 parameter defaults to false. You can pass _source: true to return both source fields
 and stored fields in the search response.
@@ -2361,9 +2361,9 @@ precedence over mapped fields with the same name.
 - **`stats` (Optional, string[])**: Stats groups to associate with the search. Each group maintains a statistics
 aggregation for its associated searches. You can retrieve these stats using
 the indices stats API.
-- **`wait_for_completion_timeout` (Optional, string | -1 | 0)**: Blocks and waits until the search is completed up to a certain timeout.
+- **`wait_for_completion_timeout` (Optional, string \| -1 \| 0)**: Blocks and waits until the search is completed up to a certain timeout.
 When the async search completes within the timeout, the response won’t include the ID as the results are not stored in the cluster.
-- **`keep_alive` (Optional, string | -1 | 0)**: Specifies how long the async search needs to be available.
+- **`keep_alive` (Optional, string \| -1 \| 0)**: Specifies how long the async search needs to be available.
 Ongoing async searches and any saved search results are deleted after this period.
 - **`keep_on_completion` (Optional, boolean)**: If `true`, results are stored for later retrieval when the search completes within the `wait_for_completion_timeout`.
 - **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -2373,9 +2373,9 @@ Ongoing async searches and any saved search results are deleted after this perio
 - **`batched_reduce_size` (Optional, number)**: Affects how often partial results become available, which happens whenever shard results are reduced.
 A partial reduction is performed every time the coordinating node has received a certain number of new shard responses (5 by default).
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: The default value is the only supported value.
-- **`default_operator` (Optional, Enum("and" | "or"))**: The default operator for query string query (AND or OR)
+- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query (AND or OR)
 - **`df` (Optional, string)**: The field to use as default where no field prefix is given in the query string
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`ignore_throttled` (Optional, boolean)**: Whether specified concrete, expanded or aliased indices should be ignored when throttled
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
 - **`lenient` (Optional, boolean)**: Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
@@ -2383,15 +2383,15 @@ A partial reduction is performed every time the coordinating node has received a
 - **`preference` (Optional, string)**: Specify the node or shard the operation should be performed on (default: random)
 - **`request_cache` (Optional, boolean)**: Specify if request cache should be used for this request or not, defaults to true
 - **`routing` (Optional, string)**: A list of specific routing values
-- **`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))**: Search operation type
+- **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: Search operation type
 - **`suggest_field` (Optional, string)**: Specifies which field to use for suggestions.
-- **`suggest_mode` (Optional, Enum("missing" | "popular" | "always"))**: Specify suggest mode
+- **`suggest_mode` (Optional, Enum("missing" \| "popular" \| "always"))**: Specify suggest mode
 - **`suggest_size` (Optional, number)**: How many suggestions to return in response
 - **`suggest_text` (Optional, string)**: The source text for which the suggestions should be returned.
 - **`typed_keys` (Optional, boolean)**: Specify whether aggregation and suggester names should be prefixed by their respective types in the response
 - **`rest_total_hits_as_int` (Optional, boolean)**: Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-- **`_source_excludes` (Optional, string | string[])**: A list of fields to exclude from the returned _source field
-- **`_source_includes` (Optional, string | string[])**: A list of fields to extract and return from the _source field
+- **`_source_excludes` (Optional, string \| string[])**: A list of fields to exclude from the returned _source field
+- **`_source_includes` (Optional, string \| string[])**: A list of fields to extract and return from the _source field
 - **`q` (Optional, string)**: Query in the Lucene query string syntax
 
 ## client.autoscaling.deleteAutoscalingPolicy [_autoscaling.delete_autoscaling_policy]
@@ -2409,9 +2409,9 @@ client.autoscaling.deleteAutoscalingPolicy({ name })
 
 #### Request (object) [_request_autoscaling.delete_autoscaling_policy]
 - **`name` (string)**: the name of the autoscaling policy
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.autoscaling.getAutoscalingCapacity [_autoscaling.get_autoscaling_capacity]
 Get the autoscaling capacity.
@@ -2438,7 +2438,7 @@ client.autoscaling.getAutoscalingCapacity({ ... })
 ### Arguments [_arguments_autoscaling.get_autoscaling_capacity]
 
 #### Request (object) [_request_autoscaling.get_autoscaling_capacity]
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.autoscaling.getAutoscalingPolicy [_autoscaling.get_autoscaling_policy]
@@ -2456,7 +2456,7 @@ client.autoscaling.getAutoscalingPolicy({ name })
 
 #### Request (object) [_request_autoscaling.get_autoscaling_policy]
 - **`name` (string)**: the name of the autoscaling policy
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.autoscaling.putAutoscalingPolicy [_autoscaling.put_autoscaling_policy]
@@ -2475,9 +2475,9 @@ client.autoscaling.putAutoscalingPolicy({ name })
 #### Request (object) [_request_autoscaling.put_autoscaling_policy]
 - **`name` (string)**: the name of the autoscaling policy
 - **`policy` (Optional, { roles, deciders })**
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.cat.aliases [_cat.aliases]
 Get aliases.
@@ -2496,15 +2496,15 @@ client.cat.aliases({ ... })
 ### Arguments [_arguments_cat.aliases]
 
 #### Request (object) [_request_cat.aliases]
-- **`name` (Optional, string | string[])**: A list of aliases to retrieve. Supports wildcards (`*`).  To retrieve all aliases, omit this parameter or use `*` or `_all`.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`name` (Optional, string \| string[])**: A list of aliases to retrieve. Supports wildcards (`*`).  To retrieve all aliases, omit this parameter or use `*` or `_all`.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: The type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 It supports a list of values, such as `open,hidden`.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicated that the request should never timeout, you can set it to `-1`.
 
@@ -2524,17 +2524,17 @@ client.cat.allocation({ ... })
 ### Arguments [_arguments_cat.allocation]
 
 #### Request (object) [_request_cat.allocation]
-- **`node_id` (Optional, string | string[])**: A list of node identifiers or names used to limit the returned information.
-- **`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))**: The unit used to display byte values.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`node_id` (Optional, string \| string[])**: A list of node identifiers or names used to limit the returned information.
+- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`local` (Optional, boolean)**: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.cat.componentTemplates [_cat.component_templates]
 Get component templates.
@@ -2557,15 +2557,15 @@ client.cat.componentTemplates({ ... })
 - **`name` (Optional, string)**: The name of the component template.
 It accepts wildcard expressions.
 If it is omitted, all component templates are returned.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`local` (Optional, boolean)**: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 
 ## client.cat.count [_cat.count]
 Get a document count.
@@ -2585,11 +2585,11 @@ client.cat.count({ ... })
 ### Arguments [_arguments_cat.count]
 
 #### Request (object) [_request_cat.count]
-- **`index` (Optional, string | string[])**: A list of data streams, indices, and aliases used to limit the request.
+- **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases used to limit the request.
 It supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 
@@ -2610,11 +2610,11 @@ client.cat.fielddata({ ... })
 ### Arguments [_arguments_cat.fielddata]
 
 #### Request (object) [_request_cat.fielddata]
-- **`fields` (Optional, string | string[])**: List of fields used to limit returned information.
+- **`fields` (Optional, string \| string[])**: List of fields used to limit returned information.
 To retrieve all fields, omit this parameter.
-- **`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))**: The unit used to display byte values.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 
@@ -2640,10 +2640,10 @@ client.cat.health({ ... })
 ### Arguments [_arguments_cat.health]
 
 #### Request (object) [_request_cat.health]
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: The unit used to display time values.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 - **`ts` (Optional, boolean)**: If true, returns `HH:MM:SS` and Unix epoch timestamps.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 
@@ -2686,17 +2686,17 @@ client.cat.indices({ ... })
 ### Arguments [_arguments_cat.indices]
 
 #### Request (object) [_request_cat.indices]
-- **`index` (Optional, string | string[])**: List of data streams, indices, and aliases used to limit the request.
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))**: The unit used to display byte values.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: The type of index that wildcard patterns can match.
-- **`health` (Optional, Enum("green" | "yellow" | "red"))**: The health status used to limit returned indices. By default, the response includes indices of any health status.
+- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match.
+- **`health` (Optional, Enum("green" \| "yellow" \| "red"))**: The health status used to limit returned indices. By default, the response includes indices of any health status.
 - **`include_unloaded_segments` (Optional, boolean)**: If true, the response includes information from segments that are not loaded into memory.
 - **`pri` (Optional, boolean)**: If true, the response only includes information from primary shards.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: The unit used to display time values.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 
@@ -2716,15 +2716,15 @@ client.cat.master({ ... })
 ### Arguments [_arguments_cat.master]
 
 #### Request (object) [_request_cat.master]
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`local` (Optional, boolean)**: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.cat.mlDataFrameAnalytics [_cat.ml_data_frame_analytics]
 Get data frame analytics jobs.
@@ -2746,11 +2746,11 @@ client.cat.mlDataFrameAnalytics({ ... })
 #### Request (object) [_request_cat.ml_data_frame_analytics]
 - **`id` (Optional, string)**: The ID of the data frame analytics to fetch
 - **`allow_no_match` (Optional, boolean)**: Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified)
-- **`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))**: The unit in which to display byte values
-- **`h` (Optional, Enum("assignment_explanation" | "create_time" | "description" | "dest_index" | "failure_reason" | "id" | "model_memory_limit" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "progress" | "source_index" | "state" | "type" | "version") | Enum("assignment_explanation" | "create_time" | "description" | "dest_index" | "failure_reason" | "id" | "model_memory_limit" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "progress" | "source_index" | "state" | "type" | "version")[])**: List of column names to display.
-- **`s` (Optional, Enum("assignment_explanation" | "create_time" | "description" | "dest_index" | "failure_reason" | "id" | "model_memory_limit" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "progress" | "source_index" | "state" | "type" | "version") | Enum("assignment_explanation" | "create_time" | "description" | "dest_index" | "failure_reason" | "id" | "model_memory_limit" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "progress" | "source_index" | "state" | "type" | "version")[])**: List of column names or column aliases used to sort the
+- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit in which to display byte values
+- **`h` (Optional, Enum("assignment_explanation" \| "create_time" \| "description" \| "dest_index" \| "failure_reason" \| "id" \| "model_memory_limit" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "progress" \| "source_index" \| "state" \| "type" \| "version") \| Enum("assignment_explanation" \| "create_time" \| "description" \| "dest_index" \| "failure_reason" \| "id" \| "model_memory_limit" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "progress" \| "source_index" \| "state" \| "type" \| "version")[])**: List of column names to display.
+- **`s` (Optional, Enum("assignment_explanation" \| "create_time" \| "description" \| "dest_index" \| "failure_reason" \| "id" \| "model_memory_limit" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "progress" \| "source_index" \| "state" \| "type" \| "version") \| Enum("assignment_explanation" \| "create_time" \| "description" \| "dest_index" \| "failure_reason" \| "id" \| "model_memory_limit" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "progress" \| "source_index" \| "state" \| "type" \| "version")[])**: List of column names or column aliases used to sort the
 response.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: Unit used to display time values.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
 
 ## client.cat.mlDatafeeds [_cat.ml_datafeeds]
 Get datafeeds.
@@ -2783,9 +2783,9 @@ client.cat.mlDatafeeds({ ... })
 If `true`, the API returns an empty datafeeds array when there are no matches and the subset of results when
 there are partial matches. If `false`, the API returns a 404 status code when there are no matches or only
 partial matches.
-- **`h` (Optional, Enum("ae" | "bc" | "id" | "na" | "ne" | "ni" | "nn" | "sba" | "sc" | "seah" | "st" | "s") | Enum("ae" | "bc" | "id" | "na" | "ne" | "ni" | "nn" | "sba" | "sc" | "seah" | "st" | "s")[])**: List of column names to display.
-- **`s` (Optional, Enum("ae" | "bc" | "id" | "na" | "ne" | "ni" | "nn" | "sba" | "sc" | "seah" | "st" | "s") | Enum("ae" | "bc" | "id" | "na" | "ne" | "ni" | "nn" | "sba" | "sc" | "seah" | "st" | "s")[])**: List of column names or column aliases used to sort the response.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: The unit used to display time values.
+- **`h` (Optional, Enum("ae" \| "bc" \| "id" \| "na" \| "ne" \| "ni" \| "nn" \| "sba" \| "sc" \| "seah" \| "st" \| "s") \| Enum("ae" \| "bc" \| "id" \| "na" \| "ne" \| "ni" \| "nn" \| "sba" \| "sc" \| "seah" \| "st" \| "s")[])**: List of column names to display.
+- **`s` (Optional, Enum("ae" \| "bc" \| "id" \| "na" \| "ne" \| "ni" \| "nn" \| "sba" \| "sc" \| "seah" \| "st" \| "s") \| Enum("ae" \| "bc" \| "id" \| "na" \| "ne" \| "ni" \| "nn" \| "sba" \| "sc" \| "seah" \| "st" \| "s")[])**: List of column names or column aliases used to sort the response.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 
 ## client.cat.mlJobs [_cat.ml_jobs]
 Get anomaly detection jobs.
@@ -2818,10 +2818,10 @@ client.cat.mlJobs({ ... })
 If `true`, the API returns an empty jobs array when there are no matches and the subset of results when there
 are partial matches. If `false`, the API returns a 404 status code when there are no matches or only partial
 matches.
-- **`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))**: The unit used to display byte values.
-- **`h` (Optional, Enum("assignment_explanation" | "buckets.count" | "buckets.time.exp_avg" | "buckets.time.exp_avg_hour" | "buckets.time.max" | "buckets.time.min" | "buckets.time.total" | "data.buckets" | "data.earliest_record" | "data.empty_buckets" | "data.input_bytes" | "data.input_fields" | "data.input_records" | "data.invalid_dates" | "data.last" | "data.last_empty_bucket" | "data.last_sparse_bucket" | "data.latest_record" | "data.missing_fields" | "data.out_of_order_timestamps" | "data.processed_fields" | "data.processed_records" | "data.sparse_buckets" | "forecasts.memory.avg" | "forecasts.memory.max" | "forecasts.memory.min" | "forecasts.memory.total" | "forecasts.records.avg" | "forecasts.records.max" | "forecasts.records.min" | "forecasts.records.total" | "forecasts.time.avg" | "forecasts.time.max" | "forecasts.time.min" | "forecasts.time.total" | "forecasts.total" | "id" | "model.bucket_allocation_failures" | "model.by_fields" | "model.bytes" | "model.bytes_exceeded" | "model.categorization_status" | "model.categorized_doc_count" | "model.dead_category_count" | "model.failed_category_count" | "model.frequent_category_count" | "model.log_time" | "model.memory_limit" | "model.memory_status" | "model.over_fields" | "model.partition_fields" | "model.rare_category_count" | "model.timestamp" | "model.total_category_count" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "opened_time" | "state") | Enum("assignment_explanation" | "buckets.count" | "buckets.time.exp_avg" | "buckets.time.exp_avg_hour" | "buckets.time.max" | "buckets.time.min" | "buckets.time.total" | "data.buckets" | "data.earliest_record" | "data.empty_buckets" | "data.input_bytes" | "data.input_fields" | "data.input_records" | "data.invalid_dates" | "data.last" | "data.last_empty_bucket" | "data.last_sparse_bucket" | "data.latest_record" | "data.missing_fields" | "data.out_of_order_timestamps" | "data.processed_fields" | "data.processed_records" | "data.sparse_buckets" | "forecasts.memory.avg" | "forecasts.memory.max" | "forecasts.memory.min" | "forecasts.memory.total" | "forecasts.records.avg" | "forecasts.records.max" | "forecasts.records.min" | "forecasts.records.total" | "forecasts.time.avg" | "forecasts.time.max" | "forecasts.time.min" | "forecasts.time.total" | "forecasts.total" | "id" | "model.bucket_allocation_failures" | "model.by_fields" | "model.bytes" | "model.bytes_exceeded" | "model.categorization_status" | "model.categorized_doc_count" | "model.dead_category_count" | "model.failed_category_count" | "model.frequent_category_count" | "model.log_time" | "model.memory_limit" | "model.memory_status" | "model.over_fields" | "model.partition_fields" | "model.rare_category_count" | "model.timestamp" | "model.total_category_count" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "opened_time" | "state")[])**: List of column names to display.
-- **`s` (Optional, Enum("assignment_explanation" | "buckets.count" | "buckets.time.exp_avg" | "buckets.time.exp_avg_hour" | "buckets.time.max" | "buckets.time.min" | "buckets.time.total" | "data.buckets" | "data.earliest_record" | "data.empty_buckets" | "data.input_bytes" | "data.input_fields" | "data.input_records" | "data.invalid_dates" | "data.last" | "data.last_empty_bucket" | "data.last_sparse_bucket" | "data.latest_record" | "data.missing_fields" | "data.out_of_order_timestamps" | "data.processed_fields" | "data.processed_records" | "data.sparse_buckets" | "forecasts.memory.avg" | "forecasts.memory.max" | "forecasts.memory.min" | "forecasts.memory.total" | "forecasts.records.avg" | "forecasts.records.max" | "forecasts.records.min" | "forecasts.records.total" | "forecasts.time.avg" | "forecasts.time.max" | "forecasts.time.min" | "forecasts.time.total" | "forecasts.total" | "id" | "model.bucket_allocation_failures" | "model.by_fields" | "model.bytes" | "model.bytes_exceeded" | "model.categorization_status" | "model.categorized_doc_count" | "model.dead_category_count" | "model.failed_category_count" | "model.frequent_category_count" | "model.log_time" | "model.memory_limit" | "model.memory_status" | "model.over_fields" | "model.partition_fields" | "model.rare_category_count" | "model.timestamp" | "model.total_category_count" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "opened_time" | "state") | Enum("assignment_explanation" | "buckets.count" | "buckets.time.exp_avg" | "buckets.time.exp_avg_hour" | "buckets.time.max" | "buckets.time.min" | "buckets.time.total" | "data.buckets" | "data.earliest_record" | "data.empty_buckets" | "data.input_bytes" | "data.input_fields" | "data.input_records" | "data.invalid_dates" | "data.last" | "data.last_empty_bucket" | "data.last_sparse_bucket" | "data.latest_record" | "data.missing_fields" | "data.out_of_order_timestamps" | "data.processed_fields" | "data.processed_records" | "data.sparse_buckets" | "forecasts.memory.avg" | "forecasts.memory.max" | "forecasts.memory.min" | "forecasts.memory.total" | "forecasts.records.avg" | "forecasts.records.max" | "forecasts.records.min" | "forecasts.records.total" | "forecasts.time.avg" | "forecasts.time.max" | "forecasts.time.min" | "forecasts.time.total" | "forecasts.total" | "id" | "model.bucket_allocation_failures" | "model.by_fields" | "model.bytes" | "model.bytes_exceeded" | "model.categorization_status" | "model.categorized_doc_count" | "model.dead_category_count" | "model.failed_category_count" | "model.frequent_category_count" | "model.log_time" | "model.memory_limit" | "model.memory_status" | "model.over_fields" | "model.partition_fields" | "model.rare_category_count" | "model.timestamp" | "model.total_category_count" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "opened_time" | "state")[])**: List of column names or column aliases used to sort the response.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: The unit used to display time values.
+- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
+- **`h` (Optional, Enum("assignment_explanation" \| "buckets.count" \| "buckets.time.exp_avg" \| "buckets.time.exp_avg_hour" \| "buckets.time.max" \| "buckets.time.min" \| "buckets.time.total" \| "data.buckets" \| "data.earliest_record" \| "data.empty_buckets" \| "data.input_bytes" \| "data.input_fields" \| "data.input_records" \| "data.invalid_dates" \| "data.last" \| "data.last_empty_bucket" \| "data.last_sparse_bucket" \| "data.latest_record" \| "data.missing_fields" \| "data.out_of_order_timestamps" \| "data.processed_fields" \| "data.processed_records" \| "data.sparse_buckets" \| "forecasts.memory.avg" \| "forecasts.memory.max" \| "forecasts.memory.min" \| "forecasts.memory.total" \| "forecasts.records.avg" \| "forecasts.records.max" \| "forecasts.records.min" \| "forecasts.records.total" \| "forecasts.time.avg" \| "forecasts.time.max" \| "forecasts.time.min" \| "forecasts.time.total" \| "forecasts.total" \| "id" \| "model.bucket_allocation_failures" \| "model.by_fields" \| "model.bytes" \| "model.bytes_exceeded" \| "model.categorization_status" \| "model.categorized_doc_count" \| "model.dead_category_count" \| "model.failed_category_count" \| "model.frequent_category_count" \| "model.log_time" \| "model.memory_limit" \| "model.memory_status" \| "model.over_fields" \| "model.partition_fields" \| "model.rare_category_count" \| "model.timestamp" \| "model.total_category_count" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "opened_time" \| "state") \| Enum("assignment_explanation" \| "buckets.count" \| "buckets.time.exp_avg" \| "buckets.time.exp_avg_hour" \| "buckets.time.max" \| "buckets.time.min" \| "buckets.time.total" \| "data.buckets" \| "data.earliest_record" \| "data.empty_buckets" \| "data.input_bytes" \| "data.input_fields" \| "data.input_records" \| "data.invalid_dates" \| "data.last" \| "data.last_empty_bucket" \| "data.last_sparse_bucket" \| "data.latest_record" \| "data.missing_fields" \| "data.out_of_order_timestamps" \| "data.processed_fields" \| "data.processed_records" \| "data.sparse_buckets" \| "forecasts.memory.avg" \| "forecasts.memory.max" \| "forecasts.memory.min" \| "forecasts.memory.total" \| "forecasts.records.avg" \| "forecasts.records.max" \| "forecasts.records.min" \| "forecasts.records.total" \| "forecasts.time.avg" \| "forecasts.time.max" \| "forecasts.time.min" \| "forecasts.time.total" \| "forecasts.total" \| "id" \| "model.bucket_allocation_failures" \| "model.by_fields" \| "model.bytes" \| "model.bytes_exceeded" \| "model.categorization_status" \| "model.categorized_doc_count" \| "model.dead_category_count" \| "model.failed_category_count" \| "model.frequent_category_count" \| "model.log_time" \| "model.memory_limit" \| "model.memory_status" \| "model.over_fields" \| "model.partition_fields" \| "model.rare_category_count" \| "model.timestamp" \| "model.total_category_count" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "opened_time" \| "state")[])**: List of column names to display.
+- **`s` (Optional, Enum("assignment_explanation" \| "buckets.count" \| "buckets.time.exp_avg" \| "buckets.time.exp_avg_hour" \| "buckets.time.max" \| "buckets.time.min" \| "buckets.time.total" \| "data.buckets" \| "data.earliest_record" \| "data.empty_buckets" \| "data.input_bytes" \| "data.input_fields" \| "data.input_records" \| "data.invalid_dates" \| "data.last" \| "data.last_empty_bucket" \| "data.last_sparse_bucket" \| "data.latest_record" \| "data.missing_fields" \| "data.out_of_order_timestamps" \| "data.processed_fields" \| "data.processed_records" \| "data.sparse_buckets" \| "forecasts.memory.avg" \| "forecasts.memory.max" \| "forecasts.memory.min" \| "forecasts.memory.total" \| "forecasts.records.avg" \| "forecasts.records.max" \| "forecasts.records.min" \| "forecasts.records.total" \| "forecasts.time.avg" \| "forecasts.time.max" \| "forecasts.time.min" \| "forecasts.time.total" \| "forecasts.total" \| "id" \| "model.bucket_allocation_failures" \| "model.by_fields" \| "model.bytes" \| "model.bytes_exceeded" \| "model.categorization_status" \| "model.categorized_doc_count" \| "model.dead_category_count" \| "model.failed_category_count" \| "model.frequent_category_count" \| "model.log_time" \| "model.memory_limit" \| "model.memory_status" \| "model.over_fields" \| "model.partition_fields" \| "model.rare_category_count" \| "model.timestamp" \| "model.total_category_count" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "opened_time" \| "state") \| Enum("assignment_explanation" \| "buckets.count" \| "buckets.time.exp_avg" \| "buckets.time.exp_avg_hour" \| "buckets.time.max" \| "buckets.time.min" \| "buckets.time.total" \| "data.buckets" \| "data.earliest_record" \| "data.empty_buckets" \| "data.input_bytes" \| "data.input_fields" \| "data.input_records" \| "data.invalid_dates" \| "data.last" \| "data.last_empty_bucket" \| "data.last_sparse_bucket" \| "data.latest_record" \| "data.missing_fields" \| "data.out_of_order_timestamps" \| "data.processed_fields" \| "data.processed_records" \| "data.sparse_buckets" \| "forecasts.memory.avg" \| "forecasts.memory.max" \| "forecasts.memory.min" \| "forecasts.memory.total" \| "forecasts.records.avg" \| "forecasts.records.max" \| "forecasts.records.min" \| "forecasts.records.total" \| "forecasts.time.avg" \| "forecasts.time.max" \| "forecasts.time.min" \| "forecasts.time.total" \| "forecasts.total" \| "id" \| "model.bucket_allocation_failures" \| "model.by_fields" \| "model.bytes" \| "model.bytes_exceeded" \| "model.categorization_status" \| "model.categorized_doc_count" \| "model.dead_category_count" \| "model.failed_category_count" \| "model.frequent_category_count" \| "model.log_time" \| "model.memory_limit" \| "model.memory_status" \| "model.over_fields" \| "model.partition_fields" \| "model.rare_category_count" \| "model.timestamp" \| "model.total_category_count" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "opened_time" \| "state")[])**: List of column names or column aliases used to sort the response.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 
 ## client.cat.mlTrainedModels [_cat.ml_trained_models]
 Get trained models.
@@ -2845,12 +2845,12 @@ client.cat.mlTrainedModels({ ... })
 - **`allow_no_match` (Optional, boolean)**: Specifies what to do when the request: contains wildcard expressions and there are no models that match; contains the `_all` string or no identifiers and there are no matches; contains wildcard expressions and there are only partial matches.
 If `true`, the API returns an empty array when there are no matches and the subset of results when there are partial matches.
 If `false`, the API returns a 404 status code when there are no matches or only partial matches.
-- **`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))**: The unit used to display byte values.
-- **`h` (Optional, Enum("create_time" | "created_by" | "data_frame_analytics_id" | "description" | "heap_size" | "id" | "ingest.count" | "ingest.current" | "ingest.failed" | "ingest.pipelines" | "ingest.time" | "license" | "operations" | "version") | Enum("create_time" | "created_by" | "data_frame_analytics_id" | "description" | "heap_size" | "id" | "ingest.count" | "ingest.current" | "ingest.failed" | "ingest.pipelines" | "ingest.time" | "license" | "operations" | "version")[])**: A list of column names to display.
-- **`s` (Optional, Enum("create_time" | "created_by" | "data_frame_analytics_id" | "description" | "heap_size" | "id" | "ingest.count" | "ingest.current" | "ingest.failed" | "ingest.pipelines" | "ingest.time" | "license" | "operations" | "version") | Enum("create_time" | "created_by" | "data_frame_analytics_id" | "description" | "heap_size" | "id" | "ingest.count" | "ingest.current" | "ingest.failed" | "ingest.pipelines" | "ingest.time" | "license" | "operations" | "version")[])**: A list of column names or aliases used to sort the response.
+- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
+- **`h` (Optional, Enum("create_time" \| "created_by" \| "data_frame_analytics_id" \| "description" \| "heap_size" \| "id" \| "ingest.count" \| "ingest.current" \| "ingest.failed" \| "ingest.pipelines" \| "ingest.time" \| "license" \| "operations" \| "version") \| Enum("create_time" \| "created_by" \| "data_frame_analytics_id" \| "description" \| "heap_size" \| "id" \| "ingest.count" \| "ingest.current" \| "ingest.failed" \| "ingest.pipelines" \| "ingest.time" \| "license" \| "operations" \| "version")[])**: A list of column names to display.
+- **`s` (Optional, Enum("create_time" \| "created_by" \| "data_frame_analytics_id" \| "description" \| "heap_size" \| "id" \| "ingest.count" \| "ingest.current" \| "ingest.failed" \| "ingest.pipelines" \| "ingest.time" \| "license" \| "operations" \| "version") \| Enum("create_time" \| "created_by" \| "data_frame_analytics_id" \| "description" \| "heap_size" \| "id" \| "ingest.count" \| "ingest.current" \| "ingest.failed" \| "ingest.pipelines" \| "ingest.time" \| "license" \| "operations" \| "version")[])**: A list of column names or aliases used to sort the response.
 - **`from` (Optional, number)**: Skips the specified number of transforms.
 - **`size` (Optional, number)**: The maximum number of transforms to display.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: Unit used to display time values.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
 
 ## client.cat.nodeattrs [_cat.nodeattrs]
 Get node attribute information.
@@ -2867,15 +2867,15 @@ client.cat.nodeattrs({ ... })
 ### Arguments [_arguments_cat.nodeattrs]
 
 #### Request (object) [_request_cat.nodeattrs]
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`local` (Optional, boolean)**: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.cat.nodes [_cat.nodes]
 Get node information.
@@ -2892,15 +2892,16 @@ client.cat.nodes({ ... })
 ### Arguments [_arguments_cat.nodes]
 
 #### Request (object) [_request_cat.nodes]
-- **`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))**: The unit used to display byte values.
-- **`full_id` (Optional, boolean | string)**: If `true`, return the full node ID. If `false`, return the shortened node ID.
+- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
+- **`full_id` (Optional, boolean \| string)**: If `true`, return the full node ID. If `false`, return the shortened node ID.
 - **`include_unloaded_segments` (Optional, boolean)**: If true, the response includes information from segments that are not loaded into memory.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, Enum("build" \| "completion.size" \| "cpu" \| "disk.avail" \| "disk.total" \| "disk.used" \| "disk.used_percent" \| "fielddata.evictions" \| "fielddata.memory_size" \| "file_desc.current" \| "file_desc.max" \| "file_desc.percent" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "heap.current" \| "heap.max" \| "heap.percent" \| "http_address" \| "id" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "jdk" \| "load_1m" \| "load_5m" \| "load_15m" \| "mappings.total_count" \| "mappings.total_estimated_overhead_in_bytes" \| "master" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "name" \| "node.role" \| "pid" \| "port" \| "query_cache.memory_size" \| "query_cache.evictions" \| "query_cache.hit_count" \| "query_cache.miss_count" \| "ram.current" \| "ram.max" \| "ram.percent" \| "refresh.total" \| "refresh.time" \| "request_cache.memory_size" \| "request_cache.evictions" \| "request_cache.hit_count" \| "request_cache.miss_count" \| "script.compilations" \| "script.cache_evictions" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "shard_stats.total_count" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "uptime" \| "version") \| Enum("build" \| "completion.size" \| "cpu" \| "disk.avail" \| "disk.total" \| "disk.used" \| "disk.used_percent" \| "fielddata.evictions" \| "fielddata.memory_size" \| "file_desc.current" \| "file_desc.max" \| "file_desc.percent" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "heap.current" \| "heap.max" \| "heap.percent" \| "http_address" \| "id" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "jdk" \| "load_1m" \| "load_5m" \| "load_15m" \| "mappings.total_count" \| "mappings.total_estimated_overhead_in_bytes" \| "master" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "name" \| "node.role" \| "pid" \| "port" \| "query_cache.memory_size" \| "query_cache.evictions" \| "query_cache.hit_count" \| "query_cache.miss_count" \| "ram.current" \| "ram.max" \| "ram.percent" \| "refresh.total" \| "refresh.time" \| "request_cache.memory_size" \| "request_cache.evictions" \| "request_cache.hit_count" \| "request_cache.miss_count" \| "script.compilations" \| "script.cache_evictions" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "shard_stats.total_count" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "uptime" \| "version")[])**: A list of columns names to display.
+It supports simple wildcards.
+- **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: Unit used to display time values.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 
 ## client.cat.pendingTasks [_cat.pending_tasks]
 Get pending task information.
@@ -2917,16 +2918,16 @@ client.cat.pendingTasks({ ... })
 ### Arguments [_arguments_cat.pending_tasks]
 
 #### Request (object) [_request_cat.pending_tasks]
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`local` (Optional, boolean)**: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: Unit used to display time values.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
 
 ## client.cat.plugins [_cat.plugins]
 Get plugin information.
@@ -2943,8 +2944,8 @@ client.cat.plugins({ ... })
 ### Arguments [_arguments_cat.plugins]
 
 #### Request (object) [_request_cat.plugins]
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`include_bootstrap` (Optional, boolean)**: Include bootstrap plugins in the response
@@ -2952,7 +2953,7 @@ or `:desc` as a suffix to the column name.
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.cat.recovery [_cat.recovery]
 Get shard recovery information.
@@ -2971,16 +2972,16 @@ client.cat.recovery({ ... })
 ### Arguments [_arguments_cat.recovery]
 
 #### Request (object) [_request_cat.recovery]
-- **`index` (Optional, string | string[])**: A list of data streams, indices, and aliases used to limit the request.
+- **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`active_only` (Optional, boolean)**: If `true`, the response only includes ongoing shard recoveries.
-- **`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))**: The unit used to display byte values.
+- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: Unit used to display time values.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
 
 ## client.cat.repositories [_cat.repositories]
 Get snapshot repository information.
@@ -2997,15 +2998,15 @@ client.cat.repositories({ ... })
 ### Arguments [_arguments_cat.repositories]
 
 #### Request (object) [_request_cat.repositories]
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`local` (Optional, boolean)**: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.cat.segments [_cat.segments]
 Get segment information.
@@ -3023,19 +3024,19 @@ client.cat.segments({ ... })
 ### Arguments [_arguments_cat.segments]
 
 #### Request (object) [_request_cat.segments]
-- **`index` (Optional, string | string[])**: A list of data streams, indices, and aliases used to limit the request.
+- **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))**: The unit used to display byte values.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`local` (Optional, boolean)**: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.cat.shards [_cat.shards]
 Get shard information.
@@ -3053,16 +3054,16 @@ client.cat.shards({ ... })
 ### Arguments [_arguments_cat.shards]
 
 #### Request (object) [_request_cat.shards]
-- **`index` (Optional, string | string[])**: A list of data streams, indices, and aliases used to limit the request.
+- **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))**: The unit used to display byte values.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: Unit used to display time values.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
 
 ## client.cat.snapshots [_cat.snapshots]
 Get snapshot information.
@@ -3080,17 +3081,17 @@ client.cat.snapshots({ ... })
 ### Arguments [_arguments_cat.snapshots]
 
 #### Request (object) [_request_cat.snapshots]
-- **`repository` (Optional, string | string[])**: A list of snapshot repositories used to limit the request.
+- **`repository` (Optional, string \| string[])**: A list of snapshot repositories used to limit the request.
 Accepts wildcard expressions.
 `_all` returns all repositories.
 If any repository fails during the request, Elasticsearch returns an error.
 - **`ignore_unavailable` (Optional, boolean)**: If `true`, the response does not include information from unavailable snapshots.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: Unit used to display time values.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
 
 ## client.cat.tasks [_cat.tasks]
 Get task information.
@@ -3111,12 +3112,12 @@ client.cat.tasks({ ... })
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
 - **`nodes` (Optional, string[])**: Unique node identifiers, which are used to limit the response.
 - **`parent_task_id` (Optional, string)**: The parent task identifier, which is used to limit the response.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: Unit used to display time values.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`wait_for_completion` (Optional, boolean)**: If `true`, the request blocks until the task has completed.
 
@@ -3138,15 +3139,15 @@ client.cat.templates({ ... })
 #### Request (object) [_request_cat.templates]
 - **`name` (Optional, string)**: The name of the template to return.
 Accepts wildcard expressions. If omitted, all templates are returned.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`local` (Optional, boolean)**: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.cat.threadPool [_cat.thread_pool]
 Get thread pool statistics.
@@ -3164,18 +3165,18 @@ client.cat.threadPool({ ... })
 ### Arguments [_arguments_cat.thread_pool]
 
 #### Request (object) [_request_cat.thread_pool]
-- **`thread_pool_patterns` (Optional, string | string[])**: A list of thread pool names used to limit the request.
+- **`thread_pool_patterns` (Optional, string \| string[])**: A list of thread pool names used to limit the request.
 Accepts wildcard expressions.
-- **`h` (Optional, string | string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string | string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: The unit used to display time values.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 - **`local` (Optional, boolean)**: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.cat.transforms [_cat.transforms]
 Get transform information.
@@ -3201,9 +3202,9 @@ If you do not specify one of these options, the API returns information for all 
 If `true`, it returns an empty transforms array when there are no matches and the subset of results when there are partial matches.
 If `false`, the request returns a 404 status code when there are no matches or only partial matches.
 - **`from` (Optional, number)**: Skips the specified number of transforms.
-- **`h` (Optional, Enum("changes_last_detection_time" | "checkpoint" | "checkpoint_duration_time_exp_avg" | "checkpoint_progress" | "create_time" | "delete_time" | "description" | "dest_index" | "documents_deleted" | "documents_indexed" | "docs_per_second" | "documents_processed" | "frequency" | "id" | "index_failure" | "index_time" | "index_total" | "indexed_documents_exp_avg" | "last_search_time" | "max_page_search_size" | "pages_processed" | "pipeline" | "processed_documents_exp_avg" | "processing_time" | "reason" | "search_failure" | "search_time" | "search_total" | "source_index" | "state" | "transform_type" | "trigger_count" | "version") | Enum("changes_last_detection_time" | "checkpoint" | "checkpoint_duration_time_exp_avg" | "checkpoint_progress" | "create_time" | "delete_time" | "description" | "dest_index" | "documents_deleted" | "documents_indexed" | "docs_per_second" | "documents_processed" | "frequency" | "id" | "index_failure" | "index_time" | "index_total" | "indexed_documents_exp_avg" | "last_search_time" | "max_page_search_size" | "pages_processed" | "pipeline" | "processed_documents_exp_avg" | "processing_time" | "reason" | "search_failure" | "search_time" | "search_total" | "source_index" | "state" | "transform_type" | "trigger_count" | "version")[])**: List of column names to display.
-- **`s` (Optional, Enum("changes_last_detection_time" | "checkpoint" | "checkpoint_duration_time_exp_avg" | "checkpoint_progress" | "create_time" | "delete_time" | "description" | "dest_index" | "documents_deleted" | "documents_indexed" | "docs_per_second" | "documents_processed" | "frequency" | "id" | "index_failure" | "index_time" | "index_total" | "indexed_documents_exp_avg" | "last_search_time" | "max_page_search_size" | "pages_processed" | "pipeline" | "processed_documents_exp_avg" | "processing_time" | "reason" | "search_failure" | "search_time" | "search_total" | "source_index" | "state" | "transform_type" | "trigger_count" | "version") | Enum("changes_last_detection_time" | "checkpoint" | "checkpoint_duration_time_exp_avg" | "checkpoint_progress" | "create_time" | "delete_time" | "description" | "dest_index" | "documents_deleted" | "documents_indexed" | "docs_per_second" | "documents_processed" | "frequency" | "id" | "index_failure" | "index_time" | "index_total" | "indexed_documents_exp_avg" | "last_search_time" | "max_page_search_size" | "pages_processed" | "pipeline" | "processed_documents_exp_avg" | "processing_time" | "reason" | "search_failure" | "search_time" | "search_total" | "source_index" | "state" | "transform_type" | "trigger_count" | "version")[])**: List of column names or column aliases used to sort the response.
-- **`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: The unit used to display time values.
+- **`h` (Optional, Enum("changes_last_detection_time" \| "checkpoint" \| "checkpoint_duration_time_exp_avg" \| "checkpoint_progress" \| "create_time" \| "delete_time" \| "description" \| "dest_index" \| "documents_deleted" \| "documents_indexed" \| "docs_per_second" \| "documents_processed" \| "frequency" \| "id" \| "index_failure" \| "index_time" \| "index_total" \| "indexed_documents_exp_avg" \| "last_search_time" \| "max_page_search_size" \| "pages_processed" \| "pipeline" \| "processed_documents_exp_avg" \| "processing_time" \| "reason" \| "search_failure" \| "search_time" \| "search_total" \| "source_index" \| "state" \| "transform_type" \| "trigger_count" \| "version") \| Enum("changes_last_detection_time" \| "checkpoint" \| "checkpoint_duration_time_exp_avg" \| "checkpoint_progress" \| "create_time" \| "delete_time" \| "description" \| "dest_index" \| "documents_deleted" \| "documents_indexed" \| "docs_per_second" \| "documents_processed" \| "frequency" \| "id" \| "index_failure" \| "index_time" \| "index_total" \| "indexed_documents_exp_avg" \| "last_search_time" \| "max_page_search_size" \| "pages_processed" \| "pipeline" \| "processed_documents_exp_avg" \| "processing_time" \| "reason" \| "search_failure" \| "search_time" \| "search_total" \| "source_index" \| "state" \| "transform_type" \| "trigger_count" \| "version")[])**: List of column names to display.
+- **`s` (Optional, Enum("changes_last_detection_time" \| "checkpoint" \| "checkpoint_duration_time_exp_avg" \| "checkpoint_progress" \| "create_time" \| "delete_time" \| "description" \| "dest_index" \| "documents_deleted" \| "documents_indexed" \| "docs_per_second" \| "documents_processed" \| "frequency" \| "id" \| "index_failure" \| "index_time" \| "index_total" \| "indexed_documents_exp_avg" \| "last_search_time" \| "max_page_search_size" \| "pages_processed" \| "pipeline" \| "processed_documents_exp_avg" \| "processing_time" \| "reason" \| "search_failure" \| "search_time" \| "search_total" \| "source_index" \| "state" \| "transform_type" \| "trigger_count" \| "version") \| Enum("changes_last_detection_time" \| "checkpoint" \| "checkpoint_duration_time_exp_avg" \| "checkpoint_progress" \| "create_time" \| "delete_time" \| "description" \| "dest_index" \| "documents_deleted" \| "documents_indexed" \| "docs_per_second" \| "documents_processed" \| "frequency" \| "id" \| "index_failure" \| "index_time" \| "index_total" \| "indexed_documents_exp_avg" \| "last_search_time" \| "max_page_search_size" \| "pages_processed" \| "pipeline" \| "processed_documents_exp_avg" \| "processing_time" \| "reason" \| "search_failure" \| "search_time" \| "search_total" \| "source_index" \| "state" \| "transform_type" \| "trigger_count" \| "version")[])**: List of column names or column aliases used to sort the response.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 - **`size` (Optional, number)**: The maximum number of transforms to obtain.
 
 ## client.ccr.deleteAutoFollowPattern [_ccr.delete_auto_follow_pattern]
@@ -3221,7 +3222,7 @@ client.ccr.deleteAutoFollowPattern({ name })
 
 #### Request (object) [_request_ccr.delete_auto_follow_pattern]
 - **`name` (string)**: The auto-follow pattern collection to delete.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 It can also be set to `-1` to indicate that the request should never timeout.
 
@@ -3246,21 +3247,21 @@ client.ccr.follow({ index, leader_index, remote_cluster })
 - **`max_outstanding_read_requests` (Optional, number)**: The maximum number of outstanding reads requests from the remote cluster.
 - **`max_outstanding_write_requests` (Optional, number)**: The maximum number of outstanding write requests on the follower.
 - **`max_read_request_operation_count` (Optional, number)**: The maximum number of operations to pull per read from the remote cluster.
-- **`max_read_request_size` (Optional, number | string)**: The maximum size in bytes of per read of a batch of operations pulled from the remote cluster.
-- **`max_retry_delay` (Optional, string | -1 | 0)**: The maximum time to wait before retrying an operation that failed exceptionally. An exponential backoff strategy is employed when
+- **`max_read_request_size` (Optional, number \| string)**: The maximum size in bytes of per read of a batch of operations pulled from the remote cluster.
+- **`max_retry_delay` (Optional, string \| -1 \| 0)**: The maximum time to wait before retrying an operation that failed exceptionally. An exponential backoff strategy is employed when
 retrying.
 - **`max_write_buffer_count` (Optional, number)**: The maximum number of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will be
 deferred until the number of queued operations goes below the limit.
-- **`max_write_buffer_size` (Optional, number | string)**: The maximum total bytes of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will
+- **`max_write_buffer_size` (Optional, number \| string)**: The maximum total bytes of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will
 be deferred until the total bytes of queued operations goes below the limit.
 - **`max_write_request_operation_count` (Optional, number)**: The maximum number of operations per bulk write request executed on the follower.
-- **`max_write_request_size` (Optional, number | string)**: The maximum total bytes of operations per bulk write request executed on the follower.
-- **`read_poll_timeout` (Optional, string | -1 | 0)**: The maximum time to wait for new operations on the remote cluster when the follower index is synchronized with the leader index.
+- **`max_write_request_size` (Optional, number \| string)**: The maximum total bytes of operations per bulk write request executed on the follower.
+- **`read_poll_timeout` (Optional, string \| -1 \| 0)**: The maximum time to wait for new operations on the remote cluster when the follower index is synchronized with the leader index.
 When the timeout has elapsed, the poll for operations will return to the follower so that it can update some statistics.
 Then the follower will immediately attempt to read from the leader again.
 - **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })**: Settings to override from the leader index.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: Specifies the number of shards to wait on being active before responding. This defaults to waiting on none of the shards to be
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: Specifies the number of shards to wait on being active before responding. This defaults to waiting on none of the shards to be
 active.
 A shard must be restored from the leader index before being active. Restoring a follower shard requires transferring all the
 remote Lucene segment files to the follower index.
@@ -3280,8 +3281,8 @@ client.ccr.followInfo({ index })
 ### Arguments [_arguments_ccr.follow_info]
 
 #### Request (object) [_request_ccr.follow_info]
-- **`index` (string | string[])**: A comma-delimited list of follower index patterns.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`index` (string \| string[])**: A comma-delimited list of follower index patterns.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 It can also be set to `-1` to indicate that the request should never timeout.
 
@@ -3300,8 +3301,8 @@ client.ccr.followStats({ index })
 ### Arguments [_arguments_ccr.follow_stats]
 
 #### Request (object) [_request_ccr.follow_stats]
-- **`index` (string | string[])**: A comma-delimited list of index patterns.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response.
+- **`index` (string \| string[])**: A comma-delimited list of index patterns.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.ccr.forgetFollower [_ccr.forget_follower]
@@ -3332,7 +3333,7 @@ client.ccr.forgetFollower({ index })
 - **`follower_index` (Optional, string)**
 - **`follower_index_uuid` (Optional, string)**
 - **`leader_remote_cluster` (Optional, string)**
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.ccr.getAutoFollowPattern [_ccr.get_auto_follow_pattern]
 Get auto-follow patterns.
@@ -3350,7 +3351,7 @@ client.ccr.getAutoFollowPattern({ ... })
 #### Request (object) [_request_ccr.get_auto_follow_pattern]
 - **`name` (Optional, string)**: The auto-follow pattern collection that you want to retrieve.
 If you do not specify a name, the API returns information for all collections.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 It can also be set to `-1` to indicate that the request should never timeout.
 
@@ -3375,7 +3376,7 @@ client.ccr.pauseAutoFollowPattern({ name })
 
 #### Request (object) [_request_ccr.pause_auto_follow_pattern]
 - **`name` (string)**: The name of the auto-follow pattern to pause.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 It can also be set to `-1` to indicate that the request should never timeout.
 
@@ -3397,7 +3398,7 @@ client.ccr.pauseFollow({ index })
 
 #### Request (object) [_request_ccr.pause_follow]
 - **`index` (string)**: The name of the follower index.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 It can also be set to `-1` to indicate that the request should never timeout.
 
@@ -3427,15 +3428,15 @@ client.ccr.putAutoFollowPattern({ name, remote_cluster })
 - **`max_outstanding_read_requests` (Optional, number)**: The maximum number of outstanding reads requests from the remote cluster.
 - **`settings` (Optional, Record<string, User-defined value>)**: Settings to override from the leader index. Note that certain settings can not be overrode (e.g., index.number_of_shards).
 - **`max_outstanding_write_requests` (Optional, number)**: The maximum number of outstanding reads requests from the remote cluster.
-- **`read_poll_timeout` (Optional, string | -1 | 0)**: The maximum time to wait for new operations on the remote cluster when the follower index is synchronized with the leader index. When the timeout has elapsed, the poll for operations will return to the follower so that it can update some statistics. Then the follower will immediately attempt to read from the leader again.
+- **`read_poll_timeout` (Optional, string \| -1 \| 0)**: The maximum time to wait for new operations on the remote cluster when the follower index is synchronized with the leader index. When the timeout has elapsed, the poll for operations will return to the follower so that it can update some statistics. Then the follower will immediately attempt to read from the leader again.
 - **`max_read_request_operation_count` (Optional, number)**: The maximum number of operations to pull per read from the remote cluster.
-- **`max_read_request_size` (Optional, number | string)**: The maximum size in bytes of per read of a batch of operations pulled from the remote cluster.
-- **`max_retry_delay` (Optional, string | -1 | 0)**: The maximum time to wait before retrying an operation that failed exceptionally. An exponential backoff strategy is employed when retrying.
+- **`max_read_request_size` (Optional, number \| string)**: The maximum size in bytes of per read of a batch of operations pulled from the remote cluster.
+- **`max_retry_delay` (Optional, string \| -1 \| 0)**: The maximum time to wait before retrying an operation that failed exceptionally. An exponential backoff strategy is employed when retrying.
 - **`max_write_buffer_count` (Optional, number)**: The maximum number of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will be deferred until the number of queued operations goes below the limit.
-- **`max_write_buffer_size` (Optional, number | string)**: The maximum total bytes of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will be deferred until the total bytes of queued operations goes below the limit.
+- **`max_write_buffer_size` (Optional, number \| string)**: The maximum total bytes of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will be deferred until the total bytes of queued operations goes below the limit.
 - **`max_write_request_operation_count` (Optional, number)**: The maximum number of operations per bulk write request executed on the follower.
-- **`max_write_request_size` (Optional, number | string)**: The maximum total bytes of operations per bulk write request executed on the follower.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`max_write_request_size` (Optional, number \| string)**: The maximum total bytes of operations per bulk write request executed on the follower.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.ccr.resumeAutoFollowPattern [_ccr.resume_auto_follow_pattern]
 Resume an auto-follow pattern.
@@ -3454,7 +3455,7 @@ client.ccr.resumeAutoFollowPattern({ name })
 
 #### Request (object) [_request_ccr.resume_auto_follow_pattern]
 - **`name` (string)**: The name of the auto-follow pattern to resume.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 It can also be set to `-1` to indicate that the request should never timeout.
 
@@ -3479,13 +3480,13 @@ client.ccr.resumeFollow({ index })
 - **`max_outstanding_write_requests` (Optional, number)**
 - **`max_read_request_operation_count` (Optional, number)**
 - **`max_read_request_size` (Optional, string)**
-- **`max_retry_delay` (Optional, string | -1 | 0)**
+- **`max_retry_delay` (Optional, string \| -1 \| 0)**
 - **`max_write_buffer_count` (Optional, number)**
 - **`max_write_buffer_size` (Optional, string)**
 - **`max_write_request_operation_count` (Optional, number)**
 - **`max_write_request_size` (Optional, string)**
-- **`read_poll_timeout` (Optional, string | -1 | 0)**
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`read_poll_timeout` (Optional, string \| -1 \| 0)**
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.ccr.stats [_ccr.stats]
 Get cross-cluster replication stats.
@@ -3501,10 +3502,10 @@ client.ccr.stats({ ... })
 ### Arguments [_arguments_ccr.stats]
 
 #### Request (object) [_request_ccr.stats]
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 It can also be set to `-1` to indicate that the request should never timeout.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.ccr.unfollow [_ccr.unfollow]
 Unfollow an index.
@@ -3526,7 +3527,7 @@ client.ccr.unfollow({ index })
 
 #### Request (object) [_request_ccr.unfollow]
 - **`index` (string)**: The name of the follower index.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 It can also be set to `-1` to indicate that the request should never timeout.
 
@@ -3552,7 +3553,7 @@ client.cluster.allocationExplain({ ... })
 - **`shard` (Optional, number)**: Specifies the ID of the shard that you would like an explanation for.
 - **`include_disk_info` (Optional, boolean)**: If true, returns information about disk usage and shard sizes.
 - **`include_yes_decisions` (Optional, boolean)**: If true, returns YES decisions in explanation.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.cluster.deleteComponentTemplate [_cluster.delete_component_template]
 Delete component templates.
@@ -3567,10 +3568,10 @@ client.cluster.deleteComponentTemplate({ name })
 ### Arguments [_arguments_cluster.delete_component_template]
 
 #### Request (object) [_request_cluster.delete_component_template]
-- **`name` (string | string[])**: List or wildcard expression of component template names used to limit the request.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`name` (string \| string[])**: List or wildcard expression of component template names used to limit the request.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.cluster.deleteVotingConfigExclusions [_cluster.delete_voting_config_exclusions]
@@ -3586,7 +3587,7 @@ client.cluster.deleteVotingConfigExclusions({ ... })
 ### Arguments [_arguments_cluster.delete_voting_config_exclusions]
 
 #### Request (object) [_request_cluster.delete_voting_config_exclusions]
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 - **`wait_for_removal` (Optional, boolean)**: Specifies whether to wait for all excluded nodes to be removed from the
 cluster before clearing the voting configuration exclusions list.
 Defaults to true, meaning that all excluded nodes must be removed from
@@ -3607,9 +3608,9 @@ client.cluster.existsComponentTemplate({ name })
 ### Arguments [_arguments_cluster.exists_component_template]
 
 #### Request (object) [_request_cluster.exists_component_template]
-- **`name` (string | string[])**: List of component template names used to limit the request.
+- **`name` (string \| string[])**: List of component template names used to limit the request.
 Wildcard (*) expressions are supported.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is
 received before the timeout expires, the request fails and returns an
 error.
 - **`local` (Optional, boolean)**: If true, the request retrieves information from the local node only.
@@ -3634,7 +3635,7 @@ Wildcard (`*`) expressions are supported.
 - **`include_defaults` (Optional, boolean)**: Return all default configurations for the component template (default: false)
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only.
 If `false`, information is retrieved from the master node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.cluster.getSettings [_cluster.get_settings]
@@ -3652,9 +3653,9 @@ client.cluster.getSettings({ ... })
 #### Request (object) [_request_cluster.get_settings]
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
 - **`include_defaults` (Optional, boolean)**: If `true`, returns default cluster settings from the local node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.cluster.health [_cluster.health]
@@ -3679,18 +3680,18 @@ client.cluster.health({ ... })
 ### Arguments [_arguments_cluster.health]
 
 #### Request (object) [_request_cluster.health]
-- **`index` (Optional, string | string[])**: List of data streams, indices, and index aliases used to limit the request. Wildcard expressions (`*`) are supported. To target all data streams and indices in a cluster, omit this parameter or use _all or `*`.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
-- **`level` (Optional, Enum("cluster" | "indices" | "shards"))**: Can be one of cluster, indices or shards. Controls the details level of the health information returned.
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and index aliases used to limit the request. Wildcard expressions (`*`) are supported. To target all data streams and indices in a cluster, omit this parameter or use _all or `*`.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+- **`level` (Optional, Enum("cluster" \| "indices" \| "shards"))**: Can be one of cluster, indices or shards. Controls the details level of the health information returned.
 - **`local` (Optional, boolean)**: If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: A number controlling to how many active shards to wait for, all to wait for all shards in the cluster to be active, or 0 to not wait.
-- **`wait_for_events` (Optional, Enum("immediate" | "urgent" | "high" | "normal" | "low" | "languid"))**: Can be one of immediate, urgent, high, normal, low, languid. Wait until all currently queued events with the given priority are processed.
-- **`wait_for_nodes` (Optional, string | number)**: The request waits until the specified number N of nodes is available. It also accepts >=N, <=N, >N and <N. Alternatively, it is possible to use ge(N), le(N), gt(N) and lt(N) notation.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: A number controlling to how many active shards to wait for, all to wait for all shards in the cluster to be active, or 0 to not wait.
+- **`wait_for_events` (Optional, Enum("immediate" \| "urgent" \| "high" \| "normal" \| "low" \| "languid"))**: Can be one of immediate, urgent, high, normal, low, languid. Wait until all currently queued events with the given priority are processed.
+- **`wait_for_nodes` (Optional, string \| number)**: The request waits until the specified number N of nodes is available. It also accepts >=N, <=N, >N and <N. Alternatively, it is possible to use ge(N), le(N), gt(N) and lt(N) notation.
 - **`wait_for_no_initializing_shards` (Optional, boolean)**: A boolean value which controls whether to wait (until the timeout provided) for the cluster to have no shard initializations. Defaults to false, which means it will not wait for initializing shards.
 - **`wait_for_no_relocating_shards` (Optional, boolean)**: A boolean value which controls whether to wait (until the timeout provided) for the cluster to have no shard relocations. Defaults to false, which means it will not wait for relocating shards.
-- **`wait_for_status` (Optional, Enum("green" | "yellow" | "red"))**: One of green, yellow or red. Will wait (until the timeout provided) until the status of the cluster changes to the one provided or better, i.e. green > yellow > red. By default, will not wait for any status.
+- **`wait_for_status` (Optional, Enum("green" \| "yellow" \| "red"))**: One of green, yellow or red. Will wait (until the timeout provided) until the status of the cluster changes to the one provided or better, i.e. green > yellow > red. By default, will not wait for any status.
 
 ## client.cluster.info [_cluster.info]
 Get cluster info.
@@ -3705,7 +3706,7 @@ client.cluster.info({ target })
 ### Arguments [_arguments_cluster.info]
 
 #### Request (object) [_request_cluster.info]
-- **`target` (Enum("_all" | "http" | "ingest" | "thread_pool" | "script") | Enum("_all" | "http" | "ingest" | "thread_pool" | "script")[])**: Limits the information returned to the specific target. Supports a list, such as http,ingest.
+- **`target` (Enum("_all" \| "http" \| "ingest" \| "thread_pool" \| "script") \| Enum("_all" \| "http" \| "ingest" \| "thread_pool" \| "script")[])**: Limits the information returned to the specific target. Supports a list, such as http,ingest.
 
 ## client.cluster.pendingTasks [_cluster.pending_tasks]
 Get the pending cluster tasks.
@@ -3726,7 +3727,7 @@ client.cluster.pendingTasks({ ... })
 #### Request (object) [_request_cluster.pending_tasks]
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only.
 If `false`, information is retrieved from the master node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.cluster.postVotingConfigExclusions [_cluster.post_voting_config_exclusions]
@@ -3758,12 +3759,12 @@ client.cluster.postVotingConfigExclusions({ ... })
 ### Arguments [_arguments_cluster.post_voting_config_exclusions]
 
 #### Request (object) [_request_cluster.post_voting_config_exclusions]
-- **`node_names` (Optional, string | string[])**: A list of the names of the nodes to exclude from the
+- **`node_names` (Optional, string \| string[])**: A list of the names of the nodes to exclude from the
 voting configuration. If specified, you may not also specify node_ids.
-- **`node_ids` (Optional, string | string[])**: A list of the persistent ids of the nodes to exclude
+- **`node_ids` (Optional, string \| string[])**: A list of the persistent ids of the nodes to exclude
 from the voting configuration. If specified, you may not also specify node_names.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
-- **`timeout` (Optional, string | -1 | 0)**: When adding a voting configuration exclusion, the API waits for the
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: When adding a voting configuration exclusion, the API waits for the
 specified nodes to be excluded from the voting configuration before
 returning. If the timeout expires before the appropriate condition
 is satisfied, the request fails and returns an error.
@@ -3815,7 +3816,7 @@ To unset `_meta`, replace the template without specifying this information.
 - **`deprecated` (Optional, boolean)**: Marks this index template as deprecated. When creating or updating a non-deprecated index template
 that uses deprecated components, Elasticsearch will emit a deprecation warning.
 - **`create` (Optional, boolean)**: If `true`, this request cannot replace or update existing component templates.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.cluster.putSettings [_cluster.put_settings]
@@ -3851,8 +3852,8 @@ client.cluster.putSettings({ ... })
 - **`persistent` (Optional, Record<string, User-defined value>)**
 - **`transient` (Optional, Record<string, User-defined value>)**
 - **`flat_settings` (Optional, boolean)**: Return settings in flat format (default: false)
-- **`master_timeout` (Optional, string | -1 | 0)**: Explicit operation timeout for connection to master node
-- **`timeout` (Optional, string | -1 | 0)**: Explicit operation timeout
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Explicit operation timeout for connection to master node
+- **`timeout` (Optional, string \| -1 \| 0)**: Explicit operation timeout
 
 ## client.cluster.remoteInfo [_cluster.remote_info]
 Get remote cluster information.
@@ -3902,10 +3903,10 @@ client.cluster.reroute({ ... })
 - **`dry_run` (Optional, boolean)**: If true, then the request simulates the operation.
 It will calculate the result of applying the commands to the current cluster state and return the resulting cluster state after the commands (and rebalancing) have been applied; it will not actually perform the requested changes.
 - **`explain` (Optional, boolean)**: If true, then the response contains an explanation of why the commands can or cannot run.
-- **`metric` (Optional, string | string[])**: Limits the information returned to the specified metrics.
+- **`metric` (Optional, string \| string[])**: Limits the information returned to the specified metrics.
 - **`retry_failed` (Optional, boolean)**: If true, then retries allocation of shards that are blocked due to too many subsequent allocation failures.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.cluster.state [_cluster.state]
 Get the cluster state.
@@ -3937,16 +3938,16 @@ client.cluster.state({ ... })
 ### Arguments [_arguments_cluster.state]
 
 #### Request (object) [_request_cluster.state]
-- **`metric` (Optional, string | string[])**: Limit the information returned to the specified metrics
-- **`index` (Optional, string | string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
+- **`metric` (Optional, string \| string[])**: Limit the information returned to the specified metrics
+- **`index` (Optional, string \| string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
 - **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`flat_settings` (Optional, boolean)**: Return settings in flat format (default: false)
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
 - **`local` (Optional, boolean)**: Return local information, do not retrieve the state from master node (default: false)
-- **`master_timeout` (Optional, string | -1 | 0)**: Specify timeout for connection to master
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
 - **`wait_for_metadata_version` (Optional, number)**: Wait for the metadata version to be equal or greater than the specified metadata version
-- **`wait_for_timeout` (Optional, string | -1 | 0)**: The maximum time to wait for wait_for_metadata_version before timing out
+- **`wait_for_timeout` (Optional, string \| -1 \| 0)**: The maximum time to wait for wait_for_metadata_version before timing out
 
 ## client.cluster.stats [_cluster.stats]
 Get cluster statistics.
@@ -3961,9 +3962,9 @@ client.cluster.stats({ ... })
 ### Arguments [_arguments_cluster.stats]
 
 #### Request (object) [_request_cluster.stats]
-- **`node_id` (Optional, string | string[])**: List of node filters used to limit returned information. Defaults to all nodes in the cluster.
+- **`node_id` (Optional, string \| string[])**: List of node filters used to limit returned information. Defaults to all nodes in the cluster.
 - **`include_remotes` (Optional, boolean)**: Include remote cluster data into the response
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for each node to respond.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for each node to respond.
 If a node does not respond before its timeout expires, the response does not include its stats.
 However, timed out nodes are included in the response’s `_nodes.failed` property. Defaults to no timeout.
 
@@ -4037,9 +4038,9 @@ client.connector.list({ ... })
 #### Request (object) [_request_connector.list]
 - **`from` (Optional, number)**: Starting offset (default: 0)
 - **`size` (Optional, number)**: Specifies a max number of results to get
-- **`index_name` (Optional, string | string[])**: A list of connector index names to fetch connector documents for
-- **`connector_name` (Optional, string | string[])**: A list of connector names to fetch connector documents for
-- **`service_type` (Optional, string | string[])**: A list of connector service types to fetch connector documents for
+- **`index_name` (Optional, string \| string[])**: A list of connector index names to fetch connector documents for
+- **`connector_name` (Optional, string \| string[])**: A list of connector names to fetch connector documents for
+- **`service_type` (Optional, string \| string[])**: A list of connector service types to fetch connector documents for
 - **`include_deleted` (Optional, boolean)**: A flag to indicate if the desired connector should be fetched, even if it was soft-deleted.
 - **`query` (Optional, string)**: A wildcard query string that filters connectors with matching name, description or index name
 
@@ -4212,9 +4213,9 @@ client.connector.syncJobList({ ... })
 #### Request (object) [_request_connector.sync_job_list]
 - **`from` (Optional, number)**: Starting offset (default: 0)
 - **`size` (Optional, number)**: Specifies a max number of results to get
-- **`status` (Optional, Enum("canceling" | "canceled" | "completed" | "error" | "in_progress" | "pending" | "suspended"))**: A sync job status to fetch connector sync jobs for
+- **`status` (Optional, Enum("canceling" \| "canceled" \| "completed" \| "error" \| "in_progress" \| "pending" \| "suspended"))**: A sync job status to fetch connector sync jobs for
 - **`connector_id` (Optional, string)**: A connector id to fetch connector sync jobs for
-- **`job_type` (Optional, Enum("full" | "incremental" | "access_control") | Enum("full" | "incremental" | "access_control")[])**: A list of job types to fetch the sync jobs for
+- **`job_type` (Optional, Enum("full" \| "incremental" \| "access_control") \| Enum("full" \| "incremental" \| "access_control")[])**: A list of job types to fetch the sync jobs for
 
 ## client.connector.syncJobPost [_connector.sync_job_post]
 Create a connector sync job.
@@ -4231,8 +4232,8 @@ client.connector.syncJobPost({ id })
 
 #### Request (object) [_request_connector.sync_job_post]
 - **`id` (string)**: The id of the associated connector
-- **`job_type` (Optional, Enum("full" | "incremental" | "access_control"))**
-- **`trigger_method` (Optional, Enum("on_demand" | "scheduled"))**
+- **`job_type` (Optional, Enum("full" \| "incremental" \| "access_control"))**
+- **`trigger_method` (Optional, Enum("on_demand" \| "scheduled"))**
 
 ## client.connector.syncJobUpdateStats [_connector.sync_job_update_stats]
 Set the connector sync job stats.
@@ -4256,7 +4257,7 @@ client.connector.syncJobUpdateStats({ connector_sync_job_id, deleted_document_co
 - **`deleted_document_count` (number)**: The number of documents the sync job deleted.
 - **`indexed_document_count` (number)**: The number of documents the sync job indexed.
 - **`indexed_document_volume` (number)**: The total size of the data (in MiB) the sync job indexed.
-- **`last_seen` (Optional, string | -1 | 0)**: The timestamp to use in the `last_seen` property for the connector sync job.
+- **`last_seen` (Optional, string \| -1 \| 0)**: The timestamp to use in the `last_seen` property for the connector sync job.
 - **`metadata` (Optional, Record<string, User-defined value>)**: The connector-specific metadata.
 - **`total_document_count` (Optional, number)**: The total number of documents in the target index after the sync job finished.
 
@@ -4332,7 +4333,7 @@ client.connector.updateError({ connector_id, error })
 
 #### Request (object) [_request_connector.update_error]
 - **`connector_id` (string)**: The unique identifier of the connector to be updated
-- **`error` (T | null)**
+- **`error` (T \| null)**
 
 ## client.connector.updateFeatures [_connector.update_features]
 Update the connector features.
@@ -4415,7 +4416,7 @@ client.connector.updateIndexName({ connector_id, index_name })
 
 #### Request (object) [_request_connector.update_index_name]
 - **`connector_id` (string)**: The unique identifier of the connector to be updated
-- **`index_name` (T | null)**
+- **`index_name` (T \| null)**
 
 ## client.connector.updateName [_connector.update_name]
 Update the connector name and description.
@@ -4508,7 +4509,7 @@ client.connector.updateStatus({ connector_id, status })
 
 #### Request (object) [_request_connector.update_status]
 - **`connector_id` (string)**: The unique identifier of the connector to be updated
-- **`status` (Enum("created" | "needs_configuration" | "configured" | "connected" | "error"))**
+- **`status` (Enum("created" \| "needs_configuration" \| "configured" \| "connected" \| "error"))**
 
 ## client.danglingIndices.deleteDanglingIndex [_dangling_indices.delete_dangling_index]
 Delete a dangling index.
@@ -4526,8 +4527,8 @@ client.danglingIndices.deleteDanglingIndex({ index_uuid, accept_data_loss })
 #### Request (object) [_request_dangling_indices.delete_dangling_index]
 - **`index_uuid` (string)**: The UUID of the index to delete. Use the get dangling indices API to find the UUID.
 - **`accept_data_loss` (boolean)**: This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index.
-- **`master_timeout` (Optional, string | -1 | 0)**: Specify timeout for connection to master
-- **`timeout` (Optional, string | -1 | 0)**: Explicit operation timeout
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
+- **`timeout` (Optional, string \| -1 \| 0)**: Explicit operation timeout
 
 ## client.danglingIndices.importDanglingIndex [_dangling_indices.import_dangling_index]
 Import a dangling index.
@@ -4547,8 +4548,8 @@ client.danglingIndices.importDanglingIndex({ index_uuid, accept_data_loss })
 - **`index_uuid` (string)**: The UUID of the index to import. Use the get dangling indices API to locate the UUID.
 - **`accept_data_loss` (boolean)**: This parameter must be set to true to import a dangling index.
 Because Elasticsearch cannot know where the dangling index data came from or determine which shard copies are fresh and which are stale, it cannot guarantee that the imported data represents the latest state of the index when it was last in the cluster.
-- **`master_timeout` (Optional, string | -1 | 0)**: Specify timeout for connection to master
-- **`timeout` (Optional, string | -1 | 0)**: Explicit operation timeout
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
+- **`timeout` (Optional, string \| -1 \| 0)**: Explicit operation timeout
 
 ## client.danglingIndices.listDanglingIndices [_dangling_indices.list_dangling_indices]
 Get the dangling indices.
@@ -4579,7 +4580,7 @@ client.enrich.deletePolicy({ name })
 
 #### Request (object) [_request_enrich.delete_policy]
 - **`name` (string)**: Enrich policy to delete.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.enrich.executePolicy [_enrich.execute_policy]
 Run an enrich policy.
@@ -4595,7 +4596,7 @@ client.enrich.executePolicy({ name })
 
 #### Request (object) [_request_enrich.execute_policy]
 - **`name` (string)**: Enrich policy to execute.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 - **`wait_for_completion` (Optional, boolean)**: If `true`, the request blocks other enrich policy execution requests until complete.
 
 ## client.enrich.getPolicy [_enrich.get_policy]
@@ -4611,9 +4612,9 @@ client.enrich.getPolicy({ ... })
 ### Arguments [_arguments_enrich.get_policy]
 
 #### Request (object) [_request_enrich.get_policy]
-- **`name` (Optional, string | string[])**: List of enrich policy names used to limit the request.
+- **`name` (Optional, string \| string[])**: List of enrich policy names used to limit the request.
 To return information for all enrich policies, omit this parameter.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.enrich.putPolicy [_enrich.put_policy]
 Create an enrich policy.
@@ -4632,7 +4633,7 @@ client.enrich.putPolicy({ name })
 - **`geo_match` (Optional, { enrich_fields, indices, match_field, query, name, elasticsearch_version })**: Matches enrich data to incoming documents based on a `geo_shape` query.
 - **`match` (Optional, { enrich_fields, indices, match_field, query, name, elasticsearch_version })**: Matches enrich data to incoming documents based on a `term` query.
 - **`range` (Optional, { enrich_fields, indices, match_field, query, name, elasticsearch_version })**: Matches a number, date, or IP address in incoming documents to a range in the enrich index based on a `term` query.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.enrich.stats [_enrich.stats]
 Get enrich stats.
@@ -4647,7 +4648,7 @@ client.enrich.stats({ ... })
 ### Arguments [_arguments_enrich.stats]
 
 #### Request (object) [_request_enrich.stats]
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.eql.delete [_eql.delete]
 Delete an async EQL search.
@@ -4681,9 +4682,9 @@ client.eql.get({ id })
 
 #### Request (object) [_request_eql.get]
 - **`id` (string)**: Identifier for the search.
-- **`keep_alive` (Optional, string | -1 | 0)**: Period for which the search and its results are stored on the cluster.
+- **`keep_alive` (Optional, string \| -1 \| 0)**: Period for which the search and its results are stored on the cluster.
 Defaults to the keep_alive value set by the search’s EQL search API request.
-- **`wait_for_completion_timeout` (Optional, string | -1 | 0)**: Timeout duration to wait for the request to finish.
+- **`wait_for_completion_timeout` (Optional, string \| -1 \| 0)**: Timeout duration to wait for the request to finish.
 Defaults to no timeout, meaning the request waits for complete search results.
 
 ## client.eql.getStatus [_eql.get_status]
@@ -4715,17 +4716,17 @@ client.eql.search({ index, query })
 ### Arguments [_arguments_eql.search]
 
 #### Request (object) [_request_eql.search]
-- **`index` (string | string[])**: The name of the index to scope the operation
+- **`index` (string \| string[])**: The name of the index to scope the operation
 - **`query` (string)**: EQL query you wish to run.
 - **`case_sensitive` (Optional, boolean)**
 - **`event_category_field` (Optional, string)**: Field containing the event classification, such as process, file, or network.
 - **`tiebreaker_field` (Optional, string)**: Field used to sort hits with the same timestamp in ascending order
 - **`timestamp_field` (Optional, string)**: Field containing event timestamp. Default "@timestamp"
 - **`fetch_size` (Optional, number)**: Maximum number of events to search at a time for sequence queries.
-- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type } | { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type }[])**: Query, written in Query DSL, used to filter the events on which the EQL query runs.
-- **`keep_alive` (Optional, string | -1 | 0)**
+- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type } \| { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type }[])**: Query, written in Query DSL, used to filter the events on which the EQL query runs.
+- **`keep_alive` (Optional, string \| -1 \| 0)**
 - **`keep_on_completion` (Optional, boolean)**
-- **`wait_for_completion_timeout` (Optional, string | -1 | 0)**
+- **`wait_for_completion_timeout` (Optional, string \| -1 \| 0)**
 - **`allow_partial_search_results` (Optional, boolean)**: Allow query execution also in case of shard failures.
 If true, the query will keep running and will return results based on the available shards.
 For sequences, the behavior can be further refined using allow_partial_sequence_results
@@ -4733,14 +4734,14 @@ For sequences, the behavior can be further refined using allow_partial_sequence_
 If true, the sequence query will return results based on the available shards, ignoring the others.
 If false, the sequence query will return successfully, but will always have empty results.
 - **`size` (Optional, number)**: For basic queries, the maximum number of matching events to return. Defaults to 10
-- **`fields` (Optional, { field, format, include_unmapped } | { field, format, include_unmapped }[])**: Array of wildcard (*) patterns. The response returns values for field names matching these patterns in the fields property of each hit.
-- **`result_position` (Optional, Enum("tail" | "head"))**
+- **`fields` (Optional, { field, format, include_unmapped } \| { field, format, include_unmapped }[])**: Array of wildcard (*) patterns. The response returns values for field names matching these patterns in the fields property of each hit.
+- **`result_position` (Optional, Enum("tail" \| "head"))**
 - **`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)**
 - **`max_samples_per_key` (Optional, number)**: By default, the response of a sample query contains up to `10` samples, with one sample per unique set of join keys. Use the `size`
 parameter to get a smaller or larger set of samples. To retrieve more than one sample per set of join keys, use the
 `max_samples_per_key` parameter. Pipes are not supported for sample queries.
 - **`allow_no_indices` (Optional, boolean)**
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**
 - **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
 
 ## client.esql.asyncQuery [_esql.async_query]
@@ -4762,7 +4763,7 @@ client.esql.asyncQuery({ query })
 - **`columnar` (Optional, boolean)**: By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results.
 - **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
 - **`locale` (Optional, string)**
-- **`params` (Optional, number | number | string | boolean | null[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
+- **`params` (Optional, number \| number \| string \| boolean \| null[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
 - **`profile` (Optional, boolean)**: If provided and `true` the response will include an extra `profile` object
 with information on how the query was executed. This information is for human debugging
 and its format can change at any time but it can give some insight into the performance
@@ -4772,7 +4773,7 @@ name and the next level key is the column name.
 - **`include_ccs_metadata` (Optional, boolean)**: When set to `true` and performing a cross-cluster query, the response will include an extra `_clusters`
 object with information about the clusters that participated in the search along with info such as shards
 count.
-- **`wait_for_completion_timeout` (Optional, string | -1 | 0)**: The period to wait for the request to finish.
+- **`wait_for_completion_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the request to finish.
 By default, the request waits for 1 second for the query results.
 If the query completes during this period, results are returned
 Otherwise, a query ID is returned that can later be used to retrieve the results.
@@ -4784,8 +4785,8 @@ To override the default behavior, you can set the `esql.query.allow_partial_resu
 It is valid only for the CSV format.
 - **`drop_null_columns` (Optional, boolean)**: Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
 If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
-- **`format` (Optional, Enum("csv" | "json" | "tsv" | "txt" | "yaml" | "cbor" | "smile" | "arrow"))**: A short version of the Accept header, for example `json` or `yaml`.
-- **`keep_alive` (Optional, string | -1 | 0)**: The period for which the query and its results are stored in the cluster.
+- **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile" \| "arrow"))**: A short version of the Accept header, for example `json` or `yaml`.
+- **`keep_alive` (Optional, string \| -1 \| 0)**: The period for which the query and its results are stored in the cluster.
 The default period is five days.
 When this period expires, the query and its results are deleted, even if the query is still ongoing.
 If the `keep_on_completion` parameter is false, Elasticsearch only stores async queries that do not complete within the period set by the `wait_for_completion_timeout` parameter, regardless of this value.
@@ -4834,9 +4835,9 @@ A query ID is provided in the ES|QL async query API response for a query that do
 A query ID is also provided when the request was submitted with the `keep_on_completion` parameter set to `true`.
 - **`drop_null_columns` (Optional, boolean)**: Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
 If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
-- **`keep_alive` (Optional, string | -1 | 0)**: The period for which the query and its results are stored in the cluster.
+- **`keep_alive` (Optional, string \| -1 \| 0)**: The period for which the query and its results are stored in the cluster.
 When this period expires, the query and its results are deleted, even if the query is still ongoing.
-- **`wait_for_completion_timeout` (Optional, string | -1 | 0)**: The period to wait for the request to finish.
+- **`wait_for_completion_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the request to finish.
 By default, the request waits for complete query results.
 If the request completes during the period specified in this parameter, complete query results are returned.
 Otherwise, the response returns an `is_running` value of `true` and no results.
@@ -4899,7 +4900,7 @@ client.esql.query({ query })
 - **`columnar` (Optional, boolean)**: By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results.
 - **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
 - **`locale` (Optional, string)**
-- **`params` (Optional, number | number | string | boolean | null[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
+- **`params` (Optional, number \| number \| string \| boolean \| null[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
 - **`profile` (Optional, boolean)**: If provided and `true` the response will include an extra `profile` object
 with information on how the query was executed. This information is for human debugging
 and its format can change at any time but it can give some insight into the performance
@@ -4909,7 +4910,7 @@ name and the next level key is the column name.
 - **`include_ccs_metadata` (Optional, boolean)**: When set to `true` and performing a cross-cluster query, the response will include an extra `_clusters`
 object with information about the clusters that participated in the search along with info such as shards
 count.
-- **`format` (Optional, Enum("csv" | "json" | "tsv" | "txt" | "yaml" | "cbor" | "smile" | "arrow"))**: A short version of the Accept header, e.g. json, yaml.
+- **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile" \| "arrow"))**: A short version of the Accept header, e.g. json, yaml.
 - **`delimiter` (Optional, string)**: The character to use between values within a CSV row. Only valid for the CSV format.
 - **`drop_null_columns` (Optional, boolean)**: Should columns that are entirely `null` be removed from the `columns` and `values` portion of the results?
 Defaults to `false`. If `true` then the response will include an extra section under the name `all_columns` which has the name of all columns.
@@ -4939,7 +4940,7 @@ client.features.getFeatures({ ... })
 ### Arguments [_arguments_features.get_features]
 
 #### Request (object) [_request_features.get_features]
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.features.resetFeatures [_features.reset_features]
 Reset the features.
@@ -4969,7 +4970,7 @@ client.features.resetFeatures({ ... })
 ### Arguments [_arguments_features.reset_features]
 
 #### Request (object) [_request_features.reset_features]
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.fleet.globalCheckpoints [_fleet.global_checkpoints]
 Get global checkpoints.
@@ -4986,7 +4987,7 @@ client.fleet.globalCheckpoints({ index })
 ### Arguments [_arguments_fleet.global_checkpoints]
 
 #### Request (object) [_request_fleet.global_checkpoints]
-- **`index` (string | string)**: A single index or index alias that resolves to a single index.
+- **`index` (string \| string)**: A single index or index alias that resolves to a single index.
 - **`wait_for_advance` (Optional, boolean)**: A boolean value which controls whether to wait (until the timeout) for the global checkpoints
 to advance past the provided `checkpoints`.
 - **`wait_for_index` (Optional, boolean)**: A boolean value which controls whether to wait (until the timeout) for the target index to exist
@@ -4994,7 +4995,7 @@ and all primary shards be active. Can only be true when `wait_for_advance` is tr
 - **`checkpoints` (Optional, number[])**: A comma separated list of previous global checkpoints. When used in combination with `wait_for_advance`,
 the API will only return once the global checkpoints advances past the checkpoints. Providing an empty list
 will cause Elasticsearch to immediately return the current global checkpoints.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a global checkpoints to advance past `checkpoints`.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a global checkpoints to advance past `checkpoints`.
 
 ## client.fleet.msearch [_fleet.msearch]
 Run multiple Fleet searches.
@@ -5011,17 +5012,17 @@ client.fleet.msearch({ ... })
 ### Arguments [_arguments_fleet.msearch]
 
 #### Request (object) [_request_fleet.msearch]
-- **`index` (Optional, string | string)**: A single target to search. If the target is an index alias, it must resolve to a single index.
-- **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } | { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
+- **`index` (Optional, string \| string)**: A single target to search. If the target is an index alias, it must resolve to a single index.
+- **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
 - **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 - **`ignore_throttled` (Optional, boolean)**: If true, concrete, expanded or aliased indices are ignored when frozen.
 - **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
 - **`max_concurrent_searches` (Optional, number)**: Maximum number of concurrent searches the multi search API can execute.
 - **`max_concurrent_shard_requests` (Optional, number)**: Maximum number of concurrent shard requests that each sub-search request executes per node.
 - **`pre_filter_shard_size` (Optional, number)**: Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint.
-- **`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))**: Indicates whether global term and document frequencies should be used when scoring returned documents.
+- **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: Indicates whether global term and document frequencies should be used when scoring returned documents.
 - **`rest_total_hits_as_int` (Optional, boolean)**: If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object.
 - **`typed_keys` (Optional, boolean)**: Specifies whether aggregation and suggester names should be prefixed by their respective types in the response.
 - **`wait_for_checkpoints` (Optional, number[])**: A comma separated list of checkpoints. When configured, the search API will only be executed on a shard
@@ -5045,7 +5046,7 @@ client.fleet.search({ index })
 ### Arguments [_arguments_fleet.search]
 
 #### Request (object) [_request_fleet.search]
-- **`index` (string | string)**: A single target to search. If the target is an index alias, it must resolve to a single index.
+- **`index` (string \| string)**: A single target to search. If the target is an index alias, it must resolve to a single index.
 - **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**
 - **`collapse` (Optional, { field, inner_hits, max_concurrent_group_searches, collapse })**
 - **`explain` (Optional, boolean)**: If true, returns detailed information about score computation as part of a hit.
@@ -5054,7 +5055,7 @@ client.fleet.search({ index })
 hits using the from and size parameters. To page through more hits, use the
 search_after parameter.
 - **`highlight` (Optional, { encoder, fields })**
-- **`track_total_hits` (Optional, boolean | number)**: Number of hits matching the query to count accurately. If true, the exact
+- **`track_total_hits` (Optional, boolean \| number)**: Number of hits matching the query to count accurately. If true, the exact
 number of hits is returned at the cost of some performance. If false, the
 response does not include the total number of hits matching the query.
 Defaults to 10,000 hits.
@@ -5066,15 +5067,15 @@ not included in search results and results collected by aggregations.
 - **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**
 - **`profile` (Optional, boolean)**
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search definition using the Query DSL.
-- **`rescore` (Optional, { window_size, query, learning_to_rank } | { window_size, query, learning_to_rank }[])**
+- **`rescore` (Optional, { window_size, query, learning_to_rank } \| { window_size, query, learning_to_rank }[])**
 - **`script_fields` (Optional, Record<string, { script, ignore_failure }>)**: Retrieve a script evaluation (based on different fields) for each hit.
-- **`search_after` (Optional, number | number | string | boolean | null[])**
+- **`search_after` (Optional, number \| number \| string \| boolean \| null[])**
 - **`size` (Optional, number)**: The number of hits to return. By default, you cannot page through more
 than 10,000 hits using the from and size parameters. To page through more
 hits, use the search_after parameter.
 - **`slice` (Optional, { field, id, max })**
-- **`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])**
-- **`_source` (Optional, boolean | { excludes, includes })**: Indicates which source fields are returned for matching documents. These
+- **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**
+- **`_source` (Optional, boolean \| { excludes, includes })**: Indicates which source fields are returned for matching documents. These
 fields are returned in the hits._source property of the search response.
 - **`fields` (Optional, { field, format, include_unmapped }[])**: Array of wildcard (*) patterns. The request returns values for field names
 matching these patterns in the hits.fields property of the response.
@@ -5089,7 +5090,7 @@ Defaults to no timeout.
 - **`version` (Optional, boolean)**: If true, returns document version as part of a hit.
 - **`seq_no_primary_term` (Optional, boolean)**: If true, returns sequence number and primary term of the last modification
 of each hit. See Optimistic concurrency control.
-- **`stored_fields` (Optional, string | string[])**: List of stored fields to return as part of a hit. If no fields are specified,
+- **`stored_fields` (Optional, string \| string[])**: List of stored fields to return as part of a hit. If no fields are specified,
 no stored fields are included in the response. If this field is specified, the _source
 parameter defaults to false. You can pass _source: true to return both source fields
 and stored fields in the search response.
@@ -5105,9 +5106,9 @@ the indices stats API.
 - **`analyze_wildcard` (Optional, boolean)**
 - **`batched_reduce_size` (Optional, number)**
 - **`ccs_minimize_roundtrips` (Optional, boolean)**
-- **`default_operator` (Optional, Enum("and" | "or"))**
+- **`default_operator` (Optional, Enum("and" \| "or"))**
 - **`df` (Optional, string)**
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**
 - **`ignore_throttled` (Optional, boolean)**
 - **`ignore_unavailable` (Optional, boolean)**
 - **`lenient` (Optional, boolean)**
@@ -5116,16 +5117,16 @@ the indices stats API.
 - **`pre_filter_shard_size` (Optional, number)**
 - **`request_cache` (Optional, boolean)**
 - **`routing` (Optional, string)**
-- **`scroll` (Optional, string | -1 | 0)**
-- **`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))**
+- **`scroll` (Optional, string \| -1 \| 0)**
+- **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**
 - **`suggest_field` (Optional, string)**: Specifies which field to use for suggestions.
-- **`suggest_mode` (Optional, Enum("missing" | "popular" | "always"))**
+- **`suggest_mode` (Optional, Enum("missing" \| "popular" \| "always"))**
 - **`suggest_size` (Optional, number)**
 - **`suggest_text` (Optional, string)**: The source text for which the suggestions should be returned.
 - **`typed_keys` (Optional, boolean)**
 - **`rest_total_hits_as_int` (Optional, boolean)**
-- **`_source_excludes` (Optional, string | string[])**
-- **`_source_includes` (Optional, string | string[])**
+- **`_source_excludes` (Optional, string \| string[])**
+- **`_source_includes` (Optional, string \| string[])**
 - **`q` (Optional, string)**
 - **`wait_for_checkpoints` (Optional, number[])**: A comma separated list of checkpoints. When configured, the search API will only be executed on a shard
 after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause
@@ -5151,13 +5152,13 @@ client.graph.explore({ index })
 ### Arguments [_arguments_graph.explore]
 
 #### Request (object) [_request_graph.explore]
-- **`index` (string | string[])**: Name of the index.
+- **`index` (string \| string[])**: Name of the index.
 - **`connections` (Optional, { connections, query, vertices })**: Specifies or more fields from which you want to extract terms that are associated with the specified vertices.
 - **`controls` (Optional, { sample_diversity, sample_size, timeout, use_significance })**: Direct the Graph API how to build the graph.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: A seed query that identifies the documents of interest. Can be any valid Elasticsearch query.
 - **`vertices` (Optional, { exclude, field, include, min_doc_count, shard_min_doc_count, size }[])**: Specifies one or more fields that contain the terms you want to include in the graph as vertices.
 - **`routing` (Optional, string)**: Custom value used to route operations to a specific shard.
-- **`timeout` (Optional, string | -1 | 0)**: Specifies the period of time to wait for a response from each shard.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the period of time to wait for a response from each shard.
 If no response is received before the timeout expires, the request fails and returns an error.
 Defaults to no timeout.
 
@@ -5175,8 +5176,8 @@ client.ilm.deleteLifecycle({ policy })
 
 #### Request (object) [_request_ilm.delete_lifecycle]
 - **`policy` (string)**: Identifier for the policy.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.ilm.explainLifecycle [_ilm.explain_lifecycle]
 Explain the lifecycle state.
@@ -5198,7 +5199,7 @@ client.ilm.explainLifecycle({ index })
 To target all data streams and indices, use `*` or `_all`.
 - **`only_errors` (Optional, boolean)**: Filters the returned indices to only indices that are managed by ILM and are in an error state, either due to an encountering an error while executing the policy, or attempting to use a policy that does not exist.
 - **`only_managed` (Optional, boolean)**: Filters the returned indices to only indices that are managed by ILM.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.ilm.getLifecycle [_ilm.get_lifecycle]
 Get lifecycle policies.
@@ -5213,8 +5214,8 @@ client.ilm.getLifecycle({ ... })
 
 #### Request (object) [_request_ilm.get_lifecycle]
 - **`policy` (Optional, string)**: Identifier for the policy.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.ilm.getStatus [_ilm.get_status]
 Get the ILM status.
@@ -5257,7 +5258,7 @@ client.ilm.migrateToDataTiers({ ... })
 - **`node_attribute` (Optional, string)**
 - **`dry_run` (Optional, boolean)**: If true, simulates the migration from node attributes based allocation filters to data tiers, but does not perform the migration.
 This provides a way to retrieve the indices and ILM policies that need to be migrated.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 It can also be set to `-1` to indicate that the request should never timeout.
 
@@ -5306,8 +5307,8 @@ client.ilm.putLifecycle({ policy })
 
 #### Request (object) [_request_ilm.put_lifecycle]
 - **`policy` (string)**: Identifier for the policy.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.ilm.removePolicy [_ilm.remove_policy]
 Remove policies from an index.
@@ -5357,8 +5358,8 @@ client.ilm.start({ ... })
 ### Arguments [_arguments_ilm.start]
 
 #### Request (object) [_request_ilm.start]
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.ilm.stop [_ilm.stop]
 Stop the ILM plugin.
@@ -5377,8 +5378,8 @@ client.ilm.stop({ ... })
 ### Arguments [_arguments_ilm.stop]
 
 #### Request (object) [_request_ilm.stop]
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.addBlock [_indices.add_block]
 Add an index block.
@@ -5399,18 +5400,18 @@ client.indices.addBlock({ index, block })
 By default, you must explicitly name the indices you are adding blocks to.
 To allow the adding of blocks to indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`.
 You can update this setting in the `elasticsearch.yml` file or by using the cluster update settings API.
-- **`block` (Enum("metadata" | "read" | "read_only" | "write"))**: The block type to add to the index.
+- **`block` (Enum("metadata" \| "read" \| "read_only" \| "write"))**: The block type to add to the index.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
 For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: The type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 It supports a list of values, such as `open,hidden`.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 It can also be set to `-1` to indicate that the request should never timeout.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
 If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged.
 It can also be set to `-1` to indicate that the request should never timeout.
 
@@ -5438,16 +5439,16 @@ If no index is specified or the index does not have a default analyzer, the anal
 - **`analyzer` (Optional, string)**: The name of the analyzer that should be applied to the provided `text`.
 This could be a built-in analyzer, or an analyzer that’s been configured in the index.
 - **`attributes` (Optional, string[])**: Array of token attributes used to filter the output of the `explain` parameter.
-- **`char_filter` (Optional, string | { type, escaped_tags } | { type, mappings, mappings_path } | { type, flags, pattern, replacement } | { type, mode, name } | { type, normalize_kana, normalize_kanji }[])**: Array of character filters used to preprocess characters before the tokenizer.
+- **`char_filter` (Optional, string \| { type, escaped_tags } \| { type, mappings, mappings_path } \| { type, flags, pattern, replacement } \| { type, mode, name, unicode_set_filter } \| { type, normalize_kana, normalize_kanji }[])**: Array of character filters used to preprocess characters before the tokenizer.
 - **`explain` (Optional, boolean)**: If `true`, the response includes token attributes and additional details.
 - **`field` (Optional, string)**: Field used to derive the analyzer.
 To use this parameter, you must specify an index.
 If specified, the `analyzer` parameter overrides this value.
-- **`filter` (Optional, string | { type } | { type } | { type, preserve_original } | { type, ignored_scripts, output_unigrams } | { type } | { type } | { type, common_words, common_words_path, ignore_case, query_mode } | { type, filter, script } | { type } | { type, delimiter, encoding } | { type, max_gram, min_gram, side, preserve_original } | { type, articles, articles_path, articles_case } | { type, max_output_size, separator } | { type } | { type } | { type } | { type, dedup, dictionary, locale, longest_only } | { type, hyphenation_patterns_path, no_sub_matches, no_overlapping_matches } | { type } | { type, mode, types } | { type, keep_words, keep_words_case, keep_words_path } | { type, ignore_case, keywords, keywords_path, keywords_pattern } | { type } | { type } | { type, max, min } | { type, consume_all_tokens, max_token_count } | { type, language } | { type, bucket_count, hash_count, hash_set_size, with_rotation } | { type, filters, preserve_original } | { type, max_gram, min_gram, preserve_original } | { type, stoptags } | { type, patterns, preserve_original } | { type, all, pattern, replacement } | { type } | { type } | { type, script } | { type } | { type } | { type } | { type } | { type } | { type, filler_token, max_shingle_size, min_shingle_size, output_unigrams, output_unigrams_if_no_shingles, token_separator } | { type, language } | { type } | { type, rules, rules_path } | { type, language } | { type, ignore_case, remove_trailing, stopwords, stopwords_path } | { type } | { type } | { type } | { type, length } | { type, only_on_same_position } | { type } | { type, adjust_offsets, ignore_keywords } | { type } | { type, stopwords } | { type, minimum_length } | { type, use_romaji } | { type, stoptags } | { type, alternate, case_first, case_level, country, decomposition, hiragana_quaternary_mode, language, numeric, rules, strength, variable_top, variant } | { type, unicode_set_filter } | { type, name } | { type, dir, id } | { type, encoder, languageset, max_code_len, name_type, replace, rule_type } | { type }[])**: Array of token filters used to apply after the tokenizer.
+- **`filter` (Optional, string \| { type } \| { type } \| { type, preserve_original } \| { type, ignored_scripts, output_unigrams } \| { type } \| { type } \| { type, common_words, common_words_path, ignore_case, query_mode } \| { type, filter, script } \| { type } \| { type, delimiter, encoding } \| { type, max_gram, min_gram, side, preserve_original } \| { type, articles, articles_path, articles_case } \| { type, max_output_size, separator } \| { type } \| { type } \| { type } \| { type, dedup, dictionary, locale, longest_only } \| { type, hyphenation_patterns_path, no_sub_matches, no_overlapping_matches } \| { type } \| { type, mode, types } \| { type, keep_words, keep_words_case, keep_words_path } \| { type, ignore_case, keywords, keywords_path, keywords_pattern } \| { type } \| { type } \| { type, max, min } \| { type, consume_all_tokens, max_token_count } \| { type, language } \| { type, bucket_count, hash_count, hash_set_size, with_rotation } \| { type, filters, preserve_original } \| { type, max_gram, min_gram, preserve_original } \| { type, stoptags } \| { type, patterns, preserve_original } \| { type, all, pattern, replacement } \| { type } \| { type } \| { type, script } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, filler_token, max_shingle_size, min_shingle_size, output_unigrams, output_unigrams_if_no_shingles, token_separator } \| { type, language } \| { type } \| { type, rules, rules_path } \| { type, language } \| { type, ignore_case, remove_trailing, stopwords, stopwords_path } \| { type } \| { type } \| { type } \| { type, length } \| { type, only_on_same_position } \| { type } \| { type, adjust_offsets, ignore_keywords } \| { type } \| { type, stopwords } \| { type, minimum_length } \| { type, use_romaji } \| { type, stoptags } \| { type, alternate, case_first, case_level, country, decomposition, hiragana_quaternary_mode, language, numeric, rules, strength, variable_top, variant } \| { type, unicode_set_filter } \| { type, name } \| { type, dir, id } \| { type, encoder, languageset, max_code_len, name_type, replace, rule_type } \| { type }[])**: Array of token filters used to apply after the tokenizer.
 - **`normalizer` (Optional, string)**: Normalizer to use to convert text into a single token.
-- **`text` (Optional, string | string[])**: Text to analyze.
+- **`text` (Optional, string \| string[])**: Text to analyze.
 If an array of strings is provided, it is analyzed as a multi-value field.
-- **`tokenizer` (Optional, string | { type, tokenize_on_chars, max_token_length } | { type, max_token_length } | { type, custom_token_chars, max_gram, min_gram, token_chars } | { type, buffer_size } | { type } | { type } | { type, custom_token_chars, max_gram, min_gram, token_chars } | { type, buffer_size, delimiter, replacement, reverse, skip } | { type, flags, group, pattern } | { type, pattern } | { type, pattern } | { type, max_token_length } | { type } | { type, max_token_length } | { type, max_token_length } | { type, rule_files } | { type, discard_punctuation, mode, nbest_cost, nbest_examples, user_dictionary, user_dictionary_rules, discard_compound_token } | { type, decompound_mode, discard_punctuation, user_dictionary, user_dictionary_rules })**: Tokenizer to use to convert text into tokens.
+- **`tokenizer` (Optional, string \| { type, tokenize_on_chars, max_token_length } \| { type, max_token_length } \| { type, custom_token_chars, max_gram, min_gram, token_chars } \| { type, buffer_size } \| { type } \| { type } \| { type, custom_token_chars, max_gram, min_gram, token_chars } \| { type, buffer_size, delimiter, replacement, reverse, skip } \| { type, flags, group, pattern } \| { type, pattern } \| { type, pattern } \| { type, max_token_length } \| { type } \| { type, max_token_length } \| { type, max_token_length } \| { type, rule_files } \| { type, discard_punctuation, mode, nbest_cost, nbest_examples, user_dictionary, user_dictionary_rules, discard_compound_token } \| { type, decompound_mode, discard_punctuation, user_dictionary, user_dictionary_rules })**: Tokenizer to use to convert text into tokens.
 
 ## client.indices.cancelMigrateReindex [_indices.cancel_migrate_reindex]
 Cancel a migration reindex operation.
@@ -5463,7 +5464,7 @@ client.indices.cancelMigrateReindex({ index })
 ### Arguments [_arguments_indices.cancel_migrate_reindex]
 
 #### Request (object) [_request_indices.cancel_migrate_reindex]
-- **`index` (string | string[])**: The index or data stream name
+- **`index` (string \| string[])**: The index or data stream name
 
 ## client.indices.clearCache [_indices.clear_cache]
 Clear the cache.
@@ -5483,18 +5484,18 @@ client.indices.clearCache({ ... })
 ### Arguments [_arguments_indices.clear_cache]
 
 #### Request (object) [_request_indices.clear_cache]
-- **`index` (Optional, string | string[])**: List of data streams, indices, and aliases used to limit the request.
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 - **`fielddata` (Optional, boolean)**: If `true`, clears the fields cache.
 Use the `fields` parameter to clear the cache of specific fields only.
-- **`fields` (Optional, string | string[])**: List of field names used to limit the `fielddata` parameter.
+- **`fields` (Optional, string \| string[])**: List of field names used to limit the `fielddata` parameter.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 - **`query` (Optional, boolean)**: If `true`, clears the query cache.
 - **`request` (Optional, boolean)**: If `true`, clears the request cache.
@@ -5559,11 +5560,11 @@ client.indices.clone({ index, target })
 - **`target` (string)**: Name of the target index to create.
 - **`aliases` (Optional, Record<string, { filter, index_routing, is_hidden, is_write_index, routing, search_routing }>)**: Aliases for the resulting index.
 - **`settings` (Optional, Record<string, User-defined value>)**: Configuration options for the target index.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
 Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
 
 ## client.indices.close [_indices.close]
@@ -5595,19 +5596,19 @@ client.indices.close({ index })
 ### Arguments [_arguments_indices.close]
 
 #### Request (object) [_request_indices.close]
-- **`index` (string | string[])**: List or wildcard expression of index names used to limit the request.
+- **`index` (string \| string[])**: List or wildcard expression of index names used to limit the request.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
 Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
 
 ## client.indices.create [_indices.create]
@@ -5657,11 +5658,11 @@ Index names must meet the following criteria:
 - Field data types
 - Mapping parameters
 - **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })**: Configuration options for the index.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
 Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
 
 ## client.indices.createDataStream [_indices.create_data_stream]
@@ -5684,8 +5685,8 @@ Cannot include `\`, `/`, `*`, `?`, `"`, `<`, `>`, `|`, `,`, `#`, `:`, or a space
 Cannot start with `-`, `_`, `+`, or `.ds-`;
 Cannot be `.` or `..`;
 Cannot be longer than 255 bytes. Multi-byte characters count towards this limit faster.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.createFrom [_indices.create_from]
 Create an index from a source index.
@@ -5722,7 +5723,7 @@ client.indices.dataStreamsStats({ ... })
 - **`name` (Optional, string)**: List of data streams used to limit the request.
 Wildcard expressions (`*`) are supported.
 To target all data streams in a cluster, omit this parameter or use `*`.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of data stream that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match.
 Supports a list of values, such as `open,hidden`.
 
 ## client.indices.delete [_indices.delete]
@@ -5743,20 +5744,20 @@ client.indices.delete({ index })
 ### Arguments [_arguments_indices.delete]
 
 #### Request (object) [_request_indices.delete]
-- **`index` (string | string[])**: List of indices to delete.
+- **`index` (string \| string[])**: List of indices to delete.
 You cannot specify index aliases.
 By default, this parameter does not support wildcards (`*`) or `_all`.
 To use wildcards or `_all`, set the `action.destructive_requires_name` cluster setting to `false`.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.deleteAlias [_indices.delete_alias]
@@ -5772,13 +5773,13 @@ client.indices.deleteAlias({ index, name })
 ### Arguments [_arguments_indices.delete_alias]
 
 #### Request (object) [_request_indices.delete_alias]
-- **`index` (string | string[])**: List of data streams or indices used to limit the request.
+- **`index` (string \| string[])**: List of data streams or indices used to limit the request.
 Supports wildcards (`*`).
-- **`name` (string | string[])**: List of aliases to remove.
+- **`name` (string \| string[])**: List of aliases to remove.
 Supports wildcards (`*`). To remove all aliases, use `*` or `_all`.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.deleteDataLifecycle [_indices.delete_data_lifecycle]
@@ -5794,10 +5795,10 @@ client.indices.deleteDataLifecycle({ name })
 ### Arguments [_arguments_indices.delete_data_lifecycle]
 
 #### Request (object) [_request_indices.delete_data_lifecycle]
-- **`name` (string | string[])**: A list of data streams of which the data stream lifecycle will be deleted; use `*` to get all data streams
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Whether wildcard expressions should get expanded to open or closed indices (default: open)
-- **`master_timeout` (Optional, string | -1 | 0)**: Specify timeout for connection to master
-- **`timeout` (Optional, string | -1 | 0)**: Explicit timestamp for the document
+- **`name` (string \| string[])**: A list of data streams of which the data stream lifecycle will be deleted; use `*` to get all data streams
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether wildcard expressions should get expanded to open or closed indices (default: open)
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
+- **`timeout` (Optional, string \| -1 \| 0)**: Explicit timestamp for the document
 
 ## client.indices.deleteDataStream [_indices.delete_data_stream]
 Delete data streams.
@@ -5812,9 +5813,19 @@ client.indices.deleteDataStream({ name })
 ### Arguments [_arguments_indices.delete_data_stream]
 
 #### Request (object) [_request_indices.delete_data_stream]
-- **`name` (string | string[])**: List of data streams to delete. Wildcard (`*`) expressions are supported.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of data stream that wildcard patterns can match. Supports a list of values,such as `open,hidden`.
+- **`name` (string \| string[])**: List of data streams to delete. Wildcard (`*`) expressions are supported.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match. Supports a list of values,such as `open,hidden`.
+
+## client.indices.deleteDataStreamOptions [_indices.delete_data_stream_options]
+Deletes the data stream options of the selected data streams.
+
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
+
+```ts
+client.indices.deleteDataStreamOptions()
+```
+
 
 ## client.indices.deleteIndexTemplate [_indices.delete_index_template]
 Delete an index template.
@@ -5831,9 +5842,9 @@ client.indices.deleteIndexTemplate({ name })
 ### Arguments [_arguments_indices.delete_index_template]
 
 #### Request (object) [_request_indices.delete_index_template]
-- **`name` (string | string[])**: List of index template names used to limit the request. Wildcard (*) expressions are supported.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`name` (string \| string[])**: List of index template names used to limit the request. Wildcard (*) expressions are supported.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.deleteTemplate [_indices.delete_template]
 Delete a legacy index template.
@@ -5849,9 +5860,9 @@ client.indices.deleteTemplate({ name })
 #### Request (object) [_request_indices.delete_template]
 - **`name` (string)**: The name of the legacy index template to delete.
 Wildcard (`*`) expressions are supported.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.diskUsage [_indices.disk_usage]
@@ -5873,12 +5884,12 @@ client.indices.diskUsage({ index })
 ### Arguments [_arguments_indices.disk_usage]
 
 #### Request (object) [_request_indices.disk_usage]
-- **`index` (string | string[])**: List of data streams, indices, and aliases used to limit the request.
+- **`index` (string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 It’s recommended to execute this API with a single index (or the latest backing index of a data stream) as the API consumes resources significantly.
 - **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
 For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 - **`flush` (Optional, boolean)**: If `true`, the API performs a flush before analysis.
@@ -5923,10 +5934,10 @@ client.indices.exists({ index })
 ### Arguments [_arguments_indices.exists]
 
 #### Request (object) [_request_indices.exists]
-- **`index` (string | string[])**: List of data streams, indices, and aliases. Supports wildcards (`*`).
+- **`index` (string \| string[])**: List of data streams, indices, and aliases. Supports wildcards (`*`).
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
@@ -5949,17 +5960,17 @@ client.indices.existsAlias({ name })
 ### Arguments [_arguments_indices.exists_alias]
 
 #### Request (object) [_request_indices.exists_alias]
-- **`name` (string | string[])**: List of aliases to check. Supports wildcards (`*`).
-- **`index` (Optional, string | string[])**: List of data streams or indices used to limit the request. Supports wildcards (`*`).
+- **`name` (string \| string[])**: List of aliases to check. Supports wildcards (`*`).
+- **`index` (Optional, string \| string[])**: List of data streams or indices used to limit the request. Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, requests that include a missing data stream or index in the target indices or data streams return an error.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.existsIndexTemplate [_indices.exists_index_template]
@@ -5979,7 +5990,7 @@ client.indices.existsIndexTemplate({ name })
 - **`name` (string)**: List of index template names used to limit the request. Wildcard (*) expressions are supported.
 - **`local` (Optional, boolean)**: If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
 - **`flat_settings` (Optional, boolean)**: If true, returns settings in flat format.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.existsTemplate [_indices.exists_template]
 Check existence of index templates.
@@ -5997,11 +6008,11 @@ client.indices.existsTemplate({ name })
 ### Arguments [_arguments_indices.exists_template]
 
 #### Request (object) [_request_indices.exists_template]
-- **`name` (string | string[])**: A list of index template names used to limit the request.
+- **`name` (string \| string[])**: A list of index template names used to limit the request.
 Wildcard (`*`) expressions are supported.
 - **`flat_settings` (Optional, boolean)**: Indicates whether to use a flat format for the response.
 - **`local` (Optional, boolean)**: Indicates whether to get information from the local node only.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 
@@ -6018,9 +6029,9 @@ client.indices.explainDataLifecycle({ index })
 ### Arguments [_arguments_indices.explain_data_lifecycle]
 
 #### Request (object) [_request_indices.explain_data_lifecycle]
-- **`index` (string | string[])**: The name of the index to explain
+- **`index` (string \| string[])**: The name of the index to explain
 - **`include_defaults` (Optional, boolean)**: indicates if the API should return the default values the system uses for the index's lifecycle
-- **`master_timeout` (Optional, string | -1 | 0)**: Specify timeout for connection to master
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
 
 ## client.indices.fieldUsageStats [_indices.field_usage_stats]
 Get field usage stats.
@@ -6040,15 +6051,15 @@ client.indices.fieldUsageStats({ index })
 ### Arguments [_arguments_indices.field_usage_stats]
 
 #### Request (object) [_request_indices.field_usage_stats]
-- **`index` (string | string[])**: List or wildcard expression of index names used to limit the request.
+- **`index` (string \| string[])**: List or wildcard expression of index names used to limit the request.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
 For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 - **`ignore_unavailable` (Optional, boolean)**: If `true`, missing or closed indices are not included in the response.
-- **`fields` (Optional, string | string[])**: List or wildcard expressions of fields to include in the statistics.
+- **`fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in the statistics.
 
 ## client.indices.flush [_indices.flush]
 Flush data streams or indices.
@@ -6072,12 +6083,12 @@ client.indices.flush({ ... })
 ### Arguments [_arguments_indices.flush]
 
 #### Request (object) [_request_indices.flush]
-- **`index` (Optional, string | string[])**: List of data streams, indices, and aliases to flush.
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases to flush.
 Supports wildcards (`*`).
 To flush all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
@@ -6150,9 +6161,9 @@ client.indices.forcemerge({ ... })
 ### Arguments [_arguments_indices.forcemerge]
 
 #### Request (object) [_request_indices.forcemerge]
-- **`index` (Optional, string | string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
+- **`index` (Optional, string \| string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
 - **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`flush` (Optional, boolean)**: Specify whether the index should be flushed after performing the operation (default: true)
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
 - **`max_num_segments` (Optional, number)**: The number of segments the index should be merged into (default: dynamic)
@@ -6173,20 +6184,20 @@ client.indices.get({ index })
 ### Arguments [_arguments_indices.get]
 
 #### Request (object) [_request_indices.get]
-- **`index` (string | string[])**: List of data streams, indices, and index aliases used to limit the request.
+- **`index` (string \| string[])**: List of data streams, indices, and index aliases used to limit the request.
 Wildcard expressions (*) are supported.
 - **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all value targets only
 missing or closed indices. This behavior applies even if the request targets other open indices. For example,
 a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument
 determines whether wildcard expressions match hidden data streams. Supports a list of values,
 such as open,hidden.
 - **`flat_settings` (Optional, boolean)**: If true, returns settings in flat format.
 - **`ignore_unavailable` (Optional, boolean)**: If false, requests that target a missing index return an error.
 - **`include_defaults` (Optional, boolean)**: If true, return all default settings in the response.
 - **`local` (Optional, boolean)**: If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`features` (Optional, { name, description } | { name, description }[])**: Return only information on specified index features
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`features` (Optional, { name, description } \| { name, description }[])**: Return only information on specified index features
 
 ## client.indices.getAlias [_indices.get_alias]
 Get aliases.
@@ -6201,20 +6212,20 @@ client.indices.getAlias({ ... })
 ### Arguments [_arguments_indices.get_alias]
 
 #### Request (object) [_request_indices.get_alias]
-- **`name` (Optional, string | string[])**: List of aliases to retrieve.
+- **`name` (Optional, string \| string[])**: List of aliases to retrieve.
 Supports wildcards (`*`).
 To retrieve all aliases, omit this parameter or use `*` or `_all`.
-- **`index` (Optional, string | string[])**: List of data streams or indices used to limit the request.
+- **`index` (Optional, string \| string[])**: List of data streams or indices used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.getDataLifecycle [_indices.get_data_lifecycle]
@@ -6231,14 +6242,14 @@ client.indices.getDataLifecycle({ name })
 ### Arguments [_arguments_indices.get_data_lifecycle]
 
 #### Request (object) [_request_indices.get_data_lifecycle]
-- **`name` (string | string[])**: List of data streams to limit the request.
+- **`name` (string \| string[])**: List of data streams to limit the request.
 Supports wildcards (`*`).
 To target all data streams, omit this parameter or use `*` or `_all`.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of data stream that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 - **`include_defaults` (Optional, boolean)**: If `true`, return all default settings in the response.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.getDataLifecycleStats [_indices.get_data_lifecycle_stats]
 Get data stream lifecycle stats.
@@ -6265,13 +6276,23 @@ client.indices.getDataStream({ ... })
 ### Arguments [_arguments_indices.get_data_stream]
 
 #### Request (object) [_request_indices.get_data_stream]
-- **`name` (Optional, string | string[])**: List of data stream names used to limit the request.
+- **`name` (Optional, string \| string[])**: List of data stream names used to limit the request.
 Wildcard (`*`) expressions are supported. If omitted, all data streams are returned.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of data stream that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match.
 Supports a list of values, such as `open,hidden`.
 - **`include_defaults` (Optional, boolean)**: If true, returns all relevant default configurations for the index template.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 - **`verbose` (Optional, boolean)**: Whether the maximum timestamp for each data stream should be calculated and returned.
+
+## client.indices.getDataStreamOptions [_indices.get_data_stream_options]
+Returns the data stream options of the selected data streams.
+
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
+
+```ts
+client.indices.getDataStreamOptions()
+```
+
 
 ## client.indices.getFieldMapping [_indices.get_field_mapping]
 Get mapping definitions.
@@ -6289,14 +6310,14 @@ client.indices.getFieldMapping({ fields })
 ### Arguments [_arguments_indices.get_field_mapping]
 
 #### Request (object) [_request_indices.get_field_mapping]
-- **`fields` (string | string[])**: List or wildcard expression of fields used to limit returned information.
+- **`fields` (string \| string[])**: List or wildcard expression of fields used to limit returned information.
 Supports wildcards (`*`).
-- **`index` (Optional, string | string[])**: List of data streams, indices, and aliases used to limit the request.
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
@@ -6319,7 +6340,7 @@ client.indices.getIndexTemplate({ ... })
 - **`name` (Optional, string)**: List of index template names used to limit the request. Wildcard (*) expressions are supported.
 - **`local` (Optional, boolean)**: If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
 - **`flat_settings` (Optional, boolean)**: If true, returns settings in flat format.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 - **`include_defaults` (Optional, boolean)**: If true, returns all relevant default configurations for the index template.
 
 ## client.indices.getMapping [_indices.get_mapping]
@@ -6335,18 +6356,18 @@ client.indices.getMapping({ ... })
 ### Arguments [_arguments_indices.get_mapping]
 
 #### Request (object) [_request_indices.get_mapping]
-- **`index` (Optional, string | string[])**: List of data streams, indices, and aliases used to limit the request.
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.getMigrateReindexStatus [_indices.get_migrate_reindex_status]
@@ -6363,7 +6384,7 @@ client.indices.getMigrateReindexStatus({ index })
 ### Arguments [_arguments_indices.get_migrate_reindex_status]
 
 #### Request (object) [_request_indices.get_migrate_reindex_status]
-- **`index` (string | string[])**: The index or data stream name.
+- **`index` (string \| string[])**: The index or data stream name.
 
 ## client.indices.getSettings [_indices.get_settings]
 Get index settings.
@@ -6379,16 +6400,16 @@ client.indices.getSettings({ ... })
 ### Arguments [_arguments_indices.get_settings]
 
 #### Request (object) [_request_indices.get_settings]
-- **`index` (Optional, string | string[])**: List of data streams, indices, and aliases used to limit
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit
 the request. Supports wildcards (`*`). To target all data streams and
 indices, omit this parameter or use `*` or `_all`.
-- **`name` (Optional, string | string[])**: List or wildcard expression of settings to retrieve.
+- **`name` (Optional, string \| string[])**: List or wildcard expression of settings to retrieve.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index
 alias, or `_all` value targets only missing or closed indices. This
 behavior applies even if the request targets other open indices. For
 example, a request targeting `foo*,bar*` returns an error if an index
 starts with foo but no index starts with `bar`.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
@@ -6396,7 +6417,7 @@ Supports a list of values, such as `open,hidden`.
 - **`include_defaults` (Optional, boolean)**: If `true`, return all default settings in the response.
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only. If
 `false`, information is retrieved from the master node.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is
 received before the timeout expires, the request fails and returns an
 error.
 
@@ -6415,12 +6436,12 @@ client.indices.getTemplate({ ... })
 ### Arguments [_arguments_indices.get_template]
 
 #### Request (object) [_request_indices.get_template]
-- **`name` (Optional, string | string[])**: List of index template names used to limit the request.
+- **`name` (Optional, string \| string[])**: List of index template names used to limit the request.
 Wildcard (`*`) expressions are supported.
 To return all index templates, omit this parameter or use a value of `_all` or `*`.
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.migrateReindex [_indices.migrate_reindex]
@@ -6464,8 +6485,8 @@ client.indices.migrateToDataStream({ name })
 
 #### Request (object) [_request_indices.migrate_to_data_stream]
 - **`name` (string)**: Name of the index alias to convert to a data stream.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.modifyDataStream [_indices.modify_data_stream]
 Update data streams.
@@ -6516,23 +6537,23 @@ client.indices.open({ index })
 ### Arguments [_arguments_indices.open]
 
 #### Request (object) [_request_indices.open]
-- **`index` (string | string[])**: List of data streams, indices, and aliases used to limit the request.
+- **`index` (string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 By default, you must explicitly name the indices you using to limit the request.
 To limit a request using `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to false.
 You can update this setting in the `elasticsearch.yml` file or using the cluster update settings API.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
 Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
 
 ## client.indices.promoteDataStream [_indices.promote_data_stream]
@@ -6558,7 +6579,7 @@ client.indices.promoteDataStream({ name })
 
 #### Request (object) [_request_indices.promote_data_stream]
 - **`name` (string)**: The name of the data stream
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.putAlias [_indices.put_alias]
 Create or update an alias.
@@ -6573,7 +6594,7 @@ client.indices.putAlias({ index, name })
 ### Arguments [_arguments_indices.put_alias]
 
 #### Request (object) [_request_indices.put_alias]
-- **`index` (string | string[])**: List of data streams or indices to add.
+- **`index` (string \| string[])**: List of data streams or indices to add.
 Supports wildcards (`*`).
 Wildcard patterns that match both data streams and indices return an error.
 - **`name` (string)**: Alias to update.
@@ -6592,9 +6613,9 @@ Data stream aliases don’t support this parameter.
 - **`search_routing` (Optional, string)**: Value used to route search operations to a specific shard.
 If specified, this overwrites the `routing` value for search operations.
 Data stream aliases don’t support this parameter.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.putDataLifecycle [_indices.put_data_lifecycle]
@@ -6610,23 +6631,33 @@ client.indices.putDataLifecycle({ name })
 ### Arguments [_arguments_indices.put_data_lifecycle]
 
 #### Request (object) [_request_indices.put_data_lifecycle]
-- **`name` (string | string[])**: List of data streams used to limit the request.
+- **`name` (string \| string[])**: List of data streams used to limit the request.
 Supports wildcards (`*`).
 To target all data streams use `*` or `_all`.
-- **`data_retention` (Optional, string | -1 | 0)**: If defined, every document added to this data stream will be stored at least for this time frame.
+- **`data_retention` (Optional, string \| -1 \| 0)**: If defined, every document added to this data stream will be stored at least for this time frame.
 Any time after this duration the document could be deleted.
 When empty, every document in this data stream will be stored indefinitely.
 - **`downsampling` (Optional, { rounds })**: The downsampling configuration to execute for the managed backing index after rollover.
 - **`enabled` (Optional, boolean)**: If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
 that's disabled (enabled: `false`) will have no effect on the data stream.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of data stream that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `hidden`, `open`, `closed`, `none`.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is
 received before the timeout expires, the request fails and returns an
 error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
+
+## client.indices.putDataStreamOptions [_indices.put_data_stream_options]
+Updates the data stream options of the selected data streams.
+
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
+
+```ts
+client.indices.putDataStreamOptions()
+```
+
 
 ## client.indices.putIndexTemplate [_indices.put_index_template]
 Create or update an index template.
@@ -6668,7 +6699,7 @@ client.indices.putIndexTemplate({ name })
 
 #### Request (object) [_request_indices.put_index_template]
 - **`name` (string)**: Index or template name
-- **`index_patterns` (Optional, string | string[])**: Name of the index template to create.
+- **`index_patterns` (Optional, string \| string[])**: Name of the index template to create.
 - **`composed_of` (Optional, string[])**: An ordered list of component template names.
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
 - **`template` (Optional, { aliases, mappings, settings, lifecycle })**: Template to be applied.
@@ -6697,7 +6728,7 @@ references a component template that might not exist
 - **`deprecated` (Optional, boolean)**: Marks this index template as deprecated. When creating or updating a non-deprecated index template
 that uses deprecated components, Elasticsearch will emit a deprecation warning.
 - **`create` (Optional, boolean)**: If `true`, this request cannot replace or update existing index templates.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`cause` (Optional, string)**: User defined reason for creating/updating the index template
 
@@ -6741,9 +6772,9 @@ client.indices.putMapping({ index })
 ### Arguments [_arguments_indices.put_mapping]
 
 #### Request (object) [_request_indices.put_mapping]
-- **`index` (string | string[])**: A list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
+- **`index` (string \| string[])**: A list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
 - **`date_detection` (Optional, boolean)**: Controls whether dynamic date detection is enabled.
-- **`dynamic` (Optional, Enum("strict" | "runtime" | true | false))**: Controls whether new fields are added dynamically.
+- **`dynamic` (Optional, Enum("strict" \| "runtime" \| true \| false))**: Controls whether new fields are added dynamically.
 - **`dynamic_date_formats` (Optional, string[])**: If date detection is enabled then new string fields are checked
 against 'dynamic_date_formats' and if the value matches then
 a new date field is added instead of string.
@@ -6753,7 +6784,7 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 - **`numeric_detection` (Optional, boolean)**: Automatically map strings into numeric data types for all fields.
-- **`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { positive_score_impact, type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, dims, element_type, index, index_options, similarity } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, subobjects, type } | { type, enabled, priority, time_series_dimension } | { type, meta, inference_id, search_inference_id, chunking_settings } | { type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { type, index } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } | { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type } | { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
+- **`properties` (Optional, Record<string, { type } \| { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } \| { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } \| { relations, eager_global_ordinals, type } \| { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } \| { type, fields, meta, copy_to } \| { type } \| { positive_score_impact, type } \| { positive_score_impact, type } \| { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { type } \| { type, null_value } \| { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } \| { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } \| { type, default_metric, metrics, time_series_metric } \| { type, dims, element_type, index, index_options, similarity } \| { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } \| { enabled, include_in_parent, include_in_root, type } \| { enabled, subobjects, type } \| { type, enabled, priority, time_series_dimension } \| { type, meta, inference_id, search_inference_id, chunking_settings } \| { type } \| { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } \| { value, type } \| { type, index } \| { path, type } \| { ignore_malformed, type } \| { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } \| { type } \| { analyzer, boost, index, null_value, enable_position_increments, type } \| { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } \| { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } \| { ignore_malformed, ignore_z_value, null_value, type } \| { coerce, ignore_malformed, ignore_z_value, orientation, type } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value, scaling_factor } \| { type, null_value } \| { type, null_value } \| { format, type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
@@ -6763,14 +6794,14 @@ application-specific metadata.
 - **`runtime` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)**: Mapping of runtime fields for the index.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`write_index_only` (Optional, boolean)**: If `true`, the mappings are applied only to the current write index for the target.
 
@@ -6801,7 +6832,7 @@ client.indices.putSettings({ ... })
 ### Arguments [_arguments_indices.put_settings]
 
 #### Request (object) [_request_indices.put_settings]
-- **`index` (Optional, string | string[])**: List of data streams, indices, and aliases used to limit
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit
 the request. Supports wildcards (`*`). To target all data streams and
 indices, omit this parameter or use `*` or `_all`.
 - **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })**
@@ -6810,20 +6841,20 @@ alias, or `_all` value targets only missing or closed indices. This
 behavior applies even if the request targets other open indices. For
 example, a request targeting `foo*,bar*` returns an error if an index
 starts with `foo` but no index starts with `bar`.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match. If the request can target
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target
 data streams, this argument determines whether wildcard expressions match
 hidden data streams. Supports a list of values, such as
 `open,hidden`.
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
 - **`ignore_unavailable` (Optional, boolean)**: If `true`, returns settings in flat format.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is
 received before the timeout expires, the request fails and returns an
 error.
 - **`preserve_existing` (Optional, boolean)**: If `true`, existing index settings remain unchanged.
 - **`reopen` (Optional, boolean)**: Whether to close and reopen the index to apply non-dynamic settings.
 If set to `true` the indices to which the settings are being applied
 will be closed temporarily and then reopened in order to apply the changes.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the
  timeout expires, the request fails and returns an error.
 
 ## client.indices.putTemplate [_indices.put_template]
@@ -6860,7 +6891,7 @@ client.indices.putTemplate({ name })
 #### Request (object) [_request_indices.put_template]
 - **`name` (string)**: The name of the template
 - **`aliases` (Optional, Record<string, { filter, index_routing, is_hidden, is_write_index, routing, search_routing }>)**: Aliases for the index.
-- **`index_patterns` (Optional, string | string[])**: Array of wildcard expressions used to match the names
+- **`index_patterns` (Optional, string \| string[])**: Array of wildcard expressions used to match the names
 of indices during creation.
 - **`mappings` (Optional, { all_field, date_detection, dynamic, dynamic_date_formats, dynamic_templates, _field_names, index_field, _meta, numeric_detection, properties, _routing, _size, _source, runtime, enabled, subobjects, _data_stream_timestamp })**: Mapping for fields in the index.
 - **`order` (Optional, number)**: Order in which Elasticsearch applies this template if index
@@ -6873,7 +6904,7 @@ Templates with lower 'order' values are merged first. Templates with higher
 is not automatically generated by Elasticsearch.
 To unset a version, replace the template without specifying one.
 - **`create` (Optional, boolean)**: If true, this request cannot replace or update existing index templates.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is
 received before the timeout expires, the request fails and returns an error.
 - **`cause` (Optional, string)**: User defined reason for creating/updating the index template
 
@@ -6911,7 +6942,7 @@ client.indices.recovery({ ... })
 ### Arguments [_arguments_indices.recovery]
 
 #### Request (object) [_request_indices.recovery]
-- **`index` (Optional, string | string[])**: List of data streams, indices, and aliases used to limit the request.
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`active_only` (Optional, boolean)**: If `true`, the response only includes ongoing shard recoveries.
@@ -6942,12 +6973,12 @@ client.indices.refresh({ ... })
 ### Arguments [_arguments_indices.refresh]
 
 #### Request (object) [_request_indices.refresh]
-- **`index` (Optional, string | string[])**: List of data streams, indices, and aliases used to limit the request.
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
@@ -6978,9 +7009,9 @@ client.indices.reloadSearchAnalyzers({ index })
 ### Arguments [_arguments_indices.reload_search_analyzers]
 
 #### Request (object) [_request_indices.reload_search_analyzers]
-- **`index` (string | string[])**: A list of index names to reload analyzers for
+- **`index` (string \| string[])**: A list of index names to reload analyzers for
 - **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
 - **`resource` (Optional, string)**: Changed resource to reload analyzers from if applicable
 
@@ -7041,7 +7072,7 @@ client.indices.resolveCluster({ ... })
 ### Arguments [_arguments_indices.resolve_cluster]
 
 #### Request (object) [_request_indices.resolve_cluster]
-- **`name` (Optional, string | string[])**: A list of names or index patterns for the indices, aliases, and data streams to resolve.
+- **`name` (Optional, string \| string[])**: A list of names or index patterns for the indices, aliases, and data streams to resolve.
 Resources on remote clusters can be specified using the `<cluster>`:`<name>` syntax.
 Index and cluster exclusions (e.g., `-cluster1:*`) are also supported.
 If no index expression is specified, information about all remote clusters configured on the local cluster
@@ -7051,7 +7082,7 @@ or closed indices. This behavior applies even if the request targets other open 
 targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index
 options to the `_resolve/cluster` API endpoint that takes no index expression.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
@@ -7063,7 +7094,7 @@ options to the `_resolve/cluster` API endpoint that takes no index expression.
 - **`ignore_unavailable` (Optional, boolean)**: If false, the request returns an error if it targets a missing or closed index.
 NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index
 options to the `_resolve/cluster` API endpoint that takes no index expression.
-- **`timeout` (Optional, string | -1 | 0)**: The maximum time to wait for remote clusters to respond.
+- **`timeout` (Optional, string \| -1 \| 0)**: The maximum time to wait for remote clusters to respond.
 If a remote cluster does not respond within this timeout period, the API response
 will show the cluster as not connected and include an error message that the
 request timed out.
@@ -7086,9 +7117,9 @@ client.indices.resolveIndex({ name })
 ### Arguments [_arguments_indices.resolve_index]
 
 #### Request (object) [_request_indices.resolve_index]
-- **`name` (string | string[])**: Comma-separated name(s) or index pattern(s) of the indices, aliases, and data streams to resolve.
+- **`name` (string \| string[])**: Comma-separated name(s) or index pattern(s) of the indices, aliases, and data streams to resolve.
 Resources on remote clusters can be specified using the `<cluster>`:`<name>` syntax.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
@@ -7162,11 +7193,11 @@ If specified, this mapping can include field names, field data types, and mappin
 - **`settings` (Optional, Record<string, User-defined value>)**: Configuration options for the index.
 Data streams do not support this parameter.
 - **`dry_run` (Optional, boolean)**: If `true`, checks whether the current index satisfies the specified conditions but does not perform a rollover.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
 Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
 - **`lazy` (Optional, boolean)**: If set to true, the rollover action will only mark a data stream to signal that it needs to be rolled over at the next write.
 Only allowed on data streams.
@@ -7185,12 +7216,12 @@ client.indices.segments({ ... })
 ### Arguments [_arguments_indices.segments]
 
 #### Request (object) [_request_indices.segments]
-- **`index` (Optional, string | string[])**: List of data streams, indices, and aliases used to limit the request.
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
@@ -7219,14 +7250,14 @@ client.indices.shardStores({ ... })
 ### Arguments [_arguments_indices.shard_stores]
 
 #### Request (object) [_request_indices.shard_stores]
-- **`index` (Optional, string | string[])**: List of data streams, indices, and aliases used to limit the request.
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 - **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all
 value targets only missing or closed indices. This behavior applies even if the request
 targets other open indices.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams,
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams,
 this argument determines whether wildcard expressions match hidden data streams.
 - **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
-- **`status` (Optional, Enum("green" | "yellow" | "red" | "all") | Enum("green" | "yellow" | "red" | "all")[])**: List of shard health statuses used to limit the request.
+- **`status` (Optional, Enum("green" \| "yellow" \| "red" \| "all") \| Enum("green" \| "yellow" \| "red" \| "all")[])**: List of shard health statuses used to limit the request.
 
 ## client.indices.shrink [_indices.shrink]
 Shrink an index.
@@ -7276,11 +7307,11 @@ client.indices.shrink({ index, target })
 - **`aliases` (Optional, Record<string, { filter, index_routing, is_hidden, is_write_index, routing, search_routing }>)**: The key is the alias name.
 Index alias names support date math.
 - **`settings` (Optional, Record<string, User-defined value>)**: Configuration options for the target index.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
 Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
 
 ## client.indices.simulateIndexTemplate [_indices.simulate_index_template]
@@ -7299,7 +7330,7 @@ client.indices.simulateIndexTemplate({ name })
 - **`name` (string)**: Name of the index to simulate
 - **`create` (Optional, boolean)**: Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one
 - **`cause` (Optional, string)**: User defined reason for dry-run creating the new template for simulation purposes
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 - **`include_defaults` (Optional, boolean)**: If true, returns all relevant default configurations for the index template.
 
 ## client.indices.simulateTemplate [_indices.simulate_template]
@@ -7320,7 +7351,7 @@ this parameter and specify the template configuration in the request body.
 - **`allow_auto_create` (Optional, boolean)**: This setting overrides the value of the `action.auto_create_index` cluster setting.
 If set to `true` in a template, then indices can be automatically created using that template even if auto-creation of indices is disabled via `actions.auto_create_index`.
 If set to `false`, then indices or data streams matching the template must always be explicitly created, and may never be automatically created.
-- **`index_patterns` (Optional, string | string[])**: Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation.
+- **`index_patterns` (Optional, string \| string[])**: Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation.
 - **`composed_of` (Optional, string[])**: An ordered list of component template names.
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
 - **`template` (Optional, { aliases, mappings, settings, lifecycle })**: Template to be applied.
@@ -7343,7 +7374,7 @@ references a component template that might not exist
 that uses deprecated components, Elasticsearch will emit a deprecation warning.
 - **`create` (Optional, boolean)**: If true, the template passed in the body is only used if no existing templates match the same index patterns. If false, the simulation uses the template with the highest priority. Note that the template is not permanently added or updated in either case; it is only used for the simulation.
 - **`cause` (Optional, string)**: User defined reason for dry-run creating the new template for simulation purposes
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 - **`include_defaults` (Optional, boolean)**: If true, returns all relevant default configurations for the index template.
 
 ## client.indices.split [_indices.split]
@@ -7394,11 +7425,11 @@ client.indices.split({ index, target })
 - **`target` (string)**: Name of the target index to create.
 - **`aliases` (Optional, Record<string, { filter, index_routing, is_hidden, is_write_index, routing, search_routing }>)**: Aliases for the resulting index.
 - **`settings` (Optional, Record<string, User-defined value>)**: Configuration options for the target index.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation.
 Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
 
 ## client.indices.stats [_indices.stats]
@@ -7423,19 +7454,19 @@ client.indices.stats({ ... })
 ### Arguments [_arguments_indices.stats]
 
 #### Request (object) [_request_indices.stats]
-- **`metric` (Optional, string | string[])**: Limit the information returned the specific metrics.
-- **`index` (Optional, string | string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
-- **`completion_fields` (Optional, string | string[])**: List or wildcard expressions of fields to include in fielddata and suggest statistics.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument
+- **`metric` (Optional, string \| string[])**: Limit the information returned the specific metrics.
+- **`index` (Optional, string \| string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
+- **`completion_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata and suggest statistics.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument
 determines whether wildcard expressions match hidden data streams. Supports a list of values,
 such as `open,hidden`.
-- **`fielddata_fields` (Optional, string | string[])**: List or wildcard expressions of fields to include in fielddata statistics.
-- **`fields` (Optional, string | string[])**: List or wildcard expressions of fields to include in the statistics.
+- **`fielddata_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata statistics.
+- **`fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in the statistics.
 - **`forbid_closed_indices` (Optional, boolean)**: If true, statistics are not collected from closed indices.
-- **`groups` (Optional, string | string[])**: List of search groups to include in the search statistics.
+- **`groups` (Optional, string \| string[])**: List of search groups to include in the search statistics.
 - **`include_segment_file_sizes` (Optional, boolean)**: If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested).
 - **`include_unloaded_segments` (Optional, boolean)**: If true, the response includes information from segments that are not loaded into memory.
-- **`level` (Optional, Enum("cluster" | "indices" | "shards"))**: Indicates whether statistics are aggregated at the cluster, index, or shard level.
+- **`level` (Optional, Enum("cluster" \| "indices" \| "shards"))**: Indicates whether statistics are aggregated at the cluster, index, or shard level.
 
 ## client.indices.updateAliases [_indices.update_aliases]
 Create or update an alias.
@@ -7451,9 +7482,9 @@ client.indices.updateAliases({ ... })
 
 #### Request (object) [_request_indices.update_aliases]
 - **`actions` (Optional, { add_backing_index, remove_backing_index }[])**: Actions to perform.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.validateQuery [_indices.validate_query]
@@ -7469,7 +7500,7 @@ client.indices.validateQuery({ ... })
 ### Arguments [_arguments_indices.validate_query]
 
 #### Request (object) [_request_indices.validate_query]
-- **`index` (Optional, string | string[])**: List of data streams, indices, and aliases to search.
+- **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases to search.
 Supports wildcards (`*`).
 To search all data streams or indices, omit this parameter or use `*` or `_all`.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Query in the Lucene query string syntax.
@@ -7479,10 +7510,10 @@ This behavior applies even if the request targets other open indices.
 - **`analyzer` (Optional, string)**: Analyzer to use for the query string.
 This parameter can only be used when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed.
-- **`default_operator` (Optional, Enum("and" | "or"))**: The default operator for query string query: `AND` or `OR`.
+- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `AND` or `OR`.
 - **`df` (Optional, string)**: Field to use as default where no field prefix is given in the query string.
 This parameter can only be used when the `q` query string parameter is specified.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
@@ -7495,6 +7526,17 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ## client.inference.chatCompletionUnified [_inference.chat_completion_unified]
 Perform chat completion inference
 
+The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. 
+It only works with the `chat_completion` task type for `openai` and `elastic` inference services.
+
+IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face.
+For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
+
+NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.
+The Chat completion inference API and the Stream inference API differ in their response structure and capabilities.
+The Chat completion inference API provides more comprehensive customization options through more fields and function calling support.
+If you use the `openai` service or the `elastic` service, use the Chat completion inference API.
+
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-unified-inference)
 
 ```ts
@@ -7506,7 +7548,7 @@ client.inference.chatCompletionUnified({ inference_id })
 #### Request (object) [_request_inference.chat_completion_unified]
 - **`inference_id` (string)**: The inference Id
 - **`chat_completion_request` (Optional, { messages, model, max_completion_tokens, stop, temperature, tool_choice, tools, top_p })**
-- **`timeout` (Optional, string | -1 | 0)**: Specifies the amount of time to wait for the inference request to complete.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.completion [_inference.completion]
 Perform completion inference on the service
@@ -7521,10 +7563,10 @@ client.inference.completion({ inference_id, input })
 
 #### Request (object) [_request_inference.completion]
 - **`inference_id` (string)**: The inference Id
-- **`input` (string | string[])**: Inference input.
+- **`input` (string \| string[])**: Inference input.
 Either a string or an array of strings.
 - **`task_settings` (Optional, User-defined value)**: Optional task settings
-- **`timeout` (Optional, string | -1 | 0)**: Specifies the amount of time to wait for the inference request to complete.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.delete [_inference.delete]
 Delete an inference endpoint
@@ -7539,7 +7581,7 @@ client.inference.delete({ inference_id })
 
 #### Request (object) [_request_inference.delete]
 - **`inference_id` (string)**: The inference identifier.
-- **`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion" | "chat_completion"))**: The task type
+- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The task type
 - **`dry_run` (Optional, boolean)**: When true, the endpoint is not deleted and a list of ingest processors which reference this endpoint is returned.
 - **`force` (Optional, boolean)**: When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields.
 
@@ -7555,7 +7597,7 @@ client.inference.get({ ... })
 ### Arguments [_arguments_inference.get]
 
 #### Request (object) [_request_inference.get]
-- **`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion" | "chat_completion"))**: The task type
+- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The task type
 - **`inference_id` (Optional, string)**: The inference Id
 
 ## client.inference.inference [_inference.inference]
@@ -7580,25 +7622,20 @@ client.inference.inference({ inference_id, input })
 
 #### Request (object) [_request_inference.inference]
 - **`inference_id` (string)**: The unique identifier for the inference endpoint.
-- **`input` (string | string[])**: The text on which you want to perform the inference task.
+- **`input` (string \| string[])**: The text on which you want to perform the inference task.
 It can be a single string or an array.
 
 > info
 > Inference endpoints for the `completion` task type currently only support a single string as input.
-- **`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion" | "chat_completion"))**: The type of inference task that the model performs.
+- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The type of inference task that the model performs.
 - **`query` (Optional, string)**: The query input, which is required only for the `rerank` task.
 It is not required for other tasks.
 - **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request.
 These settings are specific to the task type you specified and override the task settings specified when initializing the service.
-- **`timeout` (Optional, string | -1 | 0)**: The amount of time to wait for the inference request to complete.
+- **`timeout` (Optional, string \| -1 \| 0)**: The amount of time to wait for the inference request to complete.
 
 ## client.inference.put [_inference.put]
 Create an inference endpoint.
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
 IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face.
 For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models.
@@ -7614,19 +7651,13 @@ client.inference.put({ inference_id })
 
 #### Request (object) [_request_inference.put]
 - **`inference_id` (string)**: The inference Id
-- **`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion" | "chat_completion"))**: The task type
+- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The task type
 - **`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })**
 
 ## client.inference.putAlibabacloud [_inference.put_alibabacloud]
 Create an AlibabaCloud AI Search inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `alibabacloud-ai-search` service.
-
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-alibabacloud)
 
@@ -7637,7 +7668,7 @@ client.inference.putAlibabacloud({ task_type, alibabacloud_inference_id, service
 ### Arguments [_arguments_inference.put_alibabacloud]
 
 #### Request (object) [_request_inference.put_alibabacloud]
-- **`task_type` (Enum("completion" | "rerank" | "space_embedding" | "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("completion" \| "rerank" \| "space_embedding" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`alibabacloud_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("alibabacloud-ai-search"))**: The type of service supported for the specified task type. In this case, `alibabacloud-ai-search`.
 - **`service_settings` ({ api_key, host, rate_limit, service_id, workspace })**: Settings used to install the inference model. These settings are specific to the `alibabacloud-ai-search` service.
@@ -7653,12 +7684,6 @@ Creates an inference endpoint to perform an inference task with the `amazonbedro
 >info
 > You need to provide the access and secret keys only once, during the inference model creation. The get inference API does not retrieve your access or secret keys. After creating the inference model, you cannot change the associated key pairs. If you want to use a different access and secret key pair, delete the inference model and recreate it with the same name and the updated keys.
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-amazonbedrock)
 
 ```ts
@@ -7668,7 +7693,7 @@ client.inference.putAmazonbedrock({ task_type, amazonbedrock_inference_id, servi
 ### Arguments [_arguments_inference.put_amazonbedrock]
 
 #### Request (object) [_request_inference.put_amazonbedrock]
-- **`task_type` (Enum("completion" | "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("completion" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`amazonbedrock_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("amazonbedrock"))**: The type of service supported for the specified task type. In this case, `amazonbedrock`.
 - **`service_settings` ({ access_key, model, provider, region, rate_limit, secret_key })**: Settings used to install the inference model. These settings are specific to the `amazonbedrock` service.
@@ -7680,12 +7705,6 @@ These settings are specific to the task type you specified.
 Create an Anthropic inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `anthropic` service.
-
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-anthropic)
 
@@ -7710,12 +7729,6 @@ Create an Azure AI studio inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `azureaistudio` service.
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-azureaistudio)
 
 ```ts
@@ -7725,7 +7738,7 @@ client.inference.putAzureaistudio({ task_type, azureaistudio_inference_id, servi
 ### Arguments [_arguments_inference.put_azureaistudio]
 
 #### Request (object) [_request_inference.put_azureaistudio]
-- **`task_type` (Enum("completion" | "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("completion" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`azureaistudio_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("azureaistudio"))**: The type of service supported for the specified task type. In this case, `azureaistudio`.
 - **`service_settings` ({ api_key, endpoint_type, target, provider, rate_limit })**: Settings used to install the inference model. These settings are specific to the `openai` service.
@@ -7745,12 +7758,6 @@ The list of chat completion models that you can choose from in your Azure OpenAI
 
 The list of embeddings models that you can choose from in your deployment can be found in the [Azure models documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#embeddings).
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-azureopenai)
 
 ```ts
@@ -7760,7 +7767,7 @@ client.inference.putAzureopenai({ task_type, azureopenai_inference_id, service, 
 ### Arguments [_arguments_inference.put_azureopenai]
 
 #### Request (object) [_request_inference.put_azureopenai]
-- **`task_type` (Enum("completion" | "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("completion" \| "text_embedding"))**: The type of the inference task that the model will perform.
 NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
 - **`azureopenai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("azureopenai"))**: The type of service supported for the specified task type. In this case, `azureopenai`.
@@ -7774,12 +7781,6 @@ Create a Cohere inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `cohere` service.
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-cohere)
 
 ```ts
@@ -7789,7 +7790,7 @@ client.inference.putCohere({ task_type, cohere_inference_id, service, service_se
 ### Arguments [_arguments_inference.put_cohere]
 
 #### Request (object) [_request_inference.put_cohere]
-- **`task_type` (Enum("completion" | "rerank" | "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("completion" \| "rerank" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`cohere_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("cohere"))**: The type of service supported for the specified task type. In this case, `cohere`.
 - **`service_settings` ({ api_key, embedding_type, model_id, rate_limit, similarity })**: Settings used to install the inference model.
@@ -7825,7 +7826,7 @@ client.inference.putElasticsearch({ task_type, elasticsearch_inference_id, servi
 ### Arguments [_arguments_inference.put_elasticsearch]
 
 #### Request (object) [_request_inference.put_elasticsearch]
-- **`task_type` (Enum("rerank" | "sparse_embedding" | "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("rerank" \| "sparse_embedding" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`elasticsearch_inference_id` (string)**: The unique identifier of the inference endpoint.
 The must not match the `model_id`.
 - **`service` (Enum("elasticsearch"))**: The type of service supported for the specified task type. In this case, `elasticsearch`.
@@ -7873,12 +7874,6 @@ Create an Google AI Studio inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `googleaistudio` service.
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-googleaistudio)
 
 ```ts
@@ -7888,7 +7883,7 @@ client.inference.putGoogleaistudio({ task_type, googleaistudio_inference_id, ser
 ### Arguments [_arguments_inference.put_googleaistudio]
 
 #### Request (object) [_request_inference.put_googleaistudio]
-- **`task_type` (Enum("completion" | "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("completion" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`googleaistudio_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("googleaistudio"))**: The type of service supported for the specified task type. In this case, `googleaistudio`.
 - **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `googleaistudio` service.
@@ -7899,12 +7894,6 @@ Create a Google Vertex AI inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `googlevertexai` service.
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-googlevertexai)
 
 ```ts
@@ -7914,7 +7903,7 @@ client.inference.putGooglevertexai({ task_type, googlevertexai_inference_id, ser
 ### Arguments [_arguments_inference.put_googlevertexai]
 
 #### Request (object) [_request_inference.put_googlevertexai]
-- **`task_type` (Enum("rerank" | "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("rerank" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`googlevertexai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("googlevertexai"))**: The type of service supported for the specified task type. In this case, `googlevertexai`.
 - **`service_settings` ({ location, model_id, project_id, rate_limit, service_account_json })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
@@ -7941,12 +7930,6 @@ The following models are recommended for the Hugging Face service:
 * `multilingual-e5-base`
 * `multilingual-e5-small`
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-hugging-face)
 
 ```ts
@@ -7970,12 +7953,6 @@ Create an inference endpoint to perform an inference task with the `jinaai` serv
 To review the available `rerank` models, refer to <https://jina.ai/reranker>.
 To review the available `text_embedding` models, refer to the <https://jina.ai/embeddings/>.
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-jinaai)
 
 ```ts
@@ -7985,7 +7962,7 @@ client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_se
 ### Arguments [_arguments_inference.put_jinaai]
 
 #### Request (object) [_request_inference.put_jinaai]
-- **`task_type` (Enum("rerank" | "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("rerank" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`jinaai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("jinaai"))**: The type of service supported for the specified task type. In this case, `jinaai`.
 - **`service_settings` ({ api_key, model_id, rate_limit, similarity })**: Settings used to install the inference model. These settings are specific to the `jinaai` service.
@@ -7997,12 +7974,6 @@ These settings are specific to the task type you specified.
 Create a Mistral inference endpoint.
 
 Creates an inference endpoint to perform an inference task with the `mistral` service.
-
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-mistral)
 
@@ -8025,12 +7996,6 @@ Create an OpenAI inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `openai` service or `openai` compatible APIs.
 
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-openai)
 
 ```ts
@@ -8040,7 +8005,7 @@ client.inference.putOpenai({ task_type, openai_inference_id, service, service_se
 ### Arguments [_arguments_inference.put_openai]
 
 #### Request (object) [_request_inference.put_openai]
-- **`task_type` (Enum("chat_completion" | "completion" | "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("chat_completion" \| "completion" \| "text_embedding"))**: The type of the inference task that the model will perform.
 NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
 - **`openai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("openai"))**: The type of service supported for the specified task type. In this case, `openai`.
@@ -8065,7 +8030,7 @@ client.inference.putVoyageai({ task_type, voyageai_inference_id, service, servic
 ### Arguments [_arguments_inference.put_voyageai]
 
 #### Request (object) [_request_inference.put_voyageai]
-- **`task_type` (Enum("text_embedding" | "rerank"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("text_embedding" \| "rerank"))**: The type of the inference task that the model will perform.
 - **`voyageai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("voyageai"))**: The type of service supported for the specified task type. In this case, `voyageai`.
 - **`service_settings` ({ dimensions, model_id, rate_limit, embedding_type })**: Settings used to install the inference model. These settings are specific to the `voyageai` service.
@@ -8079,12 +8044,6 @@ Create a Watsonx inference endpoint.
 Create an inference endpoint to perform an inference task with the `watsonxai` service.
 You need an IBM Cloud Databases for Elasticsearch deployment to use the `watsonxai` inference service.
 You can provision one through the IBM catalog, the Cloud Databases CLI plug-in, the Cloud Databases API, or Terraform.
-
-When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-After creating the endpoint, wait for the model deployment to complete before using it.
-To verify the deployment status, use the get trained model statistics API.
-Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
-Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-watsonx)
 
@@ -8115,14 +8074,14 @@ client.inference.rerank({ inference_id, query, input })
 #### Request (object) [_request_inference.rerank]
 - **`inference_id` (string)**: The unique identifier for the inference endpoint.
 - **`query` (string)**: Query input.
-- **`input` (string | string[])**: The text on which you want to perform the inference task.
+- **`input` (string \| string[])**: The text on which you want to perform the inference task.
 It can be a single string or an array.
 
 > info
 > Inference endpoints for the `completion` task type currently only support a single string as input.
 - **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request.
 These settings are specific to the task type you specified and override the task settings specified when initializing the service.
-- **`timeout` (Optional, string | -1 | 0)**: The amount of time to wait for the inference request to complete.
+- **`timeout` (Optional, string \| -1 \| 0)**: The amount of time to wait for the inference request to complete.
 
 ## client.inference.sparseEmbedding [_inference.sparse_embedding]
 Perform sparse embedding inference on the service
@@ -8137,10 +8096,10 @@ client.inference.sparseEmbedding({ inference_id, input })
 
 #### Request (object) [_request_inference.sparse_embedding]
 - **`inference_id` (string)**: The inference Id
-- **`input` (string | string[])**: Inference input.
+- **`input` (string \| string[])**: Inference input.
 Either a string or an array of strings.
 - **`task_settings` (Optional, User-defined value)**: Optional task settings
-- **`timeout` (Optional, string | -1 | 0)**: Specifies the amount of time to wait for the inference request to complete.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.streamCompletion [_inference.stream_completion]
 Perform streaming inference.
@@ -8161,7 +8120,7 @@ client.inference.streamCompletion({ inference_id, input })
 
 #### Request (object) [_request_inference.stream_completion]
 - **`inference_id` (string)**: The unique identifier for the inference endpoint.
-- **`input` (string | string[])**: The text on which you want to perform the inference task.
+- **`input` (string \| string[])**: The text on which you want to perform the inference task.
 It can be a single string or an array.
 
 NOTE: Inference endpoints for the completion task type currently only support a single string as input.
@@ -8180,10 +8139,10 @@ client.inference.textEmbedding({ inference_id, input })
 
 #### Request (object) [_request_inference.text_embedding]
 - **`inference_id` (string)**: The inference Id
-- **`input` (string | string[])**: Inference input.
+- **`input` (string \| string[])**: Inference input.
 Either a string or an array of strings.
 - **`task_settings` (Optional, User-defined value)**: Optional task settings
-- **`timeout` (Optional, string | -1 | 0)**: Specifies the amount of time to wait for the inference request to complete.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.update [_inference.update]
 Update an inference endpoint.
@@ -8204,7 +8163,7 @@ client.inference.update({ inference_id })
 
 #### Request (object) [_request_inference.update]
 - **`inference_id` (string)**: The unique identifier of the inference endpoint.
-- **`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion" | "chat_completion"))**: The type of inference task that the model performs.
+- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The type of inference task that the model performs.
 - **`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })**
 
 ## client.ingest.deleteGeoipDatabase [_ingest.delete_geoip_database]
@@ -8221,10 +8180,10 @@ client.ingest.deleteGeoipDatabase({ id })
 ### Arguments [_arguments_ingest.delete_geoip_database]
 
 #### Request (object) [_request_ingest.delete_geoip_database]
-- **`id` (string | string[])**: A list of geoip database configurations to delete
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`id` (string \| string[])**: A list of geoip database configurations to delete
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.ingest.deleteIpLocationDatabase [_ingest.delete_ip_location_database]
 Delete IP geolocation database configurations.
@@ -8238,11 +8197,11 @@ client.ingest.deleteIpLocationDatabase({ id })
 ### Arguments [_arguments_ingest.delete_ip_location_database]
 
 #### Request (object) [_request_ingest.delete_ip_location_database]
-- **`id` (string | string[])**: A list of IP location database configurations.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`id` (string \| string[])**: A list of IP location database configurations.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 A value of `-1` indicates that the request should never time out.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 A value of `-1` indicates that the request should never time out.
 
@@ -8261,9 +8220,9 @@ client.ingest.deletePipeline({ id })
 #### Request (object) [_request_ingest.delete_pipeline]
 - **`id` (string)**: Pipeline ID or wildcard expression of pipeline IDs used to limit the request.
 To delete all ingest pipelines in a cluster, use a value of `*`.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.ingest.geoIpStats [_ingest.geo_ip_stats]
@@ -8291,7 +8250,7 @@ client.ingest.getGeoipDatabase({ ... })
 ### Arguments [_arguments_ingest.get_geoip_database]
 
 #### Request (object) [_request_ingest.get_geoip_database]
-- **`id` (Optional, string | string[])**: A list of database configuration IDs to retrieve.
+- **`id` (Optional, string \| string[])**: A list of database configuration IDs to retrieve.
 Wildcard (`*`) expressions are supported.
 To get all database configurations, omit this parameter or use `*`.
 
@@ -8307,10 +8266,10 @@ client.ingest.getIpLocationDatabase({ ... })
 ### Arguments [_arguments_ingest.get_ip_location_database]
 
 #### Request (object) [_request_ingest.get_ip_location_database]
-- **`id` (Optional, string | string[])**: List of database configuration IDs to retrieve.
+- **`id` (Optional, string \| string[])**: List of database configuration IDs to retrieve.
 Wildcard (`*`) expressions are supported.
 To get all database configurations, omit this parameter or use `*`.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 A value of `-1` indicates that the request should never time out.
 
@@ -8332,7 +8291,7 @@ client.ingest.getPipeline({ ... })
 - **`id` (Optional, string)**: List of pipeline IDs to retrieve.
 Wildcard (`*`) expressions are supported.
 To get all ingest pipelines, omit this parameter or use `*`.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`summary` (Optional, boolean)**: Return pipelines without their definitions (default: false)
 
@@ -8367,9 +8326,9 @@ client.ingest.putGeoipDatabase({ id, name, maxmind })
 - **`name` (string)**: The provider-assigned name of the IP geolocation database to download.
 - **`maxmind` ({ account_id })**: The configuration necessary to identify which IP geolocation provider to use to download the database, as well as any provider-specific configuration necessary for such downloading.
 At present, the only supported provider is maxmind, and the maxmind provider requires that an account_id (string) is configured.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.ingest.putIpLocationDatabase [_ingest.put_ip_location_database]
 Create or update an IP geolocation database configuration.
@@ -8385,10 +8344,10 @@ client.ingest.putIpLocationDatabase({ id })
 #### Request (object) [_request_ingest.put_ip_location_database]
 - **`id` (string)**: The database configuration identifier.
 - **`configuration` (Optional, { name, maxmind, ipinfo })**
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 A value of `-1` indicates that the request should never time out.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
 If no response is received before the timeout expires, the cluster metadata update still applies but the response indicates that it was not completely acknowledged.
 A value of `-1` indicates that the request should never time out.
 
@@ -8413,8 +8372,8 @@ client.ingest.putPipeline({ id })
 - **`version` (Optional, number)**: Version number used by external systems to track ingest pipelines. This parameter is intended for external systems only. Elasticsearch does not use or validate pipeline version numbers.
 - **`deprecated` (Optional, boolean)**: Marks this ingest pipeline as deprecated.
 When a deprecated ingest pipeline is referenced as the default or final pipeline when creating or updating a non-deprecated index template, Elasticsearch will emit a deprecation warning.
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 - **`if_version` (Optional, number)**: Required version for optimistic concurrency control for pipeline updates
 
 ## client.ingest.simulate [_ingest.simulate]
@@ -8456,8 +8415,8 @@ client.license.delete({ ... })
 ### Arguments [_arguments_license.delete]
 
 #### Request (object) [_request_license.delete]
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.license.get [_license.get]
 Get license information.
@@ -8524,8 +8483,8 @@ client.license.post({ ... })
 - **`license` (Optional, { expiry_date_in_millis, issue_date_in_millis, start_date_in_millis, issued_to, issuer, max_nodes, max_resource_units, signature, type, uid })**
 - **`licenses` (Optional, { expiry_date_in_millis, issue_date_in_millis, start_date_in_millis, issued_to, issuer, max_nodes, max_resource_units, signature, type, uid }[])**: A sequence of one or more JSON documents containing the license information.
 - **`acknowledge` (Optional, boolean)**: Specifies whether you acknowledge the license changes.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.license.postStartBasic [_license.post_start_basic]
 Start a basic license.
@@ -8549,8 +8508,8 @@ client.license.postStartBasic({ ... })
 
 #### Request (object) [_request_license.post_start_basic]
 - **`acknowledge` (Optional, boolean)**: whether the user has acknowledged acknowledge messages (default: false)
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.license.postStartTrial [_license.post_start_trial]
 Start a trial.
@@ -8572,7 +8531,7 @@ client.license.postStartTrial({ ... })
 #### Request (object) [_request_license.post_start_trial]
 - **`acknowledge` (Optional, boolean)**: whether the user has acknowledged acknowledge messages (default: false)
 - **`type_query_string` (Optional, string)**
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.logstash.deletePipeline [_logstash.delete_pipeline]
 Delete a Logstash pipeline.
@@ -8603,7 +8562,7 @@ client.logstash.getPipeline({ ... })
 ### Arguments [_arguments_logstash.get_pipeline]
 
 #### Request (object) [_request_logstash.get_pipeline]
-- **`id` (Optional, string | string[])**: A list of pipeline identifiers.
+- **`id` (Optional, string \| string[])**: A list of pipeline identifiers.
 
 ## client.logstash.putPipeline [_logstash.put_pipeline]
 Create or update a Logstash pipeline.
@@ -8711,7 +8670,7 @@ client.ml.closeJob({ job_id })
 - **`job_id` (string)**: Identifier for the anomaly detection job. It can be a job identifier, a group name, or a wildcard expression. You can close multiple anomaly detection jobs in a single API request by using a group name, a list of jobs, or a wildcard expression. You can close all jobs by using `_all` or by specifying `*` as the job identifier.
 - **`allow_no_match` (Optional, boolean)**: Refer to the description for the `allow_no_match` query parameter.
 - **`force` (Optional, boolean)**: Refer to the descriptiion for the `force` query parameter.
-- **`timeout` (Optional, string | -1 | 0)**: Refer to the description for the `timeout` query parameter.
+- **`timeout` (Optional, string \| -1 \| 0)**: Refer to the description for the `timeout` query parameter.
 
 ## client.ml.deleteCalendar [_ml.delete_calendar]
 Delete a calendar.
@@ -8758,7 +8717,7 @@ client.ml.deleteCalendarJob({ calendar_id, job_id })
 
 #### Request (object) [_request_ml.delete_calendar_job]
 - **`calendar_id` (string)**: A string that uniquely identifies a calendar.
-- **`job_id` (string | string[])**: An identifier for the anomaly detection jobs. It can be a job identifier, a group name, or a
+- **`job_id` (string \| string[])**: An identifier for the anomaly detection jobs. It can be a job identifier, a group name, or a
 list of jobs or groups.
 
 ## client.ml.deleteDataFrameAnalytics [_ml.delete_data_frame_analytics]
@@ -8775,7 +8734,7 @@ client.ml.deleteDataFrameAnalytics({ id })
 #### Request (object) [_request_ml.delete_data_frame_analytics]
 - **`id` (string)**: Identifier for the data frame analytics job.
 - **`force` (Optional, boolean)**: If `true`, it deletes a job that is not stopped; this method is quicker than stopping and deleting the job.
-- **`timeout` (Optional, string | -1 | 0)**: The time to wait for the job to be deleted.
+- **`timeout` (Optional, string \| -1 \| 0)**: The time to wait for the job to be deleted.
 
 ## client.ml.deleteDatafeed [_ml.delete_datafeed]
 Delete a datafeed.
@@ -8821,7 +8780,7 @@ client.ml.deleteExpiredData({ ... })
 group name, or a wildcard expression.
 - **`requests_per_second` (Optional, float)**: The desired requests per second for the deletion processes. The default
 behavior is no throttling.
-- **`timeout` (Optional, string | -1 | 0)**: How long can the underlying delete processes run until they are canceled.
+- **`timeout` (Optional, string \| -1 \| 0)**: How long can the underlying delete processes run until they are canceled.
 
 ## client.ml.deleteFilter [_ml.delete_filter]
 Delete a filter.
@@ -8865,7 +8824,7 @@ all forecasts from the job.
 particular, if this parameter is set to `false` and there are no
 forecasts associated with the job, attempts to delete all forecasts
 return an error.
-- **`timeout` (Optional, string | -1 | 0)**: Specifies the period of time to wait for the completion of the delete
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the period of time to wait for the completion of the delete
 operation. When this period of time elapses, the API fails and returns an
 error.
 
@@ -8932,7 +8891,7 @@ client.ml.deleteTrainedModel({ model_id })
 #### Request (object) [_request_ml.delete_trained_model]
 - **`model_id` (string)**: The unique identifier of the trained model.
 - **`force` (Optional, boolean)**: Forcefully deletes a trained model that is referenced by ingest pipelines or has a started deployment.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.ml.deleteTrainedModelAlias [_ml.delete_trained_model_alias]
 Delete a trained model alias.
@@ -9073,11 +9032,11 @@ client.ml.flushJob({ job_id })
 
 #### Request (object) [_request_ml.flush_job]
 - **`job_id` (string)**: Identifier for the anomaly detection job.
-- **`advance_time` (Optional, string | Unit)**: Refer to the description for the `advance_time` query parameter.
+- **`advance_time` (Optional, string \| Unit)**: Refer to the description for the `advance_time` query parameter.
 - **`calc_interim` (Optional, boolean)**: Refer to the description for the `calc_interim` query parameter.
-- **`end` (Optional, string | Unit)**: Refer to the description for the `end` query parameter.
-- **`skip_time` (Optional, string | Unit)**: Refer to the description for the `skip_time` query parameter.
-- **`start` (Optional, string | Unit)**: Refer to the description for the `start` query parameter.
+- **`end` (Optional, string \| Unit)**: Refer to the description for the `end` query parameter.
+- **`skip_time` (Optional, string \| Unit)**: Refer to the description for the `skip_time` query parameter.
+- **`start` (Optional, string \| Unit)**: Refer to the description for the `start` query parameter.
 
 ## client.ml.forecast [_ml.forecast]
 Predict future behavior of a time series.
@@ -9098,8 +9057,8 @@ client.ml.forecast({ job_id })
 #### Request (object) [_request_ml.forecast]
 - **`job_id` (string)**: Identifier for the anomaly detection job. The job must be open when you
 create a forecast; otherwise, an error occurs.
-- **`duration` (Optional, string | -1 | 0)**: Refer to the description for the `duration` query parameter.
-- **`expires_in` (Optional, string | -1 | 0)**: Refer to the description for the `expires_in` query parameter.
+- **`duration` (Optional, string \| -1 \| 0)**: Refer to the description for the `duration` query parameter.
+- **`expires_in` (Optional, string \| -1 \| 0)**: Refer to the description for the `expires_in` query parameter.
 - **`max_model_memory` (Optional, string)**: Refer to the description for the `max_model_memory` query parameter.
 
 ## client.ml.getBuckets [_ml.get_buckets]
@@ -9116,16 +9075,16 @@ client.ml.getBuckets({ job_id })
 
 #### Request (object) [_request_ml.get_buckets]
 - **`job_id` (string)**: Identifier for the anomaly detection job.
-- **`timestamp` (Optional, string | Unit)**: The timestamp of a single bucket result. If you do not specify this
+- **`timestamp` (Optional, string \| Unit)**: The timestamp of a single bucket result. If you do not specify this
 parameter, the API returns information about all buckets.
 - **`anomaly_score` (Optional, number)**: Refer to the description for the `anomaly_score` query parameter.
 - **`desc` (Optional, boolean)**: Refer to the description for the `desc` query parameter.
-- **`end` (Optional, string | Unit)**: Refer to the description for the `end` query parameter.
+- **`end` (Optional, string \| Unit)**: Refer to the description for the `end` query parameter.
 - **`exclude_interim` (Optional, boolean)**: Refer to the description for the `exclude_interim` query parameter.
 - **`expand` (Optional, boolean)**: Refer to the description for the `expand` query parameter.
 - **`page` (Optional, { from, size })**
 - **`sort` (Optional, string)**: Refer to the desription for the `sort` query parameter.
-- **`start` (Optional, string | Unit)**: Refer to the description for the `start` query parameter.
+- **`start` (Optional, string \| Unit)**: Refer to the description for the `start` query parameter.
 - **`from` (Optional, number)**: Skips the specified number of buckets.
 - **`size` (Optional, number)**: Specifies the maximum number of buckets to obtain.
 
@@ -9142,11 +9101,11 @@ client.ml.getCalendarEvents({ calendar_id })
 
 #### Request (object) [_request_ml.get_calendar_events]
 - **`calendar_id` (string)**: A string that uniquely identifies a calendar. You can get information for multiple calendars by using a list of ids or a wildcard expression. You can get information for all calendars by using `_all` or `*` or by omitting the calendar identifier.
-- **`end` (Optional, string | Unit)**: Specifies to get events with timestamps earlier than this time.
+- **`end` (Optional, string \| Unit)**: Specifies to get events with timestamps earlier than this time.
 - **`from` (Optional, number)**: Skips the specified number of events.
 - **`job_id` (Optional, string)**: Specifies to get events for a specific anomaly detection job identifier or job group. It must be used with a calendar identifier of `_all` or `*`.
 - **`size` (Optional, number)**: Specifies the maximum number of events to obtain.
-- **`start` (Optional, string | Unit)**: Specifies to get events with timestamps after this time.
+- **`start` (Optional, string \| Unit)**: Specifies to get events with timestamps after this time.
 
 ## client.ml.getCalendars [_ml.get_calendars]
 Get calendar configuration info.
@@ -9272,7 +9231,7 @@ client.ml.getDatafeedStats({ ... })
 ### Arguments [_arguments_ml.get_datafeed_stats]
 
 #### Request (object) [_request_ml.get_datafeed_stats]
-- **`datafeed_id` (Optional, string | string[])**: Identifier for the datafeed. It can be a datafeed identifier or a
+- **`datafeed_id` (Optional, string \| string[])**: Identifier for the datafeed. It can be a datafeed identifier or a
 wildcard expression. If you do not specify one of these options, the API
 returns information about all datafeeds.
 - **`allow_no_match` (Optional, boolean)**: Specifies what to do when the request:
@@ -9303,7 +9262,7 @@ client.ml.getDatafeeds({ ... })
 ### Arguments [_arguments_ml.get_datafeeds]
 
 #### Request (object) [_request_ml.get_datafeeds]
-- **`datafeed_id` (Optional, string | string[])**: Identifier for the datafeed. It can be a datafeed identifier or a
+- **`datafeed_id` (Optional, string \| string[])**: Identifier for the datafeed. It can be a datafeed identifier or a
 wildcard expression. If you do not specify one of these options, the API
 returns information about all datafeeds.
 - **`allow_no_match` (Optional, boolean)**: Specifies what to do when the request:
@@ -9333,7 +9292,7 @@ client.ml.getFilters({ ... })
 ### Arguments [_arguments_ml.get_filters]
 
 #### Request (object) [_request_ml.get_filters]
-- **`filter_id` (Optional, string | string[])**: A string that uniquely identifies a filter.
+- **`filter_id` (Optional, string \| string[])**: A string that uniquely identifies a filter.
 - **`from` (Optional, number)**: Skips the specified number of filters.
 - **`size` (Optional, number)**: Specifies the maximum number of filters to obtain.
 
@@ -9356,7 +9315,7 @@ client.ml.getInfluencers({ job_id })
 - **`page` (Optional, { from, size })**: Configures pagination.
 This parameter has the `from` and `size` properties.
 - **`desc` (Optional, boolean)**: If true, the results are sorted in descending order.
-- **`end` (Optional, string | Unit)**: Returns influencers with timestamps earlier than this time.
+- **`end` (Optional, string \| Unit)**: Returns influencers with timestamps earlier than this time.
 The default value means it is unset and results are not limited to
 specific timestamps.
 - **`exclude_interim` (Optional, boolean)**: If true, the output excludes interim results. By default, interim results
@@ -9367,7 +9326,7 @@ value.
 - **`size` (Optional, number)**: Specifies the maximum number of influencers to obtain.
 - **`sort` (Optional, string)**: Specifies the sort field for the requested influencers. By default, the
 influencers are sorted by the `influencer_score` value.
-- **`start` (Optional, string | Unit)**: Returns influencers with timestamps after this time. The default value
+- **`start` (Optional, string \| Unit)**: Returns influencers with timestamps after this time. The default value
 means it is unset and results are not limited to specific timestamps.
 
 ## client.ml.getJobStats [_ml.get_job_stats]
@@ -9413,7 +9372,7 @@ client.ml.getJobs({ ... })
 ### Arguments [_arguments_ml.get_jobs]
 
 #### Request (object) [_request_ml.get_jobs]
-- **`job_id` (Optional, string | string[])**: Identifier for the anomaly detection job. It can be a job identifier, a
+- **`job_id` (Optional, string \| string[])**: Identifier for the anomaly detection job. It can be a job identifier, a
 group name, or a wildcard expression. If you do not specify one of these
 options, the API returns information for all anomaly detection jobs.
 - **`allow_no_match` (Optional, boolean)**: Specifies what to do when the request:
@@ -9446,9 +9405,9 @@ client.ml.getMemoryStats({ ... })
 #### Request (object) [_request_ml.get_memory_stats]
 - **`node_id` (Optional, string)**: The names of particular nodes in the cluster to target. For example, `nodeId1,nodeId2` or
 `ml:true`
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout
 expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request
 fails and returns an error.
 
 ## client.ml.getModelSnapshotUpgradeStats [_ml.get_model_snapshot_upgrade_stats]
@@ -9494,10 +9453,10 @@ client.ml.getModelSnapshots({ job_id })
 snapshots by using a list or a wildcard expression. You can get all snapshots by using `_all`,
 by specifying `*` as the snapshot ID, or by omitting the snapshot ID.
 - **`desc` (Optional, boolean)**: Refer to the description for the `desc` query parameter.
-- **`end` (Optional, string | Unit)**: Refer to the description for the `end` query parameter.
+- **`end` (Optional, string \| Unit)**: Refer to the description for the `end` query parameter.
 - **`page` (Optional, { from, size })**
 - **`sort` (Optional, string)**: Refer to the description for the `sort` query parameter.
-- **`start` (Optional, string | Unit)**: Refer to the description for the `start` query parameter.
+- **`start` (Optional, string \| Unit)**: Refer to the description for the `start` query parameter.
 - **`from` (Optional, number)**: Skips the specified number of snapshots.
 - **`size` (Optional, number)**: Specifies the maximum number of snapshots to obtain.
 
@@ -9538,11 +9497,11 @@ expression.
 You can summarize the bucket results for all anomaly detection jobs by
 using `_all` or by specifying `*` as the `<job_id>`.
 - **`allow_no_match` (Optional, boolean)**: Refer to the description for the `allow_no_match` query parameter.
-- **`bucket_span` (Optional, string | -1 | 0)**: Refer to the description for the `bucket_span` query parameter.
-- **`end` (Optional, string | Unit)**: Refer to the description for the `end` query parameter.
+- **`bucket_span` (Optional, string \| -1 \| 0)**: Refer to the description for the `bucket_span` query parameter.
+- **`end` (Optional, string \| Unit)**: Refer to the description for the `end` query parameter.
 - **`exclude_interim` (Optional, boolean)**: Refer to the description for the `exclude_interim` query parameter.
-- **`overall_score` (Optional, number | string)**: Refer to the description for the `overall_score` query parameter.
-- **`start` (Optional, string | Unit)**: Refer to the description for the `start` query parameter.
+- **`overall_score` (Optional, number \| string)**: Refer to the description for the `overall_score` query parameter.
+- **`start` (Optional, string \| Unit)**: Refer to the description for the `start` query parameter.
 - **`top_n` (Optional, number)**: Refer to the description for the `top_n` query parameter.
 
 ## client.ml.getRecords [_ml.get_records]
@@ -9569,12 +9528,12 @@ client.ml.getRecords({ job_id })
 #### Request (object) [_request_ml.get_records]
 - **`job_id` (string)**: Identifier for the anomaly detection job.
 - **`desc` (Optional, boolean)**: Refer to the description for the `desc` query parameter.
-- **`end` (Optional, string | Unit)**: Refer to the description for the `end` query parameter.
+- **`end` (Optional, string \| Unit)**: Refer to the description for the `end` query parameter.
 - **`exclude_interim` (Optional, boolean)**: Refer to the description for the `exclude_interim` query parameter.
 - **`page` (Optional, { from, size })**
 - **`record_score` (Optional, number)**: Refer to the description for the `record_score` query parameter.
 - **`sort` (Optional, string)**: Refer to the description for the `sort` query parameter.
-- **`start` (Optional, string | Unit)**: Refer to the description for the `start` query parameter.
+- **`start` (Optional, string \| Unit)**: Refer to the description for the `start` query parameter.
 - **`from` (Optional, number)**: Skips the specified number of records.
 - **`size` (Optional, number)**: Specifies the maximum number of records to obtain.
 
@@ -9590,7 +9549,7 @@ client.ml.getTrainedModels({ ... })
 ### Arguments [_arguments_ml.get_trained_models]
 
 #### Request (object) [_request_ml.get_trained_models]
-- **`model_id` (Optional, string | string[])**: The unique identifier of the trained model or a model alias.
+- **`model_id` (Optional, string \| string[])**: The unique identifier of the trained model or a model alias.
 
 You can get information for multiple trained models in a single API
 request by using a list of model IDs or a wildcard
@@ -9609,10 +9568,10 @@ JSON map (true) or in a custom compressed format (false).
 retrieval. This allows the configuration to be in an acceptable format to
 be retrieved and then added to another cluster.
 - **`from` (Optional, number)**: Skips the specified number of models.
-- **`include` (Optional, Enum("definition" | "feature_importance_baseline" | "hyperparameters" | "total_feature_importance" | "definition_status"))**: A comma delimited string of optional fields to include in the response
+- **`include` (Optional, Enum("definition" \| "feature_importance_baseline" \| "hyperparameters" \| "total_feature_importance" \| "definition_status"))**: A comma delimited string of optional fields to include in the response
 body.
 - **`size` (Optional, number)**: Specifies the maximum number of models to obtain.
-- **`tags` (Optional, string | string[])**: A comma delimited string of tags. A trained model can have many tags, or
+- **`tags` (Optional, string \| string[])**: A comma delimited string of tags. A trained model can have many tags, or
 none. When supplied, only trained models that contain all the supplied
 tags are returned.
 
@@ -9630,7 +9589,7 @@ client.ml.getTrainedModelsStats({ ... })
 ### Arguments [_arguments_ml.get_trained_models_stats]
 
 #### Request (object) [_request_ml.get_trained_models_stats]
-- **`model_id` (Optional, string | string[])**: The unique identifier of the trained model or a model alias. It can be a
+- **`model_id` (Optional, string \| string[])**: The unique identifier of the trained model or a model alias. It can be a
 list or a wildcard expression.
 - **`allow_no_match` (Optional, boolean)**: Specifies what to do when the request:
 
@@ -9660,7 +9619,7 @@ client.ml.inferTrainedModel({ model_id, docs })
 configured trained model input. Typically, for NLP models, the field name is `text_field`.
 Currently, for NLP models, only a single value is allowed.
 - **`inference_config` (Optional, { regression, classification, text_classification, zero_shot_classification, fill_mask, ner, pass_through, text_embedding, text_expansion, question_answering })**: The inference configuration updates to apply on the API call
-- **`timeout` (Optional, string | -1 | 0)**: Controls the amount of time to wait for inference results.
+- **`timeout` (Optional, string \| -1 \| 0)**: Controls the amount of time to wait for inference results.
 
 ## client.ml.info [_ml.info]
 Get machine learning information.
@@ -9699,7 +9658,7 @@ client.ml.openJob({ job_id })
 
 #### Request (object) [_request_ml.open_job]
 - **`job_id` (string)**: Identifier for the anomaly detection job.
-- **`timeout` (Optional, string | -1 | 0)**: Refer to the description for the `timeout` query parameter.
+- **`timeout` (Optional, string \| -1 \| 0)**: Refer to the description for the `timeout` query parameter.
 
 ## client.ml.postCalendarEvents [_ml.post_calendar_events]
 Add scheduled events to the calendar.
@@ -9733,8 +9692,8 @@ client.ml.postData({ job_id })
 #### Request (object) [_request_ml.post_data]
 - **`job_id` (string)**: Identifier for the anomaly detection job. The job must have a state of open to receive and process the data.
 - **`data` (Optional, TData[])**
-- **`reset_end` (Optional, string | Unit)**: Specifies the end of the bucket resetting range.
-- **`reset_start` (Optional, string | Unit)**: Specifies the start of the bucket resetting range.
+- **`reset_end` (Optional, string \| Unit)**: Specifies the end of the bucket resetting range.
+- **`reset_start` (Optional, string \| Unit)**: Specifies the start of the bucket resetting range.
 
 ## client.ml.previewDataFrameAnalytics [_ml.preview_data_frame_analytics]
 Preview features used by data frame analytics.
@@ -9783,8 +9742,8 @@ configuration details in the request body.
 `datafeed_config` object does not include a `job_id` that references an existing anomaly detection job, you must
 supply this `job_config` object. If you include both a `job_id` and a `job_config`, the latter information is
 used. You cannot specify a `job_config` object unless you also supply a `datafeed_config` object.
-- **`start` (Optional, string | Unit)**: The start time from where the datafeed preview should begin
-- **`end` (Optional, string | Unit)**: The end time when the datafeed preview should stop
+- **`start` (Optional, string \| Unit)**: The start time from where the datafeed preview should begin
+- **`end` (Optional, string \| Unit)**: The end time when the datafeed preview should stop
 
 ## client.ml.putCalendar [_ml.put_calendar]
 Create a calendar.
@@ -9815,7 +9774,7 @@ client.ml.putCalendarJob({ calendar_id, job_id })
 
 #### Request (object) [_request_ml.put_calendar_job]
 - **`calendar_id` (string)**: A string that uniquely identifies a calendar.
-- **`job_id` (string | string[])**: An identifier for the anomaly detection jobs. It can be a job identifier, a group name, or a list of jobs or groups.
+- **`job_id` (string \| string[])**: An identifier for the anomaly detection jobs. It can be a job identifier, a group name, or a list of jobs or groups.
 
 ## client.ml.putDataFrameAnalytics [_ml.put_data_frame_analytics]
 Create a data frame analytics job.
@@ -9891,7 +9850,7 @@ analytical processing. If your `elasticsearch.yml` file contains an
 `xpack.ml.max_model_memory_limit` setting, an error occurs when you try
 to create data frame analytics jobs that have `model_memory_limit` values
 greater than that setting.
-- **`headers` (Optional, Record<string, string | string[]>)**
+- **`headers` (Optional, Record<string, string \| string[]>)**
 - **`version` (Optional, string)**
 
 ## client.ml.putDatafeed [_ml.put_datafeed]
@@ -9931,12 +9890,12 @@ The datafeed can optionally search over indices that have already been read in a
 any data has subsequently been added to the index. If missing data is found, it is a good indication that the
 `query_delay` is set too low and the data is being indexed after the datafeed has passed that moment in time.
 This check runs only on real-time datafeeds.
-- **`frequency` (Optional, string | -1 | 0)**: The interval at which scheduled queries are made while the datafeed runs in real time.
+- **`frequency` (Optional, string \| -1 \| 0)**: The interval at which scheduled queries are made while the datafeed runs in real time.
 The default value is either the bucket span for short bucket spans, or, for longer bucket spans, a sensible
 fraction of the bucket span. When `frequency` is shorter than the bucket span, interim results for the last
 (partial) bucket are written then eventually overwritten by the full bucket results. If the datafeed uses
 aggregations, this value must be divisible by the interval of the date histogram aggregation.
-- **`indices` (Optional, string | string[])**: An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the master
+- **`indices` (Optional, string \| string[])**: An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the master
 nodes and the machine learning nodes must have the `remote_cluster_client` role.
 - **`indices_options` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, ignore_throttled })**: Specifies index expansion options that are used during search
 - **`job_id` (Optional, string)**: Identifier for the anomaly detection job.
@@ -9947,7 +9906,7 @@ end time that sees no data remains started until it is explicitly stopped. By de
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an
 Elasticsearch search POST body. All the options that are supported by Elasticsearch can be used, as this
 object is passed verbatim to Elasticsearch.
-- **`query_delay` (Optional, string | -1 | 0)**: The number of seconds behind real time that data is queried. For example, if data from 10:04 a.m. might
+- **`query_delay` (Optional, string \| -1 \| 0)**: The number of seconds behind real time that data is queried. For example, if data from 10:04 a.m. might
 not be searchable in Elasticsearch until 10:06 a.m., set this property to 120 seconds. The default
 value is randomly selected between `60s` and `120s`. This randomness improves the query performance
 when there are multiple jobs running on the same node.
@@ -9956,10 +9915,10 @@ when there are multiple jobs running on the same node.
 The detector configuration objects in a job can contain functions that use these script fields.
 - **`scroll_size` (Optional, number)**: The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations.
 The maximum value is the value of `index.max_result_window`, which is 10,000 by default.
-- **`headers` (Optional, Record<string, string | string[]>)**
+- **`headers` (Optional, Record<string, string \| string[]>)**
 - **`allow_no_indices` (Optional, boolean)**: If true, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the `_all`
 string or when no indices are specified.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
 whether wildcard expressions match hidden data streams. Supports a list of values.
 - **`ignore_throttled` (Optional, boolean)**: If true, concrete, expanded, or aliased indices are ignored when frozen.
 - **`ignore_unavailable` (Optional, boolean)**: If true, unavailable indices (missing or closed) are ignored.
@@ -10003,7 +9962,7 @@ client.ml.putJob({ job_id, analysis_config, data_description })
 - **`data_description` ({ format, time_field, time_format, field_delimiter })**: Defines the format of the input data when you send data to the job by using the post data API. Note that when configure a datafeed, these properties are automatically set. When data is received via the post data API, it is not stored in Elasticsearch. Only the results for anomaly detection are retained.
 - **`allow_lazy_open` (Optional, boolean)**: Advanced configuration option. Specifies whether this job can open when there is insufficient machine learning node capacity for it to be immediately assigned to a node. By default, if a machine learning node with capacity to run the job cannot immediately be found, the open anomaly detection jobs API returns an error. However, this is also subject to the cluster-wide `xpack.ml.max_lazy_ml_nodes` setting. If this option is set to true, the open anomaly detection jobs API does not return an error and the job waits in the opening state until sufficient machine learning node capacity is available.
 - **`analysis_limits` (Optional, { categorization_examples_limit, model_memory_limit })**: Limits can be applied for the resources required to hold the mathematical models in memory. These limits are approximate and can be set per job. They do not control the memory used by other processes, for example the Elasticsearch Java processes.
-- **`background_persist_interval` (Optional, string | -1 | 0)**: Advanced configuration option. The time between each periodic persistence of the model. The default value is a randomized value between 3 to 4 hours, which avoids all jobs persisting at exactly the same time. The smallest allowed value is 1 hour. For very large models (several GB), persistence could take 10-20 minutes, so do not set the `background_persist_interval` value too low.
+- **`background_persist_interval` (Optional, string \| -1 \| 0)**: Advanced configuration option. The time between each periodic persistence of the model. The default value is a randomized value between 3 to 4 hours, which avoids all jobs persisting at exactly the same time. The smallest allowed value is 1 hour. For very large models (several GB), persistence could take 10-20 minutes, so do not set the `background_persist_interval` value too low.
 - **`custom_settings` (Optional, User-defined value)**: Advanced configuration option. Contains custom meta data about the job.
 - **`daily_model_snapshot_retention_after_days` (Optional, number)**: Advanced configuration option, which affects the automatic removal of old model snapshots for this job. It specifies a period of time (in days) after which only the first snapshot per day is retained. This period is relative to the timestamp of the most recent snapshot for this job. Valid values range from 0 to `model_snapshot_retention_days`.
 - **`datafeed_config` (Optional, { aggregations, chunking_config, datafeed_id, delayed_data_check_config, frequency, indices, indices_options, job_id, max_empty_searches, query, query_delay, runtime_mappings, script_fields, scroll_size })**: Defines a datafeed for the anomaly detection job. If Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead.
@@ -10016,7 +9975,7 @@ client.ml.putJob({ job_id, analysis_config, data_description })
 - **`results_retention_days` (Optional, number)**: Advanced configuration option. The period of time (in days) that results are retained. Age is calculated relative to the timestamp of the latest bucket result. If this property has a non-null value, once per day at 00:30 (server time), results that are the specified number of days older than the latest bucket result are deleted from Elasticsearch. The default value is null, which means all results are retained. Annotations generated by the system also count as results for retention purposes; they are deleted after the same number of days as results. Annotations added by users are retained forever.
 - **`allow_no_indices` (Optional, boolean)**: If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the
 `_all` string or when no indices are specified.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
 whether wildcard expressions match hidden data streams. Supports a list of values. Valid values are:
 
 * `all`: Match any data stream or index, including hidden ones.
@@ -10053,7 +10012,7 @@ definition.trained_model's target_type. For pre-packaged models such as
 ELSER the config is not required.
 - **`input` (Optional, { field_names })**: The input field names for the model definition.
 - **`metadata` (Optional, User-defined value)**: An object map that contains metadata about the model.
-- **`model_type` (Optional, Enum("tree_ensemble" | "lang_ident" | "pytorch"))**: The model type.
+- **`model_type` (Optional, Enum("tree_ensemble" \| "lang_ident" \| "pytorch"))**: The model type.
 - **`model_size_bytes` (Optional, number)**: The estimated memory usage in bytes to keep the trained model in memory.
 This property is supported only if defer_definition_decompression is true
 or the model definition is not supplied.
@@ -10219,7 +10178,7 @@ client.ml.setUpgradeMode({ ... })
 - **`enabled` (Optional, boolean)**: When `true`, it enables `upgrade_mode` which temporarily halts all job
 and datafeed tasks and prohibits new job and datafeed tasks from
 starting.
-- **`timeout` (Optional, string | -1 | 0)**: The time to wait for the request to be completed.
+- **`timeout` (Optional, string \| -1 \| 0)**: The time to wait for the request to be completed.
 
 ## client.ml.startDataFrameAnalytics [_ml.start_data_frame_analytics]
 Start a data frame analytics job.
@@ -10247,7 +10206,7 @@ client.ml.startDataFrameAnalytics({ id })
 - **`id` (string)**: Identifier for the data frame analytics job. This identifier can contain
 lowercase alphanumeric characters (a-z and 0-9), hyphens, and
 underscores. It must start and end with alphanumeric characters.
-- **`timeout` (Optional, string | -1 | 0)**: Controls the amount of time to wait until the data frame analytics job
+- **`timeout` (Optional, string \| -1 \| 0)**: Controls the amount of time to wait until the data frame analytics job
 starts.
 
 ## client.ml.startDatafeed [_ml.start_datafeed]
@@ -10277,9 +10236,9 @@ client.ml.startDatafeed({ datafeed_id })
 - **`datafeed_id` (string)**: A numerical character string that uniquely identifies the datafeed. This identifier can contain lowercase
 alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric
 characters.
-- **`end` (Optional, string | Unit)**: Refer to the description for the `end` query parameter.
-- **`start` (Optional, string | Unit)**: Refer to the description for the `start` query parameter.
-- **`timeout` (Optional, string | -1 | 0)**: Refer to the description for the `timeout` query parameter.
+- **`end` (Optional, string \| Unit)**: Refer to the description for the `end` query parameter.
+- **`start` (Optional, string \| Unit)**: Refer to the description for the `start` query parameter.
+- **`timeout` (Optional, string \| -1 \| 0)**: Refer to the description for the `timeout` query parameter.
 
 ## client.ml.startTrainedModelDeployment [_ml.start_trained_model_deployment]
 Start a trained model deployment.
@@ -10298,7 +10257,7 @@ client.ml.startTrainedModelDeployment({ model_id })
 - **`adaptive_allocations` (Optional, { enabled, min_number_of_allocations, max_number_of_allocations })**: Adaptive allocations configuration. When enabled, the number of allocations
 is set based on the current load.
 If adaptive_allocations is enabled, do not set the number of allocations manually.
-- **`cache_size` (Optional, number | string)**: The inference cache size (in memory outside the JVM heap) per node for the model.
+- **`cache_size` (Optional, number \| string)**: The inference cache size (in memory outside the JVM heap) per node for the model.
 The default value is the same size as the `model_size_bytes`. To disable the cache,
 `0b` can be provided.
 - **`deployment_id` (Optional, string)**: A unique identifier for the deployment of the model.
@@ -10309,7 +10268,7 @@ Increasing this value generally increases the throughput.
 If this setting is greater than the number of hardware threads
 it will automatically be changed to a value less than the number of hardware threads.
 If adaptive_allocations is enabled, do not set this value, because it’s automatically set.
-- **`priority` (Optional, Enum("normal" | "low"))**: The deployment priority.
+- **`priority` (Optional, Enum("normal" \| "low"))**: The deployment priority.
 - **`queue_capacity` (Optional, number)**: Specifies the number of inference requests that are allowed in the queue. After the number of requests exceeds
 this value, new requests are rejected with a 429 error.
 - **`threads_per_allocation` (Optional, number)**: Sets the number of threads used by each model allocation during inference. This generally increases
@@ -10317,8 +10276,8 @@ the inference speed. The inference process is a compute-bound process; any numbe
 greater than the number of available hardware threads on the machine does not increase the
 inference speed. If this setting is greater than the number of hardware threads
 it will automatically be changed to a value less than the number of hardware threads.
-- **`timeout` (Optional, string | -1 | 0)**: Specifies the amount of time to wait for the model to deploy.
-- **`wait_for` (Optional, Enum("started" | "starting" | "fully_allocated"))**: Specifies the allocation status to wait for before returning.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the model to deploy.
+- **`wait_for` (Optional, Enum("started" \| "starting" \| "fully_allocated"))**: Specifies the allocation status to wait for before returning.
 
 ## client.ml.stopDataFrameAnalytics [_ml.stop_data_frame_analytics]
 Stop data frame analytics jobs.
@@ -10349,7 +10308,7 @@ array when there are no matches and the subset of results when there are
 partial matches. If this parameter is false, the request returns a 404
 status code when there are no matches or only partial matches.
 - **`force` (Optional, boolean)**: If true, the data frame analytics job is stopped forcefully.
-- **`timeout` (Optional, string | -1 | 0)**: Controls the amount of time to wait until the data frame analytics job
+- **`timeout` (Optional, string \| -1 \| 0)**: Controls the amount of time to wait until the data frame analytics job
 stops. Defaults to 20 seconds.
 
 ## client.ml.stopDatafeed [_ml.stop_datafeed]
@@ -10371,7 +10330,7 @@ list of datafeeds or a wildcard expression. You can close all datafeeds by using
 the identifier.
 - **`allow_no_match` (Optional, boolean)**: Refer to the description for the `allow_no_match` query parameter.
 - **`force` (Optional, boolean)**: Refer to the description for the `force` query parameter.
-- **`timeout` (Optional, string | -1 | 0)**: Refer to the description for the `timeout` query parameter.
+- **`timeout` (Optional, string \| -1 \| 0)**: Refer to the description for the `timeout` query parameter.
 
 ## client.ml.stopTrainedModelDeployment [_ml.stop_trained_model_deployment]
 Stop a trained model deployment.
@@ -10450,7 +10409,7 @@ search over indices that have already been read in an effort to determine whethe
 added to the index. If missing data is found, it is a good indication that the `query_delay` is set too low and
 the data is being indexed after the datafeed has passed that moment in time. This check runs only on real-time
 datafeeds.
-- **`frequency` (Optional, string | -1 | 0)**: The interval at which scheduled queries are made while the datafeed runs in real time. The default value is
+- **`frequency` (Optional, string \| -1 \| 0)**: The interval at which scheduled queries are made while the datafeed runs in real time. The default value is
 either the bucket span for short bucket spans, or, for longer bucket spans, a sensible fraction of the bucket
 span. When `frequency` is shorter than the bucket span, interim results for the last (partial) bucket are
 written then eventually overwritten by the full bucket results. If the datafeed uses aggregations, this value
@@ -10470,7 +10429,7 @@ changed. Therefore, the time required to learn might be long and the understanda
 unpredictable. If you want to make significant changes to the source data, it is recommended that you
 clone the job and datafeed and make the amendments in the clone. Let both run in parallel and close one
 when you are satisfied with the results of the job.
-- **`query_delay` (Optional, string | -1 | 0)**: The number of seconds behind real time that data is queried. For example, if data from 10:04 a.m. might
+- **`query_delay` (Optional, string \| -1 \| 0)**: The number of seconds behind real time that data is queried. For example, if data from 10:04 a.m. might
 not be searchable in Elasticsearch until 10:06 a.m., set this property to 120 seconds. The default
 value is randomly selected between `60s` and `120s`. This randomness improves the query performance
 when there are multiple jobs running on the same node.
@@ -10481,7 +10440,7 @@ The detector configuration objects in a job can contain functions that use these
 The maximum value is the value of `index.max_result_window`.
 - **`allow_no_indices` (Optional, boolean)**: If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the
 `_all` string or when no indices are specified.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
 whether wildcard expressions match hidden data streams. Supports a list of values. Valid values are:
 
 * `all`: Match any data stream or index, including hidden ones.
@@ -10534,7 +10493,7 @@ option is set to `true`, the open anomaly detection jobs API does not
 return an error and the job waits in the opening state until sufficient
 machine learning node capacity is available.
 - **`analysis_limits` (Optional, { model_memory_limit })**
-- **`background_persist_interval` (Optional, string | -1 | 0)**: Advanced configuration option. The time between each periodic persistence
+- **`background_persist_interval` (Optional, string \| -1 \| 0)**: Advanced configuration option. The time between each periodic persistence
 of the model.
 The default value is a randomized value between 3 to 4 hours, which
 avoids all jobs persisting at exactly the same time. The smallest allowed
@@ -10550,7 +10509,7 @@ custom URLs to machine learning results.
 - **`categorization_filters` (Optional, string[])**
 - **`description` (Optional, string)**: A description of the job.
 - **`model_plot_config` (Optional, { annotations_enabled, enabled, terms })**
-- **`model_prune_window` (Optional, string | -1 | 0)**
+- **`model_prune_window` (Optional, string \| -1 \| 0)**
 - **`daily_model_snapshot_retention_after_days` (Optional, number)**: Advanced configuration option, which affects the automatic removal of old
 model snapshots for this job. It specifies a period of time (in days)
 after which only the first snapshot per day is retained. This period is
@@ -10643,7 +10602,7 @@ client.ml.upgradeJobSnapshot({ job_id, snapshot_id })
 - **`snapshot_id` (string)**: A numerical character string that uniquely identifies the model snapshot.
 - **`wait_for_completion` (Optional, boolean)**: When true, the API won’t respond until the upgrade is complete.
 Otherwise, it responds as soon as the upgrade task is assigned to a node.
-- **`timeout` (Optional, string | -1 | 0)**: Controls the time to wait for the request to complete.
+- **`timeout` (Optional, string \| -1 \| 0)**: Controls the time to wait for the request to complete.
 
 ## client.nodes.clearRepositoriesMeteringArchive [_nodes.clear_repositories_metering_archive]
 Clear the archived repositories metering.
@@ -10658,7 +10617,7 @@ client.nodes.clearRepositoriesMeteringArchive({ node_id, max_archive_version })
 ### Arguments [_arguments_nodes.clear_repositories_metering_archive]
 
 #### Request (object) [_request_nodes.clear_repositories_metering_archive]
-- **`node_id` (string | string[])**: List of node IDs or names used to limit returned information.
+- **`node_id` (string \| string[])**: List of node IDs or names used to limit returned information.
 - **`max_archive_version` (number)**: Specifies the maximum `archive_version` to be cleared from the archive.
 
 ## client.nodes.getRepositoriesMeteringInfo [_nodes.get_repositories_metering_info]
@@ -10676,7 +10635,7 @@ client.nodes.getRepositoriesMeteringInfo({ node_id })
 ### Arguments [_arguments_nodes.get_repositories_metering_info]
 
 #### Request (object) [_request_nodes.get_repositories_metering_info]
-- **`node_id` (string | string[])**: List of node IDs or names used to limit returned information.
+- **`node_id` (string \| string[])**: List of node IDs or names used to limit returned information.
 
 ## client.nodes.hotThreads [_nodes.hot_threads]
 Get the hot threads for nodes.
@@ -10692,16 +10651,16 @@ client.nodes.hotThreads({ ... })
 ### Arguments [_arguments_nodes.hot_threads]
 
 #### Request (object) [_request_nodes.hot_threads]
-- **`node_id` (Optional, string | string[])**: List of node IDs or names used to limit returned information.
+- **`node_id` (Optional, string \| string[])**: List of node IDs or names used to limit returned information.
 - **`ignore_idle_threads` (Optional, boolean)**: If true, known idle threads (e.g. waiting in a socket select, or to get
 a task from an empty queue) are filtered out.
-- **`interval` (Optional, string | -1 | 0)**: The interval to do the second sampling of threads.
+- **`interval` (Optional, string \| -1 \| 0)**: The interval to do the second sampling of threads.
 - **`snapshots` (Optional, number)**: Number of samples of thread stacktrace.
 - **`threads` (Optional, number)**: Specifies the number of hot threads to provide information for.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received
 before the timeout expires, the request fails and returns an error.
-- **`type` (Optional, Enum("cpu" | "wait" | "block" | "gpu" | "mem"))**: The type to sample.
-- **`sort` (Optional, Enum("cpu" | "wait" | "block" | "gpu" | "mem"))**: The sort order for 'cpu' type (default: total)
+- **`type` (Optional, Enum("cpu" \| "wait" \| "block" \| "gpu" \| "mem"))**: The type to sample.
+- **`sort` (Optional, Enum("cpu" \| "wait" \| "block" \| "gpu" \| "mem"))**: The sort order for 'cpu' type (default: total)
 
 ## client.nodes.info [_nodes.info]
 Get node information.
@@ -10717,10 +10676,10 @@ client.nodes.info({ ... })
 ### Arguments [_arguments_nodes.info]
 
 #### Request (object) [_request_nodes.info]
-- **`node_id` (Optional, string | string[])**: List of node IDs or names used to limit returned information.
-- **`metric` (Optional, string | string[])**: Limits the information returned to the specific metrics. Supports a list, such as http,ingest.
+- **`node_id` (Optional, string \| string[])**: List of node IDs or names used to limit returned information.
+- **`metric` (Optional, string \| string[])**: Limits the information returned to the specific metrics. Supports a list, such as http,ingest.
 - **`flat_settings` (Optional, boolean)**: If true, returns settings in flat format.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.nodes.reloadSecureSettings [_nodes.reload_secure_settings]
 Reload the keystore on nodes in the cluster.
@@ -10742,9 +10701,9 @@ client.nodes.reloadSecureSettings({ ... })
 ### Arguments [_arguments_nodes.reload_secure_settings]
 
 #### Request (object) [_request_nodes.reload_secure_settings]
-- **`node_id` (Optional, string | string[])**: The names of particular nodes in the cluster to target.
+- **`node_id` (Optional, string \| string[])**: The names of particular nodes in the cluster to target.
 - **`secure_settings_password` (Optional, string)**: The password for the Elasticsearch keystore.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.nodes.stats [_nodes.stats]
@@ -10761,16 +10720,16 @@ client.nodes.stats({ ... })
 ### Arguments [_arguments_nodes.stats]
 
 #### Request (object) [_request_nodes.stats]
-- **`node_id` (Optional, string | string[])**: List of node IDs or names used to limit returned information.
-- **`metric` (Optional, string | string[])**: Limit the information returned to the specified metrics
-- **`index_metric` (Optional, string | string[])**: Limit the information returned for indices metric to the specific index metrics. It can be used only if indices (or all) metric is specified.
-- **`completion_fields` (Optional, string | string[])**: List or wildcard expressions of fields to include in fielddata and suggest statistics.
-- **`fielddata_fields` (Optional, string | string[])**: List or wildcard expressions of fields to include in fielddata statistics.
-- **`fields` (Optional, string | string[])**: List or wildcard expressions of fields to include in the statistics.
+- **`node_id` (Optional, string \| string[])**: List of node IDs or names used to limit returned information.
+- **`metric` (Optional, string \| string[])**: Limit the information returned to the specified metrics
+- **`index_metric` (Optional, string \| string[])**: Limit the information returned for indices metric to the specific index metrics. It can be used only if indices (or all) metric is specified.
+- **`completion_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata and suggest statistics.
+- **`fielddata_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata statistics.
+- **`fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in the statistics.
 - **`groups` (Optional, boolean)**: List of search groups to include in the search statistics.
 - **`include_segment_file_sizes` (Optional, boolean)**: If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested).
-- **`level` (Optional, Enum("cluster" | "indices" | "shards"))**: Indicates whether statistics are aggregated at the cluster, index, or shard level.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`level` (Optional, Enum("cluster" \| "indices" \| "shards"))**: Indicates whether statistics are aggregated at the cluster, index, or shard level.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 - **`types` (Optional, string[])**: A list of document types for the indexing index metric.
 - **`include_unloaded_segments` (Optional, boolean)**: If `true`, the response includes information from segments that are not loaded into memory.
 
@@ -10786,10 +10745,10 @@ client.nodes.usage({ ... })
 ### Arguments [_arguments_nodes.usage]
 
 #### Request (object) [_request_nodes.usage]
-- **`node_id` (Optional, string | string[])**: A list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-- **`metric` (Optional, string | string[])**: Limits the information returned to the specific metrics.
+- **`node_id` (Optional, string \| string[])**: A list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+- **`metric` (Optional, string \| string[])**: Limits the information returned to the specific metrics.
 A list of the following options: `_all`, `rest_actions`.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.queryRules.deleteRule [_query_rules.delete_rule]
@@ -10892,8 +10851,8 @@ client.queryRules.putRule({ ruleset_id, rule_id, type, criteria, actions })
 #### Request (object) [_request_query_rules.put_rule]
 - **`ruleset_id` (string)**: The unique identifier of the query ruleset containing the rule to be created or updated.
 - **`rule_id` (string)**: The unique identifier of the query rule within the specified ruleset to be created or updated.
-- **`type` (Enum("pinned" | "exclude"))**: The type of rule.
-- **`criteria` ({ type, metadata, values } | { type, metadata, values }[])**: The criteria that must be met for the rule to be applied.
+- **`type` (Enum("pinned" \| "exclude"))**: The type of rule.
+- **`criteria` ({ type, metadata, values } \| { type, metadata, values }[])**: The criteria that must be met for the rule to be applied.
 If multiple criteria are specified for a rule, all criteria must be met for the rule to be applied.
 - **`actions` ({ ids, docs })**: The actions to take when the rule is matched.
 The format of this action depends on the rule type.
@@ -10919,7 +10878,7 @@ client.queryRules.putRuleset({ ruleset_id, rules })
 
 #### Request (object) [_request_query_rules.put_ruleset]
 - **`ruleset_id` (string)**: The unique identifier of the query ruleset to be created or updated.
-- **`rules` ({ rule_id, type, criteria, actions, priority } | { rule_id, type, criteria, actions, priority }[])**
+- **`rules` ({ rule_id, type, criteria, actions, priority } \| { rule_id, type, criteria, actions, priority }[])**
 
 ## client.queryRules.test [_query_rules.test]
 Test a query ruleset.
@@ -11035,7 +10994,7 @@ client.rollup.getRollupIndexCaps({ index })
 ### Arguments [_arguments_rollup.get_rollup_index_caps]
 
 #### Request (object) [_request_rollup.get_rollup_index_caps]
-- **`index` (string | string[])**: Data stream or index to check for rollup capabilities.
+- **`index` (string \| string[])**: Data stream or index to check for rollup capabilities.
 Wildcard (`*`) expressions are supported.
 
 ## client.rollup.putJob [_rollup.put_job]
@@ -11082,8 +11041,8 @@ rolled up; it is merely used for tweaking the speed or memory cost of the indexe
 - **`metrics` (Optional, { field, metrics }[])**: Defines the metrics to collect for each grouping tuple. By default, only the doc_counts are collected for each
 group. To make rollup useful, you will often add metrics like averages, mins, maxes, etc. Metrics are defined
 on a per-field basis and for each field you configure which metric should be collected.
-- **`timeout` (Optional, string | -1 | 0)**: Time to wait for the request to complete.
-- **`headers` (Optional, Record<string, string | string[]>)**
+- **`timeout` (Optional, string \| -1 \| 0)**: Time to wait for the request to complete.
+- **`headers` (Optional, Record<string, string \| string[]>)**
 
 ## client.rollup.rollupSearch [_rollup.rollup_search]
 Search rolled-up data.
@@ -11132,7 +11091,7 @@ client.rollup.rollupSearch({ index })
 ### Arguments [_arguments_rollup.rollup_search]
 
 #### Request (object) [_request_rollup.rollup_search]
-- **`index` (string | string[])**: A list of data streams and indices used to limit the request.
+- **`index` (string \| string[])**: A list of data streams and indices used to limit the request.
 This parameter has the following rules:
 
 * At least one data stream, index, or wildcard expression must be specified. This target can include a rollup or non-rollup index. For data streams, the stream's backing indices can only serve as non-rollup indices. Omitting the parameter or using `_all` are not permitted.
@@ -11185,7 +11144,7 @@ client.rollup.stopJob({ id })
 
 #### Request (object) [_request_rollup.stop_job]
 - **`id` (string)**: Identifier for the rollup job.
-- **`timeout` (Optional, string | -1 | 0)**: If `wait_for_completion` is `true`, the API blocks for (at maximum) the specified duration while waiting for the job to stop.
+- **`timeout` (Optional, string \| -1 \| 0)**: If `wait_for_completion` is `true`, the API blocks for (at maximum) the specified duration while waiting for the job to stop.
 If more than `timeout` time has passed, the API throws a timeout exception.
 NOTE: Even if a timeout occurs, the stop request is still processing and eventually moves the job to STOPPED.
 The timeout simply means the API call itself timed out while waiting for the status change.
@@ -11281,7 +11240,7 @@ client.searchApplication.postBehavioralAnalyticsEvent({ collection_name, event_t
 
 #### Request (object) [_request_search_application.post_behavioral_analytics_event]
 - **`collection_name` (string)**: The name of the behavioral analytics collection.
-- **`event_type` (Enum("page_view" | "search" | "search_click"))**: The analytics event type.
+- **`event_type` (Enum("page_view" \| "search" \| "search_click"))**: The analytics event type.
 - **`payload` (Optional, User-defined value)**
 - **`debug` (Optional, boolean)**: Whether the response type has to include more details
 
@@ -11366,8 +11325,8 @@ client.searchableSnapshots.cacheStats({ ... })
 ### Arguments [_arguments_searchable_snapshots.cache_stats]
 
 #### Request (object) [_request_searchable_snapshots.cache_stats]
-- **`node_id` (Optional, string | string[])**: The names of the nodes in the cluster to target.
-- **`master_timeout` (Optional, string | -1 | 0)**
+- **`node_id` (Optional, string \| string[])**: The names of the nodes in the cluster to target.
+- **`master_timeout` (Optional, string \| -1 \| 0)**
 
 ## client.searchableSnapshots.clearCache [_searchable_snapshots.clear_cache]
 Clear the cache.
@@ -11382,9 +11341,9 @@ client.searchableSnapshots.clearCache({ ... })
 ### Arguments [_arguments_searchable_snapshots.clear_cache]
 
 #### Request (object) [_request_searchable_snapshots.clear_cache]
-- **`index` (Optional, string | string[])**: A list of data streams, indices, and aliases to clear from the cache.
+- **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to clear from the cache.
 It supports wildcards (`*`).
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
 
@@ -11410,7 +11369,7 @@ If no `renamed_index` is specified, this name will also be used to create the ne
 - **`renamed_index` (Optional, string)**: The name of the index that will be created.
 - **`index_settings` (Optional, Record<string, User-defined value>)**: The settings that should be added to the index when it is mounted.
 - **`ignore_index_settings` (Optional, string[])**: The names of settings that should be removed from the index when it is mounted.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 - **`wait_for_completion` (Optional, boolean)**: If true, the request blocks until the operation is complete.
@@ -11428,8 +11387,8 @@ client.searchableSnapshots.stats({ ... })
 ### Arguments [_arguments_searchable_snapshots.stats]
 
 #### Request (object) [_request_searchable_snapshots.stats]
-- **`index` (Optional, string | string[])**: A list of data streams and indices to retrieve statistics for.
-- **`level` (Optional, Enum("cluster" | "indices" | "shards"))**: Return stats aggregated at cluster, index or shard level
+- **`index` (Optional, string \| string[])**: A list of data streams and indices to retrieve statistics for.
+- **`level` (Optional, Enum("cluster" \| "indices" \| "shards"))**: Return stats aggregated at cluster, index or shard level
 
 ## client.security.activateUserProfile [_security.activate_user_profile]
 Activate a user profile.
@@ -11456,7 +11415,7 @@ client.security.activateUserProfile({ grant_type })
 ### Arguments [_arguments_security.activate_user_profile]
 
 #### Request (object) [_request_security.activate_user_profile]
-- **`grant_type` (Enum("password" | "access_token"))**: The type of grant.
+- **`grant_type` (Enum("password" \| "access_token"))**: The type of grant.
 - **`access_token` (Optional, string)**: The user's Elasticsearch access token or JWT.
 Both `access` and `id` JWT token types are supported and they depend on the underlying JWT realm configuration.
 If you specify the `access_token` grant type, this parameter is required.
@@ -11499,7 +11458,7 @@ client.security.bulkDeleteRole({ names })
 
 #### Request (object) [_request_security.bulk_delete_role]
 - **`names` (string[])**: An array of role names to delete
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.bulkPutRole [_security.bulk_put_role]
 Bulk create or update roles.
@@ -11517,7 +11476,7 @@ client.security.bulkPutRole({ roles })
 
 #### Request (object) [_request_security.bulk_put_role]
 - **`roles` (Record<string, { cluster, indices, remote_indices, remote_cluster, global, applications, metadata, run_as, description, restriction, transient_metadata }>)**: A dictionary of role name to RoleDescriptor objects to add or update
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.bulkUpdateApiKeys [_security.bulk_update_api_keys]
 Bulk update API keys.
@@ -11546,8 +11505,8 @@ client.security.bulkUpdateApiKeys({ ids })
 ### Arguments [_arguments_security.bulk_update_api_keys]
 
 #### Request (object) [_request_security.bulk_update_api_keys]
-- **`ids` (string | string[])**: The API key identifiers.
-- **`expiration` (Optional, string | -1 | 0)**: Expiration time for the API keys.
+- **`ids` (string \| string[])**: The API key identifiers.
+- **`expiration` (Optional, string \| -1 \| 0)**: Expiration time for the API keys.
 By default, API keys never expire.
 This property can be omitted to leave the value unchanged.
 - **`metadata` (Optional, Record<string, User-defined value>)**: Arbitrary nested metadata to associate with the API keys.
@@ -11582,7 +11541,7 @@ parameter, the password is changed for the current user.
 hashing algorithm as has been configured for password storage. For more details,
 see the explanation of the `xpack.security.authc.password_hashing.algorithm`
 setting.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.clearApiKeyCache [_security.clear_api_key_cache]
 Clear the API key cache.
@@ -11599,7 +11558,7 @@ client.security.clearApiKeyCache({ ids })
 ### Arguments [_arguments_security.clear_api_key_cache]
 
 #### Request (object) [_request_security.clear_api_key_cache]
-- **`ids` (string | string[])**: List of API key IDs to evict from the API key cache.
+- **`ids` (string \| string[])**: List of API key IDs to evict from the API key cache.
 To evict all API keys, use `*`.
 Does not support other wildcard patterns.
 
@@ -11641,7 +11600,7 @@ client.security.clearCachedRealms({ realms })
 ### Arguments [_arguments_security.clear_cached_realms]
 
 #### Request (object) [_request_security.clear_cached_realms]
-- **`realms` (string | string[])**: A list of realms.
+- **`realms` (string \| string[])**: A list of realms.
 To clear all realms, use an asterisk (`*`).
 It does not support other wildcard patterns.
 - **`usernames` (Optional, string[])**: A list of the users to clear from the cache.
@@ -11661,7 +11620,7 @@ client.security.clearCachedRoles({ name })
 ### Arguments [_arguments_security.clear_cached_roles]
 
 #### Request (object) [_request_security.clear_cached_roles]
-- **`name` (string | string[])**: A list of roles to evict from the role cache.
+- **`name` (string \| string[])**: A list of roles to evict from the role cache.
 To evict all roles, use an asterisk (`*`).
 It does not support other wildcard patterns.
 
@@ -11686,7 +11645,7 @@ client.security.clearCachedServiceTokens({ namespace, service, name })
 #### Request (object) [_request_security.clear_cached_service_tokens]
 - **`namespace` (string)**: The namespace, which is a top-level grouping of service accounts.
 - **`service` (string)**: The name of the service, which must be unique within its namespace.
-- **`name` (string | string[])**: A list of token names to evict from the service account token caches.
+- **`name` (string \| string[])**: A list of token names to evict from the service account token caches.
 Use a wildcard (`*`) to evict all tokens that belong to a service account.
 It does not support other wildcard patterns.
 
@@ -11715,7 +11674,7 @@ client.security.createApiKey({ ... })
 ### Arguments [_arguments_security.create_api_key]
 
 #### Request (object) [_request_security.create_api_key]
-- **`expiration` (Optional, string | -1 | 0)**: The expiration time for the API key.
+- **`expiration` (Optional, string \| -1 \| 0)**: The expiration time for the API key.
 By default, API keys never expire.
 - **`name` (Optional, string)**: A name for the API key.
 - **`role_descriptors` (Optional, Record<string, { cluster, indices, remote_indices, remote_cluster, global, applications, metadata, run_as, description, restriction, transient_metadata }>)**: An array of role descriptors for this API key.
@@ -11728,7 +11687,7 @@ NOTE: Due to the way in which this permission intersection is calculated, it is 
 In this case, you must explicitly specify a role descriptor with no privileges.
 The derived API key can be used for authentication; it will not have authority to call Elasticsearch APIs.
 - **`metadata` (Optional, Record<string, User-defined value>)**: Arbitrary metadata that you want to associate with the API key. It supports nested data structure. Within the metadata object, keys beginning with `_` are reserved for system usage.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.createCrossClusterApiKey [_security.create_cross_cluster_api_key]
 Create a cross-cluster API key.
@@ -11765,7 +11724,7 @@ At least one of them must be specified.
 NOTE: No explicit privileges should be specified for either search or replication access.
 The creation process automatically converts the access specification to a role descriptor which has relevant privileges assigned accordingly.
 - **`name` (string)**: Specifies the name for this API key.
-- **`expiration` (Optional, string | -1 | 0)**: Expiration time for the API key.
+- **`expiration` (Optional, string \| -1 \| 0)**: Expiration time for the API key.
 By default, API keys never expire.
 - **`metadata` (Optional, Record<string, User-defined value>)**: Arbitrary metadata that you want to associate with the API key.
 It supports nested data structure.
@@ -11798,7 +11757,7 @@ They can contain alphanumeric characters (a-z, A-Z, 0-9), dashes (`-`), and unde
 
 NOTE: Token names must be unique in the context of the associated service account.
 They must also be globally unique with their fully qualified names, which are comprised of the service account principal and token name, such as `<namespace>/<service>/<token-name>`.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.delegatePki [_security.delegate_pki]
 Delegate PKI authentication.
@@ -11847,8 +11806,8 @@ client.security.deletePrivileges({ application, name })
 #### Request (object) [_request_security.delete_privileges]
 - **`application` (string)**: The name of the application.
 Application privileges are always associated with exactly one application.
-- **`name` (string | string[])**: The name of the privilege.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`name` (string \| string[])**: The name of the privilege.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.deleteRole [_security.delete_role]
 Delete roles.
@@ -11867,7 +11826,7 @@ client.security.deleteRole({ name })
 
 #### Request (object) [_request_security.delete_role]
 - **`name` (string)**: The name of the role.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.deleteRoleMapping [_security.delete_role_mapping]
 Delete role mappings.
@@ -11887,7 +11846,7 @@ client.security.deleteRoleMapping({ name })
 #### Request (object) [_request_security.delete_role_mapping]
 - **`name` (string)**: The distinct name that identifies the role mapping.
 The name is used solely as an identifier to facilitate interaction via the API; it does not affect the behavior of the mapping in any way.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.deleteServiceToken [_security.delete_service_token]
 Delete service account tokens.
@@ -11906,7 +11865,7 @@ client.security.deleteServiceToken({ namespace, service, name })
 - **`namespace` (string)**: The namespace, which is a top-level grouping of service accounts.
 - **`service` (string)**: The service name.
 - **`name` (string)**: The name of the service account token.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.deleteUser [_security.delete_user]
 Delete users.
@@ -11923,7 +11882,7 @@ client.security.deleteUser({ username })
 
 #### Request (object) [_request_security.delete_user]
 - **`username` (string)**: An identifier for the user.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.disableUser [_security.disable_user]
 Disable users.
@@ -11942,7 +11901,7 @@ client.security.disableUser({ username })
 
 #### Request (object) [_request_security.disable_user]
 - **`username` (string)**: An identifier for the user.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.disableUserProfile [_security.disable_user_profile]
 Disable a user profile.
@@ -11966,7 +11925,7 @@ client.security.disableUserProfile({ uid })
 
 #### Request (object) [_request_security.disable_user_profile]
 - **`uid` (string)**: Unique identifier for the user profile.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If 'true', Elasticsearch refreshes the affected shards to make this operation visible to search.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If 'true', Elasticsearch refreshes the affected shards to make this operation visible to search.
 If 'wait_for', it waits for a refresh to make this operation visible to search.
 If 'false', it does nothing with refreshes.
 
@@ -11986,7 +11945,7 @@ client.security.enableUser({ username })
 
 #### Request (object) [_request_security.enable_user]
 - **`username` (string)**: An identifier for the user.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.enableUserProfile [_security.enable_user_profile]
 Enable a user profile.
@@ -12010,7 +11969,7 @@ client.security.enableUserProfile({ uid })
 
 #### Request (object) [_request_security.enable_user_profile]
 - **`uid` (string)**: A unique identifier for the user profile.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If 'true', Elasticsearch refreshes the affected shards to make this operation
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If 'true', Elasticsearch refreshes the affected shards to make this operation
 visible to search.
 If 'wait_for', it waits for a refresh to make this operation visible to search.
 If 'false', nothing is done with refreshes.
@@ -12111,7 +12070,7 @@ client.security.getPrivileges({ ... })
 - **`application` (Optional, string)**: The name of the application.
 Application privileges are always associated with exactly one application.
 If you do not specify this parameter, the API returns information about all privileges for all applications.
-- **`name` (Optional, string | string[])**: The name of the privilege.
+- **`name` (Optional, string \| string[])**: The name of the privilege.
 If you do not specify this parameter, the API returns information about all privileges for the requested application.
 
 ## client.security.getRole [_security.get_role]
@@ -12130,7 +12089,7 @@ client.security.getRole({ ... })
 ### Arguments [_arguments_security.get_role]
 
 #### Request (object) [_request_security.get_role]
-- **`name` (Optional, string | string[])**: The name of the role.
+- **`name` (Optional, string \| string[])**: The name of the role.
 You can specify multiple roles as a list.
 If you do not specify this parameter, the API returns information about all roles.
 
@@ -12150,7 +12109,7 @@ client.security.getRoleMapping({ ... })
 ### Arguments [_arguments_security.get_role_mapping]
 
 #### Request (object) [_request_security.get_role_mapping]
-- **`name` (Optional, string | string[])**: The distinct name that identifies the role mapping. The name is used solely as an identifier to facilitate interaction via the API; it does not affect the behavior of the mapping in any way. You can specify multiple mapping names as a list. If you do not specify this parameter, the API returns information about all role mappings.
+- **`name` (Optional, string \| string[])**: The distinct name that identifies the role mapping. The name is used solely as an identifier to facilitate interaction via the API; it does not affect the behavior of the mapping in any way. You can specify multiple mapping names as a list. If you do not specify this parameter, the API returns information about all role mappings.
 
 ## client.security.getServiceAccounts [_security.get_service_accounts]
 Get service accounts.
@@ -12215,7 +12174,7 @@ client.security.getSettings({ ... })
 ### Arguments [_arguments_security.get_settings]
 
 #### Request (object) [_request_security.get_settings]
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.security.getToken [_security.get_token]
@@ -12243,7 +12202,7 @@ client.security.getToken({ ... })
 ### Arguments [_arguments_security.get_token]
 
 #### Request (object) [_request_security.get_token]
-- **`grant_type` (Optional, Enum("password" | "client_credentials" | "_kerberos" | "refresh_token"))**: The type of grant.
+- **`grant_type` (Optional, Enum("password" \| "client_credentials" \| "_kerberos" \| "refresh_token"))**: The type of grant.
 Supported grant types are: `password`, `_kerberos`, `client_credentials`, and `refresh_token`.
 - **`scope` (Optional, string)**: The scope of the token.
 Currently tokens are only issued for a scope of FULL regardless of the value sent with the request.
@@ -12274,7 +12233,7 @@ client.security.getUser({ ... })
 ### Arguments [_arguments_security.get_user]
 
 #### Request (object) [_request_security.get_user]
-- **`username` (Optional, string | string[])**: An identifier for the user. You can specify multiple usernames as a list. If you omit this parameter, the API retrieves information about all users.
+- **`username` (Optional, string \| string[])**: An identifier for the user. You can specify multiple usernames as a list. If you omit this parameter, the API retrieves information about all users.
 - **`with_profile_uid` (Optional, boolean)**: Determines whether to retrieve the user profile UID, if it exists, for the users.
 
 ## client.security.getUserPrivileges [_security.get_user_privileges]
@@ -12296,7 +12255,7 @@ client.security.getUserPrivileges({ ... })
 #### Request (object) [_request_security.get_user_privileges]
 - **`application` (Optional, string)**: The name of the application. Application privileges are always associated with exactly one application. If you do not specify this parameter, the API returns information about all privileges for all applications.
 - **`priviledge` (Optional, string)**: The name of the privilege. If you do not specify this parameter, the API returns information about all privileges for the requested application.
-- **`username` (Optional, string | null)**
+- **`username` (Optional, string \| null)**
 
 ## client.security.getUserProfile [_security.get_user_profile]
 Get a user profile.
@@ -12316,8 +12275,8 @@ client.security.getUserProfile({ uid })
 ### Arguments [_arguments_security.get_user_profile]
 
 #### Request (object) [_request_security.get_user_profile]
-- **`uid` (string | string[])**: A unique identifier for the user profile.
-- **`data` (Optional, string | string[])**: A list of filters for the `data` field of the profile document.
+- **`uid` (string \| string[])**: A unique identifier for the user profile.
+- **`data` (Optional, string \| string[])**: A list of filters for the `data` field of the profile document.
 To return all content use `data=*`.
 To return a subset of content use `data=<key>` to retrieve content nested under the specified `<key>`.
 By default returns no `data` content.
@@ -12356,7 +12315,7 @@ client.security.grantApiKey({ api_key, grant_type })
 
 #### Request (object) [_request_security.grant_api_key]
 - **`api_key` ({ name, expiration, role_descriptors, metadata })**: The API key.
-- **`grant_type` (Enum("access_token" | "password"))**: The type of grant. Supported grant types are: `access_token`, `password`.
+- **`grant_type` (Enum("access_token" \| "password"))**: The type of grant. Supported grant types are: `access_token`, `password`.
 - **`access_token` (Optional, string)**: The user's access token.
 If you specify the `access_token` grant type, this parameter is required.
 It is not valid with other grant types.
@@ -12386,7 +12345,7 @@ client.security.hasPrivileges({ ... })
 #### Request (object) [_request_security.has_privileges]
 - **`user` (Optional, string)**: Username
 - **`application` (Optional, { application, privileges, resources }[])**
-- **`cluster` (Optional, Enum("all" | "cancel_task" | "create_snapshot" | "cross_cluster_replication" | "cross_cluster_search" | "delegate_pki" | "grant_api_key" | "manage" | "manage_api_key" | "manage_autoscaling" | "manage_behavioral_analytics" | "manage_ccr" | "manage_data_frame_transforms" | "manage_data_stream_global_retention" | "manage_enrich" | "manage_esql" | "manage_ilm" | "manage_index_templates" | "manage_inference" | "manage_ingest_pipelines" | "manage_logstash_pipelines" | "manage_ml" | "manage_oidc" | "manage_own_api_key" | "manage_pipeline" | "manage_rollup" | "manage_saml" | "manage_search_application" | "manage_search_query_rules" | "manage_search_synonyms" | "manage_security" | "manage_service_account" | "manage_slm" | "manage_token" | "manage_transform" | "manage_user_profile" | "manage_watcher" | "monitor" | "monitor_data_frame_transforms" | "monitor_data_stream_global_retention" | "monitor_enrich" | "monitor_esql" | "monitor_inference" | "monitor_ml" | "monitor_rollup" | "monitor_snapshot" | "monitor_stats" | "monitor_text_structure" | "monitor_transform" | "monitor_watcher" | "none" | "post_behavioral_analytics_event" | "read_ccr" | "read_fleet_secrets" | "read_ilm" | "read_pipeline" | "read_security" | "read_slm" | "transport_client" | "write_connector_secrets" | "write_fleet_secrets")[])**: A list of the cluster privileges that you want to check.
+- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets")[])**: A list of the cluster privileges that you want to check.
 - **`index` (Optional, { names, privileges, allow_restricted_indices }[])**
 
 ## client.security.hasPrivilegesUserProfile [_security.has_privileges_user_profile]
@@ -12592,7 +12551,7 @@ client.security.putPrivileges({ ... })
 
 #### Request (object) [_request_security.put_privileges]
 - **`privileges` (Optional, Record<string, Record<string, { allocate, delete, downsample, freeze, forcemerge, migrate, readonly, rollover, set_priority, searchable_snapshot, shrink, unfollow, wait_for_snapshot }>>)**
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.putRole [_security.put_role]
 Create or update roles.
@@ -12612,7 +12571,7 @@ client.security.putRole({ name })
 #### Request (object) [_request_security.put_role]
 - **`name` (string)**: The name of the role that is being created or updated. On Elasticsearch Serverless, the role name must begin with a letter or digit and can only contain letters, digits and the characters '_', '-', and '.'. Each role must have a unique name, as this will serve as the identifier for that role.
 - **`applications` (Optional, { application, privileges, resources }[])**: A list of application privilege entries.
-- **`cluster` (Optional, Enum("all" | "cancel_task" | "create_snapshot" | "cross_cluster_replication" | "cross_cluster_search" | "delegate_pki" | "grant_api_key" | "manage" | "manage_api_key" | "manage_autoscaling" | "manage_behavioral_analytics" | "manage_ccr" | "manage_data_frame_transforms" | "manage_data_stream_global_retention" | "manage_enrich" | "manage_esql" | "manage_ilm" | "manage_index_templates" | "manage_inference" | "manage_ingest_pipelines" | "manage_logstash_pipelines" | "manage_ml" | "manage_oidc" | "manage_own_api_key" | "manage_pipeline" | "manage_rollup" | "manage_saml" | "manage_search_application" | "manage_search_query_rules" | "manage_search_synonyms" | "manage_security" | "manage_service_account" | "manage_slm" | "manage_token" | "manage_transform" | "manage_user_profile" | "manage_watcher" | "monitor" | "monitor_data_frame_transforms" | "monitor_data_stream_global_retention" | "monitor_enrich" | "monitor_esql" | "monitor_inference" | "monitor_ml" | "monitor_rollup" | "monitor_snapshot" | "monitor_stats" | "monitor_text_structure" | "monitor_transform" | "monitor_watcher" | "none" | "post_behavioral_analytics_event" | "read_ccr" | "read_fleet_secrets" | "read_ilm" | "read_pipeline" | "read_security" | "read_slm" | "transport_client" | "write_connector_secrets" | "write_fleet_secrets")[])**: A list of cluster privileges. These privileges define the cluster-level actions for users with this role.
+- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets")[])**: A list of cluster privileges. These privileges define the cluster-level actions for users with this role.
 - **`global` (Optional, Record<string, User-defined value>)**: An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware. Support for global privileges is currently limited to the management of application privileges.
 - **`indices` (Optional, { field_security, names, privileges, query, allow_restricted_indices }[])**: A list of indices permissions entries.
 - **`remote_indices` (Optional, { clusters, field_security, names, privileges, query, allow_restricted_indices }[])**: A list of remote indices permissions entries.
@@ -12624,7 +12583,7 @@ They have no effect for remote clusters configured with the certificate based mo
 - **`run_as` (Optional, string[])**: A list of users that the owners of this role can impersonate. *Note*: in Serverless, the run-as feature is disabled. For API compatibility, you can still specify an empty `run_as` field, but a non-empty list will be rejected.
 - **`description` (Optional, string)**: Optional description of the role descriptor
 - **`transient_metadata` (Optional, Record<string, User-defined value>)**: Indicates roles that might be incompatible with the current cluster license, specifically roles with document and field level security. When the cluster license doesn’t allow certain features for a given role, this parameter is updated dynamically to list the incompatible features. If `enabled` is `false`, the role is ignored, but is still listed in the response from the authenticate API.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.putRoleMapping [_security.put_role_mapping]
 Create or update role mappings.
@@ -12675,7 +12634,7 @@ Exactly one of `roles` or `role_templates` must be specified.
 - **`rules` (Optional, { any, all, field, except })**: The rules that determine which users should be matched by the mapping.
 A rule is a logical condition that is expressed by using a JSON DSL.
 - **`run_as` (Optional, string[])**
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.putUser [_security.put_user]
 Create or update users.
@@ -12698,8 +12657,8 @@ client.security.putUser({ username })
 NOTE: Usernames must be at least 1 and no more than 507 characters.
 They can contain alphanumeric characters (a-z, A-Z, 0-9), spaces, punctuation, and printable symbols in the Basic Latin (ASCII) block.
 Leading or trailing whitespace is not allowed.
-- **`email` (Optional, string | null)**: The email of the user.
-- **`full_name` (Optional, string | null)**: The full name of the user.
+- **`email` (Optional, string \| null)**: The email of the user.
+- **`full_name` (Optional, string \| null)**: The full name of the user.
 - **`metadata` (Optional, Record<string, User-defined value>)**: Arbitrary metadata that you want to associate with the user.
 - **`password` (Optional, string)**: The user's password.
 Passwords must be at least 6 characters long.
@@ -12714,7 +12673,7 @@ The `password` parameter and the `password_hash` parameter cannot be used in the
 The roles determine the user's access permissions.
 To create a user without any roles, specify an empty list (`[]`).
 - **`enabled` (Optional, boolean)**: Specifies whether the user is enabled.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: Valid values are `true`, `false`, and `wait_for`.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: Valid values are `true`, `false`, and `wait_for`.
 These values have the same meaning as in the index API, but the default value for this API is true.
 
 ## client.security.queryApiKeys [_security.query_api_keys]
@@ -12755,7 +12714,7 @@ Such a match query is hence equivalent to a `term` query.
 It must not be negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter.
-- **`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])**: The sort definition.
+- **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: The sort definition.
 Other than `id`, all public fields of an API key are eligible for sorting.
 In addition, sort can also be applied to the `_doc` field to sort by index order.
 - **`size` (Optional, number)**: The number of hits to return.
@@ -12763,7 +12722,7 @@ It must not be negative.
 The `size` parameter can be set to `0`, in which case no API key matches are returned, only the aggregation results.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter.
-- **`search_after` (Optional, number | number | string | boolean | null[])**: The search after definition.
+- **`search_after` (Optional, number \| number \| string \| boolean \| null[])**: The search after definition.
 - **`with_limited_by` (Optional, boolean)**: Return the snapshot of the owner user's role descriptors associated with the API key.
 An API key's actual permission is the intersection of its assigned role descriptors and the owner user's role descriptors (effectively limited by it).
 An API key cannot retrieve any API key’s limited-by role descriptors (including itself) unless it has `manage_api_key` or higher privileges.
@@ -12799,14 +12758,14 @@ You can query the following information associated with roles: `name`, `descript
 It must not be negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter.
-- **`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])**: The sort definition.
+- **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: The sort definition.
 You can sort on `username`, `roles`, or `enabled`.
 In addition, sort can also be applied to the `_doc` field to sort by index order.
 - **`size` (Optional, number)**: The number of hits to return.
 It must not be negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter.
-- **`search_after` (Optional, number | number | string | boolean | null[])**: The search after definition.
+- **`search_after` (Optional, number \| number \| string \| boolean \| null[])**: The search after definition.
 
 ## client.security.queryUser [_security.query_user]
 Find users with a query.
@@ -12835,14 +12794,14 @@ You can query the following information associated with user: `username`, `roles
 It must not be negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter.
-- **`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])**: The sort definition.
+- **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: The sort definition.
 Fields eligible for sorting are: `username`, `roles`, `enabled`.
 In addition, sort can also be applied to the `_doc` field to sort by index order.
 - **`size` (Optional, number)**: The number of hits to return.
 It must not be negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter.
-- **`search_after` (Optional, number | number | string | boolean | null[])**: The search after definition
+- **`search_after` (Optional, number \| number \| string \| boolean \| null[])**: The search after definition
 - **`with_profile_uid` (Optional, boolean)**: Determines whether to retrieve the user profile UID, if it exists, for the users.
 
 ## client.security.samlAuthenticate [_security.saml_authenticate]
@@ -12873,7 +12832,7 @@ client.security.samlAuthenticate({ content, ids })
 
 #### Request (object) [_request_security.saml_authenticate]
 - **`content` (string)**: The SAML response as it was sent by the user's browser, usually a Base64 encoded XML document.
-- **`ids` (string | string[])**: A JSON array with all the valid SAML Request Ids that the caller of the API has for the current user.
+- **`ids` (string \| string[])**: A JSON array with all the valid SAML Request Ids that the caller of the API has for the current user.
 - **`realm` (Optional, string)**: The name of the realm that should authenticate the SAML response. Useful in cases where many SAML realms are defined.
 
 ## client.security.samlCompleteLogout [_security.saml_complete_logout]
@@ -12900,7 +12859,7 @@ client.security.samlCompleteLogout({ realm, ids })
 
 #### Request (object) [_request_security.saml_complete_logout]
 - **`realm` (string)**: The name of the SAML realm in Elasticsearch for which the configuration is used to verify the logout response.
-- **`ids` (string | string[])**: A JSON array with all the valid SAML Request Ids that the caller of the API has for the current user.
+- **`ids` (string \| string[])**: A JSON array with all the valid SAML Request Ids that the caller of the API has for the current user.
 - **`query_string` (Optional, string)**: If the SAML IdP sends the logout response with the HTTP-Redirect binding, this field must be set to the query string of the redirect URI.
 - **`content` (Optional, string)**: If the SAML IdP sends the logout response with the HTTP-Post binding, this field must be set to the value of the SAMLResponse form parameter from the logout response.
 
@@ -13031,7 +12990,7 @@ client.security.suggestUserProfiles({ ... })
 - **`name` (Optional, string)**: A query string used to match name-related fields in user profile documents.
 Name-related fields are the user's `username`, `full_name`, and `email`.
 - **`size` (Optional, number)**: The number of profiles to return.
-- **`data` (Optional, string | string[])**: A list of filters for the `data` field of the profile document.
+- **`data` (Optional, string \| string[])**: A list of filters for the `data` field of the profile document.
 To return all content use `data=*`.
 To return a subset of content, use `data=<key>` to retrieve content nested under the specified `<key>`.
 By default, the API returns no `data` content.
@@ -13083,7 +13042,7 @@ The structure of a role descriptor is the same as the request for the create API
 It supports a nested data structure.
 Within the metadata object, keys beginning with `_` are reserved for system usage.
 When specified, this value fully replaces the metadata previously associated with the API key.
-- **`expiration` (Optional, string | -1 | 0)**: The expiration time for the API key.
+- **`expiration` (Optional, string \| -1 \| 0)**: The expiration time for the API key.
 By default, API keys never expire.
 This property can be omitted to leave the expiration unchanged.
 
@@ -13120,7 +13079,7 @@ client.security.updateCrossClusterApiKey({ id, access })
 The access is composed of permissions for cross cluster search and cross cluster replication.
 At least one of them must be specified.
 When specified, the new access assignment fully replaces the previously assigned access.
-- **`expiration` (Optional, string | -1 | 0)**: The expiration time for the API key.
+- **`expiration` (Optional, string \| -1 \| 0)**: The expiration time for the API key.
 By default, API keys never expire. This property can be omitted to leave the value unchanged.
 - **`metadata` (Optional, Record<string, User-defined value>)**: Arbitrary metadata that you want to associate with the API key.
 It supports nested data structure.
@@ -13149,9 +13108,9 @@ client.security.updateSettings({ ... })
 - **`security` (Optional, { index })**: Settings for the index used for most security configuration, including native realm users and roles configured with the API.
 - **`security-profile` (Optional, { index })**: Settings for the index used to store profile information.
 - **`security-tokens` (Optional, { index })**: Settings for the index used to store tokens.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.security.updateUserProfileData [_security.update_user_profile_data]
@@ -13193,7 +13152,7 @@ Within the `data` object, top-level keys cannot begin with an underscore (`_`) o
 The data object is not searchable, but can be retrieved with the get user profile API.
 - **`if_seq_no` (Optional, number)**: Only perform the operation if the document has this sequence number.
 - **`if_primary_term` (Optional, number)**: Only perform the operation if the document has this primary term.
-- **`refresh` (Optional, Enum(true | false | "wait_for"))**: If 'true', Elasticsearch refreshes the affected shards to make this operation
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If 'true', Elasticsearch refreshes the affected shards to make this operation
 visible to search.
 If 'wait_for', it waits for a refresh to make this operation visible to search.
 If 'false', nothing is done with refreshes.
@@ -13219,8 +13178,8 @@ client.shutdown.deleteNode({ node_id })
 
 #### Request (object) [_request_shutdown.delete_node]
 - **`node_id` (string)**: The node id of node to be removed from the shutdown state
-- **`master_timeout` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.shutdown.getNode [_shutdown.get_node]
 Get the shutdown status.
@@ -13241,8 +13200,8 @@ client.shutdown.getNode({ ... })
 ### Arguments [_arguments_shutdown.get_node]
 
 #### Request (object) [_request_shutdown.get_node]
-- **`node_id` (Optional, string | string[])**: Which node for which to retrieve the shutdown status
-- **`master_timeout` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`node_id` (Optional, string \| string[])**: Which node for which to retrieve the shutdown status
+- **`master_timeout` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.shutdown.putNode [_shutdown.put_node]
 Prepare a node to be shut down.
@@ -13275,7 +13234,7 @@ client.shutdown.putNode({ node_id, type, reason })
 This parameter is not validated against the cluster's active nodes.
 This enables you to register a node for shut down while it is offline.
 No error is thrown if you specify an invalid node ID.
-- **`type` (Enum("restart" | "remove" | "replace"))**: Valid values are restart, remove, or replace.
+- **`type` (Enum("restart" \| "remove" \| "replace"))**: Valid values are restart, remove, or replace.
 Use restart when you need to temporarily shut down a node to perform an upgrade, make configuration changes, or perform other maintenance.
 Because the node is expected to rejoin the cluster, data is not migrated off of the node.
 Use remove when you need to permanently remove a node from the cluster.
@@ -13292,9 +13251,9 @@ If you specify both a restart allocation delay and an index-level allocation del
 Specifies the name of the node that is replacing the node being shut down.
 Shards from the shut down node are only allowed to be allocated to the target node, and no other data will be allocated to the target node.
 During relocation of data certain allocation rules are ignored, such as disk watermarks or user attribute filtering rules.
-- **`master_timeout` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))**: The period to wait for a response.
+- **`timeout` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.simulate.ingest [_simulate.ingest]
@@ -13353,9 +13312,9 @@ client.slm.deleteLifecycle({ policy_id })
 
 #### Request (object) [_request_slm.delete_lifecycle]
 - **`policy_id` (string)**: The id of the snapshot lifecycle policy to remove
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.slm.executeLifecycle [_slm.execute_lifecycle]
@@ -13373,9 +13332,9 @@ client.slm.executeLifecycle({ policy_id })
 
 #### Request (object) [_request_slm.execute_lifecycle]
 - **`policy_id` (string)**: The id of the snapshot lifecycle policy to be executed
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.slm.executeRetention [_slm.execute_retention]
@@ -13392,9 +13351,9 @@ client.slm.executeRetention({ ... })
 ### Arguments [_arguments_slm.execute_retention]
 
 #### Request (object) [_request_slm.execute_retention]
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.slm.getLifecycle [_slm.get_lifecycle]
@@ -13410,10 +13369,10 @@ client.slm.getLifecycle({ ... })
 ### Arguments [_arguments_slm.get_lifecycle]
 
 #### Request (object) [_request_slm.get_lifecycle]
-- **`policy_id` (Optional, string | string[])**: List of snapshot lifecycle policies to retrieve
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`policy_id` (Optional, string \| string[])**: List of snapshot lifecycle policies to retrieve
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.slm.getStats [_slm.get_stats]
@@ -13429,8 +13388,8 @@ client.slm.getStats({ ... })
 ### Arguments [_arguments_slm.get_stats]
 
 #### Request (object) [_request_slm.get_stats]
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.slm.getStatus [_slm.get_status]
 Get the snapshot lifecycle management status.
@@ -13444,10 +13403,10 @@ client.slm.getStatus({ ... })
 ### Arguments [_arguments_slm.get_status]
 
 #### Request (object) [_request_slm.get_status]
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 
@@ -13472,10 +13431,10 @@ client.slm.putLifecycle({ policy_id })
 - **`repository` (Optional, string)**: Repository used to store snapshots created by this policy. This repository must exist prior to the policy’s creation. You can create a repository using the snapshot repository API.
 - **`retention` (Optional, { expire_after, max_count, min_count })**: Retention rules used to retain and delete snapshots created by the policy.
 - **`schedule` (Optional, string)**: Periodic or absolute schedule at which the policy creates snapshots. SLM applies schedule changes immediately.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 
@@ -13493,10 +13452,10 @@ client.slm.start({ ... })
 ### Arguments [_arguments_slm.start]
 
 #### Request (object) [_request_slm.start]
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 
@@ -13519,10 +13478,10 @@ client.slm.stop({ ... })
 ### Arguments [_arguments_slm.stop]
 
 #### Request (object) [_request_slm.stop]
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 
@@ -13540,10 +13499,10 @@ client.snapshot.cleanupRepository({ repository })
 
 #### Request (object) [_request_snapshot.cleanup_repository]
 - **`repository` (string)**: The name of the snapshot repository to clean up.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
 If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged.
 To indicate that the request should never timeout, set it to `-1`.
 
@@ -13565,7 +13524,7 @@ client.snapshot.clone({ repository, snapshot, target_snapshot, indices })
 - **`target_snapshot` (string)**: The target snapshot name.
 - **`indices` (string)**: A list of indices to include in the snapshot.
 Multi-target syntax is supported.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 
@@ -13586,7 +13545,7 @@ client.snapshot.create({ repository, snapshot })
 - **`snapshot` (string)**: The name of the snapshot.
 It supportes date math.
 It must be unique in the repository.
-- **`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])**: Determines how wildcard patterns in the `indices` parameter match data streams and indices.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Determines how wildcard patterns in the `indices` parameter match data streams and indices.
 It supports a list of values such as `open,hidden`.
 - **`feature_states` (Optional, string[])**: The feature states to include in the snapshot.
 Each feature state includes one or more system indices containing related data.
@@ -13602,7 +13561,7 @@ If `false`, the request returns an error for any data stream or index that is mi
 - **`include_global_state` (Optional, boolean)**: If `true`, the current cluster state is included in the snapshot.
 The cluster state includes persistent cluster settings, composable index templates, legacy index templates, ingest pipelines, and ILM policies.
 It also includes data stored in system indices, such as Watches and task records (configurable via `feature_states`).
-- **`indices` (Optional, string | string[])**: A list of data streams and indices to include in the snapshot.
+- **`indices` (Optional, string \| string[])**: A list of data streams and indices to include in the snapshot.
 It supports a multi-target syntax.
 The default is an empty array (`[]`), which includes all regular data streams and regular indices.
 To exclude all data streams and indices, use `-*`.
@@ -13617,7 +13576,7 @@ Only shards that were successfully included in the snapshot will be restored.
 All missing shards will be recreated as empty.
 
 If `false`, the entire restore operation will fail if one or more indices included in the snapshot do not have all primary shards available.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`wait_for_completion` (Optional, boolean)**: If `true`, the request returns a response when the snapshot is complete.
 If `false`, the request returns a response when the snapshot initializes.
@@ -13641,10 +13600,10 @@ client.snapshot.createRepository({ repository })
 
 #### Request (object) [_request_snapshot.create_repository]
 - **`repository` (string)**: The name of the snapshot repository to register or update.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
 If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged.
 To indicate that the request should never timeout, set it to `-1`.
 - **`verify` (Optional, boolean)**: If `true`, the request verifies the repository is functional on all master and data nodes in the cluster.
@@ -13666,7 +13625,7 @@ client.snapshot.delete({ repository, snapshot })
 - **`repository` (string)**: The name of the repository to delete a snapshot from.
 - **`snapshot` (string)**: A list of snapshot names to delete.
 It also accepts wildcards (`*`).
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 
@@ -13684,12 +13643,12 @@ client.snapshot.deleteRepository({ repository })
 ### Arguments [_arguments_snapshot.delete_repository]
 
 #### Request (object) [_request_snapshot.delete_repository]
-- **`repository` (string | string[])**: The ame of the snapshot repositories to unregister.
+- **`repository` (string \| string[])**: The ame of the snapshot repositories to unregister.
 Wildcard (`*`) patterns are supported.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
 If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged.
 To indicate that the request should never timeout, set it to `-1`.
 
@@ -13711,7 +13670,7 @@ client.snapshot.get({ repository, snapshot })
 #### Request (object) [_request_snapshot.get]
 - **`repository` (string)**: A list of snapshot repository names used to limit the request.
 Wildcard (`*`) expressions are supported.
-- **`snapshot` (string | string[])**: A list of snapshot names to retrieve
+- **`snapshot` (string \| string[])**: A list of snapshot names to retrieve
 Wildcards (`*`) are supported.
 
 * To get information about all snapshots in a registered repository, use a wildcard (`*`) or `_all`.
@@ -13725,9 +13684,9 @@ It can be a millisecond time value or a number when sorting by `index-` or shard
 The default is `false`, meaning that this information is omitted.
 - **`index_names` (Optional, boolean)**: If `true`, the response includes the name of each index in each snapshot.
 - **`include_repository` (Optional, boolean)**: If `true`, the response includes the repository name in each snapshot.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`order` (Optional, Enum("asc" | "desc"))**: The sort order.
+- **`order` (Optional, Enum("asc" \| "desc"))**: The sort order.
 Valid values are `asc` for ascending and `desc` for descending order.
 The default behavior is ascending order.
 - **`offset` (Optional, number)**: Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0.
@@ -13739,7 +13698,7 @@ You can use wildcards (`*`) and combinations of wildcards followed by exclude pa
 For example, the pattern `*,-policy-a-\*` will return all snapshots except for those that were created by an SLM policy with a name starting with `policy-a-`.
 Note that the wildcard pattern `*` matches all snapshots created by an SLM policy but not those snapshots that were not created by an SLM policy.
 To include snapshots that were not created by an SLM policy, you can use the special pattern `_none` that will match all snapshots without an SLM policy.
-- **`sort` (Optional, Enum("start_time" | "duration" | "name" | "index_count" | "repository" | "shard_count" | "failed_shard_count"))**: The sort order for the result.
+- **`sort` (Optional, Enum("start_time" \| "duration" \| "name" \| "index_count" \| "repository" \| "shard_count" \| "failed_shard_count"))**: The sort order for the result.
 The default behavior is sorting by snapshot start time stamp.
 - **`verbose` (Optional, boolean)**: If `true`, returns additional information about each snapshot such as the version of Elasticsearch which took the snapshot, the start and end times of the snapshot, and the number of shards snapshotted.
 
@@ -13757,13 +13716,13 @@ client.snapshot.getRepository({ ... })
 ### Arguments [_arguments_snapshot.get_repository]
 
 #### Request (object) [_request_snapshot.get_repository]
-- **`repository` (Optional, string | string[])**: A list of snapshot repository names used to limit the request.
+- **`repository` (Optional, string \| string[])**: A list of snapshot repository names used to limit the request.
 Wildcard (`*`) expressions are supported including combining wildcards with exclude patterns starting with `-`.
 
 To get information about all snapshot repositories registered in the cluster, omit this parameter or use `*` or `_all`.
 - **`local` (Optional, boolean)**: If `true`, the request gets information from the local node only.
 If `false`, the request gets information from the master node.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 
@@ -13879,9 +13838,9 @@ For realistic experiments, you should set it to at least `2000`.
 If false, it returns only a summary of the analysis.
 - **`early_read_node_count` (Optional, number)**: The number of nodes on which to perform an early read operation while writing each blob.
 Early read operations are only rarely performed.
-- **`max_blob_size` (Optional, number | string)**: The maximum size of a blob to be written during the test.
+- **`max_blob_size` (Optional, number \| string)**: The maximum size of a blob to be written during the test.
 For realistic experiments, you should set it to at least `2gb`.
-- **`max_total_data_size` (Optional, number | string)**: An upper limit on the total size of all the blobs written during the test.
+- **`max_total_data_size` (Optional, number \| string)**: An upper limit on the total size of all the blobs written during the test.
 For realistic experiments, you should set it to at least `1tb`.
 - **`rare_action_probability` (Optional, number)**: The probability of performing a rare action such as an early read, an overwrite, or an aborted write on each blob.
 - **`rarely_abort_writes` (Optional, boolean)**: Indicates whether to rarely cancel writes before they complete.
@@ -13891,7 +13850,7 @@ For realistic experiments, you should set it to at least `100`.
 - **`seed` (Optional, number)**: The seed for the pseudo-random number generator used to generate the list of operations performed during the test.
 To repeat the same set of operations in multiple experiments, use the same seed in each experiment.
 Note that the operations are performed concurrently so might not always happen in the same order on each run.
-- **`timeout` (Optional, string | -1 | 0)**: The period of time to wait for the test to complete.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period of time to wait for the test to complete.
 If no response is received before the timeout expires, the test is cancelled and returns an error.
 
 ## client.snapshot.restore [_snapshot.restore]
@@ -13960,7 +13919,7 @@ You can't use this option to change `index.number_of_shards`.
 
 For data streams, this option applies only to restored backing indices.
 New backing indices are configured using the data stream's matching index template.
-- **`indices` (Optional, string | string[])**: A list of indices and data streams to restore.
+- **`indices` (Optional, string \| string[])**: A list of indices and data streams to restore.
 It supports a multi-target syntax.
 The default behavior is all regular indices and regular data streams in the snapshot.
 
@@ -13976,7 +13935,7 @@ Data streams and indices matching the rename pattern will be renamed according t
 
 The rename pattern is applied as defined by the regular expression that supports referencing the original text, according to the `appendReplacement` logic.
 - **`rename_replacement` (Optional, string)**: The rename replacement string that is used with the `rename_pattern`.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 - **`wait_for_completion` (Optional, boolean)**: If `true`, the request returns a response when the restore operation completes.
@@ -14014,12 +13973,12 @@ client.snapshot.status({ ... })
 #### Request (object) [_request_snapshot.status]
 - **`repository` (Optional, string)**: The snapshot repository name used to limit the request.
 It supports wildcards (`*`) if `<snapshot>` isn't specified.
-- **`snapshot` (Optional, string | string[])**: A list of snapshots to retrieve status for.
+- **`snapshot` (Optional, string \| string[])**: A list of snapshots to retrieve status for.
 The default is currently running snapshots.
 Wildcards (`*`) are not supported.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error for any snapshots that are unavailable.
 If `true`, the request ignores snapshots that are unavailable, such as those that are corrupted or temporarily cannot be returned.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 
@@ -14037,10 +13996,10 @@ client.snapshot.verifyRepository({ repository })
 
 #### Request (object) [_request_snapshot.verify_repository]
 - **`repository` (string)**: The name of the snapshot repository to verify.
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
 If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged.
 To indicate that the request should never timeout, set it to `-1`.
 
@@ -14100,9 +14059,9 @@ The API supports this parameter only for CSV responses.
 - **`format` (Optional, string)**: The format for the response.
 You must specify a format using this parameter or the `Accept` HTTP header.
 If you specify both, the API uses this parameter.
-- **`keep_alive` (Optional, string | -1 | 0)**: The retention period for the search and its results.
+- **`keep_alive` (Optional, string \| -1 \| 0)**: The retention period for the search and its results.
 It defaults to the `keep_alive` period for the original SQL search.
-- **`wait_for_completion_timeout` (Optional, string | -1 | 0)**: The period to wait for complete results.
+- **`wait_for_completion_timeout` (Optional, string \| -1 \| 0)**: The period to wait for complete results.
 It defaults to no timeout, meaning the request waits for complete search results.
 
 ## client.sql.getAsyncStatus [_sql.get_async_status]
@@ -14147,24 +14106,24 @@ It ignores other request body parameters.
 If `true`, the API is lenient and returns the first value from the array with no guarantee of consistent results.
 - **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The Elasticsearch query DSL for additional filtering.
 - **`index_using_frozen` (Optional, boolean)**: If `true`, the search can run on frozen indices.
-- **`keep_alive` (Optional, string | -1 | 0)**: The retention period for an async or saved synchronous search.
+- **`keep_alive` (Optional, string \| -1 \| 0)**: The retention period for an async or saved synchronous search.
 - **`keep_on_completion` (Optional, boolean)**: If `true`, Elasticsearch stores synchronous searches if you also specify the `wait_for_completion_timeout` parameter.
 If `false`, Elasticsearch only stores async searches that don't finish before the `wait_for_completion_timeout`.
-- **`page_timeout` (Optional, string | -1 | 0)**: The minimum retention period for the scroll cursor.
+- **`page_timeout` (Optional, string \| -1 \| 0)**: The minimum retention period for the scroll cursor.
 After this time period, a pagination request might fail because the scroll cursor is no longer available.
 Subsequent scroll requests prolong the lifetime of the scroll cursor by the duration of `page_timeout` in the scroll request.
 - **`params` (Optional, Record<string, User-defined value>)**: The values for parameters in the query.
 - **`query` (Optional, string)**: The SQL query to run.
-- **`request_timeout` (Optional, string | -1 | 0)**: The timeout before the request fails.
+- **`request_timeout` (Optional, string \| -1 \| 0)**: The timeout before the request fails.
 - **`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)**: One or more runtime fields for the search request.
 These fields take precedence over mapped fields with the same name.
 - **`time_zone` (Optional, string)**: The ISO-8601 time zone ID for the search.
-- **`wait_for_completion_timeout` (Optional, string | -1 | 0)**: The period to wait for complete results.
+- **`wait_for_completion_timeout` (Optional, string \| -1 \| 0)**: The period to wait for complete results.
 It defaults to no timeout, meaning the request waits for complete search results.
 If the search doesn't finish within this period, the search becomes async.
 
 To save a synchronous search, you must specify this parameter and the `keep_on_completion` parameter.
-- **`format` (Optional, Enum("csv" | "json" | "tsv" | "txt" | "yaml" | "cbor" | "smile"))**: The format for the response.
+- **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile"))**: The format for the response.
 You can also specify a format using the `Accept` HTTP header.
 If you specify both this parameter and the `Accept` HTTP header, this parameter takes precedence.
 
@@ -14328,7 +14287,7 @@ client.synonyms.putSynonym({ id, synonyms_set })
 
 #### Request (object) [_request_synonyms.put_synonym]
 - **`id` (string)**: The ID of the synonyms set to be created or updated.
-- **`synonyms_set` ({ id, synonyms } | { id, synonyms }[])**: The synonym rules definitions for the synonyms set.
+- **`synonyms_set` ({ id, synonyms } \| { id, synonyms }[])**: The synonym rules definitions for the synonyms set.
 - **`refresh` (Optional, boolean)**: If `true`, the request will refresh the analyzers with the new synonyms set and wait for the new synonyms to be available before returning.
 If `false`, analyzers will not be reloaded with the new synonym set
 
@@ -14378,8 +14337,8 @@ client.tasks.cancel({ ... })
 ### Arguments [_arguments_tasks.cancel]
 
 #### Request (object) [_request_tasks.cancel]
-- **`task_id` (Optional, string | number)**: The task identifier.
-- **`actions` (Optional, string | string[])**: A list or wildcard expression of actions that is used to limit the request.
+- **`task_id` (Optional, string \| number)**: The task identifier.
+- **`actions` (Optional, string \| string[])**: A list or wildcard expression of actions that is used to limit the request.
 - **`nodes` (Optional, string[])**: A list of node IDs or names that is used to limit the request.
 - **`parent_task_id` (Optional, string)**: A parent task ID that is used to limit the tasks.
 - **`wait_for_completion` (Optional, boolean)**: If true, the request blocks until all found tasks are complete.
@@ -14403,7 +14362,7 @@ client.tasks.get({ task_id })
 
 #### Request (object) [_request_tasks.get]
 - **`task_id` (string)**: The task identifier.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`wait_for_completion` (Optional, boolean)**: If `true`, the request blocks until the task has completed.
 
@@ -14477,17 +14436,17 @@ client.tasks.list({ ... })
 ### Arguments [_arguments_tasks.list]
 
 #### Request (object) [_request_tasks.list]
-- **`actions` (Optional, string | string[])**: A list or wildcard expression of actions used to limit the request.
+- **`actions` (Optional, string \| string[])**: A list or wildcard expression of actions used to limit the request.
 For example, you can use `cluser:*` to retrieve all cluster-related tasks.
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about the running tasks.
 This information is useful to distinguish tasks from each other but is more costly to run.
-- **`group_by` (Optional, Enum("nodes" | "parents" | "none"))**: A key that is used to group tasks in the response.
+- **`group_by` (Optional, Enum("nodes" \| "parents" \| "none"))**: A key that is used to group tasks in the response.
 The task lists can be grouped either by nodes or by parent tasks.
-- **`nodes` (Optional, string | string[])**: A list of node IDs or names that is used to limit the returned information.
+- **`nodes` (Optional, string \| string[])**: A list of node IDs or names that is used to limit the returned information.
 - **`parent_task_id` (Optional, string)**: A parent task identifier that is used to limit returned information.
 To return all tasks, omit this parameter or use a value of `-1`.
 If the parent task is not found, the API does not return a 404 response code.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for each node to respond.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for each node to respond.
 If a node does not respond before its timeout expires, the response does not include its information.
 However, timed out nodes are included in the `node_failures` property.
 - **`wait_for_completion` (Optional, boolean)**: If `true`, the request blocks until the operation is complete.
@@ -14533,13 +14492,13 @@ In this default scenario, all rows must have the same number of fields for the d
 If you specify a delimiter, up to 10% of the rows can have a different number of columns than the first row.
 - **`documents_to_sample` (Optional, number)**: The number of documents to include in the structural analysis.
 The minimum value is 2.
-- **`ecs_compatibility` (Optional, Enum("disabled" | "v1"))**: The mode of compatibility with ECS compliant Grok patterns.
+- **`ecs_compatibility` (Optional, Enum("disabled" \| "v1"))**: The mode of compatibility with ECS compliant Grok patterns.
 Use this parameter to specify whether to use ECS Grok patterns instead of legacy ones when the structure finder creates a Grok pattern.
 This setting primarily has an impact when a whole message Grok pattern such as `%{CATALINALOG}` matches the input.
 If the structure finder identifies a common structure but has no idea of the meaning then generic field names such as `path`, `ipaddress`, `field1`, and `field2` are used in the `grok_pattern` output.
 The intention in that situation is that a user who knows the meanings will rename the fields before using them.
 - **`explain` (Optional, boolean)**: If `true`, the response includes a field named `explanation`, which is an array of strings that indicate how the structure finder produced its result.
-- **`format` (Optional, Enum("delimited" | "ndjson" | "semi_structured_text" | "xml"))**: The high level structure of the text.
+- **`format` (Optional, Enum("delimited" \| "ndjson" \| "semi_structured_text" \| "xml"))**: The high level structure of the text.
 By default, the API chooses the format.
 In this default scenario, all rows must have the same number of fields for a delimited format to be detected.
 If the format is set to delimited and the delimiter is not set, however, the API tolerates up to 5% of rows that have a different number of columns than the first row.
@@ -14554,7 +14513,7 @@ If your delimited text format does not use quoting, a workaround is to set this 
 - **`should_trim_fields` (Optional, boolean)**: If the format is `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them.
 If this parameter is not specified and the delimiter is pipe (`|`), the default value is true.
 Otherwise, the default value is `false`.
-- **`timeout` (Optional, string | -1 | 0)**: The maximum amount of time that the structure analysis can take.
+- **`timeout` (Optional, string \| -1 \| 0)**: The maximum amount of time that the structure analysis can take.
 If the analysis is still running when the timeout expires, it will be stopped.
 - **`timestamp_field` (Optional, string)**: The name of the field that contains the primary timestamp of each record in the text.
 In particular, if the text was ingested into an index, this is the field that would be used to populate the `@timestamp` field.
@@ -14640,12 +14599,12 @@ Only a single character is supported; the delimiter cannot have multiple charact
 By default, the API considers the following possibilities: comma, tab, semi-colon, and pipe (`|`).
 In this default scenario, all rows must have the same number of fields for the delimited format to be detected.
 If you specify a delimiter, up to 10% of the rows can have a different number of columns than the first row.
-- **`ecs_compatibility` (Optional, Enum("disabled" | "v1"))**: The mode of compatibility with ECS compliant Grok patterns.
+- **`ecs_compatibility` (Optional, Enum("disabled" \| "v1"))**: The mode of compatibility with ECS compliant Grok patterns.
 Use this parameter to specify whether to use ECS Grok patterns instead of legacy ones when the structure finder creates a Grok pattern.
 This setting primarily has an impact when a whole message Grok pattern such as `%{CATALINALOG}` matches the input.
 If the structure finder identifies a common structure but has no idea of meaning then generic field names such as `path`, `ipaddress`, `field1`, and `field2` are used in the `grok_pattern` output, with the intention that a user who knows the meanings rename these fields before using it.
 - **`explain` (Optional, boolean)**: If this parameter is set to true, the response includes a field named `explanation`, which is an array of strings that indicate how the structure finder produced its result.
-- **`format` (Optional, Enum("delimited" | "ndjson" | "semi_structured_text" | "xml"))**: The high level structure of the text.
+- **`format` (Optional, Enum("delimited" \| "ndjson" \| "semi_structured_text" \| "xml"))**: The high level structure of the text.
 By default, the API chooses the format.
 In this default scenario, all rows must have the same number of fields for a delimited format to be detected.
 If the format is `delimited` and the delimiter is not set, however, the API tolerates up to 5% of rows that have a different number of columns than the first row.
@@ -14660,7 +14619,7 @@ If your delimited text format does not use quoting, a workaround is to set this 
 - **`should_trim_fields` (Optional, boolean)**: If the format is `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them.
 If this parameter is not specified and the delimiter is pipe (`|`), the default value is true.
 Otherwise, the default value is `false`.
-- **`timeout` (Optional, string | -1 | 0)**: The maximum amount of time that the structure analysis can take.
+- **`timeout` (Optional, string \| -1 \| 0)**: The maximum amount of time that the structure analysis can take.
 If the analysis is still running when the timeout expires, it will be stopped.
 - **`timestamp_field` (Optional, string)**: The name of the field that contains the primary timestamp of each record in the text.
 In particular, if the text was ingested into an index, this is the field that would be used to populate the `@timestamp` field.
@@ -14782,7 +14741,7 @@ If your delimited text format does not use quoting, a workaround is to set this 
 - **`should_trim_fields` (Optional, boolean)**: If you have set `format` to `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them.
 If this parameter is not specified and the delimiter is pipe (`|`), the default value is `true`.
 Otherwise, the default value is `false`.
-- **`timeout` (Optional, string | -1 | 0)**: The maximum amount of time that the structure analysis can take.
+- **`timeout` (Optional, string \| -1 \| 0)**: The maximum amount of time that the structure analysis can take.
 If the analysis is still running when the timeout expires then it will be stopped.
 - **`timestamp_field` (Optional, string)**: The name of the field that contains the primary timestamp of each record in the text.
 In particular, if the text were ingested into an index, this is the field that would be used to populate the `@timestamp` field.
@@ -14867,7 +14826,7 @@ client.transform.deleteTransform({ transform_id })
 deleted regardless of its current state.
 - **`delete_dest_index` (Optional, boolean)**: If this value is true, the destination index is deleted together with the transform. If false, the destination
 index will not be deleted
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.transform.getNodeStats [_transform.get_node_stats]
 Retrieves transform usage information for transform nodes.
@@ -14892,7 +14851,7 @@ client.transform.getTransform({ ... })
 ### Arguments [_arguments_transform.get_transform]
 
 #### Request (object) [_request_transform.get_transform]
-- **`transform_id` (Optional, string | string[])**: Identifier for the transform. It can be a transform identifier or a
+- **`transform_id` (Optional, string \| string[])**: Identifier for the transform. It can be a transform identifier or a
 wildcard expression. You can get information for all transforms by using
 `_all`, by specifying `*` as the `<transform_id>`, or by omitting the
 `<transform_id>`.
@@ -14924,7 +14883,7 @@ client.transform.getTransformStats({ transform_id })
 ### Arguments [_arguments_transform.get_transform_stats]
 
 #### Request (object) [_request_transform.get_transform_stats]
-- **`transform_id` (string | string[])**: Identifier for the transform. It can be a transform identifier or a
+- **`transform_id` (string \| string[])**: Identifier for the transform. It can be a transform identifier or a
 wildcard expression. You can get information for all transforms by using
 `_all`, by specifying `*` as the `<transform_id>`, or by omitting the
 `<transform_id>`.
@@ -14938,7 +14897,7 @@ If this parameter is false, the request returns a 404 status code when
 there are no matches or only partial matches.
 - **`from` (Optional, number)**: Skips the specified number of transforms.
 - **`size` (Optional, number)**: Specifies the maximum number of transforms to obtain.
-- **`timeout` (Optional, string | -1 | 0)**: Controls the time to wait for the stats
+- **`timeout` (Optional, string \| -1 \| 0)**: Controls the time to wait for the stats
 
 ## client.transform.previewTransform [_transform.preview_transform]
 Preview a transform.
@@ -14961,7 +14920,7 @@ client.transform.previewTransform({ ... })
 configuration details in the request body.
 - **`dest` (Optional, { index, op_type, pipeline, routing, version_type })**: The destination for the transform.
 - **`description` (Optional, string)**: Free text description of the transform.
-- **`frequency` (Optional, string | -1 | 0)**: The interval between checks for changes in the source indices when the
+- **`frequency` (Optional, string \| -1 \| 0)**: The interval between checks for changes in the source indices when the
 transform is running continuously. Also determines the retry interval in
 the event of transient failures while the transform is searching or
 indexing. The minimum value is 1s and the maximum is 1h.
@@ -14975,7 +14934,7 @@ the data.
 criteria is deleted from the destination index.
 - **`latest` (Optional, { sort, unique_key })**: The latest method transforms the data by finding the latest document for
 each unique key.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the
 timeout expires, the request fails and returns an error.
 
 ## client.transform.putTransform [_transform.put_transform]
@@ -15016,7 +14975,7 @@ hyphens, and underscores. It has a 64 character limit and must start and end wit
 - **`dest` ({ index, op_type, pipeline, routing, version_type })**: The destination for the transform.
 - **`source` ({ index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
 - **`description` (Optional, string)**: Free text description of the transform.
-- **`frequency` (Optional, string | -1 | 0)**: The interval between checks for changes in the source indices when the transform is running continuously. Also
+- **`frequency` (Optional, string \| -1 \| 0)**: The interval between checks for changes in the source indices when the transform is running continuously. Also
 determines the retry interval in the event of transient failures while the transform is searching or indexing.
 The minimum value is `1s` and the maximum is `1h`.
 - **`latest` (Optional, { sort, unique_key })**: The latest method transforms the data by finding the latest document for each unique key.
@@ -15032,7 +14991,7 @@ check for the existence of the source indices and a check that the destination i
 index pattern. You can use this parameter to skip the checks, for example when the source index does not exist
 until after the transform is created. The validations are always run when you start the transform, however, with
 the exception of privilege checks.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.transform.resetTransform [_transform.reset_transform]
 Reset a transform.
@@ -15053,7 +15012,7 @@ client.transform.resetTransform({ transform_id })
 hyphens, and underscores. It has a 64 character limit and must start and end with alphanumeric characters.
 - **`force` (Optional, boolean)**: If this value is `true`, the transform is reset regardless of its current state. If it's `false`, the transform
 must be stopped before it can be reset.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.transform.scheduleNowTransform [_transform.schedule_now_transform]
 Schedule a transform to start now.
@@ -15074,7 +15033,7 @@ client.transform.scheduleNowTransform({ transform_id })
 
 #### Request (object) [_request_transform.schedule_now_transform]
 - **`transform_id` (string)**: Identifier for the transform.
-- **`timeout` (Optional, string | -1 | 0)**: Controls the time to wait for the scheduling to take place
+- **`timeout` (Optional, string \| -1 \| 0)**: Controls the time to wait for the scheduling to take place
 
 ## client.transform.startTransform [_transform.start_transform]
 Start a transform.
@@ -15104,7 +15063,7 @@ client.transform.startTransform({ transform_id })
 
 #### Request (object) [_request_transform.start_transform]
 - **`transform_id` (string)**: Identifier for the transform.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 - **`from` (Optional, string)**: Restricts the set of transformed entities to those changed after this time. Relative times like now-30d are supported. Only applicable for continuous transforms.
 
 ## client.transform.stopTransform [_transform.stop_transform]
@@ -15131,7 +15090,7 @@ only partial matches, the API stops the appropriate transforms.
 
 If it is false, the request returns a 404 status code when there are no matches or only partial matches.
 - **`force` (Optional, boolean)**: If it is true, the API forcefully stops the transforms.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response when `wait_for_completion` is `true`. If no response is received before the
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response when `wait_for_completion` is `true`. If no response is received before the
 timeout expires, the request returns a timeout exception. However, the request continues processing and
 eventually moves the transform to a STOPPED state.
 - **`wait_for_checkpoint` (Optional, boolean)**: If it is true, the transform does not completely stop until the current checkpoint is completed. If it is false,
@@ -15161,7 +15120,7 @@ client.transform.updateTransform({ transform_id })
 - **`transform_id` (string)**: Identifier for the transform.
 - **`dest` (Optional, { index, op_type, pipeline, routing, version_type })**: The destination for the transform.
 - **`description` (Optional, string)**: Free text description of the transform.
-- **`frequency` (Optional, string | -1 | 0)**: The interval between checks for changes in the source indices when the
+- **`frequency` (Optional, string \| -1 \| 0)**: The interval between checks for changes in the source indices when the
 transform is running continuously. Also determines the retry interval in
 the event of transient failures while the transform is searching or
 indexing. The minimum value is 1s and the maximum is 1h.
@@ -15169,12 +15128,12 @@ indexing. The minimum value is 1s and the maximum is 1h.
 - **`source` (Optional, { index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
 - **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, unattended })**: Defines optional transform settings.
 - **`sync` (Optional, { time })**: Defines the properties transforms require to run continuously.
-- **`retention_policy` (Optional, { time } | null)**: Defines a retention policy for the transform. Data that meets the defined
+- **`retention_policy` (Optional, { time } \| null)**: Defines a retention policy for the transform. Data that meets the defined
 criteria is deleted from the destination index.
 - **`defer_validation` (Optional, boolean)**: When true, deferrable validations are not run. This behavior may be
 desired if the source index does not exist until after the transform is
 created.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the
 timeout expires, the request fails and returns an error.
 
 ## client.transform.upgradeTransforms [_transform.upgrade_transforms]
@@ -15204,7 +15163,7 @@ client.transform.upgradeTransforms({ ... })
 
 #### Request (object) [_request_transform.upgrade_transforms]
 - **`dry_run` (Optional, boolean)**: When true, the request checks for updates but does not run them.
-- **`timeout` (Optional, string | -1 | 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and
 returns an error.
 
 ## client.watcher.ackWatch [_watcher.ack_watch]
@@ -15229,7 +15188,7 @@ client.watcher.ackWatch({ watch_id })
 
 #### Request (object) [_request_watcher.ack_watch]
 - **`watch_id` (string)**: The watch identifier.
-- **`action_id` (Optional, string | string[])**: A list of the action identifiers to acknowledge.
+- **`action_id` (Optional, string \| string[])**: A list of the action identifiers to acknowledge.
 If you omit this parameter, all of the actions of the watch are acknowledged.
 
 ## client.watcher.activateWatch [_watcher.activate_watch]
@@ -15309,7 +15268,7 @@ client.watcher.executeWatch({ ... })
 
 #### Request (object) [_request_watcher.execute_watch]
 - **`id` (Optional, string)**: The watch identifier.
-- **`action_modes` (Optional, Record<string, Enum("simulate" | "force_simulate" | "execute" | "force_execute" | "skip")>)**: Determines how to handle the watch actions as part of the watch execution.
+- **`action_modes` (Optional, Record<string, Enum("simulate" \| "force_simulate" \| "execute" \| "force_execute" \| "skip")>)**: Determines how to handle the watch actions as part of the watch execution.
 - **`alternative_input` (Optional, Record<string, User-defined value>)**: When present, the watch uses this object as a payload instead of executing its own input.
 - **`ignore_condition` (Optional, boolean)**: When set to `true`, the watch execution uses the always condition. This can also be specified as an HTTP parameter.
 - **`record_execution` (Optional, boolean)**: When set to `true`, the watch record representing the watch execution result is persisted to the `.watcher-history` index for the current time.
@@ -15335,7 +15294,7 @@ client.watcher.getSettings({ ... })
 ### Arguments [_arguments_watcher.get_settings]
 
 #### Request (object) [_request_watcher.get_settings]
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.watcher.getWatch [_watcher.get_watch]
@@ -15380,7 +15339,7 @@ client.watcher.putWatch({ id })
 - **`condition` (Optional, { always, array_compare, compare, never, script })**: The condition that defines if the actions should be run.
 - **`input` (Optional, { chain, http, search, simple })**: The input that defines the input that loads the data for the watch.
 - **`metadata` (Optional, Record<string, User-defined value>)**: Metadata JSON that will be copied into the history entries.
-- **`throttle_period` (Optional, string | -1 | 0)**: The minimum time between actions being run.
+- **`throttle_period` (Optional, string \| -1 \| 0)**: The minimum time between actions being run.
 The default is 5 seconds.
 This default can be changed in the config file with the setting `xpack.watcher.throttle.period.default_period`.
 If both this value and the `throttle_period_in_millis` parameter are specified, Watcher uses the last parameter included in the request.
@@ -15413,8 +15372,8 @@ It must be non-negative.
 - **`size` (Optional, number)**: The number of hits to return.
 It must be non-negative.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: A query that filters the watches to be returned.
-- **`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])**: One or more fields used to sort the search results.
-- **`search_after` (Optional, number | number | string | boolean | null[])**: Retrieve the next page of hits using a set of sort values from the previous page.
+- **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: One or more fields used to sort the search results.
+- **`search_after` (Optional, number \| number \| string \| boolean \| null[])**: Retrieve the next page of hits using a set of sort values from the previous page.
 
 ## client.watcher.start [_watcher.start]
 Start the watch service.
@@ -15429,7 +15388,7 @@ client.watcher.start({ ... })
 ### Arguments [_arguments_watcher.start]
 
 #### Request (object) [_request_watcher.start]
-- **`master_timeout` (Optional, string | -1 | 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.watcher.stats [_watcher.stats]
 Get Watcher statistics.
@@ -15445,7 +15404,7 @@ client.watcher.stats({ ... })
 ### Arguments [_arguments_watcher.stats]
 
 #### Request (object) [_request_watcher.stats]
-- **`metric` (Optional, Enum("_all" | "queued_watches" | "current_watches" | "pending_watches") | Enum("_all" | "queued_watches" | "current_watches" | "pending_watches")[])**: Defines which additional metrics are included in the response.
+- **`metric` (Optional, Enum("_all" \| "queued_watches" \| "current_watches" \| "pending_watches") \| Enum("_all" \| "queued_watches" \| "current_watches" \| "pending_watches")[])**: Defines which additional metrics are included in the response.
 - **`emit_stacktraces` (Optional, boolean)**: Defines whether stack traces are generated for each watch that is running.
 
 ## client.watcher.stop [_watcher.stop]
@@ -15461,7 +15420,7 @@ client.watcher.stop({ ... })
 ### Arguments [_arguments_watcher.stop]
 
 #### Request (object) [_request_watcher.stop]
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 
@@ -15485,9 +15444,9 @@ client.watcher.updateSettings({ ... })
 #### Request (object) [_request_watcher.update_settings]
 - **`index.auto_expand_replicas` (Optional, string)**
 - **`index.number_of_replicas` (Optional, number)**
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string | -1 | 0)**: The period to wait for a response.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.xpack.info [_xpack.info]
@@ -15507,7 +15466,7 @@ client.xpack.info({ ... })
 ### Arguments [_arguments_xpack.info]
 
 #### Request (object) [_request_xpack.info]
-- **`categories` (Optional, Enum("build" | "features" | "license")[])**: A list of the information categories to include in the response.
+- **`categories` (Optional, Enum("build" \| "features" \| "license")[])**: A list of the information categories to include in the response.
 For example, `build,license,features`.
 - **`accept_enterprise` (Optional, boolean)**: If this param is used it must be set to true
 - **`human` (Optional, boolean)**: Defines whether additional human-readable information is included in the response.
@@ -15527,7 +15486,7 @@ client.xpack.usage({ ... })
 ### Arguments [_arguments_xpack.usage]
 
 #### Request (object) [_request_xpack.usage]
-- **`master_timeout` (Optional, string | -1 | 0)**: The period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 
