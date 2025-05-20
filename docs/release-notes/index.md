@@ -20,6 +20,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.0.2
+
+### Fixes [elasticsearch-javascript-client-9.0.2-fixes]
+
+**Remove dangling references to `typesWithBodyKey`:** the `typesWithBodyKey.ts` file and `estypesWithBody` export were removed in 9.0.0 but were still being referenced in the `index.d.ts` file that declares TypeScript types. This reference has been removed.
+
 ## 9.0.1
 
 ### Fixes [elasticsearch-javascript-client-9.0.1-fixes]
