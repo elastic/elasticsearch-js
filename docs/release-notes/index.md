@@ -20,11 +20,23 @@ To check for security updates, go to [Security announcements for the Elastic sta
 
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 
-## 9.0.0 [elasticsearch-javascript-client-900-release-notes]
+## 9.0.2
 
-**Release date:** April 8, 2025
+### Fixes [elasticsearch-javascript-client-9.0.2-fixes]
 
-### Features and enhancements [elasticsearch-javascript-client-900-features-enhancements]
+**Remove dangling references to `typesWithBodyKey`:** the `typesWithBodyKey.ts` file and `estypesWithBody` export were removed in 9.0.0 but were still being referenced in the `index.d.ts` file that declares TypeScript types. This reference has been removed.
+
+## 9.0.1
+
+### Fixes [elasticsearch-javascript-client-9.0.1-fixes]
+
+**Reinstate `nodeFilter` and node `roles` feature:** The docs note a `nodeFilter` option on the client that will, by default, filter the nodes based on any `roles` values that are set at instantiation. At some point, this functionality was partially disabled. This brings the feature back, ensuring that it matches what the documentation has said it does all along.
+
+**Ensure Apache Arrow ES|QL helper uses async iterator:** the [`esql.toArrowReader()` helper function](/reference/client-helpers.md#_toarrowreader) was trying to return `RecordBatchStreamReader`&mdash;a synchronous iterator&mdash;despite the fact that the `apache-arrow` package was, in most cases, automatically coercing it to `AsyncRecordBatchStreamReader`, its asynchronous counterpart. It now is always returned as an async iterator.
+
+## 9.0.0 [elasticsearch-javascript-client-9.0.0-release-notes]
+
+### Features and enhancements [elasticsearch-javascript-client-9.0.0-features-enhancements]
 
 - **Compatibility with Elasticsearch 9.0:** All changes and additions to Elasticsearch APIs for its 9.0 release are reflected in this release.
 - **Serverless client merged in:** the `@elastic/elasticsearch-serverless` client is being deprecated, and its functionality has been merged back into this client. This should have zero impact on the way the client works by default, except that a new `serverMode` option has been added. When it's explicitly set to `"serverless"` by a user, a few default settings and behaviors are changed:
@@ -40,4 +52,4 @@ To check for security updates, go to [Security announcements for the Elastic sta
 
 - **Improved Cloud ID parsing:** when using a Cloud ID as the `cloud` parameter to instantiate the client, that ID was assumed to be in the correct format. New assertions have been added to verify that format and throw a `ConfigurationError` if it is invalid. See [#2694](https://github.com/elastic/elasticsearch-js/issues/2694).
 
-% ### Fixes [elasticsearch-javascript-client-900-fixes]
+% ### Fixes [elasticsearch-javascript-client-9.0.0-fixes]
