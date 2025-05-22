@@ -422,6 +422,13 @@ export default class Indices {
         body: [],
         query: []
       },
+      'indices.get_data_stream_settings': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
       'indices.get_field_mapping': {
         path: [
           'fields',
@@ -574,6 +581,13 @@ export default class Indices {
         ]
       },
       'indices.put_data_stream_options': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
+      'indices.put_data_stream_settings': {
         path: [
           'name'
         ],
@@ -1676,7 +1690,7 @@ export default class Indices {
   }
 
   /**
-    * Delete a legacy index template.
+    * Delete a legacy index template. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-template | Elasticsearch API documentation}
     */
   async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteTemplateResponse>
@@ -2489,6 +2503,51 @@ export default class Indices {
   }
 
   /**
+    * Gets a data stream's settings
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
+    */
+  async getDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_data_stream_settings']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_settings`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_data_stream_settings',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Get mapping definitions. Retrieves mapping definitions for one or more fields. For data streams, the API retrieves field mappings for the stream’s backing indices. This API is useful if you don't need a complete mapping or if an index mapping contains a large number of fields.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-mapping | Elasticsearch API documentation}
     */
@@ -2753,7 +2812,7 @@ export default class Indices {
   }
 
   /**
-    * Get index templates. Get information about one or more index templates. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
+    * Get legacy index templates. Get information about one or more index templates. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-template | Elasticsearch API documentation}
     */
   async getTemplate (this: That, params?: T.IndicesGetTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetTemplateResponse>
@@ -3206,6 +3265,51 @@ export default class Indices {
   }
 
   /**
+    * Updates a data stream's settings
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
+    */
+  async putDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.put_data_stream_settings']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_settings`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_data_stream_settings',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Create or update an index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices. Elasticsearch applies templates to new indices based on an wildcard pattern that matches the index name. Index templates are applied during data stream or index creation. For data streams, these settings and mappings are applied when the stream's backing indices are created. Settings and mappings specified in a create index API request override any settings or mappings specified in an index template. Changes to index templates do not affect existing indices, including the existing backing indices of a data stream. You can use C-style `/* *\/` block comments in index templates. You can include comments anywhere in the request body, except before the opening curly bracket. **Multiple matching templates** If multiple index templates match the name of a new index or data stream, the template with the highest priority is used. Multiple templates with overlapping index patterns at the same priority are not allowed and an error will be thrown when attempting to create a template matching an existing index template at identical priorities. **Composing aliases, mappings, and settings** When multiple component templates are specified in the `composed_of` field for an index template, they are merged in the order specified, meaning that later component templates override earlier component templates. Any mappings, settings, or aliases from the parent index template are merged in next. Finally, any configuration on the index request itself is merged. Mapping definitions are merged recursively, which means that later mapping components can introduce new field mappings and update the mapping configuration. If a field mapping is already contained in an earlier component, its definition will be completely overwritten by the later one. This recursive merging strategy applies not only to field mappings, but also root options like `dynamic_templates` and `meta`. If an earlier component contains a `dynamic_templates` block, then by default new `dynamic_templates` entries are appended onto the end. If an entry already exists with the same key, then it is overwritten by the new definition.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-index-template | Elasticsearch API documentation}
     */
@@ -3374,7 +3478,7 @@ export default class Indices {
   }
 
   /**
-    * Create or update an index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices. Elasticsearch applies templates to new indices based on an index pattern that matches the index name. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8. Composable templates always take precedence over legacy templates. If no composable template matches a new index, matching legacy templates are applied according to their order. Index templates are only applied during index creation. Changes to index templates do not affect existing indices. Settings and mappings specified in create index API requests override any settings or mappings specified in an index template. You can use C-style `/* *\/` block comments in index templates. You can include comments anywhere in the request body, except before the opening curly bracket. **Indices matching multiple templates** Multiple index templates can potentially match an index, in this case, both the settings and mappings are merged into the final configuration of the index. The order of the merging can be controlled using the order parameter, with lower order being applied first, and higher orders overriding them. NOTE: Multiple matching templates with the same order value will result in a non-deterministic merging order.
+    * Create or update a legacy index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices. Elasticsearch applies templates to new indices based on an index pattern that matches the index name. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8. Composable templates always take precedence over legacy templates. If no composable template matches a new index, matching legacy templates are applied according to their order. Index templates are only applied during index creation. Changes to index templates do not affect existing indices. Settings and mappings specified in create index API requests override any settings or mappings specified in an index template. You can use C-style `/* *\/` block comments in index templates. You can include comments anywhere in the request body, except before the opening curly bracket. **Indices matching multiple templates** Multiple index templates can potentially match an index, in this case, both the settings and mappings are merged into the final configuration of the index. The order of the merging can be controlled using the order parameter, with lower order being applied first, and higher orders overriding them. NOTE: Multiple matching templates with the same order value will result in a non-deterministic merging order.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-template | Elasticsearch API documentation}
     */
   async putTemplate (this: That, params: T.IndicesPutTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutTemplateResponse>

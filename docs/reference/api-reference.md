@@ -5848,6 +5848,7 @@ client.indices.deleteIndexTemplate({ name })
 
 ## client.indices.deleteTemplate [_indices.delete_template]
 Delete a legacy index template.
+IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-template)
 
@@ -6422,7 +6423,7 @@ received before the timeout expires, the request fails and returns an
 error.
 
 ## client.indices.getTemplate [_indices.get_template]
-Get index templates.
+Get legacy index templates.
 Get information about one or more index templates.
 
 IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
@@ -6858,7 +6859,7 @@ will be closed temporarily and then reopened in order to apply the changes.
  timeout expires, the request fails and returns an error.
 
 ## client.indices.putTemplate [_indices.put_template]
-Create or update an index template.
+Create or update a legacy index template.
 Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
 Elasticsearch applies templates to new indices based on an index pattern that matches the index name.
 
@@ -13852,6 +13853,68 @@ To repeat the same set of operations in multiple experiments, use the same seed 
 Note that the operations are performed concurrently so might not always happen in the same order on each run.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period of time to wait for the test to complete.
 If no response is received before the timeout expires, the test is cancelled and returns an error.
+
+## client.snapshot.repositoryVerifyIntegrity [_snapshot.repository_verify_integrity]
+Verify the repository integrity.
+Verify the integrity of the contents of a snapshot repository.
+
+This API enables you to perform a comprehensive check of the contents of a repository, looking for any anomalies in its data or metadata which might prevent you from restoring snapshots from the repository or which might cause future snapshot create or delete operations to fail.
+
+If you suspect the integrity of the contents of one of your snapshot repositories, cease all write activity to this repository immediately, set its `read_only` option to `true`, and use this API to verify its integrity.
+Until you do so:
+
+* It may not be possible to restore some snapshots from this repository.
+* Searchable snapshots may report errors when searched or may have unassigned shards.
+* Taking snapshots into this repository may fail or may appear to succeed but have created a snapshot which cannot be restored.
+* Deleting snapshots from this repository may fail or may appear to succeed but leave the underlying data on disk.
+* Continuing to write to the repository while it is in an invalid state may causing additional damage to its contents.
+
+If the API finds any problems with the integrity of the contents of your repository, Elasticsearch will not be able to repair the damage.
+The only way to bring the repository back into a fully working state after its contents have been damaged is by restoring its contents from a repository backup which was taken before the damage occurred.
+You must also identify what caused the damage and take action to prevent it from happening again.
+
+If you cannot restore a repository backup, register a new repository and use this for all future snapshot operations.
+In some cases it may be possible to recover some of the contents of a damaged repository, either by restoring as many of its snapshots as needed and taking new snapshots of the restored data, or by using the reindex API to copy data from any searchable snapshots mounted from the damaged repository.
+
+Avoid all operations which write to the repository while the verify repository integrity API is running.
+If something changes the repository contents while an integrity verification is running then Elasticsearch may incorrectly report having detected some anomalies in its contents due to the concurrent writes.
+It may also incorrectly fail to report some anomalies that the concurrent writes prevented it from detecting.
+
+NOTE: This API is intended for exploratory use by humans. You should expect the request parameters and the response format to vary in future versions.
+
+NOTE: This API may not work correctly in a mixed-version cluster.
+
+The default values for the parameters of this API are designed to limit the impact of the integrity verification on other activities in your cluster.
+For instance, by default it will only use at most half of the `snapshot_meta` threads to verify the integrity of each snapshot, allowing other snapshot operations to use the other half of this thread pool.
+If you modify these parameters to speed up the verification process, you risk disrupting other snapshot-related operations in your cluster.
+For large repositories, consider setting up a separate single-node Elasticsearch cluster just for running the integrity verification API.
+
+The response exposes implementation details of the analysis which may change from version to version.
+The response body format is therefore not considered stable and may be different in newer versions.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-repository-verify-integrity)
+
+```ts
+client.snapshot.repositoryVerifyIntegrity({ repository })
+```
+
+### Arguments [_arguments_snapshot.repository_verify_integrity]
+
+#### Request (object) [_request_snapshot.repository_verify_integrity]
+- **`repository` (string \| string[])**: The name of the snapshot repository.
+- **`blob_thread_pool_concurrency` (Optional, number)**: If `verify_blob_contents` is `true`, this parameter specifies how many blobs to verify at once.
+- **`index_snapshot_verification_concurrency` (Optional, number)**: The maximum number of index snapshots to verify concurrently within each index verification.
+- **`index_verification_concurrency` (Optional, number)**: The number of indices to verify concurrently.
+The default behavior is to use the entire `snapshot_meta` thread pool.
+- **`max_bytes_per_sec` (Optional, string)**: If `verify_blob_contents` is `true`, this parameter specifies the maximum amount of data that Elasticsearch will read from the repository every second.
+- **`max_failed_shard_snapshots` (Optional, number)**: The number of shard snapshot failures to track during integrity verification, in order to avoid excessive resource usage.
+If your repository contains more than this number of shard snapshot failures, the verification will fail.
+- **`meta_thread_pool_concurrency` (Optional, number)**: The maximum number of snapshot metadata operations to run concurrently.
+The default behavior is to use at most half of the `snapshot_meta` thread pool at once.
+- **`snapshot_verification_concurrency` (Optional, number)**: The number of snapshots to verify concurrently.
+The default behavior is to use at most half of the `snapshot_meta` thread pool at once.
+- **`verify_blob_contents` (Optional, boolean)**: Indicates whether to verify the checksum of every data blob in the repository.
+If this feature is enabled, Elasticsearch will read the entire repository contents, which may be extremely slow and expensive.
 
 ## client.snapshot.restore [_snapshot.restore]
 Restore a snapshot.
