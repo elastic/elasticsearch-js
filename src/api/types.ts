@@ -1709,7 +1709,7 @@ export interface SearchShardProfile {
   index: IndexName
   node_id: NodeId
   searches: SearchSearchProfile[]
-  shard_id: long
+  shard_id: integer
 }
 
 export interface SearchSmoothingModelContainer {
@@ -19251,7 +19251,7 @@ export interface SnapshotSnapshotShardFailure {
   index: IndexName
   node_id?: Id
   reason: string
-  shard_id: Id
+  shard_id: integer
   index_uuid: Id
   status: string
 }
