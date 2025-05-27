@@ -1,0 +1,4 @@
+## `MultiTermQueryRewrite`
+:::
+type MultiTermQueryRewrite = string;
+:::

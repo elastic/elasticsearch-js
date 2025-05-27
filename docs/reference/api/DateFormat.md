@@ -1,0 +1,4 @@
+## `DateFormat`
+:::
+type DateFormat = string;
+:::

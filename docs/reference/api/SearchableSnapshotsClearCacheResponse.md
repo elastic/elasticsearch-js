@@ -1,0 +1,4 @@
+## `SearchableSnapshotsClearCacheResponse`
+:::
+type SearchableSnapshotsClearCacheResponse = any;
+:::

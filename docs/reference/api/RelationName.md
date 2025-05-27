@@ -1,0 +1,4 @@
+## `RelationName`
+:::
+type RelationName = string;
+:::

@@ -1,0 +1,4 @@
+## `float`
+:::
+type float = number;
+:::

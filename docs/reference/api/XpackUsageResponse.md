@@ -1,0 +1,32 @@
+## Interface `XpackUsageResponse`
+
+| Name | Type | Description |
+| - | - | - |
+| `aggregate_metric` | [XpackUsageBase](./XpackUsageBase.md) | &nbsp; |
+| `analytics` | [XpackUsageAnalytics](./XpackUsageAnalytics.md) | &nbsp; |
+| `archive` | [XpackUsageArchive](./XpackUsageArchive.md) | &nbsp; |
+| `ccr` | [XpackUsageCcr](./XpackUsageCcr.md) | &nbsp; |
+| `data_frame` | [XpackUsageBase](./XpackUsageBase.md) | &nbsp; |
+| `data_science` | [XpackUsageBase](./XpackUsageBase.md) | &nbsp; |
+| `data_streams` | [XpackUsageDataStreams](./XpackUsageDataStreams.md) | &nbsp; |
+| `data_tiers` | [XpackUsageDataTiers](./XpackUsageDataTiers.md) | &nbsp; |
+| `enrich` | [XpackUsageBase](./XpackUsageBase.md) | &nbsp; |
+| `eql` | [XpackUsageEql](./XpackUsageEql.md) | &nbsp; |
+| `flattened` | [XpackUsageFlattened](./XpackUsageFlattened.md) | &nbsp; |
+| `graph` | [XpackUsageBase](./XpackUsageBase.md) | &nbsp; |
+| `health_api` | [XpackUsageHealthStatistics](./XpackUsageHealthStatistics.md) | &nbsp; |
+| `ilm` | [XpackUsageIlm](./XpackUsageIlm.md) | &nbsp; |
+| `logstash` | [XpackUsageBase](./XpackUsageBase.md) | &nbsp; |
+| `ml` | [XpackUsageMachineLearning](./XpackUsageMachineLearning.md) | &nbsp; |
+| `monitoring` | [XpackUsageMonitoring](./XpackUsageMonitoring.md) | &nbsp; |
+| `rollup` | [XpackUsageBase](./XpackUsageBase.md) | &nbsp; |
+| `runtime_fields` | [XpackUsageRuntimeFieldTypes](./XpackUsageRuntimeFieldTypes.md) | &nbsp; |
+| `searchable_snapshots` | [XpackUsageSearchableSnapshots](./XpackUsageSearchableSnapshots.md) | &nbsp; |
+| `security` | [XpackUsageSecurity](./XpackUsageSecurity.md) | &nbsp; |
+| `slm` | [XpackUsageSlm](./XpackUsageSlm.md) | &nbsp; |
+| `spatial` | [XpackUsageBase](./XpackUsageBase.md) | &nbsp; |
+| `sql` | [XpackUsageSql](./XpackUsageSql.md) | &nbsp; |
+| `transform` | [XpackUsageBase](./XpackUsageBase.md) | &nbsp; |
+| `vectors` | [XpackUsageVector](./XpackUsageVector.md) | &nbsp; |
+| `voting_only` | [XpackUsageBase](./XpackUsageBase.md) | &nbsp; |
+| `watcher` | [XpackUsageWatcher](./XpackUsageWatcher.md) | &nbsp; |

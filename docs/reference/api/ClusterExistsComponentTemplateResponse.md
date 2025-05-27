@@ -1,0 +1,4 @@
+## `ClusterExistsComponentTemplateResponse`
+:::
+type ClusterExistsComponentTemplateResponse = boolean;
+:::

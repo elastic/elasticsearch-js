@@ -1,0 +1,4 @@
+## `InferenceTaskSettings`
+:::
+type InferenceTaskSettings = any;
+:::

@@ -1,0 +1,4 @@
+## `InferenceAnthropicServiceType`
+:::
+type InferenceAnthropicServiceType = 'anthropic';
+:::

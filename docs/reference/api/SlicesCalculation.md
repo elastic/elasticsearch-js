@@ -1,0 +1,4 @@
+## `SlicesCalculation`
+:::
+type SlicesCalculation = 'auto';
+:::

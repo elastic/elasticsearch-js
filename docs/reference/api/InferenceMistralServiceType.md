@@ -1,0 +1,4 @@
+## `InferenceMistralServiceType`
+:::
+type InferenceMistralServiceType = 'mistral';
+:::

@@ -1,0 +1,4 @@
+## `IndicesDownsampleResponse`
+:::
+type IndicesDownsampleResponse = any;
+:::

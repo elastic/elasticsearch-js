@@ -1,0 +1,29 @@
+## Interface `ClusterAllocationExplainResponse`
+
+| Name | Type | Description |
+| - | - | - |
+| `allocate_explanation` | string | &nbsp; |
+| `allocation_delay_in_millis` | [DurationValue](./DurationValue.md)<[UnitMillis](./UnitMillis.md)> | &nbsp; |
+| `allocation_delay` | [Duration](./Duration.md) | &nbsp; |
+| `can_allocate` | [ClusterAllocationExplainDecision](./ClusterAllocationExplainDecision.md) | &nbsp; |
+| `can_move_to_other_node` | [ClusterAllocationExplainDecision](./ClusterAllocationExplainDecision.md) | &nbsp; |
+| `can_rebalance_cluster_decisions` | [ClusterAllocationExplainAllocationDecision](./ClusterAllocationExplainAllocationDecision.md)[] | &nbsp; |
+| `can_rebalance_cluster` | [ClusterAllocationExplainDecision](./ClusterAllocationExplainDecision.md) | &nbsp; |
+| `can_rebalance_to_other_node` | [ClusterAllocationExplainDecision](./ClusterAllocationExplainDecision.md) | &nbsp; |
+| `can_remain_decisions` | [ClusterAllocationExplainAllocationDecision](./ClusterAllocationExplainAllocationDecision.md)[] | &nbsp; |
+| `can_remain_on_current_node` | [ClusterAllocationExplainDecision](./ClusterAllocationExplainDecision.md) | &nbsp; |
+| `cluster_info` | [ClusterAllocationExplainClusterInfo](./ClusterAllocationExplainClusterInfo.md) | &nbsp; |
+| `configured_delay_in_millis` | [DurationValue](./DurationValue.md)<[UnitMillis](./UnitMillis.md)> | &nbsp; |
+| `configured_delay` | [Duration](./Duration.md) | &nbsp; |
+| `current_node` | [ClusterAllocationExplainCurrentNode](./ClusterAllocationExplainCurrentNode.md) | &nbsp; |
+| `current_state` | string | &nbsp; |
+| `index` | [IndexName](./IndexName.md) | &nbsp; |
+| `move_explanation` | string | &nbsp; |
+| `node_allocation_decisions` | [ClusterAllocationExplainNodeAllocationExplanation](./ClusterAllocationExplainNodeAllocationExplanation.md)[] | &nbsp; |
+| `note` | string | &nbsp; |
+| `primary` | boolean | &nbsp; |
+| `rebalance_explanation` | string | &nbsp; |
+| `remaining_delay_in_millis` | [DurationValue](./DurationValue.md)<[UnitMillis](./UnitMillis.md)> | &nbsp; |
+| `remaining_delay` | [Duration](./Duration.md) | &nbsp; |
+| `shard` | [integer](./integer.md) | &nbsp; |
+| `unassigned_info` | [ClusterAllocationExplainUnassignedInformation](./ClusterAllocationExplainUnassignedInformation.md) | &nbsp; |

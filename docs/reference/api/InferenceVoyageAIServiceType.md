@@ -1,0 +1,4 @@
+## `InferenceVoyageAIServiceType`
+:::
+type InferenceVoyageAIServiceType = 'voyageai';
+:::

@@ -1,0 +1,4 @@
+## `ScrollId`
+:::
+type ScrollId = string;
+:::

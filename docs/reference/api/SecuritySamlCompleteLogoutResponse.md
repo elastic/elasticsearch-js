@@ -1,0 +1,4 @@
+## `SecuritySamlCompleteLogoutResponse`
+:::
+type SecuritySamlCompleteLogoutResponse = boolean;
+:::

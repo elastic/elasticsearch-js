@@ -1,0 +1,4 @@
+## `ulong`
+:::
+type ulong = number;
+:::

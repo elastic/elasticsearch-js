@@ -1,0 +1,4 @@
+## `SynonymsSynonymString`
+:::
+type SynonymsSynonymString = string;
+:::

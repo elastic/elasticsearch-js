@@ -1,0 +1,4 @@
+## `ClusterAlias`
+:::
+type ClusterAlias = string;
+:::

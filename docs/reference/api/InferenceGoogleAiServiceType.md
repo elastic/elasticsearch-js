@@ -1,0 +1,4 @@
+## `InferenceGoogleAiServiceType`
+:::
+type InferenceGoogleAiServiceType = 'googleaistudio';
+:::

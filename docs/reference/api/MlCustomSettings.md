@@ -1,0 +1,4 @@
+## `MlCustomSettings`
+:::
+type MlCustomSettings = any;
+:::

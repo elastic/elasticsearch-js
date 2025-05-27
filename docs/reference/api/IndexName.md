@@ -1,0 +1,4 @@
+## `IndexName`
+:::
+type IndexName = string;
+:::

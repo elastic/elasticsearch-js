@@ -1,0 +1,4 @@
+## `CategoryId`
+:::
+type CategoryId = string;
+:::

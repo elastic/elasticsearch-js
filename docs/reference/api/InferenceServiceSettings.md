@@ -1,0 +1,4 @@
+## `InferenceServiceSettings`
+:::
+type InferenceServiceSettings = any;
+:::

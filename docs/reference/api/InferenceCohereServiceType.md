@@ -1,0 +1,4 @@
+## `InferenceCohereServiceType`
+:::
+type InferenceCohereServiceType = 'cohere';
+:::

@@ -1,0 +1,4 @@
+## `InferenceGoogleVertexAIServiceType`
+:::
+type InferenceGoogleVertexAIServiceType = 'googlevertexai';
+:::

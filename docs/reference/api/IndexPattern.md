@@ -1,0 +1,4 @@
+## `IndexPattern`
+:::
+type IndexPattern = string;
+:::

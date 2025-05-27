@@ -1,0 +1,4 @@
+## `Password`
+:::
+type Password = string;
+:::

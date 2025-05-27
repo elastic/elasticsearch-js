@@ -1,0 +1,4 @@
+## `long`
+:::
+type long = number;
+:::

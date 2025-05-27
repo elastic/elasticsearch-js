@@ -1,0 +1,4 @@
+## `InferenceWatsonxServiceType`
+:::
+type InferenceWatsonxServiceType = 'watsonxai';
+:::

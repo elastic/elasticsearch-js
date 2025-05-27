@@ -1,0 +1,4 @@
+## `GeoShape`
+:::
+type GeoShape = any;
+:::

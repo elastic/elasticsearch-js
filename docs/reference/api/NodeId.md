@@ -1,0 +1,4 @@
+## `NodeId`
+:::
+type NodeId = string;
+:::

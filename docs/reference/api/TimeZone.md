@@ -1,0 +1,4 @@
+## `TimeZone`
+:::
+type TimeZone = string;
+:::

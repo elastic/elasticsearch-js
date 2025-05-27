@@ -1,0 +1,4 @@
+## `ClusterStateResponse`
+:::
+type ClusterStateResponse = any;
+:::

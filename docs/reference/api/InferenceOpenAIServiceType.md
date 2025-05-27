@@ -1,0 +1,4 @@
+## `InferenceOpenAIServiceType`
+:::
+type InferenceOpenAIServiceType = 'openai';
+:::

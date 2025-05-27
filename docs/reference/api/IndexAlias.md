@@ -1,0 +1,4 @@
+## `IndexAlias`
+:::
+type IndexAlias = string;
+:::

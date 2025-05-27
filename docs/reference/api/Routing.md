@@ -1,0 +1,4 @@
+## `Routing`
+:::
+type Routing = string;
+:::

@@ -1,0 +1,4 @@
+## `DataStreamName`
+:::
+type DataStreamName = string;
+:::

@@ -1,0 +1,4 @@
+## `InferenceElasticsearchServiceType`
+:::
+type InferenceElasticsearchServiceType = 'elasticsearch';
+:::

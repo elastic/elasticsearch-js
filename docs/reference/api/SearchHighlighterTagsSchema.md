@@ -1,0 +1,4 @@
+## `SearchHighlighterTagsSchema`
+:::
+type SearchHighlighterTagsSchema = 'styled';
+:::

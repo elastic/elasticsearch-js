@@ -1,0 +1,4 @@
+## `PropertyName`
+:::
+type PropertyName = string;
+:::

@@ -1,0 +1,4 @@
+## `double`
+:::
+type double = number;
+:::

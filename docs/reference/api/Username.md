@@ -1,0 +1,4 @@
+## `Username`
+:::
+type Username = string;
+:::

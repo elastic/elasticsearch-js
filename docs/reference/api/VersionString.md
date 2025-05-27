@@ -1,0 +1,4 @@
+## `VersionString`
+:::
+type VersionString = string;
+:::

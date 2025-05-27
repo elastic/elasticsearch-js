@@ -1,0 +1,4 @@
+## `TransportAddress`
+:::
+type TransportAddress = string;
+:::

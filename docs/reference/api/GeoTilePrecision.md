@@ -1,0 +1,4 @@
+## `GeoTilePrecision`
+:::
+type GeoTilePrecision = number;
+:::

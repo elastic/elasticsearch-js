@@ -1,0 +1,4 @@
+## `SqlRow`
+:::
+type SqlRow = any[];
+:::

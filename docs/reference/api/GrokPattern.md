@@ -1,0 +1,4 @@
+## `GrokPattern`
+:::
+type GrokPattern = string;
+:::

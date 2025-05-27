@@ -1,0 +1,4 @@
+## `Service`
+:::
+type Service = string;
+:::

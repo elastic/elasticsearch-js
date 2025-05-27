@@ -1,0 +1,4 @@
+## `DurationLarge`
+:::
+type DurationLarge = string;
+:::

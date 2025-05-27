@@ -1,0 +1,4 @@
+## `integer`
+:::
+type integer = number;
+:::

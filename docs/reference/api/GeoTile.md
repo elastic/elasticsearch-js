@@ -1,0 +1,4 @@
+## `GeoTile`
+:::
+type GeoTile = string;
+:::

@@ -1,0 +1,4 @@
+## `SearchApplicationPutBehavioralAnalyticsResponse`
+:::
+type SearchApplicationPutBehavioralAnalyticsResponse = [SearchApplicationPutBehavioralAnalyticsAnalyticsAcknowledgeResponseBase](./SearchApplicationPutBehavioralAnalyticsAnalyticsAcknowledgeResponseBase.md);
+:::

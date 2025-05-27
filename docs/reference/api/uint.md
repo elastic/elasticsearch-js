@@ -1,0 +1,4 @@
+## `uint`
+:::
+type uint = number;
+:::

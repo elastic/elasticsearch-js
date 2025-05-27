@@ -1,0 +1,4 @@
+## `Uuid`
+:::
+type Uuid = string;
+:::

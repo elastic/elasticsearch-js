@@ -1,0 +1,4 @@
+## `Field`
+:::
+type Field = string;
+:::

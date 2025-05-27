@@ -1,0 +1,5 @@
+## Interface `NodesInfoNodeInfoRepositoriesUrl`
+
+| Name | Type | Description |
+| - | - | - |
+| `allowed_urls` | string | &nbsp; |

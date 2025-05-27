@@ -1,0 +1,4 @@
+## `LogstashDeletePipelineResponse`
+:::
+type LogstashDeletePipelineResponse = boolean;
+:::

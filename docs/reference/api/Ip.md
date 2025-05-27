@@ -1,0 +1,4 @@
+## `Ip`
+:::
+type Ip = string;
+:::

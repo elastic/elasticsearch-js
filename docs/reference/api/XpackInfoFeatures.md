@@ -1,0 +1,31 @@
+## Interface `XpackInfoFeatures`
+
+| Name | Type | Description |
+| - | - | - |
+| `aggregate_metric` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `analytics` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `archive` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `ccr` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `data_streams` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `data_tiers` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `enrich` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `enterprise_search` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `eql` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `esql` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `graph` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `ilm` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `logsdb` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `logstash` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `ml` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `monitoring` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `rollup` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `runtime_fields` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `searchable_snapshots` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `security` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `slm` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `spatial` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `sql` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `transform` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `universal_profiling` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `voting_only` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |
+| `watcher` | [XpackInfoFeature](./XpackInfoFeature.md) | &nbsp; |

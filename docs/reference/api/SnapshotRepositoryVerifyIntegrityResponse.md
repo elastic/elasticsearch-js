@@ -1,0 +1,4 @@
+## `SnapshotRepositoryVerifyIntegrityResponse`
+:::
+type SnapshotRepositoryVerifyIntegrityResponse = any;
+:::

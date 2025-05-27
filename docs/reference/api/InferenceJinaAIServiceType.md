@@ -1,0 +1,4 @@
+## `InferenceJinaAIServiceType`
+:::
+type InferenceJinaAIServiceType = 'jinaai';
+:::

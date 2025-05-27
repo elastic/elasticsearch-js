@@ -1,0 +1,4 @@
+## `AggregateName`
+:::
+type AggregateName = string;
+:::

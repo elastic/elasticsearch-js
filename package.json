@@ -27,7 +27,8 @@
     "prebuild": "npm run clean-build && npm run lint",
     "build": "tsc && rm lib/package.json && mv lib/src/* lib/ && rm -rf lib/src",
     "clean-build": "rimraf ./lib && mkdir lib",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "docs": "npm run build && api-extractor run --local && node scripts/docgen.mjs"
   },
   "keywords": [
     "elasticsearch",
@@ -59,6 +60,7 @@
   },
   "devDependencies": {
     "@elastic/request-converter": "9.0.1",
+    "@microsoft/api-extractor": "^7.52.8",
     "@sinonjs/fake-timers": "14.0.0",
     "@types/debug": "4.1.12",
     "@types/ms": "2.1.0",

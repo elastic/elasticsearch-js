@@ -1,0 +1,4 @@
+## `byte`
+:::
+type byte = number;
+:::

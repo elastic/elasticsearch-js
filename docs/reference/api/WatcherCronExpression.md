@@ -1,0 +1,4 @@
+## `WatcherCronExpression`
+:::
+type WatcherCronExpression = string;
+:::

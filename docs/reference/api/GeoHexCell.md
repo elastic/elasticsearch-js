@@ -1,0 +1,4 @@
+## `GeoHexCell`
+:::
+type GeoHexCell = string;
+:::

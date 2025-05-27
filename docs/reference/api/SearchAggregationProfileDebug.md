@@ -1,0 +1,36 @@
+## Interface `SearchAggregationProfileDebug`
+
+| Name | Type | Description |
+| - | - | - |
+| `brute_force_used` | [integer](./integer.md) | &nbsp; |
+| `built_buckets` | [integer](./integer.md) | &nbsp; |
+| `chars_fetched` | [integer](./integer.md) | &nbsp; |
+| `collect_analyzed_count` | [integer](./integer.md) | &nbsp; |
+| `collect_analyzed_ns` | [integer](./integer.md) | &nbsp; |
+| `collection_strategy` | string | &nbsp; |
+| `deferred_aggregators` | string[] | &nbsp; |
+| `delegate_debug` | [SearchAggregationProfileDebug](./SearchAggregationProfileDebug.md) | &nbsp; |
+| `delegate` | string | &nbsp; |
+| `dynamic_pruning_attempted` | [integer](./integer.md) | &nbsp; |
+| `dynamic_pruning_used` | [integer](./integer.md) | &nbsp; |
+| `empty_collectors_used` | [integer](./integer.md) | &nbsp; |
+| `extract_count` | [integer](./integer.md) | &nbsp; |
+| `extract_ns` | [integer](./integer.md) | &nbsp; |
+| `filters` | [SearchAggregationProfileDelegateDebugFilter](./SearchAggregationProfileDelegateDebugFilter.md)[] | &nbsp; |
+| `has_filter` | boolean | &nbsp; |
+| `map_reducer` | string | &nbsp; |
+| `numeric_collectors_used` | [integer](./integer.md) | &nbsp; |
+| `ordinals_collectors_overhead_too_high` | [integer](./integer.md) | &nbsp; |
+| `ordinals_collectors_used` | [integer](./integer.md) | &nbsp; |
+| `result_strategy` | string | &nbsp; |
+| `segments_collected` | [integer](./integer.md) | &nbsp; |
+| `segments_counted` | [integer](./integer.md) | &nbsp; |
+| `segments_with_deleted_docs` | [integer](./integer.md) | &nbsp; |
+| `segments_with_doc_count_field` | [integer](./integer.md) | &nbsp; |
+| `segments_with_multi_valued_ords` | [integer](./integer.md) | &nbsp; |
+| `segments_with_single_valued_ords` | [integer](./integer.md) | &nbsp; |
+| `skipped_due_to_no_data` | [integer](./integer.md) | &nbsp; |
+| `string_hashing_collectors_used` | [integer](./integer.md) | &nbsp; |
+| `surviving_buckets` | [integer](./integer.md) | &nbsp; |
+| `total_buckets` | [integer](./integer.md) | &nbsp; |
+| `values_fetched` | [integer](./integer.md) | &nbsp; |

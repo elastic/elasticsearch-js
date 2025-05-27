@@ -1,0 +1,4 @@
+## `SuggestionName`
+:::
+type SuggestionName = string;
+:::

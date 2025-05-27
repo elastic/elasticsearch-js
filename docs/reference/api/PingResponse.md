@@ -1,0 +1,4 @@
+## `PingResponse`
+:::
+type PingResponse = boolean;
+:::

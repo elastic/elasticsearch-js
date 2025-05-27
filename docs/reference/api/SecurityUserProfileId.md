@@ -1,0 +1,4 @@
+## `SecurityUserProfileId`
+:::
+type SecurityUserProfileId = string;
+:::

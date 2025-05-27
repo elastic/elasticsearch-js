@@ -1,0 +1,4 @@
+## `TimeOfDay`
+:::
+type TimeOfDay = string;
+:::

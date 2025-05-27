@@ -1,0 +1,4 @@
+## `PipelineName`
+:::
+type PipelineName = string;
+:::

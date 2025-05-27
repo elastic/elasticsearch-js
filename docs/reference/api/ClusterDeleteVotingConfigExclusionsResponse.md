@@ -1,0 +1,4 @@
+## `ClusterDeleteVotingConfigExclusionsResponse`
+:::
+type ClusterDeleteVotingConfigExclusionsResponse = boolean;
+:::

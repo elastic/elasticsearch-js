@@ -1,0 +1,4 @@
+## `IndicesMigrateReindexModeEnum`
+:::
+type IndicesMigrateReindexModeEnum = 'upgrade';
+:::

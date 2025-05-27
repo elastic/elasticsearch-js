@@ -1,0 +1,4 @@
+## `IndicesPromoteDataStreamResponse`
+:::
+type IndicesPromoteDataStreamResponse = any;
+:::

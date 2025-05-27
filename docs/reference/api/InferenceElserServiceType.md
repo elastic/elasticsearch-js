@@ -1,0 +1,4 @@
+## `InferenceElserServiceType`
+:::
+type InferenceElserServiceType = 'elser';
+:::

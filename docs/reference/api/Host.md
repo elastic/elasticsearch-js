@@ -1,0 +1,4 @@
+## `Host`
+:::
+type Host = string;
+:::

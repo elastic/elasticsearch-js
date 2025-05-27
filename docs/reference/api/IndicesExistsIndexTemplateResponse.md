@@ -1,0 +1,4 @@
+## `IndicesExistsIndexTemplateResponse`
+:::
+type IndicesExistsIndexTemplateResponse = boolean;
+:::

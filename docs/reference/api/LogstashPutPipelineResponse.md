@@ -1,0 +1,4 @@
+## `LogstashPutPipelineResponse`
+:::
+type LogstashPutPipelineResponse = boolean;
+:::

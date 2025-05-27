@@ -1,0 +1,4 @@
+## `short`
+:::
+type short = number;
+:::

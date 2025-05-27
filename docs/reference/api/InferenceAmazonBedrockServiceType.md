@@ -1,0 +1,4 @@
+## `InferenceAmazonBedrockServiceType`
+:::
+type InferenceAmazonBedrockServiceType = 'amazonbedrock';
+:::

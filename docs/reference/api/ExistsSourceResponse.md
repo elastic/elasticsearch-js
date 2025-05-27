@@ -1,0 +1,4 @@
+## `ExistsSourceResponse`
+:::
+type ExistsSourceResponse = boolean;
+:::

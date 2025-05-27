@@ -72,3 +72,4 @@ rest-api-spec
 yaml-rest-tests
 generated-tests
 schema
+api-extractor/*

@@ -1,0 +1,4 @@
+## `InferenceAnthropicTaskType`
+:::
+type InferenceAnthropicTaskType = 'completion';
+:::

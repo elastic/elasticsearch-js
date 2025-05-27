@@ -1,0 +1,4 @@
+## `Namespace`
+:::
+type Namespace = string;
+:::

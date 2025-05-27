@@ -1,0 +1,4 @@
+## `IndicesDiskUsageResponse`
+:::
+type IndicesDiskUsageResponse = any;
+:::

@@ -1,0 +1,4 @@
+## `GeoHash`
+:::
+type GeoHash = string;
+:::

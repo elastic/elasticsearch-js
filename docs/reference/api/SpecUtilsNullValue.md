@@ -1,0 +1,4 @@
+## `SpecUtilsNullValue`
+:::
+type SpecUtilsNullValue = null;
+:::
