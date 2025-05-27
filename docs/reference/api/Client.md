@@ -21,4 +21,5 @@ new Client(opts: [ClientOptions](./ClientOptions.md));
 
 | Name | Signature | Description |
 | - | - | - |
-| `child` | `child(opts: [ClientOptions](./ClientOptions.md)): [Client](./Client.md);` | Creates a child client instance that shared its connection pool with the parent client || `close` | `close(): Promise<void>;` | Closes all connections in the connection pool. Connections shared with any parent or child instances will also be closed. |
+| `child` | `child(opts: [ClientOptions](./ClientOptions.md)): [Client](./Client.md);` | Creates a child client instance that shared its connection pool with the parent client |
+| `close` | `close(): Promise<void>;` | Closes all connections in the connection pool. Connections shared with any parent or child instances will also be closed. |
