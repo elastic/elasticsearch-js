@@ -5914,6 +5914,7 @@ client.indices.deleteIndexTemplate({ name })
 [discrete]
 ==== delete_template
 Delete a legacy index template.
+IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
 
 {ref}/indices-delete-template-v1.html[Endpoint documentation]
 [source,ts]
@@ -6500,7 +6501,7 @@ error.
 
 [discrete]
 ==== get_template
-Get index templates.
+Get legacy index templates.
 Get information about one or more index templates.
 
 IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
@@ -6924,7 +6925,7 @@ error.
 
 [discrete]
 ==== put_template
-Create or update an index template.
+Create or update a legacy index template.
 Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
 Elasticsearch applies templates to new indices based on an index pattern that matches the index name.
 
