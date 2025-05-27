@@ -2954,7 +2954,7 @@ export interface SearchShardProfile {
   index: IndexName
   node_id: NodeId
   searches: SearchSearchProfile[]
-  shard_id: long
+  shard_id: integer
 }
 
 export interface SearchSmoothingModelContainer {
@@ -22110,6 +22110,13 @@ export interface InferenceInferenceEndpointInfo extends InferenceInferenceEndpoi
   task_type: InferenceTaskType
 }
 
+export interface InferenceInferenceEndpointInfoJinaAi extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeJinaAi
+}
+
 export interface InferenceInferenceResult {
   text_embedding_bytes?: InferenceTextEmbeddingByteResult[]
   text_embedding_bits?: InferenceTextEmbeddingByteResult[]
@@ -22291,6 +22298,8 @@ export type InferenceSparseVector = Record<string, float>
 export type InferenceTaskSettings = any
 
 export type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank' | 'completion' | 'chat_completion'
+
+export type InferenceTaskTypeJinaAi = 'text_embedding' | 'rerank'
 
 export interface InferenceTextEmbeddingByteResult {
   embedding: InferenceDenseByteVector
@@ -22753,7 +22762,7 @@ export interface InferencePutJinaaiRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, jinaai_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutJinaaiResponse = InferenceInferenceEndpointInfo
+export type InferencePutJinaaiResponse = InferenceInferenceEndpointInfoJinaAi
 
 export interface InferencePutMistralRequest extends RequestBase {
   /** The task type.
@@ -34132,7 +34141,7 @@ export interface SnapshotSnapshotShardFailure {
   index: IndexName
   node_id?: Id
   reason: string
-  shard_id: Id
+  shard_id: integer
   index_uuid: Id
   status: string
 }

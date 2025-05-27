@@ -1611,7 +1611,7 @@ export default class Indices {
   }
 
   /**
-    * Delete a legacy index template.
+    * Delete a legacy index template. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-delete-template | Elasticsearch API documentation}
     */
   async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteTemplateResponse>
@@ -2643,7 +2643,7 @@ export default class Indices {
   }
 
   /**
-    * Get index templates. Get information about one or more index templates. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
+    * Get legacy index templates. Get information about one or more index templates. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-get-template | Elasticsearch API documentation}
     */
   async getTemplate (this: That, params?: T.IndicesGetTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetTemplateResponse>
@@ -3219,7 +3219,7 @@ export default class Indices {
   }
 
   /**
-    * Create or update an index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices. Elasticsearch applies templates to new indices based on an index pattern that matches the index name. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8. Composable templates always take precedence over legacy templates. If no composable template matches a new index, matching legacy templates are applied according to their order. Index templates are only applied during index creation. Changes to index templates do not affect existing indices. Settings and mappings specified in create index API requests override any settings or mappings specified in an index template. You can use C-style `/* *\/` block comments in index templates. You can include comments anywhere in the request body, except before the opening curly bracket. **Indices matching multiple templates** Multiple index templates can potentially match an index, in this case, both the settings and mappings are merged into the final configuration of the index. The order of the merging can be controlled using the order parameter, with lower order being applied first, and higher orders overriding them. NOTE: Multiple matching templates with the same order value will result in a non-deterministic merging order.
+    * Create or update a legacy index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices. Elasticsearch applies templates to new indices based on an index pattern that matches the index name. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8. Composable templates always take precedence over legacy templates. If no composable template matches a new index, matching legacy templates are applied according to their order. Index templates are only applied during index creation. Changes to index templates do not affect existing indices. Settings and mappings specified in create index API requests override any settings or mappings specified in an index template. You can use C-style `/* *\/` block comments in index templates. You can include comments anywhere in the request body, except before the opening curly bracket. **Indices matching multiple templates** Multiple index templates can potentially match an index, in this case, both the settings and mappings are merged into the final configuration of the index. The order of the merging can be controlled using the order parameter, with lower order being applied first, and higher orders overriding them. NOTE: Multiple matching templates with the same order value will result in a non-deterministic merging order.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-put-template | Elasticsearch API documentation}
     */
   async putTemplate (this: That, params: T.IndicesPutTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutTemplateResponse>
