@@ -1,4 +1,4 @@
-## Interface `NodesInfoDeprecationIndexing`
+# `NodesInfoDeprecationIndexing` [interface-NodesInfoDeprecationIndexing]
 
 | Name | Type | Description |
 | - | - | - |

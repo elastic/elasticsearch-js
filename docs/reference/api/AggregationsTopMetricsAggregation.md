@@ -1,4 +1,4 @@
-## Interface `AggregationsTopMetricsAggregation`
+# `AggregationsTopMetricsAggregation` [interface-AggregationsTopMetricsAggregation]
 
 | Name | Type | Description |
 | - | - | - |

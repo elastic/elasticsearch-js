@@ -1,4 +1,4 @@
-## Interface `SecurityEnrollKibanaResponse`
+# `SecurityEnrollKibanaResponse` [interface-SecurityEnrollKibanaResponse]
 
 | Name | Type | Description |
 | - | - | - |

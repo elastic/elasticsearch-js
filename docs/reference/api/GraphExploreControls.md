@@ -1,4 +1,4 @@
-## Interface `GraphExploreControls`
+# `GraphExploreControls` [interface-GraphExploreControls]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AnalysisStopAnalyzer`
+# `AnalysisStopAnalyzer` [interface-AnalysisStopAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

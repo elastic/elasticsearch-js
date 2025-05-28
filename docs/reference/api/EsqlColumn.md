@@ -1,4 +1,4 @@
-## Interface `EsqlColumn`
+# `EsqlColumn` [interface-EsqlColumn]
 
 | Name | Type | Description |
 | - | - | - |

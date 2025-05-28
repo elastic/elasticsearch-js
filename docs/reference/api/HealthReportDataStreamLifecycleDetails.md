@@ -1,4 +1,4 @@
-## Interface `HealthReportDataStreamLifecycleDetails`
+# `HealthReportDataStreamLifecycleDetails` [interface-HealthReportDataStreamLifecycleDetails]
 
 | Name | Type | Description |
 | - | - | - |

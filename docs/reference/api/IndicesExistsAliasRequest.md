@@ -1,4 +1,4 @@
-## Interface `IndicesExistsAliasRequest`
+# `IndicesExistsAliasRequest` [interface-IndicesExistsAliasRequest]
 
 | Name | Type | Description |
 | - | - | - |

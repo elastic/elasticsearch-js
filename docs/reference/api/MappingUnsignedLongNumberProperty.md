@@ -1,4 +1,4 @@
-## Interface `MappingUnsignedLongNumberProperty`
+# `MappingUnsignedLongNumberProperty` [interface-MappingUnsignedLongNumberProperty]
 
 | Name | Type | Description |
 | - | - | - |

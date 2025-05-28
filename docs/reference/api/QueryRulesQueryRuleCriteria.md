@@ -1,4 +1,4 @@
-## Interface `QueryRulesQueryRuleCriteria`
+# `QueryRulesQueryRuleCriteria` [interface-QueryRulesQueryRuleCriteria]
 
 | Name | Type | Description |
 | - | - | - |

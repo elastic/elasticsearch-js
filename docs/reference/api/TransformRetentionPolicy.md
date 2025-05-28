@@ -1,4 +1,4 @@
-## Interface `TransformRetentionPolicy`
+# `TransformRetentionPolicy` [interface-TransformRetentionPolicy]
 
 | Name | Type | Description |
 | - | - | - |

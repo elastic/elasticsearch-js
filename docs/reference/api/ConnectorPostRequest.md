@@ -1,4 +1,4 @@
-## Interface `ConnectorPostRequest`
+# `ConnectorPostRequest` [interface-ConnectorPostRequest]
 
 | Name | Type | Description |
 | - | - | - |

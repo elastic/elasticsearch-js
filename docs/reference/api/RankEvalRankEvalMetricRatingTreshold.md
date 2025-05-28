@@ -1,4 +1,4 @@
-## Interface `RankEvalRankEvalMetricRatingTreshold`
+# `RankEvalRankEvalMetricRatingTreshold` [interface-RankEvalRankEvalMetricRatingTreshold]
 
 | Name | Type | Description |
 | - | - | - |

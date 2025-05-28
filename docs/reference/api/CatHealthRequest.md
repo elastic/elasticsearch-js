@@ -1,4 +1,4 @@
-## Interface `CatHealthRequest`
+# `CatHealthRequest` [interface-CatHealthRequest]
 
 | Name | Type | Description |
 | - | - | - |

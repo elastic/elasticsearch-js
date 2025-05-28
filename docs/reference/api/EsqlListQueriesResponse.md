@@ -1,4 +1,4 @@
-## Interface `EsqlListQueriesResponse`
+# `EsqlListQueriesResponse` [interface-EsqlListQueriesResponse]
 
 | Name | Type | Description |
 | - | - | - |

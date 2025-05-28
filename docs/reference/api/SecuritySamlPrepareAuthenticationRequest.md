@@ -1,4 +1,4 @@
-## Interface `SecuritySamlPrepareAuthenticationRequest`
+# `SecuritySamlPrepareAuthenticationRequest` [interface-SecuritySamlPrepareAuthenticationRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SynonymsSynonymsUpdateResult`
+# `SynonymsSynonymsUpdateResult` [interface-SynonymsSynonymsUpdateResult]
 
 | Name | Type | Description |
 | - | - | - |

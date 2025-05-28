@@ -1,4 +1,4 @@
-## Interface `QueryDslCommonTermsQuery`
+# `QueryDslCommonTermsQuery` [interface-QueryDslCommonTermsQuery]
 
 | Name | Type | Description |
 | - | - | - |

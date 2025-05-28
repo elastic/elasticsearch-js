@@ -1,4 +1,4 @@
-## Interface `MlDataframeAnalyticsStatsProgress`
+# `MlDataframeAnalyticsStatsProgress` [interface-MlDataframeAnalyticsStatsProgress]
 
 | Name | Type | Description |
 | - | - | - |

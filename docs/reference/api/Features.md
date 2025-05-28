@@ -1,19 +1,19 @@
-## `Features`
+# `Features` [class-Features]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Features(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Features]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Features]
 
 | Name | Signature | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `TransformDestination`
+# `TransformDestination` [interface-TransformDestination]
 
 | Name | Type | Description |
 | - | - | - |

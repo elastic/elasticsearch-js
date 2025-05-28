@@ -1,4 +1,4 @@
-## Interface `MappingCountedKeywordProperty`
+# `MappingCountedKeywordProperty` [interface-MappingCountedKeywordProperty]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `CatCountCountRecord`
+# `CatCountCountRecord` [interface-CatCountCountRecord]
 
 | Name | Type | Description |
 | - | - | - |

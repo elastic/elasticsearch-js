@@ -1,4 +1,4 @@
-## Interface `CatAllocationRequest`
+# `CatAllocationRequest` [interface-CatAllocationRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SecurityCreateApiKeyResponse`
+# `SecurityCreateApiKeyResponse` [interface-SecurityCreateApiKeyResponse]
 
 | Name | Type | Description |
 | - | - | - |

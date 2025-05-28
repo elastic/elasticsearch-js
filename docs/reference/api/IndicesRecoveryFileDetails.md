@@ -1,4 +1,4 @@
-## Interface `IndicesRecoveryFileDetails`
+# `IndicesRecoveryFileDetails` [interface-IndicesRecoveryFileDetails]
 
 | Name | Type | Description |
 | - | - | - |

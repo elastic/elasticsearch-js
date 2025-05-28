@@ -1,4 +1,4 @@
-## Interface `NodesCgroupCpuStat`
+# `NodesCgroupCpuStat` [interface-NodesCgroupCpuStat]
 
 | Name | Type | Description |
 | - | - | - |

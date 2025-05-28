@@ -1,4 +1,4 @@
-## Interface `ConnectorDeleteRequest`
+# `ConnectorDeleteRequest` [interface-ConnectorDeleteRequest]
 
 | Name | Type | Description |
 | - | - | - |

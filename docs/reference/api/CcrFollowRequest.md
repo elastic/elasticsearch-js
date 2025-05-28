@@ -1,4 +1,4 @@
-## Interface `CcrFollowRequest`
+# `CcrFollowRequest` [interface-CcrFollowRequest]
 
 | Name | Type | Description |
 | - | - | - |

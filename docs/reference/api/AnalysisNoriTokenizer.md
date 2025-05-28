@@ -1,4 +1,4 @@
-## Interface `AnalysisNoriTokenizer`
+# `AnalysisNoriTokenizer` [interface-AnalysisNoriTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,19 +1,19 @@
-## `Monitoring`
+# `Monitoring` [class-Monitoring]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Monitoring(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Monitoring]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Monitoring]
 
 | Name | Signature | Description |
 | - | - | - |

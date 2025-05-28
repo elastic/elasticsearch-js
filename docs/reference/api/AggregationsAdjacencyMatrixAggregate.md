@@ -1,4 +1,4 @@
-## Interface `AggregationsAdjacencyMatrixAggregate`
+# `AggregationsAdjacencyMatrixAggregate` [interface-AggregationsAdjacencyMatrixAggregate]
 
 | Name | Type | Description |
 | - | - | - |

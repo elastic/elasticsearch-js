@@ -1,4 +1,4 @@
-## Interface `InferenceMistralServiceSettings`
+# `InferenceMistralServiceSettings` [interface-InferenceMistralServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

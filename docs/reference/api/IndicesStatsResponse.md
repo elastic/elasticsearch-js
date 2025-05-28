@@ -1,4 +1,4 @@
-## Interface `IndicesStatsResponse`
+# `IndicesStatsResponse` [interface-IndicesStatsResponse]
 
 | Name | Type | Description |
 | - | - | - |

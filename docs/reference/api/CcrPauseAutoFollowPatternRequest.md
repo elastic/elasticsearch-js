@@ -1,4 +1,4 @@
-## Interface `CcrPauseAutoFollowPatternRequest`
+# `CcrPauseAutoFollowPatternRequest` [interface-CcrPauseAutoFollowPatternRequest]
 
 | Name | Type | Description |
 | - | - | - |

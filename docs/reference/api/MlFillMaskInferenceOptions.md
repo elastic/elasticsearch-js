@@ -1,4 +1,4 @@
-## Interface `MlFillMaskInferenceOptions`
+# `MlFillMaskInferenceOptions` [interface-MlFillMaskInferenceOptions]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `XpackUsageDataTierPhaseStatistics`
+# `XpackUsageDataTierPhaseStatistics` [interface-XpackUsageDataTierPhaseStatistics]
 
 | Name | Type | Description |
 | - | - | - |

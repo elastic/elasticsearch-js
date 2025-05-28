@@ -1,4 +1,4 @@
-## Interface `IndicesSegmentsResponse`
+# `IndicesSegmentsResponse` [interface-IndicesSegmentsResponse]
 
 | Name | Type | Description |
 | - | - | - |

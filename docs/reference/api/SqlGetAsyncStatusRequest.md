@@ -1,4 +1,4 @@
-## Interface `SqlGetAsyncStatusRequest`
+# `SqlGetAsyncStatusRequest` [interface-SqlGetAsyncStatusRequest]
 
 | Name | Type | Description |
 | - | - | - |

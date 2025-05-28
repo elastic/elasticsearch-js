@@ -1,4 +1,4 @@
-## Interface `QueryDslIntervalsAnyOf`
+# `QueryDslIntervalsAnyOf` [interface-QueryDslIntervalsAnyOf]
 
 | Name | Type | Description |
 | - | - | - |

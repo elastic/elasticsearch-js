@@ -1,4 +1,4 @@
-## Interface `SecurityUserProfileHitMetadata`
+# `SecurityUserProfileHitMetadata` [interface-SecurityUserProfileHitMetadata]
 
 | Name | Type | Description |
 | - | - | - |

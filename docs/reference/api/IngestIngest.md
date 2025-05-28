@@ -1,4 +1,4 @@
-## Interface `IngestIngest`
+# `IngestIngest` [interface-IngestIngest]
 
 | Name | Type | Description |
 | - | - | - |

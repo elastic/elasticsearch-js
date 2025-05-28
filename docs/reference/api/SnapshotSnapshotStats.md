@@ -1,4 +1,4 @@
-## Interface `SnapshotSnapshotStats`
+# `SnapshotSnapshotStats` [interface-SnapshotSnapshotStats]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AnalysisUniqueTokenFilter`
+# `AnalysisUniqueTokenFilter` [interface-AnalysisUniqueTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

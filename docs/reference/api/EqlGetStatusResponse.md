@@ -1,4 +1,4 @@
-## Interface `EqlGetStatusResponse`
+# `EqlGetStatusResponse` [interface-EqlGetStatusResponse]
 
 | Name | Type | Description |
 | - | - | - |

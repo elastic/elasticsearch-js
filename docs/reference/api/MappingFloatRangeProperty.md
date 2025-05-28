@@ -1,4 +1,4 @@
-## Interface `MappingFloatRangeProperty`
+# `MappingFloatRangeProperty` [interface-MappingFloatRangeProperty]
 
 | Name | Type | Description |
 | - | - | - |

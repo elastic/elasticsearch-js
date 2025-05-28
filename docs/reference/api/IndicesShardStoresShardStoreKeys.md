@@ -1,4 +1,4 @@
-## Interface `IndicesShardStoresShardStoreKeys`
+# `IndicesShardStoresShardStoreKeys` [interface-IndicesShardStoresShardStoreKeys]
 
 | Name | Type | Description |
 | - | - | - |

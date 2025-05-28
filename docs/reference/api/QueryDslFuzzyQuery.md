@@ -1,4 +1,4 @@
-## Interface `QueryDslFuzzyQuery`
+# `QueryDslFuzzyQuery` [interface-QueryDslFuzzyQuery]
 
 | Name | Type | Description |
 | - | - | - |

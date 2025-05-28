@@ -1,4 +1,4 @@
-## Interface `WatcherHttpInputResponseResult`
+# `WatcherHttpInputResponseResult` [interface-WatcherHttpInputResponseResult]
 
 | Name | Type | Description |
 | - | - | - |

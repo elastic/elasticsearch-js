@@ -1,4 +1,4 @@
-## Interface `NodesKeyedProcessor`
+# `NodesKeyedProcessor` [interface-NodesKeyedProcessor]
 
 | Name | Type | Description |
 | - | - | - |

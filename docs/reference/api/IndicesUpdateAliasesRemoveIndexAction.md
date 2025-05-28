@@ -1,4 +1,4 @@
-## Interface `IndicesUpdateAliasesRemoveIndexAction`
+# `IndicesUpdateAliasesRemoveIndexAction` [interface-IndicesUpdateAliasesRemoveIndexAction]
 
 | Name | Type | Description |
 | - | - | - |

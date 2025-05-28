@@ -1,4 +1,4 @@
-## Interface `SearchApplicationPutBehavioralAnalyticsAnalyticsAcknowledgeResponseBase`
+# `SearchApplicationPutBehavioralAnalyticsAnalyticsAcknowledgeResponseBase` [interface-SearchApplicationPutBehavioralAnalyticsAnalyticsAcknowledgeResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AnalysisIcuNormalizationCharFilter`
+# `AnalysisIcuNormalizationCharFilter` [interface-AnalysisIcuNormalizationCharFilter]
 
 | Name | Type | Description |
 | - | - | - |

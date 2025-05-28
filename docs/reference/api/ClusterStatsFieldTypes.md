@@ -1,4 +1,4 @@
-## Interface `ClusterStatsFieldTypes`
+# `ClusterStatsFieldTypes` [interface-ClusterStatsFieldTypes]
 
 | Name | Type | Description |
 | - | - | - |

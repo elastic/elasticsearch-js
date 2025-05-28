@@ -1,4 +1,4 @@
-## Interface `IndicesShrinkResponse`
+# `IndicesShrinkResponse` [interface-IndicesShrinkResponse]
 
 | Name | Type | Description |
 | - | - | - |

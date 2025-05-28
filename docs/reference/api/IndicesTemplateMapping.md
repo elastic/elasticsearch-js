@@ -1,4 +1,4 @@
-## Interface `IndicesTemplateMapping`
+# `IndicesTemplateMapping` [interface-IndicesTemplateMapping]
 
 | Name | Type | Description |
 | - | - | - |

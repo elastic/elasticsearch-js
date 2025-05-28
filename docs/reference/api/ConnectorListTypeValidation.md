@@ -1,4 +1,4 @@
-## Interface `ConnectorListTypeValidation`
+# `ConnectorListTypeValidation` [interface-ConnectorListTypeValidation]
 
 | Name | Type | Description |
 | - | - | - |

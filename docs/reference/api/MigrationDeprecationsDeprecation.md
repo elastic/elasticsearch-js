@@ -1,4 +1,4 @@
-## Interface `MigrationDeprecationsDeprecation`
+# `MigrationDeprecationsDeprecation` [interface-MigrationDeprecationsDeprecation]
 
 | Name | Type | Description |
 | - | - | - |

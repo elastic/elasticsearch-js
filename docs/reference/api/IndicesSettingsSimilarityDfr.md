@@ -1,4 +1,4 @@
-## Interface `IndicesSettingsSimilarityDfr`
+# `IndicesSettingsSimilarityDfr` [interface-IndicesSettingsSimilarityDfr]
 
 | Name | Type | Description |
 | - | - | - |

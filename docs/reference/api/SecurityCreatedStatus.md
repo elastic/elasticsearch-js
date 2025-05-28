@@ -1,4 +1,4 @@
-## Interface `SecurityCreatedStatus`
+# `SecurityCreatedStatus` [interface-SecurityCreatedStatus]
 
 | Name | Type | Description |
 | - | - | - |

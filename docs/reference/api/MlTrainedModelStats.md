@@ -1,4 +1,4 @@
-## Interface `MlTrainedModelStats`
+# `MlTrainedModelStats` [interface-MlTrainedModelStats]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `NodesBreaker`
+# `NodesBreaker` [interface-NodesBreaker]
 
 | Name | Type | Description |
 | - | - | - |

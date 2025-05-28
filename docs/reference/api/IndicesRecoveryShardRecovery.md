@@ -1,4 +1,4 @@
-## Interface `IndicesRecoveryShardRecovery`
+# `IndicesRecoveryShardRecovery` [interface-IndicesRecoveryShardRecovery]
 
 | Name | Type | Description |
 | - | - | - |

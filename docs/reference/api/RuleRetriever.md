@@ -1,4 +1,4 @@
-## Interface `RuleRetriever`
+# `RuleRetriever` [interface-RuleRetriever]
 
 | Name | Type | Description |
 | - | - | - |

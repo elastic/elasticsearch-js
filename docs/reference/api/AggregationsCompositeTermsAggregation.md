@@ -1,4 +1,4 @@
-## Interface `AggregationsCompositeTermsAggregation`
+# `AggregationsCompositeTermsAggregation` [interface-AggregationsCompositeTermsAggregation]
 
 | Name | Type | Description |
 | - | - | - |

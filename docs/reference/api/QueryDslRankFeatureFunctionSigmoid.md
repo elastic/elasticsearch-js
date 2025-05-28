@@ -1,4 +1,4 @@
-## Interface `QueryDslRankFeatureFunctionSigmoid`
+# `QueryDslRankFeatureFunctionSigmoid` [interface-QueryDslRankFeatureFunctionSigmoid]
 
 | Name | Type | Description |
 | - | - | - |

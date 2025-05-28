@@ -1,4 +1,4 @@
-## Interface `IndicesCreateFromRequest`
+# `IndicesCreateFromRequest` [interface-IndicesCreateFromRequest]
 
 | Name | Type | Description |
 | - | - | - |

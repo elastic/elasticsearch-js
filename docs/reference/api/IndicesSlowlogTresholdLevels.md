@@ -1,4 +1,4 @@
-## Interface `IndicesSlowlogTresholdLevels`
+# `IndicesSlowlogTresholdLevels` [interface-IndicesSlowlogTresholdLevels]
 
 | Name | Type | Description |
 | - | - | - |

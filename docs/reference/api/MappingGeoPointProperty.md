@@ -1,4 +1,4 @@
-## Interface `MappingGeoPointProperty`
+# `MappingGeoPointProperty` [interface-MappingGeoPointProperty]
 
 | Name | Type | Description |
 | - | - | - |

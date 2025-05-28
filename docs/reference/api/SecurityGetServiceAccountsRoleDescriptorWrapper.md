@@ -1,4 +1,4 @@
-## Interface `SecurityGetServiceAccountsRoleDescriptorWrapper`
+# `SecurityGetServiceAccountsRoleDescriptorWrapper` [interface-SecurityGetServiceAccountsRoleDescriptorWrapper]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsExtendedStatsAggregation`
+# `AggregationsExtendedStatsAggregation` [interface-AggregationsExtendedStatsAggregation]
 
 | Name | Type | Description |
 | - | - | - |

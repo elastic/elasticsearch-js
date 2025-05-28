@@ -1,4 +1,4 @@
-## Interface `EsqlAsyncEsqlResult`
+# `EsqlAsyncEsqlResult` [interface-EsqlAsyncEsqlResult]
 
 | Name | Type | Description |
 | - | - | - |

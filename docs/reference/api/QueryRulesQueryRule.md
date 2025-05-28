@@ -1,4 +1,4 @@
-## Interface `QueryRulesQueryRule`
+# `QueryRulesQueryRule` [interface-QueryRulesQueryRule]
 
 | Name | Type | Description |
 | - | - | - |

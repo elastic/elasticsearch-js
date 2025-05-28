@@ -1,4 +1,4 @@
-## Interface `AnalysisGalicianAnalyzer`
+# `AnalysisGalicianAnalyzer` [interface-AnalysisGalicianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

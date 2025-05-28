@@ -1,4 +1,4 @@
-## Interface `MlPutDatafeedRequest`
+# `MlPutDatafeedRequest` [interface-MlPutDatafeedRequest]
 
 | Name | Type | Description |
 | - | - | - |

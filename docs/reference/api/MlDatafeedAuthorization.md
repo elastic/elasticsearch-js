@@ -1,4 +1,4 @@
-## Interface `MlDatafeedAuthorization`
+# `MlDatafeedAuthorization` [interface-MlDatafeedAuthorization]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlForecastResponse`
+# `MlForecastResponse` [interface-MlForecastResponse]
 
 | Name | Type | Description |
 | - | - | - |

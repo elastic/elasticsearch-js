@@ -1,4 +1,4 @@
-## Interface `IndicesDataStreamTimestampField`
+# `IndicesDataStreamTimestampField` [interface-IndicesDataStreamTimestampField]
 
 | Name | Type | Description |
 | - | - | - |

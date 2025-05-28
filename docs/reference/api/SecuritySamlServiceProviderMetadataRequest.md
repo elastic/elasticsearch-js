@@ -1,4 +1,4 @@
-## Interface `SecuritySamlServiceProviderMetadataRequest`
+# `SecuritySamlServiceProviderMetadataRequest` [interface-SecuritySamlServiceProviderMetadataRequest]
 
 | Name | Type | Description |
 | - | - | - |

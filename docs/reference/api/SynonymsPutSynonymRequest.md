@@ -1,4 +1,4 @@
-## Interface `SynonymsPutSynonymRequest`
+# `SynonymsPutSynonymRequest` [interface-SynonymsPutSynonymRequest]
 
 | Name | Type | Description |
 | - | - | - |

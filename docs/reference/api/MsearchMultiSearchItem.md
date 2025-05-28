@@ -1,4 +1,4 @@
-## Interface `MsearchMultiSearchItem`
+# `MsearchMultiSearchItem` [interface-MsearchMultiSearchItem]
 
 | Name | Type | Description |
 | - | - | - |

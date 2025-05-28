@@ -1,4 +1,4 @@
-## Interface `MlGetTrainedModelsStatsRequest`
+# `MlGetTrainedModelsStatsRequest` [interface-MlGetTrainedModelsStatsRequest]
 
 | Name | Type | Description |
 | - | - | - |

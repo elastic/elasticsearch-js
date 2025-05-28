@@ -1,4 +1,4 @@
-## Interface `IndicesPutMappingRequest`
+# `IndicesPutMappingRequest` [interface-IndicesPutMappingRequest]
 
 | Name | Type | Description |
 | - | - | - |

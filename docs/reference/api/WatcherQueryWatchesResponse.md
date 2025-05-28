@@ -1,4 +1,4 @@
-## Interface `WatcherQueryWatchesResponse`
+# `WatcherQueryWatchesResponse` [interface-WatcherQueryWatchesResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoScript`
+# `NodesInfoNodeInfoScript` [interface-NodesInfoNodeInfoScript]
 
 | Name | Type | Description |
 | - | - | - |

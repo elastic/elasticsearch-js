@@ -1,4 +1,4 @@
-## Interface `MlInferenceConfigUpdateContainer`
+# `MlInferenceConfigUpdateContainer` [interface-MlInferenceConfigUpdateContainer]
 
 | Name | Type | Description |
 | - | - | - |

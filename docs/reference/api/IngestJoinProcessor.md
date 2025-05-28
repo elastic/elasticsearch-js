@@ -1,4 +1,4 @@
-## Interface `IngestJoinProcessor`
+# `IngestJoinProcessor` [interface-IngestJoinProcessor]
 
 | Name | Type | Description |
 | - | - | - |

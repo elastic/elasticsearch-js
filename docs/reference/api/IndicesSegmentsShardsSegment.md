@@ -1,4 +1,4 @@
-## Interface `IndicesSegmentsShardsSegment`
+# `IndicesSegmentsShardsSegment` [interface-IndicesSegmentsShardsSegment]
 
 | Name | Type | Description |
 | - | - | - |

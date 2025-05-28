@@ -1,4 +1,4 @@
-## Interface `MlTrainedModelAssignmentRoutingTable`
+# `MlTrainedModelAssignmentRoutingTable` [interface-MlTrainedModelAssignmentRoutingTable]
 
 | Name | Type | Description |
 | - | - | - |

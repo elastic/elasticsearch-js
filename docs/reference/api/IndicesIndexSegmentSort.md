@@ -1,4 +1,4 @@
-## Interface `IndicesIndexSegmentSort`
+# `IndicesIndexSegmentSort` [interface-IndicesIndexSegmentSort]
 
 | Name | Type | Description |
 | - | - | - |

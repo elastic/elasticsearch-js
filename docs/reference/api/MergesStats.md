@@ -1,4 +1,4 @@
-## Interface `MergesStats`
+# `MergesStats` [interface-MergesStats]
 
 | Name | Type | Description |
 | - | - | - |

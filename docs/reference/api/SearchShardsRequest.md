@@ -1,4 +1,4 @@
-## Interface `SearchShardsRequest`
+# `SearchShardsRequest` [interface-SearchShardsRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `ConnectorFilteringAdvancedSnippet`
+# `ConnectorFilteringAdvancedSnippet` [interface-ConnectorFilteringAdvancedSnippet]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `WatcherArrayCompareOpParams`
+# `WatcherArrayCompareOpParams` [interface-WatcherArrayCompareOpParams]
 
 | Name | Type | Description |
 | - | - | - |

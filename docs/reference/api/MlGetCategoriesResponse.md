@@ -1,4 +1,4 @@
-## Interface `MlGetCategoriesResponse`
+# `MlGetCategoriesResponse` [interface-MlGetCategoriesResponse]
 
 | Name | Type | Description |
 | - | - | - |

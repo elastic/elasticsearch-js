@@ -1,4 +1,4 @@
-## Interface `XpackUsageWatcherActions`
+# `XpackUsageWatcherActions` [interface-XpackUsageWatcherActions]
 
 | Name | Type | Description |
 | - | - | - |

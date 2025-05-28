@@ -1,4 +1,4 @@
-## Interface `SearchAggregationProfileDebug`
+# `SearchAggregationProfileDebug` [interface-SearchAggregationProfileDebug]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IlmShrinkAction`
+# `IlmShrinkAction` [interface-IlmShrinkAction]
 
 | Name | Type | Description |
 | - | - | - |

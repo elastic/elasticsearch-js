@@ -1,4 +1,4 @@
-## Interface `SecurityCreateServiceTokenResponse`
+# `SecurityCreateServiceTokenResponse` [interface-SecurityCreateServiceTokenResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SnapshotRepositoryBase`
+# `SnapshotRepositoryBase` [interface-SnapshotRepositoryBase]
 
 | Name | Type | Description |
 | - | - | - |

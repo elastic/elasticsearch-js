@@ -1,4 +1,4 @@
-## Interface `TaskFailure`
+# `TaskFailure` [interface-TaskFailure]
 
 | Name | Type | Description |
 | - | - | - |

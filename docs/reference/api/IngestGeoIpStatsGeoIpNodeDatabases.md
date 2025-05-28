@@ -1,4 +1,4 @@
-## Interface `IngestGeoIpStatsGeoIpNodeDatabases`
+# `IngestGeoIpStatsGeoIpNodeDatabases` [interface-IngestGeoIpStatsGeoIpNodeDatabases]
 
 | Name | Type | Description |
 | - | - | - |

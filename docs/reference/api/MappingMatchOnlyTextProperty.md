@@ -1,4 +1,4 @@
-## Interface `MappingMatchOnlyTextProperty`
+# `MappingMatchOnlyTextProperty` [interface-MappingMatchOnlyTextProperty]
 
 | Name | Type | Description |
 | - | - | - |

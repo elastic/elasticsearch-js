@@ -1,4 +1,4 @@
-## Interface `MlDataframeAnalyticsStatsMemoryUsage`
+# `MlDataframeAnalyticsStatsMemoryUsage` [interface-MlDataframeAnalyticsStatsMemoryUsage]
 
 | Name | Type | Description |
 | - | - | - |

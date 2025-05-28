@@ -1,4 +1,4 @@
-## Interface `AutoscalingGetAutoscalingPolicyRequest`
+# `AutoscalingGetAutoscalingPolicyRequest` [interface-AutoscalingGetAutoscalingPolicyRequest]
 
 | Name | Type | Description |
 | - | - | - |

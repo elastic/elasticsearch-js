@@ -1,4 +1,4 @@
-## Interface `InferenceAlibabaCloudTaskSettings`
+# `InferenceAlibabaCloudTaskSettings` [interface-InferenceAlibabaCloudTaskSettings]
 
 | Name | Type | Description |
 | - | - | - |

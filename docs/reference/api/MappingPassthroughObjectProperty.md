@@ -1,4 +1,4 @@
-## Interface `MappingPassthroughObjectProperty`
+# `MappingPassthroughObjectProperty` [interface-MappingPassthroughObjectProperty]
 
 | Name | Type | Description |
 | - | - | - |

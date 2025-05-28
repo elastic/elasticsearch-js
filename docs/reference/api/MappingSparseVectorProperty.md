@@ -1,4 +1,4 @@
-## Interface `MappingSparseVectorProperty`
+# `MappingSparseVectorProperty` [interface-MappingSparseVectorProperty]
 
 | Name | Type | Description |
 | - | - | - |

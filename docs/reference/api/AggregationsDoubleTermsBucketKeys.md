@@ -1,4 +1,4 @@
-## Interface `AggregationsDoubleTermsBucketKeys`
+# `AggregationsDoubleTermsBucketKeys` [interface-AggregationsDoubleTermsBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

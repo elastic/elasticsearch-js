@@ -1,4 +1,4 @@
-## Interface `AnalysisNoriPartOfSpeechTokenFilter`
+# `AnalysisNoriPartOfSpeechTokenFilter` [interface-AnalysisNoriPartOfSpeechTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `RollupFieldMetric`
+# `RollupFieldMetric` [interface-RollupFieldMetric]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `WatcherEmailAttachmentContainer`
+# `WatcherEmailAttachmentContainer` [interface-WatcherEmailAttachmentContainer]
 
 | Name | Type | Description |
 | - | - | - |

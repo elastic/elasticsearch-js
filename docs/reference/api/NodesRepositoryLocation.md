@@ -1,4 +1,4 @@
-## Interface `NodesRepositoryLocation`
+# `NodesRepositoryLocation` [interface-NodesRepositoryLocation]
 
 | Name | Type | Description |
 | - | - | - |

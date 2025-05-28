@@ -1,4 +1,4 @@
-## Interface `AggregationsTermsPartition`
+# `AggregationsTermsPartition` [interface-AggregationsTermsPartition]
 
 | Name | Type | Description |
 | - | - | - |

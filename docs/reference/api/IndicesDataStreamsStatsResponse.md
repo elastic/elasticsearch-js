@@ -1,4 +1,4 @@
-## Interface `IndicesDataStreamsStatsResponse`
+# `IndicesDataStreamsStatsResponse` [interface-IndicesDataStreamsStatsResponse]
 
 | Name | Type | Description |
 | - | - | - |

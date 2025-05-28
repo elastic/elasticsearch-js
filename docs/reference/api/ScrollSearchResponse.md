@@ -1,4 +1,4 @@
-## Interface `ScrollSearchResponse`
+# `ScrollSearchResponse` [interface-ScrollSearchResponse]
 
 | Name | Type | Description |
 | - | - | - |

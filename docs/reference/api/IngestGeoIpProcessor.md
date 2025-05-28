@@ -1,4 +1,4 @@
-## Interface `IngestGeoIpProcessor`
+# `IngestGeoIpProcessor` [interface-IngestGeoIpProcessor]
 
 | Name | Type | Description |
 | - | - | - |

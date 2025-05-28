@@ -1,4 +1,4 @@
-## Interface `MappingKeywordProperty`
+# `MappingKeywordProperty` [interface-MappingKeywordProperty]
 
 | Name | Type | Description |
 | - | - | - |

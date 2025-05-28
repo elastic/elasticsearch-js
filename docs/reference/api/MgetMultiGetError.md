@@ -1,4 +1,4 @@
-## Interface `MgetMultiGetError`
+# `MgetMultiGetError` [interface-MgetMultiGetError]
 
 | Name | Type | Description |
 | - | - | - |

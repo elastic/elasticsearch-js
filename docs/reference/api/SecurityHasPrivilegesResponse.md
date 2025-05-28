@@ -1,4 +1,4 @@
-## Interface `SecurityHasPrivilegesResponse`
+# `SecurityHasPrivilegesResponse` [interface-SecurityHasPrivilegesResponse]
 
 | Name | Type | Description |
 | - | - | - |

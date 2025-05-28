@@ -1,4 +1,4 @@
-## Interface `RrfRank`
+# `RrfRank` [interface-RrfRank]
 
 | Name | Type | Description |
 | - | - | - |

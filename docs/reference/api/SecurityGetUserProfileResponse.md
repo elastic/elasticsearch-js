@@ -1,4 +1,4 @@
-## Interface `SecurityGetUserProfileResponse`
+# `SecurityGetUserProfileResponse` [interface-SecurityGetUserProfileResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `CcrGetAutoFollowPatternAutoFollowPattern`
+# `CcrGetAutoFollowPatternAutoFollowPattern` [interface-CcrGetAutoFollowPatternAutoFollowPattern]
 
 | Name | Type | Description |
 | - | - | - |

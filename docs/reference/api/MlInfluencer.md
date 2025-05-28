@@ -1,4 +1,4 @@
-## Interface `MlInfluencer`
+# `MlInfluencer` [interface-MlInfluencer]
 
 | Name | Type | Description |
 | - | - | - |

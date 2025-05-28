@@ -1,4 +1,4 @@
-## Interface `AggregationsHoltWintersModelSettings`
+# `AggregationsHoltWintersModelSettings` [interface-AggregationsHoltWintersModelSettings]
 
 | Name | Type | Description |
 | - | - | - |

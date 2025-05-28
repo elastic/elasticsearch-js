@@ -1,4 +1,4 @@
-## Interface `IndicesRefreshRequest`
+# `IndicesRefreshRequest` [interface-IndicesRefreshRequest]
 
 | Name | Type | Description |
 | - | - | - |

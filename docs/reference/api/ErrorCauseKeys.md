@@ -1,4 +1,4 @@
-## Interface `ErrorCauseKeys`
+# `ErrorCauseKeys` [interface-ErrorCauseKeys]
 
 | Name | Type | Description |
 | - | - | - |

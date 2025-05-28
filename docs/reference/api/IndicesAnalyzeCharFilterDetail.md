@@ -1,4 +1,4 @@
-## Interface `IndicesAnalyzeCharFilterDetail`
+# `IndicesAnalyzeCharFilterDetail` [interface-IndicesAnalyzeCharFilterDetail]
 
 | Name | Type | Description |
 | - | - | - |

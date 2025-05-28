@@ -1,4 +1,4 @@
-## Interface `EnrichPutPolicyRequest`
+# `EnrichPutPolicyRequest` [interface-EnrichPutPolicyRequest]
 
 | Name | Type | Description |
 | - | - | - |

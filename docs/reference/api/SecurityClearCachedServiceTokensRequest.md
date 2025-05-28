@@ -1,4 +1,4 @@
-## Interface `SecurityClearCachedServiceTokensRequest`
+# `SecurityClearCachedServiceTokensRequest` [interface-SecurityClearCachedServiceTokensRequest]
 
 | Name | Type | Description |
 | - | - | - |

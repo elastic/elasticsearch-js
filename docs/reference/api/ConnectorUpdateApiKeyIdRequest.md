@@ -1,4 +1,4 @@
-## Interface `ConnectorUpdateApiKeyIdRequest`
+# `ConnectorUpdateApiKeyIdRequest` [interface-ConnectorUpdateApiKeyIdRequest]
 
 | Name | Type | Description |
 | - | - | - |

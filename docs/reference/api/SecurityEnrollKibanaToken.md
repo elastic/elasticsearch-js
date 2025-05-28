@@ -1,4 +1,4 @@
-## Interface `SecurityEnrollKibanaToken`
+# `SecurityEnrollKibanaToken` [interface-SecurityEnrollKibanaToken]
 
 | Name | Type | Description |
 | - | - | - |

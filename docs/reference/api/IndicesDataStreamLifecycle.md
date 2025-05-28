@@ -1,4 +1,4 @@
-## Interface `IndicesDataStreamLifecycle`
+# `IndicesDataStreamLifecycle` [interface-IndicesDataStreamLifecycle]
 
 | Name | Type | Description |
 | - | - | - |

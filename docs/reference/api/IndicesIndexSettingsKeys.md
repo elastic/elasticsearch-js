@@ -1,4 +1,4 @@
-## Interface `IndicesIndexSettingsKeys`
+# `IndicesIndexSettingsKeys` [interface-IndicesIndexSettingsKeys]
 
 | Name | Type | Description |
 | - | - | - |

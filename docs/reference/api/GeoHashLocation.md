@@ -1,4 +1,4 @@
-## Interface `GeoHashLocation`
+# `GeoHashLocation` [interface-GeoHashLocation]
 
 | Name | Type | Description |
 | - | - | - |

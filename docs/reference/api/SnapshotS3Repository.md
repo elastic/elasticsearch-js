@@ -1,4 +1,4 @@
-## Interface `SnapshotS3Repository`
+# `SnapshotS3Repository` [interface-SnapshotS3Repository]
 
 | Name | Type | Description |
 | - | - | - |

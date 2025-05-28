@@ -1,4 +1,4 @@
-## Interface `SecurityGetServiceCredentialsResponse`
+# `SecurityGetServiceCredentialsResponse` [interface-SecurityGetServiceCredentialsResponse]
 
 | Name | Type | Description |
 | - | - | - |

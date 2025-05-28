@@ -1,4 +1,4 @@
-## Interface `AggregationsGeoHexGridAggregate`
+# `AggregationsGeoHexGridAggregate` [interface-AggregationsGeoHexGridAggregate]
 
 | Name | Type | Description |
 | - | - | - |

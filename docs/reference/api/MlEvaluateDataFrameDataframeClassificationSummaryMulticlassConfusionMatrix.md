@@ -1,4 +1,4 @@
-## Interface `MlEvaluateDataFrameDataframeClassificationSummaryMulticlassConfusionMatrix`
+# `MlEvaluateDataFrameDataframeClassificationSummaryMulticlassConfusionMatrix` [interface-MlEvaluateDataFrameDataframeClassificationSummaryMulticlassConfusionMatrix]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesMappingLimitSettingsDepth`
+# `IndicesMappingLimitSettingsDepth` [interface-IndicesMappingLimitSettingsDepth]
 
 | Name | Type | Description |
 | - | - | - |

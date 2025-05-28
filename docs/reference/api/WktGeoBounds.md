@@ -1,4 +1,4 @@
-## Interface `WktGeoBounds`
+# `WktGeoBounds` [interface-WktGeoBounds]
 
 | Name | Type | Description |
 | - | - | - |

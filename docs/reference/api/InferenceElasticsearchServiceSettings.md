@@ -1,4 +1,4 @@
-## Interface `InferenceElasticsearchServiceSettings`
+# `InferenceElasticsearchServiceSettings` [interface-InferenceElasticsearchServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

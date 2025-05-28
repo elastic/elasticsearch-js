@@ -1,4 +1,4 @@
-## Interface `StoreStats`
+# `StoreStats` [interface-StoreStats]
 
 | Name | Type | Description |
 | - | - | - |

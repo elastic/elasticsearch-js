@@ -1,4 +1,4 @@
-## Interface `MlPutTrainedModelInput`
+# `MlPutTrainedModelInput` [interface-MlPutTrainedModelInput]
 
 | Name | Type | Description |
 | - | - | - |

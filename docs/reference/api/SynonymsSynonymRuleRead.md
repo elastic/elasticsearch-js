@@ -1,4 +1,4 @@
-## Interface `SynonymsSynonymRuleRead`
+# `SynonymsSynonymRuleRead` [interface-SynonymsSynonymRuleRead]
 
 | Name | Type | Description |
 | - | - | - |

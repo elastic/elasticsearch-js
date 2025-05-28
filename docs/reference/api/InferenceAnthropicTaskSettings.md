@@ -1,4 +1,4 @@
-## Interface `InferenceAnthropicTaskSettings`
+# `InferenceAnthropicTaskSettings` [interface-InferenceAnthropicTaskSettings]
 
 | Name | Type | Description |
 | - | - | - |

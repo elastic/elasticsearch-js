@@ -1,4 +1,4 @@
-## Interface `QueryDslWeightedTokensQuery`
+# `QueryDslWeightedTokensQuery` [interface-QueryDslWeightedTokensQuery]
 
 | Name | Type | Description |
 | - | - | - |

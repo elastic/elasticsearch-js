@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoIngestDownloader`
+# `NodesInfoNodeInfoIngestDownloader` [interface-NodesInfoNodeInfoIngestDownloader]
 
 | Name | Type | Description |
 | - | - | - |

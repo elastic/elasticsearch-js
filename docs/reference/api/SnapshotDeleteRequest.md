@@ -1,4 +1,4 @@
-## Interface `SnapshotDeleteRequest`
+# `SnapshotDeleteRequest` [interface-SnapshotDeleteRequest]
 
 | Name | Type | Description |
 | - | - | - |

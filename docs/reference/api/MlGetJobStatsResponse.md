@@ -1,4 +1,4 @@
-## Interface `MlGetJobStatsResponse`
+# `MlGetJobStatsResponse` [interface-MlGetJobStatsResponse]
 
 | Name | Type | Description |
 | - | - | - |

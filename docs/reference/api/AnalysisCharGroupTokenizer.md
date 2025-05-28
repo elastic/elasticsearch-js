@@ -1,4 +1,4 @@
-## Interface `AnalysisCharGroupTokenizer`
+# `AnalysisCharGroupTokenizer` [interface-AnalysisCharGroupTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

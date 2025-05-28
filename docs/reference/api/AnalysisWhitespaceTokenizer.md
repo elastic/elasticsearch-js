@@ -1,4 +1,4 @@
-## Interface `AnalysisWhitespaceTokenizer`
+# `AnalysisWhitespaceTokenizer` [interface-AnalysisWhitespaceTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

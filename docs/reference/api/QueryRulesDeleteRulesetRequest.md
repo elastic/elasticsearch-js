@@ -1,4 +1,4 @@
-## Interface `QueryRulesDeleteRulesetRequest`
+# `QueryRulesDeleteRulesetRequest` [interface-QueryRulesDeleteRulesetRequest]
 
 | Name | Type | Description |
 | - | - | - |

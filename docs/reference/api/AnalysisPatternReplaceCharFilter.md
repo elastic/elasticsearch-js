@@ -1,4 +1,4 @@
-## Interface `AnalysisPatternReplaceCharFilter`
+# `AnalysisPatternReplaceCharFilter` [interface-AnalysisPatternReplaceCharFilter]
 
 | Name | Type | Description |
 | - | - | - |

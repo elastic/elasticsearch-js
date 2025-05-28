@@ -1,4 +1,4 @@
-## Interface `IndicesDownsampleConfig`
+# `IndicesDownsampleConfig` [interface-IndicesDownsampleConfig]
 
 | Name | Type | Description |
 | - | - | - |

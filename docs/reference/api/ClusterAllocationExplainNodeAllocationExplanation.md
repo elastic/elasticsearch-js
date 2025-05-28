@@ -1,4 +1,4 @@
-## Interface `ClusterAllocationExplainNodeAllocationExplanation`
+# `ClusterAllocationExplainNodeAllocationExplanation` [interface-ClusterAllocationExplainNodeAllocationExplanation]
 
 | Name | Type | Description |
 | - | - | - |

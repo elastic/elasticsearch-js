@@ -1,4 +1,4 @@
-## Interface `BulkIndexByScrollFailure`
+# `BulkIndexByScrollFailure` [interface-BulkIndexByScrollFailure]
 
 | Name | Type | Description |
 | - | - | - |

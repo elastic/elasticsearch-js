@@ -1,4 +1,4 @@
-## Interface `StoredScript`
+# `StoredScript` [interface-StoredScript]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesStorage`
+# `IndicesStorage` [interface-IndicesStorage]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MappingTextIndexPrefixes`
+# `MappingTextIndexPrefixes` [interface-MappingTextIndexPrefixes]
 
 | Name | Type | Description |
 | - | - | - |

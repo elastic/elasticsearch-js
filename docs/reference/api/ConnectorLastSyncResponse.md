@@ -1,4 +1,4 @@
-## Interface `ConnectorLastSyncResponse`
+# `ConnectorLastSyncResponse` [interface-ConnectorLastSyncResponse]
 
 | Name | Type | Description |
 | - | - | - |

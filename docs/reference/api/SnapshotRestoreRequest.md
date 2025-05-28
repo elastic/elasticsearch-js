@@ -1,4 +1,4 @@
-## Interface `SnapshotRestoreRequest`
+# `SnapshotRestoreRequest` [interface-SnapshotRestoreRequest]
 
 | Name | Type | Description |
 | - | - | - |

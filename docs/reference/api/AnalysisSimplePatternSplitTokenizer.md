@@ -1,4 +1,4 @@
-## Interface `AnalysisSimplePatternSplitTokenizer`
+# `AnalysisSimplePatternSplitTokenizer` [interface-AnalysisSimplePatternSplitTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

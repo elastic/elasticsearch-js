@@ -1,4 +1,4 @@
-## Interface `InferencePutGooglevertexaiRequest`
+# `InferencePutGooglevertexaiRequest` [interface-InferencePutGooglevertexaiRequest]
 
 | Name | Type | Description |
 | - | - | - |

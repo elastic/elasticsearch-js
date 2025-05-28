@@ -1,4 +1,4 @@
-## Interface `HealthReportFileSettingsIndicatorDetails`
+# `HealthReportFileSettingsIndicatorDetails` [interface-HealthReportFileSettingsIndicatorDetails]
 
 | Name | Type | Description |
 | - | - | - |

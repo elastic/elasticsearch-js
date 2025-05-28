@@ -1,4 +1,4 @@
-## Interface `BulkStats`
+# `BulkStats` [interface-BulkStats]
 
 | Name | Type | Description |
 | - | - | - |

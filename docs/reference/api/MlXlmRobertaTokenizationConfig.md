@@ -1,4 +1,4 @@
-## Interface `MlXlmRobertaTokenizationConfig`
+# `MlXlmRobertaTokenizationConfig` [interface-MlXlmRobertaTokenizationConfig]
 
 | Name | Type | Description |
 | - | - | - |

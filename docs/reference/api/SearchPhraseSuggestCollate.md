@@ -1,4 +1,4 @@
-## Interface `SearchPhraseSuggestCollate`
+# `SearchPhraseSuggestCollate` [interface-SearchPhraseSuggestCollate]
 
 | Name | Type | Description |
 | - | - | - |

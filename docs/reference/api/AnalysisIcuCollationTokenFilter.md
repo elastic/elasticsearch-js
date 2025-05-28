@@ -1,4 +1,4 @@
-## Interface `AnalysisIcuCollationTokenFilter`
+# `AnalysisIcuCollationTokenFilter` [interface-AnalysisIcuCollationTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

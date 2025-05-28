@@ -1,4 +1,4 @@
-## Interface `AggregationsInferenceTopClassEntry`
+# `AggregationsInferenceTopClassEntry` [interface-AggregationsInferenceTopClassEntry]
 
 | Name | Type | Description |
 | - | - | - |

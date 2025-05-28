@@ -1,4 +1,4 @@
-## Interface `XpackUsageDataTiers`
+# `XpackUsageDataTiers` [interface-XpackUsageDataTiers]
 
 | Name | Type | Description |
 | - | - | - |

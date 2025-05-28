@@ -1,4 +1,4 @@
-## Interface `SlmPolicy`
+# `SlmPolicy` [interface-SlmPolicy]
 
 | Name | Type | Description |
 | - | - | - |

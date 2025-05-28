@@ -1,4 +1,4 @@
-## Interface `AcknowledgedResponseBase`
+# `AcknowledgedResponseBase` [interface-AcknowledgedResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

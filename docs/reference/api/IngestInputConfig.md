@@ -1,4 +1,4 @@
-## Interface `IngestInputConfig`
+# `IngestInputConfig` [interface-IngestInputConfig]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `ExplainExplanationDetail`
+# `ExplainExplanationDetail` [interface-ExplainExplanationDetail]
 
 | Name | Type | Description |
 | - | - | - |

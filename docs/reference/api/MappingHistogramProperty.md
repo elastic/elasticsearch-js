@@ -1,4 +1,4 @@
-## Interface `MappingHistogramProperty`
+# `MappingHistogramProperty` [interface-MappingHistogramProperty]
 
 | Name | Type | Description |
 | - | - | - |

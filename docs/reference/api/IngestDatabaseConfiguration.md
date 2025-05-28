@@ -1,4 +1,4 @@
-## Interface `IngestDatabaseConfiguration`
+# `IngestDatabaseConfiguration` [interface-IngestDatabaseConfiguration]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `OnDropDocument`
+# `OnDropDocument` [interface-OnDropDocument]
 
 | Name | Type | Description |
 | - | - | - |

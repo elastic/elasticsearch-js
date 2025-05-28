@@ -1,4 +1,4 @@
-## Interface `IngestGetIpLocationDatabaseDatabaseConfigurationMetadata`
+# `IngestGetIpLocationDatabaseDatabaseConfigurationMetadata` [interface-IngestGetIpLocationDatabaseDatabaseConfigurationMetadata]
 
 | Name | Type | Description |
 | - | - | - |

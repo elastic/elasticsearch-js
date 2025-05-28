@@ -1,4 +1,4 @@
-## Interface `ClusterRerouteCommandAllocatePrimaryAction`
+# `ClusterRerouteCommandAllocatePrimaryAction` [interface-ClusterRerouteCommandAllocatePrimaryAction]
 
 | Name | Type | Description |
 | - | - | - |

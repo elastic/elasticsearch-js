@@ -1,4 +1,4 @@
-## Interface `RollupGroupings`
+# `RollupGroupings` [interface-RollupGroupings]
 
 | Name | Type | Description |
 | - | - | - |

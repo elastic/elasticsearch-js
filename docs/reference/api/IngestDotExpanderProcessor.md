@@ -1,4 +1,4 @@
-## Interface `IngestDotExpanderProcessor`
+# `IngestDotExpanderProcessor` [interface-IngestDotExpanderProcessor]
 
 | Name | Type | Description |
 | - | - | - |

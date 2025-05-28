@@ -1,4 +1,4 @@
-## Interface `SearchFetchProfileBreakdown`
+# `SearchFetchProfileBreakdown` [interface-SearchFetchProfileBreakdown]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesGetDataLifecycleStatsDataStreamStats`
+# `IndicesGetDataLifecycleStatsDataStreamStats` [interface-IndicesGetDataLifecycleStatsDataStreamStats]
 
 | Name | Type | Description |
 | - | - | - |

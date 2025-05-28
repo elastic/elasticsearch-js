@@ -1,4 +1,4 @@
-## Interface `ClusterStatsCCSUsageTimeValue`
+# `ClusterStatsCCSUsageTimeValue` [interface-ClusterStatsCCSUsageTimeValue]
 
 | Name | Type | Description |
 | - | - | - |

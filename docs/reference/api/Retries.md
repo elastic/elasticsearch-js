@@ -1,4 +1,4 @@
-## Interface `Retries`
+# `Retries` [interface-Retries]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AnalysisGermanAnalyzer`
+# `AnalysisGermanAnalyzer` [interface-AnalysisGermanAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

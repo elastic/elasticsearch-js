@@ -1,4 +1,4 @@
-## Interface `SnapshotS3RepositorySettings`
+# `SnapshotS3RepositorySettings` [interface-SnapshotS3RepositorySettings]
 
 | Name | Type | Description |
 | - | - | - |

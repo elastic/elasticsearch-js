@@ -1,4 +1,4 @@
-## Interface `MlChunkingConfig`
+# `MlChunkingConfig` [interface-MlChunkingConfig]
 
 | Name | Type | Description |
 | - | - | - |

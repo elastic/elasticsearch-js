@@ -1,4 +1,4 @@
-## Interface `IndicesIndexingPressure`
+# `IndicesIndexingPressure` [interface-IndicesIndexingPressure]
 
 | Name | Type | Description |
 | - | - | - |

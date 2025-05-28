@@ -1,4 +1,4 @@
-## Interface `IndicesResolveIndexRequest`
+# `IndicesResolveIndexRequest` [interface-IndicesResolveIndexRequest]
 
 | Name | Type | Description |
 | - | - | - |

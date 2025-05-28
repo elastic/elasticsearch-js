@@ -1,4 +1,4 @@
-## Interface `MlPutTrainedModelRequest`
+# `MlPutTrainedModelRequest` [interface-MlPutTrainedModelRequest]
 
 | Name | Type | Description |
 | - | - | - |

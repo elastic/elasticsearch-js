@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoAggregation`
+# `NodesInfoNodeInfoAggregation` [interface-NodesInfoNodeInfoAggregation]
 
 | Name | Type | Description |
 | - | - | - |

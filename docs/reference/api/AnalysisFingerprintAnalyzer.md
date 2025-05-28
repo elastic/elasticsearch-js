@@ -1,4 +1,4 @@
-## Interface `AnalysisFingerprintAnalyzer`
+# `AnalysisFingerprintAnalyzer` [interface-AnalysisFingerprintAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

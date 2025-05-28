@@ -1,4 +1,4 @@
-## Interface `NodesStatsRequest`
+# `NodesStatsRequest` [interface-NodesStatsRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IlmGetLifecycleRequest`
+# `IlmGetLifecycleRequest` [interface-IlmGetLifecycleRequest]
 
 | Name | Type | Description |
 | - | - | - |

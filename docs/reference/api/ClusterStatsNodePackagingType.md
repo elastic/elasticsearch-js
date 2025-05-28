@@ -1,4 +1,4 @@
-## Interface `ClusterStatsNodePackagingType`
+# `ClusterStatsNodePackagingType` [interface-ClusterStatsNodePackagingType]
 
 | Name | Type | Description |
 | - | - | - |

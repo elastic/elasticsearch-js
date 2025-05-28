@@ -1,19 +1,19 @@
-## `License`
+# `License` [class-License]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new License(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-License]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-License]
 
 | Name | Signature | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AsyncSearchDeleteRequest`
+# `AsyncSearchDeleteRequest` [interface-AsyncSearchDeleteRequest]
 
 | Name | Type | Description |
 | - | - | - |

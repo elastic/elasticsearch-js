@@ -1,4 +1,4 @@
-## Interface `AggregationsEwmaModelSettings`
+# `AggregationsEwmaModelSettings` [interface-AggregationsEwmaModelSettings]
 
 | Name | Type | Description |
 | - | - | - |

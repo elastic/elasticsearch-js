@@ -1,4 +1,4 @@
-## Interface `WriteResponseBase`
+# `WriteResponseBase` [interface-WriteResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

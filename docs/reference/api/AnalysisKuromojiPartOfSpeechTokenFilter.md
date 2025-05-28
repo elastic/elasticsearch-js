@@ -1,4 +1,4 @@
-## Interface `AnalysisKuromojiPartOfSpeechTokenFilter`
+# `AnalysisKuromojiPartOfSpeechTokenFilter` [interface-AnalysisKuromojiPartOfSpeechTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

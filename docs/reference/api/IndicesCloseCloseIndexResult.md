@@ -1,4 +1,4 @@
-## Interface `IndicesCloseCloseIndexResult`
+# `IndicesCloseCloseIndexResult` [interface-IndicesCloseCloseIndexResult]
 
 | Name | Type | Description |
 | - | - | - |

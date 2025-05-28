@@ -1,4 +1,4 @@
-## Interface `XpackUsageMlInferenceIngestProcessorCount`
+# `XpackUsageMlInferenceIngestProcessorCount` [interface-XpackUsageMlInferenceIngestProcessorCount]
 
 | Name | Type | Description |
 | - | - | - |

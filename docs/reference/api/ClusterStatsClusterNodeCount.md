@@ -1,4 +1,4 @@
-## Interface `ClusterStatsClusterNodeCount`
+# `ClusterStatsClusterNodeCount` [interface-ClusterStatsClusterNodeCount]
 
 | Name | Type | Description |
 | - | - | - |

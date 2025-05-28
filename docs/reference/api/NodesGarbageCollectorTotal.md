@@ -1,4 +1,4 @@
-## Interface `NodesGarbageCollectorTotal`
+# `NodesGarbageCollectorTotal` [interface-NodesGarbageCollectorTotal]
 
 | Name | Type | Description |
 | - | - | - |

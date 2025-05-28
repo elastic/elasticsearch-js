@@ -1,19 +1,19 @@
-## `Security`
+# `Security` [class-Security]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Security(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Security]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Security]
 
 | Name | Signature | Description |
 | - | - | - |

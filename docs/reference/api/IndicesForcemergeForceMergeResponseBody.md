@@ -1,4 +1,4 @@
-## Interface `IndicesForcemergeForceMergeResponseBody`
+# `IndicesForcemergeForceMergeResponseBody` [interface-IndicesForcemergeForceMergeResponseBody]
 
 | Name | Type | Description |
 | - | - | - |

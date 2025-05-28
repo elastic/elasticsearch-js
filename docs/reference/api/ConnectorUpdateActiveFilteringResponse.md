@@ -1,4 +1,4 @@
-## Interface `ConnectorUpdateActiveFilteringResponse`
+# `ConnectorUpdateActiveFilteringResponse` [interface-ConnectorUpdateActiveFilteringResponse]
 
 | Name | Type | Description |
 | - | - | - |

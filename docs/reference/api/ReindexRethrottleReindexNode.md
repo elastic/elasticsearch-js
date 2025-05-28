@@ -1,4 +1,4 @@
-## Interface `ReindexRethrottleReindexNode`
+# `ReindexRethrottleReindexNode` [interface-ReindexRethrottleReindexNode]
 
 | Name | Type | Description |
 | - | - | - |

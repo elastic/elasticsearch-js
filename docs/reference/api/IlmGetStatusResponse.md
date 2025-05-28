@@ -1,4 +1,4 @@
-## Interface `IlmGetStatusResponse`
+# `IlmGetStatusResponse` [interface-IlmGetStatusResponse]
 
 | Name | Type | Description |
 | - | - | - |

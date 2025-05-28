@@ -1,4 +1,4 @@
-## Interface `QueryDslPrefixQuery`
+# `QueryDslPrefixQuery` [interface-QueryDslPrefixQuery]
 
 | Name | Type | Description |
 | - | - | - |

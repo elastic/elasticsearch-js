@@ -1,4 +1,4 @@
-## Interface `GraphSampleDiversity`
+# `GraphSampleDiversity` [interface-GraphSampleDiversity]
 
 | Name | Type | Description |
 | - | - | - |

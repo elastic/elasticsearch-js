@@ -1,4 +1,4 @@
-## Interface `NodesCgroup`
+# `NodesCgroup` [interface-NodesCgroup]
 
 | Name | Type | Description |
 | - | - | - |

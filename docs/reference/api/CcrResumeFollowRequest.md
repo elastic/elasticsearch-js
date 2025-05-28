@@ -1,4 +1,4 @@
-## Interface `CcrResumeFollowRequest`
+# `CcrResumeFollowRequest` [interface-CcrResumeFollowRequest]
 
 | Name | Type | Description |
 | - | - | - |

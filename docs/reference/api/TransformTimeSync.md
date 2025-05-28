@@ -1,4 +1,4 @@
-## Interface `TransformTimeSync`
+# `TransformTimeSync` [interface-TransformTimeSync]
 
 | Name | Type | Description |
 | - | - | - |

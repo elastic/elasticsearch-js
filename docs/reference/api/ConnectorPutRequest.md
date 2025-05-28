@@ -1,4 +1,4 @@
-## Interface `ConnectorPutRequest`
+# `ConnectorPutRequest` [interface-ConnectorPutRequest]
 
 | Name | Type | Description |
 | - | - | - |

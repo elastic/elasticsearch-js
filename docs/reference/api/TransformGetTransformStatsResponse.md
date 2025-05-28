@@ -1,4 +1,4 @@
-## Interface `TransformGetTransformStatsResponse`
+# `TransformGetTransformStatsResponse` [interface-TransformGetTransformStatsResponse]
 
 | Name | Type | Description |
 | - | - | - |

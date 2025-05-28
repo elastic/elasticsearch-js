@@ -1,4 +1,4 @@
-## Interface `EsqlEsqlClusterInfo`
+# `EsqlEsqlClusterInfo` [interface-EsqlEsqlClusterInfo]
 
 | Name | Type | Description |
 | - | - | - |

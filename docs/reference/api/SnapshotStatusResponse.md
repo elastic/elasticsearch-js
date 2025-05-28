@@ -1,4 +1,4 @@
-## Interface `SnapshotStatusResponse`
+# `SnapshotStatusResponse` [interface-SnapshotStatusResponse]
 
 | Name | Type | Description |
 | - | - | - |

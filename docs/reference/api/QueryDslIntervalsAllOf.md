@@ -1,4 +1,4 @@
-## Interface `QueryDslIntervalsAllOf`
+# `QueryDslIntervalsAllOf` [interface-QueryDslIntervalsAllOf]
 
 | Name | Type | Description |
 | - | - | - |

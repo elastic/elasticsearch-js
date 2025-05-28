@@ -1,4 +1,4 @@
-## Interface `AggregationsMultiBucketBase`
+# `AggregationsMultiBucketBase` [interface-AggregationsMultiBucketBase]
 
 | Name | Type | Description |
 | - | - | - |

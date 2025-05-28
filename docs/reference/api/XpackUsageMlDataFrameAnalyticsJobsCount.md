@@ -1,4 +1,4 @@
-## Interface `XpackUsageMlDataFrameAnalyticsJobsCount`
+# `XpackUsageMlDataFrameAnalyticsJobsCount` [interface-XpackUsageMlDataFrameAnalyticsJobsCount]
 
 | Name | Type | Description |
 | - | - | - |

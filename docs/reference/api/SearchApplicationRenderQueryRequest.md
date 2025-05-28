@@ -1,4 +1,4 @@
-## Interface `SearchApplicationRenderQueryRequest`
+# `SearchApplicationRenderQueryRequest` [interface-SearchApplicationRenderQueryRequest]
 
 | Name | Type | Description |
 | - | - | - |

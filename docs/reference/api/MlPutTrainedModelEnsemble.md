@@ -1,4 +1,4 @@
-## Interface `MlPutTrainedModelEnsemble`
+# `MlPutTrainedModelEnsemble` [interface-MlPutTrainedModelEnsemble]
 
 | Name | Type | Description |
 | - | - | - |

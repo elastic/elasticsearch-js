@@ -1,4 +1,4 @@
-## Interface `IlmRemovePolicyResponse`
+# `IlmRemovePolicyResponse` [interface-IlmRemovePolicyResponse]
 
 | Name | Type | Description |
 | - | - | - |

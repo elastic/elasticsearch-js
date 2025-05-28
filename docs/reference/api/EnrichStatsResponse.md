@@ -1,4 +1,4 @@
-## Interface `EnrichStatsResponse`
+# `EnrichStatsResponse` [interface-EnrichStatsResponse]
 
 | Name | Type | Description |
 | - | - | - |

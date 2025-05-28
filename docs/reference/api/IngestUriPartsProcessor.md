@@ -1,4 +1,4 @@
-## Interface `IngestUriPartsProcessor`
+# `IngestUriPartsProcessor` [interface-IngestUriPartsProcessor]
 
 | Name | Type | Description |
 | - | - | - |

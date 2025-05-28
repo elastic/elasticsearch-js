@@ -1,4 +1,4 @@
-## Interface `ReindexRethrottleReindexTask`
+# `ReindexRethrottleReindexTask` [interface-ReindexRethrottleReindexTask]
 
 | Name | Type | Description |
 | - | - | - |

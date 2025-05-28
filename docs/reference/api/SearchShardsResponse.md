@@ -1,4 +1,4 @@
-## Interface `SearchShardsResponse`
+# `SearchShardsResponse` [interface-SearchShardsResponse]
 
 | Name | Type | Description |
 | - | - | - |

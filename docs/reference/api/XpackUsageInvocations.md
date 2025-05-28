@@ -1,4 +1,4 @@
-## Interface `XpackUsageInvocations`
+# `XpackUsageInvocations` [interface-XpackUsageInvocations]
 
 | Name | Type | Description |
 | - | - | - |

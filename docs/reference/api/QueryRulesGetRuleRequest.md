@@ -1,4 +1,4 @@
-## Interface `QueryRulesGetRuleRequest`
+# `QueryRulesGetRuleRequest` [interface-QueryRulesGetRuleRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `QueryDslUntypedDistanceFeatureQuery`
+# `QueryDslUntypedDistanceFeatureQuery` [interface-QueryDslUntypedDistanceFeatureQuery]
 
 | Name | Type | Description |
 | - | - | - |

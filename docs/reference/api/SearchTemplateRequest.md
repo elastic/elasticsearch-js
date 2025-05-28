@@ -1,4 +1,4 @@
-## Interface `SearchTemplateRequest`
+# `SearchTemplateRequest` [interface-SearchTemplateRequest]
 
 | Name | Type | Description |
 | - | - | - |

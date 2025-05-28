@@ -1,4 +1,4 @@
-## Interface `AggregationsIpPrefixBucketKeys`
+# `AggregationsIpPrefixBucketKeys` [interface-AggregationsIpPrefixBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

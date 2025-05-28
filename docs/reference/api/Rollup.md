@@ -1,19 +1,19 @@
-## `Rollup`
+# `Rollup` [class-Rollup]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Rollup(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Rollup]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Rollup]
 
 | Name | Signature | Description |
 | - | - | - |

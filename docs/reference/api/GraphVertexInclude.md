@@ -1,4 +1,4 @@
-## Interface `GraphVertexInclude`
+# `GraphVertexInclude` [interface-GraphVertexInclude]
 
 | Name | Type | Description |
 | - | - | - |

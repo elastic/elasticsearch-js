@@ -1,4 +1,4 @@
-## Interface `IngestSimulateDocumentResult`
+# `IngestSimulateDocumentResult` [interface-IngestSimulateDocumentResult]
 
 | Name | Type | Description |
 | - | - | - |

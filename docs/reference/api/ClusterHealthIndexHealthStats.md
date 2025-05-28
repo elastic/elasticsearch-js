@@ -1,4 +1,4 @@
-## Interface `ClusterHealthIndexHealthStats`
+# `ClusterHealthIndexHealthStats` [interface-ClusterHealthIndexHealthStats]
 
 | Name | Type | Description |
 | - | - | - |

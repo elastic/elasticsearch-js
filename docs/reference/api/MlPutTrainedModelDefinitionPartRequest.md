@@ -1,4 +1,4 @@
-## Interface `MlPutTrainedModelDefinitionPartRequest`
+# `MlPutTrainedModelDefinitionPartRequest` [interface-MlPutTrainedModelDefinitionPartRequest]
 
 | Name | Type | Description |
 | - | - | - |

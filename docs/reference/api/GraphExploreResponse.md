@@ -1,4 +1,4 @@
-## Interface `GraphExploreResponse`
+# `GraphExploreResponse` [interface-GraphExploreResponse]
 
 | Name | Type | Description |
 | - | - | - |

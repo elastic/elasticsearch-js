@@ -1,4 +1,4 @@
-## Interface `LicenseGetBasicStatusResponse`
+# `LicenseGetBasicStatusResponse` [interface-LicenseGetBasicStatusResponse]
 
 | Name | Type | Description |
 | - | - | - |

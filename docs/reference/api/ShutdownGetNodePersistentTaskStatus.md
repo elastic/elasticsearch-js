@@ -1,4 +1,4 @@
-## Interface `ShutdownGetNodePersistentTaskStatus`
+# `ShutdownGetNodePersistentTaskStatus` [interface-ShutdownGetNodePersistentTaskStatus]
 
 | Name | Type | Description |
 | - | - | - |

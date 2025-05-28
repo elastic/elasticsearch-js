@@ -1,4 +1,4 @@
-## Interface `AnalysisKStemTokenFilter`
+# `AnalysisKStemTokenFilter` [interface-AnalysisKStemTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

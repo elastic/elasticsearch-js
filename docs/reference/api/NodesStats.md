@@ -1,4 +1,4 @@
-## Interface `NodesStats`
+# `NodesStats` [interface-NodesStats]
 
 | Name | Type | Description |
 | - | - | - |

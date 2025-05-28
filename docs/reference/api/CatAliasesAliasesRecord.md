@@ -1,4 +1,4 @@
-## Interface `CatAliasesAliasesRecord`
+# `CatAliasesAliasesRecord` [interface-CatAliasesAliasesRecord]
 
 | Name | Type | Description |
 | - | - | - |

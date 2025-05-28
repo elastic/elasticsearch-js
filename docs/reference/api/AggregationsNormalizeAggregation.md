@@ -1,4 +1,4 @@
-## Interface `AggregationsNormalizeAggregation`
+# `AggregationsNormalizeAggregation` [interface-AggregationsNormalizeAggregation]
 
 | Name | Type | Description |
 | - | - | - |

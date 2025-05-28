@@ -1,4 +1,4 @@
-## Interface `IndicesIndexingSlowlogTresholds`
+# `IndicesIndexingSlowlogTresholds` [interface-IndicesIndexingSlowlogTresholds]
 
 | Name | Type | Description |
 | - | - | - |

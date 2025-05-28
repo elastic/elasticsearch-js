@@ -1,4 +1,4 @@
-## Interface `CatMlDataFrameAnalyticsRequest`
+# `CatMlDataFrameAnalyticsRequest` [interface-CatMlDataFrameAnalyticsRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MappingDocValuesPropertyBase`
+# `MappingDocValuesPropertyBase` [interface-MappingDocValuesPropertyBase]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsHoltMovingAverageAggregation`
+# `AggregationsHoltMovingAverageAggregation` [interface-AggregationsHoltMovingAverageAggregation]
 
 | Name | Type | Description |
 | - | - | - |

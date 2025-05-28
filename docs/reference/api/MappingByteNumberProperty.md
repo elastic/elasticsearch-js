@@ -1,4 +1,4 @@
-## Interface `MappingByteNumberProperty`
+# `MappingByteNumberProperty` [interface-MappingByteNumberProperty]
 
 | Name | Type | Description |
 | - | - | - |

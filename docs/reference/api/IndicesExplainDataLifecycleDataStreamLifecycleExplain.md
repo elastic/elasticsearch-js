@@ -1,4 +1,4 @@
-## Interface `IndicesExplainDataLifecycleDataStreamLifecycleExplain`
+# `IndicesExplainDataLifecycleDataStreamLifecycleExplain` [interface-IndicesExplainDataLifecycleDataStreamLifecycleExplain]
 
 | Name | Type | Description |
 | - | - | - |

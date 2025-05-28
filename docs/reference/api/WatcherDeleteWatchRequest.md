@@ -1,4 +1,4 @@
-## Interface `WatcherDeleteWatchRequest`
+# `WatcherDeleteWatchRequest` [interface-WatcherDeleteWatchRequest]
 
 | Name | Type | Description |
 | - | - | - |

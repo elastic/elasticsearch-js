@@ -1,4 +1,4 @@
-## Interface `RollupDeleteJobRequest`
+# `RollupDeleteJobRequest` [interface-RollupDeleteJobRequest]
 
 | Name | Type | Description |
 | - | - | - |

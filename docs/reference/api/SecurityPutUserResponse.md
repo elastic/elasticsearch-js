@@ -1,4 +1,4 @@
-## Interface `SecurityPutUserResponse`
+# `SecurityPutUserResponse` [interface-SecurityPutUserResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `NodesJvmThreads`
+# `NodesJvmThreads` [interface-NodesJvmThreads]
 
 | Name | Type | Description |
 | - | - | - |

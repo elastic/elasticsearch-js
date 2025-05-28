@@ -1,4 +1,4 @@
-## Interface `MlDataframeEvaluationClassificationMetricsAucRoc`
+# `MlDataframeEvaluationClassificationMetricsAucRoc` [interface-MlDataframeEvaluationClassificationMetricsAucRoc]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `ElasticsearchVersionMinInfo`
+# `ElasticsearchVersionMinInfo` [interface-ElasticsearchVersionMinInfo]
 
 | Name | Type | Description |
 | - | - | - |

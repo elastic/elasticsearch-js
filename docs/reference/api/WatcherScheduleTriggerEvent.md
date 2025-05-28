@@ -1,4 +1,4 @@
-## Interface `WatcherScheduleTriggerEvent`
+# `WatcherScheduleTriggerEvent` [interface-WatcherScheduleTriggerEvent]
 
 | Name | Type | Description |
 | - | - | - |

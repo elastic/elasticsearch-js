@@ -1,4 +1,4 @@
-## Interface `SecurityDelegatePkiAuthenticationRealm`
+# `SecurityDelegatePkiAuthenticationRealm` [interface-SecurityDelegatePkiAuthenticationRealm]
 
 | Name | Type | Description |
 | - | - | - |

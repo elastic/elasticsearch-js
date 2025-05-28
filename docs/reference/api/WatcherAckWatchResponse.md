@@ -1,4 +1,4 @@
-## Interface `WatcherAckWatchResponse`
+# `WatcherAckWatchResponse` [interface-WatcherAckWatchResponse]
 
 | Name | Type | Description |
 | - | - | - |

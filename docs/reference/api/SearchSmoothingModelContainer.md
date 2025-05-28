@@ -1,4 +1,4 @@
-## Interface `SearchSmoothingModelContainer`
+# `SearchSmoothingModelContainer` [interface-SearchSmoothingModelContainer]
 
 | Name | Type | Description |
 | - | - | - |

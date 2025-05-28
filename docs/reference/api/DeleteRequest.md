@@ -1,4 +1,4 @@
-## Interface `DeleteRequest`
+# `DeleteRequest` [interface-DeleteRequest]
 
 | Name | Type | Description |
 | - | - | - |

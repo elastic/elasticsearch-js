@@ -1,4 +1,4 @@
-## Interface `SecurityChangePasswordRequest`
+# `SecurityChangePasswordRequest` [interface-SecurityChangePasswordRequest]
 
 | Name | Type | Description |
 | - | - | - |

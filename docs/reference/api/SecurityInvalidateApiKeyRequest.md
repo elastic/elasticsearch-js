@@ -1,4 +1,4 @@
-## Interface `SecurityInvalidateApiKeyRequest`
+# `SecurityInvalidateApiKeyRequest` [interface-SecurityInvalidateApiKeyRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesAnalyzeExplainAnalyzeTokenKeys`
+# `IndicesAnalyzeExplainAnalyzeTokenKeys` [interface-IndicesAnalyzeExplainAnalyzeTokenKeys]
 
 | Name | Type | Description |
 | - | - | - |

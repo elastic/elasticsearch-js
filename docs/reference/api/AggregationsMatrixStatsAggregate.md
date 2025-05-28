@@ -1,4 +1,4 @@
-## Interface `AggregationsMatrixStatsAggregate`
+# `AggregationsMatrixStatsAggregate` [interface-AggregationsMatrixStatsAggregate]
 
 | Name | Type | Description |
 | - | - | - |

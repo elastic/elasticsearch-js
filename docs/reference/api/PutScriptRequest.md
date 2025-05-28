@@ -1,4 +1,4 @@
-## Interface `PutScriptRequest`
+# `PutScriptRequest` [interface-PutScriptRequest]
 
 | Name | Type | Description |
 | - | - | - |

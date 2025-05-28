@@ -1,4 +1,4 @@
-## Interface `MlModelSnapshot`
+# `MlModelSnapshot` [interface-MlModelSnapshot]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsSingleBucketAggregateBase`
+# `AggregationsSingleBucketAggregateBase` [interface-AggregationsSingleBucketAggregateBase]
 
 | Name | Type | Description |
 | - | - | - |

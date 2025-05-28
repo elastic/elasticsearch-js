@@ -1,4 +1,4 @@
-## Interface `AnalysisEdgeNGramTokenFilter`
+# `AnalysisEdgeNGramTokenFilter` [interface-AnalysisEdgeNGramTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

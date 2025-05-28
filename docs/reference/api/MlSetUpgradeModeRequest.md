@@ -1,4 +1,4 @@
-## Interface `MlSetUpgradeModeRequest`
+# `MlSetUpgradeModeRequest` [interface-MlSetUpgradeModeRequest]
 
 | Name | Type | Description |
 | - | - | - |

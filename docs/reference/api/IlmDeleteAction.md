@@ -1,4 +1,4 @@
-## Interface `IlmDeleteAction`
+# `IlmDeleteAction` [interface-IlmDeleteAction]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsSignificantTermsBucketBase`
+# `AggregationsSignificantTermsBucketBase` [interface-AggregationsSignificantTermsBucketBase]
 
 | Name | Type | Description |
 | - | - | - |

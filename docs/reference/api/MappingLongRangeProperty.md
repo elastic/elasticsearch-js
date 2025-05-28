@@ -1,4 +1,4 @@
-## Interface `MappingLongRangeProperty`
+# `MappingLongRangeProperty` [interface-MappingLongRangeProperty]
 
 | Name | Type | Description |
 | - | - | - |

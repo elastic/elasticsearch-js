@@ -1,4 +1,4 @@
-## Interface `SearchApplicationPutBehavioralAnalyticsRequest`
+# `SearchApplicationPutBehavioralAnalyticsRequest` [interface-SearchApplicationPutBehavioralAnalyticsRequest]
 
 | Name | Type | Description |
 | - | - | - |

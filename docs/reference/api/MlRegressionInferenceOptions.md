@@ -1,4 +1,4 @@
-## Interface `MlRegressionInferenceOptions`
+# `MlRegressionInferenceOptions` [interface-MlRegressionInferenceOptions]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `HealthReportMasterIsStableIndicator`
+# `HealthReportMasterIsStableIndicator` [interface-HealthReportMasterIsStableIndicator]
 
 | Name | Type | Description |
 | - | - | - |

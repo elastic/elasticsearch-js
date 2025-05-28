@@ -1,4 +1,4 @@
-## Interface `MappingGeoShapeProperty`
+# `MappingGeoShapeProperty` [interface-MappingGeoShapeProperty]
 
 | Name | Type | Description |
 | - | - | - |

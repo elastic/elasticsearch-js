@@ -1,4 +1,4 @@
-## Interface `IndicesFieldUsageStatsFieldsUsageBodyKeys`
+# `IndicesFieldUsageStatsFieldsUsageBodyKeys` [interface-IndicesFieldUsageStatsFieldsUsageBodyKeys]
 
 | Name | Type | Description |
 | - | - | - |

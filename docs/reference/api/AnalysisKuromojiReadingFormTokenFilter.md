@@ -1,4 +1,4 @@
-## Interface `AnalysisKuromojiReadingFormTokenFilter`
+# `AnalysisKuromojiReadingFormTokenFilter` [interface-AnalysisKuromojiReadingFormTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

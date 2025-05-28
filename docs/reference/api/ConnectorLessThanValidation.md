@@ -1,4 +1,4 @@
-## Interface `ConnectorLessThanValidation`
+# `ConnectorLessThanValidation` [interface-ConnectorLessThanValidation]
 
 | Name | Type | Description |
 | - | - | - |

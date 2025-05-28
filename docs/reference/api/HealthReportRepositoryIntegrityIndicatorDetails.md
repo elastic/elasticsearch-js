@@ -1,4 +1,4 @@
-## Interface `HealthReportRepositoryIntegrityIndicatorDetails`
+# `HealthReportRepositoryIntegrityIndicatorDetails` [interface-HealthReportRepositoryIntegrityIndicatorDetails]
 
 | Name | Type | Description |
 | - | - | - |

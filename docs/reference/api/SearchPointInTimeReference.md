@@ -1,4 +1,4 @@
-## Interface `SearchPointInTimeReference`
+# `SearchPointInTimeReference` [interface-SearchPointInTimeReference]
 
 | Name | Type | Description |
 | - | - | - |

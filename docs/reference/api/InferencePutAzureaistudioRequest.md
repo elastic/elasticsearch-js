@@ -1,4 +1,4 @@
-## Interface `InferencePutAzureaistudioRequest`
+# `InferencePutAzureaistudioRequest` [interface-InferencePutAzureaistudioRequest]
 
 | Name | Type | Description |
 | - | - | - |

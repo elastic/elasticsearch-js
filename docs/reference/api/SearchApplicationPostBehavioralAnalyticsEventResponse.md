@@ -1,4 +1,4 @@
-## Interface `SearchApplicationPostBehavioralAnalyticsEventResponse`
+# `SearchApplicationPostBehavioralAnalyticsEventResponse` [interface-SearchApplicationPostBehavioralAnalyticsEventResponse]
 
 | Name | Type | Description |
 | - | - | - |

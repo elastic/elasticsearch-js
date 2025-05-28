@@ -1,4 +1,4 @@
-## Interface `HealthReportShardsCapacityIndicator`
+# `HealthReportShardsCapacityIndicator` [interface-HealthReportShardsCapacityIndicator]
 
 | Name | Type | Description |
 | - | - | - |

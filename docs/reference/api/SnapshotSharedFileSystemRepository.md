@@ -1,4 +1,4 @@
-## Interface `SnapshotSharedFileSystemRepository`
+# `SnapshotSharedFileSystemRepository` [interface-SnapshotSharedFileSystemRepository]
 
 | Name | Type | Description |
 | - | - | - |

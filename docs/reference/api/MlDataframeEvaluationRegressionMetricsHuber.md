@@ -1,4 +1,4 @@
-## Interface `MlDataframeEvaluationRegressionMetricsHuber`
+# `MlDataframeEvaluationRegressionMetricsHuber` [interface-MlDataframeEvaluationRegressionMetricsHuber]
 
 | Name | Type | Description |
 | - | - | - |

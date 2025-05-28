@@ -1,4 +1,4 @@
-## Interface `SecurityRealmInfo`
+# `SecurityRealmInfo` [interface-SecurityRealmInfo]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SegmentsStats`
+# `SegmentsStats` [interface-SegmentsStats]
 
 | Name | Type | Description |
 | - | - | - |

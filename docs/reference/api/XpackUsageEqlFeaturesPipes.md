@@ -1,4 +1,4 @@
-## Interface `XpackUsageEqlFeaturesPipes`
+# `XpackUsageEqlFeaturesPipes` [interface-XpackUsageEqlFeaturesPipes]
 
 | Name | Type | Description |
 | - | - | - |

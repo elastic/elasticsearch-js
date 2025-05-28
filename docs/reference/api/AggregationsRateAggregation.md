@@ -1,4 +1,4 @@
-## Interface `AggregationsRateAggregation`
+# `AggregationsRateAggregation` [interface-AggregationsRateAggregation]
 
 | Name | Type | Description |
 | - | - | - |

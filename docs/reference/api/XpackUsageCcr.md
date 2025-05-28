@@ -1,4 +1,4 @@
-## Interface `XpackUsageCcr`
+# `XpackUsageCcr` [interface-XpackUsageCcr]
 
 | Name | Type | Description |
 | - | - | - |

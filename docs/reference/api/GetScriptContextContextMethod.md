@@ -1,4 +1,4 @@
-## Interface `GetScriptContextContextMethod`
+# `GetScriptContextContextMethod` [interface-GetScriptContextContextMethod]
 
 | Name | Type | Description |
 | - | - | - |

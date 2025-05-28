@@ -1,4 +1,4 @@
-## Interface `QueryCacheStats`
+# `QueryCacheStats` [interface-QueryCacheStats]
 
 | Name | Type | Description |
 | - | - | - |

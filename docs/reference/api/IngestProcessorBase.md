@@ -1,4 +1,4 @@
-## Interface `IngestProcessorBase`
+# `IngestProcessorBase` [interface-IngestProcessorBase]
 
 | Name | Type | Description |
 | - | - | - |

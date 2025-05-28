@@ -1,4 +1,4 @@
-## Interface `AggregationsExtendedBounds`
+# `AggregationsExtendedBounds` [interface-AggregationsExtendedBounds]
 
 | Name | Type | Description |
 | - | - | - |

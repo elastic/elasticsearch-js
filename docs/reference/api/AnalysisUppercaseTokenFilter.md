@@ -1,4 +1,4 @@
-## Interface `AnalysisUppercaseTokenFilter`
+# `AnalysisUppercaseTokenFilter` [interface-AnalysisUppercaseTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

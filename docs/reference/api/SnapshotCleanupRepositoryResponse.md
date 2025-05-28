@@ -1,4 +1,4 @@
-## Interface `SnapshotCleanupRepositoryResponse`
+# `SnapshotCleanupRepositoryResponse` [interface-SnapshotCleanupRepositoryResponse]
 
 | Name | Type | Description |
 | - | - | - |

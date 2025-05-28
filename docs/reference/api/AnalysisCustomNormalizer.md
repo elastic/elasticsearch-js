@@ -1,4 +1,4 @@
-## Interface `AnalysisCustomNormalizer`
+# `AnalysisCustomNormalizer` [interface-AnalysisCustomNormalizer]
 
 | Name | Type | Description |
 | - | - | - |

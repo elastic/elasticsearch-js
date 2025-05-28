@@ -1,4 +1,4 @@
-## Interface `HealthReportDiagnosis`
+# `HealthReportDiagnosis` [interface-HealthReportDiagnosis]
 
 | Name | Type | Description |
 | - | - | - |

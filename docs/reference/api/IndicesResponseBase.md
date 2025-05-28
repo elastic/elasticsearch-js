@@ -1,4 +1,4 @@
-## Interface `IndicesResponseBase`
+# `IndicesResponseBase` [interface-IndicesResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

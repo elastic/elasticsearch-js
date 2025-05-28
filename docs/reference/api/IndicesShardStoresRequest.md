@@ -1,4 +1,4 @@
-## Interface `IndicesShardStoresRequest`
+# `IndicesShardStoresRequest` [interface-IndicesShardStoresRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `InferenceContentObject`
+# `InferenceContentObject` [interface-InferenceContentObject]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlTextClassificationInferenceOptions`
+# `MlTextClassificationInferenceOptions` [interface-MlTextClassificationInferenceOptions]
 
 | Name | Type | Description |
 | - | - | - |

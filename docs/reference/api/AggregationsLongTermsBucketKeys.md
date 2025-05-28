@@ -1,4 +1,4 @@
-## Interface `AggregationsLongTermsBucketKeys`
+# `AggregationsLongTermsBucketKeys` [interface-AggregationsLongTermsBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

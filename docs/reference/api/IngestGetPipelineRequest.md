@@ -1,4 +1,4 @@
-## Interface `IngestGetPipelineRequest`
+# `IngestGetPipelineRequest` [interface-IngestGetPipelineRequest]
 
 | Name | Type | Description |
 | - | - | - |

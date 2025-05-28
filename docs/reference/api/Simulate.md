@@ -1,19 +1,19 @@
-## `Simulate`
+# `Simulate` [class-Simulate]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Simulate(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Simulate]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Simulate]
 
 | Name | Signature | Description |
 | - | - | - |

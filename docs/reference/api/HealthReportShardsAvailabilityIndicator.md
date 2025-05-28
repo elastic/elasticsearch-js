@@ -1,4 +1,4 @@
-## Interface `HealthReportShardsAvailabilityIndicator`
+# `HealthReportShardsAvailabilityIndicator` [interface-HealthReportShardsAvailabilityIndicator]
 
 | Name | Type | Description |
 | - | - | - |

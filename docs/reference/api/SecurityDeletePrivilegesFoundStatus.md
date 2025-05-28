@@ -1,4 +1,4 @@
-## Interface `SecurityDeletePrivilegesFoundStatus`
+# `SecurityDeletePrivilegesFoundStatus` [interface-SecurityDeletePrivilegesFoundStatus]
 
 | Name | Type | Description |
 | - | - | - |

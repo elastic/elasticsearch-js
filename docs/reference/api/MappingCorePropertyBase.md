@@ -1,4 +1,4 @@
-## Interface `MappingCorePropertyBase`
+# `MappingCorePropertyBase` [interface-MappingCorePropertyBase]
 
 | Name | Type | Description |
 | - | - | - |

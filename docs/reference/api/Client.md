@@ -1,12 +1,12 @@
-## `Client`
+# `Client` [class-Client]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Client(opts: [ClientOptions](./ClientOptions.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Client]
 
 | Name | Type | Description |
 | - | - | - |
@@ -17,7 +17,7 @@ new Client(opts: [ClientOptions](./ClientOptions.md));
 | `serializer` | [Serializer](./Serializer.md) | &nbsp; |
 | `transport` | [SniffingTransport](./SniffingTransport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Client]
 
 | Name | Signature | Description |
 | - | - | - |

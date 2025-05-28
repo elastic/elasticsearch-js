@@ -1,4 +1,4 @@
-## Interface `CoordsGeoBounds`
+# `CoordsGeoBounds` [interface-CoordsGeoBounds]
 
 | Name | Type | Description |
 | - | - | - |

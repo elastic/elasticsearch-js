@@ -1,4 +1,4 @@
-## Interface `InferenceRequestChatCompletion`
+# `InferenceRequestChatCompletion` [interface-InferenceRequestChatCompletion]
 
 | Name | Type | Description |
 | - | - | - |

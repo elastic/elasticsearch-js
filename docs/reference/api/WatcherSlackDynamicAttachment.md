@@ -1,4 +1,4 @@
-## Interface `WatcherSlackDynamicAttachment`
+# `WatcherSlackDynamicAttachment` [interface-WatcherSlackDynamicAttachment]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `NodesJvmMemoryStats`
+# `NodesJvmMemoryStats` [interface-NodesJvmMemoryStats]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SecurityGetSettingsRequest`
+# `SecurityGetSettingsRequest` [interface-SecurityGetSettingsRequest]
 
 | Name | Type | Description |
 | - | - | - |

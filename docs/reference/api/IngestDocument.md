@@ -1,4 +1,4 @@
-## Interface `IngestDocument`
+# `IngestDocument` [interface-IngestDocument]
 
 | Name | Type | Description |
 | - | - | - |

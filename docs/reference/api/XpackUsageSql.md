@@ -1,4 +1,4 @@
-## Interface `XpackUsageSql`
+# `XpackUsageSql` [interface-XpackUsageSql]
 
 | Name | Type | Description |
 | - | - | - |

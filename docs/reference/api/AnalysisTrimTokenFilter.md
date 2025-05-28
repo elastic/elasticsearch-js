@@ -1,4 +1,4 @@
-## Interface `AnalysisTrimTokenFilter`
+# `AnalysisTrimTokenFilter` [interface-AnalysisTrimTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

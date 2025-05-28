@@ -1,4 +1,4 @@
-## Interface `IndicesAddBlockIndicesBlockStatus`
+# `IndicesAddBlockIndicesBlockStatus` [interface-IndicesAddBlockIndicesBlockStatus]
 
 | Name | Type | Description |
 | - | - | - |

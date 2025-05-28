@@ -1,4 +1,4 @@
-## Interface `QueryDslRandomScoreFunction`
+# `QueryDslRandomScoreFunction` [interface-QueryDslRandomScoreFunction]
 
 | Name | Type | Description |
 | - | - | - |

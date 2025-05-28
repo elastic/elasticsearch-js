@@ -1,4 +1,4 @@
-## Interface `RetrieverBase`
+# `RetrieverBase` [interface-RetrieverBase]
 
 | Name | Type | Description |
 | - | - | - |

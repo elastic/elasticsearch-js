@@ -1,4 +1,4 @@
-## Interface `InferenceUpdateRequest`
+# `InferenceUpdateRequest` [interface-InferenceUpdateRequest]
 
 | Name | Type | Description |
 | - | - | - |

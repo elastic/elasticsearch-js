@@ -1,4 +1,4 @@
-## Interface `SlmDeleteLifecycleRequest`
+# `SlmDeleteLifecycleRequest` [interface-SlmDeleteLifecycleRequest]
 
 | Name | Type | Description |
 | - | - | - |

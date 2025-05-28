@@ -1,4 +1,4 @@
-## Interface `IngestRedact`
+# `IngestRedact` [interface-IngestRedact]
 
 | Name | Type | Description |
 | - | - | - |

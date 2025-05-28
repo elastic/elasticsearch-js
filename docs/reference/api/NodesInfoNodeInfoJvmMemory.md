@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoJvmMemory`
+# `NodesInfoNodeInfoJvmMemory` [interface-NodesInfoNodeInfoJvmMemory]
 
 | Name | Type | Description |
 | - | - | - |

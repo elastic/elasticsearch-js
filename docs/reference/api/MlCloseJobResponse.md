@@ -1,4 +1,4 @@
-## Interface `MlCloseJobResponse`
+# `MlCloseJobResponse` [interface-MlCloseJobResponse]
 
 | Name | Type | Description |
 | - | - | - |

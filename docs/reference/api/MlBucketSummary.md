@@ -1,4 +1,4 @@
-## Interface `MlBucketSummary`
+# `MlBucketSummary` [interface-MlBucketSummary]
 
 | Name | Type | Description |
 | - | - | - |

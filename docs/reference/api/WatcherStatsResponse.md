@@ -1,4 +1,4 @@
-## Interface `WatcherStatsResponse`
+# `WatcherStatsResponse` [interface-WatcherStatsResponse]
 
 | Name | Type | Description |
 | - | - | - |

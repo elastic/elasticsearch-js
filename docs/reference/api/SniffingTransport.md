@@ -1,9 +1,9 @@
-## `SniffingTransport`
+# `SniffingTransport` [class-SniffingTransport]
 
-### Constructor
+## Constructor
 
 
-### Methods
+## Methods [class-methods-SniffingTransport]
 
 | Name | Signature | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `InferenceTextEmbeddingInferenceResult`
+# `InferenceTextEmbeddingInferenceResult` [interface-InferenceTextEmbeddingInferenceResult]
 
 | Name | Type | Description |
 | - | - | - |

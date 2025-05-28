@@ -1,4 +1,4 @@
-## Interface `WatcherHttpInputProxy`
+# `WatcherHttpInputProxy` [interface-WatcherHttpInputProxy]
 
 | Name | Type | Description |
 | - | - | - |

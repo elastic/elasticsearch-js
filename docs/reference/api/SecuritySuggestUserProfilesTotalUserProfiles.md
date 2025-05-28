@@ -1,4 +1,4 @@
-## Interface `SecuritySuggestUserProfilesTotalUserProfiles`
+# `SecuritySuggestUserProfilesTotalUserProfiles` [interface-SecuritySuggestUserProfilesTotalUserProfiles]
 
 | Name | Type | Description |
 | - | - | - |

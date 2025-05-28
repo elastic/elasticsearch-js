@@ -1,4 +1,4 @@
-## Interface `AnalysisGreekAnalyzer`
+# `AnalysisGreekAnalyzer` [interface-AnalysisGreekAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

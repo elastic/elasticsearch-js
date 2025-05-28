@@ -1,4 +1,4 @@
-## Interface `LogstashPipelineMetadata`
+# `LogstashPipelineMetadata` [interface-LogstashPipelineMetadata]
 
 | Name | Type | Description |
 | - | - | - |

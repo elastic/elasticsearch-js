@@ -1,4 +1,4 @@
-## Interface `TextEmbedding`
+# `TextEmbedding` [interface-TextEmbedding]
 
 | Name | Type | Description |
 | - | - | - |

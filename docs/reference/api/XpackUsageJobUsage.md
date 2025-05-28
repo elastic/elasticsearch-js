@@ -1,4 +1,4 @@
-## Interface `XpackUsageJobUsage`
+# `XpackUsageJobUsage` [interface-XpackUsageJobUsage]
 
 | Name | Type | Description |
 | - | - | - |

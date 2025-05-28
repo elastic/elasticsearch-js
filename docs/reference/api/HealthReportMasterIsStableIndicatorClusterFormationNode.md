@@ -1,4 +1,4 @@
-## Interface `HealthReportMasterIsStableIndicatorClusterFormationNode`
+# `HealthReportMasterIsStableIndicatorClusterFormationNode` [interface-HealthReportMasterIsStableIndicatorClusterFormationNode]
 
 | Name | Type | Description |
 | - | - | - |

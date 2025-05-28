@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeOperatingSystemInfo`
+# `NodesInfoNodeOperatingSystemInfo` [interface-NodesInfoNodeOperatingSystemInfo]
 
 | Name | Type | Description |
 | - | - | - |

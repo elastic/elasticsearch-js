@@ -1,4 +1,4 @@
-## Interface `SecurityApplicationPrivileges`
+# `SecurityApplicationPrivileges` [interface-SecurityApplicationPrivileges]
 
 | Name | Type | Description |
 | - | - | - |

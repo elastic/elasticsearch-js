@@ -1,4 +1,4 @@
-## Interface `IngestIpLocationProcessor`
+# `IngestIpLocationProcessor` [interface-IngestIpLocationProcessor]
 
 | Name | Type | Description |
 | - | - | - |

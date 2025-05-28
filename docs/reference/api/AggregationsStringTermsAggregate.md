@@ -1,4 +1,4 @@
-## Interface `AggregationsStringTermsAggregate`
+# `AggregationsStringTermsAggregate` [interface-AggregationsStringTermsAggregate]
 
 | Name | Type | Description |
 | - | - | - |

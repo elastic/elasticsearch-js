@@ -1,4 +1,4 @@
-## Interface `ClusterRerouteCommand`
+# `ClusterRerouteCommand` [interface-ClusterRerouteCommand]
 
 | Name | Type | Description |
 | - | - | - |

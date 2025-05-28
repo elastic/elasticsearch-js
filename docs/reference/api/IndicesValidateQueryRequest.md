@@ -1,4 +1,4 @@
-## Interface `IndicesValidateQueryRequest`
+# `IndicesValidateQueryRequest` [interface-IndicesValidateQueryRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlCalendarEvent`
+# `MlCalendarEvent` [interface-MlCalendarEvent]
 
 | Name | Type | Description |
 | - | - | - |

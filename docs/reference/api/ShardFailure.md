@@ -1,4 +1,4 @@
-## Interface `ShardFailure`
+# `ShardFailure` [interface-ShardFailure]
 
 | Name | Type | Description |
 | - | - | - |

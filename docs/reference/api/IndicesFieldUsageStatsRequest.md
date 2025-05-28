@@ -1,4 +1,4 @@
-## Interface `IndicesFieldUsageStatsRequest`
+# `IndicesFieldUsageStatsRequest` [interface-IndicesFieldUsageStatsRequest]
 
 | Name | Type | Description |
 | - | - | - |

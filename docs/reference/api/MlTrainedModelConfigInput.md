@@ -1,4 +1,4 @@
-## Interface `MlTrainedModelConfigInput`
+# `MlTrainedModelConfigInput` [interface-MlTrainedModelConfigInput]
 
 | Name | Type | Description |
 | - | - | - |

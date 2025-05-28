@@ -1,4 +1,4 @@
-## Interface `IngestFailProcessor`
+# `IngestFailProcessor` [interface-IngestFailProcessor]
 
 | Name | Type | Description |
 | - | - | - |

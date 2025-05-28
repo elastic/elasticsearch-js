@@ -1,4 +1,4 @@
-## Interface `MlEvaluateDataFrameConfusionMatrixPrediction`
+# `MlEvaluateDataFrameConfusionMatrixPrediction` [interface-MlEvaluateDataFrameConfusionMatrixPrediction]
 
 | Name | Type | Description |
 | - | - | - |

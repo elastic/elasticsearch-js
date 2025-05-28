@@ -1,4 +1,4 @@
-## Interface `InferencePutElserRequest`
+# `InferencePutElserRequest` [interface-InferencePutElserRequest]
 
 | Name | Type | Description |
 | - | - | - |

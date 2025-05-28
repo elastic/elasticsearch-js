@@ -1,4 +1,4 @@
-## Interface `MlCategory`
+# `MlCategory` [interface-MlCategory]
 
 | Name | Type | Description |
 | - | - | - |

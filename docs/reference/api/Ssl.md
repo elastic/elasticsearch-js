@@ -1,19 +1,19 @@
-## `Ssl`
+# `Ssl` [class-Ssl]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Ssl(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Ssl]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Ssl]
 
 | Name | Signature | Description |
 | - | - | - |

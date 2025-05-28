@@ -1,4 +1,4 @@
-## Interface `NodesHttp`
+# `NodesHttp` [interface-NodesHttp]
 
 | Name | Type | Description |
 | - | - | - |

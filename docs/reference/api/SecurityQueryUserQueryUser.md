@@ -1,4 +1,4 @@
-## Interface `SecurityQueryUserQueryUser`
+# `SecurityQueryUserQueryUser` [interface-SecurityQueryUserQueryUser]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsBucketSelectorAggregation`
+# `AggregationsBucketSelectorAggregation` [interface-AggregationsBucketSelectorAggregation]
 
 | Name | Type | Description |
 | - | - | - |

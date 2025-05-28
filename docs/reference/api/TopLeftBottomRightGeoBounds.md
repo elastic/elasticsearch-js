@@ -1,4 +1,4 @@
-## Interface `TopLeftBottomRightGeoBounds`
+# `TopLeftBottomRightGeoBounds` [interface-TopLeftBottomRightGeoBounds]
 
 | Name | Type | Description |
 | - | - | - |

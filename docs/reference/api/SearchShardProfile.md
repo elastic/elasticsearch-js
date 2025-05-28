@@ -1,4 +1,4 @@
-## Interface `SearchShardProfile`
+# `SearchShardProfile` [interface-SearchShardProfile]
 
 | Name | Type | Description |
 | - | - | - |

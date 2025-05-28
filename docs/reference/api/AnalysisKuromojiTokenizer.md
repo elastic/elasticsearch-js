@@ -1,4 +1,4 @@
-## Interface `AnalysisKuromojiTokenizer`
+# `AnalysisKuromojiTokenizer` [interface-AnalysisKuromojiTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

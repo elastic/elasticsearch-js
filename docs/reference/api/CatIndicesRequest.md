@@ -1,4 +1,4 @@
-## Interface `CatIndicesRequest`
+# `CatIndicesRequest` [interface-CatIndicesRequest]
 
 | Name | Type | Description |
 | - | - | - |

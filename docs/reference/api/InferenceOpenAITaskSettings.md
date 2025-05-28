@@ -1,4 +1,4 @@
-## Interface `InferenceOpenAITaskSettings`
+# `InferenceOpenAITaskSettings` [interface-InferenceOpenAITaskSettings]
 
 | Name | Type | Description |
 | - | - | - |

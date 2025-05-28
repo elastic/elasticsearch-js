@@ -1,4 +1,4 @@
-## Interface `CatMlTrainedModelsTrainedModelsRecord`
+# `CatMlTrainedModelsTrainedModelsRecord` [interface-CatMlTrainedModelsTrainedModelsRecord]
 
 | Name | Type | Description |
 | - | - | - |

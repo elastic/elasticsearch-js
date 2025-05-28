@@ -1,4 +1,4 @@
-## Interface `SlmConfiguration`
+# `SlmConfiguration` [interface-SlmConfiguration]
 
 | Name | Type | Description |
 | - | - | - |

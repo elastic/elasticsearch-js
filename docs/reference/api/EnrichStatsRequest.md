@@ -1,4 +1,4 @@
-## Interface `EnrichStatsRequest`
+# `EnrichStatsRequest` [interface-EnrichStatsRequest]
 
 | Name | Type | Description |
 | - | - | - |

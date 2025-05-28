@@ -1,4 +1,4 @@
-## Interface `BulkRequest`
+# `BulkRequest` [interface-BulkRequest]
 
 | Name | Type | Description |
 | - | - | - |

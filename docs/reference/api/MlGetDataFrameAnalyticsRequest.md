@@ -1,4 +1,4 @@
-## Interface `MlGetDataFrameAnalyticsRequest`
+# `MlGetDataFrameAnalyticsRequest` [interface-MlGetDataFrameAnalyticsRequest]
 
 | Name | Type | Description |
 | - | - | - |

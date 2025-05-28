@@ -1,4 +1,4 @@
-## Interface `MlTopClassEntry`
+# `MlTopClassEntry` [interface-MlTopClassEntry]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesAnalyzeAnalyzerDetail`
+# `IndicesAnalyzeAnalyzerDetail` [interface-IndicesAnalyzeAnalyzerDetail]
 
 | Name | Type | Description |
 | - | - | - |

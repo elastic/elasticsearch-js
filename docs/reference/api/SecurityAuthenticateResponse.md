@@ -1,4 +1,4 @@
-## Interface `SecurityAuthenticateResponse`
+# `SecurityAuthenticateResponse` [interface-SecurityAuthenticateResponse]
 
 | Name | Type | Description |
 | - | - | - |

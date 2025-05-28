@@ -1,4 +1,4 @@
-## Interface `IndicesStatsShardQueryCache`
+# `IndicesStatsShardQueryCache` [interface-IndicesStatsShardQueryCache]
 
 | Name | Type | Description |
 | - | - | - |

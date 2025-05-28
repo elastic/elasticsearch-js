@@ -1,4 +1,4 @@
-## Interface `AggregationsGeoBoundsAggregation`
+# `AggregationsGeoBoundsAggregation` [interface-AggregationsGeoBoundsAggregation]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IlmDeleteLifecycleRequest`
+# `IlmDeleteLifecycleRequest` [interface-IlmDeleteLifecycleRequest]
 
 | Name | Type | Description |
 | - | - | - |

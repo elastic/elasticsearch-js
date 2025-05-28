@@ -1,4 +1,4 @@
-## Interface `MlDeleteJobRequest`
+# `MlDeleteJobRequest` [interface-MlDeleteJobRequest]
 
 | Name | Type | Description |
 | - | - | - |

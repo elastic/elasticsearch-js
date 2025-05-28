@@ -1,4 +1,4 @@
-## Interface `TextStructureTestGrokPatternMatchedText`
+# `TextStructureTestGrokPatternMatchedText` [interface-TextStructureTestGrokPatternMatchedText]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlUpdateJobRequest`
+# `MlUpdateJobRequest` [interface-MlUpdateJobRequest]
 
 | Name | Type | Description |
 | - | - | - |

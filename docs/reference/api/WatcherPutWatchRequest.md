@@ -1,4 +1,4 @@
-## Interface `WatcherPutWatchRequest`
+# `WatcherPutWatchRequest` [interface-WatcherPutWatchRequest]
 
 | Name | Type | Description |
 | - | - | - |

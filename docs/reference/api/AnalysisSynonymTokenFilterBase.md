@@ -1,4 +1,4 @@
-## Interface `AnalysisSynonymTokenFilterBase`
+# `AnalysisSynonymTokenFilterBase` [interface-AnalysisSynonymTokenFilterBase]
 
 | Name | Type | Description |
 | - | - | - |

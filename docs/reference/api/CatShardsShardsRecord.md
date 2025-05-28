@@ -1,4 +1,4 @@
-## Interface `CatShardsShardsRecord`
+# `CatShardsShardsRecord` [interface-CatShardsShardsRecord]
 
 | Name | Type | Description |
 | - | - | - |

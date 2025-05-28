@@ -1,4 +1,4 @@
-## Interface `AggregationsGeoHashGridAggregate`
+# `AggregationsGeoHashGridAggregate` [interface-AggregationsGeoHashGridAggregate]
 
 | Name | Type | Description |
 | - | - | - |

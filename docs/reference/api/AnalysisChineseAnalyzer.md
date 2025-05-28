@@ -1,4 +1,4 @@
-## Interface `AnalysisChineseAnalyzer`
+# `AnalysisChineseAnalyzer` [interface-AnalysisChineseAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlPreviewDatafeedRequest`
+# `MlPreviewDatafeedRequest` [interface-MlPreviewDatafeedRequest]
 
 | Name | Type | Description |
 | - | - | - |

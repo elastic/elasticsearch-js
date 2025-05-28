@@ -1,4 +1,4 @@
-## Interface `NodesAdaptiveSelection`
+# `NodesAdaptiveSelection` [interface-NodesAdaptiveSelection]
 
 | Name | Type | Description |
 | - | - | - |

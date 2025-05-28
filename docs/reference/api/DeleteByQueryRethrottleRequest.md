@@ -1,4 +1,4 @@
-## Interface `DeleteByQueryRethrottleRequest`
+# `DeleteByQueryRethrottleRequest` [interface-DeleteByQueryRethrottleRequest]
 
 | Name | Type | Description |
 | - | - | - |

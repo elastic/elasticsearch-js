@@ -1,4 +1,4 @@
-## Interface `MlFlushJobRequest`
+# `MlFlushJobRequest` [interface-MlFlushJobRequest]
 
 | Name | Type | Description |
 | - | - | - |

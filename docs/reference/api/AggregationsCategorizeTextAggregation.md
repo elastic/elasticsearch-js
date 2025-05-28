@@ -1,4 +1,4 @@
-## Interface `AggregationsCategorizeTextAggregation`
+# `AggregationsCategorizeTextAggregation` [interface-AggregationsCategorizeTextAggregation]
 
 | Name | Type | Description |
 | - | - | - |

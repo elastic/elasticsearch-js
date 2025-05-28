@@ -1,4 +1,4 @@
-## Interface `ReindexResponse`
+# `ReindexResponse` [interface-ReindexResponse]
 
 | Name | Type | Description |
 | - | - | - |

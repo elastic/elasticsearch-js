@@ -1,4 +1,4 @@
-## Interface `SslCertificatesCertificateInformation`
+# `SslCertificatesCertificateInformation` [interface-SslCertificatesCertificateInformation]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MappingDenseVectorIndexOptionsRescoreVector`
+# `MappingDenseVectorIndexOptionsRescoreVector` [interface-MappingDenseVectorIndexOptionsRescoreVector]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoXpackSecuritySsl`
+# `NodesInfoNodeInfoXpackSecuritySsl` [interface-NodesInfoNodeInfoXpackSecuritySsl]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlDeleteTrainedModelAliasRequest`
+# `MlDeleteTrainedModelAliasRequest` [interface-MlDeleteTrainedModelAliasRequest]
 
 | Name | Type | Description |
 | - | - | - |

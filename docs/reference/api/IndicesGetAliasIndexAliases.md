@@ -1,4 +1,4 @@
-## Interface `IndicesGetAliasIndexAliases`
+# `IndicesGetAliasIndexAliases` [interface-IndicesGetAliasIndexAliases]
 
 | Name | Type | Description |
 | - | - | - |

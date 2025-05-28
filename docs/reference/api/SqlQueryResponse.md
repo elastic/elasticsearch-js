@@ -1,4 +1,4 @@
-## Interface `SqlQueryResponse`
+# `SqlQueryResponse` [interface-SqlQueryResponse]
 
 | Name | Type | Description |
 | - | - | - |

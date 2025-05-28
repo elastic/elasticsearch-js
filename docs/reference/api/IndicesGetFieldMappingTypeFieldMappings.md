@@ -1,4 +1,4 @@
-## Interface `IndicesGetFieldMappingTypeFieldMappings`
+# `IndicesGetFieldMappingTypeFieldMappings` [interface-IndicesGetFieldMappingTypeFieldMappings]
 
 | Name | Type | Description |
 | - | - | - |

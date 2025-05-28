@@ -1,4 +1,4 @@
-## Interface `SecurityOidcLogoutResponse`
+# `SecurityOidcLogoutResponse` [interface-SecurityOidcLogoutResponse]
 
 | Name | Type | Description |
 | - | - | - |

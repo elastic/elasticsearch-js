@@ -1,4 +1,4 @@
-## Interface `MlJobConfig`
+# `MlJobConfig` [interface-MlJobConfig]
 
 | Name | Type | Description |
 | - | - | - |

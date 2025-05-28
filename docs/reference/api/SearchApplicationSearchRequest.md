@@ -1,4 +1,4 @@
-## Interface `SearchApplicationSearchRequest`
+# `SearchApplicationSearchRequest` [interface-SearchApplicationSearchRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,19 +1,19 @@
-## `Eql`
+# `Eql` [class-Eql]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Eql(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Eql]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Eql]
 
 | Name | Signature | Description |
 | - | - | - |

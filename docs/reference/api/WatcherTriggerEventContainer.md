@@ -1,4 +1,4 @@
-## Interface `WatcherTriggerEventContainer`
+# `WatcherTriggerEventContainer` [interface-WatcherTriggerEventContainer]
 
 | Name | Type | Description |
 | - | - | - |

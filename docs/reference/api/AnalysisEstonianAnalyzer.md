@@ -1,4 +1,4 @@
-## Interface `AnalysisEstonianAnalyzer`
+# `AnalysisEstonianAnalyzer` [interface-AnalysisEstonianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

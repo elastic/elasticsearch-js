@@ -1,4 +1,4 @@
-## Interface `MlInfoNativeCode`
+# `MlInfoNativeCode` [interface-MlInfoNativeCode]
 
 | Name | Type | Description |
 | - | - | - |

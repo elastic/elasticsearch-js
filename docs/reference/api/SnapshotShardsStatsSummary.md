@@ -1,4 +1,4 @@
-## Interface `SnapshotShardsStatsSummary`
+# `SnapshotShardsStatsSummary` [interface-SnapshotShardsStatsSummary]
 
 | Name | Type | Description |
 | - | - | - |

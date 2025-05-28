@@ -1,4 +1,4 @@
-## Interface `ClusterComponentTemplateNode`
+# `ClusterComponentTemplateNode` [interface-ClusterComponentTemplateNode]
 
 | Name | Type | Description |
 | - | - | - |

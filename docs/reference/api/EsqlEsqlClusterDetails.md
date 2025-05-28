@@ -1,4 +1,4 @@
-## Interface `EsqlEsqlClusterDetails`
+# `EsqlEsqlClusterDetails` [interface-EsqlEsqlClusterDetails]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `UpdateUpdateWriteResponseBase`
+# `UpdateUpdateWriteResponseBase` [interface-UpdateUpdateWriteResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesGetSettingsRequest`
+# `IndicesGetSettingsRequest` [interface-IndicesGetSettingsRequest]
 
 | Name | Type | Description |
 | - | - | - |

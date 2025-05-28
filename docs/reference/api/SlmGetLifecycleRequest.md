@@ -1,4 +1,4 @@
-## Interface `SlmGetLifecycleRequest`
+# `SlmGetLifecycleRequest` [interface-SlmGetLifecycleRequest]
 
 | Name | Type | Description |
 | - | - | - |

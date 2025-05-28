@@ -1,4 +1,4 @@
-## Interface `SearchableSnapshotsMountMountedSnapshot`
+# `SearchableSnapshotsMountMountedSnapshot` [interface-SearchableSnapshotsMountMountedSnapshot]
 
 | Name | Type | Description |
 | - | - | - |

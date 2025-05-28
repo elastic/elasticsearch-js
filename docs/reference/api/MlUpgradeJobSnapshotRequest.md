@@ -1,4 +1,4 @@
-## Interface `MlUpgradeJobSnapshotRequest`
+# `MlUpgradeJobSnapshotRequest` [interface-MlUpgradeJobSnapshotRequest]
 
 | Name | Type | Description |
 | - | - | - |

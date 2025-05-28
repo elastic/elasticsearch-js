@@ -1,4 +1,4 @@
-## Interface `SecurityEnrollNodeResponse`
+# `SecurityEnrollNodeResponse` [interface-SecurityEnrollNodeResponse]
 
 | Name | Type | Description |
 | - | - | - |

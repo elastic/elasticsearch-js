@@ -1,4 +1,4 @@
-## Interface `AnalysisIcuTokenizer`
+# `AnalysisIcuTokenizer` [interface-AnalysisIcuTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

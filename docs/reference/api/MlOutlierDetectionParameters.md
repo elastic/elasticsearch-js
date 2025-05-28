@@ -1,4 +1,4 @@
-## Interface `MlOutlierDetectionParameters`
+# `MlOutlierDetectionParameters` [interface-MlOutlierDetectionParameters]
 
 | Name | Type | Description |
 | - | - | - |

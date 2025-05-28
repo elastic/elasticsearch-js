@@ -1,4 +1,4 @@
-## Interface `QueryDslCombinedFieldsQuery`
+# `QueryDslCombinedFieldsQuery` [interface-QueryDslCombinedFieldsQuery]
 
 | Name | Type | Description |
 | - | - | - |

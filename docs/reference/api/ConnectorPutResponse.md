@@ -1,4 +1,4 @@
-## Interface `ConnectorPutResponse`
+# `ConnectorPutResponse` [interface-ConnectorPutResponse]
 
 | Name | Type | Description |
 | - | - | - |

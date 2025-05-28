@@ -1,4 +1,4 @@
-## Interface `AggregationsGeoDistanceAggregation`
+# `AggregationsGeoDistanceAggregation` [interface-AggregationsGeoDistanceAggregation]
 
 | Name | Type | Description |
 | - | - | - |

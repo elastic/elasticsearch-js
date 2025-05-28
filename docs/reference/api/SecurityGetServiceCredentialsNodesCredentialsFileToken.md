@@ -1,4 +1,4 @@
-## Interface `SecurityGetServiceCredentialsNodesCredentialsFileToken`
+# `SecurityGetServiceCredentialsNodesCredentialsFileToken` [interface-SecurityGetServiceCredentialsNodesCredentialsFileToken]
 
 | Name | Type | Description |
 | - | - | - |

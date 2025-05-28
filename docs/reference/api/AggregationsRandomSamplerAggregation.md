@@ -1,4 +1,4 @@
-## Interface `AggregationsRandomSamplerAggregation`
+# `AggregationsRandomSamplerAggregation` [interface-AggregationsRandomSamplerAggregation]
 
 | Name | Type | Description |
 | - | - | - |

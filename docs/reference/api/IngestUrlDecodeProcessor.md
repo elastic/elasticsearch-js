@@ -1,4 +1,4 @@
-## Interface `IngestUrlDecodeProcessor`
+# `IngestUrlDecodeProcessor` [interface-IngestUrlDecodeProcessor]
 
 | Name | Type | Description |
 | - | - | - |

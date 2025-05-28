@@ -1,4 +1,4 @@
-## Interface `SecurityRoleDescriptor`
+# `SecurityRoleDescriptor` [interface-SecurityRoleDescriptor]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `TransformDeleteTransformRequest`
+# `TransformDeleteTransformRequest` [interface-TransformDeleteTransformRequest]
 
 | Name | Type | Description |
 | - | - | - |

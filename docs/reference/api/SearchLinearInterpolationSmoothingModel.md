@@ -1,4 +1,4 @@
-## Interface `SearchLinearInterpolationSmoothingModel`
+# `SearchLinearInterpolationSmoothingModel` [interface-SearchLinearInterpolationSmoothingModel]
 
 | Name | Type | Description |
 | - | - | - |

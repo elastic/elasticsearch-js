@@ -1,4 +1,4 @@
-## Interface `GeoLine`
+# `GeoLine` [interface-GeoLine]
 
 | Name | Type | Description |
 | - | - | - |

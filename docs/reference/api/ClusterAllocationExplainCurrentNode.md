@@ -1,4 +1,4 @@
-## Interface `ClusterAllocationExplainCurrentNode`
+# `ClusterAllocationExplainCurrentNode` [interface-ClusterAllocationExplainCurrentNode]
 
 | Name | Type | Description |
 | - | - | - |

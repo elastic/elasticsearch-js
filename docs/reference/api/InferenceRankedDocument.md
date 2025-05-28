@@ -1,4 +1,4 @@
-## Interface `InferenceRankedDocument`
+# `InferenceRankedDocument` [interface-InferenceRankedDocument]
 
 | Name | Type | Description |
 | - | - | - |

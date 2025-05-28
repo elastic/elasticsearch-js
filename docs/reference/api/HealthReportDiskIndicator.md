@@ -1,4 +1,4 @@
-## Interface `HealthReportDiskIndicator`
+# `HealthReportDiskIndicator` [interface-HealthReportDiskIndicator]
 
 | Name | Type | Description |
 | - | - | - |

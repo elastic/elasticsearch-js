@@ -1,4 +1,4 @@
-## Interface `AnalysisClassicTokenFilter`
+# `AnalysisClassicTokenFilter` [interface-AnalysisClassicTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AnalysisFrenchAnalyzer`
+# `AnalysisFrenchAnalyzer` [interface-AnalysisFrenchAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

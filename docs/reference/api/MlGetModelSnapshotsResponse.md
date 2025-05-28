@@ -1,4 +1,4 @@
-## Interface `MlGetModelSnapshotsResponse`
+# `MlGetModelSnapshotsResponse` [interface-MlGetModelSnapshotsResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `QueryDslFieldAndFormat`
+# `QueryDslFieldAndFormat` [interface-QueryDslFieldAndFormat]
 
 | Name | Type | Description |
 | - | - | - |

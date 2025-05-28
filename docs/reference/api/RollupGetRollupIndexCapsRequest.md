@@ -1,4 +1,4 @@
-## Interface `RollupGetRollupIndexCapsRequest`
+# `RollupGetRollupIndexCapsRequest` [interface-RollupGetRollupIndexCapsRequest]
 
 | Name | Type | Description |
 | - | - | - |

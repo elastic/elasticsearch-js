@@ -1,4 +1,4 @@
-## Interface `IndicesFieldUsageStatsShardsStats`
+# `IndicesFieldUsageStatsShardsStats` [interface-IndicesFieldUsageStatsShardsStats]
 
 | Name | Type | Description |
 | - | - | - |

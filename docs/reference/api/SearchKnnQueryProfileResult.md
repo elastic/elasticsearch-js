@@ -1,4 +1,4 @@
-## Interface `SearchKnnQueryProfileResult`
+# `SearchKnnQueryProfileResult` [interface-SearchKnnQueryProfileResult]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesModifyDataStreamIndexAndDataStreamAction`
+# `IndicesModifyDataStreamIndexAndDataStreamAction` [interface-IndicesModifyDataStreamIndexAndDataStreamAction]
 
 | Name | Type | Description |
 | - | - | - |

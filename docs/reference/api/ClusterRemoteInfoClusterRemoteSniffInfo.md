@@ -1,4 +1,4 @@
-## Interface `ClusterRemoteInfoClusterRemoteSniffInfo`
+# `ClusterRemoteInfoClusterRemoteSniffInfo` [interface-ClusterRemoteInfoClusterRemoteSniffInfo]
 
 | Name | Type | Description |
 | - | - | - |

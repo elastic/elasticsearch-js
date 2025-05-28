@@ -1,4 +1,4 @@
-## Interface `MlTrainedModelAssignment`
+# `MlTrainedModelAssignment` [interface-MlTrainedModelAssignment]
 
 | Name | Type | Description |
 | - | - | - |

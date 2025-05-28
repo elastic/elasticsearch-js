@@ -1,4 +1,4 @@
-## Interface `ConnectorGetRequest`
+# `ConnectorGetRequest` [interface-ConnectorGetRequest]
 
 | Name | Type | Description |
 | - | - | - |

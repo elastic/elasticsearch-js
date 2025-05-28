@@ -1,4 +1,4 @@
-## Interface `QueryDslSparseVectorQuery`
+# `QueryDslSparseVectorQuery` [interface-QueryDslSparseVectorQuery]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `CcrReadException`
+# `CcrReadException` [interface-CcrReadException]
 
 | Name | Type | Description |
 | - | - | - |

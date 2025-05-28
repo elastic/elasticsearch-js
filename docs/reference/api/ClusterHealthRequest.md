@@ -1,4 +1,4 @@
-## Interface `ClusterHealthRequest`
+# `ClusterHealthRequest` [interface-ClusterHealthRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsMultiTermsAggregate`
+# `AggregationsMultiTermsAggregate` [interface-AggregationsMultiTermsAggregate]
 
 | Name | Type | Description |
 | - | - | - |

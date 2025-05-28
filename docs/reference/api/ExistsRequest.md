@@ -1,4 +1,4 @@
-## Interface `ExistsRequest`
+# `ExistsRequest` [interface-ExistsRequest]
 
 | Name | Type | Description |
 | - | - | - |

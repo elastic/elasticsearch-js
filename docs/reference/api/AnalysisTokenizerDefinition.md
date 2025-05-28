@@ -1,4 +1,4 @@
-## `AnalysisTokenizerDefinition`
-:::
+# `AnalysisTokenizerDefinition` [alias-AnalysisTokenizerDefinition]
+```typescript
 type AnalysisTokenizerDefinition = [AnalysisCharGroupTokenizer](./AnalysisCharGroupTokenizer.md) | [AnalysisClassicTokenizer](./AnalysisClassicTokenizer.md) | [AnalysisEdgeNGramTokenizer](./AnalysisEdgeNGramTokenizer.md) | [AnalysisKeywordTokenizer](./AnalysisKeywordTokenizer.md) | [AnalysisLetterTokenizer](./AnalysisLetterTokenizer.md) | [AnalysisLowercaseTokenizer](./AnalysisLowercaseTokenizer.md) | [AnalysisNGramTokenizer](./AnalysisNGramTokenizer.md) | [AnalysisPathHierarchyTokenizer](./AnalysisPathHierarchyTokenizer.md) | [AnalysisPatternTokenizer](./AnalysisPatternTokenizer.md) | [AnalysisSimplePatternTokenizer](./AnalysisSimplePatternTokenizer.md) | [AnalysisSimplePatternSplitTokenizer](./AnalysisSimplePatternSplitTokenizer.md) | [AnalysisStandardTokenizer](./AnalysisStandardTokenizer.md) | [AnalysisThaiTokenizer](./AnalysisThaiTokenizer.md) | [AnalysisUaxEmailUrlTokenizer](./AnalysisUaxEmailUrlTokenizer.md) | [AnalysisWhitespaceTokenizer](./AnalysisWhitespaceTokenizer.md) | [AnalysisIcuTokenizer](./AnalysisIcuTokenizer.md) | [AnalysisKuromojiTokenizer](./AnalysisKuromojiTokenizer.md) | [AnalysisNoriTokenizer](./AnalysisNoriTokenizer.md);
-:::
+```

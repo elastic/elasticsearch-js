@@ -1,4 +1,4 @@
-## Interface `WatcherSlackResult`
+# `WatcherSlackResult` [interface-WatcherSlackResult]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SecurityGetUserRequest`
+# `SecurityGetUserRequest` [interface-SecurityGetUserRequest]
 
 | Name | Type | Description |
 | - | - | - |

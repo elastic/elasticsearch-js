@@ -1,4 +1,4 @@
-## Interface `EsqlEsqlResult`
+# `EsqlEsqlResult` [interface-EsqlEsqlResult]
 
 | Name | Type | Description |
 | - | - | - |

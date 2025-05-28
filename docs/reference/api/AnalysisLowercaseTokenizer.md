@@ -1,4 +1,4 @@
-## Interface `AnalysisLowercaseTokenizer`
+# `AnalysisLowercaseTokenizer` [interface-AnalysisLowercaseTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

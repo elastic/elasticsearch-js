@@ -1,4 +1,4 @@
-## Interface `XpackInfoBuildInformation`
+# `XpackInfoBuildInformation` [interface-XpackInfoBuildInformation]
 
 | Name | Type | Description |
 | - | - | - |

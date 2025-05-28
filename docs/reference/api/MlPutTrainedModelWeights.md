@@ -1,4 +1,4 @@
-## Interface `MlPutTrainedModelWeights`
+# `MlPutTrainedModelWeights` [interface-MlPutTrainedModelWeights]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `ShardStatistics`
+# `ShardStatistics` [interface-ShardStatistics]
 
 | Name | Type | Description |
 | - | - | - |

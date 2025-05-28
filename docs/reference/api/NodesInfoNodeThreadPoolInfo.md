@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeThreadPoolInfo`
+# `NodesInfoNodeThreadPoolInfo` [interface-NodesInfoNodeThreadPoolInfo]
 
 | Name | Type | Description |
 | - | - | - |

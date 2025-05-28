@@ -1,4 +1,4 @@
-## Interface `EsqlQueryRequest`
+# `EsqlQueryRequest` [interface-EsqlQueryRequest]
 
 | Name | Type | Description |
 | - | - | - |

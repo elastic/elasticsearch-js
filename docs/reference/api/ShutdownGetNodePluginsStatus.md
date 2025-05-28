@@ -1,4 +1,4 @@
-## Interface `ShutdownGetNodePluginsStatus`
+# `ShutdownGetNodePluginsStatus` [interface-ShutdownGetNodePluginsStatus]
 
 | Name | Type | Description |
 | - | - | - |

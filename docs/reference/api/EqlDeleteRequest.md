@@ -1,4 +1,4 @@
-## Interface `EqlDeleteRequest`
+# `EqlDeleteRequest` [interface-EqlDeleteRequest]
 
 | Name | Type | Description |
 | - | - | - |

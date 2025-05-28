@@ -1,4 +1,4 @@
-## Interface `ConnectorSchedulingConfiguration`
+# `ConnectorSchedulingConfiguration` [interface-ConnectorSchedulingConfiguration]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AnalysisIrishAnalyzer`
+# `AnalysisIrishAnalyzer` [interface-AnalysisIrishAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

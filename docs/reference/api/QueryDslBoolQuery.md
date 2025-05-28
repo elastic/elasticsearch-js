@@ -1,4 +1,4 @@
-## Interface `QueryDslBoolQuery`
+# `QueryDslBoolQuery` [interface-QueryDslBoolQuery]
 
 | Name | Type | Description |
 | - | - | - |

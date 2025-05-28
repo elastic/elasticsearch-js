@@ -1,4 +1,4 @@
-## Interface `AnalysisPorterStemTokenFilter`
+# `AnalysisPorterStemTokenFilter` [interface-AnalysisPorterStemTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

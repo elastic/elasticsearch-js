@@ -1,4 +1,4 @@
-## Interface `ConnectorConnectorFeatures`
+# `ConnectorConnectorFeatures` [interface-ConnectorConnectorFeatures]
 
 | Name | Type | Description |
 | - | - | - |

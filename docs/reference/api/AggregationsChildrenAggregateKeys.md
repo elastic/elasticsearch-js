@@ -1,4 +1,4 @@
-## Interface `AggregationsChildrenAggregateKeys`
+# `AggregationsChildrenAggregateKeys` [interface-AggregationsChildrenAggregateKeys]
 
 | Name | Type | Description |
 | - | - | - |

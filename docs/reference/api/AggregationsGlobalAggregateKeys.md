@@ -1,4 +1,4 @@
-## Interface `AggregationsGlobalAggregateKeys`
+# `AggregationsGlobalAggregateKeys` [interface-AggregationsGlobalAggregateKeys]
 
 | Name | Type | Description |
 | - | - | - |

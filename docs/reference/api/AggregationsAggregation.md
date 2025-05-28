@@ -1,4 +1,4 @@
-## Interface `AggregationsAggregation`
+# `AggregationsAggregation` [interface-AggregationsAggregation]
 
 | Name | Type | Description |
 | - | - | - |

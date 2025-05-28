@@ -1,4 +1,4 @@
-## Interface `MlResetJobRequest`
+# `MlResetJobRequest` [interface-MlResetJobRequest]
 
 | Name | Type | Description |
 | - | - | - |

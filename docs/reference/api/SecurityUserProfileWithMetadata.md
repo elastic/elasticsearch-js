@@ -1,4 +1,4 @@
-## Interface `SecurityUserProfileWithMetadata`
+# `SecurityUserProfileWithMetadata` [interface-SecurityUserProfileWithMetadata]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesDownsampleRequest`
+# `IndicesDownsampleRequest` [interface-IndicesDownsampleRequest]
 
 | Name | Type | Description |
 | - | - | - |

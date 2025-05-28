@@ -1,4 +1,4 @@
-## Interface `CatRecoveryRecoveryRecord`
+# `CatRecoveryRecoveryRecord` [interface-CatRecoveryRecoveryRecord]
 
 | Name | Type | Description |
 | - | - | - |

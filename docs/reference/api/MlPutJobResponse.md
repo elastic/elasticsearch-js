@@ -1,4 +1,4 @@
-## Interface `MlPutJobResponse`
+# `MlPutJobResponse` [interface-MlPutJobResponse]
 
 | Name | Type | Description |
 | - | - | - |

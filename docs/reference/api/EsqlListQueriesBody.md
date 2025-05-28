@@ -1,4 +1,4 @@
-## Interface `EsqlListQueriesBody`
+# `EsqlListQueriesBody` [interface-EsqlListQueriesBody]
 
 | Name | Type | Description |
 | - | - | - |

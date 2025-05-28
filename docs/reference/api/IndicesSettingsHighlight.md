@@ -1,4 +1,4 @@
-## Interface `IndicesSettingsHighlight`
+# `IndicesSettingsHighlight` [interface-IndicesSettingsHighlight]
 
 | Name | Type | Description |
 | - | - | - |

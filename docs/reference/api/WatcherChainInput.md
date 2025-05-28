@@ -1,4 +1,4 @@
-## Interface `WatcherChainInput`
+# `WatcherChainInput` [interface-WatcherChainInput]
 
 | Name | Type | Description |
 | - | - | - |

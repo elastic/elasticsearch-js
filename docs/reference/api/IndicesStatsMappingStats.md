@@ -1,4 +1,4 @@
-## Interface `IndicesStatsMappingStats`
+# `IndicesStatsMappingStats` [interface-IndicesStatsMappingStats]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AnalysisKeywordAnalyzer`
+# `AnalysisKeywordAnalyzer` [interface-AnalysisKeywordAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AnalysisSnowballTokenFilter`
+# `AnalysisSnowballTokenFilter` [interface-AnalysisSnowballTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

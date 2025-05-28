@@ -1,4 +1,4 @@
-## Interface `ClusterDeleteComponentTemplateRequest`
+# `ClusterDeleteComponentTemplateRequest` [interface-ClusterDeleteComponentTemplateRequest]
 
 | Name | Type | Description |
 | - | - | - |

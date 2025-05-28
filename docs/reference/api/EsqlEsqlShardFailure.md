@@ -1,4 +1,4 @@
-## Interface `EsqlEsqlShardFailure`
+# `EsqlEsqlShardFailure` [interface-EsqlEsqlShardFailure]
 
 | Name | Type | Description |
 | - | - | - |

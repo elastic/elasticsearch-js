@@ -1,4 +1,4 @@
-## Interface `AnalysisSoraniAnalyzer`
+# `AnalysisSoraniAnalyzer` [interface-AnalysisSoraniAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

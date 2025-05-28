@@ -1,4 +1,4 @@
-## Interface `IndicesClearCacheRequest`
+# `IndicesClearCacheRequest` [interface-IndicesClearCacheRequest]
 
 | Name | Type | Description |
 | - | - | - |

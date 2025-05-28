@@ -105,16 +105,15 @@ function generateDescription(comment) {
 }
 
 function generateApiFunction(spec) {
-  // let code = '```typescript\n'
-  let code = ':::\n'
+  let code = '```typescript\n'
   code += generatePropertyType(spec.excerptTokens)
   code += '\n'
-  code += ':::\n'
+  code += '```\n'
   return code
 }
 
 function generateInterface(spec) {
-  let code = `## Interface \`${spec.displayName}\`\n\n`
+  let code = `# \`${spec.displayName}\` [interface-${spec.displayName}]\n\n`
   code += '| Name | Type | Description |\n'
   code += '| - | - | - |\n'
 
@@ -131,22 +130,21 @@ function generateInterface(spec) {
 }
 
 function generateClass(spec) {
-  let code = `## \`${spec.displayName}\`\n`
+  let code = `# \`${spec.displayName}\` [class-${spec.displayName}]\n`
 
-  code += '\n### Constructor\n\n'
+  code += '\n## Constructor\n\n'
   const cons = spec.members.filter(m => m.kind === 'Constructor')
   for (const con of cons) {
-    // code += '```typescript\n'
-    code += ':::\n'
+    code += '```typescript\n'
     code += generatePropertyType(con.excerptTokens).replace(/^constructor/, `new ${spec.displayName}`)
     code += '\n'
-    code += ':::\n'
+    code += '```\n'
   }
 
   // generate properties
   const props = spec.members.filter(m => m.kind === 'Property')
   if (props.length > 0) {
-    code += '\n### Properties\n\n'
+    code += `\n## Properties [class-properties-${spec.displayName}]\n\n`
     code += '| Name | Type | Description |\n'
     code += '| - | - | - |\n'
 
@@ -165,7 +163,7 @@ function generateClass(spec) {
   // generate methods
   const methods = spec.members.filter(m => m.kind === 'Method')
   if (methods.length > 0) {
-    code += '\n### Methods\n\n'
+    code += `\n## Methods [class-methods-${spec.displayName}]\n\n`
     code += '| Name | Signature | Description |\n'
     code += '| - | - | - |\n'
 
@@ -174,7 +172,7 @@ function generateClass(spec) {
       code += ` | \`${generatePropertyType(method.excerptTokens)}\``
       const description = generateDescription(method.tsdocComment, false)
       code += ` | ${description.length > 0 ? description : '&nbsp;'}`
-      code += ' |'
+      code += ' |\n'
     }
   }
 
@@ -182,11 +180,10 @@ function generateClass(spec) {
 }
 
 function generateAlias(spec) {
-  let code = `## \`${spec.displayName}\`\n`
-  // code += '```typescript\n'
-  code += ':::\n'
+  let code = `# \`${spec.displayName}\` [alias-${spec.displayName}]\n`
+  code += '```typescript\n'
   code += `${generatePropertyType(spec.excerpt.tokens)}\n`
-  code += ':::\n'
+  code += '```\n'
   return code
 }
 

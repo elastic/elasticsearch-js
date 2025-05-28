@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoSearch`
+# `NodesInfoNodeInfoSearch` [interface-NodesInfoNodeInfoSearch]
 
 | Name | Type | Description |
 | - | - | - |

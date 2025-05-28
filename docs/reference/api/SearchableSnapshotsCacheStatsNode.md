@@ -1,4 +1,4 @@
-## Interface `SearchableSnapshotsCacheStatsNode`
+# `SearchableSnapshotsCacheStatsNode` [interface-SearchableSnapshotsCacheStatsNode]
 
 | Name | Type | Description |
 | - | - | - |

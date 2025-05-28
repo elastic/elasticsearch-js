@@ -1,4 +1,4 @@
-## Interface `WarmerStats`
+# `WarmerStats` [interface-WarmerStats]
 
 | Name | Type | Description |
 | - | - | - |

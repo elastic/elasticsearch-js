@@ -1,4 +1,4 @@
-## Interface `MlEvaluateDataFrameDataframeClassificationSummaryRecall`
+# `MlEvaluateDataFrameDataframeClassificationSummaryRecall` [interface-MlEvaluateDataFrameDataframeClassificationSummaryRecall]
 
 | Name | Type | Description |
 | - | - | - |

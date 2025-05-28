@@ -1,4 +1,4 @@
-## Interface `NodeOptions`
+# `NodeOptions` [interface-NodeOptions]
 
 | Name | Type | Description |
 | - | - | - |

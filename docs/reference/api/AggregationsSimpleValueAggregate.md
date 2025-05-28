@@ -1,4 +1,4 @@
-## Interface `AggregationsSimpleValueAggregate`
+# `AggregationsSimpleValueAggregate` [interface-AggregationsSimpleValueAggregate]
 
 | Name | Type | Description |
 | - | - | - |

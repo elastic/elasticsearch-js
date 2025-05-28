@@ -1,4 +1,4 @@
-## Interface `WatcherArrayCompareConditionKeys`
+# `WatcherArrayCompareConditionKeys` [interface-WatcherArrayCompareConditionKeys]
 
 | Name | Type | Description |
 | - | - | - |

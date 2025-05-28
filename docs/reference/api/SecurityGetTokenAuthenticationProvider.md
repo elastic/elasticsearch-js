@@ -1,4 +1,4 @@
-## Interface `SecurityGetTokenAuthenticationProvider`
+# `SecurityGetTokenAuthenticationProvider` [interface-SecurityGetTokenAuthenticationProvider]
 
 | Name | Type | Description |
 | - | - | - |

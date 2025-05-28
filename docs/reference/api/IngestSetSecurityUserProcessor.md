@@ -1,4 +1,4 @@
-## Interface `IngestSetSecurityUserProcessor`
+# `IngestSetSecurityUserProcessor` [interface-IngestSetSecurityUserProcessor]
 
 | Name | Type | Description |
 | - | - | - |

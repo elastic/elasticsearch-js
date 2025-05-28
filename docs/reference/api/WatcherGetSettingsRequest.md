@@ -1,4 +1,4 @@
-## Interface `WatcherGetSettingsRequest`
+# `WatcherGetSettingsRequest` [interface-WatcherGetSettingsRequest]
 
 | Name | Type | Description |
 | - | - | - |

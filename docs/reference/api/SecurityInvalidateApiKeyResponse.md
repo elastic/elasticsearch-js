@@ -1,4 +1,4 @@
-## Interface `SecurityInvalidateApiKeyResponse`
+# `SecurityInvalidateApiKeyResponse` [interface-SecurityInvalidateApiKeyResponse]
 
 | Name | Type | Description |
 | - | - | - |

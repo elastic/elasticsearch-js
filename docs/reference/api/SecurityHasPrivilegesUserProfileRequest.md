@@ -1,4 +1,4 @@
-## Interface `SecurityHasPrivilegesUserProfileRequest`
+# `SecurityHasPrivilegesUserProfileRequest` [interface-SecurityHasPrivilegesUserProfileRequest]
 
 | Name | Type | Description |
 | - | - | - |

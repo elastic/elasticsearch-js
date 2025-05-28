@@ -1,4 +1,4 @@
-## Interface `WatcherWatch`
+# `WatcherWatch` [interface-WatcherWatch]
 
 | Name | Type | Description |
 | - | - | - |

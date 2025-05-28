@@ -1,4 +1,4 @@
-## Interface `MappingShapeProperty`
+# `MappingShapeProperty` [interface-MappingShapeProperty]
 
 | Name | Type | Description |
 | - | - | - |

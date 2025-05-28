@@ -1,4 +1,4 @@
-## Interface `XpackUsageRealm`
+# `XpackUsageRealm` [interface-XpackUsageRealm]
 
 | Name | Type | Description |
 | - | - | - |

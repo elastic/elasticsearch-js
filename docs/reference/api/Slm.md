@@ -1,19 +1,19 @@
-## `Slm`
+# `Slm` [class-Slm]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Slm(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Slm]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Slm]
 
 | Name | Signature | Description |
 | - | - | - |

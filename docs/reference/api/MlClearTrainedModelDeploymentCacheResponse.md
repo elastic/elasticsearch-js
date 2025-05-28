@@ -1,4 +1,4 @@
-## Interface `MlClearTrainedModelDeploymentCacheResponse`
+# `MlClearTrainedModelDeploymentCacheResponse` [interface-MlClearTrainedModelDeploymentCacheResponse]
 
 | Name | Type | Description |
 | - | - | - |

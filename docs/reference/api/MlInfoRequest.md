@@ -1,4 +1,4 @@
-## Interface `MlInfoRequest`
+# `MlInfoRequest` [interface-MlInfoRequest]
 
 | Name | Type | Description |
 | - | - | - |

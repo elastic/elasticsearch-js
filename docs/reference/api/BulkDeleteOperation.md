@@ -1,4 +1,4 @@
-## Interface `BulkDeleteOperation`
+# `BulkDeleteOperation` [interface-BulkDeleteOperation]
 
 | Name | Type | Description |
 | - | - | - |

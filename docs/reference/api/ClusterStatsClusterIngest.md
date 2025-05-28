@@ -1,4 +1,4 @@
-## Interface `ClusterStatsClusterIngest`
+# `ClusterStatsClusterIngest` [interface-ClusterStatsClusterIngest]
 
 | Name | Type | Description |
 | - | - | - |

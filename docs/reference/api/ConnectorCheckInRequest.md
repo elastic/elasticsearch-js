@@ -1,4 +1,4 @@
-## Interface `ConnectorCheckInRequest`
+# `ConnectorCheckInRequest` [interface-ConnectorCheckInRequest]
 
 | Name | Type | Description |
 | - | - | - |

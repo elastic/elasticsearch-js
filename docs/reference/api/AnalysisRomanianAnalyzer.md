@@ -1,4 +1,4 @@
-## Interface `AnalysisRomanianAnalyzer`
+# `AnalysisRomanianAnalyzer` [interface-AnalysisRomanianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

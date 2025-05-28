@@ -1,19 +1,19 @@
-## `Ilm`
+# `Ilm` [class-Ilm]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Ilm(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Ilm]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Ilm]
 
 | Name | Signature | Description |
 | - | - | - |

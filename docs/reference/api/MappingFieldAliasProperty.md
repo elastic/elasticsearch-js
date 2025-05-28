@@ -1,4 +1,4 @@
-## Interface `MappingFieldAliasProperty`
+# `MappingFieldAliasProperty` [interface-MappingFieldAliasProperty]
 
 | Name | Type | Description |
 | - | - | - |

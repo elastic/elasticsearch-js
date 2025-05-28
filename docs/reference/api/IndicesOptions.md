@@ -1,4 +1,4 @@
-## Interface `IndicesOptions`
+# `IndicesOptions` [interface-IndicesOptions]
 
 | Name | Type | Description |
 | - | - | - |

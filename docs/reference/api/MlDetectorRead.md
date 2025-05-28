@@ -1,4 +1,4 @@
-## Interface `MlDetectorRead`
+# `MlDetectorRead` [interface-MlDetectorRead]
 
 | Name | Type | Description |
 | - | - | - |

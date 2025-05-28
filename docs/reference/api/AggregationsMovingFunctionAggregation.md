@@ -1,4 +1,4 @@
-## Interface `AggregationsMovingFunctionAggregation`
+# `AggregationsMovingFunctionAggregation` [interface-AggregationsMovingFunctionAggregation]
 
 | Name | Type | Description |
 | - | - | - |

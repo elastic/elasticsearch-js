@@ -1,4 +1,4 @@
-## Interface `ClusterStatsRemoteClusterInfo`
+# `ClusterStatsRemoteClusterInfo` [interface-ClusterStatsRemoteClusterInfo]
 
 | Name | Type | Description |
 | - | - | - |

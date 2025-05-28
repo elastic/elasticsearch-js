@@ -1,4 +1,4 @@
-## Interface `AggregationsDiversifiedSamplerAggregation`
+# `AggregationsDiversifiedSamplerAggregation` [interface-AggregationsDiversifiedSamplerAggregation]
 
 | Name | Type | Description |
 | - | - | - |

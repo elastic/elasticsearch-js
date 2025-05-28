@@ -1,4 +1,4 @@
-## Interface `ClusterPendingTasksResponse`
+# `ClusterPendingTasksResponse` [interface-ClusterPendingTasksResponse]
 
 | Name | Type | Description |
 | - | - | - |

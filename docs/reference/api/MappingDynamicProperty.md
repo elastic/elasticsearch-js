@@ -1,4 +1,4 @@
-## Interface `MappingDynamicProperty`
+# `MappingDynamicProperty` [interface-MappingDynamicProperty]
 
 | Name | Type | Description |
 | - | - | - |

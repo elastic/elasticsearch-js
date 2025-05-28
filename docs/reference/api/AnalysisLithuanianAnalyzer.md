@@ -1,4 +1,4 @@
-## Interface `AnalysisLithuanianAnalyzer`
+# `AnalysisLithuanianAnalyzer` [interface-AnalysisLithuanianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

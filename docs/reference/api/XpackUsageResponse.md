@@ -1,4 +1,4 @@
-## Interface `XpackUsageResponse`
+# `XpackUsageResponse` [interface-XpackUsageResponse]
 
 | Name | Type | Description |
 | - | - | - |

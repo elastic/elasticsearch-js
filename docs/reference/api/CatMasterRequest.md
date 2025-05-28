@@ -1,4 +1,4 @@
-## Interface `CatMasterRequest`
+# `CatMasterRequest` [interface-CatMasterRequest]
 
 | Name | Type | Description |
 | - | - | - |

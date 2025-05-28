@@ -1,4 +1,4 @@
-## Interface `MlEvaluateDataFrameDataframeEvaluationSummaryAucRoc`
+# `MlEvaluateDataFrameDataframeEvaluationSummaryAucRoc` [interface-MlEvaluateDataFrameDataframeEvaluationSummaryAucRoc]
 
 | Name | Type | Description |
 | - | - | - |

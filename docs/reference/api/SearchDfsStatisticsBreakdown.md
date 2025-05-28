@@ -1,4 +1,4 @@
-## Interface `SearchDfsStatisticsBreakdown`
+# `SearchDfsStatisticsBreakdown` [interface-SearchDfsStatisticsBreakdown]
 
 | Name | Type | Description |
 | - | - | - |

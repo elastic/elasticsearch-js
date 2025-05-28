@@ -1,4 +1,4 @@
-## Interface `InferenceWatsonxServiceSettings`
+# `InferenceWatsonxServiceSettings` [interface-InferenceWatsonxServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

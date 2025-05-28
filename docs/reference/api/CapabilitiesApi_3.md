@@ -1,3 +1,3 @@
-:::
+```typescript
 default function CapabilitiesApi(this: [That](./That.md), params?: [TODO](./TODO.md), options?: [TransportRequestOptions](./TransportRequestOptions.md)): Promise<[TODO](./TODO.md)>;
-:::
+```

@@ -1,19 +1,19 @@
-## `TextStructure`
+# `TextStructure` [class-TextStructure]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new TextStructure(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-TextStructure]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-TextStructure]
 
 | Name | Signature | Description |
 | - | - | - |

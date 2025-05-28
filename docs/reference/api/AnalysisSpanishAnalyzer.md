@@ -1,4 +1,4 @@
-## Interface `AnalysisSpanishAnalyzer`
+# `AnalysisSpanishAnalyzer` [interface-AnalysisSpanishAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

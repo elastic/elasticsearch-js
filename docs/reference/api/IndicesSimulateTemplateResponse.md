@@ -1,4 +1,4 @@
-## Interface `IndicesSimulateTemplateResponse`
+# `IndicesSimulateTemplateResponse` [interface-IndicesSimulateTemplateResponse]
 
 | Name | Type | Description |
 | - | - | - |

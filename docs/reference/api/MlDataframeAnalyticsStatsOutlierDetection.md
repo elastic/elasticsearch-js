@@ -1,4 +1,4 @@
-## Interface `MlDataframeAnalyticsStatsOutlierDetection`
+# `MlDataframeAnalyticsStatsOutlierDetection` [interface-MlDataframeAnalyticsStatsOutlierDetection]
 
 | Name | Type | Description |
 | - | - | - |

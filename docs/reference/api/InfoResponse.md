@@ -1,4 +1,4 @@
-## Interface `InfoResponse`
+# `InfoResponse` [interface-InfoResponse]
 
 | Name | Type | Description |
 | - | - | - |

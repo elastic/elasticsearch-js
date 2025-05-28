@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoSettingsCluster`
+# `NodesInfoNodeInfoSettingsCluster` [interface-NodesInfoNodeInfoSettingsCluster]
 
 | Name | Type | Description |
 | - | - | - |

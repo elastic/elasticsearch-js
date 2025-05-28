@@ -1,4 +1,4 @@
-## Interface `SearchSourceFilter`
+# `SearchSourceFilter` [interface-SearchSourceFilter]
 
 | Name | Type | Description |
 | - | - | - |

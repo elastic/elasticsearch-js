@@ -1,4 +1,4 @@
-## Interface `SearchDfsStatisticsProfile`
+# `SearchDfsStatisticsProfile` [interface-SearchDfsStatisticsProfile]
 
 | Name | Type | Description |
 | - | - | - |

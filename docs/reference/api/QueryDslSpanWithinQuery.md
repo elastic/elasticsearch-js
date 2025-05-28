@@ -1,4 +1,4 @@
-## Interface `QueryDslSpanWithinQuery`
+# `QueryDslSpanWithinQuery` [interface-QueryDslSpanWithinQuery]
 
 | Name | Type | Description |
 | - | - | - |

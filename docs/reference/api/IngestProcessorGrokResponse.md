@@ -1,4 +1,4 @@
-## Interface `IngestProcessorGrokResponse`
+# `IngestProcessorGrokResponse` [interface-IngestProcessorGrokResponse]
 
 | Name | Type | Description |
 | - | - | - |

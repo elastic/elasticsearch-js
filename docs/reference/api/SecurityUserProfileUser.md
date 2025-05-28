@@ -1,4 +1,4 @@
-## Interface `SecurityUserProfileUser`
+# `SecurityUserProfileUser` [interface-SecurityUserProfileUser]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SynonymsGetSynonymsSetsResponse`
+# `SynonymsGetSynonymsSetsResponse` [interface-SynonymsGetSynonymsSetsResponse]
 
 | Name | Type | Description |
 | - | - | - |

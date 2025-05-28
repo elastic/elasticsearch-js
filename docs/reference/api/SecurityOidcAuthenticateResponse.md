@@ -1,4 +1,4 @@
-## Interface `SecurityOidcAuthenticateResponse`
+# `SecurityOidcAuthenticateResponse` [interface-SecurityOidcAuthenticateResponse]
 
 | Name | Type | Description |
 | - | - | - |

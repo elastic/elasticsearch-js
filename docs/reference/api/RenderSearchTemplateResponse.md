@@ -1,4 +1,4 @@
-## Interface `RenderSearchTemplateResponse`
+# `RenderSearchTemplateResponse` [interface-RenderSearchTemplateResponse]
 
 | Name | Type | Description |
 | - | - | - |

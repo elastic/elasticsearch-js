@@ -1,4 +1,4 @@
-## Interface `RescoreVector`
+# `RescoreVector` [interface-RescoreVector]
 
 | Name | Type | Description |
 | - | - | - |

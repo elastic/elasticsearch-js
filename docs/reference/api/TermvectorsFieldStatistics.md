@@ -1,4 +1,4 @@
-## Interface `TermvectorsFieldStatistics`
+# `TermvectorsFieldStatistics` [interface-TermvectorsFieldStatistics]
 
 | Name | Type | Description |
 | - | - | - |

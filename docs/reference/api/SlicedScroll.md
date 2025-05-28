@@ -1,4 +1,4 @@
-## Interface `SlicedScroll`
+# `SlicedScroll` [interface-SlicedScroll]
 
 | Name | Type | Description |
 | - | - | - |

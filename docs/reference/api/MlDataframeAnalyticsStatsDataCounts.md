@@ -1,4 +1,4 @@
-## Interface `MlDataframeAnalyticsStatsDataCounts`
+# `MlDataframeAnalyticsStatsDataCounts` [interface-MlDataframeAnalyticsStatsDataCounts]
 
 | Name | Type | Description |
 | - | - | - |

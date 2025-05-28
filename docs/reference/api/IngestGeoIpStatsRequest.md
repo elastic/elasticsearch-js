@@ -1,4 +1,4 @@
-## Interface `IngestGeoIpStatsRequest`
+# `IngestGeoIpStatsRequest` [interface-IngestGeoIpStatsRequest]
 
 | Name | Type | Description |
 | - | - | - |

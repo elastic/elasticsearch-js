@@ -1,4 +1,4 @@
-## Interface `ClusterStatsIndexingPressureMemorySummary`
+# `ClusterStatsIndexingPressureMemorySummary` [interface-ClusterStatsIndexingPressureMemorySummary]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SearchTermSuggester`
+# `SearchTermSuggester` [interface-SearchTermSuggester]
 
 | Name | Type | Description |
 | - | - | - |

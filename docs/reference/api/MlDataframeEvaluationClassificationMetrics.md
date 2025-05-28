@@ -1,4 +1,4 @@
-## Interface `MlDataframeEvaluationClassificationMetrics`
+# `MlDataframeEvaluationClassificationMetrics` [interface-MlDataframeEvaluationClassificationMetrics]
 
 | Name | Type | Description |
 | - | - | - |

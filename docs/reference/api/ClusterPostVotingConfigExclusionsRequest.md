@@ -1,4 +1,4 @@
-## Interface `ClusterPostVotingConfigExclusionsRequest`
+# `ClusterPostVotingConfigExclusionsRequest` [interface-ClusterPostVotingConfigExclusionsRequest]
 
 | Name | Type | Description |
 | - | - | - |

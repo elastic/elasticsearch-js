@@ -1,4 +1,4 @@
-## Interface `EsqlToRecords`
+# `EsqlToRecords` [interface-EsqlToRecords]
 
 | Name | Type | Description |
 | - | - | - |

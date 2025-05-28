@@ -1,4 +1,4 @@
-## Interface `SecurityQueryRoleRequest`
+# `SecurityQueryRoleRequest` [interface-SecurityQueryRoleRequest]
 
 | Name | Type | Description |
 | - | - | - |

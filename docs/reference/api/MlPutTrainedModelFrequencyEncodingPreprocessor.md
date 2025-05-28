@@ -1,4 +1,4 @@
-## Interface `MlPutTrainedModelFrequencyEncodingPreprocessor`
+# `MlPutTrainedModelFrequencyEncodingPreprocessor` [interface-MlPutTrainedModelFrequencyEncodingPreprocessor]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `WatcherEmailBody`
+# `WatcherEmailBody` [interface-WatcherEmailBody]
 
 | Name | Type | Description |
 | - | - | - |

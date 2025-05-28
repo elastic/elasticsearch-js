@@ -1,4 +1,4 @@
-## Interface `AnalysisCjkAnalyzer`
+# `AnalysisCjkAnalyzer` [interface-AnalysisCjkAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlAnomalyCause`
+# `MlAnomalyCause` [interface-MlAnomalyCause]
 
 | Name | Type | Description |
 | - | - | - |

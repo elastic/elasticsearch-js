@@ -1,4 +1,4 @@
-## Interface `SecurityQueryUserResponse`
+# `SecurityQueryUserResponse` [interface-SecurityQueryUserResponse]
 
 | Name | Type | Description |
 | - | - | - |

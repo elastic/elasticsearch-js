@@ -1,4 +1,4 @@
-## Interface `AggregationsAdjacencyMatrixBucketKeys`
+# `AggregationsAdjacencyMatrixBucketKeys` [interface-AggregationsAdjacencyMatrixBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

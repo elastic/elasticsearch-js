@@ -1,4 +1,4 @@
-## Interface `QueryDslGeoGridQuery`
+# `QueryDslGeoGridQuery` [interface-QueryDslGeoGridQuery]
 
 | Name | Type | Description |
 | - | - | - |

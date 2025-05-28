@@ -1,4 +1,4 @@
-## Interface `IndicesFailureStore`
+# `IndicesFailureStore` [interface-IndicesFailureStore]
 
 | Name | Type | Description |
 | - | - | - |

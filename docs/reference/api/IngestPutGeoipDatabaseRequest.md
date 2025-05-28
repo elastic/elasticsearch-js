@@ -1,4 +1,4 @@
-## Interface `IngestPutGeoipDatabaseRequest`
+# `IngestPutGeoipDatabaseRequest` [interface-IngestPutGeoipDatabaseRequest]
 
 | Name | Type | Description |
 | - | - | - |

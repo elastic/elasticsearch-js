@@ -1,4 +1,4 @@
-## Interface `RelocationFailureInfo`
+# `RelocationFailureInfo` [interface-RelocationFailureInfo]
 
 | Name | Type | Description |
 | - | - | - |

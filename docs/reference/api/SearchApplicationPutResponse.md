@@ -1,4 +1,4 @@
-## Interface `SearchApplicationPutResponse`
+# `SearchApplicationPutResponse` [interface-SearchApplicationPutResponse]
 
 | Name | Type | Description |
 | - | - | - |

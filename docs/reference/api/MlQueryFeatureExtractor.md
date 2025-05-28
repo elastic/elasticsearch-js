@@ -1,4 +1,4 @@
-## Interface `MlQueryFeatureExtractor`
+# `MlQueryFeatureExtractor` [interface-MlQueryFeatureExtractor]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SqlClearCursorRequest`
+# `SqlClearCursorRequest` [interface-SqlClearCursorRequest]
 
 | Name | Type | Description |
 | - | - | - |

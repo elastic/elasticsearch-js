@@ -1,4 +1,4 @@
-## Interface `IngestRemoveProcessor`
+# `IngestRemoveProcessor` [interface-IngestRemoveProcessor]
 
 | Name | Type | Description |
 | - | - | - |

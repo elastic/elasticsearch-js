@@ -1,4 +1,4 @@
-## Interface `WatcherTriggerContainer`
+# `WatcherTriggerContainer` [interface-WatcherTriggerContainer]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlGetFiltersRequest`
+# `MlGetFiltersRequest` [interface-MlGetFiltersRequest]
 
 | Name | Type | Description |
 | - | - | - |

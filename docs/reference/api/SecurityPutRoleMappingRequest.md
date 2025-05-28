@@ -1,4 +1,4 @@
-## Interface `SecurityPutRoleMappingRequest`
+# `SecurityPutRoleMappingRequest` [interface-SecurityPutRoleMappingRequest]
 
 | Name | Type | Description |
 | - | - | - |

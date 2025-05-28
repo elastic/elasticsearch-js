@@ -1,4 +1,4 @@
-## Interface `SecuritySuggestUserProfilesHint`
+# `SecuritySuggestUserProfilesHint` [interface-SecuritySuggestUserProfilesHint]
 
 | Name | Type | Description |
 | - | - | - |

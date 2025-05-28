@@ -1,4 +1,4 @@
-## Interface `AggregationsUnmappedSamplerAggregateKeys`
+# `AggregationsUnmappedSamplerAggregateKeys` [interface-AggregationsUnmappedSamplerAggregateKeys]
 
 | Name | Type | Description |
 | - | - | - |

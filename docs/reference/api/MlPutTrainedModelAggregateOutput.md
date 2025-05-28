@@ -1,4 +1,4 @@
-## Interface `MlPutTrainedModelAggregateOutput`
+# `MlPutTrainedModelAggregateOutput` [interface-MlPutTrainedModelAggregateOutput]
 
 | Name | Type | Description |
 | - | - | - |

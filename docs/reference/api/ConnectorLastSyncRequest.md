@@ -1,4 +1,4 @@
-## Interface `ConnectorLastSyncRequest`
+# `ConnectorLastSyncRequest` [interface-ConnectorLastSyncRequest]
 
 | Name | Type | Description |
 | - | - | - |

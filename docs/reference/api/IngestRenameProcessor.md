@@ -1,4 +1,4 @@
-## Interface `IngestRenameProcessor`
+# `IngestRenameProcessor` [interface-IngestRenameProcessor]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesDeleteDataLifecycleRequest`
+# `IndicesDeleteDataLifecycleRequest` [interface-IndicesDeleteDataLifecycleRequest]
 
 | Name | Type | Description |
 | - | - | - |

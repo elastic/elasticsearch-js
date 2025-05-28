@@ -1,4 +1,4 @@
-## Interface `MlJobBlocked`
+# `MlJobBlocked` [interface-MlJobBlocked]
 
 | Name | Type | Description |
 | - | - | - |

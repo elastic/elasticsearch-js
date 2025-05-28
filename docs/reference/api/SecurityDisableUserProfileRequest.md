@@ -1,4 +1,4 @@
-## Interface `SecurityDisableUserProfileRequest`
+# `SecurityDisableUserProfileRequest` [interface-SecurityDisableUserProfileRequest]
 
 | Name | Type | Description |
 | - | - | - |

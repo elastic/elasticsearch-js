@@ -1,4 +1,4 @@
-## Interface `MlPutDataFrameAnalyticsResponse`
+# `MlPutDataFrameAnalyticsResponse` [interface-MlPutDataFrameAnalyticsResponse]
 
 | Name | Type | Description |
 | - | - | - |

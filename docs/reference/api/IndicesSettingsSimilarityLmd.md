@@ -1,4 +1,4 @@
-## Interface `IndicesSettingsSimilarityLmd`
+# `IndicesSettingsSimilarityLmd` [interface-IndicesSettingsSimilarityLmd]
 
 | Name | Type | Description |
 | - | - | - |

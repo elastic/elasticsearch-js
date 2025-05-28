@@ -1,4 +1,4 @@
-## Interface `MlRunningStateSearchInterval`
+# `MlRunningStateSearchInterval` [interface-MlRunningStateSearchInterval]
 
 | Name | Type | Description |
 | - | - | - |

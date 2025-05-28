@@ -1,4 +1,4 @@
-## Interface `IlmAllocateAction`
+# `IlmAllocateAction` [interface-IlmAllocateAction]
 
 | Name | Type | Description |
 | - | - | - |

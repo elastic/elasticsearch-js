@@ -1,4 +1,4 @@
-## Interface `MlQuestionAnsweringInferenceOptions`
+# `MlQuestionAnsweringInferenceOptions` [interface-MlQuestionAnsweringInferenceOptions]
 
 | Name | Type | Description |
 | - | - | - |

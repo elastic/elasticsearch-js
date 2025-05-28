@@ -1,4 +1,4 @@
-## Interface `NodesTransport`
+# `NodesTransport` [interface-NodesTransport]
 
 | Name | Type | Description |
 | - | - | - |

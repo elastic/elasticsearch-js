@@ -1,4 +1,4 @@
-## Interface `GetScriptLanguagesLanguageContext`
+# `GetScriptLanguagesLanguageContext` [interface-GetScriptLanguagesLanguageContext]
 
 | Name | Type | Description |
 | - | - | - |

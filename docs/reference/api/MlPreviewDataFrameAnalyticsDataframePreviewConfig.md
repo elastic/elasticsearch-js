@@ -1,4 +1,4 @@
-## Interface `MlPreviewDataFrameAnalyticsDataframePreviewConfig`
+# `MlPreviewDataFrameAnalyticsDataframePreviewConfig` [interface-MlPreviewDataFrameAnalyticsDataframePreviewConfig]
 
 | Name | Type | Description |
 | - | - | - |

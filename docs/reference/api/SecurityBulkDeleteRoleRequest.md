@@ -1,4 +1,4 @@
-## Interface `SecurityBulkDeleteRoleRequest`
+# `SecurityBulkDeleteRoleRequest` [interface-SecurityBulkDeleteRoleRequest]
 
 | Name | Type | Description |
 | - | - | - |

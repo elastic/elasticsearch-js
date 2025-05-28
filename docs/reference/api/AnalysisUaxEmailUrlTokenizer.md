@@ -1,4 +1,4 @@
-## Interface `AnalysisUaxEmailUrlTokenizer`
+# `AnalysisUaxEmailUrlTokenizer` [interface-AnalysisUaxEmailUrlTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

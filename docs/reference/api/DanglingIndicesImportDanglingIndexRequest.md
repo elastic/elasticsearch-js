@@ -1,4 +1,4 @@
-## Interface `DanglingIndicesImportDanglingIndexRequest`
+# `DanglingIndicesImportDanglingIndexRequest` [interface-DanglingIndicesImportDanglingIndexRequest]
 
 | Name | Type | Description |
 | - | - | - |

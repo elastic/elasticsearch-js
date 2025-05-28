@@ -1,4 +1,4 @@
-## Interface `SecurityUpdateUserProfileDataRequest`
+# `SecurityUpdateUserProfileDataRequest` [interface-SecurityUpdateUserProfileDataRequest]
 
 | Name | Type | Description |
 | - | - | - |

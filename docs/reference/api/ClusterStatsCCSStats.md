@@ -1,4 +1,4 @@
-## Interface `ClusterStatsCCSStats`
+# `ClusterStatsCCSStats` [interface-ClusterStatsCCSStats]
 
 | Name | Type | Description |
 | - | - | - |

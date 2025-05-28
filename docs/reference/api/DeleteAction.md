@@ -1,4 +1,4 @@
-## Interface `DeleteAction`
+# `DeleteAction` [interface-DeleteAction]
 
 | Name | Type | Description |
 | - | - | - |

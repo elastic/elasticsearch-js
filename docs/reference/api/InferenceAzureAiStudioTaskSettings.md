@@ -1,4 +1,4 @@
-## Interface `InferenceAzureAiStudioTaskSettings`
+# `InferenceAzureAiStudioTaskSettings` [interface-InferenceAzureAiStudioTaskSettings]
 
 | Name | Type | Description |
 | - | - | - |

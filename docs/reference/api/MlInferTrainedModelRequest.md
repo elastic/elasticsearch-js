@@ -1,4 +1,4 @@
-## Interface `MlInferTrainedModelRequest`
+# `MlInferTrainedModelRequest` [interface-MlInferTrainedModelRequest]
 
 | Name | Type | Description |
 | - | - | - |

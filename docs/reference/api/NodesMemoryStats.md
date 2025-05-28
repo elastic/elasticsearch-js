@@ -1,4 +1,4 @@
-## Interface `NodesMemoryStats`
+# `NodesMemoryStats` [interface-NodesMemoryStats]
 
 | Name | Type | Description |
 | - | - | - |

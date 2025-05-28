@@ -1,4 +1,4 @@
-## Interface `XpackUsageMlJobForecasts`
+# `XpackUsageMlJobForecasts` [interface-XpackUsageMlJobForecasts]
 
 | Name | Type | Description |
 | - | - | - |

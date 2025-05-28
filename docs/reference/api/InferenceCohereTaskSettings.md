@@ -1,4 +1,4 @@
-## Interface `InferenceCohereTaskSettings`
+# `InferenceCohereTaskSettings` [interface-InferenceCohereTaskSettings]
 
 | Name | Type | Description |
 | - | - | - |

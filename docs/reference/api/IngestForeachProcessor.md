@@ -1,4 +1,4 @@
-## Interface `IngestForeachProcessor`
+# `IngestForeachProcessor` [interface-IngestForeachProcessor]
 
 | Name | Type | Description |
 | - | - | - |

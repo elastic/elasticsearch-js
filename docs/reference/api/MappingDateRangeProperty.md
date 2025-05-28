@@ -1,4 +1,4 @@
-## Interface `MappingDateRangeProperty`
+# `MappingDateRangeProperty` [interface-MappingDateRangeProperty]
 
 | Name | Type | Description |
 | - | - | - |

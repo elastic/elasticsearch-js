@@ -1,4 +1,4 @@
-## Interface `CatPendingTasksRequest`
+# `CatPendingTasksRequest` [interface-CatPendingTasksRequest]
 
 | Name | Type | Description |
 | - | - | - |

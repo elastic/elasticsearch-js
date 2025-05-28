@@ -1,4 +1,4 @@
-## Interface `QueryDslWrapperQuery`
+# `QueryDslWrapperQuery` [interface-QueryDslWrapperQuery]
 
 | Name | Type | Description |
 | - | - | - |

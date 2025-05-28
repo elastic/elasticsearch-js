@@ -1,4 +1,4 @@
-## Interface `InferencePutWatsonxRequest`
+# `InferencePutWatsonxRequest` [interface-InferencePutWatsonxRequest]
 
 | Name | Type | Description |
 | - | - | - |

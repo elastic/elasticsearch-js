@@ -1,4 +1,4 @@
-## Interface `InferenceOpenAIServiceSettings`
+# `InferenceOpenAIServiceSettings` [interface-InferenceOpenAIServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

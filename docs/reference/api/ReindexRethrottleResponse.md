@@ -1,4 +1,4 @@
-## Interface `ReindexRethrottleResponse`
+# `ReindexRethrottleResponse` [interface-ReindexRethrottleResponse]
 
 | Name | Type | Description |
 | - | - | - |

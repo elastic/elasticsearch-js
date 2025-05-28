@@ -1,4 +1,4 @@
-## Interface `MlTextEmbeddingInferenceOptions`
+# `MlTextEmbeddingInferenceOptions` [interface-MlTextEmbeddingInferenceOptions]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `BulkResponseItem`
+# `BulkResponseItem` [interface-BulkResponseItem]
 
 | Name | Type | Description |
 | - | - | - |

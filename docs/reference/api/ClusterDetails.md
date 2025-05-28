@@ -1,4 +1,4 @@
-## Interface `ClusterDetails`
+# `ClusterDetails` [interface-ClusterDetails]
 
 | Name | Type | Description |
 | - | - | - |

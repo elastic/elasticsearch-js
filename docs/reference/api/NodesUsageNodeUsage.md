@@ -1,4 +1,4 @@
-## Interface `NodesUsageNodeUsage`
+# `NodesUsageNodeUsage` [interface-NodesUsageNodeUsage]
 
 | Name | Type | Description |
 | - | - | - |

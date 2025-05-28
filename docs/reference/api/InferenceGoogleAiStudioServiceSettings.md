@@ -1,4 +1,4 @@
-## Interface `InferenceGoogleAiStudioServiceSettings`
+# `InferenceGoogleAiStudioServiceSettings` [interface-InferenceGoogleAiStudioServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

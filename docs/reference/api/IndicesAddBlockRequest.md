@@ -1,4 +1,4 @@
-## Interface `IndicesAddBlockRequest`
+# `IndicesAddBlockRequest` [interface-IndicesAddBlockRequest]
 
 | Name | Type | Description |
 | - | - | - |

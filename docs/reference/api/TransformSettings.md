@@ -1,4 +1,4 @@
-## Interface `TransformSettings`
+# `TransformSettings` [interface-TransformSettings]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `NestedSortValue`
+# `NestedSortValue` [interface-NestedSortValue]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `LatLonGeoLocation`
+# `LatLonGeoLocation` [interface-LatLonGeoLocation]
 
 | Name | Type | Description |
 | - | - | - |

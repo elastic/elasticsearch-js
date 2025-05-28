@@ -1,4 +1,4 @@
-## Interface `InferenceAmazonBedrockServiceSettings`
+# `InferenceAmazonBedrockServiceSettings` [interface-InferenceAmazonBedrockServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesMigrateReindexSourceIndex`
+# `IndicesMigrateReindexSourceIndex` [interface-IndicesMigrateReindexSourceIndex]
 
 | Name | Type | Description |
 | - | - | - |

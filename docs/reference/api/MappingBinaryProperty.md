@@ -1,4 +1,4 @@
-## Interface `MappingBinaryProperty`
+# `MappingBinaryProperty` [interface-MappingBinaryProperty]
 
 | Name | Type | Description |
 | - | - | - |

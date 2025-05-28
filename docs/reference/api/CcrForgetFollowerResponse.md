@@ -1,4 +1,4 @@
-## Interface `CcrForgetFollowerResponse`
+# `CcrForgetFollowerResponse` [interface-CcrForgetFollowerResponse]
 
 | Name | Type | Description |
 | - | - | - |

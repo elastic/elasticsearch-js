@@ -1,4 +1,4 @@
-## Interface `MappingPointProperty`
+# `MappingPointProperty` [interface-MappingPointProperty]
 
 | Name | Type | Description |
 | - | - | - |

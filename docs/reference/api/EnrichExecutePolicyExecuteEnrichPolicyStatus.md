@@ -1,4 +1,4 @@
-## Interface `EnrichExecutePolicyExecuteEnrichPolicyStatus`
+# `EnrichExecutePolicyExecuteEnrichPolicyStatus` [interface-EnrichExecutePolicyExecuteEnrichPolicyStatus]
 
 | Name | Type | Description |
 | - | - | - |

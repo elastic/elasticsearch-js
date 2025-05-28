@@ -1,4 +1,4 @@
-## Interface `AggregationsHoltLinearModelSettings`
+# `AggregationsHoltLinearModelSettings` [interface-AggregationsHoltLinearModelSettings]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `ConnectorUpdatePipelineRequest`
+# `ConnectorUpdatePipelineRequest` [interface-ConnectorUpdatePipelineRequest]
 
 | Name | Type | Description |
 | - | - | - |

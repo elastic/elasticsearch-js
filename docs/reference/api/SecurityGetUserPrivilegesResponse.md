@@ -1,4 +1,4 @@
-## Interface `SecurityGetUserPrivilegesResponse`
+# `SecurityGetUserPrivilegesResponse` [interface-SecurityGetUserPrivilegesResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsBucketCorrelationFunctionCountCorrelation`
+# `AggregationsBucketCorrelationFunctionCountCorrelation` [interface-AggregationsBucketCorrelationFunctionCountCorrelation]
 
 | Name | Type | Description |
 | - | - | - |

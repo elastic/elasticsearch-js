@@ -1,4 +1,4 @@
-## Interface `ClusterGetComponentTemplateResponse`
+# `ClusterGetComponentTemplateResponse` [interface-ClusterGetComponentTemplateResponse]
 
 | Name | Type | Description |
 | - | - | - |

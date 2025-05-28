@@ -1,4 +1,4 @@
-## Interface `AnalysisHunspellTokenFilter`
+# `AnalysisHunspellTokenFilter` [interface-AnalysisHunspellTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

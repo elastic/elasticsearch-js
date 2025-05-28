@@ -1,4 +1,4 @@
-## Interface `XpackUsageIpFilter`
+# `XpackUsageIpFilter` [interface-XpackUsageIpFilter]
 
 | Name | Type | Description |
 | - | - | - |

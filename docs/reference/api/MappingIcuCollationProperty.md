@@ -1,4 +1,4 @@
-## Interface `MappingIcuCollationProperty`
+# `MappingIcuCollationProperty` [interface-MappingIcuCollationProperty]
 
 | Name | Type | Description |
 | - | - | - |

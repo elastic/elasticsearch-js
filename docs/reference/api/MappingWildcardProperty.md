@@ -1,4 +1,4 @@
-## Interface `MappingWildcardProperty`
+# `MappingWildcardProperty` [interface-MappingWildcardProperty]
 
 | Name | Type | Description |
 | - | - | - |

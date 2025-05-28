@@ -1,4 +1,4 @@
-## Interface `IndicesPutIndexTemplateIndexTemplateMapping`
+# `IndicesPutIndexTemplateIndexTemplateMapping` [interface-IndicesPutIndexTemplateIndexTemplateMapping]
 
 | Name | Type | Description |
 | - | - | - |

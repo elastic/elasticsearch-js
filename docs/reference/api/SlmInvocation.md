@@ -1,4 +1,4 @@
-## Interface `SlmInvocation`
+# `SlmInvocation` [interface-SlmInvocation]
 
 | Name | Type | Description |
 | - | - | - |

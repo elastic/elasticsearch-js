@@ -1,4 +1,4 @@
-## Interface `IngestInferenceConfigRegression`
+# `IngestInferenceConfigRegression` [interface-IngestInferenceConfigRegression]
 
 | Name | Type | Description |
 | - | - | - |

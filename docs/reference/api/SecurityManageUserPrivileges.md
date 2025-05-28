@@ -1,4 +1,4 @@
-## Interface `SecurityManageUserPrivileges`
+# `SecurityManageUserPrivileges` [interface-SecurityManageUserPrivileges]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsGeoTileGridAggregate`
+# `AggregationsGeoTileGridAggregate` [interface-AggregationsGeoTileGridAggregate]
 
 | Name | Type | Description |
 | - | - | - |

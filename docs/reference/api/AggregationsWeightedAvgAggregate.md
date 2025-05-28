@@ -1,4 +1,4 @@
-## Interface `AggregationsWeightedAvgAggregate`
+# `AggregationsWeightedAvgAggregate` [interface-AggregationsWeightedAvgAggregate]
 
 | Name | Type | Description |
 | - | - | - |

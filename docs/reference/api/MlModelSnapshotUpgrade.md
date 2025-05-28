@@ -1,4 +1,4 @@
-## Interface `MlModelSnapshotUpgrade`
+# `MlModelSnapshotUpgrade` [interface-MlModelSnapshotUpgrade]
 
 | Name | Type | Description |
 | - | - | - |

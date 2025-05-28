@@ -1,4 +1,4 @@
-## Interface `InferenceInferenceChunkingSettings`
+# `InferenceInferenceChunkingSettings` [interface-InferenceInferenceChunkingSettings]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `HealthReportRequest`
+# `HealthReportRequest` [interface-HealthReportRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `QueryRulesQueryRuleActions`
+# `QueryRulesQueryRuleActions` [interface-QueryRulesQueryRuleActions]
 
 | Name | Type | Description |
 | - | - | - |

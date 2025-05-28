@@ -1,4 +1,4 @@
-## Interface `IndicesExistsIndexTemplateRequest`
+# `IndicesExistsIndexTemplateRequest` [interface-IndicesExistsIndexTemplateRequest]
 
 | Name | Type | Description |
 | - | - | - |

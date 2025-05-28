@@ -1,4 +1,4 @@
-## Interface `FeaturesFeature`
+# `FeaturesFeature` [interface-FeaturesFeature]
 
 | Name | Type | Description |
 | - | - | - |

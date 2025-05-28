@@ -1,4 +1,4 @@
-## Interface `SecurityOidcPrepareAuthenticationResponse`
+# `SecurityOidcPrepareAuthenticationResponse` [interface-SecurityOidcPrepareAuthenticationResponse]
 
 | Name | Type | Description |
 | - | - | - |

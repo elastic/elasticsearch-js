@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoSettingsHttpType`
+# `NodesInfoNodeInfoSettingsHttpType` [interface-NodesInfoNodeInfoSettingsHttpType]
 
 | Name | Type | Description |
 | - | - | - |

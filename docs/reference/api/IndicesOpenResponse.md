@@ -1,4 +1,4 @@
-## Interface `IndicesOpenResponse`
+# `IndicesOpenResponse` [interface-IndicesOpenResponse]
 
 | Name | Type | Description |
 | - | - | - |

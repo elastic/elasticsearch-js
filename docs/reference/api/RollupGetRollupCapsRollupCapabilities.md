@@ -1,4 +1,4 @@
-## Interface `RollupGetRollupCapsRollupCapabilities`
+# `RollupGetRollupCapsRollupCapabilities` [interface-RollupGetRollupCapsRollupCapabilities]
 
 | Name | Type | Description |
 | - | - | - |

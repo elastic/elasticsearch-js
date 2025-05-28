@@ -1,4 +1,4 @@
-## Interface `SnapshotFileCountSnapshotStats`
+# `SnapshotFileCountSnapshotStats` [interface-SnapshotFileCountSnapshotStats]
 
 | Name | Type | Description |
 | - | - | - |

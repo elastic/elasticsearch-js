@@ -1,4 +1,4 @@
-## Interface `TermvectorsRequest`
+# `TermvectorsRequest` [interface-TermvectorsRequest]
 
 | Name | Type | Description |
 | - | - | - |

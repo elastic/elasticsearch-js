@@ -1,4 +1,4 @@
-## Interface `IngestScriptProcessor`
+# `IngestScriptProcessor` [interface-IngestScriptProcessor]
 
 | Name | Type | Description |
 | - | - | - |

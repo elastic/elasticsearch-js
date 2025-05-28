@@ -1,4 +1,4 @@
-## Interface `IndicesStatsShardSequenceNumber`
+# `IndicesStatsShardSequenceNumber` [interface-IndicesStatsShardSequenceNumber]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `ClusterStatsOperatingSystemMemoryInfo`
+# `ClusterStatsOperatingSystemMemoryInfo` [interface-ClusterStatsOperatingSystemMemoryInfo]
 
 | Name | Type | Description |
 | - | - | - |

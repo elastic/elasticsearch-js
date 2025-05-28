@@ -1,4 +1,4 @@
-## Interface `CatCatRequestBase`
+# `CatCatRequestBase` [interface-CatCatRequestBase]
 
 | Name | Type | Description |
 | - | - | - |

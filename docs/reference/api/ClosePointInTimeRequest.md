@@ -1,4 +1,4 @@
-## Interface `ClosePointInTimeRequest`
+# `ClosePointInTimeRequest` [interface-ClosePointInTimeRequest]
 
 | Name | Type | Description |
 | - | - | - |

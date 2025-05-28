@@ -1,4 +1,4 @@
-## Interface `SecurityQueryApiKeysRequest`
+# `SecurityQueryApiKeysRequest` [interface-SecurityQueryApiKeysRequest]
 
 | Name | Type | Description |
 | - | - | - |

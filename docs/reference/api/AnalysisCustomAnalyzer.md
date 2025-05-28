@@ -1,4 +1,4 @@
-## Interface `AnalysisCustomAnalyzer`
+# `AnalysisCustomAnalyzer` [interface-AnalysisCustomAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

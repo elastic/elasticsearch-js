@@ -1,4 +1,4 @@
-## Interface `ClosePointInTimeResponse`
+# `ClosePointInTimeResponse` [interface-ClosePointInTimeResponse]
 
 | Name | Type | Description |
 | - | - | - |

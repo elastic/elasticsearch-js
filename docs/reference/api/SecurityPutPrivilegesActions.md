@@ -1,4 +1,4 @@
-## Interface `SecurityPutPrivilegesActions`
+# `SecurityPutPrivilegesActions` [interface-SecurityPutPrivilegesActions]
 
 | Name | Type | Description |
 | - | - | - |

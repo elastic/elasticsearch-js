@@ -1,4 +1,4 @@
-## Interface `IndicesPromoteDataStreamRequest`
+# `IndicesPromoteDataStreamRequest` [interface-IndicesPromoteDataStreamRequest]
 
 | Name | Type | Description |
 | - | - | - |

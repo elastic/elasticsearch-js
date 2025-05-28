@@ -1,4 +1,4 @@
-## Interface `MlPutTrainedModelAliasRequest`
+# `MlPutTrainedModelAliasRequest` [interface-MlPutTrainedModelAliasRequest]
 
 | Name | Type | Description |
 | - | - | - |

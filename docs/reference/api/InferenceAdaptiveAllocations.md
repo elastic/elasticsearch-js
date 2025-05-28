@@ -1,4 +1,4 @@
-## Interface `InferenceAdaptiveAllocations`
+# `InferenceAdaptiveAllocations` [interface-InferenceAdaptiveAllocations]
 
 | Name | Type | Description |
 | - | - | - |

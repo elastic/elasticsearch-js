@@ -1,4 +1,4 @@
-## Interface `QueryDslSemanticQuery`
+# `QueryDslSemanticQuery` [interface-QueryDslSemanticQuery]
 
 | Name | Type | Description |
 | - | - | - |

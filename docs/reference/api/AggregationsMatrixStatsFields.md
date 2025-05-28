@@ -1,4 +1,4 @@
-## Interface `AggregationsMatrixStatsFields`
+# `AggregationsMatrixStatsFields` [interface-AggregationsMatrixStatsFields]
 
 | Name | Type | Description |
 | - | - | - |

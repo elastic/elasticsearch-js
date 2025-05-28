@@ -1,4 +1,4 @@
-## Interface `AnalysisRemoveDuplicatesTokenFilter`
+# `AnalysisRemoveDuplicatesTokenFilter` [interface-AnalysisRemoveDuplicatesTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `WatcherExecutionResultCondition`
+# `WatcherExecutionResultCondition` [interface-WatcherExecutionResultCondition]
 
 | Name | Type | Description |
 | - | - | - |

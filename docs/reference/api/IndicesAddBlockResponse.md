@@ -1,4 +1,4 @@
-## Interface `IndicesAddBlockResponse`
+# `IndicesAddBlockResponse` [interface-IndicesAddBlockResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `RollupDeleteJobResponse`
+# `RollupDeleteJobResponse` [interface-RollupDeleteJobResponse]
 
 | Name | Type | Description |
 | - | - | - |

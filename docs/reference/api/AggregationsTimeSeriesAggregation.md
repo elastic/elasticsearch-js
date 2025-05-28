@@ -1,4 +1,4 @@
-## Interface `AggregationsTimeSeriesAggregation`
+# `AggregationsTimeSeriesAggregation` [interface-AggregationsTimeSeriesAggregation]
 
 | Name | Type | Description |
 | - | - | - |

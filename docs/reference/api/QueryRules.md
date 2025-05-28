@@ -1,19 +1,19 @@
-## `QueryRules`
+# `QueryRules` [class-QueryRules]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new QueryRules(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-QueryRules]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-QueryRules]
 
 | Name | Signature | Description |
 | - | - | - |

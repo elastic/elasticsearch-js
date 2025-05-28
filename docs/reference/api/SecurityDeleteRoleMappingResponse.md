@@ -1,4 +1,4 @@
-## Interface `SecurityDeleteRoleMappingResponse`
+# `SecurityDeleteRoleMappingResponse` [interface-SecurityDeleteRoleMappingResponse]
 
 | Name | Type | Description |
 | - | - | - |

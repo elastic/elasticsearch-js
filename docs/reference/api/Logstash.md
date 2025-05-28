@@ -1,19 +1,19 @@
-## `Logstash`
+# `Logstash` [class-Logstash]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Logstash(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Logstash]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Logstash]
 
 | Name | Signature | Description |
 | - | - | - |

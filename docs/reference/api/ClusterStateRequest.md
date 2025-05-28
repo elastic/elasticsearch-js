@@ -1,4 +1,4 @@
-## Interface `ClusterStateRequest`
+# `ClusterStateRequest` [interface-ClusterStateRequest]
 
 | Name | Type | Description |
 | - | - | - |

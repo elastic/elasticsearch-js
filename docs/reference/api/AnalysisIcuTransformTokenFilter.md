@@ -1,4 +1,4 @@
-## Interface `AnalysisIcuTransformTokenFilter`
+# `AnalysisIcuTransformTokenFilter` [interface-AnalysisIcuTransformTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

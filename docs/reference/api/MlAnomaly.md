@@ -1,4 +1,4 @@
-## Interface `MlAnomaly`
+# `MlAnomaly` [interface-MlAnomaly]
 
 | Name | Type | Description |
 | - | - | - |

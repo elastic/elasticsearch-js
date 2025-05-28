@@ -1,4 +1,4 @@
-## Interface `AggregationsPipelineAggregationBase`
+# `AggregationsPipelineAggregationBase` [interface-AggregationsPipelineAggregationBase]
 
 | Name | Type | Description |
 | - | - | - |

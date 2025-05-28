@@ -1,4 +1,4 @@
-## Interface `SecurityEnrollKibanaRequest`
+# `SecurityEnrollKibanaRequest` [interface-SecurityEnrollKibanaRequest]
 
 | Name | Type | Description |
 | - | - | - |

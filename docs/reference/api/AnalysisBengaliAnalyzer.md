@@ -1,4 +1,4 @@
-## Interface `AnalysisBengaliAnalyzer`
+# `AnalysisBengaliAnalyzer` [interface-AnalysisBengaliAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

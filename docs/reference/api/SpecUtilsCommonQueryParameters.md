@@ -1,4 +1,4 @@
-## Interface `SpecUtilsCommonQueryParameters`
+# `SpecUtilsCommonQueryParameters` [interface-SpecUtilsCommonQueryParameters]
 
 | Name | Type | Description |
 | - | - | - |

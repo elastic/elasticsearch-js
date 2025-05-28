@@ -1,4 +1,4 @@
-## Interface `IlmForceMergeAction`
+# `IlmForceMergeAction` [interface-IlmForceMergeAction]
 
 | Name | Type | Description |
 | - | - | - |

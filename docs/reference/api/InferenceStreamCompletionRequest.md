@@ -1,4 +1,4 @@
-## Interface `InferenceStreamCompletionRequest`
+# `InferenceStreamCompletionRequest` [interface-InferenceStreamCompletionRequest]
 
 | Name | Type | Description |
 | - | - | - |

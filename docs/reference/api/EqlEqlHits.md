@@ -1,4 +1,4 @@
-## Interface `EqlEqlHits`
+# `EqlEqlHits` [interface-EqlEqlHits]
 
 | Name | Type | Description |
 | - | - | - |

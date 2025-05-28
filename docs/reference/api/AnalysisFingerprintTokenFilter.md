@@ -1,4 +1,4 @@
-## Interface `AnalysisFingerprintTokenFilter`
+# `AnalysisFingerprintTokenFilter` [interface-AnalysisFingerprintTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

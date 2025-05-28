@@ -1,4 +1,4 @@
-## Interface `InferenceRerankedInferenceResult`
+# `InferenceRerankedInferenceResult` [interface-InferenceRerankedInferenceResult]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoTransport`
+# `NodesInfoNodeInfoTransport` [interface-NodesInfoNodeInfoTransport]
 
 | Name | Type | Description |
 | - | - | - |

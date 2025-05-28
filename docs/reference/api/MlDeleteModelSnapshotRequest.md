@@ -1,4 +1,4 @@
-## Interface `MlDeleteModelSnapshotRequest`
+# `MlDeleteModelSnapshotRequest` [interface-MlDeleteModelSnapshotRequest]
 
 | Name | Type | Description |
 | - | - | - |

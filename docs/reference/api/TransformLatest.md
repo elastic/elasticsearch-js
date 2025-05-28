@@ -1,4 +1,4 @@
-## Interface `TransformLatest`
+# `TransformLatest` [interface-TransformLatest]
 
 | Name | Type | Description |
 | - | - | - |

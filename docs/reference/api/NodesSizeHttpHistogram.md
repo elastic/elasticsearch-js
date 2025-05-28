@@ -1,4 +1,4 @@
-## Interface `NodesSizeHttpHistogram`
+# `NodesSizeHttpHistogram` [interface-NodesSizeHttpHistogram]
 
 | Name | Type | Description |
 | - | - | - |

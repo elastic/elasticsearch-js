@@ -1,4 +1,4 @@
-## Interface `ReindexDestination`
+# `ReindexDestination` [interface-ReindexDestination]
 
 | Name | Type | Description |
 | - | - | - |

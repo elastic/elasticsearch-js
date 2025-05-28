@@ -1,4 +1,4 @@
-## Interface `RankEvalDocumentRating`
+# `RankEvalDocumentRating` [interface-RankEvalDocumentRating]
 
 | Name | Type | Description |
 | - | - | - |

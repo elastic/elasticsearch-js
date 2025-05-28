@@ -1,4 +1,4 @@
-## Interface `AggregationsSimpleMovingAverageAggregation`
+# `AggregationsSimpleMovingAverageAggregation` [interface-AggregationsSimpleMovingAverageAggregation]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesDeleteIndexTemplateRequest`
+# `IndicesDeleteIndexTemplateRequest` [interface-IndicesDeleteIndexTemplateRequest]
 
 | Name | Type | Description |
 | - | - | - |

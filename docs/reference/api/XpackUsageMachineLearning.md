@@ -1,4 +1,4 @@
-## Interface `XpackUsageMachineLearning`
+# `XpackUsageMachineLearning` [interface-XpackUsageMachineLearning]
 
 | Name | Type | Description |
 | - | - | - |

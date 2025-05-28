@@ -1,4 +1,4 @@
-## Interface `IngestPipelineProcessorResult`
+# `IngestPipelineProcessorResult` [interface-IngestPipelineProcessorResult]
 
 | Name | Type | Description |
 | - | - | - |

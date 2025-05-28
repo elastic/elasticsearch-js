@@ -1,4 +1,4 @@
-## Interface `IndicesValidateQueryIndicesValidationExplanation`
+# `IndicesValidateQueryIndicesValidationExplanation` [interface-IndicesValidateQueryIndicesValidationExplanation]
 
 | Name | Type | Description |
 | - | - | - |

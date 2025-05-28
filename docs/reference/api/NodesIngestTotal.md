@@ -1,4 +1,4 @@
-## Interface `NodesIngestTotal`
+# `NodesIngestTotal` [interface-NodesIngestTotal]
 
 | Name | Type | Description |
 | - | - | - |

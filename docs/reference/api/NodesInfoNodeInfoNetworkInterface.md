@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoNetworkInterface`
+# `NodesInfoNodeInfoNetworkInterface` [interface-NodesInfoNodeInfoNetworkInterface]
 
 | Name | Type | Description |
 | - | - | - |

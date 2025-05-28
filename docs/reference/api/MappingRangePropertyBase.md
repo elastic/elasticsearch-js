@@ -1,4 +1,4 @@
-## Interface `MappingRangePropertyBase`
+# `MappingRangePropertyBase` [interface-MappingRangePropertyBase]
 
 | Name | Type | Description |
 | - | - | - |

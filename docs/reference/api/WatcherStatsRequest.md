@@ -1,4 +1,4 @@
-## Interface `WatcherStatsRequest`
+# `WatcherStatsRequest` [interface-WatcherStatsRequest]
 
 | Name | Type | Description |
 | - | - | - |

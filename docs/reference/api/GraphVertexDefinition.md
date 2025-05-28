@@ -1,4 +1,4 @@
-## Interface `GraphVertexDefinition`
+# `GraphVertexDefinition` [interface-GraphVertexDefinition]
 
 | Name | Type | Description |
 | - | - | - |

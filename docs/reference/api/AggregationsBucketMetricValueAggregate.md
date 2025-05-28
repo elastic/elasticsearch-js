@@ -1,4 +1,4 @@
-## Interface `AggregationsBucketMetricValueAggregate`
+# `AggregationsBucketMetricValueAggregate` [interface-AggregationsBucketMetricValueAggregate]
 
 | Name | Type | Description |
 | - | - | - |

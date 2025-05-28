@@ -1,4 +1,4 @@
-## Interface `IndicesUpdateAliasesAddAction`
+# `IndicesUpdateAliasesAddAction` [interface-IndicesUpdateAliasesAddAction]
 
 | Name | Type | Description |
 | - | - | - |

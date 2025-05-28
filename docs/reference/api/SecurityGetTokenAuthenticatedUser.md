@@ -1,4 +1,4 @@
-## Interface `SecurityGetTokenAuthenticatedUser`
+# `SecurityGetTokenAuthenticatedUser` [interface-SecurityGetTokenAuthenticatedUser]
 
 | Name | Type | Description |
 | - | - | - |

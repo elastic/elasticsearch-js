@@ -1,4 +1,4 @@
-## Interface `TranslogStats`
+# `TranslogStats` [interface-TranslogStats]
 
 | Name | Type | Description |
 | - | - | - |

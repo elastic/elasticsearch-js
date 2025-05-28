@@ -1,4 +1,4 @@
-## Interface `XpackUsageEqlFeaturesJoin`
+# `XpackUsageEqlFeaturesJoin` [interface-XpackUsageEqlFeaturesJoin]
 
 | Name | Type | Description |
 | - | - | - |

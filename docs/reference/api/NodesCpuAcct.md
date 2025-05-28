@@ -1,4 +1,4 @@
-## Interface `NodesCpuAcct`
+# `NodesCpuAcct` [interface-NodesCpuAcct]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IngestIpinfo`
+# `IngestIpinfo` [interface-IngestIpinfo]
 
 | Name | Type | Description |
 | - | - | - |

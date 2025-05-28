@@ -1,4 +1,4 @@
-## Interface `CatRepositoriesRequest`
+# `CatRepositoriesRequest` [interface-CatRepositoriesRequest]
 
 | Name | Type | Description |
 | - | - | - |

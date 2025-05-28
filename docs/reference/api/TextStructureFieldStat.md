@@ -1,4 +1,4 @@
-## Interface `TextStructureFieldStat`
+# `TextStructureFieldStat` [interface-TextStructureFieldStat]
 
 | Name | Type | Description |
 | - | - | - |

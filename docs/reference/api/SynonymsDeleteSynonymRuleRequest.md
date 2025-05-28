@@ -1,4 +1,4 @@
-## Interface `SynonymsDeleteSynonymRuleRequest`
+# `SynonymsDeleteSynonymRuleRequest` [interface-SynonymsDeleteSynonymRuleRequest]
 
 | Name | Type | Description |
 | - | - | - |

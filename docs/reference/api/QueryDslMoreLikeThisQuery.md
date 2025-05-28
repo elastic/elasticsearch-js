@@ -1,4 +1,4 @@
-## Interface `QueryDslMoreLikeThisQuery`
+# `QueryDslMoreLikeThisQuery` [interface-QueryDslMoreLikeThisQuery]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesCloseResponse`
+# `IndicesCloseResponse` [interface-IndicesCloseResponse]
 
 | Name | Type | Description |
 | - | - | - |

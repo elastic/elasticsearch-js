@@ -1,4 +1,4 @@
-## Interface `AnalysisHindiNormalizationTokenFilter`
+# `AnalysisHindiNormalizationTokenFilter` [interface-AnalysisHindiNormalizationTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

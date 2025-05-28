@@ -1,19 +1,19 @@
-## `Inference`
+# `Inference` [class-Inference]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Inference(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Inference]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Inference]
 
 | Name | Signature | Description |
 | - | - | - |

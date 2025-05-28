@@ -1,4 +1,4 @@
-## Interface `SecurityGetRoleRequest`
+# `SecurityGetRoleRequest` [interface-SecurityGetRoleRequest]
 
 | Name | Type | Description |
 | - | - | - |

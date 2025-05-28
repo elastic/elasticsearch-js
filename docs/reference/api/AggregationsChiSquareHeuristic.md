@@ -1,4 +1,4 @@
-## Interface `AggregationsChiSquareHeuristic`
+# `AggregationsChiSquareHeuristic` [interface-AggregationsChiSquareHeuristic]
 
 | Name | Type | Description |
 | - | - | - |

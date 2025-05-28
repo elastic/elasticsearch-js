@@ -1,4 +1,4 @@
-## Interface `DeleteScriptRequest`
+# `DeleteScriptRequest` [interface-DeleteScriptRequest]
 
 | Name | Type | Description |
 | - | - | - |

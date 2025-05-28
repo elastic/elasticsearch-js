@@ -1,4 +1,4 @@
-## Interface `QueryDslLikeDocument`
+# `QueryDslLikeDocument` [interface-QueryDslLikeDocument]
 
 | Name | Type | Description |
 | - | - | - |

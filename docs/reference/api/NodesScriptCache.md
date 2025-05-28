@@ -1,4 +1,4 @@
-## Interface `NodesScriptCache`
+# `NodesScriptCache` [interface-NodesScriptCache]
 
 | Name | Type | Description |
 | - | - | - |

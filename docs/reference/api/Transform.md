@@ -1,19 +1,19 @@
-## `Transform`
+# `Transform` [class-Transform]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Transform(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Transform]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Transform]
 
 | Name | Signature | Description |
 | - | - | - |

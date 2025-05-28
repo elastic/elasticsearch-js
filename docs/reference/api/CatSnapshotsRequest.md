@@ -1,4 +1,4 @@
-## Interface `CatSnapshotsRequest`
+# `CatSnapshotsRequest` [interface-CatSnapshotsRequest]
 
 | Name | Type | Description |
 | - | - | - |

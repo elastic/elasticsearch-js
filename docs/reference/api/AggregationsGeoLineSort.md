@@ -1,4 +1,4 @@
-## Interface `AggregationsGeoLineSort`
+# `AggregationsGeoLineSort` [interface-AggregationsGeoLineSort]
 
 | Name | Type | Description |
 | - | - | - |

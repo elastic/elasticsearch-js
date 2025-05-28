@@ -1,4 +1,4 @@
-## Interface `MlPostDataRequest`
+# `MlPostDataRequest` [interface-MlPostDataRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `LicensePostAcknowledgement`
+# `LicensePostAcknowledgement` [interface-LicensePostAcknowledgement]
 
 | Name | Type | Description |
 | - | - | - |

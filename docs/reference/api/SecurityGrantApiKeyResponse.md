@@ -1,4 +1,4 @@
-## Interface `SecurityGrantApiKeyResponse`
+# `SecurityGrantApiKeyResponse` [interface-SecurityGrantApiKeyResponse]
 
 | Name | Type | Description |
 | - | - | - |

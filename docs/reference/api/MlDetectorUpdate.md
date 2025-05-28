@@ -1,4 +1,4 @@
-## Interface `MlDetectorUpdate`
+# `MlDetectorUpdate` [interface-MlDetectorUpdate]
 
 | Name | Type | Description |
 | - | - | - |

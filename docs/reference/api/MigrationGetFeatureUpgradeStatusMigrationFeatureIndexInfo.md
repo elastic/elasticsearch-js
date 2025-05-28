@@ -1,4 +1,4 @@
-## Interface `MigrationGetFeatureUpgradeStatusMigrationFeatureIndexInfo`
+# `MigrationGetFeatureUpgradeStatusMigrationFeatureIndexInfo` [interface-MigrationGetFeatureUpgradeStatusMigrationFeatureIndexInfo]
 
 | Name | Type | Description |
 | - | - | - |

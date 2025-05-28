@@ -1,4 +1,4 @@
-## Interface `AggregationsBucketKsAggregation`
+# `AggregationsBucketKsAggregation` [interface-AggregationsBucketKsAggregation]
 
 | Name | Type | Description |
 | - | - | - |

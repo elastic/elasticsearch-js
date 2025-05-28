@@ -1,4 +1,4 @@
-## Interface `MlDetectionRule`
+# `MlDetectionRule` [interface-MlDetectionRule]
 
 | Name | Type | Description |
 | - | - | - |

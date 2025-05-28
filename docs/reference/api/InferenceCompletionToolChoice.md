@@ -1,4 +1,4 @@
-## Interface `InferenceCompletionToolChoice`
+# `InferenceCompletionToolChoice` [interface-InferenceCompletionToolChoice]
 
 | Name | Type | Description |
 | - | - | - |

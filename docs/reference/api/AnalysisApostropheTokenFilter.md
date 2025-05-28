@@ -1,4 +1,4 @@
-## Interface `AnalysisApostropheTokenFilter`
+# `AnalysisApostropheTokenFilter` [interface-AnalysisApostropheTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

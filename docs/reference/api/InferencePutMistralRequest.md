@@ -1,4 +1,4 @@
-## Interface `InferencePutMistralRequest`
+# `InferencePutMistralRequest` [interface-InferencePutMistralRequest]
 
 | Name | Type | Description |
 | - | - | - |

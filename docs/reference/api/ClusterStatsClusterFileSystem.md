@@ -1,4 +1,4 @@
-## Interface `ClusterStatsClusterFileSystem`
+# `ClusterStatsClusterFileSystem` [interface-ClusterStatsClusterFileSystem]
 
 | Name | Type | Description |
 | - | - | - |

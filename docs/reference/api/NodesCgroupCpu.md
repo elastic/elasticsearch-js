@@ -1,4 +1,4 @@
-## Interface `NodesCgroupCpu`
+# `NodesCgroupCpu` [interface-NodesCgroupCpu]
 
 | Name | Type | Description |
 | - | - | - |

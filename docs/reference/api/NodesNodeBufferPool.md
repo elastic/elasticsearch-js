@@ -1,4 +1,4 @@
-## Interface `NodesNodeBufferPool`
+# `NodesNodeBufferPool` [interface-NodesNodeBufferPool]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesQueries`
+# `IndicesQueries` [interface-IndicesQueries]
 
 | Name | Type | Description |
 | - | - | - |

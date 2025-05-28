@@ -1,4 +1,4 @@
-## Interface `LicenseGetRequest`
+# `LicenseGetRequest` [interface-LicenseGetRequest]
 
 | Name | Type | Description |
 | - | - | - |

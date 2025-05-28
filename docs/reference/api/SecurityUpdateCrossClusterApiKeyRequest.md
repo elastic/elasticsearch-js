@@ -1,4 +1,4 @@
-## Interface `SecurityUpdateCrossClusterApiKeyRequest`
+# `SecurityUpdateCrossClusterApiKeyRequest` [interface-SecurityUpdateCrossClusterApiKeyRequest]
 
 | Name | Type | Description |
 | - | - | - |

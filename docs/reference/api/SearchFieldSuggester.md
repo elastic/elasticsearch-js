@@ -1,4 +1,4 @@
-## Interface `SearchFieldSuggester`
+# `SearchFieldSuggester` [interface-SearchFieldSuggester]
 
 | Name | Type | Description |
 | - | - | - |

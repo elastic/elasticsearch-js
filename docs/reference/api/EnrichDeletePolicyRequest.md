@@ -1,4 +1,4 @@
-## Interface `EnrichDeletePolicyRequest`
+# `EnrichDeletePolicyRequest` [interface-EnrichDeletePolicyRequest]
 
 | Name | Type | Description |
 | - | - | - |

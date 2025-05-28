@@ -1,4 +1,4 @@
-## Interface `IngestInferenceProcessor`
+# `IngestInferenceProcessor` [interface-IngestInferenceProcessor]
 
 | Name | Type | Description |
 | - | - | - |

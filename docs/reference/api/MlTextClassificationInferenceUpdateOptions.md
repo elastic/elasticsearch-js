@@ -1,4 +1,4 @@
-## Interface `MlTextClassificationInferenceUpdateOptions`
+# `MlTextClassificationInferenceUpdateOptions` [interface-MlTextClassificationInferenceUpdateOptions]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesStatsShardRouting`
+# `IndicesStatsShardRouting` [interface-IndicesStatsShardRouting]
 
 | Name | Type | Description |
 | - | - | - |

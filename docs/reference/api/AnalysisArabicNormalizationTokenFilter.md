@@ -1,4 +1,4 @@
-## Interface `AnalysisArabicNormalizationTokenFilter`
+# `AnalysisArabicNormalizationTokenFilter` [interface-AnalysisArabicNormalizationTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

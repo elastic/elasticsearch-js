@@ -1,4 +1,4 @@
-## Interface `AggregationsTDigestPercentileRanksAggregate`
+# `AggregationsTDigestPercentileRanksAggregate` [interface-AggregationsTDigestPercentileRanksAggregate]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesShardStoresShardStoreWrapper`
+# `IndicesShardStoresShardStoreWrapper` [interface-IndicesShardStoresShardStoreWrapper]
 
 | Name | Type | Description |
 | - | - | - |

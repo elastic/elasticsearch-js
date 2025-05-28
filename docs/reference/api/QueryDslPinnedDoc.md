@@ -1,4 +1,4 @@
-## Interface `QueryDslPinnedDoc`
+# `QueryDslPinnedDoc` [interface-QueryDslPinnedDoc]
 
 | Name | Type | Description |
 | - | - | - |

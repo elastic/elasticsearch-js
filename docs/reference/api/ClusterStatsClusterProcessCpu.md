@@ -1,4 +1,4 @@
-## Interface `ClusterStatsClusterProcessCpu`
+# `ClusterStatsClusterProcessCpu` [interface-ClusterStatsClusterProcessCpu]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsMovingAverageAggregationBase`
+# `AggregationsMovingAverageAggregationBase` [interface-AggregationsMovingAverageAggregationBase]
 
 | Name | Type | Description |
 | - | - | - |

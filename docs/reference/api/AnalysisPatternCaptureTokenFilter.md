@@ -1,4 +1,4 @@
-## Interface `AnalysisPatternCaptureTokenFilter`
+# `AnalysisPatternCaptureTokenFilter` [interface-AnalysisPatternCaptureTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

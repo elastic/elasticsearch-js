@@ -1,4 +1,4 @@
-## Interface `AnalysisLimitTokenCountTokenFilter`
+# `AnalysisLimitTokenCountTokenFilter` [interface-AnalysisLimitTokenCountTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

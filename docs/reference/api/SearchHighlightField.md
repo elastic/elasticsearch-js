@@ -1,4 +1,4 @@
-## Interface `SearchHighlightField`
+# `SearchHighlightField` [interface-SearchHighlightField]
 
 | Name | Type | Description |
 | - | - | - |

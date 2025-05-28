@@ -1,4 +1,4 @@
-## Interface `IlmWaitForSnapshotAction`
+# `IlmWaitForSnapshotAction` [interface-IlmWaitForSnapshotAction]
 
 | Name | Type | Description |
 | - | - | - |

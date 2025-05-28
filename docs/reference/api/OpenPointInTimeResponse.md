@@ -1,4 +1,4 @@
-## Interface `OpenPointInTimeResponse`
+# `OpenPointInTimeResponse` [interface-OpenPointInTimeResponse]
 
 | Name | Type | Description |
 | - | - | - |

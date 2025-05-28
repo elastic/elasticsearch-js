@@ -1,4 +1,4 @@
-## Interface `IndicesRolloverRolloverConditions`
+# `IndicesRolloverRolloverConditions` [interface-IndicesRolloverRolloverConditions]
 
 | Name | Type | Description |
 | - | - | - |

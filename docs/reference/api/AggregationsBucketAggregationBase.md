@@ -1,4 +1,4 @@
-## Interface `AggregationsBucketAggregationBase`
+# `AggregationsBucketAggregationBase` [interface-AggregationsBucketAggregationBase]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IngestTerminateProcessor`
+# `IngestTerminateProcessor` [interface-IngestTerminateProcessor]
 
 | Name | Type | Description |
 | - | - | - |

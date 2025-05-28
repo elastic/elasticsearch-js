@@ -1,4 +1,4 @@
-## Interface `MlGetMemoryStatsMemMlStats`
+# `MlGetMemoryStatsMemMlStats` [interface-MlGetMemoryStatsMemMlStats]
 
 | Name | Type | Description |
 | - | - | - |

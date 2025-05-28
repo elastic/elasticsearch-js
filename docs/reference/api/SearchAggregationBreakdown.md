@@ -1,4 +1,4 @@
-## Interface `SearchAggregationBreakdown`
+# `SearchAggregationBreakdown` [interface-SearchAggregationBreakdown]
 
 | Name | Type | Description |
 | - | - | - |

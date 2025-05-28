@@ -1,4 +1,4 @@
-## Interface `IndicesRecoveryRecoveryIndexStatus`
+# `IndicesRecoveryRecoveryIndexStatus` [interface-IndicesRecoveryRecoveryIndexStatus]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IngestGetGeoipDatabaseDatabaseConfigurationMetadata`
+# `IngestGetGeoipDatabaseDatabaseConfigurationMetadata` [interface-IngestGetGeoipDatabaseDatabaseConfigurationMetadata]
 
 | Name | Type | Description |
 | - | - | - |

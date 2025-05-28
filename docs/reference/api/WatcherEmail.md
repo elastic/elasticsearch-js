@@ -1,4 +1,4 @@
-## Interface `WatcherEmail`
+# `WatcherEmail` [interface-WatcherEmail]
 
 | Name | Type | Description |
 | - | - | - |

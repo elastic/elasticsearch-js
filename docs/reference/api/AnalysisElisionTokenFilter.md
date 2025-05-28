@@ -1,4 +1,4 @@
-## Interface `AnalysisElisionTokenFilter`
+# `AnalysisElisionTokenFilter` [interface-AnalysisElisionTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

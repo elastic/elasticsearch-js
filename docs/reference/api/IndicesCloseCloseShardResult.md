@@ -1,4 +1,4 @@
-## Interface `IndicesCloseCloseShardResult`
+# `IndicesCloseCloseShardResult` [interface-IndicesCloseCloseShardResult]
 
 | Name | Type | Description |
 | - | - | - |

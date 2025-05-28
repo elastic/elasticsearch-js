@@ -1,4 +1,4 @@
-## Interface `IndicesIndexSettingsTimeSeries`
+# `IndicesIndexSettingsTimeSeries` [interface-IndicesIndexSettingsTimeSeries]
 
 | Name | Type | Description |
 | - | - | - |

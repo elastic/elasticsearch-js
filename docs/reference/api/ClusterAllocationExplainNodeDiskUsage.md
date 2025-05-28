@@ -1,4 +1,4 @@
-## Interface `ClusterAllocationExplainNodeDiskUsage`
+# `ClusterAllocationExplainNodeDiskUsage` [interface-ClusterAllocationExplainNodeDiskUsage]
 
 | Name | Type | Description |
 | - | - | - |

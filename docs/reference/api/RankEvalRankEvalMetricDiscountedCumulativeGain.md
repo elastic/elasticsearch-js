@@ -1,4 +1,4 @@
-## Interface `RankEvalRankEvalMetricDiscountedCumulativeGain`
+# `RankEvalRankEvalMetricDiscountedCumulativeGain` [interface-RankEvalRankEvalMetricDiscountedCumulativeGain]
 
 | Name | Type | Description |
 | - | - | - |

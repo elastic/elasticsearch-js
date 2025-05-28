@@ -1,4 +1,4 @@
-## Interface `AggregationsFiltersAggregate`
+# `AggregationsFiltersAggregate` [interface-AggregationsFiltersAggregate]
 
 | Name | Type | Description |
 | - | - | - |

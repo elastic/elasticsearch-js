@@ -1,4 +1,4 @@
-## Interface `AggregationsSignificantTextAggregation`
+# `AggregationsSignificantTextAggregation` [interface-AggregationsSignificantTextAggregation]
 
 | Name | Type | Description |
 | - | - | - |

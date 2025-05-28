@@ -1,4 +1,4 @@
-## Interface `HelpersOptions`
+# `HelpersOptions` [interface-HelpersOptions]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `ConnectorConnectorConfigProperties`
+# `ConnectorConnectorConfigProperties` [interface-ConnectorConnectorConfigProperties]
 
 | Name | Type | Description |
 | - | - | - |

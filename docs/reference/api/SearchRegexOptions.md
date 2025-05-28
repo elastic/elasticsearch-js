@@ -1,4 +1,4 @@
-## Interface `SearchRegexOptions`
+# `SearchRegexOptions` [interface-SearchRegexOptions]
 
 | Name | Type | Description |
 | - | - | - |

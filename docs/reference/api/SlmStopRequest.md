@@ -1,4 +1,4 @@
-## Interface `SlmStopRequest`
+# `SlmStopRequest` [interface-SlmStopRequest]
 
 | Name | Type | Description |
 | - | - | - |

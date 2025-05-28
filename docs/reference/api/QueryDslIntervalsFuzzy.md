@@ -1,4 +1,4 @@
-## Interface `QueryDslIntervalsFuzzy`
+# `QueryDslIntervalsFuzzy` [interface-QueryDslIntervalsFuzzy]
 
 | Name | Type | Description |
 | - | - | - |

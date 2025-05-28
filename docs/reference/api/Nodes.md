@@ -1,19 +1,19 @@
-## `Nodes`
+# `Nodes` [class-Nodes]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Nodes(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Nodes]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Nodes]
 
 | Name | Signature | Description |
 | - | - | - |

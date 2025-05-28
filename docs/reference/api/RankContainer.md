@@ -1,4 +1,4 @@
-## Interface `RankContainer`
+# `RankContainer` [interface-RankContainer]
 
 | Name | Type | Description |
 | - | - | - |

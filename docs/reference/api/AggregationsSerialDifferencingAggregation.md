@@ -1,4 +1,4 @@
-## Interface `AggregationsSerialDifferencingAggregation`
+# `AggregationsSerialDifferencingAggregation` [interface-AggregationsSerialDifferencingAggregation]
 
 | Name | Type | Description |
 | - | - | - |

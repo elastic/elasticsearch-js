@@ -1,4 +1,4 @@
-## Interface `IndicesIndexTemplateSummary`
+# `IndicesIndexTemplateSummary` [interface-IndicesIndexTemplateSummary]
 
 | Name | Type | Description |
 | - | - | - |

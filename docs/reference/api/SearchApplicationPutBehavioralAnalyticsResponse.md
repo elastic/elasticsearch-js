@@ -1,4 +1,4 @@
-## `SearchApplicationPutBehavioralAnalyticsResponse`
-:::
+# `SearchApplicationPutBehavioralAnalyticsResponse` [alias-SearchApplicationPutBehavioralAnalyticsResponse]
+```typescript
 type SearchApplicationPutBehavioralAnalyticsResponse = [SearchApplicationPutBehavioralAnalyticsAnalyticsAcknowledgeResponseBase](./SearchApplicationPutBehavioralAnalyticsAnalyticsAcknowledgeResponseBase.md);
-:::
+```

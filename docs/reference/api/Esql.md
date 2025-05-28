@@ -1,19 +1,19 @@
-## `Esql`
+# `Esql` [class-Esql]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Esql(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Esql]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Esql]
 
 | Name | Signature | Description |
 | - | - | - |

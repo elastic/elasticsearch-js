@@ -1,4 +1,4 @@
-## Interface `XpackUsageWatcher`
+# `XpackUsageWatcher` [interface-XpackUsageWatcher]
 
 | Name | Type | Description |
 | - | - | - |

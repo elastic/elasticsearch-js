@@ -1,4 +1,4 @@
-## Interface `AggregationsSignificantTermsAggregation`
+# `AggregationsSignificantTermsAggregation` [interface-AggregationsSignificantTermsAggregation]
 
 | Name | Type | Description |
 | - | - | - |

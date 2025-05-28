@@ -1,4 +1,4 @@
-## Interface `CatNodeattrsNodeAttributesRecord`
+# `CatNodeattrsNodeAttributesRecord` [interface-CatNodeattrsNodeAttributesRecord]
 
 | Name | Type | Description |
 | - | - | - |

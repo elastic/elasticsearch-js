@@ -1,4 +1,4 @@
-## Interface `MlPutTrainedModelPreprocessor`
+# `MlPutTrainedModelPreprocessor` [interface-MlPutTrainedModelPreprocessor]
 
 | Name | Type | Description |
 | - | - | - |

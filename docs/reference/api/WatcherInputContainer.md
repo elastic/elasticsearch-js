@@ -1,4 +1,4 @@
-## Interface `WatcherInputContainer`
+# `WatcherInputContainer` [interface-WatcherInputContainer]
 
 | Name | Type | Description |
 | - | - | - |

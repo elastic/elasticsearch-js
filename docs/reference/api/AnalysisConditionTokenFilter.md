@@ -1,4 +1,4 @@
-## Interface `AnalysisConditionTokenFilter`
+# `AnalysisConditionTokenFilter` [interface-AnalysisConditionTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

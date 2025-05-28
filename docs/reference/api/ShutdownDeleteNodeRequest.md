@@ -1,4 +1,4 @@
-## Interface `ShutdownDeleteNodeRequest`
+# `ShutdownDeleteNodeRequest` [interface-ShutdownDeleteNodeRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SecurityGrantApiKeyGrantApiKey`
+# `SecurityGrantApiKeyGrantApiKey` [interface-SecurityGrantApiKeyGrantApiKey]
 
 | Name | Type | Description |
 | - | - | - |

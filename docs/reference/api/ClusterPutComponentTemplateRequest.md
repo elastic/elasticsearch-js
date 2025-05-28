@@ -1,4 +1,4 @@
-## Interface `ClusterPutComponentTemplateRequest`
+# `ClusterPutComponentTemplateRequest` [interface-ClusterPutComponentTemplateRequest]
 
 | Name | Type | Description |
 | - | - | - |

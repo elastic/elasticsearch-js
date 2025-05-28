@@ -1,4 +1,4 @@
-## Interface `SnapshotRepositoryAnalyzeResponse`
+# `SnapshotRepositoryAnalyzeResponse` [interface-SnapshotRepositoryAnalyzeResponse]
 
 | Name | Type | Description |
 | - | - | - |

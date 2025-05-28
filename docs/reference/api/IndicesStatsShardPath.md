@@ -1,4 +1,4 @@
-## Interface `IndicesStatsShardPath`
+# `IndicesStatsShardPath` [interface-IndicesStatsShardPath]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `ClusterStatsClusterNetworkTypes`
+# `ClusterStatsClusterNetworkTypes` [interface-ClusterStatsClusterNetworkTypes]
 
 | Name | Type | Description |
 | - | - | - |

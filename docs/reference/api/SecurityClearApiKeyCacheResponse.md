@@ -1,4 +1,4 @@
-## Interface `SecurityClearApiKeyCacheResponse`
+# `SecurityClearApiKeyCacheResponse` [interface-SecurityClearApiKeyCacheResponse]
 
 | Name | Type | Description |
 | - | - | - |

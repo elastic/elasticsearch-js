@@ -1,4 +1,4 @@
-## Interface `InferenceInferenceEndpoint`
+# `InferenceInferenceEndpoint` [interface-InferenceInferenceEndpoint]
 
 | Name | Type | Description |
 | - | - | - |

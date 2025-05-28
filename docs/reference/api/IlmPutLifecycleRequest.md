@@ -1,4 +1,4 @@
-## Interface `IlmPutLifecycleRequest`
+# `IlmPutLifecycleRequest` [interface-IlmPutLifecycleRequest]
 
 | Name | Type | Description |
 | - | - | - |

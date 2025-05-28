@@ -1,4 +1,4 @@
-## Interface `AnalysisPhoneticTokenFilter`
+# `AnalysisPhoneticTokenFilter` [interface-AnalysisPhoneticTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

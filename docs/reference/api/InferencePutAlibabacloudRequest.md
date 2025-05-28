@@ -1,4 +1,4 @@
-## Interface `InferencePutAlibabacloudRequest`
+# `InferencePutAlibabacloudRequest` [interface-InferencePutAlibabacloudRequest]
 
 | Name | Type | Description |
 | - | - | - |

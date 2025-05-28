@@ -1,4 +1,4 @@
-## Interface `MlUpdateDatafeedRequest`
+# `MlUpdateDatafeedRequest` [interface-MlUpdateDatafeedRequest]
 
 | Name | Type | Description |
 | - | - | - |

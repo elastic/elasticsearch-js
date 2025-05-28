@@ -1,4 +1,4 @@
-## Interface `ClusterRerouteRerouteExplanation`
+# `ClusterRerouteRerouteExplanation` [interface-ClusterRerouteRerouteExplanation]
 
 | Name | Type | Description |
 | - | - | - |

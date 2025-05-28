@@ -1,19 +1,19 @@
-## `Ml`
+# `Ml` [class-Ml]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Ml(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Ml]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Ml]
 
 | Name | Signature | Description |
 | - | - | - |

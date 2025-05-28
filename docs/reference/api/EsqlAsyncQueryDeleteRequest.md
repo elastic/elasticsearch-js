@@ -1,4 +1,4 @@
-## Interface `EsqlAsyncQueryDeleteRequest`
+# `EsqlAsyncQueryDeleteRequest` [interface-EsqlAsyncQueryDeleteRequest]
 
 | Name | Type | Description |
 | - | - | - |

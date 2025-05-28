@@ -1,4 +1,4 @@
-## Interface `SecuritySuggestUserProfilesRequest`
+# `SecuritySuggestUserProfilesRequest` [interface-SecuritySuggestUserProfilesRequest]
 
 | Name | Type | Description |
 | - | - | - |

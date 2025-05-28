@@ -1,4 +1,4 @@
-## Interface `SpecUtilsAdditionalProperty`
+# `SpecUtilsAdditionalProperty` [interface-SpecUtilsAdditionalProperty]
 
 | Name | Type | Description |
 | - | - | - |

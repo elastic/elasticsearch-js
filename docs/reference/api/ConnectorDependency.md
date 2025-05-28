@@ -1,4 +1,4 @@
-## Interface `ConnectorDependency`
+# `ConnectorDependency` [interface-ConnectorDependency]
 
 | Name | Type | Description |
 | - | - | - |

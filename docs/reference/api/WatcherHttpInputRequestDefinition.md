@@ -1,4 +1,4 @@
-## Interface `WatcherHttpInputRequestDefinition`
+# `WatcherHttpInputRequestDefinition` [interface-WatcherHttpInputRequestDefinition]
 
 | Name | Type | Description |
 | - | - | - |

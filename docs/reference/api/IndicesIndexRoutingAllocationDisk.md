@@ -1,4 +1,4 @@
-## Interface `IndicesIndexRoutingAllocationDisk`
+# `IndicesIndexRoutingAllocationDisk` [interface-IndicesIndexRoutingAllocationDisk]
 
 | Name | Type | Description |
 | - | - | - |

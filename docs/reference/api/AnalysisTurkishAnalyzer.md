@@ -1,4 +1,4 @@
-## Interface `AnalysisTurkishAnalyzer`
+# `AnalysisTurkishAnalyzer` [interface-AnalysisTurkishAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

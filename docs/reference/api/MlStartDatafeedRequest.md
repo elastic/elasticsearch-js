@@ -1,4 +1,4 @@
-## Interface `MlStartDatafeedRequest`
+# `MlStartDatafeedRequest` [interface-MlStartDatafeedRequest]
 
 | Name | Type | Description |
 | - | - | - |

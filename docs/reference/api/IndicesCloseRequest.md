@@ -1,4 +1,4 @@
-## Interface `IndicesCloseRequest`
+# `IndicesCloseRequest` [interface-IndicesCloseRequest]
 
 | Name | Type | Description |
 | - | - | - |

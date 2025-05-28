@@ -1,4 +1,4 @@
-## Interface `NodesGetRepositoriesMeteringInfoResponseBase`
+# `NodesGetRepositoriesMeteringInfoResponseBase` [interface-NodesGetRepositoriesMeteringInfoResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

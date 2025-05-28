@@ -1,4 +1,4 @@
-## Interface `IlmActions`
+# `IlmActions` [interface-IlmActions]
 
 | Name | Type | Description |
 | - | - | - |

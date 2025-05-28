@@ -1,4 +1,4 @@
-## Interface `AnalysisEdgeNGramTokenizer`
+# `AnalysisEdgeNGramTokenizer` [interface-AnalysisEdgeNGramTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

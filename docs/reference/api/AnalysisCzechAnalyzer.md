@@ -1,4 +1,4 @@
-## Interface `AnalysisCzechAnalyzer`
+# `AnalysisCzechAnalyzer` [interface-AnalysisCzechAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

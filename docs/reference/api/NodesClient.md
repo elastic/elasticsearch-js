@@ -1,4 +1,4 @@
-## Interface `NodesClient`
+# `NodesClient` [interface-NodesClient]
 
 | Name | Type | Description |
 | - | - | - |

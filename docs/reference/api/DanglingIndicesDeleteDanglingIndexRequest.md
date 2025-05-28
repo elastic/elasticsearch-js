@@ -1,4 +1,4 @@
-## Interface `DanglingIndicesDeleteDanglingIndexRequest`
+# `DanglingIndicesDeleteDanglingIndexRequest` [interface-DanglingIndicesDeleteDanglingIndexRequest]
 
 | Name | Type | Description |
 | - | - | - |

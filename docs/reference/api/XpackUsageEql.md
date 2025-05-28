@@ -1,4 +1,4 @@
-## Interface `XpackUsageEql`
+# `XpackUsageEql` [interface-XpackUsageEql]
 
 | Name | Type | Description |
 | - | - | - |

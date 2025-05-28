@@ -1,4 +1,4 @@
-## Interface `SqlDeleteAsyncRequest`
+# `SqlDeleteAsyncRequest` [interface-SqlDeleteAsyncRequest]
 
 | Name | Type | Description |
 | - | - | - |

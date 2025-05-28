@@ -1,4 +1,4 @@
-## Interface `BulkOperationBase`
+# `BulkOperationBase` [interface-BulkOperationBase]
 
 | Name | Type | Description |
 | - | - | - |

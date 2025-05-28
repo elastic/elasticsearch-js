@@ -1,4 +1,4 @@
-## Interface `QueryDslGeoPolygonPoints`
+# `QueryDslGeoPolygonPoints` [interface-QueryDslGeoPolygonPoints]
 
 | Name | Type | Description |
 | - | - | - |

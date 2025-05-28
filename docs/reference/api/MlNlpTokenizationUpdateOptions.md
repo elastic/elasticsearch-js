@@ -1,4 +1,4 @@
-## Interface `MlNlpTokenizationUpdateOptions`
+# `MlNlpTokenizationUpdateOptions` [interface-MlNlpTokenizationUpdateOptions]
 
 | Name | Type | Description |
 | - | - | - |

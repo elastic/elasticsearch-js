@@ -1,19 +1,19 @@
-## `Enrich`
+# `Enrich` [class-Enrich]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Enrich(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Enrich]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Enrich]
 
 | Name | Signature | Description |
 | - | - | - |

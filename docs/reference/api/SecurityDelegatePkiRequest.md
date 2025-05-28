@@ -1,4 +1,4 @@
-## Interface `SecurityDelegatePkiRequest`
+# `SecurityDelegatePkiRequest` [interface-SecurityDelegatePkiRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `CatIndicesIndicesRecord`
+# `CatIndicesIndicesRecord` [interface-CatIndicesIndicesRecord]
 
 | Name | Type | Description |
 | - | - | - |

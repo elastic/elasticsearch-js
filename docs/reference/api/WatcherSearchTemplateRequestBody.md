@@ -1,4 +1,4 @@
-## Interface `WatcherSearchTemplateRequestBody`
+# `WatcherSearchTemplateRequestBody` [interface-WatcherSearchTemplateRequestBody]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `API`
+# `API` [interface-API]
 
 | Name | Type | Description |
 | - | - | - |

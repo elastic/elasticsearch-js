@@ -1,4 +1,4 @@
-## Interface `SearchCompletionSuggestOption`
+# `SearchCompletionSuggestOption` [interface-SearchCompletionSuggestOption]
 
 | Name | Type | Description |
 | - | - | - |

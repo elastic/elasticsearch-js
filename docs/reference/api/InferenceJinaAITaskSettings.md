@@ -1,4 +1,4 @@
-## Interface `InferenceJinaAITaskSettings`
+# `InferenceJinaAITaskSettings` [interface-InferenceJinaAITaskSettings]
 
 | Name | Type | Description |
 | - | - | - |

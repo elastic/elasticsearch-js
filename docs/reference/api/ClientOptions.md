@@ -1,4 +1,4 @@
-## Interface `ClientOptions`
+# `ClientOptions` [interface-ClientOptions]
 
 | Name | Type | Description |
 | - | - | - |

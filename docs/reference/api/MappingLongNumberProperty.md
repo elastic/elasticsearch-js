@@ -1,4 +1,4 @@
-## Interface `MappingLongNumberProperty`
+# `MappingLongNumberProperty` [interface-MappingLongNumberProperty]
 
 | Name | Type | Description |
 | - | - | - |

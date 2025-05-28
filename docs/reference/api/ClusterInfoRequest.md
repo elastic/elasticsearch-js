@@ -1,4 +1,4 @@
-## Interface `ClusterInfoRequest`
+# `ClusterInfoRequest` [interface-ClusterInfoRequest]
 
 | Name | Type | Description |
 | - | - | - |

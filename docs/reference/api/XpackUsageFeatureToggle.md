@@ -1,4 +1,4 @@
-## Interface `XpackUsageFeatureToggle`
+# `XpackUsageFeatureToggle` [interface-XpackUsageFeatureToggle]
 
 | Name | Type | Description |
 | - | - | - |

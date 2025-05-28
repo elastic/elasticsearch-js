@@ -1,4 +1,4 @@
-## Interface `SnapshotRestoreSnapshotRestore`
+# `SnapshotRestoreSnapshotRestore` [interface-SnapshotRestoreSnapshotRestore]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `KnnQuery`
+# `KnnQuery` [interface-KnnQuery]
 
 | Name | Type | Description |
 | - | - | - |

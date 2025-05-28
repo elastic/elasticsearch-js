@@ -1,4 +1,4 @@
-## Interface `WatcherExecutionThreadPool`
+# `WatcherExecutionThreadPool` [interface-WatcherExecutionThreadPool]
 
 | Name | Type | Description |
 | - | - | - |

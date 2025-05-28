@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoXpackLicense`
+# `NodesInfoNodeInfoXpackLicense` [interface-NodesInfoNodeInfoXpackLicense]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SearchableSnapshotsMountRequest`
+# `SearchableSnapshotsMountRequest` [interface-SearchableSnapshotsMountRequest]
 
 | Name | Type | Description |
 | - | - | - |

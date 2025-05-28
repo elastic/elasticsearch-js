@@ -1,4 +1,4 @@
-## Interface `QueryDslGeoShapeQueryKeys`
+# `QueryDslGeoShapeQueryKeys` [interface-QueryDslGeoShapeQueryKeys]
 
 | Name | Type | Description |
 | - | - | - |

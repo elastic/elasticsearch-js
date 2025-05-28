@@ -1,4 +1,4 @@
-## Interface `SecurityActivateUserProfileRequest`
+# `SecurityActivateUserProfileRequest` [interface-SecurityActivateUserProfileRequest]
 
 | Name | Type | Description |
 | - | - | - |

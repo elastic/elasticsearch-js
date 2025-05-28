@@ -1,4 +1,4 @@
-## Interface `SearchQueryBreakdown`
+# `SearchQueryBreakdown` [interface-SearchQueryBreakdown]
 
 | Name | Type | Description |
 | - | - | - |

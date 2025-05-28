@@ -1,4 +1,4 @@
-## Interface `NodesTransportHistogram`
+# `NodesTransportHistogram` [interface-NodesTransportHistogram]
 
 | Name | Type | Description |
 | - | - | - |

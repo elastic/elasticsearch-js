@@ -1,4 +1,4 @@
-## Interface `MlDeleteExpiredDataRequest`
+# `MlDeleteExpiredDataRequest` [interface-MlDeleteExpiredDataRequest]
 
 | Name | Type | Description |
 | - | - | - |

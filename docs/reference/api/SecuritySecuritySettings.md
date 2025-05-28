@@ -1,4 +1,4 @@
-## Interface `SecuritySecuritySettings`
+# `SecuritySecuritySettings` [interface-SecuritySecuritySettings]
 
 | Name | Type | Description |
 | - | - | - |

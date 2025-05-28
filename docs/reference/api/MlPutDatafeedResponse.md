@@ -1,4 +1,4 @@
-## Interface `MlPutDatafeedResponse`
+# `MlPutDatafeedResponse` [interface-MlPutDatafeedResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlApiKeyAuthorization`
+# `MlApiKeyAuthorization` [interface-MlApiKeyAuthorization]
 
 | Name | Type | Description |
 | - | - | - |

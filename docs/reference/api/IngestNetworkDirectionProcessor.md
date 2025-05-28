@@ -1,4 +1,4 @@
-## Interface `IngestNetworkDirectionProcessor`
+# `IngestNetworkDirectionProcessor` [interface-IngestNetworkDirectionProcessor]
 
 | Name | Type | Description |
 | - | - | - |

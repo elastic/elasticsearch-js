@@ -1,4 +1,4 @@
-## Interface `IndicesIndexRouting`
+# `IndicesIndexRouting` [interface-IndicesIndexRouting]
 
 | Name | Type | Description |
 | - | - | - |

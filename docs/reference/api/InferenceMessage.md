@@ -1,4 +1,4 @@
-## Interface `InferenceMessage`
+# `InferenceMessage` [interface-InferenceMessage]
 
 | Name | Type | Description |
 | - | - | - |

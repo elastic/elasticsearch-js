@@ -1,4 +1,4 @@
-## Interface `AnalysisNGramTokenizer`
+# `AnalysisNGramTokenizer` [interface-AnalysisNGramTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

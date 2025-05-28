@@ -1,4 +1,4 @@
-## Interface `MigrationGetFeatureUpgradeStatusRequest`
+# `MigrationGetFeatureUpgradeStatusRequest` [interface-MigrationGetFeatureUpgradeStatusRequest]
 
 | Name | Type | Description |
 | - | - | - |

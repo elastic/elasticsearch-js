@@ -1,4 +1,4 @@
-## Interface `MlStopTrainedModelDeploymentResponse`
+# `MlStopTrainedModelDeploymentResponse` [interface-MlStopTrainedModelDeploymentResponse]
 
 | Name | Type | Description |
 | - | - | - |

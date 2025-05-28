@@ -1,4 +1,4 @@
-## Interface `NodesScripting`
+# `NodesScripting` [interface-NodesScripting]
 
 | Name | Type | Description |
 | - | - | - |

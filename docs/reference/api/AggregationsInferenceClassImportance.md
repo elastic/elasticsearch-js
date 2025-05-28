@@ -1,4 +1,4 @@
-## Interface `AggregationsInferenceClassImportance`
+# `AggregationsInferenceClassImportance` [interface-AggregationsInferenceClassImportance]
 
 | Name | Type | Description |
 | - | - | - |

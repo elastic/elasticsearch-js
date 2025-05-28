@@ -1,4 +1,4 @@
-## Interface `SecurityPutPrivilegesRequest`
+# `SecurityPutPrivilegesRequest` [interface-SecurityPutPrivilegesRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `WatcherSlackAction`
+# `WatcherSlackAction` [interface-WatcherSlackAction]
 
 | Name | Type | Description |
 | - | - | - |

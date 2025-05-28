@@ -1,4 +1,4 @@
-## Interface `IndicesIndexRoutingAllocationInitialRecovery`
+# `IndicesIndexRoutingAllocationInitialRecovery` [interface-IndicesIndexRoutingAllocationInitialRecovery]
 
 | Name | Type | Description |
 | - | - | - |

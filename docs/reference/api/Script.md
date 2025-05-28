@@ -1,4 +1,4 @@
-## Interface `Script`
+# `Script` [interface-Script]
 
 | Name | Type | Description |
 | - | - | - |

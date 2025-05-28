@@ -1,4 +1,4 @@
-## Interface `FeaturesGetFeaturesRequest`
+# `FeaturesGetFeaturesRequest` [interface-FeaturesGetFeaturesRequest]
 
 | Name | Type | Description |
 | - | - | - |

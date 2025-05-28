@@ -1,4 +1,4 @@
-## Interface `IngestGrokProcessor`
+# `IngestGrokProcessor` [interface-IngestGrokProcessor]
 
 | Name | Type | Description |
 | - | - | - |

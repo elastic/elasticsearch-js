@@ -1,4 +1,4 @@
-## Interface `AnalysisIndicNormalizationTokenFilter`
+# `AnalysisIndicNormalizationTokenFilter` [interface-AnalysisIndicNormalizationTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

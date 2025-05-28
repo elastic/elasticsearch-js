@@ -1,4 +1,4 @@
-## Interface `IndicesFielddataFrequencyFilter`
+# `IndicesFielddataFrequencyFilter` [interface-IndicesFielddataFrequencyFilter]
 
 | Name | Type | Description |
 | - | - | - |

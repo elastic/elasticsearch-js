@@ -1,4 +1,4 @@
-## Interface `MlJobTimingStats`
+# `MlJobTimingStats` [interface-MlJobTimingStats]
 
 | Name | Type | Description |
 | - | - | - |

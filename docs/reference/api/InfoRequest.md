@@ -1,4 +1,4 @@
-## Interface `InfoRequest`
+# `InfoRequest` [interface-InfoRequest]
 
 | Name | Type | Description |
 | - | - | - |

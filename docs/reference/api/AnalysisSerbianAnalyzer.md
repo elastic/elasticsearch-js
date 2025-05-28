@@ -1,4 +1,4 @@
-## Interface `AnalysisSerbianAnalyzer`
+# `AnalysisSerbianAnalyzer` [interface-AnalysisSerbianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

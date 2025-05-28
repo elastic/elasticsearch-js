@@ -1,4 +1,4 @@
-## Interface `CcrGetAutoFollowPatternResponse`
+# `CcrGetAutoFollowPatternResponse` [interface-CcrGetAutoFollowPatternResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `QueryDslTermQuery`
+# `QueryDslTermQuery` [interface-QueryDslTermQuery]
 
 | Name | Type | Description |
 | - | - | - |

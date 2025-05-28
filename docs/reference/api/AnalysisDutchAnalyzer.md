@@ -1,4 +1,4 @@
-## Interface `AnalysisDutchAnalyzer`
+# `AnalysisDutchAnalyzer` [interface-AnalysisDutchAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

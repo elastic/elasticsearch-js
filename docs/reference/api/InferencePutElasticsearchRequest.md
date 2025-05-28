@@ -1,4 +1,4 @@
-## Interface `InferencePutElasticsearchRequest`
+# `InferencePutElasticsearchRequest` [interface-InferencePutElasticsearchRequest]
 
 | Name | Type | Description |
 | - | - | - |

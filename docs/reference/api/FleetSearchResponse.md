@@ -1,4 +1,4 @@
-## Interface `FleetSearchResponse`
+# `FleetSearchResponse` [interface-FleetSearchResponse]
 
 | Name | Type | Description |
 | - | - | - |

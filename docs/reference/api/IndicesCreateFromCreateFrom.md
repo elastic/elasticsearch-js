@@ -1,4 +1,4 @@
-## Interface `IndicesCreateFromCreateFrom`
+# `IndicesCreateFromCreateFrom` [interface-IndicesCreateFromCreateFrom]
 
 | Name | Type | Description |
 | - | - | - |

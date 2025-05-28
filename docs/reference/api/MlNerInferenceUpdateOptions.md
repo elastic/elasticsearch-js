@@ -1,4 +1,4 @@
-## Interface `MlNerInferenceUpdateOptions`
+# `MlNerInferenceUpdateOptions` [interface-MlNerInferenceUpdateOptions]
 
 | Name | Type | Description |
 | - | - | - |

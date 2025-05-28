@@ -1,4 +1,4 @@
-## Interface `AggregationsHdrMethod`
+# `AggregationsHdrMethod` [interface-AggregationsHdrMethod]
 
 | Name | Type | Description |
 | - | - | - |

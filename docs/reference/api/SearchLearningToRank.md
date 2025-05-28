@@ -1,4 +1,4 @@
-## Interface `SearchLearningToRank`
+# `SearchLearningToRank` [interface-SearchLearningToRank]
 
 | Name | Type | Description |
 | - | - | - |

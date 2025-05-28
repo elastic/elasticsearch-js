@@ -1,4 +1,4 @@
-## Interface `MappingShortNumberProperty`
+# `MappingShortNumberProperty` [interface-MappingShortNumberProperty]
 
 | Name | Type | Description |
 | - | - | - |

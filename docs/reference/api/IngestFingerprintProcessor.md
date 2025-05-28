@@ -1,4 +1,4 @@
-## Interface `IngestFingerprintProcessor`
+# `IngestFingerprintProcessor` [interface-IngestFingerprintProcessor]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsHdrPercentilesAggregate`
+# `AggregationsHdrPercentilesAggregate` [interface-AggregationsHdrPercentilesAggregate]
 
 | Name | Type | Description |
 | - | - | - |

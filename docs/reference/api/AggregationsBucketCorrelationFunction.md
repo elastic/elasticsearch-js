@@ -1,4 +1,4 @@
-## Interface `AggregationsBucketCorrelationFunction`
+# `AggregationsBucketCorrelationFunction` [interface-AggregationsBucketCorrelationFunction]
 
 | Name | Type | Description |
 | - | - | - |

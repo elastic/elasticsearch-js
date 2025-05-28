@@ -1,4 +1,4 @@
-## Interface `ClusterGetSettingsRequest`
+# `ClusterGetSettingsRequest` [interface-ClusterGetSettingsRequest]
 
 | Name | Type | Description |
 | - | - | - |

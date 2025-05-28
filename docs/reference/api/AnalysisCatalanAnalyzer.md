@@ -1,4 +1,4 @@
-## Interface `AnalysisCatalanAnalyzer`
+# `AnalysisCatalanAnalyzer` [interface-AnalysisCatalanAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

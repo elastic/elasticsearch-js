@@ -1,4 +1,4 @@
-## Interface `NodesClusterStateQueue`
+# `NodesClusterStateQueue` [interface-NodesClusterStateQueue]
 
 | Name | Type | Description |
 | - | - | - |

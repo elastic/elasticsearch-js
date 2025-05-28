@@ -1,4 +1,4 @@
-## Interface `SnapshotCleanupRepositoryRequest`
+# `SnapshotCleanupRepositoryRequest` [interface-SnapshotCleanupRepositoryRequest]
 
 | Name | Type | Description |
 | - | - | - |

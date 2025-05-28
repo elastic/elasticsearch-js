@@ -1,4 +1,4 @@
-## Interface `EnrichPolicy`
+# `EnrichPolicy` [interface-EnrichPolicy]
 
 | Name | Type | Description |
 | - | - | - |

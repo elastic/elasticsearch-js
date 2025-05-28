@@ -1,4 +1,4 @@
-## Interface `IndicesSettingsSimilarityScripted`
+# `IndicesSettingsSimilarityScripted` [interface-IndicesSettingsSimilarityScripted]
 
 | Name | Type | Description |
 | - | - | - |

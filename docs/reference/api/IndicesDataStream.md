@@ -1,4 +1,4 @@
-## Interface `IndicesDataStream`
+# `IndicesDataStream` [interface-IndicesDataStream]
 
 | Name | Type | Description |
 | - | - | - |

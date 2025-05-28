@@ -1,4 +1,4 @@
-## Interface `IngestCommunityIDProcessor`
+# `IngestCommunityIDProcessor` [interface-IngestCommunityIDProcessor]
 
 | Name | Type | Description |
 | - | - | - |

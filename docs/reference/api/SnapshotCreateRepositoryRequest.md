@@ -1,4 +1,4 @@
-## Interface `SnapshotCreateRepositoryRequest`
+# `SnapshotCreateRepositoryRequest` [interface-SnapshotCreateRepositoryRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlJobStats`
+# `MlJobStats` [interface-MlJobStats]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlEvaluateDataFrameDataframeClassificationSummaryAccuracy`
+# `MlEvaluateDataFrameDataframeClassificationSummaryAccuracy` [interface-MlEvaluateDataFrameDataframeClassificationSummaryAccuracy]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `InferenceVoyageAITaskSettings`
+# `InferenceVoyageAITaskSettings` [interface-InferenceVoyageAITaskSettings]
 
 | Name | Type | Description |
 | - | - | - |

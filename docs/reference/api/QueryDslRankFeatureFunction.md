@@ -1,4 +1,4 @@
-## Interface `QueryDslRankFeatureFunction`
+# `QueryDslRankFeatureFunction` [interface-QueryDslRankFeatureFunction]
 
 | Name | Type | Description |
 | - | - | - |

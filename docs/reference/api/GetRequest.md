@@ -1,4 +1,4 @@
-## Interface `GetRequest`
+# `GetRequest` [interface-GetRequest]
 
 | Name | Type | Description |
 | - | - | - |

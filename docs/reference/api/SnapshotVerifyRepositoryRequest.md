@@ -1,4 +1,4 @@
-## Interface `SnapshotVerifyRepositoryRequest`
+# `SnapshotVerifyRepositoryRequest` [interface-SnapshotVerifyRepositoryRequest]
 
 | Name | Type | Description |
 | - | - | - |

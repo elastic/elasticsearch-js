@@ -1,4 +1,4 @@
-## Interface `MlDataframeAnalyticsStatsContainer`
+# `MlDataframeAnalyticsStatsContainer` [interface-MlDataframeAnalyticsStatsContainer]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SecurityDelegatePkiAuthentication`
+# `SecurityDelegatePkiAuthentication` [interface-SecurityDelegatePkiAuthentication]
 
 | Name | Type | Description |
 | - | - | - |

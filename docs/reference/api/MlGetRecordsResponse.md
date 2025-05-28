@@ -1,4 +1,4 @@
-## Interface `MlGetRecordsResponse`
+# `MlGetRecordsResponse` [interface-MlGetRecordsResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MappingTypeMapping`
+# `MappingTypeMapping` [interface-MappingTypeMapping]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AnalysisBrazilianAnalyzer`
+# `AnalysisBrazilianAnalyzer` [interface-AnalysisBrazilianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

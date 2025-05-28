@@ -1,4 +1,4 @@
-## Interface `IndicesRecoveryRecoveryBytes`
+# `IndicesRecoveryRecoveryBytes` [interface-IndicesRecoveryRecoveryBytes]
 
 | Name | Type | Description |
 | - | - | - |

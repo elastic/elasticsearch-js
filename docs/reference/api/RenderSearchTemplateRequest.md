@@ -1,4 +1,4 @@
-## Interface `RenderSearchTemplateRequest`
+# `RenderSearchTemplateRequest` [interface-RenderSearchTemplateRequest]
 
 | Name | Type | Description |
 | - | - | - |

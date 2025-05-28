@@ -1,4 +1,4 @@
-## Interface `ClusterStatsIndexingPressure`
+# `ClusterStatsIndexingPressure` [interface-ClusterStatsIndexingPressure]
 
 | Name | Type | Description |
 | - | - | - |

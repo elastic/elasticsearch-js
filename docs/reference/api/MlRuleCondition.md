@@ -1,4 +1,4 @@
-## Interface `MlRuleCondition`
+# `MlRuleCondition` [interface-MlRuleCondition]
 
 | Name | Type | Description |
 | - | - | - |

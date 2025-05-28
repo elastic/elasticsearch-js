@@ -1,4 +1,4 @@
-## Interface `CatMlJobsJobsRecord`
+# `CatMlJobsJobsRecord` [interface-CatMlJobsJobsRecord]
 
 | Name | Type | Description |
 | - | - | - |

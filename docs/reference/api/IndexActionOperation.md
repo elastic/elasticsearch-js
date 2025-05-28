@@ -1,4 +1,4 @@
-## Interface `IndexActionOperation`
+# `IndexActionOperation` [interface-IndexActionOperation]
 
 | Name | Type | Description |
 | - | - | - |

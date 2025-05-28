@@ -1,4 +1,4 @@
-## Interface `OpenPointInTimeRequest`
+# `OpenPointInTimeRequest` [interface-OpenPointInTimeRequest]
 
 | Name | Type | Description |
 | - | - | - |

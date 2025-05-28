@@ -1,4 +1,4 @@
-## Interface `MlGetOverallBucketsRequest`
+# `MlGetOverallBucketsRequest` [interface-MlGetOverallBucketsRequest]
 
 | Name | Type | Description |
 | - | - | - |

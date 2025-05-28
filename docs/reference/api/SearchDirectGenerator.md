@@ -1,4 +1,4 @@
-## Interface `SearchDirectGenerator`
+# `SearchDirectGenerator` [interface-SearchDirectGenerator]
 
 | Name | Type | Description |
 | - | - | - |

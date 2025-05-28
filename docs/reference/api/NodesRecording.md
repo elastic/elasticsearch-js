@@ -1,4 +1,4 @@
-## Interface `NodesRecording`
+# `NodesRecording` [interface-NodesRecording]
 
 | Name | Type | Description |
 | - | - | - |

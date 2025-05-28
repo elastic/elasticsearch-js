@@ -1,4 +1,4 @@
-## Interface `AnalysisScandinavianFoldingTokenFilter`
+# `AnalysisScandinavianFoldingTokenFilter` [interface-AnalysisScandinavianFoldingTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

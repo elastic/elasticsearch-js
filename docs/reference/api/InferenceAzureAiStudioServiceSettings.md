@@ -1,4 +1,4 @@
-## Interface `InferenceAzureAiStudioServiceSettings`
+# `InferenceAzureAiStudioServiceSettings` [interface-InferenceAzureAiStudioServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

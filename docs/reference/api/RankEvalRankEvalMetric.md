@@ -1,4 +1,4 @@
-## Interface `RankEvalRankEvalMetric`
+# `RankEvalRankEvalMetric` [interface-RankEvalRankEvalMetric]
 
 | Name | Type | Description |
 | - | - | - |

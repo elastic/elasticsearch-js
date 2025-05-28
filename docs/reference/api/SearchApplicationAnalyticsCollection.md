@@ -1,4 +1,4 @@
-## Interface `SearchApplicationAnalyticsCollection`
+# `SearchApplicationAnalyticsCollection` [interface-SearchApplicationAnalyticsCollection]
 
 | Name | Type | Description |
 | - | - | - |

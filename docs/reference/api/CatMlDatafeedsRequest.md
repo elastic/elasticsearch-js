@@ -1,4 +1,4 @@
-## Interface `CatMlDatafeedsRequest`
+# `CatMlDatafeedsRequest` [interface-CatMlDatafeedsRequest]
 
 | Name | Type | Description |
 | - | - | - |

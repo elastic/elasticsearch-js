@@ -1,4 +1,4 @@
-## Interface `MappingHalfFloatNumberProperty`
+# `MappingHalfFloatNumberProperty` [interface-MappingHalfFloatNumberProperty]
 
 | Name | Type | Description |
 | - | - | - |

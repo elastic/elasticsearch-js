@@ -1,4 +1,4 @@
-## Interface `ElasticsearchVersionInfo`
+# `ElasticsearchVersionInfo` [interface-ElasticsearchVersionInfo]
 
 | Name | Type | Description |
 | - | - | - |

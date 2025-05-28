@@ -1,4 +1,4 @@
-## Interface `MlDataframeAnalyticsAuthorization`
+# `MlDataframeAnalyticsAuthorization` [interface-MlDataframeAnalyticsAuthorization]
 
 | Name | Type | Description |
 | - | - | - |

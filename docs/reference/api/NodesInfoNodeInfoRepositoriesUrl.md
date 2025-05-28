@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoRepositoriesUrl`
+# `NodesInfoNodeInfoRepositoriesUrl` [interface-NodesInfoNodeInfoRepositoriesUrl]
 
 | Name | Type | Description |
 | - | - | - |

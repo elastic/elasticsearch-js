@@ -1,4 +1,4 @@
-## Interface `QueryDslRankFeatureFunctionSaturation`
+# `QueryDslRankFeatureFunctionSaturation` [interface-QueryDslRankFeatureFunctionSaturation]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MappingScaledFloatNumberProperty`
+# `MappingScaledFloatNumberProperty` [interface-MappingScaledFloatNumberProperty]
 
 | Name | Type | Description |
 | - | - | - |

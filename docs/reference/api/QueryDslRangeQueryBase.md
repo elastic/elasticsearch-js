@@ -1,4 +1,4 @@
-## Interface `QueryDslRangeQueryBase`
+# `QueryDslRangeQueryBase` [interface-QueryDslRangeQueryBase]
 
 | Name | Type | Description |
 | - | - | - |

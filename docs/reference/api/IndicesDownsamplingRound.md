@@ -1,4 +1,4 @@
-## Interface `IndicesDownsamplingRound`
+# `IndicesDownsamplingRound` [interface-IndicesDownsamplingRound]
 
 | Name | Type | Description |
 | - | - | - |

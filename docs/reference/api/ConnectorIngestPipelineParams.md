@@ -1,4 +1,4 @@
-## Interface `ConnectorIngestPipelineParams`
+# `ConnectorIngestPipelineParams` [interface-ConnectorIngestPipelineParams]
 
 | Name | Type | Description |
 | - | - | - |

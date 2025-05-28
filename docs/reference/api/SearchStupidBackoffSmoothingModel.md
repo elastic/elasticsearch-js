@@ -1,4 +1,4 @@
-## Interface `SearchStupidBackoffSmoothingModel`
+# `SearchStupidBackoffSmoothingModel` [interface-SearchStupidBackoffSmoothingModel]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoXpackSecurity`
+# `NodesInfoNodeInfoXpackSecurity` [interface-NodesInfoNodeInfoXpackSecurity]
 
 | Name | Type | Description |
 | - | - | - |

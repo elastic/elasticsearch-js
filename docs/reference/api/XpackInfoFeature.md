@@ -1,4 +1,4 @@
-## Interface `XpackInfoFeature`
+# `XpackInfoFeature` [interface-XpackInfoFeature]
 
 | Name | Type | Description |
 | - | - | - |

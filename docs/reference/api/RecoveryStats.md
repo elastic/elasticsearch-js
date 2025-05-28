@@ -1,4 +1,4 @@
-## Interface `RecoveryStats`
+# `RecoveryStats` [interface-RecoveryStats]
 
 | Name | Type | Description |
 | - | - | - |

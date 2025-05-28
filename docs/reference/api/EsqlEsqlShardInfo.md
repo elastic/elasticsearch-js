@@ -1,4 +1,4 @@
-## Interface `EsqlEsqlShardInfo`
+# `EsqlEsqlShardInfo` [interface-EsqlEsqlShardInfo]
 
 | Name | Type | Description |
 | - | - | - |

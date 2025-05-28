@@ -1,4 +1,4 @@
-## Interface `WatcherLoggingResult`
+# `WatcherLoggingResult` [interface-WatcherLoggingResult]
 
 | Name | Type | Description |
 | - | - | - |

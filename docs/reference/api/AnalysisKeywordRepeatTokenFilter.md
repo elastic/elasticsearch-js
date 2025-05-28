@@ -1,4 +1,4 @@
-## Interface `AnalysisKeywordRepeatTokenFilter`
+# `AnalysisKeywordRepeatTokenFilter` [interface-AnalysisKeywordRepeatTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

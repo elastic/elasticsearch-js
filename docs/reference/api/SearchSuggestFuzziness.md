@@ -1,4 +1,4 @@
-## Interface `SearchSuggestFuzziness`
+# `SearchSuggestFuzziness` [interface-SearchSuggestFuzziness]
 
 | Name | Type | Description |
 | - | - | - |

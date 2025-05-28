@@ -1,4 +1,4 @@
-## Interface `AnalysisClassicTokenizer`
+# `AnalysisClassicTokenizer` [interface-AnalysisClassicTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

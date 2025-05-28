@@ -1,4 +1,4 @@
-## Interface `AggregationsSignificantStringTermsBucketKeys`
+# `AggregationsSignificantStringTermsBucketKeys` [interface-AggregationsSignificantStringTermsBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

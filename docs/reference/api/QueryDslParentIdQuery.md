@@ -1,4 +1,4 @@
-## Interface `QueryDslParentIdQuery`
+# `QueryDslParentIdQuery` [interface-QueryDslParentIdQuery]
 
 | Name | Type | Description |
 | - | - | - |

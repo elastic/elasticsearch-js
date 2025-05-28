@@ -1,4 +1,4 @@
-## Interface `AnalysisHyphenationDecompounderTokenFilter`
+# `AnalysisHyphenationDecompounderTokenFilter` [interface-AnalysisHyphenationDecompounderTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

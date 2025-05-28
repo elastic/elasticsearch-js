@@ -1,4 +1,4 @@
-## Interface `AggregationsTopHitsAggregate`
+# `AggregationsTopHitsAggregate` [interface-AggregationsTopHitsAggregate]
 
 | Name | Type | Description |
 | - | - | - |

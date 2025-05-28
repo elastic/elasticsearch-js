@@ -1,4 +1,4 @@
-## Interface `BulkHelperOptions`
+# `BulkHelperOptions` [interface-BulkHelperOptions]
 
 | Name | Type | Description |
 | - | - | - |

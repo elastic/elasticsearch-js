@@ -1,4 +1,4 @@
-## Interface `IndicesExplainDataLifecycleRequest`
+# `IndicesExplainDataLifecycleRequest` [interface-IndicesExplainDataLifecycleRequest]
 
 | Name | Type | Description |
 | - | - | - |

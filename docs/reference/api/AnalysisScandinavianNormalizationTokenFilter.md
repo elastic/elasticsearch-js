@@ -1,4 +1,4 @@
-## Interface `AnalysisScandinavianNormalizationTokenFilter`
+# `AnalysisScandinavianNormalizationTokenFilter` [interface-AnalysisScandinavianNormalizationTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

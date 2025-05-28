@@ -1,4 +1,4 @@
-## Interface `TransformGetTransformStatsTransformIndexerStats`
+# `TransformGetTransformStatsTransformIndexerStats` [interface-TransformGetTransformStatsTransformIndexerStats]
 
 | Name | Type | Description |
 | - | - | - |

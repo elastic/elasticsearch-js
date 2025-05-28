@@ -1,4 +1,4 @@
-## Interface `AnalysisLengthTokenFilter`
+# `AnalysisLengthTokenFilter` [interface-AnalysisLengthTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `HealthReportResponse`
+# `HealthReportResponse` [interface-HealthReportResponse]
 
 | Name | Type | Description |
 | - | - | - |

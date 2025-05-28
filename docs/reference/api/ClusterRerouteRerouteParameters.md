@@ -1,4 +1,4 @@
-## Interface `ClusterRerouteRerouteParameters`
+# `ClusterRerouteRerouteParameters` [interface-ClusterRerouteRerouteParameters]
 
 | Name | Type | Description |
 | - | - | - |

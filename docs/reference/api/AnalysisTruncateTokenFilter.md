@@ -1,4 +1,4 @@
-## Interface `AnalysisTruncateTokenFilter`
+# `AnalysisTruncateTokenFilter` [interface-AnalysisTruncateTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

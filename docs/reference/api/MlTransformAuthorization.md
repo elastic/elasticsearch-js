@@ -1,4 +1,4 @@
-## Interface `MlTransformAuthorization`
+# `MlTransformAuthorization` [interface-MlTransformAuthorization]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SearchApplicationSearchApplicationParameters`
+# `SearchApplicationSearchApplicationParameters` [interface-SearchApplicationSearchApplicationParameters]
 
 | Name | Type | Description |
 | - | - | - |

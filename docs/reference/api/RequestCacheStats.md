@@ -1,4 +1,4 @@
-## Interface `RequestCacheStats`
+# `RequestCacheStats` [interface-RequestCacheStats]
 
 | Name | Type | Description |
 | - | - | - |

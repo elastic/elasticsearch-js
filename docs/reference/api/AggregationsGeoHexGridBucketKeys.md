@@ -1,4 +1,4 @@
-## Interface `AggregationsGeoHexGridBucketKeys`
+# `AggregationsGeoHexGridBucketKeys` [interface-AggregationsGeoHexGridBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `WatcherSearchInput`
+# `WatcherSearchInput` [interface-WatcherSearchInput]
 
 | Name | Type | Description |
 | - | - | - |

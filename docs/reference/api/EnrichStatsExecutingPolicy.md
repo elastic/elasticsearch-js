@@ -1,4 +1,4 @@
-## Interface `EnrichStatsExecutingPolicy`
+# `EnrichStatsExecutingPolicy` [interface-EnrichStatsExecutingPolicy]
 
 | Name | Type | Description |
 | - | - | - |

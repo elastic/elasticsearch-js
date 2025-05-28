@@ -1,4 +1,4 @@
-## Interface `AutoscalingPutAutoscalingPolicyRequest`
+# `AutoscalingPutAutoscalingPolicyRequest` [interface-AutoscalingPutAutoscalingPolicyRequest]
 
 | Name | Type | Description |
 | - | - | - |

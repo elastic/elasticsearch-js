@@ -1,4 +1,4 @@
-## Interface `IngestPutIpLocationDatabaseRequest`
+# `IngestPutIpLocationDatabaseRequest` [interface-IngestPutIpLocationDatabaseRequest]
 
 | Name | Type | Description |
 | - | - | - |

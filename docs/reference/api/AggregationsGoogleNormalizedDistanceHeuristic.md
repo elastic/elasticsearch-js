@@ -1,4 +1,4 @@
-## Interface `AggregationsGoogleNormalizedDistanceHeuristic`
+# `AggregationsGoogleNormalizedDistanceHeuristic` [interface-AggregationsGoogleNormalizedDistanceHeuristic]
 
 | Name | Type | Description |
 | - | - | - |

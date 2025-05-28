@@ -1,4 +1,4 @@
-## Interface `SecurityClearCachedPrivilegesRequest`
+# `SecurityClearCachedPrivilegesRequest` [interface-SecurityClearCachedPrivilegesRequest]
 
 | Name | Type | Description |
 | - | - | - |

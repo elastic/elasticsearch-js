@@ -1,4 +1,4 @@
-## Interface `CatThreadPoolThreadPoolRecord`
+# `CatThreadPoolThreadPoolRecord` [interface-CatThreadPoolThreadPoolRecord]
 
 | Name | Type | Description |
 | - | - | - |

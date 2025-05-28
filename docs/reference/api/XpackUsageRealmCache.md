@@ -1,4 +1,4 @@
-## Interface `XpackUsageRealmCache`
+# `XpackUsageRealmCache` [interface-XpackUsageRealmCache]
 
 | Name | Type | Description |
 | - | - | - |

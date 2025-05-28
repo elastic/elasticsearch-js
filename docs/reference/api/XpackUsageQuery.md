@@ -1,4 +1,4 @@
-## Interface `XpackUsageQuery`
+# `XpackUsageQuery` [interface-XpackUsageQuery]
 
 | Name | Type | Description |
 | - | - | - |

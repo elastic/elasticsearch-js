@@ -1,4 +1,4 @@
-## Interface `QueryDslQueryStringQuery`
+# `QueryDslQueryStringQuery` [interface-QueryDslQueryStringQuery]
 
 | Name | Type | Description |
 | - | - | - |

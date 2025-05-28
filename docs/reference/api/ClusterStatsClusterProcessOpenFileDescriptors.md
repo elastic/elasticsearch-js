@@ -1,4 +1,4 @@
-## Interface `ClusterStatsClusterProcessOpenFileDescriptors`
+# `ClusterStatsClusterProcessOpenFileDescriptors` [interface-ClusterStatsClusterProcessOpenFileDescriptors]
 
 | Name | Type | Description |
 | - | - | - |

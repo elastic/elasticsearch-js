@@ -1,4 +1,4 @@
-## Interface `InferenceAzureOpenAITaskSettings`
+# `InferenceAzureOpenAITaskSettings` [interface-InferenceAzureOpenAITaskSettings]
 
 | Name | Type | Description |
 | - | - | - |

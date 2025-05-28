@@ -1,4 +1,4 @@
-## Interface `IngestAppendProcessor`
+# `IngestAppendProcessor` [interface-IngestAppendProcessor]
 
 | Name | Type | Description |
 | - | - | - |

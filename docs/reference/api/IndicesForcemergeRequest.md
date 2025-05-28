@@ -1,4 +1,4 @@
-## Interface `IndicesForcemergeRequest`
+# `IndicesForcemergeRequest` [interface-IndicesForcemergeRequest]
 
 | Name | Type | Description |
 | - | - | - |

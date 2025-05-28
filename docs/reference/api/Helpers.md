@@ -1,17 +1,17 @@
-## `Helpers`
+# `Helpers` [class-Helpers]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Helpers(opts: [HelpersOptions](./HelpersOptions.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Helpers]
 
 | Name | Type | Description |
 | - | - | - |
 
-### Methods
+## Methods [class-methods-Helpers]
 
 | Name | Signature | Description |
 | - | - | - |

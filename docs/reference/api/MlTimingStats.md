@@ -1,4 +1,4 @@
-## Interface `MlTimingStats`
+# `MlTimingStats` [interface-MlTimingStats]
 
 | Name | Type | Description |
 | - | - | - |

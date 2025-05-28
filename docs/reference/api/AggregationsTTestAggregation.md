@@ -1,4 +1,4 @@
-## Interface `AggregationsTTestAggregation`
+# `AggregationsTTestAggregation` [interface-AggregationsTTestAggregation]
 
 | Name | Type | Description |
 | - | - | - |

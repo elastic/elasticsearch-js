@@ -1,4 +1,4 @@
-## Interface `CatMlDataFrameAnalyticsDataFrameAnalyticsRecord`
+# `CatMlDataFrameAnalyticsDataFrameAnalyticsRecord` [interface-CatMlDataFrameAnalyticsDataFrameAnalyticsRecord]
 
 | Name | Type | Description |
 | - | - | - |

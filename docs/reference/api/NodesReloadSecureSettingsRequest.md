@@ -1,4 +1,4 @@
-## Interface `NodesReloadSecureSettingsRequest`
+# `NodesReloadSecureSettingsRequest` [interface-NodesReloadSecureSettingsRequest]
 
 | Name | Type | Description |
 | - | - | - |

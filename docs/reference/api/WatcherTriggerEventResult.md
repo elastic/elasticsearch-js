@@ -1,4 +1,4 @@
-## Interface `WatcherTriggerEventResult`
+# `WatcherTriggerEventResult` [interface-WatcherTriggerEventResult]
 
 | Name | Type | Description |
 | - | - | - |

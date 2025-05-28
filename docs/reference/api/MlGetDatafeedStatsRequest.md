@@ -1,4 +1,4 @@
-## Interface `MlGetDatafeedStatsRequest`
+# `MlGetDatafeedStatsRequest` [interface-MlGetDatafeedStatsRequest]
 
 | Name | Type | Description |
 | - | - | - |

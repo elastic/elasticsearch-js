@@ -1,4 +1,4 @@
-## Interface `SecurityChangePasswordResponse`
+# `SecurityChangePasswordResponse` [interface-SecurityChangePasswordResponse]
 
 | Name | Type | Description |
 | - | - | - |

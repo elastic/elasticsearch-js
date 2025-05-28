@@ -1,4 +1,4 @@
-## Interface `MlAnalysisLimits`
+# `MlAnalysisLimits` [interface-MlAnalysisLimits]
 
 | Name | Type | Description |
 | - | - | - |

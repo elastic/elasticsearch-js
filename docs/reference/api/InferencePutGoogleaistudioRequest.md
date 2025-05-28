@@ -1,4 +1,4 @@
-## Interface `InferencePutGoogleaistudioRequest`
+# `InferencePutGoogleaistudioRequest` [interface-InferencePutGoogleaistudioRequest]
 
 | Name | Type | Description |
 | - | - | - |

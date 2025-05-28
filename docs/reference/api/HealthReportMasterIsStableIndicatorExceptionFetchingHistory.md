@@ -1,4 +1,4 @@
-## Interface `HealthReportMasterIsStableIndicatorExceptionFetchingHistory`
+# `HealthReportMasterIsStableIndicatorExceptionFetchingHistory` [interface-HealthReportMasterIsStableIndicatorExceptionFetchingHistory]
 
 | Name | Type | Description |
 | - | - | - |

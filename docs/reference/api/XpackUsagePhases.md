@@ -1,4 +1,4 @@
-## Interface `XpackUsagePhases`
+# `XpackUsagePhases` [interface-XpackUsagePhases]
 
 | Name | Type | Description |
 | - | - | - |

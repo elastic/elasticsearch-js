@@ -1,4 +1,4 @@
-## Interface `GraphExploreRequest`
+# `GraphExploreRequest` [interface-GraphExploreRequest]
 
 | Name | Type | Description |
 | - | - | - |

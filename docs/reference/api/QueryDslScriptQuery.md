@@ -1,4 +1,4 @@
-## Interface `QueryDslScriptQuery`
+# `QueryDslScriptQuery` [interface-QueryDslScriptQuery]
 
 | Name | Type | Description |
 | - | - | - |

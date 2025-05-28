@@ -1,4 +1,4 @@
-## Interface `ConnectorConnectorSyncJob`
+# `ConnectorConnectorSyncJob` [interface-ConnectorConnectorSyncJob]
 
 | Name | Type | Description |
 | - | - | - |

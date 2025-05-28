@@ -1,4 +1,4 @@
-## Interface `SnapshotVerifyRepositoryCompactNodeInfo`
+# `SnapshotVerifyRepositoryCompactNodeInfo` [interface-SnapshotVerifyRepositoryCompactNodeInfo]
 
 | Name | Type | Description |
 | - | - | - |

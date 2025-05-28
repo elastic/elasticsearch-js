@@ -1,4 +1,4 @@
-## Interface `MlDeleteCalendarRequest`
+# `MlDeleteCalendarRequest` [interface-MlDeleteCalendarRequest]
 
 | Name | Type | Description |
 | - | - | - |

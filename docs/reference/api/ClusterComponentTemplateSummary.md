@@ -1,4 +1,4 @@
-## Interface `ClusterComponentTemplateSummary`
+# `ClusterComponentTemplateSummary` [interface-ClusterComponentTemplateSummary]
 
 | Name | Type | Description |
 | - | - | - |

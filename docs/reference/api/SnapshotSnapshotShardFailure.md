@@ -1,4 +1,4 @@
-## Interface `SnapshotSnapshotShardFailure`
+# `SnapshotSnapshotShardFailure` [interface-SnapshotSnapshotShardFailure]
 
 | Name | Type | Description |
 | - | - | - |

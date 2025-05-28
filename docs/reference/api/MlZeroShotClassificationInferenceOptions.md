@@ -1,4 +1,4 @@
-## Interface `MlZeroShotClassificationInferenceOptions`
+# `MlZeroShotClassificationInferenceOptions` [interface-MlZeroShotClassificationInferenceOptions]
 
 | Name | Type | Description |
 | - | - | - |

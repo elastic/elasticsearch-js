@@ -1,4 +1,4 @@
-## Interface `IndicesModifyDataStreamRequest`
+# `IndicesModifyDataStreamRequest` [interface-IndicesModifyDataStreamRequest]
 
 | Name | Type | Description |
 | - | - | - |

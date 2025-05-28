@@ -1,4 +1,4 @@
-## Interface `AnalysisSerbianNormalizationTokenFilter`
+# `AnalysisSerbianNormalizationTokenFilter` [interface-AnalysisSerbianNormalizationTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

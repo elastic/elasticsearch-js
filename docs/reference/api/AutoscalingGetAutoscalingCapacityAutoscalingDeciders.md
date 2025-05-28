@@ -1,4 +1,4 @@
-## Interface `AutoscalingGetAutoscalingCapacityAutoscalingDeciders`
+# `AutoscalingGetAutoscalingCapacityAutoscalingDeciders` [interface-AutoscalingGetAutoscalingCapacityAutoscalingDeciders]
 
 | Name | Type | Description |
 | - | - | - |

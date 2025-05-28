@@ -1,4 +1,4 @@
-## Interface `QueryRulesTestRequest`
+# `QueryRulesTestRequest` [interface-QueryRulesTestRequest]
 
 | Name | Type | Description |
 | - | - | - |

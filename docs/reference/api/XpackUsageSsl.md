@@ -1,4 +1,4 @@
-## Interface `XpackUsageSsl`
+# `XpackUsageSsl` [interface-XpackUsageSsl]
 
 | Name | Type | Description |
 | - | - | - |

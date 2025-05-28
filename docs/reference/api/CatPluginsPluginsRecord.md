@@ -1,4 +1,4 @@
-## Interface `CatPluginsPluginsRecord`
+# `CatPluginsPluginsRecord` [interface-CatPluginsPluginsRecord]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SecurityGetServiceCredentialsNodesCredentials`
+# `SecurityGetServiceCredentialsNodesCredentials` [interface-SecurityGetServiceCredentialsNodesCredentials]
 
 | Name | Type | Description |
 | - | - | - |

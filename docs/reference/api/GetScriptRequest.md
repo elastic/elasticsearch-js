@@ -1,4 +1,4 @@
-## Interface `GetScriptRequest`
+# `GetScriptRequest` [interface-GetScriptRequest]
 
 | Name | Type | Description |
 | - | - | - |

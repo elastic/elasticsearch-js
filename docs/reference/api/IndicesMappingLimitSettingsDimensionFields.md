@@ -1,4 +1,4 @@
-## Interface `IndicesMappingLimitSettingsDimensionFields`
+# `IndicesMappingLimitSettingsDimensionFields` [interface-IndicesMappingLimitSettingsDimensionFields]
 
 | Name | Type | Description |
 | - | - | - |

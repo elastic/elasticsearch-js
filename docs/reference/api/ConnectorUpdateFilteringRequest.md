@@ -1,4 +1,4 @@
-## Interface `ConnectorUpdateFilteringRequest`
+# `ConnectorUpdateFilteringRequest` [interface-ConnectorUpdateFilteringRequest]
 
 | Name | Type | Description |
 | - | - | - |

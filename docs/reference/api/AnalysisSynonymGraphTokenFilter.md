@@ -1,4 +1,4 @@
-## Interface `AnalysisSynonymGraphTokenFilter`
+# `AnalysisSynonymGraphTokenFilter` [interface-AnalysisSynonymGraphTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

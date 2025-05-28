@@ -1,4 +1,4 @@
-## Interface `XpackUsageSecurity`
+# `XpackUsageSecurity` [interface-XpackUsageSecurity]
 
 | Name | Type | Description |
 | - | - | - |

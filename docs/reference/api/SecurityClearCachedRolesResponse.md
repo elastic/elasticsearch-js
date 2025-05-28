@@ -1,4 +1,4 @@
-## Interface `SecurityClearCachedRolesResponse`
+# `SecurityClearCachedRolesResponse` [interface-SecurityClearCachedRolesResponse]
 
 | Name | Type | Description |
 | - | - | - |

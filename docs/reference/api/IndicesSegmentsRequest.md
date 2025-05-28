@@ -1,4 +1,4 @@
-## Interface `IndicesSegmentsRequest`
+# `IndicesSegmentsRequest` [interface-IndicesSegmentsRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AnalysisBulgarianAnalyzer`
+# `AnalysisBulgarianAnalyzer` [interface-AnalysisBulgarianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

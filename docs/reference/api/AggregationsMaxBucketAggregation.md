@@ -1,4 +1,4 @@
-## Interface `AggregationsMaxBucketAggregation`
+# `AggregationsMaxBucketAggregation` [interface-AggregationsMaxBucketAggregation]
 
 | Name | Type | Description |
 | - | - | - |

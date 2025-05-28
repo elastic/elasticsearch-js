@@ -1,4 +1,4 @@
-## Interface `AggregationsEwmaMovingAverageAggregation`
+# `AggregationsEwmaMovingAverageAggregation` [interface-AggregationsEwmaMovingAverageAggregation]
 
 | Name | Type | Description |
 | - | - | - |

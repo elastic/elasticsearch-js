@@ -1,4 +1,4 @@
-## Interface `IndicesGetIndexTemplateRequest`
+# `IndicesGetIndexTemplateRequest` [interface-IndicesGetIndexTemplateRequest]
 
 | Name | Type | Description |
 | - | - | - |

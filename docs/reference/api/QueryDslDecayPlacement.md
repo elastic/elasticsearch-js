@@ -1,4 +1,4 @@
-## Interface `QueryDslDecayPlacement`
+# `QueryDslDecayPlacement` [interface-QueryDslDecayPlacement]
 
 | Name | Type | Description |
 | - | - | - |

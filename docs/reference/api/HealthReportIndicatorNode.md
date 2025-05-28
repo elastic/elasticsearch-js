@@ -1,4 +1,4 @@
-## Interface `HealthReportIndicatorNode`
+# `HealthReportIndicatorNode` [interface-HealthReportIndicatorNode]
 
 | Name | Type | Description |
 | - | - | - |

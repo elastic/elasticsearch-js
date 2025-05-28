@@ -1,4 +1,4 @@
-## Interface `IndicesMappingLimitSettingsTotalFields`
+# `IndicesMappingLimitSettingsTotalFields` [interface-IndicesMappingLimitSettingsTotalFields]
 
 | Name | Type | Description |
 | - | - | - |

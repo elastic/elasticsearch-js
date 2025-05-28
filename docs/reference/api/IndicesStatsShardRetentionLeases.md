@@ -1,4 +1,4 @@
-## Interface `IndicesStatsShardRetentionLeases`
+# `IndicesStatsShardRetentionLeases` [interface-IndicesStatsShardRetentionLeases]
 
 | Name | Type | Description |
 | - | - | - |

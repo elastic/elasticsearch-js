@@ -1,4 +1,4 @@
-## Interface `IndicesMigrateToDataStreamRequest`
+# `IndicesMigrateToDataStreamRequest` [interface-IndicesMigrateToDataStreamRequest]
 
 | Name | Type | Description |
 | - | - | - |

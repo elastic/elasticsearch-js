@@ -1,4 +1,4 @@
-## Interface `AnalysisSnowballAnalyzer`
+# `AnalysisSnowballAnalyzer` [interface-AnalysisSnowballAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `InferenceAlibabaCloudServiceSettings`
+# `InferenceAlibabaCloudServiceSettings` [interface-InferenceAlibabaCloudServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `ClusterStatsClusterJvmMemory`
+# `ClusterStatsClusterJvmMemory` [interface-ClusterStatsClusterJvmMemory]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SecurityPutUserRequest`
+# `SecurityPutUserRequest` [interface-SecurityPutUserRequest]
 
 | Name | Type | Description |
 | - | - | - |

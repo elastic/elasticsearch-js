@@ -1,4 +1,4 @@
-## Interface `AggregationsGeoLinePoint`
+# `AggregationsGeoLinePoint` [interface-AggregationsGeoLinePoint]
 
 | Name | Type | Description |
 | - | - | - |

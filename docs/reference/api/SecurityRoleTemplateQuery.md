@@ -1,4 +1,4 @@
-## Interface `SecurityRoleTemplateQuery`
+# `SecurityRoleTemplateQuery` [interface-SecurityRoleTemplateQuery]
 
 | Name | Type | Description |
 | - | - | - |

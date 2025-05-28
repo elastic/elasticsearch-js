@@ -1,4 +1,4 @@
-## Interface `ConnectorUpdateSchedulingResponse`
+# `ConnectorUpdateSchedulingResponse` [interface-ConnectorUpdateSchedulingResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `EnrichGetPolicyResponse`
+# `EnrichGetPolicyResponse` [interface-EnrichGetPolicyResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `CcrForgetFollowerRequest`
+# `CcrForgetFollowerRequest` [interface-CcrForgetFollowerRequest]
 
 | Name | Type | Description |
 | - | - | - |

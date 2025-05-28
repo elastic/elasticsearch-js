@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoXpack`
+# `NodesInfoNodeInfoXpack` [interface-NodesInfoNodeInfoXpack]
 
 | Name | Type | Description |
 | - | - | - |

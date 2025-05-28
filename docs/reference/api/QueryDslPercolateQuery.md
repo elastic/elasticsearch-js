@@ -1,4 +1,4 @@
-## Interface `QueryDslPercolateQuery`
+# `QueryDslPercolateQuery` [interface-QueryDslPercolateQuery]
 
 | Name | Type | Description |
 | - | - | - |

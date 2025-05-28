@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoSettingsIngest`
+# `NodesInfoNodeInfoSettingsIngest` [interface-NodesInfoNodeInfoSettingsIngest]
 
 | Name | Type | Description |
 | - | - | - |

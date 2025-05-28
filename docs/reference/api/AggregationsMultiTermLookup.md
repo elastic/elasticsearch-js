@@ -1,4 +1,4 @@
-## Interface `AggregationsMultiTermLookup`
+# `AggregationsMultiTermLookup` [interface-AggregationsMultiTermLookup]
 
 | Name | Type | Description |
 | - | - | - |

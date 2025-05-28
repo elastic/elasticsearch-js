@@ -1,4 +1,4 @@
-## Interface `SecurityHasPrivilegesUserProfileHasPrivilegesUserProfileErrors`
+# `SecurityHasPrivilegesUserProfileHasPrivilegesUserProfileErrors` [interface-SecurityHasPrivilegesUserProfileHasPrivilegesUserProfileErrors]
 
 | Name | Type | Description |
 | - | - | - |

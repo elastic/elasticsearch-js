@@ -1,4 +1,4 @@
-## Interface `SearchCollector`
+# `SearchCollector` [interface-SearchCollector]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IlmExplainLifecycleLifecycleExplainManaged`
+# `IlmExplainLifecycleLifecycleExplainManaged` [interface-IlmExplainLifecycleLifecycleExplainManaged]
 
 | Name | Type | Description |
 | - | - | - |

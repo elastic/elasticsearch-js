@@ -1,4 +1,4 @@
-## Interface `AnalysisDictionaryDecompounderTokenFilter`
+# `AnalysisDictionaryDecompounderTokenFilter` [interface-AnalysisDictionaryDecompounderTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `CcrDeleteAutoFollowPatternRequest`
+# `CcrDeleteAutoFollowPatternRequest` [interface-CcrDeleteAutoFollowPatternRequest]
 
 | Name | Type | Description |
 | - | - | - |

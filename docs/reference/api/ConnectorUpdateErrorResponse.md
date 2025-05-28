@@ -1,4 +1,4 @@
-## Interface `ConnectorUpdateErrorResponse`
+# `ConnectorUpdateErrorResponse` [interface-ConnectorUpdateErrorResponse]
 
 | Name | Type | Description |
 | - | - | - |

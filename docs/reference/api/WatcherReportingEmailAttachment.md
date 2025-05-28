@@ -1,4 +1,4 @@
-## Interface `WatcherReportingEmailAttachment`
+# `WatcherReportingEmailAttachment` [interface-WatcherReportingEmailAttachment]
 
 | Name | Type | Description |
 | - | - | - |

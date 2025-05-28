@@ -1,4 +1,4 @@
-## Interface `MlTrainedModelDeploymentAllocationStatus`
+# `MlTrainedModelDeploymentAllocationStatus` [interface-MlTrainedModelDeploymentAllocationStatus]
 
 | Name | Type | Description |
 | - | - | - |

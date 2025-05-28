@@ -1,4 +1,4 @@
-## Interface `MappingIntegerNumberProperty`
+# `MappingIntegerNumberProperty` [interface-MappingIntegerNumberProperty]
 
 | Name | Type | Description |
 | - | - | - |

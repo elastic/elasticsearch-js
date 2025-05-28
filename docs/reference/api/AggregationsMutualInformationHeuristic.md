@@ -1,4 +1,4 @@
-## Interface `AggregationsMutualInformationHeuristic`
+# `AggregationsMutualInformationHeuristic` [interface-AggregationsMutualInformationHeuristic]
 
 | Name | Type | Description |
 | - | - | - |

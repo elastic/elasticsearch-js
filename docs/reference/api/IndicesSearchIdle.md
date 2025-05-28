@@ -1,4 +1,4 @@
-## Interface `IndicesSearchIdle`
+# `IndicesSearchIdle` [interface-IndicesSearchIdle]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IlmStopRequest`
+# `IlmStopRequest` [interface-IlmStopRequest]
 
 | Name | Type | Description |
 | - | - | - |

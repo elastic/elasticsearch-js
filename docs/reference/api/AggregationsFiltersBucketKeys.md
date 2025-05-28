@@ -1,4 +1,4 @@
-## Interface `AggregationsFiltersBucketKeys`
+# `AggregationsFiltersBucketKeys` [interface-AggregationsFiltersBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

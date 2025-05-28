@@ -1,4 +1,4 @@
-## Interface `IndicesDeleteDataStreamRequest`
+# `IndicesDeleteDataStreamRequest` [interface-IndicesDeleteDataStreamRequest]
 
 | Name | Type | Description |
 | - | - | - |

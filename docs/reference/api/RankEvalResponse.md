@@ -1,4 +1,4 @@
-## Interface `RankEvalResponse`
+# `RankEvalResponse` [interface-RankEvalResponse]
 
 | Name | Type | Description |
 | - | - | - |

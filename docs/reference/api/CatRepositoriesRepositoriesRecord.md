@@ -1,4 +1,4 @@
-## Interface `CatRepositoriesRepositoriesRecord`
+# `CatRepositoriesRepositoriesRecord` [interface-CatRepositoriesRepositoriesRecord]
 
 | Name | Type | Description |
 | - | - | - |

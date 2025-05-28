@@ -1,4 +1,4 @@
-## Interface `QueryDslIdsQuery`
+# `QueryDslIdsQuery` [interface-QueryDslIdsQuery]
 
 | Name | Type | Description |
 | - | - | - |

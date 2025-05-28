@@ -1,4 +1,4 @@
-## Interface `PingRequest`
+# `PingRequest` [interface-PingRequest]
 
 | Name | Type | Description |
 | - | - | - |

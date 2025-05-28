@@ -1,4 +1,4 @@
-## Interface `IngestMaxmind`
+# `IngestMaxmind` [interface-IngestMaxmind]
 
 | Name | Type | Description |
 | - | - | - |

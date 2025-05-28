@@ -1,4 +1,4 @@
-## Interface `IndexingStats`
+# `IndexingStats` [interface-IndexingStats]
 
 | Name | Type | Description |
 | - | - | - |

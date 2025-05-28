@@ -1,4 +1,4 @@
-## Interface `MlOpenJobResponse`
+# `MlOpenJobResponse` [interface-MlOpenJobResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `QueryDslFunctionScoreQuery`
+# `QueryDslFunctionScoreQuery` [interface-QueryDslFunctionScoreQuery]
 
 | Name | Type | Description |
 | - | - | - |

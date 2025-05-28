@@ -1,4 +1,4 @@
-## Interface `SynonymsGetSynonymRuleRequest`
+# `SynonymsGetSynonymRuleRequest` [interface-SynonymsGetSynonymRuleRequest]
 
 | Name | Type | Description |
 | - | - | - |

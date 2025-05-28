@@ -1,4 +1,4 @@
-## Interface `ScoreSort`
+# `ScoreSort` [interface-ScoreSort]
 
 | Name | Type | Description |
 | - | - | - |

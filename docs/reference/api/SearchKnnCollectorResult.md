@@ -1,4 +1,4 @@
-## Interface `SearchKnnCollectorResult`
+# `SearchKnnCollectorResult` [interface-SearchKnnCollectorResult]
 
 | Name | Type | Description |
 | - | - | - |

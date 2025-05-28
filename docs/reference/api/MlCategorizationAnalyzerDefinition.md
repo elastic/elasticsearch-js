@@ -1,4 +1,4 @@
-## Interface `MlCategorizationAnalyzerDefinition`
+# `MlCategorizationAnalyzerDefinition` [interface-MlCategorizationAnalyzerDefinition]
 
 | Name | Type | Description |
 | - | - | - |

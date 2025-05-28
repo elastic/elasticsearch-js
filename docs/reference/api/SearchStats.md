@@ -1,4 +1,4 @@
-## Interface `SearchStats`
+# `SearchStats` [interface-SearchStats]
 
 | Name | Type | Description |
 | - | - | - |

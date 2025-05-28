@@ -1,4 +1,4 @@
-## Interface `TermvectorsFilter`
+# `TermvectorsFilter` [interface-TermvectorsFilter]
 
 | Name | Type | Description |
 | - | - | - |

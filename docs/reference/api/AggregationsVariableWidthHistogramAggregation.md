@@ -1,4 +1,4 @@
-## Interface `AggregationsVariableWidthHistogramAggregation`
+# `AggregationsVariableWidthHistogramAggregation` [interface-AggregationsVariableWidthHistogramAggregation]
 
 | Name | Type | Description |
 | - | - | - |

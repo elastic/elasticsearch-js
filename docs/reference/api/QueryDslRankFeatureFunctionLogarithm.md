@@ -1,4 +1,4 @@
-## Interface `QueryDslRankFeatureFunctionLogarithm`
+# `QueryDslRankFeatureFunctionLogarithm` [interface-QueryDslRankFeatureFunctionLogarithm]
 
 | Name | Type | Description |
 | - | - | - |

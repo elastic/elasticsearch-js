@@ -1,4 +1,4 @@
-## Interface `SecurityGetSettingsResponse`
+# `SecurityGetSettingsResponse` [interface-SecurityGetSettingsResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IngestWeb`
+# `IngestWeb` [interface-IngestWeb]
 
 | Name | Type | Description |
 | - | - | - |

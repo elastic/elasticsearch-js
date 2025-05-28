@@ -1,4 +1,4 @@
-## Interface `DeleteByQueryResponse`
+# `DeleteByQueryResponse` [interface-DeleteByQueryResponse]
 
 | Name | Type | Description |
 | - | - | - |

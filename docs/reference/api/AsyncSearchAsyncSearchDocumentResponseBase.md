@@ -1,4 +1,4 @@
-## Interface `AsyncSearchAsyncSearchDocumentResponseBase`
+# `AsyncSearchAsyncSearchDocumentResponseBase` [interface-AsyncSearchAsyncSearchDocumentResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `XpackUsageCounter`
+# `XpackUsageCounter` [interface-XpackUsageCounter]
 
 | Name | Type | Description |
 | - | - | - |

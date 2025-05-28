@@ -1,4 +1,4 @@
-## Interface `HealthReportImpact`
+# `HealthReportImpact` [interface-HealthReportImpact]
 
 | Name | Type | Description |
 | - | - | - |

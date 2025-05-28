@@ -1,4 +1,4 @@
-## Interface `AnalysisBasqueAnalyzer`
+# `AnalysisBasqueAnalyzer` [interface-AnalysisBasqueAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

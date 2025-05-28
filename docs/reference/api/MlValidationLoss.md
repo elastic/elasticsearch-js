@@ -1,4 +1,4 @@
-## Interface `MlValidationLoss`
+# `MlValidationLoss` [interface-MlValidationLoss]
 
 | Name | Type | Description |
 | - | - | - |

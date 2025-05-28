@@ -1,4 +1,4 @@
-## Interface `SecurityInvalidateTokenResponse`
+# `SecurityInvalidateTokenResponse` [interface-SecurityInvalidateTokenResponse]
 
 | Name | Type | Description |
 | - | - | - |

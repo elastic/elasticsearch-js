@@ -1,4 +1,4 @@
-## Interface `CatThreadPoolRequest`
+# `CatThreadPoolRequest` [interface-CatThreadPoolRequest]
 
 | Name | Type | Description |
 | - | - | - |

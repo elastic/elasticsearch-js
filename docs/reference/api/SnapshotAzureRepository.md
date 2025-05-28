@@ -1,4 +1,4 @@
-## Interface `SnapshotAzureRepository`
+# `SnapshotAzureRepository` [interface-SnapshotAzureRepository]
 
 | Name | Type | Description |
 | - | - | - |

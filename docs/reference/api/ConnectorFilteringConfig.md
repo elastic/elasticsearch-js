@@ -1,4 +1,4 @@
-## Interface `ConnectorFilteringConfig`
+# `ConnectorFilteringConfig` [interface-ConnectorFilteringConfig]
 
 | Name | Type | Description |
 | - | - | - |

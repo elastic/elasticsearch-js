@@ -1,4 +1,4 @@
-## Interface `QueryDslBoostingQuery`
+# `QueryDslBoostingQuery` [interface-QueryDslBoostingQuery]
 
 | Name | Type | Description |
 | - | - | - |

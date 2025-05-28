@@ -1,4 +1,4 @@
-## Interface `IndicesSettingsSearch`
+# `IndicesSettingsSearch` [interface-IndicesSettingsSearch]
 
 | Name | Type | Description |
 | - | - | - |

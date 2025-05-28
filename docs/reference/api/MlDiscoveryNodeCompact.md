@@ -1,4 +1,4 @@
-## Interface `MlDiscoveryNodeCompact`
+# `MlDiscoveryNodeCompact` [interface-MlDiscoveryNodeCompact]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesMerge`
+# `IndicesMerge` [interface-IndicesMerge]
 
 | Name | Type | Description |
 | - | - | - |

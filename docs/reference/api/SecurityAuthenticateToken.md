@@ -1,4 +1,4 @@
-## Interface `SecurityAuthenticateToken`
+# `SecurityAuthenticateToken` [interface-SecurityAuthenticateToken]
 
 | Name | Type | Description |
 | - | - | - |

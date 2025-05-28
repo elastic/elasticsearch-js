@@ -1,4 +1,4 @@
-## Interface `AggregationsGeoCentroidAggregate`
+# `AggregationsGeoCentroidAggregate` [interface-AggregationsGeoCentroidAggregate]
 
 | Name | Type | Description |
 | - | - | - |

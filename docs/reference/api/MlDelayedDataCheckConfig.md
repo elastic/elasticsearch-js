@@ -1,4 +1,4 @@
-## Interface `MlDelayedDataCheckConfig`
+# `MlDelayedDataCheckConfig` [interface-MlDelayedDataCheckConfig]
 
 | Name | Type | Description |
 | - | - | - |

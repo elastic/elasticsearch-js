@@ -1,4 +1,4 @@
-## Interface `InlineGetKeys`
+# `InlineGetKeys` [interface-InlineGetKeys]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsArrayPercentilesItem`
+# `AggregationsArrayPercentilesItem` [interface-AggregationsArrayPercentilesItem]
 
 | Name | Type | Description |
 | - | - | - |

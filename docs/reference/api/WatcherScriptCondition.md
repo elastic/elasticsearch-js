@@ -1,4 +1,4 @@
-## Interface `WatcherScriptCondition`
+# `WatcherScriptCondition` [interface-WatcherScriptCondition]
 
 | Name | Type | Description |
 | - | - | - |

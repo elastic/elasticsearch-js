@@ -1,4 +1,4 @@
-## Interface `ClusterRerouteCommandCancelAction`
+# `ClusterRerouteCommandCancelAction` [interface-ClusterRerouteCommandCancelAction]
 
 | Name | Type | Description |
 | - | - | - |

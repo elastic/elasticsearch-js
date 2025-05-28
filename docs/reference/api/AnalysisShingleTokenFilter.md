@@ -1,4 +1,4 @@
-## Interface `AnalysisShingleTokenFilter`
+# `AnalysisShingleTokenFilter` [interface-AnalysisShingleTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

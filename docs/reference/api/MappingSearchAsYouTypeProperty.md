@@ -1,4 +1,4 @@
-## Interface `MappingSearchAsYouTypeProperty`
+# `MappingSearchAsYouTypeProperty` [interface-MappingSearchAsYouTypeProperty]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IngestGetIpLocationDatabaseResponse`
+# `IngestGetIpLocationDatabaseResponse` [interface-IngestGetIpLocationDatabaseResponse]
 
 | Name | Type | Description |
 | - | - | - |

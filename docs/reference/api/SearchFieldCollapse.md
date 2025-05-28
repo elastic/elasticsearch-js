@@ -1,4 +1,4 @@
-## Interface `SearchFieldCollapse`
+# `SearchFieldCollapse` [interface-SearchFieldCollapse]
 
 | Name | Type | Description |
 | - | - | - |

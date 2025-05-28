@@ -1,4 +1,4 @@
-## Interface `StandardRetriever`
+# `StandardRetriever` [interface-StandardRetriever]
 
 | Name | Type | Description |
 | - | - | - |

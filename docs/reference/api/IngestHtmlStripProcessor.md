@@ -1,4 +1,4 @@
-## Interface `IngestHtmlStripProcessor`
+# `IngestHtmlStripProcessor` [interface-IngestHtmlStripProcessor]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesCloneRequest`
+# `IndicesCloneRequest` [interface-IndicesCloneRequest]
 
 | Name | Type | Description |
 | - | - | - |

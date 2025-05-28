@@ -1,4 +1,4 @@
-## Interface `IngestBytesProcessor`
+# `IngestBytesProcessor` [interface-IngestBytesProcessor]
 
 | Name | Type | Description |
 | - | - | - |

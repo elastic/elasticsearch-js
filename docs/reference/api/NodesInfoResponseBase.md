@@ -1,4 +1,4 @@
-## Interface `NodesInfoResponseBase`
+# `NodesInfoResponseBase` [interface-NodesInfoResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

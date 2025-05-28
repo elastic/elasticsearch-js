@@ -1,4 +1,4 @@
-## Interface `CatTemplatesRequest`
+# `CatTemplatesRequest` [interface-CatTemplatesRequest]
 
 | Name | Type | Description |
 | - | - | - |

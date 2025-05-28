@@ -1,4 +1,4 @@
-## Interface `AggregationsUnmappedTermsAggregate`
+# `AggregationsUnmappedTermsAggregate` [interface-AggregationsUnmappedTermsAggregate]
 
 | Name | Type | Description |
 | - | - | - |

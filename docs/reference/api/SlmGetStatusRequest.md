@@ -1,4 +1,4 @@
-## Interface `SlmGetStatusRequest`
+# `SlmGetStatusRequest` [interface-SlmGetStatusRequest]
 
 | Name | Type | Description |
 | - | - | - |

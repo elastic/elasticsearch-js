@@ -1,4 +1,4 @@
-## Interface `EqlSearchRequest`
+# `EqlSearchRequest` [interface-EqlSearchRequest]
 
 | Name | Type | Description |
 | - | - | - |

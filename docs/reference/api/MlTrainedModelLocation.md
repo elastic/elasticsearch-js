@@ -1,4 +1,4 @@
-## Interface `MlTrainedModelLocation`
+# `MlTrainedModelLocation` [interface-MlTrainedModelLocation]
 
 | Name | Type | Description |
 | - | - | - |

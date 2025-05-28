@@ -1,4 +1,4 @@
-## Interface `NodesSerializedClusterState`
+# `NodesSerializedClusterState` [interface-NodesSerializedClusterState]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `HealthReportDiagnosisAffectedResources`
+# `HealthReportDiagnosisAffectedResources` [interface-HealthReportDiagnosisAffectedResources]
 
 | Name | Type | Description |
 | - | - | - |

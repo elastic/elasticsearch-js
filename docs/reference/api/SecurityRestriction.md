@@ -1,4 +1,4 @@
-## Interface `SecurityRestriction`
+# `SecurityRestriction` [interface-SecurityRestriction]
 
 | Name | Type | Description |
 | - | - | - |

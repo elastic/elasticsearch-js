@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoAction`
+# `NodesInfoNodeInfoAction` [interface-NodesInfoNodeInfoAction]
 
 | Name | Type | Description |
 | - | - | - |

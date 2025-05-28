@@ -1,4 +1,4 @@
-## Interface `SearchTotalHits`
+# `SearchTotalHits` [interface-SearchTotalHits]
 
 | Name | Type | Description |
 | - | - | - |

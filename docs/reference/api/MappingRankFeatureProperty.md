@@ -1,4 +1,4 @@
-## Interface `MappingRankFeatureProperty`
+# `MappingRankFeatureProperty` [interface-MappingRankFeatureProperty]
 
 | Name | Type | Description |
 | - | - | - |

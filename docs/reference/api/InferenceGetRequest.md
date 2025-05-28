@@ -1,4 +1,4 @@
-## Interface `InferenceGetRequest`
+# `InferenceGetRequest` [interface-InferenceGetRequest]
 
 | Name | Type | Description |
 | - | - | - |

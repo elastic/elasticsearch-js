@@ -1,4 +1,4 @@
-## Interface `AnalysisSoraniNormalizationTokenFilter`
+# `AnalysisSoraniNormalizationTokenFilter` [interface-AnalysisSoraniNormalizationTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

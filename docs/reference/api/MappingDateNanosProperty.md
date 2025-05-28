@@ -1,4 +1,4 @@
-## Interface `MappingDateNanosProperty`
+# `MappingDateNanosProperty` [interface-MappingDateNanosProperty]
 
 | Name | Type | Description |
 | - | - | - |

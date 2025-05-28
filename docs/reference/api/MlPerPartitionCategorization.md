@@ -1,4 +1,4 @@
-## Interface `MlPerPartitionCategorization`
+# `MlPerPartitionCategorization` [interface-MlPerPartitionCategorization]
 
 | Name | Type | Description |
 | - | - | - |

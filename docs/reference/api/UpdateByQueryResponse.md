@@ -1,4 +1,4 @@
-## Interface `UpdateByQueryResponse`
+# `UpdateByQueryResponse` [interface-UpdateByQueryResponse]
 
 | Name | Type | Description |
 | - | - | - |

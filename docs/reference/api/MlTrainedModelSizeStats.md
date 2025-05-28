@@ -1,4 +1,4 @@
-## Interface `MlTrainedModelSizeStats`
+# `MlTrainedModelSizeStats` [interface-MlTrainedModelSizeStats]
 
 | Name | Type | Description |
 | - | - | - |

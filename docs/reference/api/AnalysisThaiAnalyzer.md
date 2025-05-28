@@ -1,4 +1,4 @@
-## Interface `AnalysisThaiAnalyzer`
+# `AnalysisThaiAnalyzer` [interface-AnalysisThaiAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

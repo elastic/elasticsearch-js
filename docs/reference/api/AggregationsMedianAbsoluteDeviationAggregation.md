@@ -1,4 +1,4 @@
-## Interface `AggregationsMedianAbsoluteDeviationAggregation`
+# `AggregationsMedianAbsoluteDeviationAggregation` [interface-AggregationsMedianAbsoluteDeviationAggregation]
 
 | Name | Type | Description |
 | - | - | - |

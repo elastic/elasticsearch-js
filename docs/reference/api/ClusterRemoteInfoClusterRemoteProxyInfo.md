@@ -1,4 +1,4 @@
-## Interface `ClusterRemoteInfoClusterRemoteProxyInfo`
+# `ClusterRemoteInfoClusterRemoteProxyInfo` [interface-ClusterRemoteInfoClusterRemoteProxyInfo]
 
 | Name | Type | Description |
 | - | - | - |

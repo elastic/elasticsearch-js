@@ -1,4 +1,4 @@
-## Interface `MlUpdateTrainedModelDeploymentRequest`
+# `MlUpdateTrainedModelDeploymentRequest` [interface-MlUpdateTrainedModelDeploymentRequest]
 
 | Name | Type | Description |
 | - | - | - |

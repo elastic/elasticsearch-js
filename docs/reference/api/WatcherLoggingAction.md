@@ -1,4 +1,4 @@
-## Interface `WatcherLoggingAction`
+# `WatcherLoggingAction` [interface-WatcherLoggingAction]
 
 | Name | Type | Description |
 | - | - | - |

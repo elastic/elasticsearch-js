@@ -1,19 +1,19 @@
-## `Cluster`
+# `Cluster` [class-Cluster]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Cluster(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Cluster]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Cluster]
 
 | Name | Signature | Description |
 | - | - | - |

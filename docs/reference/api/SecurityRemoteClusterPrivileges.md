@@ -1,4 +1,4 @@
-## Interface `SecurityRemoteClusterPrivileges`
+# `SecurityRemoteClusterPrivileges` [interface-SecurityRemoteClusterPrivileges]
 
 | Name | Type | Description |
 | - | - | - |

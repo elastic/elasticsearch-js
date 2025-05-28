@@ -1,4 +1,4 @@
-## Interface `SecuritySamlCompleteLogoutRequest`
+# `SecuritySamlCompleteLogoutRequest` [interface-SecuritySamlCompleteLogoutRequest]
 
 | Name | Type | Description |
 | - | - | - |

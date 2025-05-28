@@ -1,4 +1,4 @@
-## Interface `RollupTermsGrouping`
+# `RollupTermsGrouping` [interface-RollupTermsGrouping]
 
 | Name | Type | Description |
 | - | - | - |

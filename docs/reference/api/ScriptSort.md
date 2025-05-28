@@ -1,4 +1,4 @@
-## Interface `ScriptSort`
+# `ScriptSort` [interface-ScriptSort]
 
 | Name | Type | Description |
 | - | - | - |

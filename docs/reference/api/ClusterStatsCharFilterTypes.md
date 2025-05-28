@@ -1,4 +1,4 @@
-## Interface `ClusterStatsCharFilterTypes`
+# `ClusterStatsCharFilterTypes` [interface-ClusterStatsCharFilterTypes]
 
 | Name | Type | Description |
 | - | - | - |

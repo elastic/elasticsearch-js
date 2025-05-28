@@ -1,4 +1,4 @@
-## Interface `IngestEnrichProcessor`
+# `IngestEnrichProcessor` [interface-IngestEnrichProcessor]
 
 | Name | Type | Description |
 | - | - | - |

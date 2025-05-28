@@ -1,4 +1,4 @@
-## Interface `WatcherPagerDutyEvent`
+# `WatcherPagerDutyEvent` [interface-WatcherPagerDutyEvent]
 
 | Name | Type | Description |
 | - | - | - |

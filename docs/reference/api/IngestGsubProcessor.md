@@ -1,4 +1,4 @@
-## Interface `IngestGsubProcessor`
+# `IngestGsubProcessor` [interface-IngestGsubProcessor]
 
 | Name | Type | Description |
 | - | - | - |

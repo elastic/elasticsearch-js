@@ -1,4 +1,4 @@
-## Interface `ClusterStatsStatsResponseBase`
+# `ClusterStatsStatsResponseBase` [interface-ClusterStatsStatsResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

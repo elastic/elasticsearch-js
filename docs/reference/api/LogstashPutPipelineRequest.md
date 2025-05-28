@@ -1,4 +1,4 @@
-## Interface `LogstashPutPipelineRequest`
+# `LogstashPutPipelineRequest` [interface-LogstashPutPipelineRequest]
 
 | Name | Type | Description |
 | - | - | - |

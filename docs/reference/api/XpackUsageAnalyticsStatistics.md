@@ -1,4 +1,4 @@
-## Interface `XpackUsageAnalyticsStatistics`
+# `XpackUsageAnalyticsStatistics` [interface-XpackUsageAnalyticsStatistics]
 
 | Name | Type | Description |
 | - | - | - |

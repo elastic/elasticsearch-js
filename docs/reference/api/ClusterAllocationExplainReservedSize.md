@@ -1,4 +1,4 @@
-## Interface `ClusterAllocationExplainReservedSize`
+# `ClusterAllocationExplainReservedSize` [interface-ClusterAllocationExplainReservedSize]
 
 | Name | Type | Description |
 | - | - | - |

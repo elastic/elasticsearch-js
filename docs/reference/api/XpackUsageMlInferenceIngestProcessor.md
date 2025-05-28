@@ -1,4 +1,4 @@
-## Interface `XpackUsageMlInferenceIngestProcessor`
+# `XpackUsageMlInferenceIngestProcessor` [interface-XpackUsageMlInferenceIngestProcessor]
 
 | Name | Type | Description |
 | - | - | - |

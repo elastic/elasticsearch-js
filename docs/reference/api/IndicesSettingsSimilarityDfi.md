@@ -1,4 +1,4 @@
-## Interface `IndicesSettingsSimilarityDfi`
+# `IndicesSettingsSimilarityDfi` [interface-IndicesSettingsSimilarityDfi]
 
 | Name | Type | Description |
 | - | - | - |

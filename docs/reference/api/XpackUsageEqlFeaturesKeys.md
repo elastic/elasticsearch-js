@@ -1,4 +1,4 @@
-## Interface `XpackUsageEqlFeaturesKeys`
+# `XpackUsageEqlFeaturesKeys` [interface-XpackUsageEqlFeaturesKeys]
 
 | Name | Type | Description |
 | - | - | - |

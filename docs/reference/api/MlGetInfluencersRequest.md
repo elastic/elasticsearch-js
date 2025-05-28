@@ -1,4 +1,4 @@
-## Interface `MlGetInfluencersRequest`
+# `MlGetInfluencersRequest` [interface-MlGetInfluencersRequest]
 
 | Name | Type | Description |
 | - | - | - |

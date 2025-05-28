@@ -1,4 +1,4 @@
-## Interface `SearchableSnapshotsClearCacheRequest`
+# `SearchableSnapshotsClearCacheRequest` [interface-SearchableSnapshotsClearCacheRequest]
 
 | Name | Type | Description |
 | - | - | - |

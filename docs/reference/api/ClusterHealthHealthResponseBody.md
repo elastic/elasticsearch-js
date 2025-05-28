@@ -1,4 +1,4 @@
-## Interface `ClusterHealthHealthResponseBody`
+# `ClusterHealthHealthResponseBody` [interface-ClusterHealthHealthResponseBody]
 
 | Name | Type | Description |
 | - | - | - |

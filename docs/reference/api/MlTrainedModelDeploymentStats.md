@@ -1,4 +1,4 @@
-## Interface `MlTrainedModelDeploymentStats`
+# `MlTrainedModelDeploymentStats` [interface-MlTrainedModelDeploymentStats]
 
 | Name | Type | Description |
 | - | - | - |

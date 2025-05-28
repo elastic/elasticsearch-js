@@ -1,4 +1,4 @@
-## Interface `QueryVectorBuilder`
+# `QueryVectorBuilder` [interface-QueryVectorBuilder]
 
 | Name | Type | Description |
 | - | - | - |

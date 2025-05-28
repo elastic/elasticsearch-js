@@ -1,4 +1,4 @@
-## Interface `IndicesPutAliasRequest`
+# `IndicesPutAliasRequest` [interface-IndicesPutAliasRequest]
 
 | Name | Type | Description |
 | - | - | - |

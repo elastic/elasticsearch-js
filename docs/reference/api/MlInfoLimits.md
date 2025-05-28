@@ -1,4 +1,4 @@
-## Interface `MlInfoLimits`
+# `MlInfoLimits` [interface-MlInfoLimits]
 
 | Name | Type | Description |
 | - | - | - |

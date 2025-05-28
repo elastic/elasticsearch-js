@@ -1,4 +1,4 @@
-## Interface `IngestUppercaseProcessor`
+# `IngestUppercaseProcessor` [interface-IngestUppercaseProcessor]
 
 | Name | Type | Description |
 | - | - | - |

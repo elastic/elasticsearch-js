@@ -1,4 +1,4 @@
-## Interface `IngestSortProcessor`
+# `IngestSortProcessor` [interface-IngestSortProcessor]
 
 | Name | Type | Description |
 | - | - | - |

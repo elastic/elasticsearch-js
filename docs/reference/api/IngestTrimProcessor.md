@@ -1,4 +1,4 @@
-## Interface `IngestTrimProcessor`
+# `IngestTrimProcessor` [interface-IngestTrimProcessor]
 
 | Name | Type | Description |
 | - | - | - |

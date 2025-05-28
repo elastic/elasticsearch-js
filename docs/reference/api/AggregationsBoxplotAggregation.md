@@ -1,4 +1,4 @@
-## Interface `AggregationsBoxplotAggregation`
+# `AggregationsBoxplotAggregation` [interface-AggregationsBoxplotAggregation]
 
 | Name | Type | Description |
 | - | - | - |

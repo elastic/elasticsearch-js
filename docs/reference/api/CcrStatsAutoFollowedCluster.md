@@ -1,4 +1,4 @@
-## Interface `CcrStatsAutoFollowedCluster`
+# `CcrStatsAutoFollowedCluster` [interface-CcrStatsAutoFollowedCluster]
 
 | Name | Type | Description |
 | - | - | - |

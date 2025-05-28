@@ -1,4 +1,4 @@
-## Interface `XpackUsageBase`
+# `XpackUsageBase` [interface-XpackUsageBase]
 
 | Name | Type | Description |
 | - | - | - |

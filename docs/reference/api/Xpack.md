@@ -1,19 +1,19 @@
-## `Xpack`
+# `Xpack` [class-Xpack]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Xpack(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Xpack]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Xpack]
 
 | Name | Signature | Description |
 | - | - | - |

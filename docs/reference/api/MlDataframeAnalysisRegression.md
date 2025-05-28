@@ -1,4 +1,4 @@
-## Interface `MlDataframeAnalysisRegression`
+# `MlDataframeAnalysisRegression` [interface-MlDataframeAnalysisRegression]
 
 | Name | Type | Description |
 | - | - | - |

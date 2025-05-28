@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoMemory`
+# `NodesInfoNodeInfoMemory` [interface-NodesInfoNodeInfoMemory]
 
 | Name | Type | Description |
 | - | - | - |

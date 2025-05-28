@@ -1,4 +1,4 @@
-## Interface `ConnectorSyncJobClaimResponse`
+# `ConnectorSyncJobClaimResponse` [interface-ConnectorSyncJobClaimResponse]
 
 | Name | Type | Description |
 | - | - | - |

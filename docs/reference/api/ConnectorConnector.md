@@ -1,4 +1,4 @@
-## Interface `ConnectorConnector`
+# `ConnectorConnector` [interface-ConnectorConnector]
 
 | Name | Type | Description |
 | - | - | - |

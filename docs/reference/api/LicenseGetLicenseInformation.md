@@ -1,4 +1,4 @@
-## Interface `LicenseGetLicenseInformation`
+# `LicenseGetLicenseInformation` [interface-LicenseGetLicenseInformation]
 
 | Name | Type | Description |
 | - | - | - |

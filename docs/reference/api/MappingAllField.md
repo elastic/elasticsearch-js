@@ -1,4 +1,4 @@
-## Interface `MappingAllField`
+# `MappingAllField` [interface-MappingAllField]
 
 | Name | Type | Description |
 | - | - | - |

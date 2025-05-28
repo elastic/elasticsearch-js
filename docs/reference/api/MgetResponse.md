@@ -1,4 +1,4 @@
-## Interface `MgetResponse`
+# `MgetResponse` [interface-MgetResponse]
 
 | Name | Type | Description |
 | - | - | - |

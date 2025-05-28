@@ -1,4 +1,4 @@
-## Interface `IndicesOpenRequest`
+# `IndicesOpenRequest` [interface-IndicesOpenRequest]
 
 | Name | Type | Description |
 | - | - | - |

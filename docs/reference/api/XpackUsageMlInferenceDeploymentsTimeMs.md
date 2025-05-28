@@ -1,4 +1,4 @@
-## Interface `XpackUsageMlInferenceDeploymentsTimeMs`
+# `XpackUsageMlInferenceDeploymentsTimeMs` [interface-XpackUsageMlInferenceDeploymentsTimeMs]
 
 | Name | Type | Description |
 | - | - | - |

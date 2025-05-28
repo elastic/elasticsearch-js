@@ -1,4 +1,4 @@
-## Interface `QueryDslRuleQuery`
+# `QueryDslRuleQuery` [interface-QueryDslRuleQuery]
 
 | Name | Type | Description |
 | - | - | - |

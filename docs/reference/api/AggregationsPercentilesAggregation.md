@@ -1,4 +1,4 @@
-## Interface `AggregationsPercentilesAggregation`
+# `AggregationsPercentilesAggregation` [interface-AggregationsPercentilesAggregation]
 
 | Name | Type | Description |
 | - | - | - |

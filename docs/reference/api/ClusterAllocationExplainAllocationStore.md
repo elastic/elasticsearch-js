@@ -1,4 +1,4 @@
-## Interface `ClusterAllocationExplainAllocationStore`
+# `ClusterAllocationExplainAllocationStore` [interface-ClusterAllocationExplainAllocationStore]
 
 | Name | Type | Description |
 | - | - | - |

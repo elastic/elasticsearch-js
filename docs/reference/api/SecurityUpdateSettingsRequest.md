@@ -1,4 +1,4 @@
-## Interface `SecurityUpdateSettingsRequest`
+# `SecurityUpdateSettingsRequest` [interface-SecurityUpdateSettingsRequest]
 
 | Name | Type | Description |
 | - | - | - |

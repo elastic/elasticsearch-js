@@ -1,19 +1,19 @@
-## `Tasks`
+# `Tasks` [class-Tasks]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Tasks(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Tasks]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Tasks]
 
 | Name | Signature | Description |
 | - | - | - |

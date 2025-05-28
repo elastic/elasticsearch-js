@@ -1,4 +1,4 @@
-## Interface `IngestLocal`
+# `IngestLocal` [interface-IngestLocal]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SearchFetchProfile`
+# `SearchFetchProfile` [interface-SearchFetchProfile]
 
 | Name | Type | Description |
 | - | - | - |

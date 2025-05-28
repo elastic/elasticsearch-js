@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoOSCPU`
+# `NodesInfoNodeInfoOSCPU` [interface-NodesInfoNodeInfoOSCPU]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `RollupRollupSearchResponse`
+# `RollupRollupSearchResponse` [interface-RollupRollupSearchResponse]
 
 | Name | Type | Description |
 | - | - | - |

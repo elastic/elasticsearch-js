@@ -1,4 +1,4 @@
-## Interface `RetrieverContainer`
+# `RetrieverContainer` [interface-RetrieverContainer]
 
 | Name | Type | Description |
 | - | - | - |

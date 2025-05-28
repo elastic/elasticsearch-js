@@ -1,4 +1,4 @@
-## Interface `XpackUsageRuntimeFieldTypes`
+# `XpackUsageRuntimeFieldTypes` [interface-XpackUsageRuntimeFieldTypes]
 
 | Name | Type | Description |
 | - | - | - |

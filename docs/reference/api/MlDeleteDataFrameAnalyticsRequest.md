@@ -1,4 +1,4 @@
-## Interface `MlDeleteDataFrameAnalyticsRequest`
+# `MlDeleteDataFrameAnalyticsRequest` [interface-MlDeleteDataFrameAnalyticsRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsIpRangeBucketKeys`
+# `AggregationsIpRangeBucketKeys` [interface-AggregationsIpRangeBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

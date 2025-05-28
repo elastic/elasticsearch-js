@@ -1,4 +1,4 @@
-## Interface `SecurityBulkError`
+# `SecurityBulkError` [interface-SecurityBulkError]
 
 | Name | Type | Description |
 | - | - | - |

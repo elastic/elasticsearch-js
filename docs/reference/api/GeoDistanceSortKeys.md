@@ -1,4 +1,4 @@
-## Interface `GeoDistanceSortKeys`
+# `GeoDistanceSortKeys` [interface-GeoDistanceSortKeys]
 
 | Name | Type | Description |
 | - | - | - |

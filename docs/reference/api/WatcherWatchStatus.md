@@ -1,4 +1,4 @@
-## Interface `WatcherWatchStatus`
+# `WatcherWatchStatus` [interface-WatcherWatchStatus]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SearchApplicationEventDataStream`
+# `SearchApplicationEventDataStream` [interface-SearchApplicationEventDataStream]
 
 | Name | Type | Description |
 | - | - | - |

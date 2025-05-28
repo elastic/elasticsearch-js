@@ -1,4 +1,4 @@
-## Interface `InferenceElserServiceSettings`
+# `InferenceElserServiceSettings` [interface-InferenceElserServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

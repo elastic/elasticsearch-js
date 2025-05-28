@@ -1,4 +1,4 @@
-## Interface `AggregationsTimeSeriesBucketKeys`
+# `AggregationsTimeSeriesBucketKeys` [interface-AggregationsTimeSeriesBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

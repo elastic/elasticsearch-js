@@ -1,4 +1,4 @@
-## Interface `AggregationsValueCountAggregation`
+# `AggregationsValueCountAggregation` [interface-AggregationsValueCountAggregation]
 
 | Name | Type | Description |
 | - | - | - |

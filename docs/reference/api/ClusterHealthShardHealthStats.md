@@ -1,4 +1,4 @@
-## Interface `ClusterHealthShardHealthStats`
+# `ClusterHealthShardHealthStats` [interface-ClusterHealthShardHealthStats]
 
 | Name | Type | Description |
 | - | - | - |

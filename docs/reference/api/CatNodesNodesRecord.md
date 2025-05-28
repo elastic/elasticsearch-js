@@ -1,4 +1,4 @@
-## Interface `CatNodesNodesRecord`
+# `CatNodesNodesRecord` [interface-CatNodesNodesRecord]
 
 | Name | Type | Description |
 | - | - | - |

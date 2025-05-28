@@ -1,4 +1,4 @@
-## Interface `WatcherPagerDutyResult`
+# `WatcherPagerDutyResult` [interface-WatcherPagerDutyResult]
 
 | Name | Type | Description |
 | - | - | - |

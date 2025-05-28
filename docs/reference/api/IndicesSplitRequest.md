@@ -1,4 +1,4 @@
-## Interface `IndicesSplitRequest`
+# `IndicesSplitRequest` [interface-IndicesSplitRequest]
 
 | Name | Type | Description |
 | - | - | - |

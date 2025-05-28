@@ -1,4 +1,4 @@
-## Interface `QueryRulesPutRuleResponse`
+# `QueryRulesPutRuleResponse` [interface-QueryRulesPutRuleResponse]
 
 | Name | Type | Description |
 | - | - | - |

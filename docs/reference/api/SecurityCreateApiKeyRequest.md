@@ -1,4 +1,4 @@
-## Interface `SecurityCreateApiKeyRequest`
+# `SecurityCreateApiKeyRequest` [interface-SecurityCreateApiKeyRequest]
 
 | Name | Type | Description |
 | - | - | - |

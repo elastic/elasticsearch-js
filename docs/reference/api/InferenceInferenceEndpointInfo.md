@@ -1,4 +1,4 @@
-## Interface `InferenceInferenceEndpointInfo`
+# `InferenceInferenceEndpointInfo` [interface-InferenceInferenceEndpointInfo]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesDataStreamLifecycleRolloverConditions`
+# `IndicesDataStreamLifecycleRolloverConditions` [interface-IndicesDataStreamLifecycleRolloverConditions]
 
 | Name | Type | Description |
 | - | - | - |

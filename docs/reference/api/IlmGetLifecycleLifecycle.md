@@ -1,4 +1,4 @@
-## Interface `IlmGetLifecycleLifecycle`
+# `IlmGetLifecycleLifecycle` [interface-IlmGetLifecycleLifecycle]
 
 | Name | Type | Description |
 | - | - | - |

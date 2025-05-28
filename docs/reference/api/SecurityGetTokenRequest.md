@@ -1,4 +1,4 @@
-## Interface `SecurityGetTokenRequest`
+# `SecurityGetTokenRequest` [interface-SecurityGetTokenRequest]
 
 | Name | Type | Description |
 | - | - | - |

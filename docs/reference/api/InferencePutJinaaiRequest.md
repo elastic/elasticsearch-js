@@ -1,4 +1,4 @@
-## Interface `InferencePutJinaaiRequest`
+# `InferencePutJinaaiRequest` [interface-InferencePutJinaaiRequest]
 
 | Name | Type | Description |
 | - | - | - |

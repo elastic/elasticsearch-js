@@ -1,4 +1,4 @@
-## Interface `IndicesSettingsSimilarityIb`
+# `IndicesSettingsSimilarityIb` [interface-IndicesSettingsSimilarityIb]
 
 | Name | Type | Description |
 | - | - | - |

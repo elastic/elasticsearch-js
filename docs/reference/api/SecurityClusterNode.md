@@ -1,4 +1,4 @@
-## Interface `SecurityClusterNode`
+# `SecurityClusterNode` [interface-SecurityClusterNode]
 
 | Name | Type | Description |
 | - | - | - |

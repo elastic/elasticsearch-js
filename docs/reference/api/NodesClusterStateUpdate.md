@@ -1,4 +1,4 @@
-## Interface `NodesClusterStateUpdate`
+# `NodesClusterStateUpdate` [interface-NodesClusterStateUpdate]
 
 | Name | Type | Description |
 | - | - | - |

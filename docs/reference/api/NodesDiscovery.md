@@ -1,4 +1,4 @@
-## Interface `NodesDiscovery`
+# `NodesDiscovery` [interface-NodesDiscovery]
 
 | Name | Type | Description |
 | - | - | - |

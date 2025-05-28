@@ -1,4 +1,4 @@
-## Interface `IndicesStatsShardFileSizeInfo`
+# `IndicesStatsShardFileSizeInfo` [interface-IndicesStatsShardFileSizeInfo]
 
 | Name | Type | Description |
 | - | - | - |

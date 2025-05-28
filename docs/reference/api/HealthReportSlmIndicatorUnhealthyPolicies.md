@@ -1,4 +1,4 @@
-## Interface `HealthReportSlmIndicatorUnhealthyPolicies`
+# `HealthReportSlmIndicatorUnhealthyPolicies` [interface-HealthReportSlmIndicatorUnhealthyPolicies]
 
 | Name | Type | Description |
 | - | - | - |

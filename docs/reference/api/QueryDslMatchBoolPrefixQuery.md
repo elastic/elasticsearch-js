@@ -1,4 +1,4 @@
-## Interface `QueryDslMatchBoolPrefixQuery`
+# `QueryDslMatchBoolPrefixQuery` [interface-QueryDslMatchBoolPrefixQuery]
 
 | Name | Type | Description |
 | - | - | - |

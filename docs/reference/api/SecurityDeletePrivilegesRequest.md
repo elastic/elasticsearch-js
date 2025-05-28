@@ -1,4 +1,4 @@
-## Interface `SecurityDeletePrivilegesRequest`
+# `SecurityDeletePrivilegesRequest` [interface-SecurityDeletePrivilegesRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IngestGetGeoipDatabaseResponse`
+# `IngestGetGeoipDatabaseResponse` [interface-IngestGetGeoipDatabaseResponse]
 
 | Name | Type | Description |
 | - | - | - |

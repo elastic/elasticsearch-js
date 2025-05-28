@@ -1,4 +1,4 @@
-## Interface `IndicesPutDataLifecycleRequest`
+# `IndicesPutDataLifecycleRequest` [interface-IndicesPutDataLifecycleRequest]
 
 | Name | Type | Description |
 | - | - | - |

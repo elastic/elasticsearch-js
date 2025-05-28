@@ -1,4 +1,4 @@
-## Interface `MappingAggregateMetricDoubleProperty`
+# `MappingAggregateMetricDoubleProperty` [interface-MappingAggregateMetricDoubleProperty]
 
 | Name | Type | Description |
 | - | - | - |

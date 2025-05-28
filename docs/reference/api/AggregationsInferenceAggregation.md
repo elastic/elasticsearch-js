@@ -1,4 +1,4 @@
-## Interface `AggregationsInferenceAggregation`
+# `AggregationsInferenceAggregation` [interface-AggregationsInferenceAggregation]
 
 | Name | Type | Description |
 | - | - | - |

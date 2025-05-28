@@ -1,4 +1,4 @@
-## Interface `WatcherSlackMessage`
+# `WatcherSlackMessage` [interface-WatcherSlackMessage]
 
 | Name | Type | Description |
 | - | - | - |

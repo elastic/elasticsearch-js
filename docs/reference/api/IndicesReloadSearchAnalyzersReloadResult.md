@@ -1,4 +1,4 @@
-## Interface `IndicesReloadSearchAnalyzersReloadResult`
+# `IndicesReloadSearchAnalyzersReloadResult` [interface-IndicesReloadSearchAnalyzersReloadResult]
 
 | Name | Type | Description |
 | - | - | - |

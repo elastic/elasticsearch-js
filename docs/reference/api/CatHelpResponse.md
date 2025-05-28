@@ -1,4 +1,4 @@
-## Interface `CatHelpResponse`
+# `CatHelpResponse` [interface-CatHelpResponse]
 
 | Name | Type | Description |
 | - | - | - |

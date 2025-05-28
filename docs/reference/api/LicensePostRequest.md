@@ -1,4 +1,4 @@
-## Interface `LicensePostRequest`
+# `LicensePostRequest` [interface-LicensePostRequest]
 
 | Name | Type | Description |
 | - | - | - |

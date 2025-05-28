@@ -1,4 +1,4 @@
-## Interface `IndicesStatsShardsTotalStats`
+# `IndicesStatsShardsTotalStats` [interface-IndicesStatsShardsTotalStats]
 
 | Name | Type | Description |
 | - | - | - |

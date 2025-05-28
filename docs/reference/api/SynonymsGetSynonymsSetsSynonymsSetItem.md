@@ -1,4 +1,4 @@
-## Interface `SynonymsGetSynonymsSetsSynonymsSetItem`
+# `SynonymsGetSynonymsSetsSynonymsSetItem` [interface-SynonymsGetSynonymsSetsSynonymsSetItem]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlGetDataFrameAnalyticsStatsResponse`
+# `MlGetDataFrameAnalyticsStatsResponse` [interface-MlGetDataFrameAnalyticsStatsResponse]
 
 | Name | Type | Description |
 | - | - | - |

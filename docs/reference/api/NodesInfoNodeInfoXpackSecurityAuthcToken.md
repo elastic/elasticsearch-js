@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoXpackSecurityAuthcToken`
+# `NodesInfoNodeInfoXpackSecurityAuthcToken` [interface-NodesInfoNodeInfoXpackSecurityAuthcToken]
 
 | Name | Type | Description |
 | - | - | - |

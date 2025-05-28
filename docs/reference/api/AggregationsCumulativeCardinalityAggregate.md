@@ -1,4 +1,4 @@
-## Interface `AggregationsCumulativeCardinalityAggregate`
+# `AggregationsCumulativeCardinalityAggregate` [interface-AggregationsCumulativeCardinalityAggregate]
 
 | Name | Type | Description |
 | - | - | - |

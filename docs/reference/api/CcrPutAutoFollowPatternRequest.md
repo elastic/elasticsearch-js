@@ -1,4 +1,4 @@
-## Interface `CcrPutAutoFollowPatternRequest`
+# `CcrPutAutoFollowPatternRequest` [interface-CcrPutAutoFollowPatternRequest]
 
 | Name | Type | Description |
 | - | - | - |

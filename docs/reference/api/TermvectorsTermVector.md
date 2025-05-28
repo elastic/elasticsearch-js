@@ -1,4 +1,4 @@
-## Interface `TermvectorsTermVector`
+# `TermvectorsTermVector` [interface-TermvectorsTermVector]
 
 | Name | Type | Description |
 | - | - | - |

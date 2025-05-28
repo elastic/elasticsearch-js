@@ -1,4 +1,4 @@
-## Interface `TransformGetTransformStatsTransformHealthIssue`
+# `TransformGetTransformStatsTransformHealthIssue` [interface-TransformGetTransformStatsTransformHealthIssue]
 
 | Name | Type | Description |
 | - | - | - |

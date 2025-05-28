@@ -1,4 +1,4 @@
-## Interface `MlPreviewDataFrameAnalyticsResponse`
+# `MlPreviewDataFrameAnalyticsResponse` [interface-MlPreviewDataFrameAnalyticsResponse]
 
 | Name | Type | Description |
 | - | - | - |

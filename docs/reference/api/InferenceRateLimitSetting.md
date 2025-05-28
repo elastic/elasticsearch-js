@@ -1,4 +1,4 @@
-## Interface `InferenceRateLimitSetting`
+# `InferenceRateLimitSetting` [interface-InferenceRateLimitSetting]
 
 | Name | Type | Description |
 | - | - | - |

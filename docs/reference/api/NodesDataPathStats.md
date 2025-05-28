@@ -1,4 +1,4 @@
-## Interface `NodesDataPathStats`
+# `NodesDataPathStats` [interface-NodesDataPathStats]
 
 | Name | Type | Description |
 | - | - | - |

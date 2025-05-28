@@ -1,4 +1,4 @@
-## Interface `AnalysisStandardAnalyzer`
+# `AnalysisStandardAnalyzer` [interface-AnalysisStandardAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlAnalysisConfigRead`
+# `MlAnalysisConfigRead` [interface-MlAnalysisConfigRead]
 
 | Name | Type | Description |
 | - | - | - |

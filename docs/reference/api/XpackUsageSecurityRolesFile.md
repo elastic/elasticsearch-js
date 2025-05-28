@@ -1,4 +1,4 @@
-## Interface `XpackUsageSecurityRolesFile`
+# `XpackUsageSecurityRolesFile` [interface-XpackUsageSecurityRolesFile]
 
 | Name | Type | Description |
 | - | - | - |

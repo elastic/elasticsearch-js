@@ -1,4 +1,4 @@
-## Interface `MlPage`
+# `MlPage` [interface-MlPage]
 
 | Name | Type | Description |
 | - | - | - |

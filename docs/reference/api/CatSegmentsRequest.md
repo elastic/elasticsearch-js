@@ -1,4 +1,4 @@
-## Interface `CatSegmentsRequest`
+# `CatSegmentsRequest` [interface-CatSegmentsRequest]
 
 | Name | Type | Description |
 | - | - | - |

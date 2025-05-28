@@ -1,4 +1,4 @@
-## Interface `AnalysisIndonesianAnalyzer`
+# `AnalysisIndonesianAnalyzer` [interface-AnalysisIndonesianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

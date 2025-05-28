@@ -1,4 +1,4 @@
-## Interface `FleetGlobalCheckpointsResponse`
+# `FleetGlobalCheckpointsResponse` [interface-FleetGlobalCheckpointsResponse]
 
 | Name | Type | Description |
 | - | - | - |

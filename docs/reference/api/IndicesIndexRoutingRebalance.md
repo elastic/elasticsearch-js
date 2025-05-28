@@ -1,4 +1,4 @@
-## Interface `IndicesIndexRoutingRebalance`
+# `IndicesIndexRoutingRebalance` [interface-IndicesIndexRoutingRebalance]
 
 | Name | Type | Description |
 | - | - | - |

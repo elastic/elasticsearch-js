@@ -1,4 +1,4 @@
-## Interface `InferencePutAmazonbedrockRequest`
+# `InferencePutAmazonbedrockRequest` [interface-InferencePutAmazonbedrockRequest]
 
 | Name | Type | Description |
 | - | - | - |

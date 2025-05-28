@@ -1,4 +1,4 @@
-## Interface `QueryDslShapeQueryKeys`
+# `QueryDslShapeQueryKeys` [interface-QueryDslShapeQueryKeys]
 
 | Name | Type | Description |
 | - | - | - |

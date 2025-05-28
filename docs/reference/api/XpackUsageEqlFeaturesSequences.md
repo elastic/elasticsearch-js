@@ -1,4 +1,4 @@
-## Interface `XpackUsageEqlFeaturesSequences`
+# `XpackUsageEqlFeaturesSequences` [interface-XpackUsageEqlFeaturesSequences]
 
 | Name | Type | Description |
 | - | - | - |

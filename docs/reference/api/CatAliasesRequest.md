@@ -1,4 +1,4 @@
-## Interface `CatAliasesRequest`
+# `CatAliasesRequest` [interface-CatAliasesRequest]
 
 | Name | Type | Description |
 | - | - | - |

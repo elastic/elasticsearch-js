@@ -1,4 +1,4 @@
-## Interface `SecurityHasPrivilegesApplicationPrivilegesCheck`
+# `SecurityHasPrivilegesApplicationPrivilegesCheck` [interface-SecurityHasPrivilegesApplicationPrivilegesCheck]
 
 | Name | Type | Description |
 | - | - | - |

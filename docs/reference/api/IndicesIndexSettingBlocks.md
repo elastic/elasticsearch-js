@@ -1,4 +1,4 @@
-## Interface `IndicesIndexSettingBlocks`
+# `IndicesIndexSettingBlocks` [interface-IndicesIndexSettingBlocks]
 
 | Name | Type | Description |
 | - | - | - |

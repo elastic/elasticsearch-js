@@ -1,4 +1,4 @@
-## Interface `InferenceGoogleVertexAITaskSettings`
+# `InferenceGoogleVertexAITaskSettings` [interface-InferenceGoogleVertexAITaskSettings]
 
 | Name | Type | Description |
 | - | - | - |

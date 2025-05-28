@@ -1,4 +1,4 @@
-## Interface `SearchDfsKnnProfile`
+# `SearchDfsKnnProfile` [interface-SearchDfsKnnProfile]
 
 | Name | Type | Description |
 | - | - | - |

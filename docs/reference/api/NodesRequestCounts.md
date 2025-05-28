@@ -1,4 +1,4 @@
-## Interface `NodesRequestCounts`
+# `NodesRequestCounts` [interface-NodesRequestCounts]
 
 | Name | Type | Description |
 | - | - | - |

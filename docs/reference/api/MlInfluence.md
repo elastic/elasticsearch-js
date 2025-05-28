@@ -1,4 +1,4 @@
-## Interface `MlInfluence`
+# `MlInfluence` [interface-MlInfluence]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `FeaturesResetFeaturesRequest`
+# `FeaturesResetFeaturesRequest` [interface-FeaturesResetFeaturesRequest]
 
 | Name | Type | Description |
 | - | - | - |

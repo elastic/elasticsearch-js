@@ -1,4 +1,4 @@
-## Interface `WatcherQueryWatch`
+# `WatcherQueryWatch` [interface-WatcherQueryWatch]
 
 | Name | Type | Description |
 | - | - | - |

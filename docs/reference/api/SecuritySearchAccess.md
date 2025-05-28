@@ -1,4 +1,4 @@
-## Interface `SecuritySearchAccess`
+# `SecuritySearchAccess` [interface-SecuritySearchAccess]
 
 | Name | Type | Description |
 | - | - | - |

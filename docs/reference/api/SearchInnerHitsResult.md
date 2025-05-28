@@ -1,4 +1,4 @@
-## Interface `SearchInnerHitsResult`
+# `SearchInnerHitsResult` [interface-SearchInnerHitsResult]
 
 | Name | Type | Description |
 | - | - | - |

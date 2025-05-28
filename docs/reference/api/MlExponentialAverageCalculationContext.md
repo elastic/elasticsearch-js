@@ -1,4 +1,4 @@
-## Interface `MlExponentialAverageCalculationContext`
+# `MlExponentialAverageCalculationContext` [interface-MlExponentialAverageCalculationContext]
 
 | Name | Type | Description |
 | - | - | - |

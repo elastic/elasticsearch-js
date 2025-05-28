@@ -1,4 +1,4 @@
-## Interface `AggregationsHistogramAggregation`
+# `AggregationsHistogramAggregation` [interface-AggregationsHistogramAggregation]
 
 | Name | Type | Description |
 | - | - | - |

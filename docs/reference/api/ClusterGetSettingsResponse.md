@@ -1,4 +1,4 @@
-## Interface `ClusterGetSettingsResponse`
+# `ClusterGetSettingsResponse` [interface-ClusterGetSettingsResponse]
 
 | Name | Type | Description |
 | - | - | - |

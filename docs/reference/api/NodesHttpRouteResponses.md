@@ -1,4 +1,4 @@
-## Interface `NodesHttpRouteResponses`
+# `NodesHttpRouteResponses` [interface-NodesHttpRouteResponses]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MsearchMultisearchHeader`
+# `MsearchMultisearchHeader` [interface-MsearchMultisearchHeader]
 
 | Name | Type | Description |
 | - | - | - |

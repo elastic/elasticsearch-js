@@ -1,4 +1,4 @@
-## Interface `InferenceCompletionRequest`
+# `InferenceCompletionRequest` [interface-InferenceCompletionRequest]
 
 | Name | Type | Description |
 | - | - | - |

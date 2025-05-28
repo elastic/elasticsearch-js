@@ -1,4 +1,4 @@
-## Interface `MappingCompletionProperty`
+# `MappingCompletionProperty` [interface-MappingCompletionProperty]
 
 | Name | Type | Description |
 | - | - | - |

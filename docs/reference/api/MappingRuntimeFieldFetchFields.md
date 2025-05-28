@@ -1,4 +1,4 @@
-## Interface `MappingRuntimeFieldFetchFields`
+# `MappingRuntimeFieldFetchFields` [interface-MappingRuntimeFieldFetchFields]
 
 | Name | Type | Description |
 | - | - | - |

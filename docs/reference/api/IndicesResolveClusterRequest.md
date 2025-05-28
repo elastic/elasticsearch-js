@@ -1,4 +1,4 @@
-## Interface `IndicesResolveClusterRequest`
+# `IndicesResolveClusterRequest` [interface-IndicesResolveClusterRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesSettingsQueryString`
+# `IndicesSettingsQueryString` [interface-IndicesSettingsQueryString]
 
 | Name | Type | Description |
 | - | - | - |

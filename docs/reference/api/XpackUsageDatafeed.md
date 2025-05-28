@@ -1,4 +1,4 @@
-## Interface `XpackUsageDatafeed`
+# `XpackUsageDatafeed` [interface-XpackUsageDatafeed]
 
 | Name | Type | Description |
 | - | - | - |

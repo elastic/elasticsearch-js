@@ -1,4 +1,4 @@
-## Interface `ScriptTransform`
+# `ScriptTransform` [interface-ScriptTransform]
 
 | Name | Type | Description |
 | - | - | - |

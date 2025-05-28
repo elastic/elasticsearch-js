@@ -1,4 +1,4 @@
-## Interface `RollupDateHistogramGrouping`
+# `RollupDateHistogramGrouping` [interface-RollupDateHistogramGrouping]
 
 | Name | Type | Description |
 | - | - | - |

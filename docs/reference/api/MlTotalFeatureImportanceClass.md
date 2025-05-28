@@ -1,4 +1,4 @@
-## Interface `MlTotalFeatureImportanceClass`
+# `MlTotalFeatureImportanceClass` [interface-MlTotalFeatureImportanceClass]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MappingDoubleNumberProperty`
+# `MappingDoubleNumberProperty` [interface-MappingDoubleNumberProperty]
 
 | Name | Type | Description |
 | - | - | - |

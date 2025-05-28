@@ -1,4 +1,4 @@
-## Interface `IndicesSoftDeletes`
+# `IndicesSoftDeletes` [interface-IndicesSoftDeletes]
 
 | Name | Type | Description |
 | - | - | - |

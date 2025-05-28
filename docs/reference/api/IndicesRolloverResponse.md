@@ -1,4 +1,4 @@
-## Interface `IndicesRolloverResponse`
+# `IndicesRolloverResponse` [interface-IndicesRolloverResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,19 +1,19 @@
-## `Cat`
+# `Cat` [class-Cat]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Cat(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Cat]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Cat]
 
 | Name | Signature | Description |
 | - | - | - |

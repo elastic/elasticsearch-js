@@ -1,4 +1,4 @@
-## Interface `IndicesIndexSettingsAnalysis`
+# `IndicesIndexSettingsAnalysis` [interface-IndicesIndexSettingsAnalysis]
 
 | Name | Type | Description |
 | - | - | - |

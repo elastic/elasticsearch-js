@@ -1,4 +1,4 @@
-## Interface `QueryDslIntervalsWildcard`
+# `QueryDslIntervalsWildcard` [interface-QueryDslIntervalsWildcard]
 
 | Name | Type | Description |
 | - | - | - |

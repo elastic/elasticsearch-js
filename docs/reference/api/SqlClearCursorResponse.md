@@ -1,4 +1,4 @@
-## Interface `SqlClearCursorResponse`
+# `SqlClearCursorResponse` [interface-SqlClearCursorResponse]
 
 | Name | Type | Description |
 | - | - | - |

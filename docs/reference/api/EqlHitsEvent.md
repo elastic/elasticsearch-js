@@ -1,4 +1,4 @@
-## Interface `EqlHitsEvent`
+# `EqlHitsEvent` [interface-EqlHitsEvent]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IlmSearchableSnapshotAction`
+# `IlmSearchableSnapshotAction` [interface-IlmSearchableSnapshotAction]
 
 | Name | Type | Description |
 | - | - | - |

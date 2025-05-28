@@ -1,4 +1,4 @@
-## Interface `MlStopDatafeedRequest`
+# `MlStopDatafeedRequest` [interface-MlStopDatafeedRequest]
 
 | Name | Type | Description |
 | - | - | - |

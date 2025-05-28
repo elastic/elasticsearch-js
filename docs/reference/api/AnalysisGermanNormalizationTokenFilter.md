@@ -1,4 +1,4 @@
-## Interface `AnalysisGermanNormalizationTokenFilter`
+# `AnalysisGermanNormalizationTokenFilter` [interface-AnalysisGermanNormalizationTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

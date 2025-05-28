@@ -1,4 +1,4 @@
-## Interface `SecuritySamlPrepareAuthenticationResponse`
+# `SecuritySamlPrepareAuthenticationResponse` [interface-SecuritySamlPrepareAuthenticationResponse]
 
 | Name | Type | Description |
 | - | - | - |

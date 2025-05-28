@@ -1,4 +1,4 @@
-## Interface `MlGetJobsRequest`
+# `MlGetJobsRequest` [interface-MlGetJobsRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `XpackUsageVector`
+# `XpackUsageVector` [interface-XpackUsageVector]
 
 | Name | Type | Description |
 | - | - | - |

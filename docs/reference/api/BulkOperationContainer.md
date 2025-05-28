@@ -1,4 +1,4 @@
-## Interface `BulkOperationContainer`
+# `BulkOperationContainer` [interface-BulkOperationContainer]
 
 | Name | Type | Description |
 | - | - | - |

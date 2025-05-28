@@ -1,4 +1,4 @@
-## Interface `CcrStatsRequest`
+# `CcrStatsRequest` [interface-CcrStatsRequest]
 
 | Name | Type | Description |
 | - | - | - |

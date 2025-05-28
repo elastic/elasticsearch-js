@@ -1,4 +1,4 @@
-## Interface `AnalysisPersianAnalyzer`
+# `AnalysisPersianAnalyzer` [interface-AnalysisPersianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

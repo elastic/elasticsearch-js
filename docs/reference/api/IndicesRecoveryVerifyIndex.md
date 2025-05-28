@@ -1,4 +1,4 @@
-## Interface `IndicesRecoveryVerifyIndex`
+# `IndicesRecoveryVerifyIndex` [interface-IndicesRecoveryVerifyIndex]
 
 | Name | Type | Description |
 | - | - | - |

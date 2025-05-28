@@ -1,4 +1,4 @@
-## Interface `IlmDownsampleAction`
+# `IlmDownsampleAction` [interface-IlmDownsampleAction]
 
 | Name | Type | Description |
 | - | - | - |

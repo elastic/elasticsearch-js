@@ -1,4 +1,4 @@
-## Interface `SearchApplicationDeleteRequest`
+# `SearchApplicationDeleteRequest` [interface-SearchApplicationDeleteRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,19 +1,19 @@
-## `Graph`
+# `Graph` [class-Graph]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Graph(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Graph]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Graph]
 
 | Name | Signature | Description |
 | - | - | - |

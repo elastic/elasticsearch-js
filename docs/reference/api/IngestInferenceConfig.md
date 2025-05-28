@@ -1,4 +1,4 @@
-## Interface `IngestInferenceConfig`
+# `IngestInferenceConfig` [interface-IngestInferenceConfig]
 
 | Name | Type | Description |
 | - | - | - |

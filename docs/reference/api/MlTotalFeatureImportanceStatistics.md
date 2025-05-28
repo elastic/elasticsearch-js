@@ -1,4 +1,4 @@
-## Interface `MlTotalFeatureImportanceStatistics`
+# `MlTotalFeatureImportanceStatistics` [interface-MlTotalFeatureImportanceStatistics]
 
 | Name | Type | Description |
 | - | - | - |

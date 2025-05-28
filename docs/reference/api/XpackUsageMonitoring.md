@@ -1,4 +1,4 @@
-## Interface `XpackUsageMonitoring`
+# `XpackUsageMonitoring` [interface-XpackUsageMonitoring]
 
 | Name | Type | Description |
 | - | - | - |

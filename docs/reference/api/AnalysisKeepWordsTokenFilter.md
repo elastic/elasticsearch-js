@@ -1,4 +1,4 @@
-## Interface `AnalysisKeepWordsTokenFilter`
+# `AnalysisKeepWordsTokenFilter` [interface-AnalysisKeepWordsTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

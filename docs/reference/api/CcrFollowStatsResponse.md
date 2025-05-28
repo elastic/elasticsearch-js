@@ -1,4 +1,4 @@
-## Interface `CcrFollowStatsResponse`
+# `CcrFollowStatsResponse` [interface-CcrFollowStatsResponse]
 
 | Name | Type | Description |
 | - | - | - |

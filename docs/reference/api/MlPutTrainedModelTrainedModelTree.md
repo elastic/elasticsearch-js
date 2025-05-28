@@ -1,4 +1,4 @@
-## Interface `MlPutTrainedModelTrainedModelTree`
+# `MlPutTrainedModelTrainedModelTree` [interface-MlPutTrainedModelTrainedModelTree]
 
 | Name | Type | Description |
 | - | - | - |

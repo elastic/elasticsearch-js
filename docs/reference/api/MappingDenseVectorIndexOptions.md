@@ -1,4 +1,4 @@
-## Interface `MappingDenseVectorIndexOptions`
+# `MappingDenseVectorIndexOptions` [interface-MappingDenseVectorIndexOptions]
 
 | Name | Type | Description |
 | - | - | - |

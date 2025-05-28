@@ -1,4 +1,4 @@
-## Interface `SearchSuggesterKeys`
+# `SearchSuggesterKeys` [interface-SearchSuggesterKeys]
 
 | Name | Type | Description |
 | - | - | - |

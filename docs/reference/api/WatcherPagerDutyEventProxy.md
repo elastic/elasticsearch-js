@@ -1,4 +1,4 @@
-## Interface `WatcherPagerDutyEventProxy`
+# `WatcherPagerDutyEventProxy` [interface-WatcherPagerDutyEventProxy]
 
 | Name | Type | Description |
 | - | - | - |

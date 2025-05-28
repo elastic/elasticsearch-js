@@ -1,4 +1,4 @@
-## Interface `TasksCancelRequest`
+# `TasksCancelRequest` [interface-TasksCancelRequest]
 
 | Name | Type | Description |
 | - | - | - |

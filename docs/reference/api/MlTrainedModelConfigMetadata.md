@@ -1,4 +1,4 @@
-## Interface `MlTrainedModelConfigMetadata`
+# `MlTrainedModelConfigMetadata` [interface-MlTrainedModelConfigMetadata]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesMappingLimitSettings`
+# `IndicesMappingLimitSettings` [interface-IndicesMappingLimitSettings]
 
 | Name | Type | Description |
 | - | - | - |

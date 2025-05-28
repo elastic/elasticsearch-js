@@ -1,4 +1,4 @@
-## Interface `EsqlGetQueryResponse`
+# `EsqlGetQueryResponse` [interface-EsqlGetQueryResponse]
 
 | Name | Type | Description |
 | - | - | - |

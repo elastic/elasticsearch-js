@@ -1,4 +1,4 @@
-## Interface `GetScriptLanguagesResponse`
+# `GetScriptLanguagesResponse` [interface-GetScriptLanguagesResponse]
 
 | Name | Type | Description |
 | - | - | - |

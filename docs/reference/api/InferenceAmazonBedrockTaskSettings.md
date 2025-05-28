@@ -1,4 +1,4 @@
-## Interface `InferenceAmazonBedrockTaskSettings`
+# `InferenceAmazonBedrockTaskSettings` [interface-InferenceAmazonBedrockTaskSettings]
 
 | Name | Type | Description |
 | - | - | - |

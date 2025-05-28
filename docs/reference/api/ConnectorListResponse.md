@@ -1,4 +1,4 @@
-## Interface `ConnectorListResponse`
+# `ConnectorListResponse` [interface-ConnectorListResponse]
 
 | Name | Type | Description |
 | - | - | - |

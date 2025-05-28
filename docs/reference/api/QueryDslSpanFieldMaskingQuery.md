@@ -1,4 +1,4 @@
-## Interface `QueryDslSpanFieldMaskingQuery`
+# `QueryDslSpanFieldMaskingQuery` [interface-QueryDslSpanFieldMaskingQuery]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,19 +1,19 @@
-## `AsyncSearch`
+# `AsyncSearch` [class-AsyncSearch]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new AsyncSearch(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-AsyncSearch]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-AsyncSearch]
 
 | Name | Signature | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `QueryDslIntervalsMatch`
+# `QueryDslIntervalsMatch` [interface-QueryDslIntervalsMatch]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SlmRetention`
+# `SlmRetention` [interface-SlmRetention]
 
 | Name | Type | Description |
 | - | - | - |

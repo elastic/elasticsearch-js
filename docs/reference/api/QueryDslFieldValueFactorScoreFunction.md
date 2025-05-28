@@ -1,4 +1,4 @@
-## Interface `QueryDslFieldValueFactorScoreFunction`
+# `QueryDslFieldValueFactorScoreFunction` [interface-QueryDslFieldValueFactorScoreFunction]
 
 | Name | Type | Description |
 | - | - | - |

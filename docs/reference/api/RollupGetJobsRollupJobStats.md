@@ -1,4 +1,4 @@
-## Interface `RollupGetJobsRollupJobStats`
+# `RollupGetJobsRollupJobStats` [interface-RollupGetJobsRollupJobStats]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `CcrFollowInfoFollowerIndexParameters`
+# `CcrFollowInfoFollowerIndexParameters` [interface-CcrFollowInfoFollowerIndexParameters]
 
 | Name | Type | Description |
 | - | - | - |

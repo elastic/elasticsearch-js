@@ -1,4 +1,4 @@
-## Interface `SecurityRoleTemplate`
+# `SecurityRoleTemplate` [interface-SecurityRoleTemplate]
 
 | Name | Type | Description |
 | - | - | - |

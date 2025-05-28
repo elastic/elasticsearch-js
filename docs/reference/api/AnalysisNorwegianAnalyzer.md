@@ -1,4 +1,4 @@
-## Interface `AnalysisNorwegianAnalyzer`
+# `AnalysisNorwegianAnalyzer` [interface-AnalysisNorwegianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

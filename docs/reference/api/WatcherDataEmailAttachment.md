@@ -1,4 +1,4 @@
-## Interface `WatcherDataEmailAttachment`
+# `WatcherDataEmailAttachment` [interface-WatcherDataEmailAttachment]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AsyncSearchAsyncSearch`
+# `AsyncSearchAsyncSearch` [interface-AsyncSearchAsyncSearch]
 
 | Name | Type | Description |
 | - | - | - |

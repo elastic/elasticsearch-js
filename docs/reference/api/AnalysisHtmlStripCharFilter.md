@@ -1,4 +1,4 @@
-## Interface `AnalysisHtmlStripCharFilter`
+# `AnalysisHtmlStripCharFilter` [interface-AnalysisHtmlStripCharFilter]
 
 | Name | Type | Description |
 | - | - | - |

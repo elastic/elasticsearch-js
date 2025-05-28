@@ -1,4 +1,4 @@
-## Interface `AnalysisSimplePatternTokenizer`
+# `AnalysisSimplePatternTokenizer` [interface-AnalysisSimplePatternTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

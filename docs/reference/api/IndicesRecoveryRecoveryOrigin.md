@@ -1,4 +1,4 @@
-## Interface `IndicesRecoveryRecoveryOrigin`
+# `IndicesRecoveryRecoveryOrigin` [interface-IndicesRecoveryRecoveryOrigin]
 
 | Name | Type | Description |
 | - | - | - |

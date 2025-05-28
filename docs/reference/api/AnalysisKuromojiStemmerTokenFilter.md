@@ -1,4 +1,4 @@
-## Interface `AnalysisKuromojiStemmerTokenFilter`
+# `AnalysisKuromojiStemmerTokenFilter` [interface-AnalysisKuromojiStemmerTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlGetRecordsRequest`
+# `MlGetRecordsRequest` [interface-MlGetRecordsRequest]
 
 | Name | Type | Description |
 | - | - | - |

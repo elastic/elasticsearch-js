@@ -1,4 +1,4 @@
-## Interface `MtermvectorsResponse`
+# `MtermvectorsResponse` [interface-MtermvectorsResponse]
 
 | Name | Type | Description |
 | - | - | - |

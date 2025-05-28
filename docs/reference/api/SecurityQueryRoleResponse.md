@@ -1,4 +1,4 @@
-## Interface `SecurityQueryRoleResponse`
+# `SecurityQueryRoleResponse` [interface-SecurityQueryRoleResponse]
 
 | Name | Type | Description |
 | - | - | - |

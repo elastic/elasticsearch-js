@@ -1,4 +1,4 @@
-## Interface `AggregationsStringStatsAggregation`
+# `AggregationsStringStatsAggregation` [interface-AggregationsStringStatsAggregation]
 
 | Name | Type | Description |
 | - | - | - |

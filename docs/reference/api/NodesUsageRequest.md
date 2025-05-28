@@ -1,4 +1,4 @@
-## Interface `NodesUsageRequest`
+# `NodesUsageRequest` [interface-NodesUsageRequest]
 
 | Name | Type | Description |
 | - | - | - |

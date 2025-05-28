@@ -1,4 +1,4 @@
-## Interface `IndicesCacheQueries`
+# `IndicesCacheQueries` [interface-IndicesCacheQueries]
 
 | Name | Type | Description |
 | - | - | - |

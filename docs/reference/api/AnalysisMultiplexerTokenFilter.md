@@ -1,4 +1,4 @@
-## Interface `AnalysisMultiplexerTokenFilter`
+# `AnalysisMultiplexerTokenFilter` [interface-AnalysisMultiplexerTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

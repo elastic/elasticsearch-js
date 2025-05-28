@@ -1,4 +1,4 @@
-## Interface `IngestDissectProcessor`
+# `IngestDissectProcessor` [interface-IngestDissectProcessor]
 
 | Name | Type | Description |
 | - | - | - |

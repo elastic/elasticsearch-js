@@ -1,4 +1,4 @@
-## Interface `GetGetResult`
+# `GetGetResult` [interface-GetGetResult]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SnapshotRepositoryAnalyzeSummaryInfo`
+# `SnapshotRepositoryAnalyzeSummaryInfo` [interface-SnapshotRepositoryAnalyzeSummaryInfo]
 
 | Name | Type | Description |
 | - | - | - |

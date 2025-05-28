@@ -1,4 +1,4 @@
-## Interface `MlDatafeedTimingStats`
+# `MlDatafeedTimingStats` [interface-MlDatafeedTimingStats]
 
 | Name | Type | Description |
 | - | - | - |

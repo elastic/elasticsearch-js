@@ -1,4 +1,4 @@
-## Interface `WatcherWebhookAction`
+# `WatcherWebhookAction` [interface-WatcherWebhookAction]
 
 | Name | Type | Description |
 | - | - | - |

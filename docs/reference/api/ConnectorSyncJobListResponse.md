@@ -1,4 +1,4 @@
-## Interface `ConnectorSyncJobListResponse`
+# `ConnectorSyncJobListResponse` [interface-ConnectorSyncJobListResponse]
 
 | Name | Type | Description |
 | - | - | - |

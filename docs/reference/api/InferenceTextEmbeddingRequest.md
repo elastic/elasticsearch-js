@@ -1,4 +1,4 @@
-## Interface `InferenceTextEmbeddingRequest`
+# `InferenceTextEmbeddingRequest` [interface-InferenceTextEmbeddingRequest]
 
 | Name | Type | Description |
 | - | - | - |

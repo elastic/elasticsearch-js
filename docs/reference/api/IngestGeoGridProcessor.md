@@ -1,4 +1,4 @@
-## Interface `IngestGeoGridProcessor`
+# `IngestGeoGridProcessor` [interface-IngestGeoGridProcessor]
 
 | Name | Type | Description |
 | - | - | - |

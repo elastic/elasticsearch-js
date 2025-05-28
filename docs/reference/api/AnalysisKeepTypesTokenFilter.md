@@ -1,4 +1,4 @@
-## Interface `AnalysisKeepTypesTokenFilter`
+# `AnalysisKeepTypesTokenFilter` [interface-AnalysisKeepTypesTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

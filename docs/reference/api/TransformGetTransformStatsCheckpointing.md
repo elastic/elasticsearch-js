@@ -1,4 +1,4 @@
-## Interface `TransformGetTransformStatsCheckpointing`
+# `TransformGetTransformStatsCheckpointing` [interface-TransformGetTransformStatsCheckpointing]
 
 | Name | Type | Description |
 | - | - | - |

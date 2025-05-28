@@ -1,4 +1,4 @@
-## Interface `AggregationsVariableWidthHistogramBucketKeys`
+# `AggregationsVariableWidthHistogramBucketKeys` [interface-AggregationsVariableWidthHistogramBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IngestAttachmentProcessor`
+# `IngestAttachmentProcessor` [interface-IngestAttachmentProcessor]
 
 | Name | Type | Description |
 | - | - | - |

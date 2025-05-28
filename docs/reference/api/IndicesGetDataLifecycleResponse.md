@@ -1,4 +1,4 @@
-## Interface `IndicesGetDataLifecycleResponse`
+# `IndicesGetDataLifecycleResponse` [interface-IndicesGetDataLifecycleResponse]
 
 | Name | Type | Description |
 | - | - | - |

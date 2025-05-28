@@ -1,4 +1,4 @@
-## Interface `IngestDeleteGeoipDatabaseRequest`
+# `IngestDeleteGeoipDatabaseRequest` [interface-IngestDeleteGeoipDatabaseRequest]
 
 | Name | Type | Description |
 | - | - | - |

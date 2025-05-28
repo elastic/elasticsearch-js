@@ -1,4 +1,4 @@
-## Interface `SnapshotGetRequest`
+# `SnapshotGetRequest` [interface-SnapshotGetRequest]
 
 | Name | Type | Description |
 | - | - | - |

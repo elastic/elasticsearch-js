@@ -1,4 +1,4 @@
-## Interface `NodesReloadSecureSettingsResponseBase`
+# `NodesReloadSecureSettingsResponseBase` [interface-NodesReloadSecureSettingsResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

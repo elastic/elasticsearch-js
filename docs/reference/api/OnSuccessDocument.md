@@ -1,4 +1,4 @@
-## Interface `OnSuccessDocument`
+# `OnSuccessDocument` [interface-OnSuccessDocument]
 
 | Name | Type | Description |
 | - | - | - |

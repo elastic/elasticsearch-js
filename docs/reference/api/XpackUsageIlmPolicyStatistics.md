@@ -1,4 +1,4 @@
-## Interface `XpackUsageIlmPolicyStatistics`
+# `XpackUsageIlmPolicyStatistics` [interface-XpackUsageIlmPolicyStatistics]
 
 | Name | Type | Description |
 | - | - | - |

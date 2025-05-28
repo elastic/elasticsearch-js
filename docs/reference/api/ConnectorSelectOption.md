@@ -1,4 +1,4 @@
-## Interface `ConnectorSelectOption`
+# `ConnectorSelectOption` [interface-ConnectorSelectOption]
 
 | Name | Type | Description |
 | - | - | - |

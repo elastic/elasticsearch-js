@@ -1,4 +1,4 @@
-## Interface `AggregationsBoxPlotAggregate`
+# `AggregationsBoxPlotAggregate` [interface-AggregationsBoxPlotAggregate]
 
 | Name | Type | Description |
 | - | - | - |

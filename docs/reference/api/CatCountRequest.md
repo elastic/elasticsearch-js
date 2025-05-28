@@ -1,4 +1,4 @@
-## Interface `CatCountRequest`
+# `CatCountRequest` [interface-CatCountRequest]
 
 | Name | Type | Description |
 | - | - | - |

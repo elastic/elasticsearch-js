@@ -1,4 +1,4 @@
-## Interface `QueryDslNumberRangeQuery`
+# `QueryDslNumberRangeQuery` [interface-QueryDslNumberRangeQuery]
 
 | Name | Type | Description |
 | - | - | - |

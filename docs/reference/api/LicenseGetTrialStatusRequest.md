@@ -1,4 +1,4 @@
-## Interface `LicenseGetTrialStatusRequest`
+# `LicenseGetTrialStatusRequest` [interface-LicenseGetTrialStatusRequest]
 
 | Name | Type | Description |
 | - | - | - |

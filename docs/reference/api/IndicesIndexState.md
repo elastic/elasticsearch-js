@@ -1,4 +1,4 @@
-## Interface `IndicesIndexState`
+# `IndicesIndexState` [interface-IndicesIndexState]
 
 | Name | Type | Description |
 | - | - | - |

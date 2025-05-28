@@ -1,4 +1,4 @@
-## Interface `ClearScrollRequest`
+# `ClearScrollRequest` [interface-ClearScrollRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `HealthReportIndicators`
+# `HealthReportIndicators` [interface-HealthReportIndicators]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SearchKnnQueryProfileBreakdown`
+# `SearchKnnQueryProfileBreakdown` [interface-SearchKnnQueryProfileBreakdown]
 
 | Name | Type | Description |
 | - | - | - |

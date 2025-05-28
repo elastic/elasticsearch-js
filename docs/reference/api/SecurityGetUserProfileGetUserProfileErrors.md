@@ -1,4 +1,4 @@
-## Interface `SecurityGetUserProfileGetUserProfileErrors`
+# `SecurityGetUserProfileGetUserProfileErrors` [interface-SecurityGetUserProfileGetUserProfileErrors]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MtermvectorsRequest`
+# `MtermvectorsRequest` [interface-MtermvectorsRequest]
 
 | Name | Type | Description |
 | - | - | - |

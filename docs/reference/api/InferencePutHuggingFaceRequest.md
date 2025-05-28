@@ -1,4 +1,4 @@
-## Interface `InferencePutHuggingFaceRequest`
+# `InferencePutHuggingFaceRequest` [interface-InferencePutHuggingFaceRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `ConnectorFilteringRulesValidation`
+# `ConnectorFilteringRulesValidation` [interface-ConnectorFilteringRulesValidation]
 
 | Name | Type | Description |
 | - | - | - |

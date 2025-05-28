@@ -1,4 +1,4 @@
-## Interface `AnalysisNoriAnalyzer`
+# `AnalysisNoriAnalyzer` [interface-AnalysisNoriAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

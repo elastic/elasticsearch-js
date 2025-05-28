@@ -1,4 +1,4 @@
-## Interface `UpdateByQueryRethrottleResponse`
+# `UpdateByQueryRethrottleResponse` [interface-UpdateByQueryRethrottleResponse]
 
 | Name | Type | Description |
 | - | - | - |

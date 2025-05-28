@@ -1,4 +1,4 @@
-## Interface `MappingDoubleRangeProperty`
+# `MappingDoubleRangeProperty` [interface-MappingDoubleRangeProperty]
 
 | Name | Type | Description |
 | - | - | - |

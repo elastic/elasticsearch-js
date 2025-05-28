@@ -1,4 +1,4 @@
-## Interface `CcrPauseFollowRequest`
+# `CcrPauseFollowRequest` [interface-CcrPauseFollowRequest]
 
 | Name | Type | Description |
 | - | - | - |

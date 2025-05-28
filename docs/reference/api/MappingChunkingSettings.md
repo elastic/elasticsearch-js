@@ -1,4 +1,4 @@
-## Interface `MappingChunkingSettings`
+# `MappingChunkingSettings` [interface-MappingChunkingSettings]
 
 | Name | Type | Description |
 | - | - | - |

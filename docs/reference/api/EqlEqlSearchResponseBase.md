@@ -1,4 +1,4 @@
-## Interface `EqlEqlSearchResponseBase`
+# `EqlEqlSearchResponseBase` [interface-EqlEqlSearchResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

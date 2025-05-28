@@ -1,4 +1,4 @@
-## Interface `QueryDslWildcardQuery`
+# `QueryDslWildcardQuery` [interface-QueryDslWildcardQuery]
 
 | Name | Type | Description |
 | - | - | - |

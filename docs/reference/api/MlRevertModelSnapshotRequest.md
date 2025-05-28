@@ -1,4 +1,4 @@
-## Interface `MlRevertModelSnapshotRequest`
+# `MlRevertModelSnapshotRequest` [interface-MlRevertModelSnapshotRequest]
 
 | Name | Type | Description |
 | - | - | - |

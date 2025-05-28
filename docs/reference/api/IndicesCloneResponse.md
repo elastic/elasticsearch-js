@@ -1,4 +1,4 @@
-## Interface `IndicesCloneResponse`
+# `IndicesCloneResponse` [interface-IndicesCloneResponse]
 
 | Name | Type | Description |
 | - | - | - |

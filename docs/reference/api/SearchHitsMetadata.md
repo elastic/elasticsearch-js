@@ -1,4 +1,4 @@
-## Interface `SearchHitsMetadata`
+# `SearchHitsMetadata` [interface-SearchHitsMetadata]
 
 | Name | Type | Description |
 | - | - | - |

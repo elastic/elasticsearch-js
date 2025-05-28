@@ -1,4 +1,4 @@
-## Interface `MlPutJobRequest`
+# `MlPutJobRequest` [interface-MlPutJobRequest]
 
 | Name | Type | Description |
 | - | - | - |

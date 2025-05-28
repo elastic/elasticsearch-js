@@ -1,4 +1,4 @@
-## Interface `NodesIoStatDevice`
+# `NodesIoStatDevice` [interface-NodesIoStatDevice]
 
 | Name | Type | Description |
 | - | - | - |

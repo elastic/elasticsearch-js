@@ -1,4 +1,4 @@
-## Interface `TransformPivotGroupByContainer`
+# `TransformPivotGroupByContainer` [interface-TransformPivotGroupByContainer]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `LicenseLicense`
+# `LicenseLicense` [interface-LicenseLicense]
 
 | Name | Type | Description |
 | - | - | - |

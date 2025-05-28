@@ -1,4 +1,4 @@
-## Interface `TransformPivot`
+# `TransformPivot` [interface-TransformPivot]
 
 | Name | Type | Description |
 | - | - | - |

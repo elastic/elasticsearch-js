@@ -1,4 +1,4 @@
-## Interface `MlValidateDetectorRequest`
+# `MlValidateDetectorRequest` [interface-MlValidateDetectorRequest]
 
 | Name | Type | Description |
 | - | - | - |

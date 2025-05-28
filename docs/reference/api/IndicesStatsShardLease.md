@@ -1,4 +1,4 @@
-## Interface `IndicesStatsShardLease`
+# `IndicesStatsShardLease` [interface-IndicesStatsShardLease]
 
 | Name | Type | Description |
 | - | - | - |

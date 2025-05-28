@@ -1,4 +1,4 @@
-## Interface `CountRequest`
+# `CountRequest` [interface-CountRequest]
 
 | Name | Type | Description |
 | - | - | - |

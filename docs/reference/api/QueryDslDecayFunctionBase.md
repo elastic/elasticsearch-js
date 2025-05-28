@@ -1,4 +1,4 @@
-## Interface `QueryDslDecayFunctionBase`
+# `QueryDslDecayFunctionBase` [interface-QueryDslDecayFunctionBase]
 
 | Name | Type | Description |
 | - | - | - |

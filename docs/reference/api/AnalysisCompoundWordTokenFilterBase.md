@@ -1,4 +1,4 @@
-## Interface `AnalysisCompoundWordTokenFilterBase`
+# `AnalysisCompoundWordTokenFilterBase` [interface-AnalysisCompoundWordTokenFilterBase]
 
 | Name | Type | Description |
 | - | - | - |

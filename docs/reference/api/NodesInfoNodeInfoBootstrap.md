@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoBootstrap`
+# `NodesInfoNodeInfoBootstrap` [interface-NodesInfoNodeInfoBootstrap]
 
 | Name | Type | Description |
 | - | - | - |

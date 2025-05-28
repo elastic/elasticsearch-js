@@ -1,4 +1,4 @@
-## Interface `IndicesIndexSettingsLifecycleStep`
+# `IndicesIndexSettingsLifecycleStep` [interface-IndicesIndexSettingsLifecycleStep]
 
 | Name | Type | Description |
 | - | - | - |

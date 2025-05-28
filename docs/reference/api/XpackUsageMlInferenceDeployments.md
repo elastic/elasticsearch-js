@@ -1,4 +1,4 @@
-## Interface `XpackUsageMlInferenceDeployments`
+# `XpackUsageMlInferenceDeployments` [interface-XpackUsageMlInferenceDeployments]
 
 | Name | Type | Description |
 | - | - | - |

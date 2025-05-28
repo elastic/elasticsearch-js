@@ -1,4 +1,4 @@
-## Interface `MlEstimateModelMemoryRequest`
+# `MlEstimateModelMemoryRequest` [interface-MlEstimateModelMemoryRequest]
 
 | Name | Type | Description |
 | - | - | - |

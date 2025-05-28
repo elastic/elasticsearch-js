@@ -1,4 +1,4 @@
-## Interface `RankEvalRankEvalMetricPrecision`
+# `RankEvalRankEvalMetricPrecision` [interface-RankEvalRankEvalMetricPrecision]
 
 | Name | Type | Description |
 | - | - | - |

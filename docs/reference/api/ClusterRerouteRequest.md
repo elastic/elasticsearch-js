@@ -1,4 +1,4 @@
-## Interface `ClusterRerouteRequest`
+# `ClusterRerouteRequest` [interface-ClusterRerouteRequest]
 
 | Name | Type | Description |
 | - | - | - |

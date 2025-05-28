@@ -1,4 +1,4 @@
-## Interface `IndicesAlias`
+# `IndicesAlias` [interface-IndicesAlias]
 
 | Name | Type | Description |
 | - | - | - |

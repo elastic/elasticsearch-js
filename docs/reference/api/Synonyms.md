@@ -1,19 +1,19 @@
-## `Synonyms`
+# `Synonyms` [class-Synonyms]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Synonyms(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Synonyms]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Synonyms]
 
 | Name | Signature | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SecurityGlobalPrivilege`
+# `SecurityGlobalPrivilege` [interface-SecurityGlobalPrivilege]
 
 | Name | Type | Description |
 | - | - | - |

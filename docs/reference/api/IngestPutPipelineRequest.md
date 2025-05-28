@@ -1,4 +1,4 @@
-## Interface `IngestPutPipelineRequest`
+# `IngestPutPipelineRequest` [interface-IngestPutPipelineRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `ClusterPutSettingsResponse`
+# `ClusterPutSettingsResponse` [interface-ClusterPutSettingsResponse]
 
 | Name | Type | Description |
 | - | - | - |

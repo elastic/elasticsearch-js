@@ -1,4 +1,4 @@
-## Interface `AnalysisIcuAnalyzer`
+# `AnalysisIcuAnalyzer` [interface-AnalysisIcuAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

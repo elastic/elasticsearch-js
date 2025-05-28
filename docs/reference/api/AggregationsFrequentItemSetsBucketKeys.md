@@ -1,4 +1,4 @@
-## Interface `AggregationsFrequentItemSetsBucketKeys`
+# `AggregationsFrequentItemSetsBucketKeys` [interface-AggregationsFrequentItemSetsBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

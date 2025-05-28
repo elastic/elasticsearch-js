@@ -1,4 +1,4 @@
-## Interface `AggregationsGeoTileGridBucketKeys`
+# `AggregationsGeoTileGridBucketKeys` [interface-AggregationsGeoTileGridBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

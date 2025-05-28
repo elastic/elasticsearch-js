@@ -1,4 +1,4 @@
-## Interface `XpackUsageMlInference`
+# `XpackUsageMlInference` [interface-XpackUsageMlInference]
 
 | Name | Type | Description |
 | - | - | - |

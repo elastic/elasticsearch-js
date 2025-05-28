@@ -1,4 +1,4 @@
-## Interface `AnalysisAsciiFoldingTokenFilter`
+# `AnalysisAsciiFoldingTokenFilter` [interface-AnalysisAsciiFoldingTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

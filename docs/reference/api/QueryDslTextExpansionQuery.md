@@ -1,4 +1,4 @@
-## Interface `QueryDslTextExpansionQuery`
+# `QueryDslTextExpansionQuery` [interface-QueryDslTextExpansionQuery]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `GetStats`
+# `GetStats` [interface-GetStats]
 
 | Name | Type | Description |
 | - | - | - |

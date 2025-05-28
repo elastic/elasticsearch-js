@@ -1,4 +1,4 @@
-## Interface `EsqlAsyncQueryGetRequest`
+# `EsqlAsyncQueryGetRequest` [interface-EsqlAsyncQueryGetRequest]
 
 | Name | Type | Description |
 | - | - | - |

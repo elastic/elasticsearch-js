@@ -1,4 +1,4 @@
-## Interface `LogstashPipelineSettings`
+# `LogstashPipelineSettings` [interface-LogstashPipelineSettings]
 
 | Name | Type | Description |
 | - | - | - |

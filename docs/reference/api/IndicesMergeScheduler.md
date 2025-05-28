@@ -1,4 +1,4 @@
-## Interface `IndicesMergeScheduler`
+# `IndicesMergeScheduler` [interface-IndicesMergeScheduler]
 
 | Name | Type | Description |
 | - | - | - |

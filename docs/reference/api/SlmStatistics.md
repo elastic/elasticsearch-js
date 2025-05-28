@@ -1,4 +1,4 @@
-## Interface `SlmStatistics`
+# `SlmStatistics` [interface-SlmStatistics]
 
 | Name | Type | Description |
 | - | - | - |

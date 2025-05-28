@@ -1,4 +1,4 @@
-## Interface `AggregationsPercentilesBucketAggregate`
+# `AggregationsPercentilesBucketAggregate` [interface-AggregationsPercentilesBucketAggregate]
 
 | Name | Type | Description |
 | - | - | - |

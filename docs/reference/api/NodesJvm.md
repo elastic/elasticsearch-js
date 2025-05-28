@@ -1,4 +1,4 @@
-## Interface `NodesJvm`
+# `NodesJvm` [interface-NodesJvm]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `CatShardsRequest`
+# `CatShardsRequest` [interface-CatShardsRequest]
 
 | Name | Type | Description |
 | - | - | - |

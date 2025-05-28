@@ -1,4 +1,4 @@
-## Interface `RRFRetriever`
+# `RRFRetriever` [interface-RRFRetriever]
 
 | Name | Type | Description |
 | - | - | - |

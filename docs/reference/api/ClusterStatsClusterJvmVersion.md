@@ -1,4 +1,4 @@
-## Interface `ClusterStatsClusterJvmVersion`
+# `ClusterStatsClusterJvmVersion` [interface-ClusterStatsClusterJvmVersion]
 
 | Name | Type | Description |
 | - | - | - |

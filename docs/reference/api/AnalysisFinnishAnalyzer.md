@@ -1,4 +1,4 @@
-## Interface `AnalysisFinnishAnalyzer`
+# `AnalysisFinnishAnalyzer` [interface-AnalysisFinnishAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

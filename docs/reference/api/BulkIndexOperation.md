@@ -1,4 +1,4 @@
-## Interface `BulkIndexOperation`
+# `BulkIndexOperation` [interface-BulkIndexOperation]
 
 | Name | Type | Description |
 | - | - | - |

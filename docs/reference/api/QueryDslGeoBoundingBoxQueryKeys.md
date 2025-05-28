@@ -1,4 +1,4 @@
-## Interface `QueryDslGeoBoundingBoxQueryKeys`
+# `QueryDslGeoBoundingBoxQueryKeys` [interface-QueryDslGeoBoundingBoxQueryKeys]
 
 | Name | Type | Description |
 | - | - | - |

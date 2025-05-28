@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoClient`
+# `NodesInfoNodeInfoClient` [interface-NodesInfoNodeInfoClient]
 
 | Name | Type | Description |
 | - | - | - |

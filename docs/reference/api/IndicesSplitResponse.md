@@ -1,4 +1,4 @@
-## Interface `IndicesSplitResponse`
+# `IndicesSplitResponse` [interface-IndicesSplitResponse]
 
 | Name | Type | Description |
 | - | - | - |

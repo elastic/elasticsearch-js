@@ -1,4 +1,4 @@
-## Interface `NodesThreadCount`
+# `NodesThreadCount` [interface-NodesThreadCount]
 
 | Name | Type | Description |
 | - | - | - |

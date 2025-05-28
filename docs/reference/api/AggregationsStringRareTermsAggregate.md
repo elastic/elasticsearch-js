@@ -1,4 +1,4 @@
-## Interface `AggregationsStringRareTermsAggregate`
+# `AggregationsStringRareTermsAggregate` [interface-AggregationsStringRareTermsAggregate]
 
 | Name | Type | Description |
 | - | - | - |

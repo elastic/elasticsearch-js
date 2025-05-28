@@ -1,4 +1,4 @@
-## Interface `XpackUsageSecurityRolesDlsBitSetCache`
+# `XpackUsageSecurityRolesDlsBitSetCache` [interface-XpackUsageSecurityRolesDlsBitSetCache]
 
 | Name | Type | Description |
 | - | - | - |

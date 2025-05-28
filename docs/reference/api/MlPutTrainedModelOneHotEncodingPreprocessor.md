@@ -1,4 +1,4 @@
-## Interface `MlPutTrainedModelOneHotEncodingPreprocessor`
+# `MlPutTrainedModelOneHotEncodingPreprocessor` [interface-MlPutTrainedModelOneHotEncodingPreprocessor]
 
 | Name | Type | Description |
 | - | - | - |

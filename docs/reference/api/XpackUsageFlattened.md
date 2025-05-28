@@ -1,4 +1,4 @@
-## Interface `XpackUsageFlattened`
+# `XpackUsageFlattened` [interface-XpackUsageFlattened]
 
 | Name | Type | Description |
 | - | - | - |

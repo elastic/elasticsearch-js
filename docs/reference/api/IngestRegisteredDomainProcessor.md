@@ -1,4 +1,4 @@
-## Interface `IngestRegisteredDomainProcessor`
+# `IngestRegisteredDomainProcessor` [interface-IngestRegisteredDomainProcessor]
 
 | Name | Type | Description |
 | - | - | - |

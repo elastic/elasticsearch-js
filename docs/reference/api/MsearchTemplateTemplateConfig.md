@@ -1,4 +1,4 @@
-## Interface `MsearchTemplateTemplateConfig`
+# `MsearchTemplateTemplateConfig` [interface-MsearchTemplateTemplateConfig]
 
 | Name | Type | Description |
 | - | - | - |

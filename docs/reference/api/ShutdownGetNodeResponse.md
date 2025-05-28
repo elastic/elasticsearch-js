@@ -1,4 +1,4 @@
-## Interface `ShutdownGetNodeResponse`
+# `ShutdownGetNodeResponse` [interface-ShutdownGetNodeResponse]
 
 | Name | Type | Description |
 | - | - | - |

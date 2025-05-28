@@ -1,4 +1,4 @@
-## Interface `ClusterExistsComponentTemplateRequest`
+# `ClusterExistsComponentTemplateRequest` [interface-ClusterExistsComponentTemplateRequest]
 
 | Name | Type | Description |
 | - | - | - |

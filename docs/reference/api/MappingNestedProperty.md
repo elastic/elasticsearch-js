@@ -1,4 +1,4 @@
-## Interface `MappingNestedProperty`
+# `MappingNestedProperty` [interface-MappingNestedProperty]
 
 | Name | Type | Description |
 | - | - | - |

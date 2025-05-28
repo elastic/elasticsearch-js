@@ -1,4 +1,4 @@
-## Interface `SnapshotSourceOnlyRepositorySettings`
+# `SnapshotSourceOnlyRepositorySettings` [interface-SnapshotSourceOnlyRepositorySettings]
 
 | Name | Type | Description |
 | - | - | - |

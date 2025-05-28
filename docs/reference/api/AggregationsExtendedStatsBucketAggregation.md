@@ -1,4 +1,4 @@
-## Interface `AggregationsExtendedStatsBucketAggregation`
+# `AggregationsExtendedStatsBucketAggregation` [interface-AggregationsExtendedStatsBucketAggregation]
 
 | Name | Type | Description |
 | - | - | - |

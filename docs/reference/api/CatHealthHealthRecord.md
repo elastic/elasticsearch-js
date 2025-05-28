@@ -1,4 +1,4 @@
-## Interface `CatHealthHealthRecord`
+# `CatHealthHealthRecord` [interface-CatHealthHealthRecord]
 
 | Name | Type | Description |
 | - | - | - |

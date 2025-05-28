@@ -1,4 +1,4 @@
-## Interface `XpackUsageMlDataFrameAnalyticsJobsMemory`
+# `XpackUsageMlDataFrameAnalyticsJobsMemory` [interface-XpackUsageMlDataFrameAnalyticsJobsMemory]
 
 | Name | Type | Description |
 | - | - | - |

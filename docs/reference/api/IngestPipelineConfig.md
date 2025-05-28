@@ -1,4 +1,4 @@
-## Interface `IngestPipelineConfig`
+# `IngestPipelineConfig` [interface-IngestPipelineConfig]
 
 | Name | Type | Description |
 | - | - | - |

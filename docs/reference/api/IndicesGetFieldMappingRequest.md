@@ -1,4 +1,4 @@
-## Interface `IndicesGetFieldMappingRequest`
+# `IndicesGetFieldMappingRequest` [interface-IndicesGetFieldMappingRequest]
 
 | Name | Type | Description |
 | - | - | - |

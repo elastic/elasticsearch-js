@@ -1,4 +1,4 @@
-## Interface `ConnectorRegexValidation`
+# `ConnectorRegexValidation` [interface-ConnectorRegexValidation]
 
 | Name | Type | Description |
 | - | - | - |

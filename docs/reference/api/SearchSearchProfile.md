@@ -1,4 +1,4 @@
-## Interface `SearchSearchProfile`
+# `SearchSearchProfile` [interface-SearchSearchProfile]
 
 | Name | Type | Description |
 | - | - | - |

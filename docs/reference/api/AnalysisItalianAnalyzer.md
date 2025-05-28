@@ -1,4 +1,4 @@
-## Interface `AnalysisItalianAnalyzer`
+# `AnalysisItalianAnalyzer` [interface-AnalysisItalianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

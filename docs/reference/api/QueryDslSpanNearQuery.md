@@ -1,4 +1,4 @@
-## Interface `QueryDslSpanNearQuery`
+# `QueryDslSpanNearQuery` [interface-QueryDslSpanNearQuery]
 
 | Name | Type | Description |
 | - | - | - |

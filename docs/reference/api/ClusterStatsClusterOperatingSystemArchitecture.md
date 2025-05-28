@@ -1,4 +1,4 @@
-## Interface `ClusterStatsClusterOperatingSystemArchitecture`
+# `ClusterStatsClusterOperatingSystemArchitecture` [interface-ClusterStatsClusterOperatingSystemArchitecture]
 
 | Name | Type | Description |
 | - | - | - |

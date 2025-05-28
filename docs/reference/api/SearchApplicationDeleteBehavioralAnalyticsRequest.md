@@ -1,4 +1,4 @@
-## Interface `SearchApplicationDeleteBehavioralAnalyticsRequest`
+# `SearchApplicationDeleteBehavioralAnalyticsRequest` [interface-SearchApplicationDeleteBehavioralAnalyticsRequest]
 
 | Name | Type | Description |
 | - | - | - |

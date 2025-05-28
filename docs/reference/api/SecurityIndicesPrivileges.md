@@ -1,4 +1,4 @@
-## Interface `SecurityIndicesPrivileges`
+# `SecurityIndicesPrivileges` [interface-SecurityIndicesPrivileges]
 
 | Name | Type | Description |
 | - | - | - |

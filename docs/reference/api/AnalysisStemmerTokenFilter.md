@@ -1,4 +1,4 @@
-## Interface `AnalysisStemmerTokenFilter`
+# `AnalysisStemmerTokenFilter` [interface-AnalysisStemmerTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

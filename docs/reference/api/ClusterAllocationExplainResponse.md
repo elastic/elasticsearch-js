@@ -1,4 +1,4 @@
-## Interface `ClusterAllocationExplainResponse`
+# `ClusterAllocationExplainResponse` [interface-ClusterAllocationExplainResponse]
 
 | Name | Type | Description |
 | - | - | - |

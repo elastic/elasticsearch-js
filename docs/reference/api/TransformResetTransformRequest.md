@@ -1,4 +1,4 @@
-## Interface `TransformResetTransformRequest`
+# `TransformResetTransformRequest` [interface-TransformResetTransformRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SecurityCreateCrossClusterApiKeyRequest`
+# `SecurityCreateCrossClusterApiKeyRequest` [interface-SecurityCreateCrossClusterApiKeyRequest]
 
 | Name | Type | Description |
 | - | - | - |

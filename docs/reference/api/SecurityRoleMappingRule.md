@@ -1,4 +1,4 @@
-## Interface `SecurityRoleMappingRule`
+# `SecurityRoleMappingRule` [interface-SecurityRoleMappingRule]
 
 | Name | Type | Description |
 | - | - | - |

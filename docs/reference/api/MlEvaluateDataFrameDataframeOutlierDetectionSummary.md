@@ -1,4 +1,4 @@
-## Interface `MlEvaluateDataFrameDataframeOutlierDetectionSummary`
+# `MlEvaluateDataFrameDataframeOutlierDetectionSummary` [interface-MlEvaluateDataFrameDataframeOutlierDetectionSummary]
 
 | Name | Type | Description |
 | - | - | - |

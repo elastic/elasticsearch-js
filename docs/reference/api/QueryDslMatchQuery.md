@@ -1,4 +1,4 @@
-## Interface `QueryDslMatchQuery`
+# `QueryDslMatchQuery` [interface-QueryDslMatchQuery]
 
 | Name | Type | Description |
 | - | - | - |

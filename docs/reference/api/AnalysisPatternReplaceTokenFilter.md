@@ -1,4 +1,4 @@
-## Interface `AnalysisPatternReplaceTokenFilter`
+# `AnalysisPatternReplaceTokenFilter` [interface-AnalysisPatternReplaceTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

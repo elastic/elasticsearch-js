@@ -1,4 +1,4 @@
-## Interface `AnalysisHungarianAnalyzer`
+# `AnalysisHungarianAnalyzer` [interface-AnalysisHungarianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

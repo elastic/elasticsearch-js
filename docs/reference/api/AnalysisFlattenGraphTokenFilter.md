@@ -1,4 +1,4 @@
-## Interface `AnalysisFlattenGraphTokenFilter`
+# `AnalysisFlattenGraphTokenFilter` [interface-AnalysisFlattenGraphTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

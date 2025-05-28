@@ -1,4 +1,4 @@
-## Interface `QueryDslDistanceFeatureQueryBase`
+# `QueryDslDistanceFeatureQueryBase` [interface-QueryDslDistanceFeatureQueryBase]
 
 | Name | Type | Description |
 | - | - | - |

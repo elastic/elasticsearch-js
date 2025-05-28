@@ -1,4 +1,4 @@
-## Interface `AggregationsMaxAggregate`
+# `AggregationsMaxAggregate` [interface-AggregationsMaxAggregate]
 
 | Name | Type | Description |
 | - | - | - |

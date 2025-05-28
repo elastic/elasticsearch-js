@@ -1,19 +1,19 @@
-## `Ccr`
+# `Ccr` [class-Ccr]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Ccr(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Ccr]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Ccr]
 
 | Name | Signature | Description |
 | - | - | - |

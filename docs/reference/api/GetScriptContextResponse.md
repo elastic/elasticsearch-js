@@ -1,4 +1,4 @@
-## Interface `GetScriptContextResponse`
+# `GetScriptContextResponse` [interface-GetScriptContextResponse]
 
 | Name | Type | Description |
 | - | - | - |

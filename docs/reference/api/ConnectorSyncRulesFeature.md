@@ -1,4 +1,4 @@
-## Interface `ConnectorSyncRulesFeature`
+# `ConnectorSyncRulesFeature` [interface-ConnectorSyncRulesFeature]
 
 | Name | Type | Description |
 | - | - | - |

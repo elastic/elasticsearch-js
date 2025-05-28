@@ -1,4 +1,4 @@
-## Interface `QueryRulesPutRulesetRequest`
+# `QueryRulesPutRulesetRequest` [interface-QueryRulesPutRulesetRequest]
 
 | Name | Type | Description |
 | - | - | - |

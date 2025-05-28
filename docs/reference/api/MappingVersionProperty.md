@@ -1,4 +1,4 @@
-## Interface `MappingVersionProperty`
+# `MappingVersionProperty` [interface-MappingVersionProperty]
 
 | Name | Type | Description |
 | - | - | - |

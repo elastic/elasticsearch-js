@@ -1,4 +1,4 @@
-## Interface `CatMlJobsRequest`
+# `CatMlJobsRequest` [interface-CatMlJobsRequest]
 
 | Name | Type | Description |
 | - | - | - |

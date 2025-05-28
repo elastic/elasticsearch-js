@@ -1,4 +1,4 @@
-## Interface `LicenseGetResponse`
+# `LicenseGetResponse` [interface-LicenseGetResponse]
 
 | Name | Type | Description |
 | - | - | - |

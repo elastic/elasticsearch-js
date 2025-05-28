@@ -1,4 +1,4 @@
-## Interface `IndicesRecoveryRequest`
+# `IndicesRecoveryRequest` [interface-IndicesRecoveryRequest]
 
 | Name | Type | Description |
 | - | - | - |

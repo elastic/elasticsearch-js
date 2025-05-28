@@ -1,4 +1,4 @@
-## Interface `IndicesMappingLimitSettingsSourceFields`
+# `IndicesMappingLimitSettingsSourceFields` [interface-IndicesMappingLimitSettingsSourceFields]
 
 | Name | Type | Description |
 | - | - | - |

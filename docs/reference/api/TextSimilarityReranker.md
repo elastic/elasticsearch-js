@@ -1,4 +1,4 @@
-## Interface `TextSimilarityReranker`
+# `TextSimilarityReranker` [interface-TextSimilarityReranker]
 
 | Name | Type | Description |
 | - | - | - |

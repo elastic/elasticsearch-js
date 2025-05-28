@@ -1,4 +1,4 @@
-## Interface `ReindexSource`
+# `ReindexSource` [interface-ReindexSource]
 
 | Name | Type | Description |
 | - | - | - |

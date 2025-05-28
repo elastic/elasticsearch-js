@@ -1,4 +1,4 @@
-## Interface `MlTrainedModelPrefixStrings`
+# `MlTrainedModelPrefixStrings` [interface-MlTrainedModelPrefixStrings]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsBucketPathAggregation`
+# `AggregationsBucketPathAggregation` [interface-AggregationsBucketPathAggregation]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AutoscalingAutoscalingPolicy`
+# `AutoscalingAutoscalingPolicy` [interface-AutoscalingAutoscalingPolicy]
 
 | Name | Type | Description |
 | - | - | - |

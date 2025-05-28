@@ -1,4 +1,4 @@
-## Interface `LicensePostStartBasicRequest`
+# `LicensePostStartBasicRequest` [interface-LicensePostStartBasicRequest]
 
 | Name | Type | Description |
 | - | - | - |

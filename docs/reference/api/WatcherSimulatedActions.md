@@ -1,4 +1,4 @@
-## Interface `WatcherSimulatedActions`
+# `WatcherSimulatedActions` [interface-WatcherSimulatedActions]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `InferenceRerankRequest`
+# `InferenceRerankRequest` [interface-InferenceRerankRequest]
 
 | Name | Type | Description |
 | - | - | - |

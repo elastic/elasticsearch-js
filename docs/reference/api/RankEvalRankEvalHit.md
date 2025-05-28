@@ -1,4 +1,4 @@
-## Interface `RankEvalRankEvalHit`
+# `RankEvalRankEvalHit` [interface-RankEvalRankEvalHit]
 
 | Name | Type | Description |
 | - | - | - |

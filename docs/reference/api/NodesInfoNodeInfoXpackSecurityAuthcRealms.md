@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoXpackSecurityAuthcRealms`
+# `NodesInfoNodeInfoXpackSecurityAuthcRealms` [interface-NodesInfoNodeInfoXpackSecurityAuthcRealms]
 
 | Name | Type | Description |
 | - | - | - |

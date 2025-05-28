@@ -1,4 +1,4 @@
-## Interface `InferenceSparseEmbeddingResult`
+# `InferenceSparseEmbeddingResult` [interface-InferenceSparseEmbeddingResult]
 
 | Name | Type | Description |
 | - | - | - |

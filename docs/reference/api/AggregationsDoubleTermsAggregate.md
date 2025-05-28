@@ -1,4 +1,4 @@
-## Interface `AggregationsDoubleTermsAggregate`
+# `AggregationsDoubleTermsAggregate` [interface-AggregationsDoubleTermsAggregate]
 
 | Name | Type | Description |
 | - | - | - |

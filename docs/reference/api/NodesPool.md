@@ -1,4 +1,4 @@
-## Interface `NodesPool`
+# `NodesPool` [interface-NodesPool]
 
 | Name | Type | Description |
 | - | - | - |

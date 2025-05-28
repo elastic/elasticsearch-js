@@ -1,4 +1,4 @@
-## Interface `ShutdownPutNodeRequest`
+# `ShutdownPutNodeRequest` [interface-ShutdownPutNodeRequest]
 
 | Name | Type | Description |
 | - | - | - |

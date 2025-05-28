@@ -1,4 +1,4 @@
-## Interface `CatSegmentsSegmentsRecord`
+# `CatSegmentsSegmentsRecord` [interface-CatSegmentsSegmentsRecord]
 
 | Name | Type | Description |
 | - | - | - |

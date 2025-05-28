@@ -1,4 +1,4 @@
-## Interface `SecurityReplicationAccess`
+# `SecurityReplicationAccess` [interface-SecurityReplicationAccess]
 
 | Name | Type | Description |
 | - | - | - |

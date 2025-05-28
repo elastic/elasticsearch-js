@@ -1,4 +1,4 @@
-## Interface `MappingMurmur3HashProperty`
+# `MappingMurmur3HashProperty` [interface-MappingMurmur3HashProperty]
 
 | Name | Type | Description |
 | - | - | - |

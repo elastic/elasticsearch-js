@@ -1,4 +1,4 @@
-## Interface `CatPluginsRequest`
+# `CatPluginsRequest` [interface-CatPluginsRequest]
 
 | Name | Type | Description |
 | - | - | - |

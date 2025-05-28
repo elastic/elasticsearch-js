@@ -1,4 +1,4 @@
-## Interface `IndicesDataStreamLifecycleDownsampling`
+# `IndicesDataStreamLifecycleDownsampling` [interface-IndicesDataStreamLifecycleDownsampling]
 
 | Name | Type | Description |
 | - | - | - |

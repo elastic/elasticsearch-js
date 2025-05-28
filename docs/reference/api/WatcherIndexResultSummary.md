@@ -1,4 +1,4 @@
-## Interface `WatcherIndexResultSummary`
+# `WatcherIndexResultSummary` [interface-WatcherIndexResultSummary]
 
 | Name | Type | Description |
 | - | - | - |

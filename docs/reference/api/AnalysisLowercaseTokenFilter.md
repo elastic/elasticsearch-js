@@ -1,4 +1,4 @@
-## Interface `AnalysisLowercaseTokenFilter`
+# `AnalysisLowercaseTokenFilter` [interface-AnalysisLowercaseTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

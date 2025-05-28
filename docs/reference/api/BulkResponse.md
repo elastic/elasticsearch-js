@@ -1,4 +1,4 @@
-## Interface `BulkResponse`
+# `BulkResponse` [interface-BulkResponse]
 
 | Name | Type | Description |
 | - | - | - |

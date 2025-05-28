@@ -1,4 +1,4 @@
-## Interface `FeaturesGetFeaturesResponse`
+# `FeaturesGetFeaturesResponse` [interface-FeaturesGetFeaturesResponse]
 
 | Name | Type | Description |
 | - | - | - |

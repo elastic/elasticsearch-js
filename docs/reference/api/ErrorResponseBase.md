@@ -1,4 +1,4 @@
-## Interface `ErrorResponseBase`
+# `ErrorResponseBase` [interface-ErrorResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

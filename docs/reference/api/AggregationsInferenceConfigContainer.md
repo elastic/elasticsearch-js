@@ -1,4 +1,4 @@
-## Interface `AggregationsInferenceConfigContainer`
+# `AggregationsInferenceConfigContainer` [interface-AggregationsInferenceConfigContainer]
 
 | Name | Type | Description |
 | - | - | - |

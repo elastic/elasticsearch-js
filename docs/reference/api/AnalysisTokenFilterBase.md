@@ -1,4 +1,4 @@
-## Interface `AnalysisTokenFilterBase`
+# `AnalysisTokenFilterBase` [interface-AnalysisTokenFilterBase]
 
 | Name | Type | Description |
 | - | - | - |

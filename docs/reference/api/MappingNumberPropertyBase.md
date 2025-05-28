@@ -1,4 +1,4 @@
-## Interface `MappingNumberPropertyBase`
+# `MappingNumberPropertyBase` [interface-MappingNumberPropertyBase]
 
 | Name | Type | Description |
 | - | - | - |

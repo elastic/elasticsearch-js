@@ -1,4 +1,4 @@
-## Interface `IndicesResolveClusterResolveClusterInfo`
+# `IndicesResolveClusterResolveClusterInfo` [interface-IndicesResolveClusterResolveClusterInfo]
 
 | Name | Type | Description |
 | - | - | - |

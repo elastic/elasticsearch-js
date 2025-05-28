@@ -1,4 +1,4 @@
-## Interface `NodesPublishedClusterStates`
+# `NodesPublishedClusterStates` [interface-NodesPublishedClusterStates]
 
 | Name | Type | Description |
 | - | - | - |

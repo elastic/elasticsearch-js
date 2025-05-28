@@ -1,4 +1,4 @@
-## Interface `IndicesSettingsSimilarityBm25`
+# `IndicesSettingsSimilarityBm25` [interface-IndicesSettingsSimilarityBm25]
 
 | Name | Type | Description |
 | - | - | - |

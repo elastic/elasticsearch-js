@@ -1,4 +1,4 @@
-## Interface `IngestSimulateResponse`
+# `IngestSimulateResponse` [interface-IngestSimulateResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `WatcherActivationStatus`
+# `WatcherActivationStatus` [interface-WatcherActivationStatus]
 
 | Name | Type | Description |
 | - | - | - |

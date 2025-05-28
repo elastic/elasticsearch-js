@@ -1,4 +1,4 @@
-## Interface `SecurityDeleteUserResponse`
+# `SecurityDeleteUserResponse` [interface-SecurityDeleteUserResponse]
 
 | Name | Type | Description |
 | - | - | - |

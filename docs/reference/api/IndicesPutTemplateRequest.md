@@ -1,4 +1,4 @@
-## Interface `IndicesPutTemplateRequest`
+# `IndicesPutTemplateRequest` [interface-IndicesPutTemplateRequest]
 
 | Name | Type | Description |
 | - | - | - |

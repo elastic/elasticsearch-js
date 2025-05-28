@@ -1,4 +1,4 @@
-## Interface `MigrationDeprecationsResponse`
+# `MigrationDeprecationsResponse` [interface-MigrationDeprecationsResponse]
 
 | Name | Type | Description |
 | - | - | - |

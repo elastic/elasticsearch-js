@@ -1,4 +1,4 @@
-## Interface `QueryDslDisMaxQuery`
+# `QueryDslDisMaxQuery` [interface-QueryDslDisMaxQuery]
 
 | Name | Type | Description |
 | - | - | - |

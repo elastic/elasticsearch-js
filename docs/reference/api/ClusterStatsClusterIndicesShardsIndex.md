@@ -1,4 +1,4 @@
-## Interface `ClusterStatsClusterIndicesShardsIndex`
+# `ClusterStatsClusterIndicesShardsIndex` [interface-ClusterStatsClusterIndicesShardsIndex]
 
 | Name | Type | Description |
 | - | - | - |

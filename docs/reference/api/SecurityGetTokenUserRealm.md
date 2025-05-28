@@ -1,4 +1,4 @@
-## Interface `SecurityGetTokenUserRealm`
+# `SecurityGetTokenUserRealm` [interface-SecurityGetTokenUserRealm]
 
 | Name | Type | Description |
 | - | - | - |

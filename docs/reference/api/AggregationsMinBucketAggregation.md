@@ -1,4 +1,4 @@
-## Interface `AggregationsMinBucketAggregation`
+# `AggregationsMinBucketAggregation` [interface-AggregationsMinBucketAggregation]
 
 | Name | Type | Description |
 | - | - | - |

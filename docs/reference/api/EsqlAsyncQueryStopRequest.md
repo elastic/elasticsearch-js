@@ -1,4 +1,4 @@
-## Interface `EsqlAsyncQueryStopRequest`
+# `EsqlAsyncQueryStopRequest` [interface-EsqlAsyncQueryStopRequest]
 
 | Name | Type | Description |
 | - | - | - |

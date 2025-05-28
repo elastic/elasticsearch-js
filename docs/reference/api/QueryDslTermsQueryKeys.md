@@ -1,4 +1,4 @@
-## Interface `QueryDslTermsQueryKeys`
+# `QueryDslTermsQueryKeys` [interface-QueryDslTermsQueryKeys]
 
 | Name | Type | Description |
 | - | - | - |

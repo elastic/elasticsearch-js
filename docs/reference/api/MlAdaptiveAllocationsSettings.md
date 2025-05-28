@@ -1,4 +1,4 @@
-## Interface `MlAdaptiveAllocationsSettings`
+# `MlAdaptiveAllocationsSettings` [interface-MlAdaptiveAllocationsSettings]
 
 | Name | Type | Description |
 | - | - | - |

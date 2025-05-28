@@ -1,4 +1,4 @@
-## Interface `IngestGeoIpStatsGeoIpDownloadStatistics`
+# `IngestGeoIpStatsGeoIpDownloadStatistics` [interface-IngestGeoIpStatsGeoIpDownloadStatistics]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlGetBucketsResponse`
+# `MlGetBucketsResponse` [interface-MlGetBucketsResponse]
 
 | Name | Type | Description |
 | - | - | - |

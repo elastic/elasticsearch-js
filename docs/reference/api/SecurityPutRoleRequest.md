@@ -1,4 +1,4 @@
-## Interface `SecurityPutRoleRequest`
+# `SecurityPutRoleRequest` [interface-SecurityPutRoleRequest]
 
 | Name | Type | Description |
 | - | - | - |

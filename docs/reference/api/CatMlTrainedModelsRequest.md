@@ -1,4 +1,4 @@
-## Interface `CatMlTrainedModelsRequest`
+# `CatMlTrainedModelsRequest` [interface-CatMlTrainedModelsRequest]
 
 | Name | Type | Description |
 | - | - | - |

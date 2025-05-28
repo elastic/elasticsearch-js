@@ -1,4 +1,4 @@
-## Interface `IndicesRetentionLease`
+# `IndicesRetentionLease` [interface-IndicesRetentionLease]
 
 | Name | Type | Description |
 | - | - | - |

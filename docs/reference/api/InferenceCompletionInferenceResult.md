@@ -1,4 +1,4 @@
-## Interface `InferenceCompletionInferenceResult`
+# `InferenceCompletionInferenceResult` [interface-InferenceCompletionInferenceResult]
 
 | Name | Type | Description |
 | - | - | - |

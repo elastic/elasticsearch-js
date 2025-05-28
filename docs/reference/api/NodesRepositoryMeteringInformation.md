@@ -1,4 +1,4 @@
-## Interface `NodesRepositoryMeteringInformation`
+# `NodesRepositoryMeteringInformation` [interface-NodesRepositoryMeteringInformation]
 
 | Name | Type | Description |
 | - | - | - |

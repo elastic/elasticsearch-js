@@ -1,4 +1,4 @@
-## Interface `MlDataframeAnalysis`
+# `MlDataframeAnalysis` [interface-MlDataframeAnalysis]
 
 | Name | Type | Description |
 | - | - | - |

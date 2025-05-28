@@ -1,4 +1,4 @@
-## Interface `MlDetector`
+# `MlDetector` [interface-MlDetector]
 
 | Name | Type | Description |
 | - | - | - |

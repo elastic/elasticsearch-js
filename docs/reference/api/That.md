@@ -1,4 +1,4 @@
-## Interface `That`
+# `That` [interface-That]
 
 | Name | Type | Description |
 | - | - | - |

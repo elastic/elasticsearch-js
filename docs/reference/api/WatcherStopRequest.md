@@ -1,4 +1,4 @@
-## Interface `WatcherStopRequest`
+# `WatcherStopRequest` [interface-WatcherStopRequest]
 
 | Name | Type | Description |
 | - | - | - |

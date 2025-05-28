@@ -1,4 +1,4 @@
-## Interface `CcrFollowInfoFollowerIndex`
+# `CcrFollowInfoFollowerIndex` [interface-CcrFollowInfoFollowerIndex]
 
 | Name | Type | Description |
 | - | - | - |

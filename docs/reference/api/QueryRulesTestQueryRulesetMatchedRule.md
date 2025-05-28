@@ -1,4 +1,4 @@
-## Interface `QueryRulesTestQueryRulesetMatchedRule`
+# `QueryRulesTestQueryRulesetMatchedRule` [interface-QueryRulesTestQueryRulesetMatchedRule]
 
 | Name | Type | Description |
 | - | - | - |

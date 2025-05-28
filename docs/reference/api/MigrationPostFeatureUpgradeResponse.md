@@ -1,4 +1,4 @@
-## Interface `MigrationPostFeatureUpgradeResponse`
+# `MigrationPostFeatureUpgradeResponse` [interface-MigrationPostFeatureUpgradeResponse]
 
 | Name | Type | Description |
 | - | - | - |

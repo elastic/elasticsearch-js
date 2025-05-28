@@ -1,4 +1,4 @@
-## Interface `SecurityGetPrivilegesRequest`
+# `SecurityGetPrivilegesRequest` [interface-SecurityGetPrivilegesRequest]
 
 | Name | Type | Description |
 | - | - | - |

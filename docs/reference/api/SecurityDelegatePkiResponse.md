@@ -1,4 +1,4 @@
-## Interface `SecurityDelegatePkiResponse`
+# `SecurityDelegatePkiResponse` [interface-SecurityDelegatePkiResponse]
 
 | Name | Type | Description |
 | - | - | - |

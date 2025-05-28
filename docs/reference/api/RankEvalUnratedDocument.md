@@ -1,4 +1,4 @@
-## Interface `RankEvalUnratedDocument`
+# `RankEvalUnratedDocument` [interface-RankEvalUnratedDocument]
 
 | Name | Type | Description |
 | - | - | - |

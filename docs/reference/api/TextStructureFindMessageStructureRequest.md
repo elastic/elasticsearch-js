@@ -1,4 +1,4 @@
-## Interface `TextStructureFindMessageStructureRequest`
+# `TextStructureFindMessageStructureRequest` [interface-TextStructureFindMessageStructureRequest]
 
 | Name | Type | Description |
 | - | - | - |

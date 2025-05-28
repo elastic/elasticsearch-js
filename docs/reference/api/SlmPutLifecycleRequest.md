@@ -1,4 +1,4 @@
-## Interface `SlmPutLifecycleRequest`
+# `SlmPutLifecycleRequest` [interface-SlmPutLifecycleRequest]
 
 | Name | Type | Description |
 | - | - | - |

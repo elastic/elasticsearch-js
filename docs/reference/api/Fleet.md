@@ -1,19 +1,19 @@
-## `Fleet`
+# `Fleet` [class-Fleet]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Fleet(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Fleet]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Fleet]
 
 | Name | Signature | Description |
 | - | - | - |

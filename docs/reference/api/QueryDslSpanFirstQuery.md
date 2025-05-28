@@ -1,4 +1,4 @@
-## Interface `QueryDslSpanFirstQuery`
+# `QueryDslSpanFirstQuery` [interface-QueryDslSpanFirstQuery]
 
 | Name | Type | Description |
 | - | - | - |

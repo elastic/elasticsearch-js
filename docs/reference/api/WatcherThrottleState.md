@@ -1,4 +1,4 @@
-## Interface `WatcherThrottleState`
+# `WatcherThrottleState` [interface-WatcherThrottleState]
 
 | Name | Type | Description |
 | - | - | - |

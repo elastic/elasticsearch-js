@@ -1,4 +1,4 @@
-## Interface `XpackUsageWatcherWatchTriggerSchedule`
+# `XpackUsageWatcherWatchTriggerSchedule` [interface-XpackUsageWatcherWatchTriggerSchedule]
 
 | Name | Type | Description |
 | - | - | - |

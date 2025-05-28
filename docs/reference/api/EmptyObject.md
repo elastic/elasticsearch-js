@@ -1,4 +1,4 @@
-## Interface `EmptyObject`
+# `EmptyObject` [interface-EmptyObject]
 
 | Name | Type | Description |
 | - | - | - |

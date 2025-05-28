@@ -1,4 +1,4 @@
-## Interface `SecuritySamlLogoutResponse`
+# `SecuritySamlLogoutResponse` [interface-SecuritySamlLogoutResponse]
 
 | Name | Type | Description |
 | - | - | - |

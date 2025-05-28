@@ -1,4 +1,4 @@
-## Interface `SqlColumn`
+# `SqlColumn` [interface-SqlColumn]
 
 | Name | Type | Description |
 | - | - | - |

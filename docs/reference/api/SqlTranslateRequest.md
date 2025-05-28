@@ -1,4 +1,4 @@
-## Interface `SqlTranslateRequest`
+# `SqlTranslateRequest` [interface-SqlTranslateRequest]
 
 | Name | Type | Description |
 | - | - | - |

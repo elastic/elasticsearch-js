@@ -1,4 +1,4 @@
-## Interface `SnapshotInfoFeatureState`
+# `SnapshotInfoFeatureState` [interface-SnapshotInfoFeatureState]
 
 | Name | Type | Description |
 | - | - | - |

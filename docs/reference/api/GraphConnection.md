@@ -1,4 +1,4 @@
-## Interface `GraphConnection`
+# `GraphConnection` [interface-GraphConnection]
 
 | Name | Type | Description |
 | - | - | - |

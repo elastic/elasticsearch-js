@@ -1,4 +1,4 @@
-## Interface `MlModelPlotConfig`
+# `MlModelPlotConfig` [interface-MlModelPlotConfig]
 
 | Name | Type | Description |
 | - | - | - |

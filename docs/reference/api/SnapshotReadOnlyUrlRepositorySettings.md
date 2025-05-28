@@ -1,4 +1,4 @@
-## Interface `SnapshotReadOnlyUrlRepositorySettings`
+# `SnapshotReadOnlyUrlRepositorySettings` [interface-SnapshotReadOnlyUrlRepositorySettings]
 
 | Name | Type | Description |
 | - | - | - |

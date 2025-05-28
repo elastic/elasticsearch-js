@@ -1,4 +1,4 @@
-## Interface `MlDeleteForecastRequest`
+# `MlDeleteForecastRequest` [interface-MlDeleteForecastRequest]
 
 | Name | Type | Description |
 | - | - | - |

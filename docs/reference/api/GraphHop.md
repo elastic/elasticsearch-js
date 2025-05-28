@@ -1,4 +1,4 @@
-## Interface `GraphHop`
+# `GraphHop` [interface-GraphHop]
 
 | Name | Type | Description |
 | - | - | - |

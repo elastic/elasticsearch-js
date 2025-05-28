@@ -1,4 +1,4 @@
-## Interface `ConnectorSyncJobPostRequest`
+# `ConnectorSyncJobPostRequest` [interface-ConnectorSyncJobPostRequest]
 
 | Name | Type | Description |
 | - | - | - |

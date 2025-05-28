@@ -1,4 +1,4 @@
-## Interface `MlCommonTokenizationConfig`
+# `MlCommonTokenizationConfig` [interface-MlCommonTokenizationConfig]
 
 | Name | Type | Description |
 | - | - | - |

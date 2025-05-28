@@ -1,4 +1,4 @@
-## Interface `SecurityRoleTemplateScript`
+# `SecurityRoleTemplateScript` [interface-SecurityRoleTemplateScript]
 
 | Name | Type | Description |
 | - | - | - |

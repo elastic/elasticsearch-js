@@ -1,4 +1,4 @@
-## Interface `AggregationsCompositeBucketKeys`
+# `AggregationsCompositeBucketKeys` [interface-AggregationsCompositeBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

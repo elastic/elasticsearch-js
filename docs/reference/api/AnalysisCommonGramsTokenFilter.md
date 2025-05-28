@@ -1,4 +1,4 @@
-## Interface `AnalysisCommonGramsTokenFilter`
+# `AnalysisCommonGramsTokenFilter` [interface-AnalysisCommonGramsTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

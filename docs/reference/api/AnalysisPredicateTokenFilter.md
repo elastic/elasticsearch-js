@@ -1,4 +1,4 @@
-## Interface `AnalysisPredicateTokenFilter`
+# `AnalysisPredicateTokenFilter` [interface-AnalysisPredicateTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

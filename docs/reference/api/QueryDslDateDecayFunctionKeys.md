@@ -1,4 +1,4 @@
-## Interface `QueryDslDateDecayFunctionKeys`
+# `QueryDslDateDecayFunctionKeys` [interface-QueryDslDateDecayFunctionKeys]
 
 | Name | Type | Description |
 | - | - | - |

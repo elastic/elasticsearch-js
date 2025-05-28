@@ -1,4 +1,4 @@
-## Interface `MlHyperparameter`
+# `MlHyperparameter` [interface-MlHyperparameter]
 
 | Name | Type | Description |
 | - | - | - |

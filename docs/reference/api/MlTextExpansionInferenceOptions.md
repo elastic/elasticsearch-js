@@ -1,4 +1,4 @@
-## Interface `MlTextExpansionInferenceOptions`
+# `MlTextExpansionInferenceOptions` [interface-MlTextExpansionInferenceOptions]
 
 | Name | Type | Description |
 | - | - | - |

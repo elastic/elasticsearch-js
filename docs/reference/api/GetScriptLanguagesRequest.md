@@ -1,4 +1,4 @@
-## Interface `GetScriptLanguagesRequest`
+# `GetScriptLanguagesRequest` [interface-GetScriptLanguagesRequest]
 
 | Name | Type | Description |
 | - | - | - |

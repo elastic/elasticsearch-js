@@ -1,4 +1,4 @@
-## Interface `SearchShardsShardStoreIndex`
+# `SearchShardsShardStoreIndex` [interface-SearchShardsShardStoreIndex]
 
 | Name | Type | Description |
 | - | - | - |

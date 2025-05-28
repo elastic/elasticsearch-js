@@ -1,4 +1,4 @@
-## Interface `CatComponentTemplatesComponentTemplate`
+# `CatComponentTemplatesComponentTemplate` [interface-CatComponentTemplatesComponentTemplate]
 
 | Name | Type | Description |
 | - | - | - |

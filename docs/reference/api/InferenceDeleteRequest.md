@@ -1,4 +1,4 @@
-## Interface `InferenceDeleteRequest`
+# `InferenceDeleteRequest` [interface-InferenceDeleteRequest]
 
 | Name | Type | Description |
 | - | - | - |

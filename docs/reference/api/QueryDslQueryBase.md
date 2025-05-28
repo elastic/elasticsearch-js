@@ -1,4 +1,4 @@
-## Interface `QueryDslQueryBase`
+# `QueryDslQueryBase` [interface-QueryDslQueryBase]
 
 | Name | Type | Description |
 | - | - | - |

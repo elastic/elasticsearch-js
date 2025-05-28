@@ -1,4 +1,4 @@
-## Interface `IngestSplitProcessor`
+# `IngestSplitProcessor` [interface-IngestSplitProcessor]
 
 | Name | Type | Description |
 | - | - | - |

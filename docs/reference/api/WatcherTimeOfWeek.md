@@ -1,4 +1,4 @@
-## Interface `WatcherTimeOfWeek`
+# `WatcherTimeOfWeek` [interface-WatcherTimeOfWeek]
 
 | Name | Type | Description |
 | - | - | - |

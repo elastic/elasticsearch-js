@@ -1,4 +1,4 @@
-## Interface `MlPostDataResponse`
+# `MlPostDataResponse` [interface-MlPostDataResponse]
 
 | Name | Type | Description |
 | - | - | - |

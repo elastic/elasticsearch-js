@@ -1,4 +1,4 @@
-## Interface `SpecUtilsCommonCatQueryParameters`
+# `SpecUtilsCommonCatQueryParameters` [interface-SpecUtilsCommonCatQueryParameters]
 
 | Name | Type | Description |
 | - | - | - |

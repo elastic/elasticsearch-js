@@ -1,4 +1,4 @@
-## Interface `MlGetModelSnapshotUpgradeStatsRequest`
+# `MlGetModelSnapshotUpgradeStatsRequest` [interface-MlGetModelSnapshotUpgradeStatsRequest]
 
 | Name | Type | Description |
 | - | - | - |

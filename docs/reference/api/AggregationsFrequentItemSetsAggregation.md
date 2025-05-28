@@ -1,4 +1,4 @@
-## Interface `AggregationsFrequentItemSetsAggregation`
+# `AggregationsFrequentItemSetsAggregation` [interface-AggregationsFrequentItemSetsAggregation]
 
 | Name | Type | Description |
 | - | - | - |

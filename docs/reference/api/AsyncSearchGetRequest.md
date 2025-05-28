@@ -1,4 +1,4 @@
-## Interface `AsyncSearchGetRequest`
+# `AsyncSearchGetRequest` [interface-AsyncSearchGetRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `KnnRetriever`
+# `KnnRetriever` [interface-KnnRetriever]
 
 | Name | Type | Description |
 | - | - | - |

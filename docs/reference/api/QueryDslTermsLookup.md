@@ -1,4 +1,4 @@
-## Interface `QueryDslTermsLookup`
+# `QueryDslTermsLookup` [interface-QueryDslTermsLookup]
 
 | Name | Type | Description |
 | - | - | - |

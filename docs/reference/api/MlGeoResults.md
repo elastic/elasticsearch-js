@@ -1,4 +1,4 @@
-## Interface `MlGeoResults`
+# `MlGeoResults` [interface-MlGeoResults]
 
 | Name | Type | Description |
 | - | - | - |

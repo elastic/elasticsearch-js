@@ -1,4 +1,4 @@
-## Interface `InferenceJinaAIServiceSettings`
+# `InferenceJinaAIServiceSettings` [interface-InferenceJinaAIServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

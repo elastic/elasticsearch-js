@@ -1,4 +1,4 @@
-## Interface `WatcherHttpEmailAttachment`
+# `WatcherHttpEmailAttachment` [interface-WatcherHttpEmailAttachment]
 
 | Name | Type | Description |
 | - | - | - |

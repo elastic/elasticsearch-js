@@ -1,4 +1,4 @@
-## Interface `QueryDslTokenPruningConfig`
+# `QueryDslTokenPruningConfig` [interface-QueryDslTokenPruningConfig]
 
 | Name | Type | Description |
 | - | - | - |

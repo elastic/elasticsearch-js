@@ -1,4 +1,4 @@
-## Interface `IndicesIndexTemplateDataStreamConfiguration`
+# `IndicesIndexTemplateDataStreamConfiguration` [interface-IndicesIndexTemplateDataStreamConfiguration]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsSumAggregation`
+# `AggregationsSumAggregation` [interface-AggregationsSumAggregation]
 
 | Name | Type | Description |
 | - | - | - |

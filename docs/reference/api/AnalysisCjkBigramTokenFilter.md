@@ -1,4 +1,4 @@
-## Interface `AnalysisCjkBigramTokenFilter`
+# `AnalysisCjkBigramTokenFilter` [interface-AnalysisCjkBigramTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

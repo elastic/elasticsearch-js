@@ -1,4 +1,4 @@
-## Interface `MappingDataStreamTimestamp`
+# `MappingDataStreamTimestamp` [interface-MappingDataStreamTimestamp]
 
 | Name | Type | Description |
 | - | - | - |

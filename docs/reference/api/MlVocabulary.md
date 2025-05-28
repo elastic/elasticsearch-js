@@ -1,4 +1,4 @@
-## Interface `MlVocabulary`
+# `MlVocabulary` [interface-MlVocabulary]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MappingTextProperty`
+# `MappingTextProperty` [interface-MappingTextProperty]
 
 | Name | Type | Description |
 | - | - | - |

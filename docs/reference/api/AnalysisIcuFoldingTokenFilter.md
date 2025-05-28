@@ -1,4 +1,4 @@
-## Interface `AnalysisIcuFoldingTokenFilter`
+# `AnalysisIcuFoldingTokenFilter` [interface-AnalysisIcuFoldingTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesDeleteRequest`
+# `IndicesDeleteRequest` [interface-IndicesDeleteRequest]
 
 | Name | Type | Description |
 | - | - | - |

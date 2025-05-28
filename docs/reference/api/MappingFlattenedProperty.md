@@ -1,4 +1,4 @@
-## Interface `MappingFlattenedProperty`
+# `MappingFlattenedProperty` [interface-MappingFlattenedProperty]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SnapshotRepositoryAnalyzeSnapshotNodeInfo`
+# `SnapshotRepositoryAnalyzeSnapshotNodeInfo` [interface-SnapshotRepositoryAnalyzeSnapshotNodeInfo]
 
 | Name | Type | Description |
 | - | - | - |

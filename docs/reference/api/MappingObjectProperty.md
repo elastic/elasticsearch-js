@@ -1,4 +1,4 @@
-## Interface `MappingObjectProperty`
+# `MappingObjectProperty` [interface-MappingObjectProperty]
 
 | Name | Type | Description |
 | - | - | - |

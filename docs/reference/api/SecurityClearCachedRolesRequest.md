@@ -1,4 +1,4 @@
-## Interface `SecurityClearCachedRolesRequest`
+# `SecurityClearCachedRolesRequest` [interface-SecurityClearCachedRolesRequest]
 
 | Name | Type | Description |
 | - | - | - |

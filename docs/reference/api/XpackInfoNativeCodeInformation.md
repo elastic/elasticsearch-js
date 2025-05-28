@@ -1,4 +1,4 @@
-## Interface `XpackInfoNativeCodeInformation`
+# `XpackInfoNativeCodeInformation` [interface-XpackInfoNativeCodeInformation]
 
 | Name | Type | Description |
 | - | - | - |

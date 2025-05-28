@@ -1,4 +1,4 @@
-## Interface `MlDataframeAnalyticsSummary`
+# `MlDataframeAnalyticsSummary` [interface-MlDataframeAnalyticsSummary]
 
 | Name | Type | Description |
 | - | - | - |

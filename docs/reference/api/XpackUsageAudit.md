@@ -1,4 +1,4 @@
-## Interface `XpackUsageAudit`
+# `XpackUsageAudit` [interface-XpackUsageAudit]
 
 | Name | Type | Description |
 | - | - | - |

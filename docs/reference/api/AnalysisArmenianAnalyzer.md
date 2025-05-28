@@ -1,4 +1,4 @@
-## Interface `AnalysisArmenianAnalyzer`
+# `AnalysisArmenianAnalyzer` [interface-AnalysisArmenianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

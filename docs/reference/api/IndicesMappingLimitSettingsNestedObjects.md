@@ -1,4 +1,4 @@
-## Interface `IndicesMappingLimitSettingsNestedObjects`
+# `IndicesMappingLimitSettingsNestedObjects` [interface-IndicesMappingLimitSettingsNestedObjects]
 
 | Name | Type | Description |
 | - | - | - |

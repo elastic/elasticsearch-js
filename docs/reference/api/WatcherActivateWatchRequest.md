@@ -1,4 +1,4 @@
-## Interface `WatcherActivateWatchRequest`
+# `WatcherActivateWatchRequest` [interface-WatcherActivateWatchRequest]
 
 | Name | Type | Description |
 | - | - | - |

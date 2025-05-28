@@ -1,4 +1,4 @@
-## Interface `MlModelPackageConfig`
+# `MlModelPackageConfig` [interface-MlModelPackageConfig]
 
 | Name | Type | Description |
 | - | - | - |

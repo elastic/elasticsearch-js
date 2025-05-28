@@ -1,4 +1,4 @@
-## Interface `QueryDslGeoPolygonQueryKeys`
+# `QueryDslGeoPolygonQueryKeys` [interface-QueryDslGeoPolygonQueryKeys]
 
 | Name | Type | Description |
 | - | - | - |

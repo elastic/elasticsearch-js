@@ -1,19 +1,19 @@
-## `Autoscaling`
+# `Autoscaling` [class-Autoscaling]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Autoscaling(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Autoscaling]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Autoscaling]
 
 | Name | Signature | Description |
 | - | - | - |

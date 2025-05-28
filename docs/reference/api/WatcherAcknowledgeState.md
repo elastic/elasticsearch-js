@@ -1,4 +1,4 @@
-## Interface `WatcherAcknowledgeState`
+# `WatcherAcknowledgeState` [interface-WatcherAcknowledgeState]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `BulkUpdateAction`
+# `BulkUpdateAction` [interface-BulkUpdateAction]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsInferenceAggregateKeys`
+# `AggregationsInferenceAggregateKeys` [interface-AggregationsInferenceAggregateKeys]
 
 | Name | Type | Description |
 | - | - | - |

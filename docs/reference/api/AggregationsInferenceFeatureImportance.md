@@ -1,4 +1,4 @@
-## Interface `AggregationsInferenceFeatureImportance`
+# `AggregationsInferenceFeatureImportance` [interface-AggregationsInferenceFeatureImportance]
 
 | Name | Type | Description |
 | - | - | - |

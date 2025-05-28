@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoSettingsTransportFeatures`
+# `NodesInfoNodeInfoSettingsTransportFeatures` [interface-NodesInfoNodeInfoSettingsTransportFeatures]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IlmPolicy`
+# `IlmPolicy` [interface-IlmPolicy]
 
 | Name | Type | Description |
 | - | - | - |

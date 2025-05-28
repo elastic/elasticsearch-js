@@ -1,4 +1,4 @@
-## Interface `NodesCgroupMemory`
+# `NodesCgroupMemory` [interface-NodesCgroupMemory]
 
 | Name | Type | Description |
 | - | - | - |

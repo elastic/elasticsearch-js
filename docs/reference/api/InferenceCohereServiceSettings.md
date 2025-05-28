@@ -1,4 +1,4 @@
-## Interface `InferenceCohereServiceSettings`
+# `InferenceCohereServiceSettings` [interface-InferenceCohereServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

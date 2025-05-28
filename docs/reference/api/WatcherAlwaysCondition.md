@@ -1,4 +1,4 @@
-## Interface `WatcherAlwaysCondition`
+# `WatcherAlwaysCondition` [interface-WatcherAlwaysCondition]
 
 | Name | Type | Description |
 | - | - | - |

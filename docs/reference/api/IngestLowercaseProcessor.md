@@ -1,4 +1,4 @@
-## Interface `IngestLowercaseProcessor`
+# `IngestLowercaseProcessor` [interface-IngestLowercaseProcessor]
 
 | Name | Type | Description |
 | - | - | - |

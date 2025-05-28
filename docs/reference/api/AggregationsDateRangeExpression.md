@@ -1,4 +1,4 @@
-## Interface `AggregationsDateRangeExpression`
+# `AggregationsDateRangeExpression` [interface-AggregationsDateRangeExpression]
 
 | Name | Type | Description |
 | - | - | - |

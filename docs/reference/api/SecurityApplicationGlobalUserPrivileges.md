@@ -1,4 +1,4 @@
-## Interface `SecurityApplicationGlobalUserPrivileges`
+# `SecurityApplicationGlobalUserPrivileges` [interface-SecurityApplicationGlobalUserPrivileges]
 
 | Name | Type | Description |
 | - | - | - |

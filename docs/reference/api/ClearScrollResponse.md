@@ -1,4 +1,4 @@
-## Interface `ClearScrollResponse`
+# `ClearScrollResponse` [interface-ClearScrollResponse]
 
 | Name | Type | Description |
 | - | - | - |

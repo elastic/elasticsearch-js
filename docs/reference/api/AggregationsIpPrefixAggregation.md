@@ -1,4 +1,4 @@
-## Interface `AggregationsIpPrefixAggregation`
+# `AggregationsIpPrefixAggregation` [interface-AggregationsIpPrefixAggregation]
 
 | Name | Type | Description |
 | - | - | - |

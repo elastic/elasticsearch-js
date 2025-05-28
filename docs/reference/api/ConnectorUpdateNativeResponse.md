@@ -1,4 +1,4 @@
-## Interface `ConnectorUpdateNativeResponse`
+# `ConnectorUpdateNativeResponse` [interface-ConnectorUpdateNativeResponse]
 
 | Name | Type | Description |
 | - | - | - |

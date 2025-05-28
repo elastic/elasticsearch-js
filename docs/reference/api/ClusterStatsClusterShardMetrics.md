@@ -1,4 +1,4 @@
-## Interface `ClusterStatsClusterShardMetrics`
+# `ClusterStatsClusterShardMetrics` [interface-ClusterStatsClusterShardMetrics]
 
 | Name | Type | Description |
 | - | - | - |

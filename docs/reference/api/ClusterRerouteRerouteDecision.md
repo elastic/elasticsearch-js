@@ -1,4 +1,4 @@
-## Interface `ClusterRerouteRerouteDecision`
+# `ClusterRerouteRerouteDecision` [interface-ClusterRerouteRerouteDecision]
 
 | Name | Type | Description |
 | - | - | - |

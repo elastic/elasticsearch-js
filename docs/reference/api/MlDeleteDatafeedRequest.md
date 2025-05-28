@@ -1,4 +1,4 @@
-## Interface `MlDeleteDatafeedRequest`
+# `MlDeleteDatafeedRequest` [interface-MlDeleteDatafeedRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MsearchHelperOptions`
+# `MsearchHelperOptions` [interface-MsearchHelperOptions]
 
 | Name | Type | Description |
 | - | - | - |

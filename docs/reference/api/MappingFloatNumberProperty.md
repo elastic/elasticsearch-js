@@ -1,4 +1,4 @@
-## Interface `MappingFloatNumberProperty`
+# `MappingFloatNumberProperty` [interface-MappingFloatNumberProperty]
 
 | Name | Type | Description |
 | - | - | - |

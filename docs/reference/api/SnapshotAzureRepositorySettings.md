@@ -1,4 +1,4 @@
-## Interface `SnapshotAzureRepositorySettings`
+# `SnapshotAzureRepositorySettings` [interface-SnapshotAzureRepositorySettings]
 
 | Name | Type | Description |
 | - | - | - |

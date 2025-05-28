@@ -1,4 +1,4 @@
-## Interface `AnalysisStandardTokenizer`
+# `AnalysisStandardTokenizer` [interface-AnalysisStandardTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

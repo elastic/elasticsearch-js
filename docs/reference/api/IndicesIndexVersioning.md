@@ -1,4 +1,4 @@
-## Interface `IndicesIndexVersioning`
+# `IndicesIndexVersioning` [interface-IndicesIndexVersioning]
 
 | Name | Type | Description |
 | - | - | - |

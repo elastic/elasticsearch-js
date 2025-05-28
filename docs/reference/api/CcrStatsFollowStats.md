@@ -1,4 +1,4 @@
-## Interface `CcrStatsFollowStats`
+# `CcrStatsFollowStats` [interface-CcrStatsFollowStats]
 
 | Name | Type | Description |
 | - | - | - |

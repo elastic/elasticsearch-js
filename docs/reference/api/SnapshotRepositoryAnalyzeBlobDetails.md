@@ -1,4 +1,4 @@
-## Interface `SnapshotRepositoryAnalyzeBlobDetails`
+# `SnapshotRepositoryAnalyzeBlobDetails` [interface-SnapshotRepositoryAnalyzeBlobDetails]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AnalysisRussianAnalyzer`
+# `AnalysisRussianAnalyzer` [interface-AnalysisRussianAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

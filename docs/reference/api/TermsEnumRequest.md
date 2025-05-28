@@ -1,4 +1,4 @@
-## Interface `TermsEnumRequest`
+# `TermsEnumRequest` [interface-TermsEnumRequest]
 
 | Name | Type | Description |
 | - | - | - |

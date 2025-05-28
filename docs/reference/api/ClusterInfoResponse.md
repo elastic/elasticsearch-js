@@ -1,4 +1,4 @@
-## Interface `ClusterInfoResponse`
+# `ClusterInfoResponse` [interface-ClusterInfoResponse]
 
 | Name | Type | Description |
 | - | - | - |

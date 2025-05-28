@@ -1,4 +1,4 @@
-## Interface `WatcherSlackAttachment`
+# `WatcherSlackAttachment` [interface-WatcherSlackAttachment]
 
 | Name | Type | Description |
 | - | - | - |

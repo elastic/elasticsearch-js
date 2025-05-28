@@ -1,4 +1,4 @@
-## Interface `WatcherTimeOfYear`
+# `WatcherTimeOfYear` [interface-WatcherTimeOfYear]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `InferenceAnthropicServiceSettings`
+# `InferenceAnthropicServiceSettings` [interface-InferenceAnthropicServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

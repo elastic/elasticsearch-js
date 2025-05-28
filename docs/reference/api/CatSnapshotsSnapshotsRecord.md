@@ -1,4 +1,4 @@
-## Interface `CatSnapshotsSnapshotsRecord`
+# `CatSnapshotsSnapshotsRecord` [interface-CatSnapshotsSnapshotsRecord]
 
 | Name | Type | Description |
 | - | - | - |

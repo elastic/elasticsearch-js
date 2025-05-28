@@ -1,4 +1,4 @@
-## Interface `AggregationsRangeBucketKeys`
+# `AggregationsRangeBucketKeys` [interface-AggregationsRangeBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `NodesHotThreadsRequest`
+# `NodesHotThreadsRequest` [interface-NodesHotThreadsRequest]
 
 | Name | Type | Description |
 | - | - | - |

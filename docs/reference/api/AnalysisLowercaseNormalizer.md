@@ -1,4 +1,4 @@
-## Interface `AnalysisLowercaseNormalizer`
+# `AnalysisLowercaseNormalizer` [interface-AnalysisLowercaseNormalizer]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `RollupStopJobResponse`
+# `RollupStopJobResponse` [interface-RollupStopJobResponse]
 
 | Name | Type | Description |
 | - | - | - |

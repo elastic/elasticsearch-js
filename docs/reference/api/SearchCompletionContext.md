@@ -1,4 +1,4 @@
-## Interface `SearchCompletionContext`
+# `SearchCompletionContext` [interface-SearchCompletionContext]
 
 | Name | Type | Description |
 | - | - | - |

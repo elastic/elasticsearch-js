@@ -1,4 +1,4 @@
-## Interface `CatHelpRequest`
+# `CatHelpRequest` [interface-CatHelpRequest]
 
 | Name | Type | Description |
 | - | - | - |

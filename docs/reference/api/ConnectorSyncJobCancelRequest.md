@@ -1,4 +1,4 @@
-## Interface `ConnectorSyncJobCancelRequest`
+# `ConnectorSyncJobCancelRequest` [interface-ConnectorSyncJobCancelRequest]
 
 | Name | Type | Description |
 | - | - | - |

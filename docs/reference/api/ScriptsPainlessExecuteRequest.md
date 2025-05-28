@@ -1,4 +1,4 @@
-## Interface `ScriptsPainlessExecuteRequest`
+# `ScriptsPainlessExecuteRequest` [interface-ScriptsPainlessExecuteRequest]
 
 | Name | Type | Description |
 | - | - | - |

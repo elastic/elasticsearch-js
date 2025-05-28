@@ -1,4 +1,4 @@
-## Interface `AggregationsScriptedMetricAggregate`
+# `AggregationsScriptedMetricAggregate` [interface-AggregationsScriptedMetricAggregate]
 
 | Name | Type | Description |
 | - | - | - |

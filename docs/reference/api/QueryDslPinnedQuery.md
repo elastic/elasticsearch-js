@@ -1,4 +1,4 @@
-## Interface `QueryDslPinnedQuery`
+# `QueryDslPinnedQuery` [interface-QueryDslPinnedQuery]
 
 | Name | Type | Description |
 | - | - | - |

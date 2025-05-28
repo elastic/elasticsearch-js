@@ -1,4 +1,4 @@
-## Interface `IndexRequest`
+# `IndexRequest` [interface-IndexRequest]
 
 | Name | Type | Description |
 | - | - | - |

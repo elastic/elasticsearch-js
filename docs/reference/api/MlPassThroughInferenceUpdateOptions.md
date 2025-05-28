@@ -1,4 +1,4 @@
-## Interface `MlPassThroughInferenceUpdateOptions`
+# `MlPassThroughInferenceUpdateOptions` [interface-MlPassThroughInferenceUpdateOptions]
 
 | Name | Type | Description |
 | - | - | - |

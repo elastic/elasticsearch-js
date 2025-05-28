@@ -1,4 +1,4 @@
-## Interface `IndicesFlushRequest`
+# `IndicesFlushRequest` [interface-IndicesFlushRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `InferenceDeleteInferenceEndpointResult`
+# `InferenceDeleteInferenceEndpointResult` [interface-InferenceDeleteInferenceEndpointResult]
 
 | Name | Type | Description |
 | - | - | - |

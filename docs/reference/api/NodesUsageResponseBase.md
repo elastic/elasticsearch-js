@@ -1,4 +1,4 @@
-## Interface `NodesUsageResponseBase`
+# `NodesUsageResponseBase` [interface-NodesUsageResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

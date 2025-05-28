@@ -1,4 +1,4 @@
-## Interface `IndicesCreateResponse`
+# `IndicesCreateResponse` [interface-IndicesCreateResponse]
 
 | Name | Type | Description |
 | - | - | - |

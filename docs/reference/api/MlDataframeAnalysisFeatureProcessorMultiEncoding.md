@@ -1,4 +1,4 @@
-## Interface `MlDataframeAnalysisFeatureProcessorMultiEncoding`
+# `MlDataframeAnalysisFeatureProcessorMultiEncoding` [interface-MlDataframeAnalysisFeatureProcessorMultiEncoding]
 
 | Name | Type | Description |
 | - | - | - |

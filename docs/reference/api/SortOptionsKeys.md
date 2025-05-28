@@ -1,4 +1,4 @@
-## Interface `SortOptionsKeys`
+# `SortOptionsKeys` [interface-SortOptionsKeys]
 
 | Name | Type | Description |
 | - | - | - |

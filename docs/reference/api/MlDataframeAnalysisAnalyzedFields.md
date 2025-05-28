@@ -1,4 +1,4 @@
-## Interface `MlDataframeAnalysisAnalyzedFields`
+# `MlDataframeAnalysisAnalyzedFields` [interface-MlDataframeAnalysisAnalyzedFields]
 
 | Name | Type | Description |
 | - | - | - |

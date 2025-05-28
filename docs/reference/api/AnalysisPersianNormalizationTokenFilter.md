@@ -1,4 +1,4 @@
-## Interface `AnalysisPersianNormalizationTokenFilter`
+# `AnalysisPersianNormalizationTokenFilter` [interface-AnalysisPersianNormalizationTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

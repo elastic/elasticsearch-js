@@ -1,4 +1,4 @@
-## Interface `MtermvectorsTermVectorsResult`
+# `MtermvectorsTermVectorsResult` [interface-MtermvectorsTermVectorsResult]
 
 | Name | Type | Description |
 | - | - | - |

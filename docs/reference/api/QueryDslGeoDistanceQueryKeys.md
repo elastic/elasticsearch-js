@@ -1,4 +1,4 @@
-## Interface `QueryDslGeoDistanceQueryKeys`
+# `QueryDslGeoDistanceQueryKeys` [interface-QueryDslGeoDistanceQueryKeys]
 
 | Name | Type | Description |
 | - | - | - |

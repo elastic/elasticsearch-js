@@ -1,4 +1,4 @@
-## Interface `ClusterAllocationExplainAllocationDecision`
+# `ClusterAllocationExplainAllocationDecision` [interface-ClusterAllocationExplainAllocationDecision]
 
 | Name | Type | Description |
 | - | - | - |

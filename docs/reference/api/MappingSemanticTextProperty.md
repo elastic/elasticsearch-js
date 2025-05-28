@@ -1,4 +1,4 @@
-## Interface `MappingSemanticTextProperty`
+# `MappingSemanticTextProperty` [interface-MappingSemanticTextProperty]
 
 | Name | Type | Description |
 | - | - | - |

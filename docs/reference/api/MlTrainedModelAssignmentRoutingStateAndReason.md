@@ -1,4 +1,4 @@
-## Interface `MlTrainedModelAssignmentRoutingStateAndReason`
+# `MlTrainedModelAssignmentRoutingStateAndReason` [interface-MlTrainedModelAssignmentRoutingStateAndReason]
 
 | Name | Type | Description |
 | - | - | - |

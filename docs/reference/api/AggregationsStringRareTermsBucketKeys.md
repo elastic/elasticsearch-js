@@ -1,4 +1,4 @@
-## Interface `AggregationsStringRareTermsBucketKeys`
+# `AggregationsStringRareTermsBucketKeys` [interface-AggregationsStringRareTermsBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

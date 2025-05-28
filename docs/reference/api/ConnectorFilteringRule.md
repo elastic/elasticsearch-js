@@ -1,4 +1,4 @@
-## Interface `ConnectorFilteringRule`
+# `ConnectorFilteringRule` [interface-ConnectorFilteringRule]
 
 | Name | Type | Description |
 | - | - | - |

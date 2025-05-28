@@ -1,4 +1,4 @@
-## Interface `SnapshotRepositorySettingsBase`
+# `SnapshotRepositorySettingsBase` [interface-SnapshotRepositorySettingsBase]
 
 | Name | Type | Description |
 | - | - | - |

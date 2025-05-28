@@ -1,4 +1,4 @@
-## Interface `SecurityClearApiKeyCacheRequest`
+# `SecurityClearApiKeyCacheRequest` [interface-SecurityClearApiKeyCacheRequest]
 
 | Name | Type | Description |
 | - | - | - |

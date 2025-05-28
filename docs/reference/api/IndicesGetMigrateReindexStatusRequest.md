@@ -1,4 +1,4 @@
-## Interface `IndicesGetMigrateReindexStatusRequest`
+# `IndicesGetMigrateReindexStatusRequest` [interface-IndicesGetMigrateReindexStatusRequest]
 
 | Name | Type | Description |
 | - | - | - |

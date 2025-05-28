@@ -1,4 +1,4 @@
-## Interface `InferencePutRequest`
+# `InferencePutRequest` [interface-InferencePutRequest]
 
 | Name | Type | Description |
 | - | - | - |

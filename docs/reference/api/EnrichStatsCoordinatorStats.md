@@ -1,4 +1,4 @@
-## Interface `EnrichStatsCoordinatorStats`
+# `EnrichStatsCoordinatorStats` [interface-EnrichStatsCoordinatorStats]
 
 | Name | Type | Description |
 | - | - | - |

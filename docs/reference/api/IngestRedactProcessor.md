@@ -1,4 +1,4 @@
-## Interface `IngestRedactProcessor`
+# `IngestRedactProcessor` [interface-IngestRedactProcessor]
 
 | Name | Type | Description |
 | - | - | - |

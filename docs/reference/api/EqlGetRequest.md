@@ -1,4 +1,4 @@
-## Interface `EqlGetRequest`
+# `EqlGetRequest` [interface-EqlGetRequest]
 
 | Name | Type | Description |
 | - | - | - |

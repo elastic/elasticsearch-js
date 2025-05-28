@@ -1,4 +1,4 @@
-## Interface `AggregationsBucketSortAggregation`
+# `AggregationsBucketSortAggregation` [interface-AggregationsBucketSortAggregation]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AnalysisWhitespaceAnalyzer`
+# `AnalysisWhitespaceAnalyzer` [interface-AnalysisWhitespaceAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

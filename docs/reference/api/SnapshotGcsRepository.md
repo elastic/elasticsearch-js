@@ -1,4 +1,4 @@
-## Interface `SnapshotGcsRepository`
+# `SnapshotGcsRepository` [interface-SnapshotGcsRepository]
 
 | Name | Type | Description |
 | - | - | - |

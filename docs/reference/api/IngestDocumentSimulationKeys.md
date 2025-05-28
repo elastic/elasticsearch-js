@@ -1,4 +1,4 @@
-## Interface `IngestDocumentSimulationKeys`
+# `IngestDocumentSimulationKeys` [interface-IngestDocumentSimulationKeys]
 
 | Name | Type | Description |
 | - | - | - |

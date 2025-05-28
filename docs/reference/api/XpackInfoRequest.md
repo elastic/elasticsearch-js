@@ -1,4 +1,4 @@
-## Interface `XpackInfoRequest`
+# `XpackInfoRequest` [interface-XpackInfoRequest]
 
 | Name | Type | Description |
 | - | - | - |

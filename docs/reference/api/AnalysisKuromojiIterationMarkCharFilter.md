@@ -1,4 +1,4 @@
-## Interface `AnalysisKuromojiIterationMarkCharFilter`
+# `AnalysisKuromojiIterationMarkCharFilter` [interface-AnalysisKuromojiIterationMarkCharFilter]
 
 | Name | Type | Description |
 | - | - | - |

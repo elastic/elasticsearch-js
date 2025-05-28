@@ -1,4 +1,4 @@
-## Interface `SearchHighlight`
+# `SearchHighlight` [interface-SearchHighlight]
 
 | Name | Type | Description |
 | - | - | - |

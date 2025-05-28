@@ -1,4 +1,4 @@
-## Interface `QueryDslExistsQuery`
+# `QueryDslExistsQuery` [interface-QueryDslExistsQuery]
 
 | Name | Type | Description |
 | - | - | - |

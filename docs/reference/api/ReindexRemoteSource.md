@@ -1,4 +1,4 @@
-## Interface `ReindexRemoteSource`
+# `ReindexRemoteSource` [interface-ReindexRemoteSource]
 
 | Name | Type | Description |
 | - | - | - |

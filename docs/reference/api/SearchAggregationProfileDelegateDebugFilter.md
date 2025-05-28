@@ -1,4 +1,4 @@
-## Interface `SearchAggregationProfileDelegateDebugFilter`
+# `SearchAggregationProfileDelegateDebugFilter` [interface-SearchAggregationProfileDelegateDebugFilter]
 
 | Name | Type | Description |
 | - | - | - |

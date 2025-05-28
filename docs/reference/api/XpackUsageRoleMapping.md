@@ -1,4 +1,4 @@
-## Interface `XpackUsageRoleMapping`
+# `XpackUsageRoleMapping` [interface-XpackUsageRoleMapping]
 
 | Name | Type | Description |
 | - | - | - |

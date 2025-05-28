@@ -1,4 +1,4 @@
-## Interface `ConnectorUpdateConfigurationRequest`
+# `ConnectorUpdateConfigurationRequest` [interface-ConnectorUpdateConfigurationRequest]
 
 | Name | Type | Description |
 | - | - | - |

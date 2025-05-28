@@ -1,4 +1,4 @@
-## Interface `MlPutTrainedModelVocabularyRequest`
+# `MlPutTrainedModelVocabularyRequest` [interface-MlPutTrainedModelVocabularyRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlModelSizeStats`
+# `MlModelSizeStats` [interface-MlModelSizeStats]
 
 | Name | Type | Description |
 | - | - | - |

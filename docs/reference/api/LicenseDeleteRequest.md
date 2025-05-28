@@ -1,4 +1,4 @@
-## Interface `LicenseDeleteRequest`
+# `LicenseDeleteRequest` [interface-LicenseDeleteRequest]
 
 | Name | Type | Description |
 | - | - | - |

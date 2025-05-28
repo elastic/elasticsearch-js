@@ -1,4 +1,4 @@
-## Interface `SecurityUpdateCrossClusterApiKeyResponse`
+# `SecurityUpdateCrossClusterApiKeyResponse` [interface-SecurityUpdateCrossClusterApiKeyResponse]
 
 | Name | Type | Description |
 | - | - | - |

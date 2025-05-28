@@ -1,4 +1,4 @@
-## Interface `AnalysisWordDelimiterTokenFilter`
+# `AnalysisWordDelimiterTokenFilter` [interface-AnalysisWordDelimiterTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

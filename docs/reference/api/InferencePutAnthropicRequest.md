@@ -1,4 +1,4 @@
-## Interface `InferencePutAnthropicRequest`
+# `InferencePutAnthropicRequest` [interface-InferencePutAnthropicRequest]
 
 | Name | Type | Description |
 | - | - | - |

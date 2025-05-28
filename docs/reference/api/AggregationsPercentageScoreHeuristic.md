@@ -1,4 +1,4 @@
-## Interface `AggregationsPercentageScoreHeuristic`
+# `AggregationsPercentageScoreHeuristic` [interface-AggregationsPercentageScoreHeuristic]
 
 | Name | Type | Description |
 | - | - | - |

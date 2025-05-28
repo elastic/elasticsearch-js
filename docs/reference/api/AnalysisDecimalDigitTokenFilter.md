@@ -1,4 +1,4 @@
-## Interface `AnalysisDecimalDigitTokenFilter`
+# `AnalysisDecimalDigitTokenFilter` [interface-AnalysisDecimalDigitTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

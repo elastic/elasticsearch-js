@@ -1,4 +1,4 @@
-## Interface `InferenceElasticsearchTaskSettings`
+# `InferenceElasticsearchTaskSettings` [interface-InferenceElasticsearchTaskSettings]
 
 | Name | Type | Description |
 | - | - | - |

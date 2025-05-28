@@ -1,4 +1,4 @@
-## Interface `RollupGetRollupIndexCapsRollupJobSummary`
+# `RollupGetRollupIndexCapsRollupJobSummary` [interface-RollupGetRollupIndexCapsRollupJobSummary]
 
 | Name | Type | Description |
 | - | - | - |

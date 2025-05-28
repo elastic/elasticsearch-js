@@ -1,4 +1,4 @@
-## Interface `ClusterStatsClusterNodes`
+# `ClusterStatsClusterNodes` [interface-ClusterStatsClusterNodes]
 
 | Name | Type | Description |
 | - | - | - |

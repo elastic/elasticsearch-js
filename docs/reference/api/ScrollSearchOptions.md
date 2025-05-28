@@ -1,4 +1,4 @@
-## Interface `ScrollSearchOptions`
+# `ScrollSearchOptions` [interface-ScrollSearchOptions]
 
 | Name | Type | Description |
 | - | - | - |

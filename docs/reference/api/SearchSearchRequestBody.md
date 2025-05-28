@@ -1,4 +1,4 @@
-## Interface `SearchSearchRequestBody`
+# `SearchSearchRequestBody` [interface-SearchSearchRequestBody]
 
 | Name | Type | Description |
 | - | - | - |

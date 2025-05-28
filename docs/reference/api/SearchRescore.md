@@ -1,4 +1,4 @@
-## Interface `SearchRescore`
+# `SearchRescore` [interface-SearchRescore]
 
 | Name | Type | Description |
 | - | - | - |

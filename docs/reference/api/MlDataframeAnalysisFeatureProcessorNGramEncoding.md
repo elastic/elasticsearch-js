@@ -1,4 +1,4 @@
-## Interface `MlDataframeAnalysisFeatureProcessorNGramEncoding`
+# `MlDataframeAnalysisFeatureProcessorNGramEncoding` [interface-MlDataframeAnalysisFeatureProcessorNGramEncoding]
 
 | Name | Type | Description |
 | - | - | - |

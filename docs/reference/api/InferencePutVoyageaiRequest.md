@@ -1,4 +1,4 @@
-## Interface `InferencePutVoyageaiRequest`
+# `InferencePutVoyageaiRequest` [interface-InferencePutVoyageaiRequest]
 
 | Name | Type | Description |
 | - | - | - |

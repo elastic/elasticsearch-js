@@ -1,4 +1,4 @@
-## Interface `AggregationsCustomCategorizeTextAnalyzer`
+# `AggregationsCustomCategorizeTextAnalyzer` [interface-AggregationsCustomCategorizeTextAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

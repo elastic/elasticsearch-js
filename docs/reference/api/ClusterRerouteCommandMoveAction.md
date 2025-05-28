@@ -1,4 +1,4 @@
-## Interface `ClusterRerouteCommandMoveAction`
+# `ClusterRerouteCommandMoveAction` [interface-ClusterRerouteCommandMoveAction]
 
 | Name | Type | Description |
 | - | - | - |

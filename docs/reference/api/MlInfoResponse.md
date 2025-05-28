@@ -1,4 +1,4 @@
-## Interface `MlInfoResponse`
+# `MlInfoResponse` [interface-MlInfoResponse]
 
 | Name | Type | Description |
 | - | - | - |

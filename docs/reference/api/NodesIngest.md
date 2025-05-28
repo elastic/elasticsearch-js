@@ -1,4 +1,4 @@
-## Interface `NodesIngest`
+# `NodesIngest` [interface-NodesIngest]
 
 | Name | Type | Description |
 | - | - | - |

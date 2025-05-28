@@ -1,4 +1,4 @@
-## Interface `That_67`
+# `That_67` [interface-That_67]
 
 | Name | Type | Description |
 | - | - | - |

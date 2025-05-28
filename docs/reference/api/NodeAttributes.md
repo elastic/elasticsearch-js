@@ -1,4 +1,4 @@
-## Interface `NodeAttributes`
+# `NodeAttributes` [interface-NodeAttributes]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `QueryDslIntervalsQuery`
+# `QueryDslIntervalsQuery` [interface-QueryDslIntervalsQuery]
 
 | Name | Type | Description |
 | - | - | - |

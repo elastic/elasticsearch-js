@@ -1,4 +1,4 @@
-## Interface `CatNodesRequest`
+# `CatNodesRequest` [interface-CatNodesRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlLearningToRankConfig`
+# `MlLearningToRankConfig` [interface-MlLearningToRankConfig]
 
 | Name | Type | Description |
 | - | - | - |

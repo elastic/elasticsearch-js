@@ -1,4 +1,4 @@
-## Interface `DocStats`
+# `DocStats` [interface-DocStats]
 
 | Name | Type | Description |
 | - | - | - |

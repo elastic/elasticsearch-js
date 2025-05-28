@@ -1,4 +1,4 @@
-## Interface `MlInfoDefaults`
+# `MlInfoDefaults` [interface-MlInfoDefaults]
 
 | Name | Type | Description |
 | - | - | - |

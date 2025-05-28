@@ -1,4 +1,4 @@
-## Interface `QueryDslDateRangeQuery`
+# `QueryDslDateRangeQuery` [interface-QueryDslDateRangeQuery]
 
 | Name | Type | Description |
 | - | - | - |

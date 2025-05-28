@@ -1,4 +1,4 @@
-## Interface `MlDataframeAnalysisFeatureProcessorFrequencyEncoding`
+# `MlDataframeAnalysisFeatureProcessorFrequencyEncoding` [interface-MlDataframeAnalysisFeatureProcessorFrequencyEncoding]
 
 | Name | Type | Description |
 | - | - | - |

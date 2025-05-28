@@ -1,4 +1,4 @@
-## Interface `IngestDeleteIpLocationDatabaseRequest`
+# `IngestDeleteIpLocationDatabaseRequest` [interface-IngestDeleteIpLocationDatabaseRequest]
 
 | Name | Type | Description |
 | - | - | - |

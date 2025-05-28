@@ -1,4 +1,4 @@
-## Interface `XpackInfoMinimalLicenseInformation`
+# `XpackInfoMinimalLicenseInformation` [interface-XpackInfoMinimalLicenseInformation]
 
 | Name | Type | Description |
 | - | - | - |

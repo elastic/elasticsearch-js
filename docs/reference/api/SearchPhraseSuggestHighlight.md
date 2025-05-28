@@ -1,4 +1,4 @@
-## Interface `SearchPhraseSuggestHighlight`
+# `SearchPhraseSuggestHighlight` [interface-SearchPhraseSuggestHighlight]
 
 | Name | Type | Description |
 | - | - | - |

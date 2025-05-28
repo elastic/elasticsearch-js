@@ -1,4 +1,4 @@
-## Interface `QueryDslUntypedRangeQuery`
+# `QueryDslUntypedRangeQuery` [interface-QueryDslUntypedRangeQuery]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `WatcherHttpInputAuthentication`
+# `WatcherHttpInputAuthentication` [interface-WatcherHttpInputAuthentication]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SecurityEnableUserResponse`
+# `SecurityEnableUserResponse` [interface-SecurityEnableUserResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `WatcherDailySchedule`
+# `WatcherDailySchedule` [interface-WatcherDailySchedule]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlAnalysisConfig`
+# `MlAnalysisConfig` [interface-MlAnalysisConfig]
 
 | Name | Type | Description |
 | - | - | - |

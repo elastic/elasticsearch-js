@@ -1,4 +1,4 @@
-## Interface `AutoscalingGetAutoscalingCapacityRequest`
+# `AutoscalingGetAutoscalingCapacityRequest` [interface-AutoscalingGetAutoscalingCapacityRequest]
 
 | Name | Type | Description |
 | - | - | - |

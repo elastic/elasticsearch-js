@@ -1,4 +1,4 @@
-## Interface `MlInferenceConfigCreateContainer`
+# `MlInferenceConfigCreateContainer` [interface-MlInferenceConfigCreateContainer]
 
 | Name | Type | Description |
 | - | - | - |

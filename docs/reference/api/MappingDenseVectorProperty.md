@@ -1,4 +1,4 @@
-## Interface `MappingDenseVectorProperty`
+# `MappingDenseVectorProperty` [interface-MappingDenseVectorProperty]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SecurityDeleteUserRequest`
+# `SecurityDeleteUserRequest` [interface-SecurityDeleteUserRequest]
 
 | Name | Type | Description |
 | - | - | - |

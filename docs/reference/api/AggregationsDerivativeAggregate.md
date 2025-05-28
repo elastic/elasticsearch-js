@@ -1,4 +1,4 @@
-## Interface `AggregationsDerivativeAggregate`
+# `AggregationsDerivativeAggregate` [interface-AggregationsDerivativeAggregate]
 
 | Name | Type | Description |
 | - | - | - |

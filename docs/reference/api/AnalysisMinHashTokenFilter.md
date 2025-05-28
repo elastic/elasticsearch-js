@@ -1,4 +1,4 @@
-## Interface `AnalysisMinHashTokenFilter`
+# `AnalysisMinHashTokenFilter` [interface-AnalysisMinHashTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

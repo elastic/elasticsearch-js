@@ -1,4 +1,4 @@
-## Interface `WatcherUpdateSettingsResponse`
+# `WatcherUpdateSettingsResponse` [interface-WatcherUpdateSettingsResponse]
 
 | Name | Type | Description |
 | - | - | - |

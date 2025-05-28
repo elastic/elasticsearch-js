@@ -1,4 +1,4 @@
-## Interface `MappingDynamicTemplate`
+# `MappingDynamicTemplate` [interface-MappingDynamicTemplate]
 
 | Name | Type | Description |
 | - | - | - |

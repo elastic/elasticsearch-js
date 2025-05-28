@@ -1,4 +1,4 @@
-## Interface `AggregationsScriptedHeuristic`
+# `AggregationsScriptedHeuristic` [interface-AggregationsScriptedHeuristic]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `WatcherStatsWatcherNodeStats`
+# `WatcherStatsWatcherNodeStats` [interface-WatcherStatsWatcherNodeStats]
 
 | Name | Type | Description |
 | - | - | - |

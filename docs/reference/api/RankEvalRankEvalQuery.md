@@ -1,4 +1,4 @@
-## Interface `RankEvalRankEvalQuery`
+# `RankEvalRankEvalQuery` [interface-RankEvalRankEvalQuery]
 
 | Name | Type | Description |
 | - | - | - |

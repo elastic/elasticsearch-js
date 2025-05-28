@@ -1,4 +1,4 @@
-## Interface `MappingConstantKeywordProperty`
+# `MappingConstantKeywordProperty` [interface-MappingConstantKeywordProperty]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `WatcherHourAndMinute`
+# `WatcherHourAndMinute` [interface-WatcherHourAndMinute]
 
 | Name | Type | Description |
 | - | - | - |

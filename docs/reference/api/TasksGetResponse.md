@@ -1,4 +1,4 @@
-## Interface `TasksGetResponse`
+# `TasksGetResponse` [interface-TasksGetResponse]
 
 | Name | Type | Description |
 | - | - | - |

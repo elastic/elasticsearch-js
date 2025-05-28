@@ -1,4 +1,4 @@
-## Interface `IngestDateProcessor`
+# `IngestDateProcessor` [interface-IngestDateProcessor]
 
 | Name | Type | Description |
 | - | - | - |

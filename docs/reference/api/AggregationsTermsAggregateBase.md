@@ -1,4 +1,4 @@
-## Interface `AggregationsTermsAggregateBase`
+# `AggregationsTermsAggregateBase` [interface-AggregationsTermsAggregateBase]
 
 | Name | Type | Description |
 | - | - | - |

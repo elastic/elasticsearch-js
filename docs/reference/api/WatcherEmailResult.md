@@ -1,4 +1,4 @@
-## Interface `WatcherEmailResult`
+# `WatcherEmailResult` [interface-WatcherEmailResult]
 
 | Name | Type | Description |
 | - | - | - |

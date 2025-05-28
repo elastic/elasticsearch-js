@@ -1,4 +1,4 @@
-## Interface `WatcherIndexAction`
+# `WatcherIndexAction` [interface-WatcherIndexAction]
 
 | Name | Type | Description |
 | - | - | - |

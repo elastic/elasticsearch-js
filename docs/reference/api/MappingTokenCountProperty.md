@@ -1,4 +1,4 @@
-## Interface `MappingTokenCountProperty`
+# `MappingTokenCountProperty` [interface-MappingTokenCountProperty]
 
 | Name | Type | Description |
 | - | - | - |

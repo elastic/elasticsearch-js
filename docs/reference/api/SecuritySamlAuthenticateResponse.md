@@ -1,4 +1,4 @@
-## Interface `SecuritySamlAuthenticateResponse`
+# `SecuritySamlAuthenticateResponse` [interface-SecuritySamlAuthenticateResponse]
 
 | Name | Type | Description |
 | - | - | - |

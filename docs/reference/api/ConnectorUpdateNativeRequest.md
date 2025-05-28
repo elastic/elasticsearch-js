@@ -1,4 +1,4 @@
-## Interface `ConnectorUpdateNativeRequest`
+# `ConnectorUpdateNativeRequest` [interface-ConnectorUpdateNativeRequest]
 
 | Name | Type | Description |
 | - | - | - |

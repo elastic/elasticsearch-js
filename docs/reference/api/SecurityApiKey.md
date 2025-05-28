@@ -1,4 +1,4 @@
-## Interface `SecurityApiKey`
+# `SecurityApiKey` [interface-SecurityApiKey]
 
 | Name | Type | Description |
 | - | - | - |

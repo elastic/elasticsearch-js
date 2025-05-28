@@ -1,4 +1,4 @@
-## Interface `MlTrainedModelEntities`
+# `MlTrainedModelEntities` [interface-MlTrainedModelEntities]
 
 | Name | Type | Description |
 | - | - | - |

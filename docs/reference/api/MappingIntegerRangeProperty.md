@@ -1,4 +1,4 @@
-## Interface `MappingIntegerRangeProperty`
+# `MappingIntegerRangeProperty` [interface-MappingIntegerRangeProperty]
 
 | Name | Type | Description |
 | - | - | - |

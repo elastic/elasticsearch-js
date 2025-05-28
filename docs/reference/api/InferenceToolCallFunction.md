@@ -1,4 +1,4 @@
-## Interface `InferenceToolCallFunction`
+# `InferenceToolCallFunction` [interface-InferenceToolCallFunction]
 
 | Name | Type | Description |
 | - | - | - |

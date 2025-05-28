@@ -1,4 +1,4 @@
-## Interface `AggregationsLinearMovingAverageAggregation`
+# `AggregationsLinearMovingAverageAggregation` [interface-AggregationsLinearMovingAverageAggregation]
 
 | Name | Type | Description |
 | - | - | - |

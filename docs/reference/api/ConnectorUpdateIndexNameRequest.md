@@ -1,4 +1,4 @@
-## Interface `ConnectorUpdateIndexNameRequest`
+# `ConnectorUpdateIndexNameRequest` [interface-ConnectorUpdateIndexNameRequest]
 
 | Name | Type | Description |
 | - | - | - |

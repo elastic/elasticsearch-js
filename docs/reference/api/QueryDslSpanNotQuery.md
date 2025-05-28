@@ -1,4 +1,4 @@
-## Interface `QueryDslSpanNotQuery`
+# `QueryDslSpanNotQuery` [interface-QueryDslSpanNotQuery]
 
 | Name | Type | Description |
 | - | - | - |

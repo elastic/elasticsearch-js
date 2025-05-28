@@ -1,4 +1,4 @@
-## Interface `IndicesIndexingSlowlogSettings`
+# `IndicesIndexingSlowlogSettings` [interface-IndicesIndexingSlowlogSettings]
 
 | Name | Type | Description |
 | - | - | - |

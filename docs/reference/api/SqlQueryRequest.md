@@ -1,4 +1,4 @@
-## Interface `SqlQueryRequest`
+# `SqlQueryRequest` [interface-SqlQueryRequest]
 
 | Name | Type | Description |
 | - | - | - |

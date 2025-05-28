@@ -1,4 +1,4 @@
-## Interface `SpecUtilsBaseNode`
+# `SpecUtilsBaseNode` [interface-SpecUtilsBaseNode]
 
 | Name | Type | Description |
 | - | - | - |

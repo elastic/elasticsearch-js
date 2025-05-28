@@ -1,4 +1,4 @@
-## Interface `IndicesGetDataStreamRequest`
+# `IndicesGetDataStreamRequest` [interface-IndicesGetDataStreamRequest]
 
 | Name | Type | Description |
 | - | - | - |

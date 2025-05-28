@@ -1,4 +1,4 @@
-## Interface `AsyncSearchStatusStatusResponseBase`
+# `AsyncSearchStatusStatusResponseBase` [interface-AsyncSearchStatusStatusResponseBase]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SnapshotGetResponse`
+# `SnapshotGetResponse` [interface-SnapshotGetResponse]
 
 | Name | Type | Description |
 | - | - | - |

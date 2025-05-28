@@ -1,4 +1,4 @@
-## Interface `HealthReportIlmIndicatorDetails`
+# `HealthReportIlmIndicatorDetails` [interface-HealthReportIlmIndicatorDetails]
 
 | Name | Type | Description |
 | - | - | - |

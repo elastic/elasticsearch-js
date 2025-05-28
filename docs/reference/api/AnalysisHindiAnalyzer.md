@@ -1,4 +1,4 @@
-## Interface `AnalysisHindiAnalyzer`
+# `AnalysisHindiAnalyzer` [interface-AnalysisHindiAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

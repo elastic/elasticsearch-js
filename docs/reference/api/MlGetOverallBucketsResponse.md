@@ -1,4 +1,4 @@
-## Interface `MlGetOverallBucketsResponse`
+# `MlGetOverallBucketsResponse` [interface-MlGetOverallBucketsResponse]
 
 | Name | Type | Description |
 | - | - | - |

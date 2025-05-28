@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoDiscoverKeys`
+# `NodesInfoNodeInfoDiscoverKeys` [interface-NodesInfoNodeInfoDiscoverKeys]
 
 | Name | Type | Description |
 | - | - | - |

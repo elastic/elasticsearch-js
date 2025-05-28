@@ -1,4 +1,4 @@
-## Interface `XpackUsageSlm`
+# `XpackUsageSlm` [interface-XpackUsageSlm]
 
 | Name | Type | Description |
 | - | - | - |

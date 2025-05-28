@@ -1,4 +1,4 @@
-## Interface `AggregationsTDigest`
+# `AggregationsTDigest` [interface-AggregationsTDigest]
 
 | Name | Type | Description |
 | - | - | - |

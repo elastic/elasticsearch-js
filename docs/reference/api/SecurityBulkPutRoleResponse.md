@@ -1,4 +1,4 @@
-## Interface `SecurityBulkPutRoleResponse`
+# `SecurityBulkPutRoleResponse` [interface-SecurityBulkPutRoleResponse]
 
 | Name | Type | Description |
 | - | - | - |

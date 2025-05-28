@@ -1,4 +1,4 @@
-## Interface `IndicesNumericFielddata`
+# `IndicesNumericFielddata` [interface-IndicesNumericFielddata]
 
 | Name | Type | Description |
 | - | - | - |

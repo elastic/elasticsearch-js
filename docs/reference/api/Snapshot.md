@@ -1,19 +1,19 @@
-## `Snapshot`
+# `Snapshot` [class-Snapshot]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Snapshot(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Snapshot]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Snapshot]
 
 | Name | Signature | Description |
 | - | - | - |

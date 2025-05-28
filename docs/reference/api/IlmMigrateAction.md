@@ -1,4 +1,4 @@
-## Interface `IlmMigrateAction`
+# `IlmMigrateAction` [interface-IlmMigrateAction]
 
 | Name | Type | Description |
 | - | - | - |

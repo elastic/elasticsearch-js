@@ -1,4 +1,4 @@
-## Interface `AggregationsBucketScriptAggregation`
+# `AggregationsBucketScriptAggregation` [interface-AggregationsBucketScriptAggregation]
 
 | Name | Type | Description |
 | - | - | - |

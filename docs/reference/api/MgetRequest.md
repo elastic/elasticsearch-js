@@ -1,4 +1,4 @@
-## Interface `MgetRequest`
+# `MgetRequest` [interface-MgetRequest]
 
 | Name | Type | Description |
 | - | - | - |

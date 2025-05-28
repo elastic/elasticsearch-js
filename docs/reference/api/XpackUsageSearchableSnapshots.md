@@ -1,4 +1,4 @@
-## Interface `XpackUsageSearchableSnapshots`
+# `XpackUsageSearchableSnapshots` [interface-XpackUsageSearchableSnapshots]
 
 | Name | Type | Description |
 | - | - | - |

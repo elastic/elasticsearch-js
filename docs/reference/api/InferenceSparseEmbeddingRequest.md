@@ -1,4 +1,4 @@
-## Interface `InferenceSparseEmbeddingRequest`
+# `InferenceSparseEmbeddingRequest` [interface-InferenceSparseEmbeddingRequest]
 
 | Name | Type | Description |
 | - | - | - |

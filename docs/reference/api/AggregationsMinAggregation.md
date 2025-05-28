@@ -1,4 +1,4 @@
-## Interface `AggregationsMinAggregation`
+# `AggregationsMinAggregation` [interface-AggregationsMinAggregation]
 
 | Name | Type | Description |
 | - | - | - |

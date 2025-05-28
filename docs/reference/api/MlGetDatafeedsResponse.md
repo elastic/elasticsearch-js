@@ -1,4 +1,4 @@
-## Interface `MlGetDatafeedsResponse`
+# `MlGetDatafeedsResponse` [interface-MlGetDatafeedsResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsMissingAggregateKeys`
+# `AggregationsMissingAggregateKeys` [interface-AggregationsMissingAggregateKeys]
 
 | Name | Type | Description |
 | - | - | - |

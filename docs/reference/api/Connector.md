@@ -1,19 +1,19 @@
-## `Connector`
+# `Connector` [class-Connector]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Connector(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Connector]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Connector]
 
 | Name | Signature | Description |
 | - | - | - |

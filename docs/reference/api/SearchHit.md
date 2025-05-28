@@ -1,4 +1,4 @@
-## Interface `SearchHit`
+# `SearchHit` [interface-SearchHit]
 
 | Name | Type | Description |
 | - | - | - |

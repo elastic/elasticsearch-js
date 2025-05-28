@@ -1,4 +1,4 @@
-## Interface `SecurityClearCachedRealmsRequest`
+# `SecurityClearCachedRealmsRequest` [interface-SecurityClearCachedRealmsRequest]
 
 | Name | Type | Description |
 | - | - | - |

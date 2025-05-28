@@ -1,4 +1,4 @@
-## Interface `RefreshStats`
+# `RefreshStats` [interface-RefreshStats]
 
 | Name | Type | Description |
 | - | - | - |

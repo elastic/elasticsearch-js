@@ -1,4 +1,4 @@
-## Interface `UpdateRequest`
+# `UpdateRequest` [interface-UpdateRequest]
 
 | Name | Type | Description |
 | - | - | - |

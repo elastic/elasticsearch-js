@@ -1,4 +1,4 @@
-## Interface `XpackUsageDataStreams`
+# `XpackUsageDataStreams` [interface-XpackUsageDataStreams]
 
 | Name | Type | Description |
 | - | - | - |

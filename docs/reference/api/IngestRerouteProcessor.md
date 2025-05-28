@@ -1,4 +1,4 @@
-## Interface `IngestRerouteProcessor`
+# `IngestRerouteProcessor` [interface-IngestRerouteProcessor]
 
 | Name | Type | Description |
 | - | - | - |

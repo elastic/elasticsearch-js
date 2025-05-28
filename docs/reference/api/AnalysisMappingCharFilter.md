@@ -1,4 +1,4 @@
-## Interface `AnalysisMappingCharFilter`
+# `AnalysisMappingCharFilter` [interface-AnalysisMappingCharFilter]
 
 | Name | Type | Description |
 | - | - | - |

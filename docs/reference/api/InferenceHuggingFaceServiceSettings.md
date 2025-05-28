@@ -1,4 +1,4 @@
-## Interface `InferenceHuggingFaceServiceSettings`
+# `InferenceHuggingFaceServiceSettings` [interface-InferenceHuggingFaceServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

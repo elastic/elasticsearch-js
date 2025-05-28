@@ -1,4 +1,4 @@
-## Interface `MlInferenceResponseResult`
+# `MlInferenceResponseResult` [interface-MlInferenceResponseResult]
 
 | Name | Type | Description |
 | - | - | - |

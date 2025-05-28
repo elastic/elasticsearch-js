@@ -1,4 +1,4 @@
-## Interface `InferenceAzureOpenAIServiceSettings`
+# `InferenceAzureOpenAIServiceSettings` [interface-InferenceAzureOpenAIServiceSettings]
 
 | Name | Type | Description |
 | - | - | - |

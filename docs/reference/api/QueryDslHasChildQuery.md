@@ -1,4 +1,4 @@
-## Interface `QueryDslHasChildQuery`
+# `QueryDslHasChildQuery` [interface-QueryDslHasChildQuery]
 
 | Name | Type | Description |
 | - | - | - |

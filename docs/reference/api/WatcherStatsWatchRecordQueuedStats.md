@@ -1,4 +1,4 @@
-## Interface `WatcherStatsWatchRecordQueuedStats`
+# `WatcherStatsWatchRecordQueuedStats` [interface-WatcherStatsWatchRecordQueuedStats]
 
 | Name | Type | Description |
 | - | - | - |

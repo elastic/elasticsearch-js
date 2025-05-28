@@ -1,4 +1,4 @@
-## Interface `XpackUsageMlInferenceTrainedModelsCount`
+# `XpackUsageMlInferenceTrainedModelsCount` [interface-XpackUsageMlInferenceTrainedModelsCount]
 
 | Name | Type | Description |
 | - | - | - |

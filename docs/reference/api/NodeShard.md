@@ -1,4 +1,4 @@
-## Interface `NodeShard`
+# `NodeShard` [interface-NodeShard]
 
 | Name | Type | Description |
 | - | - | - |

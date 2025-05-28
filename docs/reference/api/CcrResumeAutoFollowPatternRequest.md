@@ -1,4 +1,4 @@
-## Interface `CcrResumeAutoFollowPatternRequest`
+# `CcrResumeAutoFollowPatternRequest` [interface-CcrResumeAutoFollowPatternRequest]
 
 | Name | Type | Description |
 | - | - | - |

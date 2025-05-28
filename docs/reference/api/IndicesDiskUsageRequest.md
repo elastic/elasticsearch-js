@@ -1,4 +1,4 @@
-## Interface `IndicesDiskUsageRequest`
+# `IndicesDiskUsageRequest` [interface-IndicesDiskUsageRequest]
 
 | Name | Type | Description |
 | - | - | - |

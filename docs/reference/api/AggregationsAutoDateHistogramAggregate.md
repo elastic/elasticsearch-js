@@ -1,4 +1,4 @@
-## Interface `AggregationsAutoDateHistogramAggregate`
+# `AggregationsAutoDateHistogramAggregate` [interface-AggregationsAutoDateHistogramAggregate]
 
 | Name | Type | Description |
 | - | - | - |

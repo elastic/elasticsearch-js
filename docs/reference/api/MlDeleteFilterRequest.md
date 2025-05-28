@@ -1,4 +1,4 @@
-## Interface `MlDeleteFilterRequest`
+# `MlDeleteFilterRequest` [interface-MlDeleteFilterRequest]
 
 | Name | Type | Description |
 | - | - | - |

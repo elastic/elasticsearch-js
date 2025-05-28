@@ -1,19 +1,19 @@
-## `SearchApplication`
+# `SearchApplication` [class-SearchApplication]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new SearchApplication(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-SearchApplication]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-SearchApplication]
 
 | Name | Signature | Description |
 | - | - | - |

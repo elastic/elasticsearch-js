@@ -1,4 +1,4 @@
-## Interface `IndicesTranslog`
+# `IndicesTranslog` [interface-IndicesTranslog]
 
 | Name | Type | Description |
 | - | - | - |

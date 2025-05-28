@@ -1,4 +1,4 @@
-## Interface `AnalysisCharFilterBase`
+# `AnalysisCharFilterBase` [interface-AnalysisCharFilterBase]
 
 | Name | Type | Description |
 | - | - | - |

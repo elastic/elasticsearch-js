@@ -1,4 +1,4 @@
-## Interface `MlDataCounts`
+# `MlDataCounts` [interface-MlDataCounts]
 
 | Name | Type | Description |
 | - | - | - |

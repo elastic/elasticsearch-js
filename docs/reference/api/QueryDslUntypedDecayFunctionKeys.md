@@ -1,4 +1,4 @@
-## Interface `QueryDslUntypedDecayFunctionKeys`
+# `QueryDslUntypedDecayFunctionKeys` [interface-QueryDslUntypedDecayFunctionKeys]
 
 | Name | Type | Description |
 | - | - | - |

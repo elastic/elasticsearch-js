@@ -1,4 +1,4 @@
-## Interface `MlFilter`
+# `MlFilter` [interface-MlFilter]
 
 | Name | Type | Description |
 | - | - | - |

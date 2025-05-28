@@ -1,4 +1,4 @@
-## Interface `MappingIndexField`
+# `MappingIndexField` [interface-MappingIndexField]
 
 | Name | Type | Description |
 | - | - | - |

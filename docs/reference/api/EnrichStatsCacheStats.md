@@ -1,4 +1,4 @@
-## Interface `EnrichStatsCacheStats`
+# `EnrichStatsCacheStats` [interface-EnrichStatsCacheStats]
 
 | Name | Type | Description |
 | - | - | - |

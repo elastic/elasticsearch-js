@@ -1,4 +1,4 @@
-## Interface `AnalysisSimpleAnalyzer`
+# `AnalysisSimpleAnalyzer` [interface-AnalysisSimpleAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |

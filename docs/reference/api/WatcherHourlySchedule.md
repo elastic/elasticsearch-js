@@ -1,4 +1,4 @@
-## Interface `WatcherHourlySchedule`
+# `WatcherHourlySchedule` [interface-WatcherHourlySchedule]
 
 | Name | Type | Description |
 | - | - | - |

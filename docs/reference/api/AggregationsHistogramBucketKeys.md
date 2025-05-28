@@ -1,4 +1,4 @@
-## Interface `AggregationsHistogramBucketKeys`
+# `AggregationsHistogramBucketKeys` [interface-AggregationsHistogramBucketKeys]
 
 | Name | Type | Description |
 | - | - | - |

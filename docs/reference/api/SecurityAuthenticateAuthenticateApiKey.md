@@ -1,4 +1,4 @@
-## Interface `SecurityAuthenticateAuthenticateApiKey`
+# `SecurityAuthenticateAuthenticateApiKey` [interface-SecurityAuthenticateAuthenticateApiKey]
 
 | Name | Type | Description |
 | - | - | - |

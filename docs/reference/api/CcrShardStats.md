@@ -1,4 +1,4 @@
-## Interface `CcrShardStats`
+# `CcrShardStats` [interface-CcrShardStats]
 
 | Name | Type | Description |
 | - | - | - |

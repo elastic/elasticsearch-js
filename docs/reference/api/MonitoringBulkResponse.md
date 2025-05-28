@@ -1,4 +1,4 @@
-## Interface `MonitoringBulkResponse`
+# `MonitoringBulkResponse` [interface-MonitoringBulkResponse]
 
 | Name | Type | Description |
 | - | - | - |

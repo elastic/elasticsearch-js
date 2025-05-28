@@ -1,4 +1,4 @@
-## Interface `AnalysisKeywordTokenizer`
+# `AnalysisKeywordTokenizer` [interface-AnalysisKeywordTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

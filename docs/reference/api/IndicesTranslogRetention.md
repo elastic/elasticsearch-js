@@ -1,4 +1,4 @@
-## Interface `IndicesTranslogRetention`
+# `IndicesTranslogRetention` [interface-IndicesTranslogRetention]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlStopDataFrameAnalyticsResponse`
+# `MlStopDataFrameAnalyticsResponse` [interface-MlStopDataFrameAnalyticsResponse]
 
 | Name | Type | Description |
 | - | - | - |

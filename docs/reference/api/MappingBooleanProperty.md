@@ -1,4 +1,4 @@
-## Interface `MappingBooleanProperty`
+# `MappingBooleanProperty` [interface-MappingBooleanProperty]
 
 | Name | Type | Description |
 | - | - | - |

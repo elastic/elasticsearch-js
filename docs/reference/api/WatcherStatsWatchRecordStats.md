@@ -1,4 +1,4 @@
-## Interface `WatcherStatsWatchRecordStats`
+# `WatcherStatsWatchRecordStats` [interface-WatcherStatsWatchRecordStats]
 
 | Name | Type | Description |
 | - | - | - |

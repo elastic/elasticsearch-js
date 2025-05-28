@@ -1,4 +1,4 @@
-## Interface `FlushStats`
+# `FlushStats` [interface-FlushStats]
 
 | Name | Type | Description |
 | - | - | - |

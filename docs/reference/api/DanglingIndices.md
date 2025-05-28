@@ -1,19 +1,19 @@
-## `DanglingIndices`
+# `DanglingIndices` [class-DanglingIndices]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new DanglingIndices(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-DanglingIndices]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-DanglingIndices]
 
 | Name | Signature | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `NodesTimeHttpHistogram`
+# `NodesTimeHttpHistogram` [interface-NodesTimeHttpHistogram]
 
 | Name | Type | Description |
 | - | - | - |

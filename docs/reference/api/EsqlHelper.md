@@ -1,4 +1,4 @@
-## Interface `EsqlHelper`
+# `EsqlHelper` [interface-EsqlHelper]
 
 | Name | Type | Description |
 | - | - | - |

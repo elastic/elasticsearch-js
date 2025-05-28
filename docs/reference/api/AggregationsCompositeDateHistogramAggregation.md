@@ -1,4 +1,4 @@
-## Interface `AggregationsCompositeDateHistogramAggregation`
+# `AggregationsCompositeDateHistogramAggregation` [interface-AggregationsCompositeDateHistogramAggregation]
 
 | Name | Type | Description |
 | - | - | - |

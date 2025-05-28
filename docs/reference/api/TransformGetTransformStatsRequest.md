@@ -1,4 +1,4 @@
-## Interface `TransformGetTransformStatsRequest`
+# `TransformGetTransformStatsRequest` [interface-TransformGetTransformStatsRequest]
 
 | Name | Type | Description |
 | - | - | - |

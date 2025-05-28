@@ -1,4 +1,4 @@
-## Interface `TermvectorsToken`
+# `TermvectorsToken` [interface-TermvectorsToken]
 
 | Name | Type | Description |
 | - | - | - |

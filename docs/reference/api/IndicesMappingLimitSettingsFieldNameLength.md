@@ -1,4 +1,4 @@
-## Interface `IndicesMappingLimitSettingsFieldNameLength`
+# `IndicesMappingLimitSettingsFieldNameLength` [interface-IndicesMappingLimitSettingsFieldNameLength]
 
 | Name | Type | Description |
 | - | - | - |

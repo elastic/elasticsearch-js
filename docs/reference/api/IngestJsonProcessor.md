@@ -1,4 +1,4 @@
-## Interface `IngestJsonProcessor`
+# `IngestJsonProcessor` [interface-IngestJsonProcessor]
 
 | Name | Type | Description |
 | - | - | - |

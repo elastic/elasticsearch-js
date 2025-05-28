@@ -1,4 +1,4 @@
-## Interface `IlmExplainLifecycleResponse`
+# `IlmExplainLifecycleResponse` [interface-IlmExplainLifecycleResponse]
 
 | Name | Type | Description |
 | - | - | - |

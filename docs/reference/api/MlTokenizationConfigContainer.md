@@ -1,4 +1,4 @@
-## Interface `MlTokenizationConfigContainer`
+# `MlTokenizationConfigContainer` [interface-MlTokenizationConfigContainer]
 
 | Name | Type | Description |
 | - | - | - |

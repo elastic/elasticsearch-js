@@ -1,4 +1,4 @@
-## Interface `NodesProcessor`
+# `NodesProcessor` [interface-NodesProcessor]
 
 | Name | Type | Description |
 | - | - | - |

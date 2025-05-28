@@ -1,4 +1,4 @@
-## Interface `SecurityUpdateSettingsResponse`
+# `SecurityUpdateSettingsResponse` [interface-SecurityUpdateSettingsResponse]
 
 | Name | Type | Description |
 | - | - | - |

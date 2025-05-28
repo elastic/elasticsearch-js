@@ -1,4 +1,4 @@
-## Interface `WatcherWebhookResult`
+# `WatcherWebhookResult` [interface-WatcherWebhookResult]
 
 | Name | Type | Description |
 | - | - | - |

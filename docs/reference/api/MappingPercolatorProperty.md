@@ -1,4 +1,4 @@
-## Interface `MappingPercolatorProperty`
+# `MappingPercolatorProperty` [interface-MappingPercolatorProperty]
 
 | Name | Type | Description |
 | - | - | - |

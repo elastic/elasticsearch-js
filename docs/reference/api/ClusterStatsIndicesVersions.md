@@ -1,4 +1,4 @@
-## Interface `ClusterStatsIndicesVersions`
+# `ClusterStatsIndicesVersions` [interface-ClusterStatsIndicesVersions]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsFormattableMetricAggregation`
+# `AggregationsFormattableMetricAggregation` [interface-AggregationsFormattableMetricAggregation]
 
 | Name | Type | Description |
 | - | - | - |

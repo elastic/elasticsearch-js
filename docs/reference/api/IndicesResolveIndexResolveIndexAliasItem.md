@@ -1,4 +1,4 @@
-## Interface `IndicesResolveIndexResolveIndexAliasItem`
+# `IndicesResolveIndexResolveIndexAliasItem` [interface-IndicesResolveIndexResolveIndexAliasItem]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsCompositeAggregation`
+# `AggregationsCompositeAggregation` [interface-AggregationsCompositeAggregation]
 
 | Name | Type | Description |
 | - | - | - |

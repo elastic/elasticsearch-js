@@ -1,4 +1,4 @@
-## Interface `AnalysisThaiTokenizer`
+# `AnalysisThaiTokenizer` [interface-AnalysisThaiTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

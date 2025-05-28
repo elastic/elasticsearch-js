@@ -1,4 +1,4 @@
-## Interface `MgetOperation`
+# `MgetOperation` [interface-MgetOperation]
 
 | Name | Type | Description |
 | - | - | - |

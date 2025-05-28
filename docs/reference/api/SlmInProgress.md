@@ -1,4 +1,4 @@
-## Interface `SlmInProgress`
+# `SlmInProgress` [interface-SlmInProgress]
 
 | Name | Type | Description |
 | - | - | - |

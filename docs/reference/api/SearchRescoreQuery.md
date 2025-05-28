@@ -1,4 +1,4 @@
-## Interface `SearchRescoreQuery`
+# `SearchRescoreQuery` [interface-SearchRescoreQuery]
 
 | Name | Type | Description |
 | - | - | - |

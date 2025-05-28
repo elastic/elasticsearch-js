@@ -1,4 +1,4 @@
-## Interface `ClusterStatsClusterOperatingSystemPrettyName`
+# `ClusterStatsClusterOperatingSystemPrettyName` [interface-ClusterStatsClusterOperatingSystemPrettyName]
 
 | Name | Type | Description |
 | - | - | - |

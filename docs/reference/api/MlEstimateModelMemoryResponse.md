@@ -1,4 +1,4 @@
-## Interface `MlEstimateModelMemoryResponse`
+# `MlEstimateModelMemoryResponse` [interface-MlEstimateModelMemoryResponse]
 
 | Name | Type | Description |
 | - | - | - |

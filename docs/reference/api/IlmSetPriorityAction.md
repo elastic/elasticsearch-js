@@ -1,4 +1,4 @@
-## Interface `IlmSetPriorityAction`
+# `IlmSetPriorityAction` [interface-IlmSetPriorityAction]
 
 | Name | Type | Description |
 | - | - | - |

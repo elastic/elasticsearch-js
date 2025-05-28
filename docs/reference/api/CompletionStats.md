@@ -1,4 +1,4 @@
-## Interface `CompletionStats`
+# `CompletionStats` [interface-CompletionStats]
 
 | Name | Type | Description |
 | - | - | - |

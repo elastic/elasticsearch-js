@@ -1,4 +1,4 @@
-## Interface `NodesClusterAppliedStats`
+# `NodesClusterAppliedStats` [interface-NodesClusterAppliedStats]
 
 | Name | Type | Description |
 | - | - | - |

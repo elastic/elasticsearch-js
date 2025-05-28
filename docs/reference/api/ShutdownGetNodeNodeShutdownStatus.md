@@ -1,4 +1,4 @@
-## Interface `ShutdownGetNodeNodeShutdownStatus`
+# `ShutdownGetNodeNodeShutdownStatus` [interface-ShutdownGetNodeNodeShutdownStatus]
 
 | Name | Type | Description |
 | - | - | - |

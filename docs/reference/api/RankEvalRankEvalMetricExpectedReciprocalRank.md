@@ -1,4 +1,4 @@
-## Interface `RankEvalRankEvalMetricExpectedReciprocalRank`
+# `RankEvalRankEvalMetricExpectedReciprocalRank` [interface-RankEvalRankEvalMetricExpectedReciprocalRank]
 
 | Name | Type | Description |
 | - | - | - |

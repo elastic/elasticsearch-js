@@ -1,4 +1,4 @@
-## Interface `AnalysisIcuNormalizationTokenFilter`
+# `AnalysisIcuNormalizationTokenFilter` [interface-AnalysisIcuNormalizationTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

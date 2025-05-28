@@ -1,4 +1,4 @@
-## Interface `MlUpdateTrainedModelDeploymentResponse`
+# `MlUpdateTrainedModelDeploymentResponse` [interface-MlUpdateTrainedModelDeploymentResponse]
 
 | Name | Type | Description |
 | - | - | - |

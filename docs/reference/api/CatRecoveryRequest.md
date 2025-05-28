@@ -1,4 +1,4 @@
-## Interface `CatRecoveryRequest`
+# `CatRecoveryRequest` [interface-CatRecoveryRequest]
 
 | Name | Type | Description |
 | - | - | - |

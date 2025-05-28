@@ -1,4 +1,4 @@
-## Interface `AnalysisPathHierarchyTokenizer`
+# `AnalysisPathHierarchyTokenizer` [interface-AnalysisPathHierarchyTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlUpdateModelSnapshotRequest`
+# `MlUpdateModelSnapshotRequest` [interface-MlUpdateModelSnapshotRequest]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesStatsShardCommit`
+# `IndicesStatsShardCommit` [interface-IndicesStatsShardCommit]
 
 | Name | Type | Description |
 | - | - | - |

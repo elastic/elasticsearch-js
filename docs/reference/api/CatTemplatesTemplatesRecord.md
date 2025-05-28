@@ -1,4 +1,4 @@
-## Interface `CatTemplatesTemplatesRecord`
+# `CatTemplatesTemplatesRecord` [interface-CatTemplatesTemplatesRecord]
 
 | Name | Type | Description |
 | - | - | - |

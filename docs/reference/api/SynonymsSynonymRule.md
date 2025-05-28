@@ -1,4 +1,4 @@
-## Interface `SynonymsSynonymRule`
+# `SynonymsSynonymRule` [interface-SynonymsSynonymRule]
 
 | Name | Type | Description |
 | - | - | - |

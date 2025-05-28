@@ -1,4 +1,4 @@
-## Interface `MappingIpProperty`
+# `MappingIpProperty` [interface-MappingIpProperty]
 
 | Name | Type | Description |
 | - | - | - |

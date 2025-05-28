@@ -1,4 +1,4 @@
-## Interface `AnalysisLetterTokenizer`
+# `AnalysisLetterTokenizer` [interface-AnalysisLetterTokenizer]
 
 | Name | Type | Description |
 | - | - | - |

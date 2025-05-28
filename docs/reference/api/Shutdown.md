@@ -1,19 +1,19 @@
-## `Shutdown`
+# `Shutdown` [class-Shutdown]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Shutdown(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Shutdown]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Shutdown]
 
 | Name | Signature | Description |
 | - | - | - |

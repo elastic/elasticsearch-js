@@ -1,19 +1,19 @@
-## `Ingest`
+# `Ingest` [class-Ingest]
 
-### Constructor
+## Constructor
 
-:::
+```typescript
 new Ingest(transport: [Transport](./Transport.md));
-:::
+```
 
-### Properties
+## Properties [class-properties-Ingest]
 
 | Name | Type | Description |
 | - | - | - |
 | `acceptedParams` | Record<string, { path: string[]; body: string[]; query: string[]; }> | &nbsp; |
 | `transport` | [Transport](./Transport.md) | &nbsp; |
 
-### Methods
+## Methods [class-methods-Ingest]
 
 | Name | Signature | Description |
 | - | - | - |

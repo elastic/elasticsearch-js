@@ -1,4 +1,4 @@
-## Interface `CountResponse`
+# `CountResponse` [interface-CountResponse]
 
 | Name | Type | Description |
 | - | - | - |

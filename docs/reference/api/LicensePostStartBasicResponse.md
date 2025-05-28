@@ -1,4 +1,4 @@
-## Interface `LicensePostStartBasicResponse`
+# `LicensePostStartBasicResponse` [interface-LicensePostStartBasicResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `MlInfoAnomalyDetectors`
+# `MlInfoAnomalyDetectors` [interface-MlInfoAnomalyDetectors]
 
 | Name | Type | Description |
 | - | - | - |

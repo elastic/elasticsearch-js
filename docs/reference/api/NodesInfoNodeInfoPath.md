@@ -1,4 +1,4 @@
-## Interface `NodesInfoNodeInfoPath`
+# `NodesInfoNodeInfoPath` [interface-NodesInfoNodeInfoPath]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `SecuritySamlInvalidateResponse`
+# `SecuritySamlInvalidateResponse` [interface-SecuritySamlInvalidateResponse]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `CatAllocationAllocationRecord`
+# `CatAllocationAllocationRecord` [interface-CatAllocationAllocationRecord]
 
 | Name | Type | Description |
 | - | - | - |

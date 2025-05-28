@@ -1,4 +1,4 @@
-## Interface `MappingJoinProperty`
+# `MappingJoinProperty` [interface-MappingJoinProperty]
 
 | Name | Type | Description |
 | - | - | - |

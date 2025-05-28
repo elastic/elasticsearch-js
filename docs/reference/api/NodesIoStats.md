@@ -1,4 +1,4 @@
-## Interface `NodesIoStats`
+# `NodesIoStats` [interface-NodesIoStats]
 
 | Name | Type | Description |
 | - | - | - |

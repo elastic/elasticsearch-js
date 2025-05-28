@@ -1,4 +1,4 @@
-## Interface `WatcherEmailAction`
+# `WatcherEmailAction` [interface-WatcherEmailAction]
 
 | Name | Type | Description |
 | - | - | - |

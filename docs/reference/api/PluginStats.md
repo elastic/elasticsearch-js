@@ -1,4 +1,4 @@
-## Interface `PluginStats`
+# `PluginStats` [interface-PluginStats]
 
 | Name | Type | Description |
 | - | - | - |

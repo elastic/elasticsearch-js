@@ -1,4 +1,4 @@
-## Interface `MlTrainedModelInferenceClassImportance`
+# `MlTrainedModelInferenceClassImportance` [interface-MlTrainedModelInferenceClassImportance]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AnalysisStopTokenFilter`
+# `AnalysisStopTokenFilter` [interface-AnalysisStopTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

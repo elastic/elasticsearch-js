@@ -1,4 +1,4 @@
-## Interface `BulkWriteOperation`
+# `BulkWriteOperation` [interface-BulkWriteOperation]
 
 | Name | Type | Description |
 | - | - | - |

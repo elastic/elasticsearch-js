@@ -1,4 +1,4 @@
-## Interface `IngestDeletePipelineRequest`
+# `IngestDeletePipelineRequest` [interface-IngestDeletePipelineRequest]
 
 | Name | Type | Description |
 | - | - | - |

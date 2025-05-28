@@ -1,4 +1,4 @@
-## Interface `MlInfoDatafeeds`
+# `MlInfoDatafeeds` [interface-MlInfoDatafeeds]
 
 | Name | Type | Description |
 | - | - | - |

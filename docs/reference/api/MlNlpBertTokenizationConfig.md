@@ -1,4 +1,4 @@
-## Interface `MlNlpBertTokenizationConfig`
+# `MlNlpBertTokenizationConfig` [interface-MlNlpBertTokenizationConfig]
 
 | Name | Type | Description |
 | - | - | - |

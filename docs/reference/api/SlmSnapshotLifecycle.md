@@ -1,4 +1,4 @@
-## Interface `SlmSnapshotLifecycle`
+# `SlmSnapshotLifecycle` [interface-SlmSnapshotLifecycle]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `AggregationsPercentilesAggregateBase`
+# `AggregationsPercentilesAggregateBase` [interface-AggregationsPercentilesAggregateBase]
 
 | Name | Type | Description |
 | - | - | - |

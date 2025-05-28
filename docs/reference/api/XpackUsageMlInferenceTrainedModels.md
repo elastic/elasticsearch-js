@@ -1,4 +1,4 @@
-## Interface `XpackUsageMlInferenceTrainedModels`
+# `XpackUsageMlInferenceTrainedModels` [interface-XpackUsageMlInferenceTrainedModels]
 
 | Name | Type | Description |
 | - | - | - |

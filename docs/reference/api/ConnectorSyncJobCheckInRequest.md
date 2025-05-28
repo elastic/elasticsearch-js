@@ -1,4 +1,4 @@
-## Interface `ConnectorSyncJobCheckInRequest`
+# `ConnectorSyncJobCheckInRequest` [interface-ConnectorSyncJobCheckInRequest]
 
 | Name | Type | Description |
 | - | - | - |

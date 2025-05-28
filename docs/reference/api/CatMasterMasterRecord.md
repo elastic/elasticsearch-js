@@ -1,4 +1,4 @@
-## Interface `CatMasterMasterRecord`
+# `CatMasterMasterRecord` [interface-CatMasterMasterRecord]
 
 | Name | Type | Description |
 | - | - | - |

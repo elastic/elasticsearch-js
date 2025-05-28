@@ -1,4 +1,4 @@
-## Interface `IndicesShardStoresShardStoreException`
+# `IndicesShardStoresShardStoreException` [interface-IndicesShardStoresShardStoreException]
 
 | Name | Type | Description |
 | - | - | - |

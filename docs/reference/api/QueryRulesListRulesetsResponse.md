@@ -1,4 +1,4 @@
-## Interface `QueryRulesListRulesetsResponse`
+# `QueryRulesListRulesetsResponse` [interface-QueryRulesListRulesetsResponse]
 
 | Name | Type | Description |
 | - | - | - |

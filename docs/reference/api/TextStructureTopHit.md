@@ -1,4 +1,4 @@
-## Interface `TextStructureTopHit`
+# `TextStructureTopHit` [interface-TextStructureTopHit]
 
 | Name | Type | Description |
 | - | - | - |

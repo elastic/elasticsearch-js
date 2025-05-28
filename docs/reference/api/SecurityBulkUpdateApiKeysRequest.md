@@ -1,4 +1,4 @@
-## Interface `SecurityBulkUpdateApiKeysRequest`
+# `SecurityBulkUpdateApiKeysRequest` [interface-SecurityBulkUpdateApiKeysRequest]
 
 | Name | Type | Description |
 | - | - | - |

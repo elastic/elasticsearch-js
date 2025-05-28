@@ -1,4 +1,4 @@
-## Interface `ConnectorGreaterThanValidation`
+# `ConnectorGreaterThanValidation` [interface-ConnectorGreaterThanValidation]
 
 | Name | Type | Description |
 | - | - | - |

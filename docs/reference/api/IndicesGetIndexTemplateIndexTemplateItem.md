@@ -1,4 +1,4 @@
-## Interface `IndicesGetIndexTemplateIndexTemplateItem`
+# `IndicesGetIndexTemplateIndexTemplateItem` [interface-IndicesGetIndexTemplateIndexTemplateItem]
 
 | Name | Type | Description |
 | - | - | - |

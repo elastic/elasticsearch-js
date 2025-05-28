@@ -1,4 +1,4 @@
-## Interface `IndicesResolveIndexResolveIndexDataStreamsItem`
+# `IndicesResolveIndexResolveIndexDataStreamsItem` [interface-IndicesResolveIndexResolveIndexDataStreamsItem]
 
 | Name | Type | Description |
 | - | - | - |

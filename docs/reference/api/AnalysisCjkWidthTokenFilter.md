@@ -1,4 +1,4 @@
-## Interface `AnalysisCjkWidthTokenFilter`
+# `AnalysisCjkWidthTokenFilter` [interface-AnalysisCjkWidthTokenFilter]
 
 | Name | Type | Description |
 | - | - | - |

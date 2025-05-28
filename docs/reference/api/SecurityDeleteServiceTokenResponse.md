@@ -1,4 +1,4 @@
-## Interface `SecurityDeleteServiceTokenResponse`
+# `SecurityDeleteServiceTokenResponse` [interface-SecurityDeleteServiceTokenResponse]
 
 | Name | Type | Description |
 | - | - | - |

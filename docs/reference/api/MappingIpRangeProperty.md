@@ -1,4 +1,4 @@
-## Interface `MappingIpRangeProperty`
+# `MappingIpRangeProperty` [interface-MappingIpRangeProperty]
 
 | Name | Type | Description |
 | - | - | - |

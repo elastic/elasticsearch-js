@@ -1,4 +1,4 @@
-## Interface `NodesCpu`
+# `NodesCpu` [interface-NodesCpu]
 
 | Name | Type | Description |
 | - | - | - |

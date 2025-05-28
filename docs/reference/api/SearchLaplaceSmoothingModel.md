@@ -1,4 +1,4 @@
-## Interface `SearchLaplaceSmoothingModel`
+# `SearchLaplaceSmoothingModel` [interface-SearchLaplaceSmoothingModel]
 
 | Name | Type | Description |
 | - | - | - |

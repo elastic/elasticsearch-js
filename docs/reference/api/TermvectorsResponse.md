@@ -1,4 +1,4 @@
-## Interface `TermvectorsResponse`
+# `TermvectorsResponse` [interface-TermvectorsResponse]
 
 | Name | Type | Description |
 | - | - | - |

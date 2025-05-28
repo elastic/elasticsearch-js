@@ -1,4 +1,4 @@
-## Interface `NodesHttpRoute`
+# `NodesHttpRoute` [interface-NodesHttpRoute]
 
 | Name | Type | Description |
 | - | - | - |

@@ -1,4 +1,4 @@
-## Interface `IndicesGetMappingIndexMappingRecord`
+# `IndicesGetMappingIndexMappingRecord` [interface-IndicesGetMappingIndexMappingRecord]
 
 | Name | Type | Description |
 | - | - | - |

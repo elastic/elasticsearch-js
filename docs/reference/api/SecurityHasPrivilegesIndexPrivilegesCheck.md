@@ -1,4 +1,4 @@
-## Interface `SecurityHasPrivilegesIndexPrivilegesCheck`
+# `SecurityHasPrivilegesIndexPrivilegesCheck` [interface-SecurityHasPrivilegesIndexPrivilegesCheck]
 
 | Name | Type | Description |
 | - | - | - |

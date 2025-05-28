@@ -1,4 +1,4 @@
-## Interface `EnrichSummary`
+# `EnrichSummary` [interface-EnrichSummary]
 
 | Name | Type | Description |
 | - | - | - |

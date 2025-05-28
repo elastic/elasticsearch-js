@@ -1,4 +1,4 @@
-## Interface `KnnSearch`
+# `KnnSearch` [interface-KnnSearch]
 
 | Name | Type | Description |
 | - | - | - |

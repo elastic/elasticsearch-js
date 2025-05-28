@@ -1,4 +1,4 @@
-## Interface `InferencePutCohereRequest`
+# `InferencePutCohereRequest` [interface-InferencePutCohereRequest]
 
 | Name | Type | Description |
 | - | - | - |

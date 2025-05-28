@@ -1,4 +1,4 @@
-## Interface `WatcherSearchInputRequestDefinition`
+# `WatcherSearchInputRequestDefinition` [interface-WatcherSearchInputRequestDefinition]
 
 | Name | Type | Description |
 | - | - | - |

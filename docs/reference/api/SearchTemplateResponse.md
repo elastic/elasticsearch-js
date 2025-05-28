@@ -1,4 +1,4 @@
-## Interface `SearchTemplateResponse`
+# `SearchTemplateResponse` [interface-SearchTemplateResponse]
 
 | Name | Type | Description |
 | - | - | - |

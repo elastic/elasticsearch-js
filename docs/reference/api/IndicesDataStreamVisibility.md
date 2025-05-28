@@ -1,4 +1,4 @@
-## Interface `IndicesDataStreamVisibility`
+# `IndicesDataStreamVisibility` [interface-IndicesDataStreamVisibility]
 
 | Name | Type | Description |
 | - | - | - |

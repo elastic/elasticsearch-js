@@ -1,4 +1,4 @@
-## Interface `SearchSuggestBase`
+# `SearchSuggestBase` [interface-SearchSuggestBase]
 
 | Name | Type | Description |
 | - | - | - |

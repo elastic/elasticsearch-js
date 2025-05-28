@@ -1,4 +1,4 @@
-## Interface `MsearchRequest`
+# `MsearchRequest` [interface-MsearchRequest]
 
 | Name | Type | Description |
 | - | - | - |

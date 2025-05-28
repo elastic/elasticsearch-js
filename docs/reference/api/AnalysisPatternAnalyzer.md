@@ -1,4 +1,4 @@
-## Interface `AnalysisPatternAnalyzer`
+# `AnalysisPatternAnalyzer` [interface-AnalysisPatternAnalyzer]
 
 | Name | Type | Description |
 | - | - | - |
