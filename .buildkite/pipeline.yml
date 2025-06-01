@@ -25,7 +25,7 @@ steps:
     continue_on_failure: true
   - label: ":junit: Test results"
     plugins:
-      - junit-annotate#v2.6.0:
+      - junit-annotate#v2.7.0:
           artifacts: "junit-output/junit-*.xml"
           job-uuid-file-pattern: "junit-(.*).xml"
           fail-build-on-error: true
