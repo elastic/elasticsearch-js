@@ -21908,7 +21908,7 @@ export interface InferenceAzureOpenAITaskSettings {
 
 export type InferenceAzureOpenAITaskType = 'completion' | 'text_embedding'
 
-export type InferenceCohereEmbeddingType = 'byte' | 'float' | 'int8'
+export type InferenceCohereEmbeddingType = 'binary' | 'bit' | 'byte' | 'float' | 'int8'
 
 export type InferenceCohereInputType = 'classification' | 'clustering' | 'ingest' | 'search'
 
@@ -21922,6 +21922,8 @@ export interface InferenceCohereServiceSettings {
     * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
   api_key: string
   /** For a `text_embedding` task, the types of embeddings you want to get back.
+    * Use `binary` for binary embeddings, which are encoded as bytes with signed int8 precision.
+    * Use `bit` for binary embeddings, which are encoded as bytes with signed int8 precision (this is a synonym of `binary`).
     * Use `byte` for signed int8 embeddings (this is a synonym of `int8`).
     * Use `float` for the default float embeddings.
     * Use `int8` for signed int8 embeddings. */
@@ -22189,6 +22191,13 @@ export interface InferenceInferenceEndpointInfo extends InferenceInferenceEndpoi
   task_type: InferenceTaskType
 }
 
+export interface InferenceInferenceEndpointInfoAlibabaCloudAI extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeAlibabaCloudAI
+}
+
 export interface InferenceInferenceEndpointInfoJinaAi extends InferenceInferenceEndpoint {
   /** The inference Id */
   inference_id: string
@@ -22377,6 +22386,8 @@ export type InferenceSparseVector = Record<string, float>
 export type InferenceTaskSettings = any
 
 export type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank' | 'completion' | 'chat_completion'
+
+export type InferenceTaskTypeAlibabaCloudAI = 'text_embedding' | 'rerank' | 'completion' | 'sparse_embedding'
 
 export type InferenceTaskTypeJinaAi = 'text_embedding' | 'rerank'
 
@@ -22604,7 +22615,7 @@ export interface InferencePutAlibabacloudRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, alibabacloud_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutAlibabacloudResponse = InferenceInferenceEndpointInfo
+export type InferencePutAlibabacloudResponse = InferenceInferenceEndpointInfoAlibabaCloudAI
 
 export interface InferencePutAmazonbedrockRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
