@@ -9359,8 +9359,6 @@ export interface QueryDslRangeQueryBase<T = unknown> extends QueryDslQueryBase {
   lt?: T
   /** Less than or equal to. */
   lte?: T
-  from?: T | null
-  to?: T | null
 }
 
 export type QueryDslRangeRelation = 'within' | 'contains' | 'intersects'
@@ -22110,6 +22108,13 @@ export interface InferenceInferenceEndpointInfo extends InferenceInferenceEndpoi
   task_type: InferenceTaskType
 }
 
+export interface InferenceInferenceEndpointInfoAlibabaCloudAI extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeAlibabaCloudAI
+}
+
 export interface InferenceInferenceEndpointInfoJinaAi extends InferenceInferenceEndpoint {
   /** The inference Id */
   inference_id: string
@@ -22298,6 +22303,8 @@ export type InferenceSparseVector = Record<string, float>
 export type InferenceTaskSettings = any
 
 export type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank' | 'completion' | 'chat_completion'
+
+export type InferenceTaskTypeAlibabaCloudAI = 'text_embedding' | 'rerank' | 'completion' | 'sparse_embedding'
 
 export type InferenceTaskTypeJinaAi = 'text_embedding' | 'rerank'
 
@@ -22525,7 +22532,7 @@ export interface InferencePutAlibabacloudRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, alibabacloud_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutAlibabacloudResponse = InferenceInferenceEndpointInfo
+export type InferencePutAlibabacloudResponse = InferenceInferenceEndpointInfoAlibabaCloudAI
 
 export interface InferencePutAmazonbedrockRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
