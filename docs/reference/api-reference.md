@@ -1651,7 +1651,7 @@ client.search({ ... })
 - **`profile` (Optional, boolean)**: Set to `true` to return detailed timing information about the execution of individual components in a search request. NOTE: This is a debugging tool and adds significant overhead to search execution.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The search definition using the Query DSL.
 - **`rescore` (Optional, { window_size, query, learning_to_rank } \| { window_size, query, learning_to_rank }[])**: Can be used to improve precision by reordering just the top (for example 100 - 500) documents returned by the `query` and `post_filter` phases.
-- **`retriever` (Optional, { standard, knn, rrf, text_similarity_reranker, rule })**: A retriever is a specification to describe top documents returned from a search. A retriever replaces other elements of the search API that also return top documents such as `query` and `knn`.
+- **`retriever` (Optional, { standard, knn, rrf, text_similarity_reranker, rule, rescorer, linear, pinned })**: A retriever is a specification to describe top documents returned from a search. A retriever replaces other elements of the search API that also return top documents such as `query` and `knn`.
 - **`script_fields` (Optional, Record<string, { script, ignore_failure }>)**: Retrieve a script evaluation (based on different fields) for each hit.
 - **`search_after` (Optional, number \| number \| string \| boolean \| null[])**: Used to retrieve the next page of hits using a set of sort values from the previous page.
 - **`size` (Optional, number)**: The number of hits to return, which must not be negative. By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters. To page through more hits, use the `search_after` property.
@@ -5818,14 +5818,22 @@ client.indices.deleteDataStream({ name })
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match. Supports a list of values,such as `open,hidden`.
 
 ## client.indices.deleteDataStreamOptions [_indices.delete_data_stream_options]
-Deletes the data stream options of the selected data streams.
+Delete data stream options.
+Removes the data stream options from a data stream.
 
 [Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
 
 ```ts
-client.indices.deleteDataStreamOptions()
+client.indices.deleteDataStreamOptions({ name })
 ```
 
+### Arguments [_arguments_indices.delete_data_stream_options]
+
+#### Request (object) [_request_indices.delete_data_stream_options]
+- **`name` (string \| string[])**: A list of data streams of which the data stream options will be deleted; use `*` to get all data streams
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether wildcard expressions should get expanded to open or closed indices (default: open)
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
+- **`timeout` (Optional, string \| -1 \| 0)**: Explicit timestamp for the document
 
 ## client.indices.deleteIndexTemplate [_indices.delete_index_template]
 Delete an index template.
@@ -6286,14 +6294,45 @@ Supports a list of values, such as `open,hidden`.
 - **`verbose` (Optional, boolean)**: Whether the maximum timestamp for each data stream should be calculated and returned.
 
 ## client.indices.getDataStreamOptions [_indices.get_data_stream_options]
-Returns the data stream options of the selected data streams.
+Get data stream options.
+
+Get the data stream options configuration of one or more data streams.
 
 [Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
 
 ```ts
-client.indices.getDataStreamOptions()
+client.indices.getDataStreamOptions({ name })
 ```
 
+### Arguments [_arguments_indices.get_data_stream_options]
+
+#### Request (object) [_request_indices.get_data_stream_options]
+- **`name` (string \| string[])**: List of data streams to limit the request.
+Supports wildcards (`*`).
+To target all data streams, omit this parameter or use `*` or `_all`.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match.
+Supports a list of values, such as `open,hidden`.
+Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+
+## client.indices.getDataStreamSettings [_indices.get_data_stream_settings]
+Get data stream settings.
+
+Get setting information for one or more data streams.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-settings)
+
+```ts
+client.indices.getDataStreamSettings({ name })
+```
+
+### Arguments [_arguments_indices.get_data_stream_settings]
+
+#### Request (object) [_request_indices.get_data_stream_settings]
+- **`name` (string \| string[])**: A list of data streams or data stream patterns. Supports wildcards (`*`).
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node. If no response is
+received before the timeout expires, the request fails and returns an
+error.
 
 ## client.indices.getFieldMapping [_indices.get_field_mapping]
 Get mapping definitions.
@@ -6651,14 +6690,58 @@ error.
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.putDataStreamOptions [_indices.put_data_stream_options]
-Updates the data stream options of the selected data streams.
+Update data stream options.
+Update the data stream options of the specified data streams.
 
 [Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
 
 ```ts
-client.indices.putDataStreamOptions()
+client.indices.putDataStreamOptions({ name })
 ```
 
+### Arguments [_arguments_indices.put_data_stream_options]
+
+#### Request (object) [_request_indices.put_data_stream_options]
+- **`name` (string \| string[])**: List of data streams used to limit the request.
+Supports wildcards (`*`).
+To target all data streams use `*` or `_all`.
+- **`failure_store` (Optional, { enabled, lifecycle })**: If defined, it will update the failure store configuration of every data stream resolved by the name expression.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match.
+Supports a list of values, such as `open,hidden`.
+Valid values are: `all`, `hidden`, `open`, `closed`, `none`.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is
+received before the timeout expires, the request fails and returns an
+error.
+- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
+
+## client.indices.putDataStreamSettings [_indices.put_data_stream_settings]
+Update data stream settings.
+
+This API can be used to override settings on specific data streams. These overrides will take precedence over what
+is specified in the template that the data stream matches. To prevent your data stream from getting into an invalid state,
+only certain settings are allowed. If possible, the setting change is applied to all
+backing indices. Otherwise, it will be applied when the data stream is next rolled over.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-settings)
+
+```ts
+client.indices.putDataStreamSettings({ name })
+```
+
+### Arguments [_arguments_indices.put_data_stream_settings]
+
+#### Request (object) [_request_indices.put_data_stream_settings]
+- **`name` (string \| string[])**: A list of data streams or data stream patterns.
+- **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })**
+- **`dry_run` (Optional, boolean)**: If `true`, the request does not actually change the settings on any data streams or indices. Instead, it
+simulates changing the settings and reports back to the user what would have happened had these settings
+actually been applied.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node. If no response is
+received before the timeout expires, the request fails and returns an
+error.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response. If no response is received before the
+ timeout expires, the request fails and returns an error.
 
 ## client.indices.putIndexTemplate [_indices.put_index_template]
 Create or update an index template.
@@ -6812,8 +6895,44 @@ Changes dynamic index settings in real time.
 For data streams, index setting changes are applied to all backing indices by default.
 
 To revert a setting to the default value, use a null value.
-The list of per-index settings that can be updated dynamically on live indices can be found in index module documentation.
+The list of per-index settings that can be updated dynamically on live indices can be found in index settings documentation.
 To preserve existing settings from being updated, set the `preserve_existing` parameter to `true`.
+
+ There are multiple valid ways to represent index settings in the request body. You can specify only the setting, for example:
+
+```
+{
+  "number_of_replicas": 1
+}
+```
+
+Or you can use an `index` setting object:
+```
+{
+  "index": {
+    "number_of_replicas": 1
+  }
+}
+```
+
+Or you can use dot annotation:
+```
+{
+  "index.number_of_replicas": 1
+}
+```
+
+Or you can embed any of the aforementioned options in a `settings` object. For example:
+
+```
+{
+  "settings": {
+    "index": {
+      "number_of_replicas": 1
+    }
+  }
+}
+```
 
 NOTE: You can only define new analyzers on closed indices.
 To add an analyzer, you must close the index, define the analyzer, and reopen the index.
@@ -7527,11 +7646,8 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ## client.inference.chatCompletionUnified [_inference.chat_completion_unified]
 Perform chat completion inference
 
-The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. 
+The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation.
 It only works with the `chat_completion` task type for `openai` and `elastic` inference services.
-
-IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face.
-For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
 
 NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.
 The Chat completion inference API and the Stream inference API differ in their response structure and capabilities.
@@ -7904,7 +8020,7 @@ client.inference.putGooglevertexai({ task_type, googlevertexai_inference_id, ser
 ### Arguments [_arguments_inference.put_googlevertexai]
 
 #### Request (object) [_request_inference.put_googlevertexai]
-- **`task_type` (Enum("rerank" \| "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("rerank" \| "text_embedding" \| "completion" \| "chat_completion"))**: The type of the inference task that the model will perform.
 - **`googlevertexai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("googlevertexai"))**: The type of service supported for the specified task type. In this case, `googlevertexai`.
 - **`service_settings` ({ location, model_id, project_id, rate_limit, service_account_json })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.

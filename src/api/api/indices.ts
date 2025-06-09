@@ -214,7 +214,11 @@ export default class Indices {
           'name'
         ],
         body: [],
-        query: []
+        query: [
+          'expand_wildcards',
+          'master_timeout',
+          'timeout'
+        ]
       },
       'indices.delete_index_template': {
         path: [
@@ -420,14 +424,19 @@ export default class Indices {
           'name'
         ],
         body: [],
-        query: []
+        query: [
+          'expand_wildcards',
+          'master_timeout'
+        ]
       },
       'indices.get_data_stream_settings': {
         path: [
           'name'
         ],
         body: [],
-        query: []
+        query: [
+          'master_timeout'
+        ]
       },
       'indices.get_field_mapping': {
         path: [
@@ -584,15 +593,27 @@ export default class Indices {
         path: [
           'name'
         ],
-        body: [],
-        query: []
+        body: [
+          'failure_store'
+        ],
+        query: [
+          'expand_wildcards',
+          'master_timeout',
+          'timeout'
+        ]
       },
       'indices.put_data_stream_settings': {
         path: [
           'name'
         ],
-        body: [],
-        query: []
+        body: [
+          'settings'
+        ],
+        query: [
+          'dry_run',
+          'master_timeout',
+          'timeout'
+        ]
       },
       'indices.put_index_template': {
         path: [
@@ -1600,13 +1621,13 @@ export default class Indices {
   }
 
   /**
-    * Deletes the data stream options of the selected data streams.
+    * Delete data stream options. Removes the data stream options from a data stream.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html | Elasticsearch API documentation}
     */
-  async deleteDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async deleteDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async deleteDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async deleteDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async deleteDataStreamOptions (this: That, params: T.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataStreamOptionsResponse>
+  async deleteDataStreamOptions (this: That, params: T.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteDataStreamOptionsResponse, unknown>>
+  async deleteDataStreamOptions (this: That, params: T.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteDataStreamOptionsResponse>
+  async deleteDataStreamOptions (this: That, params: T.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this.acceptedParams['indices.delete_data_stream_options']
@@ -1624,11 +1645,11 @@ export default class Indices {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -2458,13 +2479,13 @@ export default class Indices {
   }
 
   /**
-    * Returns the data stream options of the selected data streams.
+    * Get data stream options. Get the data stream options configuration of one or more data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html | Elasticsearch API documentation}
     */
-  async getDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getDataStreamOptions (this: That, params: T.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamOptionsResponse>
+  async getDataStreamOptions (this: That, params: T.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataStreamOptionsResponse, unknown>>
+  async getDataStreamOptions (this: That, params: T.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataStreamOptionsResponse>
+  async getDataStreamOptions (this: That, params: T.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this.acceptedParams['indices.get_data_stream_options']
@@ -2482,11 +2503,11 @@ export default class Indices {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -2503,13 +2524,13 @@ export default class Indices {
   }
 
   /**
-    * Gets a data stream's settings
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
+    * Get data stream settings. Get setting information for one or more data streams.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-settings | Elasticsearch API documentation}
     */
-  async getDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getDataStreamSettings (this: That, params: T.IndicesGetDataStreamSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamSettingsResponse>
+  async getDataStreamSettings (this: That, params: T.IndicesGetDataStreamSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataStreamSettingsResponse, unknown>>
+  async getDataStreamSettings (this: That, params: T.IndicesGetDataStreamSettingsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataStreamSettingsResponse>
+  async getDataStreamSettings (this: That, params: T.IndicesGetDataStreamSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this.acceptedParams['indices.get_data_stream_settings']
@@ -2527,11 +2548,11 @@ export default class Indices {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -3220,15 +3241,17 @@ export default class Indices {
   }
 
   /**
-    * Updates the data stream options of the selected data streams.
+    * Update data stream options. Update the data stream options of the specified data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html | Elasticsearch API documentation}
     */
-  async putDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async putDataStreamOptions (this: That, params: T.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataStreamOptionsResponse>
+  async putDataStreamOptions (this: That, params: T.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutDataStreamOptionsResponse, unknown>>
+  async putDataStreamOptions (this: That, params: T.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<T.IndicesPutDataStreamOptionsResponse>
+  async putDataStreamOptions (this: That, params: T.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this.acceptedParams['indices.put_data_stream_options']
 
     const userQuery = params?.querystring
@@ -3244,12 +3267,22 @@ export default class Indices {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -3265,36 +3298,38 @@ export default class Indices {
   }
 
   /**
-    * Updates a data stream's settings
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
+    * Update data stream settings. This API can be used to override settings on specific data streams. These overrides will take precedence over what is specified in the template that the data stream matches. To prevent your data stream from getting into an invalid state, only certain settings are allowed. If possible, the setting change is applied to all backing indices. Otherwise, it will be applied when the data stream is next rolled over.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-settings | Elasticsearch API documentation}
     */
-  async putDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async putDataStreamSettings (this: That, params: T.IndicesPutDataStreamSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataStreamSettingsResponse>
+  async putDataStreamSettings (this: That, params: T.IndicesPutDataStreamSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutDataStreamSettingsResponse, unknown>>
+  async putDataStreamSettings (this: That, params: T.IndicesPutDataStreamSettingsRequest, options?: TransportRequestOptions): Promise<T.IndicesPutDataStreamSettingsResponse>
+  async putDataStreamSettings (this: That, params: T.IndicesPutDataStreamSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this.acceptedParams['indices.put_data_stream_settings']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
-    let body: Record<string, any> | string | undefined
-    const userBody = params?.body
-    if (userBody != null) {
-      if (typeof userBody === 'string') {
-        body = userBody
-      } else {
-        body = { ...userBody }
-      }
-    }
-
-    params = params ?? {}
+    let body: any = params.body ?? undefined
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -3424,7 +3459,7 @@ export default class Indices {
   }
 
   /**
-    * Update index settings. Changes dynamic index settings in real time. For data streams, index setting changes are applied to all backing indices by default. To revert a setting to the default value, use a null value. The list of per-index settings that can be updated dynamically on live indices can be found in index module documentation. To preserve existing settings from being updated, set the `preserve_existing` parameter to `true`. NOTE: You can only define new analyzers on closed indices. To add an analyzer, you must close the index, define the analyzer, and reopen the index. You cannot close the write index of a data stream. To update the analyzer for a data stream's write index and future backing indices, update the analyzer in the index template used by the stream. Then roll over the data stream to apply the new analyzer to the stream's write index and future backing indices. This affects searches and any new data added to the stream after the rollover. However, it does not affect the data stream's backing indices or their existing data. To change the analyzer for existing backing indices, you must create a new data stream and reindex your data into it.
+    * Update index settings. Changes dynamic index settings in real time. For data streams, index setting changes are applied to all backing indices by default. To revert a setting to the default value, use a null value. The list of per-index settings that can be updated dynamically on live indices can be found in index settings documentation. To preserve existing settings from being updated, set the `preserve_existing` parameter to `true`. There are multiple valid ways to represent index settings in the request body. You can specify only the setting, for example: ``` { "number_of_replicas": 1 } ``` Or you can use an `index` setting object: ``` { "index": { "number_of_replicas": 1 } } ``` Or you can use dot annotation: ``` { "index.number_of_replicas": 1 } ``` Or you can embed any of the aforementioned options in a `settings` object. For example: ``` { "settings": { "index": { "number_of_replicas": 1 } } } ``` NOTE: You can only define new analyzers on closed indices. To add an analyzer, you must close the index, define the analyzer, and reopen the index. You cannot close the write index of a data stream. To update the analyzer for a data stream's write index and future backing indices, update the analyzer in the index template used by the stream. Then roll over the data stream to apply the new analyzer to the stream's write index and future backing indices. This affects searches and any new data added to the stream after the rollover. However, it does not affect the data stream's backing indices or their existing data. To change the analyzer for existing backing indices, you must create a new data stream and reindex your data into it.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-settings | Elasticsearch API documentation}
     */
   async putSettings (this: That, params: T.IndicesPutSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutSettingsResponse>
