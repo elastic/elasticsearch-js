@@ -3868,7 +3868,7 @@ export interface ErrorCauseKeys {
   /** The type of error */
   type: string
   /** A human-readable explanation of the error, in English. */
-  reason?: string
+  reason?: string | null
   /** The server stack trace. Present only if the `error_trace=true` parameter was sent with the request. */
   stack_trace?: string
   caused_by?: ErrorCause
@@ -4060,6 +4060,12 @@ export interface InlineGetKeys<TDocument = unknown> {
 export type InlineGet<TDocument = unknown> = InlineGetKeys<TDocument>
 & { [property: string]: any }
 
+export interface InnerRetriever {
+  retriever: RetrieverContainer
+  weight: float
+  normalizer: ScoreNormalizer
+}
+
 export type Ip = string
 
 export interface KnnQuery extends QueryDslQueryBase {
@@ -4134,6 +4140,12 @@ export interface LatLonGeoLocation {
 export type Level = 'cluster' | 'indices' | 'shards'
 
 export type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
+
+export interface LinearRetriever extends RetrieverBase {
+  /** Inner retrievers. */
+  retrievers?: InnerRetriever[]
+  rank_window_size: integer
+}
 
 export type MapboxVectorTiles = ArrayBuffer
 
@@ -4230,6 +4242,14 @@ export type OpType = 'index' | 'create'
 export type Password = string
 
 export type Percentage = string | float
+
+export interface PinnedRetriever extends RetrieverBase {
+  /** Inner retriever. */
+  retriever: RetrieverContainer
+  ids?: string[]
+  docs?: SpecifiedDocument[]
+  rank_window_size: integer
+}
 
 export type PipelineName = string
 
@@ -4330,6 +4350,12 @@ export interface RescoreVector {
   oversample: float
 }
 
+export interface RescorerRetriever extends RetrieverBase {
+  /** Inner retriever. */
+  retriever: RetrieverContainer
+  rescore: SearchRescore | SearchRescore[]
+}
+
 export type Result = 'created' | 'updated' | 'deleted' | 'not_found' | 'noop'
 
 export interface Retries {
@@ -4344,6 +4370,8 @@ export interface RetrieverBase {
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   /** Minimum _score for matching documents. Documents with a lower _score are not included in the top documents. */
   min_score?: float
+  /** Retriever name. */
+  _name?: string
 }
 
 export interface RetrieverContainer {
@@ -4357,6 +4385,13 @@ export interface RetrieverContainer {
   text_similarity_reranker?: TextSimilarityReranker
   /** A retriever that replaces the functionality of a rule query. */
   rule?: RuleRetriever
+  /** A retriever that re-scores only the results produced by its child retriever. */
+  rescorer?: RescorerRetriever
+  /** A retriever that supports the combination of different retrievers through a weighted linear combination. */
+  linear?: LinearRetriever
+  /** A pinned retriever applies pinned documents to the underlying retriever.
+    * This retriever will rewrite to a PinnedQueryBuilder. */
+  pinned?: PinnedRetriever
 }
 
 export type Routing = string
@@ -4370,7 +4405,7 @@ export interface RrfRank {
 
 export interface RuleRetriever extends RetrieverBase {
   /** The ruleset IDs containing the rules this retriever is evaluating against. */
-  ruleset_ids: Id[]
+  ruleset_ids: Id | Id[]
   /** The match criteria that will determine if a rule in the provided rulesets should be applied. */
   match_criteria: any
   /** The retriever whose results rules should be applied to. */
@@ -4380,6 +4415,8 @@ export interface RuleRetriever extends RetrieverBase {
 }
 
 export type ScalarValue = long | double | string | boolean | null
+
+export type ScoreNormalizer = 'none' | 'minmax'
 
 export interface ScoreSort {
   order?: SortOrder
@@ -4562,6 +4599,11 @@ export type SortOptions = SortOptionsKeys
 export type SortOrder = 'asc' | 'desc'
 
 export type SortResults = FieldValue[]
+
+export interface SpecifiedDocument {
+  index?: IndexName
+  id: Id
+}
 
 export interface StandardRetriever extends RetrieverBase {
   /** Defines a query to retrieve a set of top documents. */
@@ -8673,7 +8715,7 @@ export type QueryDslGeoDistanceQuery = QueryDslGeoDistanceQueryKeys
 export type QueryDslGeoExecution = 'memory' | 'indexed'
 
 export interface QueryDslGeoGridQuery extends QueryDslQueryBase {
-  geogrid?: GeoTile
+  geotile?: GeoTile
   geohash?: GeoHash
   geohex?: GeoHexCell
 }
@@ -8777,6 +8819,8 @@ export interface QueryDslIntervalsContainer {
   match?: QueryDslIntervalsMatch
   /** Matches terms that start with a specified set of characters. */
   prefix?: QueryDslIntervalsPrefix
+  range?: QueryDslIntervalsRange
+  regexp?: QueryDslIntervalsRegexp
   /** Matches terms using a wildcard pattern. */
   wildcard?: QueryDslIntervalsWildcard
 }
@@ -8857,8 +8901,36 @@ export interface QueryDslIntervalsQuery extends QueryDslQueryBase {
   match?: QueryDslIntervalsMatch
   /** Matches terms that start with a specified set of characters. */
   prefix?: QueryDslIntervalsPrefix
+  range?: QueryDslIntervalsRange
+  regexp?: QueryDslIntervalsRegexp
   /** Matches terms using a wildcard pattern. */
   wildcard?: QueryDslIntervalsWildcard
+}
+
+export interface QueryDslIntervalsRange {
+  /** Analyzer used to analyze the `prefix`. */
+  analyzer?: string
+  /** Lower term, either gte or gt must be provided. */
+  gte?: string
+  /** Lower term, either gte or gt must be provided. */
+  gt?: string
+  /** Upper term, either lte or lt must be provided. */
+  lte?: string
+  /** Upper term, either lte or lt must be provided. */
+  lt?: string
+  /** If specified, match intervals from this field rather than the top-level field.
+    * The `prefix` is normalized using the search analyzer from this field, unless `analyzer` is specified separately. */
+  use_field?: Field
+}
+
+export interface QueryDslIntervalsRegexp {
+  /** Analyzer used to analyze the `prefix`. */
+  analyzer?: string
+  /** Regex pattern. */
+  pattern: string
+  /** If specified, match intervals from this field rather than the top-level field.
+    * The `prefix` is normalized using the search analyzer from this field, unless `analyzer` is specified separately. */
+  use_field?: Field
 }
 
 export interface QueryDslIntervalsWildcard {
@@ -9415,7 +9487,8 @@ export interface QueryDslRegexpQuery extends QueryDslQueryBase {
 
 export interface QueryDslRuleQuery extends QueryDslQueryBase {
   organic: QueryDslQueryContainer
-  ruleset_ids: Id[]
+  ruleset_ids?: Id | Id[]
+  ruleset_id?: string
   match_criteria: any
 }
 
@@ -22115,11 +22188,109 @@ export interface InferenceInferenceEndpointInfoAlibabaCloudAI extends InferenceI
   task_type: InferenceTaskTypeAlibabaCloudAI
 }
 
+export interface InferenceInferenceEndpointInfoAmazonBedrock extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeAmazonBedrock
+}
+
+export interface InferenceInferenceEndpointInfoAnthropic extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeAnthropic
+}
+
+export interface InferenceInferenceEndpointInfoAzureAIStudio extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeAzureAIStudio
+}
+
+export interface InferenceInferenceEndpointInfoAzureOpenAI extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeAzureOpenAI
+}
+
+export interface InferenceInferenceEndpointInfoCohere extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeCohere
+}
+
+export interface InferenceInferenceEndpointInfoELSER extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeELSER
+}
+
+export interface InferenceInferenceEndpointInfoElasticsearch extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeElasticsearch
+}
+
+export interface InferenceInferenceEndpointInfoGoogleAIStudio extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeGoogleAIStudio
+}
+
+export interface InferenceInferenceEndpointInfoGoogleVertexAI extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeGoogleVertexAI
+}
+
+export interface InferenceInferenceEndpointInfoHuggingFace extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeHuggingFace
+}
+
 export interface InferenceInferenceEndpointInfoJinaAi extends InferenceInferenceEndpoint {
   /** The inference Id */
   inference_id: string
   /** The task type */
   task_type: InferenceTaskTypeJinaAi
+}
+
+export interface InferenceInferenceEndpointInfoMistral extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeMistral
+}
+
+export interface InferenceInferenceEndpointInfoOpenAI extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeOpenAI
+}
+
+export interface InferenceInferenceEndpointInfoVoyageAI extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeVoyageAI
+}
+
+export interface InferenceInferenceEndpointInfoWatsonx extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeWatsonx
 }
 
 export interface InferenceInferenceResult {
@@ -22306,7 +22477,35 @@ export type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank'
 
 export type InferenceTaskTypeAlibabaCloudAI = 'text_embedding' | 'rerank' | 'completion' | 'sparse_embedding'
 
+export type InferenceTaskTypeAmazonBedrock = 'text_embedding' | 'completion'
+
+export type InferenceTaskTypeAnthropic = 'completion'
+
+export type InferenceTaskTypeAzureAIStudio = 'text_embedding' | 'completion'
+
+export type InferenceTaskTypeAzureOpenAI = 'text_embedding' | 'completion'
+
+export type InferenceTaskTypeCohere = 'text_embedding' | 'rerank' | 'completion'
+
+export type InferenceTaskTypeELSER = 'sparse_embedding'
+
+export type InferenceTaskTypeElasticsearch = 'sparse_embedding' | 'text_embedding' | 'rerank'
+
+export type InferenceTaskTypeGoogleAIStudio = 'text_embedding' | 'completion'
+
+export type InferenceTaskTypeGoogleVertexAI = 'text_embedding' | 'rerank'
+
+export type InferenceTaskTypeHuggingFace = 'text_embedding'
+
 export type InferenceTaskTypeJinaAi = 'text_embedding' | 'rerank'
+
+export type InferenceTaskTypeMistral = 'text_embedding'
+
+export type InferenceTaskTypeOpenAI = 'text_embedding' | 'chat_completion' | 'completion'
+
+export type InferenceTaskTypeVoyageAI = 'text_embedding' | 'rerank'
+
+export type InferenceTaskTypeWatsonx = 'text_embedding'
 
 export interface InferenceTextEmbeddingByteResult {
   embedding: InferenceDenseByteVector
@@ -22554,7 +22753,7 @@ export interface InferencePutAmazonbedrockRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, amazonbedrock_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutAmazonbedrockResponse = InferenceInferenceEndpointInfo
+export type InferencePutAmazonbedrockResponse = InferenceInferenceEndpointInfoAmazonBedrock
 
 export interface InferencePutAnthropicRequest extends RequestBase {
   /** The task type.
@@ -22577,7 +22776,7 @@ export interface InferencePutAnthropicRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, anthropic_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutAnthropicResponse = InferenceInferenceEndpointInfo
+export type InferencePutAnthropicResponse = InferenceInferenceEndpointInfoAnthropic
 
 export interface InferencePutAzureaistudioRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22599,7 +22798,7 @@ export interface InferencePutAzureaistudioRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, azureaistudio_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutAzureaistudioResponse = InferenceInferenceEndpointInfo
+export type InferencePutAzureaistudioResponse = InferenceInferenceEndpointInfoAzureAIStudio
 
 export interface InferencePutAzureopenaiRequest extends RequestBase {
   /** The type of the inference task that the model will perform.
@@ -22622,7 +22821,7 @@ export interface InferencePutAzureopenaiRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, azureopenai_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutAzureopenaiResponse = InferenceInferenceEndpointInfo
+export type InferencePutAzureopenaiResponse = InferenceInferenceEndpointInfoAzureOpenAI
 
 export interface InferencePutCohereRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22645,7 +22844,7 @@ export interface InferencePutCohereRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, cohere_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutCohereResponse = InferenceInferenceEndpointInfo
+export type InferencePutCohereResponse = InferenceInferenceEndpointInfoCohere
 
 export interface InferencePutElasticsearchRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22668,7 +22867,7 @@ export interface InferencePutElasticsearchRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, elasticsearch_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutElasticsearchResponse = InferenceInferenceEndpointInfo
+export type InferencePutElasticsearchResponse = InferenceInferenceEndpointInfoElasticsearch
 
 export interface InferencePutElserRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22687,7 +22886,7 @@ export interface InferencePutElserRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, elser_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never }
 }
 
-export type InferencePutElserResponse = InferenceInferenceEndpointInfo
+export type InferencePutElserResponse = InferenceInferenceEndpointInfoELSER
 
 export interface InferencePutGoogleaistudioRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22706,7 +22905,7 @@ export interface InferencePutGoogleaistudioRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, googleaistudio_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never }
 }
 
-export type InferencePutGoogleaistudioResponse = InferenceInferenceEndpointInfo
+export type InferencePutGoogleaistudioResponse = InferenceInferenceEndpointInfoGoogleAIStudio
 
 export interface InferencePutGooglevertexaiRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22728,7 +22927,7 @@ export interface InferencePutGooglevertexaiRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, googlevertexai_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutGooglevertexaiResponse = InferenceInferenceEndpointInfo
+export type InferencePutGooglevertexaiResponse = InferenceInferenceEndpointInfoGoogleVertexAI
 
 export interface InferencePutHuggingFaceRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22747,7 +22946,7 @@ export interface InferencePutHuggingFaceRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, huggingface_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never }
 }
 
-export type InferencePutHuggingFaceResponse = InferenceInferenceEndpointInfo
+export type InferencePutHuggingFaceResponse = InferenceInferenceEndpointInfoHuggingFace
 
 export interface InferencePutJinaaiRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22789,7 +22988,7 @@ export interface InferencePutMistralRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, mistral_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never }
 }
 
-export type InferencePutMistralResponse = InferenceInferenceEndpointInfo
+export type InferencePutMistralResponse = InferenceInferenceEndpointInfoMistral
 
 export interface InferencePutOpenaiRequest extends RequestBase {
   /** The type of the inference task that the model will perform.
@@ -22812,7 +23011,7 @@ export interface InferencePutOpenaiRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, openai_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutOpenaiResponse = InferenceInferenceEndpointInfo
+export type InferencePutOpenaiResponse = InferenceInferenceEndpointInfoOpenAI
 
 export interface InferencePutVoyageaiRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22834,7 +23033,7 @@ export interface InferencePutVoyageaiRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, voyageai_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutVoyageaiResponse = InferenceInferenceEndpointInfo
+export type InferencePutVoyageaiResponse = InferenceInferenceEndpointInfoVoyageAI
 
 export interface InferencePutWatsonxRequest extends RequestBase {
   /** The task type.
@@ -22852,7 +23051,7 @@ export interface InferencePutWatsonxRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, watsonx_inference_id?: never, service?: never, service_settings?: never }
 }
 
-export type InferencePutWatsonxResponse = InferenceInferenceEndpointInfo
+export type InferencePutWatsonxResponse = InferenceInferenceEndpointInfoWatsonx
 
 export interface InferenceRerankRequest extends RequestBase {
   /** The unique identifier for the inference endpoint. */
