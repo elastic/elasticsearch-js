@@ -1734,7 +1734,7 @@ client.search({ ... })
 ** *`profile` (Optional, boolean)*: Set to `true` to return detailed timing information about the execution of individual components in a search request. NOTE: This is a debugging tool and adds significant overhead to search execution.
 ** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: The search definition using the Query DSL.
 ** *`rescore` (Optional, { window_size, query, learning_to_rank } | { window_size, query, learning_to_rank }[])*: Can be used to improve precision by reordering just the top (for example 100 - 500) documents returned by the `query` and `post_filter` phases.
-** *`retriever` (Optional, { standard, knn, rrf, text_similarity_reranker, rule })*: A retriever is a specification to describe top documents returned from a search. A retriever replaces other elements of the search API that also return top documents such as `query` and `knn`.
+** *`retriever` (Optional, { standard, knn, rrf, text_similarity_reranker, rule, rescorer, linear, pinned })*: A retriever is a specification to describe top documents returned from a search. A retriever replaces other elements of the search API that also return top documents such as `query` and `knn`.
 ** *`script_fields` (Optional, Record<string, { script, ignore_failure }>)*: Retrieve a script evaluation (based on different fields) for each hit.
 ** *`search_after` (Optional, number | number | string | boolean | null | User-defined value[])*: Used to retrieve the next page of hits using a set of sort values from the previous page.
 ** *`size` (Optional, number)*: The number of hits to return, which must not be negative. By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters. To page through more hits, use the `search_after` property.
@@ -7188,8 +7188,44 @@ Changes dynamic index settings in real time.
 For data streams, index setting changes are applied to all backing indices by default.
 
 To revert a setting to the default value, use a null value.
-The list of per-index settings that can be updated dynamically on live indices can be found in index module documentation.
+The list of per-index settings that can be updated dynamically on live indices can be found in index settings documentation.
 To preserve existing settings from being updated, set the `preserve_existing` parameter to `true`.
+
+ There are multiple valid ways to represent index settings in the request body. You can specify only the setting, for example:
+
+----
+{
+  "number_of_replicas": 1
+}
+----
+
+Or you can use an `index` setting object:
+----
+{
+  "index": {
+    "number_of_replicas": 1
+  }
+}
+----
+
+Or you can use dot annotation:
+----
+{
+  "index.number_of_replicas": 1
+}
+----
+
+Or you can embed any of the aforementioned options in a `settings` object. For example:
+
+----
+{
+  "settings": {
+    "index": {
+      "number_of_replicas": 1
+    }
+  }
+}
+----
 
 NOTE: You can only define new analyzers on closed indices.
 To add an analyzer, you must close the index, define the analyzer, and reopen the index.
@@ -7970,11 +8006,8 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ==== chat_completion_unified
 Perform chat completion inference
 
-The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. 
-It only works with the `chat_completion` task type for `openai` and `elastic` inference services.
-
-IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face.
-For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
+The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation.
+It only works with the `chat_completion` task type for `openai`, `elastic` and `googlevertexai` inference services.
 
 NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.
 The Chat completion inference API and the Stream inference API differ in their response structure and capabilities.
