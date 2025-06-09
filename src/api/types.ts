@@ -2490,7 +2490,7 @@ export interface SearchFieldSuggester {
 
 export interface SearchHighlight extends SearchHighlightBase {
   encoder?: SearchHighlighterEncoder
-  fields: Record<Field, SearchHighlightField>
+  fields: Partial<Record<Field, SearchHighlightField>> | Partial<Record<Field, SearchHighlightField>>[]
 }
 
 export interface SearchHighlightBase {
@@ -3868,7 +3868,7 @@ export interface ErrorCauseKeys {
   /** The type of error */
   type: string
   /** A human-readable explanation of the error, in English. */
-  reason?: string
+  reason?: string | null
   /** The server stack trace. Present only if the `error_trace=true` parameter was sent with the request. */
   stack_trace?: string
   caused_by?: ErrorCause
@@ -4062,6 +4062,12 @@ export interface InlineGetKeys<TDocument = unknown> {
 export type InlineGet<TDocument = unknown> = InlineGetKeys<TDocument>
 & { [property: string]: any }
 
+export interface InnerRetriever {
+  retriever: RetrieverContainer
+  weight: float
+  normalizer: ScoreNormalizer
+}
+
 export type Ip = string
 
 export interface KnnQuery extends QueryDslQueryBase {
@@ -4133,6 +4139,12 @@ export interface LatLonGeoLocation {
 export type Level = 'cluster' | 'indices' | 'shards'
 
 export type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
+
+export interface LinearRetriever extends RetrieverBase {
+  /** Inner retrievers. */
+  retrievers?: InnerRetriever[]
+  rank_window_size: integer
+}
 
 export type MapboxVectorTiles = ArrayBuffer
 
@@ -4229,6 +4241,14 @@ export type OpType = 'index' | 'create'
 export type Password = string
 
 export type Percentage = string | float
+
+export interface PinnedRetriever extends RetrieverBase {
+  /** Inner retriever. */
+  retriever: RetrieverContainer
+  ids?: string[]
+  docs?: SpecifiedDocument[]
+  rank_window_size: integer
+}
 
 export type PipelineName = string
 
@@ -4329,6 +4349,12 @@ export interface RescoreVector {
   oversample: float
 }
 
+export interface RescorerRetriever extends RetrieverBase {
+  /** Inner retriever. */
+  retriever: RetrieverContainer
+  rescore: SearchRescore | SearchRescore[]
+}
+
 export type Result = 'created' | 'updated' | 'deleted' | 'not_found' | 'noop'
 
 export interface Retries {
@@ -4343,6 +4369,8 @@ export interface RetrieverBase {
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   /** Minimum _score for matching documents. Documents with a lower _score are not included in the top documents. */
   min_score?: float
+  /** Retriever name. */
+  _name?: string
 }
 
 export interface RetrieverContainer {
@@ -4356,6 +4384,13 @@ export interface RetrieverContainer {
   text_similarity_reranker?: TextSimilarityReranker
   /** A retriever that replaces the functionality of a rule query. */
   rule?: RuleRetriever
+  /** A retriever that re-scores only the results produced by its child retriever. */
+  rescorer?: RescorerRetriever
+  /** A retriever that supports the combination of different retrievers through a weighted linear combination. */
+  linear?: LinearRetriever
+  /** A pinned retriever applies pinned documents to the underlying retriever.
+    * This retriever will rewrite to a PinnedQueryBuilder. */
+  pinned?: PinnedRetriever
 }
 
 export type Routing = string
@@ -4369,7 +4404,7 @@ export interface RrfRank {
 
 export interface RuleRetriever extends RetrieverBase {
   /** The ruleset IDs containing the rules this retriever is evaluating against. */
-  ruleset_ids: Id[]
+  ruleset_ids: Id | Id[]
   /** The match criteria that will determine if a rule in the provided rulesets should be applied. */
   match_criteria: any
   /** The retriever whose results rules should be applied to. */
@@ -4379,6 +4414,8 @@ export interface RuleRetriever extends RetrieverBase {
 }
 
 export type ScalarValue = long | double | string | boolean | null
+
+export type ScoreNormalizer = 'none' | 'minmax' | 'l2_norm'
 
 export interface ScoreSort {
   order?: SortOrder
@@ -4561,6 +4598,11 @@ export type SortOptions = SortOptionsKeys
 export type SortOrder = 'asc' | 'desc'
 
 export type SortResults = FieldValue[]
+
+export interface SpecifiedDocument {
+  index?: IndexName
+  id: Id
+}
 
 export interface StandardRetriever extends RetrieverBase {
   /** Defines a query to retrieve a set of top documents. */
@@ -8702,7 +8744,7 @@ export type QueryDslGeoDistanceQuery = QueryDslGeoDistanceQueryKeys
 export type QueryDslGeoExecution = 'memory' | 'indexed'
 
 export interface QueryDslGeoGridQuery extends QueryDslQueryBase {
-  geogrid?: GeoTile
+  geotile?: GeoTile
   geohash?: GeoHash
   geohex?: GeoHexCell
 }
@@ -8806,6 +8848,8 @@ export interface QueryDslIntervalsContainer {
   match?: QueryDslIntervalsMatch
   /** Matches terms that start with a specified set of characters. */
   prefix?: QueryDslIntervalsPrefix
+  range?: QueryDslIntervalsRange
+  regexp?: QueryDslIntervalsRegexp
   /** Matches terms using a wildcard pattern. */
   wildcard?: QueryDslIntervalsWildcard
 }
@@ -8886,8 +8930,36 @@ export interface QueryDslIntervalsQuery extends QueryDslQueryBase {
   match?: QueryDslIntervalsMatch
   /** Matches terms that start with a specified set of characters. */
   prefix?: QueryDslIntervalsPrefix
+  range?: QueryDslIntervalsRange
+  regexp?: QueryDslIntervalsRegexp
   /** Matches terms using a wildcard pattern. */
   wildcard?: QueryDslIntervalsWildcard
+}
+
+export interface QueryDslIntervalsRange {
+  /** Analyzer used to analyze the `prefix`. */
+  analyzer?: string
+  /** Lower term, either gte or gt must be provided. */
+  gte?: string
+  /** Lower term, either gte or gt must be provided. */
+  gt?: string
+  /** Upper term, either lte or lt must be provided. */
+  lte?: string
+  /** Upper term, either lte or lt must be provided. */
+  lt?: string
+  /** If specified, match intervals from this field rather than the top-level field.
+    * The `prefix` is normalized using the search analyzer from this field, unless `analyzer` is specified separately. */
+  use_field?: Field
+}
+
+export interface QueryDslIntervalsRegexp {
+  /** Analyzer used to analyze the `prefix`. */
+  analyzer?: string
+  /** Regex pattern. */
+  pattern: string
+  /** If specified, match intervals from this field rather than the top-level field.
+    * The `prefix` is normalized using the search analyzer from this field, unless `analyzer` is specified separately. */
+  use_field?: Field
 }
 
 export interface QueryDslIntervalsWildcard {
@@ -9444,7 +9516,8 @@ export interface QueryDslRegexpQuery extends QueryDslQueryBase {
 
 export interface QueryDslRuleQuery extends QueryDslQueryBase {
   organic: QueryDslQueryContainer
-  ruleset_ids: Id[]
+  ruleset_ids?: Id | Id[]
+  ruleset_id?: string
   match_criteria: any
 }
 
@@ -9728,7 +9801,7 @@ export interface QueryDslUntypedRangeQuery extends QueryDslRangeQueryBase<any> {
 
 export interface QueryDslWeightedTokensQuery extends QueryDslQueryBase {
   /** The tokens representing this query */
-  tokens: Record<string, float>
+  tokens: Partial<Record<string, float>>[]
   /** Token pruning configurations */
   pruning_config?: QueryDslTokenPruningConfig
 }
@@ -15431,6 +15504,7 @@ export interface ClusterComponentTemplateSummary {
   mappings?: MappingTypeMapping
   aliases?: Record<string, IndicesAliasDefinition>
   lifecycle?: IndicesDataStreamLifecycleWithRollover
+  data_stream_options?: IndicesDataStreamOptionsTemplate | null
 }
 
 export interface ClusterAllocationExplainAllocationDecision {
@@ -18605,6 +18679,9 @@ export interface IndicesDataStream {
   replicated?: boolean
   /** If `true`, the next write to this data stream will trigger a rollover first and the document will be indexed in the new backing index. If the rollover fails the indexing request will fail too. */
   rollover_on_write: boolean
+  /** The settings specific to this data stream that will take precedence over the settings in the matching index
+    * template. */
+  settings: IndicesIndexSettings
   /** Health status of the data stream.
     * This health status is based on the state of the primary and replica shards of the stream’s backing indices. */
   status: HealthStatus
@@ -18617,6 +18694,24 @@ export interface IndicesDataStream {
   timestamp_field: IndicesDataStreamTimestampField
   /** The index mode for the data stream that will be used for newly created backing indices. */
   index_mode?: IndicesIndexMode
+}
+
+export interface IndicesDataStreamFailureStore {
+  /** If defined, it turns the failure store on/off (`true`/`false`) for this data stream. A data stream failure store
+    * that's disabled (enabled: `false`) will redirect no new failed indices to the failure store; however, it will
+    * not remove any existing data from the failure store. */
+  enabled?: boolean
+  /** If defined, it specifies the lifecycle configuration for the failure store of this data stream. */
+  lifecycle?: IndicesFailureStoreLifecycle
+}
+
+export interface IndicesDataStreamFailureStoreTemplate {
+  /** If defined, it turns the failure store on/off (`true`/`false`) for this data stream. A data stream failure store
+    * that's disabled (enabled: `false`) will redirect no new failed indices to the failure store; however, it will
+    * not remove any existing data from the failure store. */
+  enabled?: boolean | null
+  /** If defined, it specifies the lifecycle configuration for the failure store of this data stream. */
+  lifecycle?: IndicesFailureStoreLifecycleTemplate | null
 }
 
 export interface IndicesDataStreamIndex {
@@ -18671,6 +18766,15 @@ export interface IndicesDataStreamLifecycleWithRollover extends IndicesDataStrea
   rollover?: IndicesDataStreamLifecycleRolloverConditions
 }
 
+export interface IndicesDataStreamOptions {
+  /** If defined, it specifies configuration for the failure store of this data stream. */
+  failure_store?: IndicesDataStreamFailureStore
+}
+
+export interface IndicesDataStreamOptionsTemplate {
+  failure_store?: IndicesDataStreamFailureStoreTemplate | null
+}
+
 export interface IndicesDataStreamTimestampField {
   /** Name of the timestamp field for the data stream, which must be `@timestamp`. The `@timestamp` field must be included in every document indexed to the data stream. */
   name: Field
@@ -18697,6 +18801,26 @@ export interface IndicesFailureStore {
   enabled: boolean
   indices: IndicesDataStreamIndex[]
   rollover_on_write: boolean
+}
+
+export interface IndicesFailureStoreLifecycle {
+  /** If defined, every document added to this data stream will be stored at least for this time frame.
+    * Any time after this duration the document could be deleted.
+    * When empty, every document in this data stream will be stored indefinitely. */
+  data_retention?: Duration
+  /** If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
+    * that's disabled (enabled: `false`) will have no effect on the data stream. */
+  enabled?: boolean
+}
+
+export interface IndicesFailureStoreLifecycleTemplate {
+  /** If defined, every document added to this data stream will be stored at least for this time frame.
+    * Any time after this duration the document could be deleted.
+    * When empty, every document in this data stream will be stored indefinitely. */
+  data_retention?: Duration | null
+  /** If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
+    * that's disabled (enabled: `false`) will have no effect on the data stream. */
+  enabled?: boolean
 }
 
 export interface IndicesFielddataFrequencyFilter {
@@ -18932,6 +19056,7 @@ export interface IndicesIndexTemplateSummary {
   /** Configuration options for the index. */
   settings?: IndicesIndexSettings
   lifecycle?: IndicesDataStreamLifecycleWithRollover
+  data_stream_options?: IndicesDataStreamOptionsTemplate | null
 }
 
 export interface IndicesIndexVersioning {
@@ -19674,6 +19799,23 @@ export interface IndicesDeleteDataStreamRequest extends RequestBase {
 
 export type IndicesDeleteDataStreamResponse = AcknowledgedResponseBase
 
+export interface IndicesDeleteDataStreamOptionsRequest extends RequestBase {
+  /** A comma-separated list of data streams of which the data stream options will be deleted; use `*` to get all data streams */
+  name: DataStreamNames
+  /** Whether wildcard expressions should get expanded to open or closed indices (default: open) */
+  expand_wildcards?: ExpandWildcards
+  /** Specify timeout for connection to master */
+  master_timeout?: Duration
+  /** Explicit timestamp for the document */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never }
+}
+
+export type IndicesDeleteDataStreamOptionsResponse = AcknowledgedResponseBase
+
 export interface IndicesDeleteIndexTemplateRequest extends RequestBase {
   /** Comma-separated list of index template names used to limit the request. Wildcard (*) expressions are supported. */
   name: Names
@@ -20143,6 +20285,59 @@ export interface IndicesGetDataStreamResponse {
   data_streams: IndicesDataStream[]
 }
 
+export interface IndicesGetDataStreamOptionsDataStreamWithOptions {
+  name: DataStreamName
+  options?: IndicesDataStreamOptions
+}
+
+export interface IndicesGetDataStreamOptionsRequest extends RequestBase {
+  /** Comma-separated list of data streams to limit the request.
+    * Supports wildcards (`*`).
+    * To target all data streams, omit this parameter or use `*` or `_all`. */
+  name: DataStreamNames
+  /** Type of data stream that wildcard patterns can match.
+    * Supports comma-separated values, such as `open,hidden`.
+    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+  expand_wildcards?: ExpandWildcards
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
+  master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never }
+}
+
+export interface IndicesGetDataStreamOptionsResponse {
+  data_streams: IndicesGetDataStreamOptionsDataStreamWithOptions[]
+}
+
+export interface IndicesGetDataStreamSettingsDataStreamSettings {
+  /** The name of the data stream. */
+  name: string
+  /** The settings specific to this data stream */
+  settings: IndicesIndexSettings
+  /** The settings specific to this data stream merged with the settings from its template. These `effective_settings`
+    * are the settings that will be used when a new index is created for this data stream. */
+  effective_settings: IndicesIndexSettings
+}
+
+export interface IndicesGetDataStreamSettingsRequest extends RequestBase {
+  /** A comma-separated list of data streams or data stream patterns. Supports wildcards (`*`). */
+  name: Indices
+  /** The period to wait for a connection to the master node. If no response is
+    * received before the timeout expires, the request fails and returns an
+    * error. */
+  master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
+}
+
+export interface IndicesGetDataStreamSettingsResponse {
+  data_streams: IndicesGetDataStreamSettingsDataStreamSettings[]
+}
+
 export interface IndicesGetFieldMappingRequest extends RequestBase {
   /** Comma-separated list or wildcard expression of fields used to limit returned information.
     * Supports wildcards (`*`). */
@@ -20516,6 +20711,90 @@ export interface IndicesPutDataLifecycleRequest extends RequestBase {
 }
 
 export type IndicesPutDataLifecycleResponse = AcknowledgedResponseBase
+
+export interface IndicesPutDataStreamOptionsRequest extends RequestBase {
+  /** Comma-separated list of data streams used to limit the request.
+    * Supports wildcards (`*`).
+    * To target all data streams use `*` or `_all`. */
+  name: DataStreamNames
+  /** Type of data stream that wildcard patterns can match.
+    * Supports comma-separated values, such as `open,hidden`.
+    * Valid values are: `all`, `hidden`, `open`, `closed`, `none`. */
+  expand_wildcards?: ExpandWildcards
+  /** Period to wait for a connection to the master node. If no response is
+    * received before the timeout expires, the request fails and returns an
+    * error. */
+  master_timeout?: Duration
+  /** Period to wait for a response.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  /** If defined, it will update the failure store configuration of every data stream resolved by the name expression. */
+  failure_store?: IndicesDataStreamFailureStore
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never, failure_store?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never, failure_store?: never }
+}
+
+export type IndicesPutDataStreamOptionsResponse = AcknowledgedResponseBase
+
+export interface IndicesPutDataStreamSettingsDataStreamSettingsError {
+  index: IndexName
+  /** A message explaining why the settings could not be applied to specific indices. */
+  error: string
+}
+
+export interface IndicesPutDataStreamSettingsIndexSettingResults {
+  /** The list of settings that were applied to the data stream but not to backing indices. These will be applied to
+    * the write index the next time the data stream is rolled over. */
+  applied_to_data_stream_only: string[]
+  /** The list of settings that were applied to the data stream and to all of its backing indices. These settings will
+    * also be applied to the write index the next time the data stream is rolled over. */
+  applied_to_data_stream_and_backing_indices: string[]
+  errors?: IndicesPutDataStreamSettingsDataStreamSettingsError[]
+}
+
+export interface IndicesPutDataStreamSettingsRequest extends RequestBase {
+  /** A comma-separated list of data streams or data stream patterns. */
+  name: Indices
+  /** If `true`, the request does not actually change the settings on any data streams or indices. Instead, it
+    * simulates changing the settings and reports back to the user what would have happened had these settings
+    * actually been applied. */
+  dry_run?: boolean
+  /** The period to wait for a connection to the master node. If no response is
+    * received before the timeout expires, the request fails and returns an
+    * error. */
+  master_timeout?: Duration
+  /** The period to wait for a response. If no response is received before the
+    *  timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  settings?: IndicesIndexSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, dry_run?: never, master_timeout?: never, timeout?: never, settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, dry_run?: never, master_timeout?: never, timeout?: never, settings?: never }
+}
+
+export interface IndicesPutDataStreamSettingsResponse {
+  data_streams: IndicesPutDataStreamSettingsUpdatedDataStreamSettings[]
+}
+
+export interface IndicesPutDataStreamSettingsUpdatedDataStreamSettings {
+  /** The data stream name. */
+  name: IndexName
+  /** If the settings were successfully applied to the data stream (or would have been, if running in `dry_run`
+    * mode), it is `true`. If an error occurred, it is `false`. */
+  applied_to_data_stream: boolean
+  /** A message explaining why the settings could not be applied to the data stream. */
+  error?: string
+  /** The settings that are specfic to this data stream that will override any settings from the matching index template. */
+  settings: IndicesIndexSettings
+  /** The settings that are effective on this data stream, taking into account the settings from the matching index
+    * template and the settings specific to this data stream. */
+  effective_settings: IndicesIndexSettings
+  /** Information about whether and where each setting was applied. */
+  index_settings_results: IndicesPutDataStreamSettingsIndexSettingResults
+}
 
 export interface IndicesPutIndexTemplateIndexTemplateMapping {
   /** Aliases to add.
@@ -22135,7 +22414,7 @@ export interface InferenceGoogleVertexAITaskSettings {
   top_n?: integer
 }
 
-export type InferenceGoogleVertexAITaskType = 'rerank' | 'text_embedding'
+export type InferenceGoogleVertexAITaskType = 'rerank' | 'text_embedding' | 'completion' | 'chat_completion'
 
 export interface InferenceHuggingFaceServiceSettings {
   /** A valid access token for your HuggingFace account.
@@ -22198,11 +22477,109 @@ export interface InferenceInferenceEndpointInfoAlibabaCloudAI extends InferenceI
   task_type: InferenceTaskTypeAlibabaCloudAI
 }
 
+export interface InferenceInferenceEndpointInfoAmazonBedrock extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeAmazonBedrock
+}
+
+export interface InferenceInferenceEndpointInfoAnthropic extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeAnthropic
+}
+
+export interface InferenceInferenceEndpointInfoAzureAIStudio extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeAzureAIStudio
+}
+
+export interface InferenceInferenceEndpointInfoAzureOpenAI extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeAzureOpenAI
+}
+
+export interface InferenceInferenceEndpointInfoCohere extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeCohere
+}
+
+export interface InferenceInferenceEndpointInfoELSER extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeELSER
+}
+
+export interface InferenceInferenceEndpointInfoElasticsearch extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeElasticsearch
+}
+
+export interface InferenceInferenceEndpointInfoGoogleAIStudio extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeGoogleAIStudio
+}
+
+export interface InferenceInferenceEndpointInfoGoogleVertexAI extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeGoogleVertexAI
+}
+
+export interface InferenceInferenceEndpointInfoHuggingFace extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeHuggingFace
+}
+
 export interface InferenceInferenceEndpointInfoJinaAi extends InferenceInferenceEndpoint {
   /** The inference Id */
   inference_id: string
   /** The task type */
   task_type: InferenceTaskTypeJinaAi
+}
+
+export interface InferenceInferenceEndpointInfoMistral extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeMistral
+}
+
+export interface InferenceInferenceEndpointInfoOpenAI extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeOpenAI
+}
+
+export interface InferenceInferenceEndpointInfoVoyageAI extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeVoyageAI
+}
+
+export interface InferenceInferenceEndpointInfoWatsonx extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeWatsonx
 }
 
 export interface InferenceInferenceResult {
@@ -22389,7 +22766,35 @@ export type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank'
 
 export type InferenceTaskTypeAlibabaCloudAI = 'text_embedding' | 'rerank' | 'completion' | 'sparse_embedding'
 
+export type InferenceTaskTypeAmazonBedrock = 'text_embedding' | 'completion'
+
+export type InferenceTaskTypeAnthropic = 'completion'
+
+export type InferenceTaskTypeAzureAIStudio = 'text_embedding' | 'completion'
+
+export type InferenceTaskTypeAzureOpenAI = 'text_embedding' | 'completion'
+
+export type InferenceTaskTypeCohere = 'text_embedding' | 'rerank' | 'completion'
+
+export type InferenceTaskTypeELSER = 'sparse_embedding'
+
+export type InferenceTaskTypeElasticsearch = 'sparse_embedding' | 'text_embedding' | 'rerank'
+
+export type InferenceTaskTypeGoogleAIStudio = 'text_embedding' | 'completion'
+
+export type InferenceTaskTypeGoogleVertexAI = 'text_embedding' | 'rerank'
+
+export type InferenceTaskTypeHuggingFace = 'text_embedding'
+
 export type InferenceTaskTypeJinaAi = 'text_embedding' | 'rerank'
+
+export type InferenceTaskTypeMistral = 'text_embedding'
+
+export type InferenceTaskTypeOpenAI = 'text_embedding' | 'chat_completion' | 'completion'
+
+export type InferenceTaskTypeVoyageAI = 'text_embedding' | 'rerank'
+
+export type InferenceTaskTypeWatsonx = 'text_embedding'
 
 export interface InferenceTextEmbeddingByteResult {
   embedding: InferenceDenseByteVector
@@ -22637,7 +23042,7 @@ export interface InferencePutAmazonbedrockRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, amazonbedrock_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutAmazonbedrockResponse = InferenceInferenceEndpointInfo
+export type InferencePutAmazonbedrockResponse = InferenceInferenceEndpointInfoAmazonBedrock
 
 export interface InferencePutAnthropicRequest extends RequestBase {
   /** The task type.
@@ -22660,7 +23065,7 @@ export interface InferencePutAnthropicRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, anthropic_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutAnthropicResponse = InferenceInferenceEndpointInfo
+export type InferencePutAnthropicResponse = InferenceInferenceEndpointInfoAnthropic
 
 export interface InferencePutAzureaistudioRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22682,7 +23087,7 @@ export interface InferencePutAzureaistudioRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, azureaistudio_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutAzureaistudioResponse = InferenceInferenceEndpointInfo
+export type InferencePutAzureaistudioResponse = InferenceInferenceEndpointInfoAzureAIStudio
 
 export interface InferencePutAzureopenaiRequest extends RequestBase {
   /** The type of the inference task that the model will perform.
@@ -22705,7 +23110,7 @@ export interface InferencePutAzureopenaiRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, azureopenai_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutAzureopenaiResponse = InferenceInferenceEndpointInfo
+export type InferencePutAzureopenaiResponse = InferenceInferenceEndpointInfoAzureOpenAI
 
 export interface InferencePutCohereRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22728,7 +23133,7 @@ export interface InferencePutCohereRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, cohere_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutCohereResponse = InferenceInferenceEndpointInfo
+export type InferencePutCohereResponse = InferenceInferenceEndpointInfoCohere
 
 export interface InferencePutElasticsearchRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22751,7 +23156,7 @@ export interface InferencePutElasticsearchRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, elasticsearch_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutElasticsearchResponse = InferenceInferenceEndpointInfo
+export type InferencePutElasticsearchResponse = InferenceInferenceEndpointInfoElasticsearch
 
 export interface InferencePutElserRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22770,7 +23175,7 @@ export interface InferencePutElserRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, elser_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never }
 }
 
-export type InferencePutElserResponse = InferenceInferenceEndpointInfo
+export type InferencePutElserResponse = InferenceInferenceEndpointInfoELSER
 
 export interface InferencePutGoogleaistudioRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22789,7 +23194,7 @@ export interface InferencePutGoogleaistudioRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, googleaistudio_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never }
 }
 
-export type InferencePutGoogleaistudioResponse = InferenceInferenceEndpointInfo
+export type InferencePutGoogleaistudioResponse = InferenceInferenceEndpointInfoGoogleAIStudio
 
 export interface InferencePutGooglevertexaiRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22811,7 +23216,7 @@ export interface InferencePutGooglevertexaiRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, googlevertexai_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutGooglevertexaiResponse = InferenceInferenceEndpointInfo
+export type InferencePutGooglevertexaiResponse = InferenceInferenceEndpointInfoGoogleVertexAI
 
 export interface InferencePutHuggingFaceRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22830,7 +23235,7 @@ export interface InferencePutHuggingFaceRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, huggingface_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never }
 }
 
-export type InferencePutHuggingFaceResponse = InferenceInferenceEndpointInfo
+export type InferencePutHuggingFaceResponse = InferenceInferenceEndpointInfoHuggingFace
 
 export interface InferencePutJinaaiRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22872,7 +23277,7 @@ export interface InferencePutMistralRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, mistral_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never }
 }
 
-export type InferencePutMistralResponse = InferenceInferenceEndpointInfo
+export type InferencePutMistralResponse = InferenceInferenceEndpointInfoMistral
 
 export interface InferencePutOpenaiRequest extends RequestBase {
   /** The type of the inference task that the model will perform.
@@ -22895,7 +23300,7 @@ export interface InferencePutOpenaiRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, openai_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutOpenaiResponse = InferenceInferenceEndpointInfo
+export type InferencePutOpenaiResponse = InferenceInferenceEndpointInfoOpenAI
 
 export interface InferencePutVoyageaiRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -22917,7 +23322,7 @@ export interface InferencePutVoyageaiRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, voyageai_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
-export type InferencePutVoyageaiResponse = InferenceInferenceEndpointInfo
+export type InferencePutVoyageaiResponse = InferenceInferenceEndpointInfoVoyageAI
 
 export interface InferencePutWatsonxRequest extends RequestBase {
   /** The task type.
@@ -22935,7 +23340,7 @@ export interface InferencePutWatsonxRequest extends RequestBase {
   querystring?: { [key: string]: any } & { task_type?: never, watsonx_inference_id?: never, service?: never, service_settings?: never }
 }
 
-export type InferencePutWatsonxResponse = InferenceInferenceEndpointInfo
+export type InferencePutWatsonxResponse = InferenceInferenceEndpointInfoWatsonx
 
 export interface InferenceRerankRequest extends RequestBase {
   /** The unique identifier for the inference endpoint. */
@@ -33720,6 +34125,14 @@ export interface SlmSnapshotLifecycle {
   stats: SlmStatistics
 }
 
+export interface SlmSnapshotPolicyStats {
+  policy: string
+  snapshots_taken: long
+  snapshots_failed: long
+  snapshots_deleted: long
+  snapshot_deletion_failures: long
+}
+
 export interface SlmStatistics {
   retention_deletion_time?: Duration
   retention_deletion_time_millis?: DurationValue<UnitMillis>
@@ -33830,7 +34243,7 @@ export interface SlmGetStatsResponse {
   total_snapshot_deletion_failures: long
   total_snapshots_failed: long
   total_snapshots_taken: long
-  policy_stats: string[]
+  policy_stats: SlmSnapshotPolicyStats[]
 }
 
 export interface SlmGetStatusRequest extends RequestBase {
