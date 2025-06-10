@@ -5,6 +5,7 @@
 
 import path from 'node:path'
 import fs from 'node:fs/promises'
+import { rimraf } from 'rimraf'
 import * as Extractor from '@microsoft/api-extractor-model'
 
 const header = `<!--
@@ -31,6 +32,8 @@ const header = `<!--
 
 const linkedRefs = new Set()
 const documented = new Set()
+
+const docsDir = path.join(import.meta.dirname, '..', 'docs', 'reference', 'api')
 
 function nodesToText(nodes) {
   let text = ''
@@ -138,7 +141,7 @@ function generateClass(spec) {
     code += '```typescript\n'
     code += generatePropertyType(con.excerptTokens).replace(/^constructor/, `new ${spec.displayName}`)
     code += '\n'
-    code += '```\n'
+    code += '```\n\n'
   }
 
   // generate properties
@@ -160,19 +163,33 @@ function generateClass(spec) {
     }
   }
 
+  if (spec.displayName === 'AsyncSearch') console.log(spec)
+
   // generate methods
-  const methods = spec.members.filter(m => m.kind === 'Method')
-  if (methods.length > 0) {
+  const methods = spec.members
+    .filter(m => m.kind === 'Method')
+    // condense methods with multiple signatures down to one listing
+    .reduce((a, b) => {
+      if (a[b.displayName] == null) {
+        a[b.displayName] = [b]
+      } else {
+        a[b.displayName].push(b)
+      }
+      return a
+    }, {})
+
+  if (Object.keys(methods).length > 0) {
     code += `\n## Methods [class-methods-${spec.displayName}]\n\n`
     code += '| Name | Signature | Description |\n'
     code += '| - | - | - |\n'
 
-    for (const method of methods) {
-      code += `| \`${method.displayName}\``
-      code += ` | \`${generatePropertyType(method.excerptTokens)}\``
-      const description = generateDescription(method.tsdocComment, false)
-      code += ` | ${description.length > 0 ? description : '&nbsp;'}`
-      code += ' |\n'
+    for (const method of Object.keys(methods)) {
+      // const methodInfo = methods[method]
+      code += `| \`${method}\` | client.${method}(params, transportOptions) | n/a |\n`
+      // code += ` | \`${generatePropertyType(method.excerptTokens)}\``
+      // const description = generateDescription(method.tsdocComment, false)
+      // code += ` | ${description.length > 0 ? description : '&nbsp;'}`
+      // code += ' |\n'
     }
   }
 
@@ -287,50 +304,177 @@ function generateAlias(spec) {
 //
 //   return code
 // }
+//
 
 async function write(name, code) {
-  const filePath = path.join(import.meta.dirname, '..', 'docs', 'reference', 'api', `${name}.md`)
+  const filePath = path.join(docsDir, `${name}.md`)
   await fs.writeFile(filePath, code, 'utf8')
 }
 
 async function start() {
+  // clear any existing files
+  await rimraf(docsDir)
+  await fs.mkdir(docsDir, { recursive: true })
+
   const model = new Extractor.ApiModel()
   const pkg = model.loadPackage(path.join(import.meta.dirname, '..', 'api-extractor', 'elasticsearch.api.json'))
   const entry = pkg.entryPoints[0]
 
-  for (const member of entry.members) {
-    if (member.displayName.endsWith('_2')) continue
-    switch (member.kind) {
-      case 'Class':
-        await write(member.displayName, generateClass(member))
-        break
-      case 'Interface':
-        await write(member.displayName, generateInterface(member))
-        break
-      case 'TypeAlias':
-        await write(member.displayName, generateAlias(member))
-        break
-      case 'Function':
-        if (member.fileUrlPath.startsWith('lib/api/api')) {
-          // if (member.displayName === 'CountApi') console.log(member)
-          // TODO: drop this: That stuff
-          // TODO: sub name with `client.foo.bar`
-          await write(`${member.displayName}_${member.overloadIndex ?? ''}`, generateApiFunction(member))
-          // TODO: generate rollup page for each override
-        }
-        // console.log(member)
-        // process.exit(0)
-        break
-      case 'Namespace':
-      case 'Variable':
-        break
-      default:
-        console.log('unsupported type', member.kind, member.displayName)
-        break
+  const lookup = (canonicalReference) => entry.members.find(m => m.canonicalReference.toString().startsWith(canonicalReference))
+
+  // creating our own custom tree structure to more cleanly represent the available functions as "methods" of `Client`
+  const clientEntry = lookup('@elastic/elasticsearch!Client:class')
+  const client = {
+    entry: clientEntry,
+    members: {
+      constructor: clientEntry.members.find(m => m.kind === 'Constructor'),
+      methods: {},
+      apis: {},
+      helpers: {}
     }
-    // TODO: generate rollup page that includes a whole API namespace's functions, requests, responses
+  }
+
+  for (const member of clientEntry.members.filter(m => m.kind === 'Method')) {
+    client.members.methods[member.displayName] = member
+  }
+
+  // add API functions to client
+  const api = lookup('@elastic/elasticsearch!~API:interface')
+  for (const prop of api.members.filter(m => m.kind === 'PropertySignature')) {
+    const reference = prop.excerptTokens.find(p => p.kind === 'Reference')
+    const canonicalReference = reference.canonicalReference.toString()
+
+    if (canonicalReference.endsWith(':class')) {
+      // expand out to all class methods
+      const parent = {}
+      const classEntry = lookup(canonicalReference)
+      for (const method of classEntry.members.filter(m => m.kind === 'Method')) {
+        if (parent[method.name] == null) {
+          parent[method.name] = method
+        }
+      }
+      client.members.apis[prop.name] = parent
+    } else if (canonicalReference.endsWith(':function')) {
+      // add member as a single function
+      const functionEntry = lookup(canonicalReference)
+      client.members.apis[prop.name] = functionEntry
+    }
+  }
+
+  // TODO: add helper methods to client
+  // const helpers = lookup('@elastic/elasticsearch!~Helpers:class')
+  // for (const prop of helpers.members.filter(m => m.kind === 'Method')) {
+  //   const reference = prop.excerptTokens.find(p => p.kind === 'Reference')
+  //   client.members.helpers[prop.name] = reference.canonicalReference.toString()
+  //   for (const exc of prop.excerptTokens.filter(m => m.kind === 'Reference')) {
+  //     console.log(exc.canonicalReference.toString())
+  //   }
+  // }
+
+  await renderClientDoc(client)
+  for (const apiName of Object.keys(client.members.apis)) {
+    const api = client.members.apis[apiName]
+    await renderApiDoc(apiName, api)
+  }
+
+  async function renderClientDoc(client) {
+    let code = '# Client [client]\n\n'
+
+    const { constructor } = client.members
+    code += `## Constructor\n\n`
+    code += '```typescript\n'
+    code += `new Client(`
+    code += constructor.parameters.map(renderParam).join(', ')
+    code += ')\n'
+    code += '```\n\n'
+    code += '### Arguments\n\n'
+    code += renderArgTable(constructor.parameters)
+    code += '\n'
+
+    const { methods } = client.members
+    code += `## Methods\n\n`
+    Object.keys(methods).forEach(method => {
+      code += `### \`${method}\`\n\n`
+      code += generateDescription(methods[method].tsdocComment) + '\n\n'
+
+      if (methods[method].parameters.length > 0) {
+        code += '### Arguments\n\n'
+        code += renderArgTable(methods[method].parameters)
+        // TODO: add return type
+        code += '\n'
+      }
+    })
+
+    const { apis } = client.members
+    code += `## Elasticsearch APIs\n\n`
+    Object.keys(apis).forEach(api => {
+      code += `- [\`${api}\`](./api-${api}.md)\n`
+    })
+
+    await write('Client', code)
+  }
+
+  async function renderApiDoc(name, api) {
+    let code = `# \`${name}\` [api-${name}]\n\n`
+
+    if (api.kind === 'Function') {
+      code += generateDescription(api.tsdocComment) + '\n\n'
+      // TODO: generate function code snippet
+      code += '## Arguments\n\n'
+      code += renderArgTable(api.parameters.slice(1, 3), true) + '\n'
+      // TODO: Inject `params` type definition
+      // TODO: add return type
+    } else {
+      for (const apiName of Object.keys(api)) {
+        code += `## \`${name}.${apiName}\` [api-${name}.${apiName}]\n\n`
+        // TODO: generate function code snippet
+        code += generateDescription(api[apiName].tsdocComment) + '\n\n'
+        code += '### Arguments\n\n'
+        code += renderArgTable(api[apiName].parameters.slice(1, 3), true) + '\n'
+        // TODO: Inject `params` type definition
+        // TODO: add return type
+      }
+    }
+
+    await write(`api-${name}`, code)
   }
 }
+
+function renderParam(param) {
+  const type = param.parameterTypeExcerpt.tokens.find(t => t.kind === 'Reference').text
+  return `${param.name}${param.isOptional ? '?' : ''}: ${type}`
+}
+
+function renderLinkedType(token) {
+  const type = token.text
+  return `[\`${type}\`](./${type}.md)`
+}
+
+function renderArgTable(params, apiFunction = false) {
+  let code = '| Name | Type | Description |\n'
+  code += '| - | - | - |\n'
+
+  params.forEach(p => {
+    let type = renderLinkedType(p.parameterTypeExcerpt.spannedTokens[0])
+    let desc = '&nbsp;'
+    if (apiFunction) {
+      if (p.name === 'params') {
+        desc = 'Request parameters for this API call'
+        type = type.replace(/\bT\./g, '')
+      } else if (p.name === 'options') {
+        desc = 'Overrides client HTTP request settings just for this request'
+        type = '[`TransportRequestOptions`](./TransportRequestOptions.md)'
+      }
+    } else {
+      const maybeDesc = generateDescription(p.tsdocComment)
+      desc = maybeDesc.length > 0 ? maybeDesc : desc
+    }
+    code += `| ${p.name} | ${type} | ${desc} |\n`
+  })
+
+  return code
+}
+
 
 start()
   .then(() => process.exit(0))
