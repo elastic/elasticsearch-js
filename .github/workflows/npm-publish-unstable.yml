@@ -1,0 +1,86 @@
+---
+name: Publish unstable builds to npm
+on:
+  push:
+    branches:
+      - main
+
+# kill in-progress action if another one is triggered
+concurrency:
+  group: publish-unstable
+  cancel-in-progress: true
+
+jobs:
+  # don't publish if source code has not changed
+  paths-filter:
+    name: Detect files changed
+    runs-on: ubuntu-latest
+    outputs:
+      src-only: "${{ steps.changes.outputs.src-only }}"
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: false
+      - uses: dorny/paths-filter/@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        id: changes
+        with:
+          filters: |
+            src:
+              - 'src/**'
+              - 'package.json'
+              - 'tsconfig.json'
+              - 'index.d.ts'
+              - 'index.js'
+
+  # pause for 30 minutes to avoid publishing more than 2x per hour
+  debounce:
+    name: Publish max 2x per hour
+    if: steps.changes.outputs.src == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debounce 30 minutes
+        uses: zachary95/github-actions-debounce
+        with:
+          wait: 1800
+
+  # run tests prior to publish to ensure some stability
+  test:
+    name: Run tests
+    needs: debounce
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: false
+          ref: main
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22.x"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install -g npm
+      - run: npm install
+      - run: npm test
+
+  # if tests pass, publish unstable
+  publish:
+    name: Publish unstable
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: npm publish
+        run: |
+          # set unstable version value
+          unstable_tag=$(echo "unstable.$(date --utc +%Y%m%d%H%M%S)")
+          latest=$(npm view @elastic/elasticsearch --json | jq -r '.["dist-tags"].latest')
+          next=$(yes | npx semver -i minor "$latest")
+          unstable_version=$(echo "$next-$unstable_tag")
+
+          # overwrite package.json with unstable version value
+          mv package.json package.json.bak
+          jq --arg v "$unstable_version" ".version = $v" package.json.bak > package.json
+          rm package.json.bak
+
+          # publish to npm
+          npm publish --provenance --access public --tag "unstable"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
