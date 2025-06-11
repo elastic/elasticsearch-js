@@ -16,7 +16,7 @@ jobs:
     name: Detect files changed
     runs-on: ubuntu-latest
     outputs:
-      src-only: "${{ steps.changes.outputs.src-only }}"
+      src: "${{ steps.changes.outputs.src }}"
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
