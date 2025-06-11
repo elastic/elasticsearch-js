@@ -35,7 +35,7 @@ jobs:
   # pause for 30 minutes to avoid publishing more than 2x per hour
   debounce:
     name: Publish max 2x per hour
-    if: steps.changes.outputs.src == 'true'
+    if: needs.paths-filter.outputs.src == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Debounce 30 minutes
