@@ -261,6 +261,8 @@ export default class Client extends API {
     }
     if (opts.serverMode === 'serverless') headers['elastic-api-version'] = serverlessApiVersion
 
+    opts.headers= Object.assign({},headers,opts.headers)
+
     const options: Required<ClientOptions> = Object.assign({}, {
       Connection: UndiciConnection,
       Transport: opts.serverMode === 'serverless' ? Transport : SniffingTransport,
