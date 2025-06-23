@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Debounce 30 minutes
-        uses: zachary95/github-actions-debounce@v0.1.0
+        uses: zachary95/github-actions-debounce@ab7363483e2837992b8aa6be891763da00ac14f9 # v0.1.0
         with:
           wait: 1800
 
