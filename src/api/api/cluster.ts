@@ -220,7 +220,7 @@ export default class Cluster {
   }
 
   /**
-    * Explain the shard allocations. Get explanations for shard allocations in the cluster. For unassigned shards, it provides an explanation for why the shard is unassigned. For assigned shards, it provides an explanation for why the shard is remaining on its current node and has not moved or rebalanced to another node. This API can be very useful when attempting to diagnose why a shard is unassigned or why a shard continues to remain on its current node when you might expect otherwise.
+    * Explain the shard allocations. Get explanations for shard allocations in the cluster. For unassigned shards, it provides an explanation for why the shard is unassigned. For assigned shards, it provides an explanation for why the shard is remaining on its current node and has not moved or rebalanced to another node. This API can be very useful when attempting to diagnose why a shard is unassigned or why a shard continues to remain on its current node when you might expect otherwise. Refer to the linked documentation for examples of how to troubleshoot allocation issues using this API.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-allocation-explain | Elasticsearch API documentation}
     */
   async allocationExplain (this: That, params?: T.ClusterAllocationExplainRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterAllocationExplainResponse>

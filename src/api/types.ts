@@ -812,7 +812,7 @@ export interface GetRequest extends RequestBase {
   /** The name of the index that contains the document. */
   index: IndexName
   /** Indicates whether the request forces synthetic `_source`.
-    * Use this paramater to test if the mapping supports synthetic `_source` and to get a sense of the worst case performance.
+    * Use this parameter to test if the mapping supports synthetic `_source` and to get a sense of the worst case performance.
     * Fetches with this parameter enabled will be slower than enabling synthetic source natively in the index. */
   force_synthetic_source?: boolean
   /** The node or shard the operation should be performed on.
@@ -844,8 +844,8 @@ export interface GetRequest extends RequestBase {
   /** A comma-separated list of stored fields to return as part of a hit.
     * If no fields are specified, no stored fields are included in the response.
     * If this field is specified, the `_source` parameter defaults to `false`.
-    * Only leaf fields can be retrieved with the `stored_field` option.
-    * Object fields can't be returned;if specified, the request fails. */
+    * Only leaf fields can be retrieved with the `stored_fields` option.
+    * Object fields can't be returned; if specified, the request fails. */
   stored_fields?: Fields
   /** The version number for concurrency control.
     * It must match the current version of the document for the request to succeed. */
@@ -1510,7 +1510,7 @@ export interface OpenPointInTimeRequest extends RequestBase {
   routing?: Routing
   /** The type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * It supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * It supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** Indicates whether the point in time tolerates unavailable shards or shard failures when initially creating the PIT.
     * If `false`, creating a point in time request when a shard is missing or unavailable will throw an exception.
@@ -2971,11 +2971,20 @@ export type SearchSourceConfig = boolean | SearchSourceFilter | Fields
 export type SearchSourceConfigParam = boolean | Fields
 
 export interface SearchSourceFilter {
+  /** If `true`, vector fields are excluded from the returned source.
+    *
+    * This option takes precedence over `includes`: any vector field will
+    * remain excluded even if it matches an `includes` rule. */
+  exclude_vectors?: boolean
+  /** A list of fields to exclude from the returned source. */
   excludes?: Fields
-  /** @alias excludes */
+  /** A list of fields to exclude from the returned source.
+    * @alias excludes */
   exclude?: Fields
+  /** A list of fields to include in the returned source. */
   includes?: Fields
-  /** @alias includes */
+  /** A list of fields to include in the returned source.
+    * @alias includes */
   include?: Fields
 }
 
@@ -3195,8 +3204,7 @@ export interface SearchShardsRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -3256,8 +3264,7 @@ export interface SearchTemplateRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   /** The type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled. */
   ignore_throttled?: boolean
@@ -3554,8 +3561,7 @@ export interface UpdateByQueryRequest extends RequestBase {
   df?: string
   /** The type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * It supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * It supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** Skips the specified number of documents. */
   from?: long
@@ -4657,7 +4663,7 @@ export interface TaskFailure {
   reason: ErrorCause
 }
 
-export type TaskId = string | integer
+export type TaskId = string
 
 export interface TextEmbedding {
   model_id: string
@@ -5069,6 +5075,9 @@ export interface AggregationsBoxPlotAggregate extends AggregationsAggregateBase 
 export interface AggregationsBoxplotAggregation extends AggregationsMetricAggregationBase {
   /** Limits the maximum number of nodes used by the underlying TDigest algorithm to `20 * compression`, enabling control of memory usage and approximation error. */
   compression?: double
+  /** The default implementation of TDigest is optimized for performance, scaling to millions or even billions of sample values while maintaining acceptable accuracy levels (close to 1% relative error for millions of samples in some cases).
+    * To use an implementation optimized for accuracy, set this parameter to high_accuracy instead. */
+  execution_hint?: AggregationsTDigestExecutionHint
 }
 
 export interface AggregationsBucketAggregationBase {
@@ -5924,6 +5933,9 @@ export interface AggregationsMedianAbsoluteDeviationAggregate extends Aggregatio
 export interface AggregationsMedianAbsoluteDeviationAggregation extends AggregationsFormatMetricAggregationBase {
   /** Limits the maximum number of nodes used by the underlying TDigest algorithm to `20 * compression`, enabling control of memory usage and approximation error. */
   compression?: double
+  /** The default implementation of TDigest is optimized for performance, scaling to millions or even billions of sample values while maintaining acceptable accuracy levels (close to 1% relative error for millions of samples in some cases).
+    * To use an implementation optimized for accuracy, set this parameter to high_accuracy instead. */
+  execution_hint?: AggregationsTDigestExecutionHint
 }
 
 export interface AggregationsMetricAggregationBase {
@@ -6456,7 +6468,12 @@ export interface AggregationsSumBucketAggregation extends AggregationsPipelineAg
 export interface AggregationsTDigest {
   /** Limits the maximum number of nodes used by the underlying TDigest algorithm to `20 * compression`, enabling control of memory usage and approximation error. */
   compression?: integer
+  /** The default implementation of TDigest is optimized for performance, scaling to millions or even billions of sample values while maintaining acceptable accuracy levels (close to 1% relative error for millions of samples in some cases).
+    * To use an implementation optimized for accuracy, set this parameter to high_accuracy instead. */
+  execution_hint?: AggregationsTDigestExecutionHint
 }
+
+export type AggregationsTDigestExecutionHint = 'default' | 'high_accuracy'
 
 export interface AggregationsTDigestPercentileRanksAggregate extends AggregationsPercentilesAggregateBase {
 }
@@ -9801,7 +9818,7 @@ export interface QueryDslUntypedRangeQuery extends QueryDslRangeQueryBase<any> {
 
 export interface QueryDslWeightedTokensQuery extends QueryDslQueryBase {
   /** The tokens representing this query */
-  tokens: Partial<Record<string, float>>[]
+  tokens: Record<string, float> | Record<string, float>[]
   /** Token pruning configurations */
   pruning_config?: QueryDslTokenPruningConfig
 }
@@ -15734,8 +15751,11 @@ export interface ClusterGetSettingsRequest extends RequestBase {
 }
 
 export interface ClusterGetSettingsResponse {
+  /** The settings that persist after the cluster restarts. */
   persistent: Record<string, any>
+  /** The settings that do not persist after the cluster restarts. */
   transient: Record<string, any>
+  /** The default setting values. */
   defaults?: Record<string, any>
 }
 
@@ -15949,7 +15969,9 @@ export interface ClusterPutSettingsRequest extends RequestBase {
   master_timeout?: Duration
   /** Explicit operation timeout */
   timeout?: Duration
+  /** The settings that persist after the cluster restarts. */
   persistent?: Record<string, any>
+  /** The settings that do not persist after the cluster restarts. */
   transient?: Record<string, any>
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { flat_settings?: never, master_timeout?: never, timeout?: never, persistent?: never, transient?: never }
@@ -17673,6 +17695,7 @@ export interface EsqlEsqlClusterDetails {
   indices: string
   took?: DurationValue<UnitMillis>
   _shards?: EsqlEsqlShardInfo
+  failures?: EsqlEsqlShardFailure[]
 }
 
 export interface EsqlEsqlClusterInfo {
@@ -17709,8 +17732,8 @@ export interface EsqlEsqlResult {
 }
 
 export interface EsqlEsqlShardFailure {
-  shard: Id
-  index: IndexName
+  shard: integer
+  index: IndexName | null
   node?: NodeId
   reason: ErrorCause
 }
@@ -17720,7 +17743,6 @@ export interface EsqlEsqlShardInfo {
   successful?: integer
   skipped?: integer
   failed?: integer
-  failures?: EsqlEsqlShardFailure[]
 }
 
 export interface EsqlTableValuesContainer {
@@ -17752,14 +17774,6 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   drop_null_columns?: boolean
   /** A short version of the Accept header, for example `json` or `yaml`. */
   format?: EsqlEsqlFormat
-  /** The period for which the query and its results are stored in the cluster.
-    * The default period is five days.
-    * When this period expires, the query and its results are deleted, even if the query is still ongoing.
-    * If the `keep_on_completion` parameter is false, Elasticsearch only stores async queries that do not complete within the period set by the `wait_for_completion_timeout` parameter, regardless of this value. */
-  keep_alive?: Duration
-  /** Indicates whether the query and its results are stored in the cluster.
-    * If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter. */
-  keep_on_completion?: boolean
   /** By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results. */
   columnar?: boolean
   /** Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on. */
@@ -17786,10 +17800,18 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
     * If the query completes during this period, results are returned
     * Otherwise, a query ID is returned that can later be used to retrieve the results. */
   wait_for_completion_timeout?: Duration
+  /** The period for which the query and its results are stored in the cluster.
+    * The default period is five days.
+    * When this period expires, the query and its results are deleted, even if the query is still ongoing.
+    * If the `keep_on_completion` parameter is false, Elasticsearch only stores async queries that do not complete within the period set by the `wait_for_completion_timeout` parameter, regardless of this value. */
+  keep_alive?: Duration
+  /** Indicates whether the query and its results are stored in the cluster.
+    * If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter. */
+  keep_on_completion?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, wait_for_completion_timeout?: never }
+  body?: string | { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, wait_for_completion_timeout?: never }
+  querystring?: { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
 }
 
 export type EsqlAsyncQueryResponse = EsqlAsyncEsqlResult
@@ -18418,6 +18440,7 @@ export interface IlmExplainLifecycleLifecycleExplainManaged {
   step_time_millis?: EpochTime<UnitMillis>
   phase_execution?: IlmExplainLifecycleLifecycleExplainPhaseExecution
   time_since_index_creation?: Duration
+  skip: boolean
 }
 
 export interface IlmExplainLifecycleLifecycleExplainPhaseExecution {
@@ -18910,7 +18933,8 @@ export interface IndicesIndexSettingsKeys {
   max_shingle_diff?: integer
   blocks?: IndicesIndexSettingBlocks
   max_refresh_listeners?: integer
-  /** Settings to define analyzers, tokenizers, token filters and character filters. */
+  /** Settings to define analyzers, tokenizers, token filters and character filters.
+    * Refer to the linked documentation for step-by-step examples of updating analyzers on existing indices. */
   analyze?: IndicesSettingsAnalyze
   highlight?: IndicesSettingsHighlight
   max_terms_count?: integer
@@ -19484,8 +19508,7 @@ export interface IndicesClearCacheRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, clears the fields cache.
     * Use the `fields` parameter to clear the cache of specific fields only. */
@@ -19553,8 +19576,7 @@ export interface IndicesCloseRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -19727,8 +19749,7 @@ export interface IndicesDeleteRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -19899,8 +19920,7 @@ export interface IndicesExistsRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
@@ -19929,8 +19949,7 @@ export interface IndicesExistsAliasRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, requests that include a missing data stream or index in the target indices or data streams return an error. */
   ignore_unavailable?: boolean
@@ -20087,8 +20106,7 @@ export interface IndicesFlushRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, the request forces a flush even if there are no changes to commit to the index. */
   force?: boolean
@@ -20190,8 +20208,7 @@ export interface IndicesGetAliasRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -20217,8 +20234,7 @@ export interface IndicesGetDataLifecycleRequest extends RequestBase {
     * To target all data streams, omit this parameter or use `*` or `_all`. */
   name: DataStreamNames
   /** Type of data stream that wildcard patterns can match.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, return all default settings in the response. */
   include_defaults?: boolean
@@ -20296,8 +20312,7 @@ export interface IndicesGetDataStreamOptionsRequest extends RequestBase {
     * To target all data streams, omit this parameter or use `*` or `_all`. */
   name: DataStreamNames
   /** Type of data stream that wildcard patterns can match.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
@@ -20351,8 +20366,7 @@ export interface IndicesGetFieldMappingRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -20411,8 +20425,7 @@ export interface IndicesGetMappingRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -20600,8 +20613,7 @@ export interface IndicesOpenRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -20685,8 +20697,7 @@ export interface IndicesPutDataLifecycleRequest extends RequestBase {
     * To target all data streams use `*` or `_all`. */
   name: DataStreamNames
   /** Type of data stream that wildcard patterns can match.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `hidden`, `open`, `closed`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** Period to wait for a connection to the master node. If no response is
     * received before the timeout expires, the request fails and returns an
@@ -20718,8 +20729,7 @@ export interface IndicesPutDataStreamOptionsRequest extends RequestBase {
     * To target all data streams use `*` or `_all`. */
   name: DataStreamNames
   /** Type of data stream that wildcard patterns can match.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `hidden`, `open`, `closed`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** Period to wait for a connection to the master node. If no response is
     * received before the timeout expires, the request fails and returns an
@@ -20874,8 +20884,7 @@ export interface IndicesPutMappingRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -21130,8 +21139,7 @@ export interface IndicesRefreshRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -21189,7 +21197,6 @@ export interface IndicesResolveClusterRequest extends RequestBase {
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
     * NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index
     * options to the `_resolve/cluster` API endpoint that takes no index expression. */
   expand_wildcards?: ExpandWildcards
@@ -21239,8 +21246,7 @@ export interface IndicesResolveIndexRequest extends RequestBase {
   name: Names
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -21362,8 +21368,7 @@ export interface IndicesSegmentsRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -21917,8 +21922,7 @@ export interface IndicesValidateQueryRequest extends RequestBase {
   df?: string
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, the response returns detailed information if an error has occurred. */
   explain?: boolean
@@ -22426,15 +22430,31 @@ export interface InferenceHuggingFaceServiceSettings {
     * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
   api_key: string
   /** This setting helps to minimize the number of rate limit errors returned from Hugging Face.
-    * By default, the `hugging_face` service sets the number of requests allowed per minute to 3000. */
+    * By default, the `hugging_face` service sets the number of requests allowed per minute to 3000 for all supported tasks.
+    * Hugging Face does not publish a universal rate limit — actual limits may vary.
+    * It is recommended to adjust this value based on the capacity and limits of your specific deployment environment. */
   rate_limit?: InferenceRateLimitSetting
-  /** The URL endpoint to use for the requests. */
+  /** The URL endpoint to use for the requests.
+    * For `completion` and `chat_completion` tasks, the deployed model must be compatible with the Hugging Face Chat Completion interface (see the linked external documentation for details). The endpoint URL for the request must include `/v1/chat/completions`.
+    * If the model supports the OpenAI Chat Completion schema, a toggle should appear in the interface. Enabling this toggle doesn't change any model behavior, it reveals the full endpoint URL needed (which should include `/v1/chat/completions`) when configuring the inference endpoint in Elasticsearch. If the model doesn't support this schema, the toggle may not be shown. */
   url: string
+  /** The name of the HuggingFace model to use for the inference task.
+    * For `completion` and `chat_completion` tasks, this field is optional but may be required for certain models — particularly when using serverless inference endpoints.
+    * For the `text_embedding` task, this field should not be included. Otherwise, the request will fail. */
+  model_id?: string
 }
 
 export type InferenceHuggingFaceServiceType = 'hugging_face'
 
-export type InferenceHuggingFaceTaskType = 'text_embedding'
+export interface InferenceHuggingFaceTaskSettings {
+  /** For a `rerank` task, return doc text within the results. */
+  return_documents?: boolean
+  /** For a `rerank` task, the number of most relevant documents to return.
+    * It defaults to the number of the documents. */
+  top_n?: integer
+}
+
+export type InferenceHuggingFaceTaskType = 'chat_completion' | 'completion' | 'rerank' | 'text_embedding'
 
 export interface InferenceInferenceChunkingSettings {
   /** The maximum size of a chunk in words.
@@ -22638,13 +22658,47 @@ export type InferenceJinaAITaskType = 'rerank' | 'text_embedding'
 export type InferenceJinaAITextEmbeddingTask = 'classification' | 'clustering' | 'ingest' | 'search'
 
 export interface InferenceMessage {
-  /** The content of the message. */
+  /** The content of the message.
+    *
+    * String example:
+    * ```
+    * {
+    *    "content": "Some string"
+    * }
+    * ```
+    *
+    * Object example:
+    * ```
+    * {
+    *   "content": [
+    *       {
+    *        "text": "Some text",
+    *        "type": "text"
+    *       }
+    *    ]
+    * }
+    * ``` */
   content?: InferenceMessageContent
-  /** The role of the message author. */
+  /** The role of the message author. Valid values are `user`, `assistant`, `system`, and `tool`. */
   role: string
-  /** The tool call that this message is responding to. */
+  /** Only for `tool` role messages. The tool call that this message is responding to. */
   tool_call_id?: Id
-  /** The tool calls generated by the model. */
+  /** Only for `assistant` role messages. The tool calls generated by the model. If it's specified, the `content` field is optional.
+    * Example:
+    * ```
+    * {
+    *   "tool_calls": [
+    *       {
+    *           "id": "call_KcAjWtAww20AihPHphUh46Gd",
+    *           "type": "function",
+    *           "function": {
+    *               "name": "get_current_weather",
+    *               "arguments": "{\"location\":\"Boston, MA\"}"
+    *           }
+    *       }
+    *   ]
+    * }
+    * ``` */
   tool_calls?: InferenceToolCall[]
 }
 
@@ -22662,7 +22716,7 @@ export interface InferenceMistralServiceSettings {
   /** The maximum number of tokens per input before chunking occurs. */
   max_input_tokens?: integer
   /** The name of the model to use for the inference task.
-    * Refer to the Mistral models documentation for the list of available text embedding models. */
+    * Refer to the Mistral models documentation for the list of available models. */
   model: string
   /** This setting helps to minimize the number of rate limit errors returned from the Mistral API.
     * By default, the `mistral` service sets the number of requests allowed per minute to 240. */
@@ -22671,7 +22725,7 @@ export interface InferenceMistralServiceSettings {
 
 export type InferenceMistralServiceType = 'mistral'
 
-export type InferenceMistralTaskType = 'text_embedding'
+export type InferenceMistralTaskType = 'text_embedding' | 'completion' | 'chat_completion'
 
 export interface InferenceOpenAIServiceSettings {
   /** A valid API key of your OpenAI account.
@@ -22719,7 +22773,25 @@ export interface InferenceRankedDocument {
 }
 
 export interface InferenceRateLimitSetting {
-  /** The number of requests allowed per minute. */
+  /** The number of requests allowed per minute.
+    * By default, the number of requests allowed per minute is set by each service as follows:
+    *
+    * * `alibabacloud-ai-search` service: `1000`
+    * * `anthropic` service: `50`
+    * * `azureaistudio` service: `240`
+    * * `azureopenai` service and task type `text_embedding`: `1440`
+    * * `azureopenai` service and task type `completion`: `120`
+    * * `cohere` service: `10000`
+    * * `elastic` service and task type `chat_completion`: `240`
+    * * `googleaistudio` service: `360`
+    * * `googlevertexai` service: `30000`
+    * * `hugging_face` service: `3000`
+    * * `jinaai` service: `2000`
+    * * `mistral` service: `240`
+    * * `openai` service and task type `text_embedding`: `3000`
+    * * `openai` service and task type `completion`: `500`
+    * * `voyageai` service: `2000`
+    * * `watsonxai` service: `120` */
   requests_per_minute?: integer
 }
 
@@ -22736,9 +22808,46 @@ export interface InferenceRequestChatCompletion {
   stop?: string[]
   /** The sampling temperature to use. */
   temperature?: float
-  /** Controls which tool is called by the model. */
+  /** Controls which tool is called by the model.
+    * String representation: One of `auto`, `none`, or `requrired`. `auto` allows the model to choose between calling tools and generating a message. `none` causes the model to not call any tools. `required` forces the model to call one or more tools.
+    * Example (object representation):
+    * ```
+    * {
+    *   "tool_choice": {
+    *       "type": "function",
+    *       "function": {
+    *           "name": "get_current_weather"
+    *       }
+    *   }
+    * }
+    * ``` */
   tool_choice?: InferenceCompletionToolType
-  /** A list of tools that the model can call. */
+  /** A list of tools that the model can call.
+    * Example:
+    * ```
+    * {
+    *   "tools": [
+    *       {
+    *           "type": "function",
+    *           "function": {
+    *               "name": "get_price_of_item",
+    *               "description": "Get the current price of an item",
+    *               "parameters": {
+    *                   "type": "object",
+    *                   "properties": {
+    *                       "item": {
+    *                           "id": "12345"
+    *                       },
+    *                       "unit": {
+    *                           "type": "currency"
+    *                       }
+    *                   }
+    *               }
+    *           }
+    *       }
+    *   ]
+    * }
+    * ``` */
   tools?: InferenceCompletionTool[]
   /** Nucleus sampling, an alternative to sampling with temperature. */
   top_p?: float
@@ -22784,17 +22893,17 @@ export type InferenceTaskTypeGoogleAIStudio = 'text_embedding' | 'completion'
 
 export type InferenceTaskTypeGoogleVertexAI = 'text_embedding' | 'rerank'
 
-export type InferenceTaskTypeHuggingFace = 'text_embedding'
+export type InferenceTaskTypeHuggingFace = 'chat_completion' | 'completion' | 'rerank' | 'text_embedding'
 
 export type InferenceTaskTypeJinaAi = 'text_embedding' | 'rerank'
 
-export type InferenceTaskTypeMistral = 'text_embedding'
+export type InferenceTaskTypeMistral = 'text_embedding' | 'chat_completion' | 'completion'
 
 export type InferenceTaskTypeOpenAI = 'text_embedding' | 'chat_completion' | 'completion'
 
 export type InferenceTaskTypeVoyageAI = 'text_embedding' | 'rerank'
 
-export type InferenceTaskTypeWatsonx = 'text_embedding'
+export type InferenceTaskTypeWatsonx = 'text_embedding' | 'chat_completion' | 'completion'
 
 export interface InferenceTextEmbeddingByteResult {
   embedding: InferenceDenseByteVector
@@ -22880,7 +22989,8 @@ export interface InferenceWatsonxServiceSettings {
     * For the active version data parameters, refer to the Wastonx documentation. */
   api_version: string
   /** The name of the model to use for the inference task.
-    * Refer to the IBM Embedding Models section in the Watsonx documentation for the list of available text embedding models. */
+    * Refer to the IBM Embedding Models section in the Watsonx documentation for the list of available text embedding models.
+    * Refer to the IBM library - Foundation models in Watsonx.ai. */
   model_id: string
   /** The identifier of the IBM Cloud project to use for the inference task. */
   project_id: string
@@ -22893,7 +23003,7 @@ export interface InferenceWatsonxServiceSettings {
 
 export type InferenceWatsonxServiceType = 'watsonxai'
 
-export type InferenceWatsonxTaskType = 'text_embedding'
+export type InferenceWatsonxTaskType = 'text_embedding' | 'chat_completion' | 'completion'
 
 export interface InferenceChatCompletionUnifiedRequest extends RequestBase {
   /** The inference Id */
@@ -22987,7 +23097,7 @@ export interface InferenceInferenceRequest extends RequestBase {
 export type InferenceInferenceResponse = InferenceInferenceResult
 
 export interface InferencePutRequest extends RequestBase {
-  /** The task type */
+  /** The task type. Refer to the integration list in the API description for the available task types. */
   task_type?: InferenceTaskType
   /** The inference Id */
   inference_id: Id
@@ -23229,10 +23339,13 @@ export interface InferencePutHuggingFaceRequest extends RequestBase {
   service: InferenceHuggingFaceServiceType
   /** Settings used to install the inference model. These settings are specific to the `hugging_face` service. */
   service_settings: InferenceHuggingFaceServiceSettings
+  /** Settings to configure the inference task.
+    * These settings are specific to the task type you specified. */
+  task_settings?: InferenceHuggingFaceTaskSettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { task_type?: never, huggingface_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never }
+  body?: string | { [key: string]: any } & { task_type?: never, huggingface_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { task_type?: never, huggingface_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never }
+  querystring?: { [key: string]: any } & { task_type?: never, huggingface_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
 export type InferencePutHuggingFaceResponse = InferenceInferenceEndpointInfoHuggingFace
@@ -23260,8 +23373,7 @@ export interface InferencePutJinaaiRequest extends RequestBase {
 export type InferencePutJinaaiResponse = InferenceInferenceEndpointInfoJinaAi
 
 export interface InferencePutMistralRequest extends RequestBase {
-  /** The task type.
-    * The only valid task type for the model to perform is `text_embedding`. */
+  /** The type of the inference task that the model will perform. */
   task_type: InferenceMistralTaskType
   /** The unique identifier of the inference endpoint. */
   mistral_inference_id: Id
@@ -23325,8 +23437,7 @@ export interface InferencePutVoyageaiRequest extends RequestBase {
 export type InferencePutVoyageaiResponse = InferenceInferenceEndpointInfoVoyageAI
 
 export interface InferencePutWatsonxRequest extends RequestBase {
-  /** The task type.
-    * The only valid task type for the model to perform is `text_embedding`. */
+  /** The type of the inference task that the model will perform. */
   task_type: InferenceWatsonxTaskType
   /** The unique identifier of the inference endpoint. */
   watsonx_inference_id: Id
@@ -28707,13 +28818,7 @@ export interface MlPutJobRequest extends RequestBase {
     * `_all` string or when no indices are specified. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
-    * whether wildcard expressions match hidden data streams. Supports comma-separated values. Valid values are:
-    *
-    * * `all`: Match any data stream or index, including hidden ones.
-    * * `closed`: Match closed, non-hidden indices. Also matches any non-hidden data stream. Data streams cannot be closed.
-    * * `hidden`: Match hidden data streams and hidden indices. Must be combined with `open`, `closed`, or both.
-    * * `none`: Wildcard patterns are not accepted.
-    * * `open`: Match open, non-hidden indices. Also matches any non-hidden data stream. */
+    * whether wildcard expressions match hidden data streams. Supports comma-separated values. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
@@ -29244,13 +29349,7 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
     * `_all` string or when no indices are specified. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
-    * whether wildcard expressions match hidden data streams. Supports comma-separated values. Valid values are:
-    *
-    * * `all`: Match any data stream or index, including hidden ones.
-    * * `closed`: Match closed, non-hidden indices. Also matches any non-hidden data stream. Data streams cannot be closed.
-    * * `hidden`: Match hidden data streams and hidden indices. Must be combined with `open`, `closed`, or both.
-    * * `none`: Wildcard patterns are not accepted.
-    * * `open`: Match open, non-hidden indices. Also matches any non-hidden data stream. */
+    * whether wildcard expressions match hidden data streams. Supports comma-separated values. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
@@ -34657,6 +34756,8 @@ export interface SnapshotSnapshotShardsStatus {
 
 export type SnapshotSnapshotSort = 'start_time' | 'duration' | 'name' | 'index_count' | 'repository' | 'shard_count' | 'failed_shard_count'
 
+export type SnapshotSnapshotState = 'IN_PROGRESS' | 'SUCCESS' | 'FAILED' | 'PARTIAL' | 'INCOMPATIBLE'
+
 export interface SnapshotSnapshotStats {
   /** The number and size of files that still need to be copied as part of the incremental snapshot.
     * For completed snapshots, this property indicates the number and size of files that were not already in the repository and were copied as part of the incremental snapshot. */
@@ -34956,14 +35057,17 @@ export interface SnapshotGetRequest extends RequestBase {
   /** The sort order for the result.
     * The default behavior is sorting by snapshot start time stamp. */
   sort?: SnapshotSnapshotSort
+  /** Only return snapshots with a state found in the given comma-separated list of snapshot states.
+    * The default is all snapshot states. */
+  state?: SnapshotSnapshotState | SnapshotSnapshotState[]
   /** If `true`, returns additional information about each snapshot such as the version of Elasticsearch which took the snapshot, the start and end times of the snapshot, and the number of shards snapshotted.
     *
     * NOTE: The parameters `size`, `order`, `after`, `from_sort_value`, `offset`, `slm_policy_filter`, and `sort` are not supported when you set `verbose=false` and the sort order for requests with `verbose=false` is undefined. */
   verbose?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, after?: never, from_sort_value?: never, ignore_unavailable?: never, index_details?: never, index_names?: never, include_repository?: never, master_timeout?: never, order?: never, offset?: never, size?: never, slm_policy_filter?: never, sort?: never, verbose?: never }
+  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, after?: never, from_sort_value?: never, ignore_unavailable?: never, index_details?: never, index_names?: never, include_repository?: never, master_timeout?: never, order?: never, offset?: never, size?: never, slm_policy_filter?: never, sort?: never, state?: never, verbose?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, after?: never, from_sort_value?: never, ignore_unavailable?: never, index_details?: never, index_names?: never, include_repository?: never, master_timeout?: never, order?: never, offset?: never, size?: never, slm_policy_filter?: never, sort?: never, verbose?: never }
+  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, after?: never, from_sort_value?: never, ignore_unavailable?: never, index_details?: never, index_names?: never, include_repository?: never, master_timeout?: never, order?: never, offset?: never, size?: never, slm_policy_filter?: never, sort?: never, state?: never, verbose?: never }
 }
 
 export interface SnapshotGetResponse {
@@ -38275,7 +38379,7 @@ export interface SpecUtilsCommonQueryParameters {
   filter_path?: string | string[]
   /** When set to `true` will return statistics in a format suitable for humans.
     * For example `"exists_time": "1h"` for humans and
-    * `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+    * `"exists_time_in_millis": 3600000` for computers. When disabled the human
     * readable values will be omitted. This makes sense for responses being consumed
     * only by machines. */
   human?: boolean

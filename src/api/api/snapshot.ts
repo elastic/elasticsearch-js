@@ -129,6 +129,7 @@ export default class Snapshot {
           'size',
           'slm_policy_filter',
           'sort',
+          'state',
           'verbose'
         ]
       },
