@@ -10618,8 +10618,6 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   delimiter?: string
   drop_null_columns?: boolean
   format?: EsqlQueryEsqlFormat
-  keep_alive?: Duration
-  keep_on_completion?: boolean
   columnar?: boolean
   filter?: QueryDslQueryContainer
   locale?: string
@@ -10629,6 +10627,8 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   tables?: Record<string, Record<string, EsqlTableValuesContainer>>
   include_ccs_metadata?: boolean
   wait_for_completion_timeout?: Duration
+  keep_alive?: Duration
+  keep_on_completion?: boolean
 }
 
 export type EsqlAsyncQueryResponse = EsqlResult
