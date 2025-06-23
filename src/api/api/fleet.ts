@@ -139,7 +139,7 @@ export default class Fleet {
   }
 
   /**
-    * Executes several [fleet searches](https://www.elastic.co/guide/en/elasticsearch/reference/current/fleet-search.html) with a single API request. The API follows the same structure as the [multi search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html) API. However, similar to the fleet search API, it supports the wait_for_checkpoints parameter.
+    * Executes several fleet searches with a single API request. The API follows the same structure as the multi search (`_msearch`) API. However, similar to the fleet search API, it supports the `wait_for_checkpoints` parameter.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/fleet-multi-search.html | Elasticsearch API documentation}
     */
   async msearch<TDocument = unknown> (this: That, params: T.FleetMsearchRequest | TB.FleetMsearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetMsearchResponse<TDocument>>

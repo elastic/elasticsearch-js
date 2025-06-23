@@ -1093,7 +1093,7 @@ client.knnSearch({ index, knn })
 * *Request (object):*
 ** *`index` (string | string[])*: A list of index names to search; use `_all` or to perform the operation on all indices.
 ** *`knn` ({ field, query_vector, k, num_candidates })*: The kNN query to run.
-** *`_source` (Optional, boolean | { excludes, includes })*: Indicates which source fields are returned for matching documents. These fields are returned in the `hits._source` property of the search response.
+** *`_source` (Optional, boolean | { exclude_vectors, excludes, includes })*: Indicates which source fields are returned for matching documents. These fields are returned in the `hits._source` property of the search response.
 ** *`docvalue_fields` (Optional, { field, format, include_unmapped }[])*: The request returns doc values for field names matching these patterns in the `hits.fields` property of the response. It accepts wildcard (`*`) patterns.
 ** *`stored_fields` (Optional, string | string[])*: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`. You can pass `_source: true` to return both source fields and stored fields in the search response.
 ** *`fields` (Optional, string | string[])*: The request returns values for field names matching these patterns in the `hits.fields` property of the response. It accepts wildcard (`*`) patterns.
@@ -1316,7 +1316,7 @@ client.openPointInTime({ index, keep_alive })
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`preference` (Optional, string)*: The node or shard the operation should be performed on. By default, it is random.
 ** *`routing` (Optional, string)*: A custom value that is used to route operations to a specific shard.
-** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
 ** *`allow_partial_search_results` (Optional, boolean)*: Indicates whether the point in time tolerates unavailable shards or shard failures when initially creating the PIT. If `false`, creating a point in time request when a shard is missing or unavailable will throw an exception. If `true`, the point in time will contain all the shards that are available at the time of the request.
 ** *`max_concurrent_shard_requests` (Optional, number)*: Maximum number of concurrent shard requests that each sub-search request executes per node.
 
@@ -1740,7 +1740,7 @@ client.search({ ... })
 ** *`size` (Optional, number)*: The number of hits to return, which must not be negative. By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters. To page through more hits, use the `search_after` property.
 ** *`slice` (Optional, { field, id, max })*: Split a scrolled search into multiple slices that can be consumed independently.
 ** *`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])*: A list of <field>:<direction> pairs.
-** *`_source` (Optional, boolean | { excludes, includes })*: The source fields that are returned for matching documents. These fields are returned in the `hits._source` property of the search response. If the `stored_fields` property is specified, the `_source` property defaults to `false`. Otherwise, it defaults to `true`.
+** *`_source` (Optional, boolean | { exclude_vectors, excludes, includes })*: The source fields that are returned for matching documents. These fields are returned in the `hits._source` property of the search response. If the `stored_fields` property is specified, the `_source` property defaults to `false`. Otherwise, it defaults to `true`.
 ** *`fields` (Optional, { field, format, include_unmapped }[])*: An array of wildcard (`*`) field patterns. The request returns values for field names matching these patterns in the `hits.fields` property of the response.
 ** *`suggest` (Optional, { text })*: Defines a suggester that provides similar looking terms based on a provided text.
 ** *`terminate_after` (Optional, number)*: The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. IMPORTANT: Use with caution. Elasticsearch applies this property to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this property for requests that target data streams with backing indices across multiple data tiers. If set to `0` (default), the query does not terminate early.
@@ -1972,7 +1972,7 @@ client.searchShards({ ... })
 * *Request (object):*
 ** *`index` (Optional, string | string[])*: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
 ** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
-** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`local` (Optional, boolean)*: If `true`, the request retrieves information from the local node only.
 ** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. IT can also be set to `-1` to indicate that the request should never timeout.
@@ -2000,7 +2000,7 @@ client.searchTemplate({ ... })
 ** *`source` (Optional, string)*: An inline search template. Supports the same parameters as the search API's request body. It also supports Mustache variables. If no `id` is specified, this parameter is required.
 ** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 ** *`ccs_minimize_roundtrips` (Optional, boolean)*: If `true`, network round-trips are minimized for cross-cluster search requests.
-** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
 ** *`ignore_throttled` (Optional, boolean)*: If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`preference` (Optional, string)*: The node or shard the operation should be performed on. It is random by default.
@@ -2146,7 +2146,7 @@ client.update({ id, index })
 ** *`doc_as_upsert` (Optional, boolean)*: If `true`, use the contents of 'doc' as the value of 'upsert'. NOTE: Using ingest pipelines with `doc_as_upsert` is not supported.
 ** *`script` (Optional, { source, id, params, lang, options })*: The script to run to update the document.
 ** *`scripted_upsert` (Optional, boolean)*: If `true`, run the script whether or not the document exists.
-** *`_source` (Optional, boolean | { excludes, includes })*: If `false`, turn off source retrieval. You can also specify a list of the fields you want to retrieve.
+** *`_source` (Optional, boolean | { exclude_vectors, excludes, includes })*: If `false`, turn off source retrieval. You can also specify a list of the fields you want to retrieve.
 ** *`upsert` (Optional, object)*: If the document does not already exist, the contents of 'upsert' are inserted as a new document. If the document exists, the 'script' is run.
 ** *`if_primary_term` (Optional, number)*: Only perform the operation if the document has this primary term.
 ** *`if_seq_no` (Optional, number)*: Only perform the operation if the document has this sequence number.
@@ -2268,7 +2268,7 @@ client.updateByQuery({ index })
 ** *`analyze_wildcard` (Optional, boolean)*: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
 ** *`default_operator` (Optional, Enum("and" | "or"))*: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
 ** *`df` (Optional, string)*: The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
-** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
 ** *`from` (Optional, number)*: Skips the specified number of documents.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`lenient` (Optional, boolean)*: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
@@ -2437,7 +2437,7 @@ than 10,000 hits using the from and size parameters. To page through more
 hits, use the search_after parameter.
 ** *`slice` (Optional, { field, id, max })*
 ** *`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])*
-** *`_source` (Optional, boolean | { excludes, includes })*: Indicates which source fields are returned for matching documents. These
+** *`_source` (Optional, boolean | { exclude_vectors, excludes, includes })*: Indicates which source fields are returned for matching documents. These
 fields are returned in the hits._source property of the search response.
 ** *`fields` (Optional, { field, format, include_unmapped }[])*: Array of wildcard (*) patterns. The request returns values for field names
 matching these patterns in the hits.fields property of the response.
@@ -4073,8 +4073,8 @@ client.cluster.putSettings({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`persistent` (Optional, Record<string, User-defined value>)*
-** *`transient` (Optional, Record<string, User-defined value>)*
+** *`persistent` (Optional, Record<string, User-defined value>)*: The settings that persist after the cluster restarts.
+** *`transient` (Optional, Record<string, User-defined value>)*: The settings that do not persist after the cluster restarts.
 ** *`flat_settings` (Optional, boolean)*: Return settings in flat format (default: false)
 ** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
 ** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
@@ -4090,7 +4090,7 @@ The API returns connection and endpoint information keyed by the configured remo
 > This API returns information that reflects current state on the local cluster.
 > The `connected` field does not necessarily reflect whether a remote cluster is down or unavailable, only whether there is currently an open connection to it.
 > Elasticsearch does not spontaneously try to reconnect to a disconnected remote cluster.
-> To trigger a reconnection, attempt a cross-cluster search, ES|QL cross-cluster search, or try the [resolve cluster endpoint](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-resolve-cluster).
+> To trigger a reconnection, attempt a cross-cluster search, ES|QL cross-cluster search, or try the `/_resolve/cluster` endpoint.
 
 {ref}/cluster-remote-info.html[Endpoint documentation]
 [source,ts]
@@ -5092,6 +5092,12 @@ count.
 By default, the request waits for 1 second for the query results.
 If the query completes during this period, results are returned
 Otherwise, a query ID is returned that can later be used to retrieve the results.
+** *`keep_alive` (Optional, string | -1 | 0)*: The period for which the query and its results are stored in the cluster.
+The default period is five days.
+When this period expires, the query and its results are deleted, even if the query is still ongoing.
+If the `keep_on_completion` parameter is false, Elasticsearch only stores async queries that do not complete within the period set by the `wait_for_completion_timeout` parameter, regardless of this value.
+** *`keep_on_completion` (Optional, boolean)*: Indicates whether the query and its results are stored in the cluster.
+If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter.
 ** *`allow_partial_results` (Optional, boolean)*: If `true`, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards.
 If `false`, the query will fail if there are any failures.
 
@@ -5101,12 +5107,6 @@ It is valid only for the CSV format.
 ** *`drop_null_columns` (Optional, boolean)*: Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
 If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
 ** *`format` (Optional, Enum("csv" | "json" | "tsv" | "txt" | "yaml" | "cbor" | "smile" | "arrow"))*: A short version of the Accept header, for example `json` or `yaml`.
-** *`keep_alive` (Optional, string | -1 | 0)*: The period for which the query and its results are stored in the cluster.
-The default period is five days.
-When this period expires, the query and its results are deleted, even if the query is still ongoing.
-If the `keep_on_completion` parameter is false, Elasticsearch only stores async queries that do not complete within the period set by the `wait_for_completion_timeout` parameter, regardless of this value.
-** *`keep_on_completion` (Optional, boolean)*: Indicates whether the query and its results are stored in the cluster.
-If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter.
 
 [discrete]
 ==== async_query_delete
@@ -5312,9 +5312,10 @@ will cause Elasticsearch to immediately return the current global checkpoints.
 
 [discrete]
 ==== msearch
-Executes several [fleet searches](https://www.elastic.co/guide/en/elasticsearch/reference/current/fleet-search.html) with a single API request.
-The API follows the same structure as the [multi search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html) API. However, similar to the fleet search API, it
-supports the wait_for_checkpoints parameter.
+Executes several fleet searches with a single API request.
+
+The API follows the same structure as the multi search (`_msearch`) API.
+However, similar to the fleet search API, it supports the `wait_for_checkpoints` parameter.
 
 {ref}/fleet-multi-search.html[Endpoint documentation]
 [source,ts]
@@ -5342,9 +5343,9 @@ client.fleet.msearch({ ... })
 ** *`wait_for_checkpoints` (Optional, number[])*: A comma separated list of checkpoints. When configured, the search API will only be executed on a shard
 after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause
 Elasticsearch to immediately execute the search.
-** *`allow_partial_search_results` (Optional, boolean)*: If true, returns partial results if there are shard request timeouts or [shard failures](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html#shard-failures). If false, returns
-an error with no partial results. Defaults to the configured cluster setting `search.default_allow_partial_results`
-which is true by default.
+** *`allow_partial_search_results` (Optional, boolean)*: If true, returns partial results if there are shard request timeouts or shard failures.
+If false, returns an error with no partial results.
+Defaults to the configured cluster setting `search.default_allow_partial_results` which is true by default.
 
 [discrete]
 ==== search
@@ -5390,7 +5391,7 @@ than 10,000 hits using the from and size parameters. To page through more
 hits, use the search_after parameter.
 ** *`slice` (Optional, { field, id, max })*
 ** *`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])*
-** *`_source` (Optional, boolean | { excludes, includes })*: Indicates which source fields are returned for matching documents. These
+** *`_source` (Optional, boolean | { exclude_vectors, excludes, includes })*: Indicates which source fields are returned for matching documents. These
 fields are returned in the hits._source property of the search response.
 ** *`fields` (Optional, { field, format, include_unmapped }[])*: Array of wildcard (*) patterns. The request returns values for field names
 matching these patterns in the hits.fields property of the response.
@@ -5447,7 +5448,7 @@ the indices stats API.
 ** *`wait_for_checkpoints` (Optional, number[])*: A comma separated list of checkpoints. When configured, the search API will only be executed on a shard
 after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause
 Elasticsearch to immediately execute the search.
-** *`allow_partial_search_results` (Optional, boolean)*: If true, returns partial results if there are shard request timeouts or [shard failures](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html#shard-failures). If false, returns
+** *`allow_partial_search_results` (Optional, boolean)*: If true, returns partial results if there are shard request timeouts or shard failures. If false, returns
 an error with no partial results. Defaults to the configured cluster setting `search.default_allow_partial_results`
 which is true by default.
 
@@ -5769,7 +5770,7 @@ The `index.analyze.max_token_count` setting enables you to limit the number of t
 If more than this limit of tokens gets generated, an error occurs.
 The `_analyze` endpoint without a specified index will always use `10000` as its limit.
 
-{ref}/indices-analyze.html[Endpoint documentation]
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-analyze[Endpoint documentation]
 [source,ts]
 ----
 client.indices.analyze({ ... })
@@ -5840,7 +5841,6 @@ This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`fielddata` (Optional, boolean)*: If `true`, clears the fields cache.
 Use the `fields` parameter to clear the cache of specific fields only.
 ** *`fields` (Optional, string | string[])*: List of field names used to limit the `fielddata` parameter.
@@ -5954,7 +5954,6 @@ This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
@@ -6104,7 +6103,6 @@ This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
@@ -6309,7 +6307,6 @@ This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`flat_settings` (Optional, boolean)*: If `true`, returns settings in flat format.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`include_defaults` (Optional, boolean)*: If `true`, return all default settings in the response.
@@ -6339,7 +6336,6 @@ This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, requests that include a missing data stream or index in the target indices or data streams return an error.
 ** *`local` (Optional, boolean)*: If `true`, the request retrieves information from the local node only.
 
@@ -6471,7 +6467,6 @@ This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`force` (Optional, boolean)*: If `true`, the request forces a flush even if there are no changes to commit to the index.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`wait_if_ongoing` (Optional, boolean)*: If `true`, the flush operation blocks until execution when another flush operation is running.
@@ -6609,7 +6604,6 @@ This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`local` (Optional, boolean)*: If `true`, the request retrieves information from the local node only.
 
@@ -6634,7 +6628,6 @@ Supports wildcards (`*`).
 To target all data streams, omit this parameter or use `*` or `_all`.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of data stream that wildcard patterns can match.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`include_defaults` (Optional, boolean)*: If `true`, return all default settings in the response.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -6686,6 +6679,17 @@ client.indices.getDataStreamOptions()
 
 
 [discrete]
+==== get_data_stream_settings
+Gets a data stream's settings
+
+{ref}/data-streams.html[Endpoint documentation]
+[source,ts]
+----
+client.indices.getDataStreamSettings()
+----
+
+
+[discrete]
 ==== get_field_mapping
 Get mapping definitions.
 Retrieves mapping definitions for one or more fields.
@@ -6713,7 +6717,6 @@ This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`include_defaults` (Optional, boolean)*: If `true`, return all default settings in the response.
 ** *`local` (Optional, boolean)*: If `true`, the request retrieves information from the local node only.
@@ -6762,7 +6765,6 @@ This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`local` (Optional, boolean)*: If `true`, the request retrieves information from the local node only.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
@@ -6955,7 +6957,6 @@ This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
@@ -7056,7 +7057,6 @@ When empty, every document in this data stream will be stored indefinitely.
 that's disabled (enabled: `false`) will have no effect on the data stream.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of data stream that wildcard patterns can match.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `hidden`, `open`, `closed`, `none`.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is
 received before the timeout expires, the request fails and returns an
 error.
@@ -7071,6 +7071,17 @@ Updates the data stream options of the selected data streams.
 [source,ts]
 ----
 client.indices.putDataStreamOptions()
+----
+
+
+[discrete]
+==== put_data_stream_settings
+Updates a data stream's settings
+
+{ref}/data-streams.html[Endpoint documentation]
+[source,ts]
+----
+client.indices.putDataStreamSettings()
 ----
 
 
@@ -7216,7 +7227,6 @@ This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
@@ -7444,7 +7454,6 @@ This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 
 [discrete]
@@ -7552,7 +7561,6 @@ options to the `_resolve/cluster` API endpoint that takes no index expression.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index
 options to the `_resolve/cluster` API endpoint that takes no index expression.
 ** *`ignore_throttled` (Optional, boolean)*: If true, concrete, expanded, or aliased indices are ignored when frozen.
@@ -7591,7 +7599,6 @@ Resources on remote clusters can be specified using the `<cluster>`:`<name>` syn
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
@@ -7697,7 +7704,6 @@ This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`verbose` (Optional, boolean)*: If `true`, the request returns a verbose response.
 
@@ -8036,7 +8042,6 @@ This parameter can only be used when the `q` query string parameter is specified
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`explain` (Optional, boolean)*: If `true`, the response returns detailed information if an error has occurred.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`lenient` (Optional, boolean)*: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
@@ -8055,7 +8060,7 @@ It only works with the `chat_completion` task type for `openai` and `elastic` in
 NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.
 The Chat completion inference API and the Stream inference API differ in their response structure and capabilities.
 The Chat completion inference API provides more comprehensive customization options through more fields and function calling support.
-If you use the `openai` service or the `elastic` service, use the Chat completion inference API.
+If you use the `openai`, `hugging_face` or the `elastic` service, use the Chat completion inference API.
 
 {ref}/chat-completion-inference-api.html[Endpoint documentation]
 [source,ts]
@@ -8171,6 +8176,24 @@ IMPORTANT: The inference APIs enable you to use certain services, such as built-
 For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models.
 However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
 
+The following integrations are available through the inference API. You can find the available task types next to the integration name:
+* AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`)
+* Amazon Bedrock (`completion`, `text_embedding`)
+* Anthropic (`completion`)
+* Azure AI Studio (`completion`, `text_embedding`)
+* Azure OpenAI (`completion`, `text_embedding`)
+* Cohere (`completion`, `rerank`, `text_embedding`)
+* Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland)
+* ELSER (`sparse_embedding`)
+* Google AI Studio (`completion`, `text_embedding`)
+* Google Vertex AI (`rerank`, `text_embedding`)
+* Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`)
+* Mistral (`chat_completion`, `completion`, `text_embedding`)
+* OpenAI (`chat_completion`, `completion`, `text_embedding`)
+* VoyageAI (`text_embedding`, `rerank`)
+* Watsonx inference integration (`text_embedding`)
+* JinaAI (`text_embedding`, `rerank`)
+
 {ref}/put-inference-api.html[Endpoint documentation]
 [source,ts]
 ----
@@ -8182,7 +8205,7 @@ client.inference.put({ inference_id })
 
 * *Request (object):*
 ** *`inference_id` (string)*: The inference Id
-** *`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion" | "chat_completion"))*: The task type
+** *`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion" | "chat_completion"))*: The task type. Refer to the integration list in the API description for the available task types.
 ** *`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })*
 
 [discrete]
@@ -8213,7 +8236,7 @@ These settings are specific to the task type you specified.
 ==== put_amazonbedrock
 Create an Amazon Bedrock inference endpoint.
 
-Creates an inference endpoint to perform an inference task with the `amazonbedrock` service.
+Create an inference endpoint to perform an inference task with the `amazonbedrock` service.
 
 >info
 > You need to provide the access and secret keys only once, during the inference model creation. The get inference API does not retrieve your access or secret keys. After creating the inference model, you cannot change the associated key pairs. If you want to use a different access and secret key pair, delete the inference model and recreate it with the same name and the updated keys.
@@ -8467,12 +8490,15 @@ These settings are specific to the task type you specified.
 Create a Hugging Face inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `hugging_face` service.
+Supported tasks include: `text_embedding`, `completion`, and `chat_completion`.
 
-You must first create an inference endpoint on the Hugging Face endpoint page to get an endpoint URL.
-Select the model you want to use on the new endpoint creation page (for example `intfloat/e5-small-v2`), then select the sentence embeddings task under the advanced configuration section.
-Create the endpoint and copy the URL after the endpoint initialization has been finished.
+To configure the endpoint, first visit the Hugging Face Inference Endpoints page and create a new endpoint.
+Select a model that supports the task you intend to use.
 
-The following models are recommended for the Hugging Face service:
+For Elastic's `text_embedding` task:
+The selected model must support the `Sentence Embeddings` task. On the new endpoint creation page, select the `Sentence Embeddings` task under the `Advanced Configuration` section.
+After the endpoint has initialized, copy the generated endpoint URL.
+Recommended models for `text_embedding` task:
 
 * `all-MiniLM-L6-v2`
 * `all-MiniLM-L12-v2`
@@ -8481,6 +8507,24 @@ The following models are recommended for the Hugging Face service:
 * `e5-small-v2`
 * `multilingual-e5-base`
 * `multilingual-e5-small`
+
+For Elastic's `chat_completion` and `completion` tasks:
+The selected model must support the `Text Generation` task and expose OpenAI API. HuggingFace supports both serverless and dedicated endpoints for `Text Generation`. When creating dedicated endpoint select the `Text Generation` task.
+After the endpoint is initialized (for dedicated) or ready (for serverless), ensure it supports the OpenAI API and includes `/v1/chat/completions` part in URL. Then, copy the full endpoint URL for use.
+Recommended models for `chat_completion` and `completion` tasks:
+
+* `Mistral-7B-Instruct-v0.2`
+* `QwQ-32B`
+* `Phi-3-mini-128k-instruct`
+
+For Elastic's `rerank` task:
+The selected model must support the `sentence-ranking` task and expose OpenAI API.
+HuggingFace supports only dedicated (not serverless) endpoints for `Rerank` so far.
+After the endpoint is initialized, copy the full endpoint URL for use.
+Tested models for `rerank` task:
+
+* `bge-reranker-base`
+* `jina-reranker-v1-turbo-en-GGUF`
 
 {ref}/infer-service-hugging-face.html[Endpoint documentation]
 [source,ts]
@@ -8492,11 +8536,13 @@ client.inference.putHuggingFace({ task_type, huggingface_inference_id, service, 
 ==== Arguments
 
 * *Request (object):*
-** *`task_type` (Enum("text_embedding"))*: The type of the inference task that the model will perform.
+** *`task_type` (Enum("chat_completion" | "completion" | "rerank" | "text_embedding"))*: The type of the inference task that the model will perform.
 ** *`huggingface_inference_id` (string)*: The unique identifier of the inference endpoint.
 ** *`service` (Enum("hugging_face"))*: The type of service supported for the specified task type. In this case, `hugging_face`.
-** *`service_settings` ({ api_key, rate_limit, url })*: Settings used to install the inference model. These settings are specific to the `hugging_face` service.
+** *`service_settings` ({ api_key, rate_limit, url, model_id })*: Settings used to install the inference model. These settings are specific to the `hugging_face` service.
 ** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
+** *`task_settings` (Optional, { return_documents, top_n })*: Settings to configure the inference task.
+These settings are specific to the task type you specified.
 
 [discrete]
 ==== put_jinaai
@@ -8529,7 +8575,7 @@ These settings are specific to the task type you specified.
 ==== put_mistral
 Create a Mistral inference endpoint.
 
-Creates an inference endpoint to perform an inference task with the `mistral` service.
+Create an inference endpoint to perform an inference task with the `mistral` service.
 
 {ref}/infer-service-mistral.html[Endpoint documentation]
 [source,ts]
@@ -8541,8 +8587,7 @@ client.inference.putMistral({ task_type, mistral_inference_id, service, service_
 ==== Arguments
 
 * *Request (object):*
-** *`task_type` (Enum("text_embedding"))*: The task type.
-The only valid task type for the model to perform is `text_embedding`.
+** *`task_type` (Enum("text_embedding" | "completion" | "chat_completion"))*: The type of the inference task that the model will perform.
 ** *`mistral_inference_id` (string)*: The unique identifier of the inference endpoint.
 ** *`service` (Enum("mistral"))*: The type of service supported for the specified task type. In this case, `mistral`.
 ** *`service_settings` ({ api_key, max_input_tokens, model, rate_limit })*: Settings used to install the inference model. These settings are specific to the `mistral` service.
@@ -10705,13 +10750,7 @@ client.ml.putJob({ job_id, analysis_config, data_description })
 ** *`allow_no_indices` (Optional, boolean)*: If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the
 `_all` string or when no indices are specified.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
-whether wildcard expressions match hidden data streams. Supports a list of values. Valid values are:
-
-* `all`: Match any data stream or index, including hidden ones.
-* `closed`: Match closed, non-hidden indices. Also matches any non-hidden data stream. Data streams cannot be closed.
-* `hidden`: Match hidden data streams and hidden indices. Must be combined with `open`, `closed`, or both.
-* `none`: Wildcard patterns are not accepted.
-* `open`: Match open, non-hidden indices. Also matches any non-hidden data stream.
+whether wildcard expressions match hidden data streams. Supports a list of values.
 ** *`ignore_throttled` (Optional, boolean)*: If `true`, concrete, expanded or aliased indices are ignored when frozen.
 ** *`ignore_unavailable` (Optional, boolean)*: If `true`, unavailable indices (missing or closed) are ignored.
 
@@ -11200,13 +11239,7 @@ The maximum value is the value of `index.max_result_window`.
 ** *`allow_no_indices` (Optional, boolean)*: If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the
 `_all` string or when no indices are specified.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
-whether wildcard expressions match hidden data streams. Supports a list of values. Valid values are:
-
-* `all`: Match any data stream or index, including hidden ones.
-* `closed`: Match closed, non-hidden indices. Also matches any non-hidden data stream. Data streams cannot be closed.
-* `hidden`: Match hidden data streams and hidden indices. Must be combined with `open`, `closed`, or both.
-* `none`: Wildcard patterns are not accepted.
-* `open`: Match open, non-hidden indices. Also matches any non-hidden data stream.
+whether wildcard expressions match hidden data streams. Supports a list of values.
 ** *`ignore_throttled` (Optional, boolean)*: If `true`, concrete, expanded or aliased indices are ignored when frozen.
 ** *`ignore_unavailable` (Optional, boolean)*: If `true`, unavailable indices (missing or closed) are ignored.
 
@@ -11411,7 +11444,7 @@ client.nodes.getRepositoriesMeteringInfo({ node_id })
 
 * *Request (object):*
 ** *`node_id` (string | string[])*: List of node IDs or names used to limit returned information.
-All the nodes selective options are explained [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster.html#cluster-nodes).
+For more information about the nodes selective options, refer to the node specification documentation.
 
 [discrete]
 ==== hot_threads
