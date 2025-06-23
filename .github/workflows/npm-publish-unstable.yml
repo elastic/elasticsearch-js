@@ -32,23 +32,16 @@ jobs:
               - 'index.d.ts'
               - 'index.js'
 
-  # pause for 30 minutes to avoid publishing more than 2x per hour
-  debounce:
-    name: Publish max 2x per hour
+  test:
+    name: Run tests and publish unstable
     if: needs.paths-filter.outputs.src == 'true'
     runs-on: ubuntu-latest
     steps:
+      # pause for 30 minutes to avoid publishing more than 2x per hour
       - name: Debounce 30 minutes
         uses: zachary95/github-actions-debounce@ab7363483e2837992b8aa6be891763da00ac14f9 # v0.1.0
         with:
           wait: 1800
-
-  # run tests prior to publish to ensure some stability
-  test:
-    name: Run tests
-    needs: debounce
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           persist-credentials: false
@@ -57,9 +50,12 @@ jobs:
         with:
           node-version: "22.x"
           registry-url: "https://registry.npmjs.org"
-      - run: npm install -g npm
-      - run: npm install
-      - run: npm test
+      - name: Install dependencies
+        run: |
+          npm install -g npm
+          npm install
+      - name: Run tests
+        run: npm test
 
   # if tests pass, publish unstable
   publish:
