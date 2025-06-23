@@ -46,16 +46,15 @@ export default class Esql {
           'query',
           'tables',
           'include_ccs_metadata',
-          'wait_for_completion_timeout'
+          'wait_for_completion_timeout',
+          'keep_alive',
+          'keep_on_completion'
         ],
         query: [
           'allow_partial_results',
           'delimiter',
           'drop_null_columns',
-          'format',
-          'keep_alive',
-          'keep_on_completion',
-          'wait_for_completion_timeout'
+          'format'
         ]
       },
       'esql.async_query_delete': {
