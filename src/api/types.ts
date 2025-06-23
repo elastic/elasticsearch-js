@@ -1510,7 +1510,7 @@ export interface OpenPointInTimeRequest extends RequestBase {
   routing?: Routing
   /** The type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * It supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * It supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** Indicates whether the point in time tolerates unavailable shards or shard failures when initially creating the PIT.
     * If `false`, creating a point in time request when a shard is missing or unavailable will throw an exception.
@@ -3195,8 +3195,7 @@ export interface SearchShardsRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -3256,8 +3255,7 @@ export interface SearchTemplateRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   /** The type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled. */
   ignore_throttled?: boolean
@@ -3554,8 +3552,7 @@ export interface UpdateByQueryRequest extends RequestBase {
   df?: string
   /** The type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * It supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * It supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** Skips the specified number of documents. */
   from?: long
@@ -15704,8 +15701,11 @@ export interface ClusterGetSettingsRequest extends RequestBase {
 }
 
 export interface ClusterGetSettingsResponse {
+  /** The settings that persist after the cluster restarts. */
   persistent: Record<string, any>
+  /** The settings that do not persist after the cluster restarts. */
   transient: Record<string, any>
+  /** The default setting values. */
   defaults?: Record<string, any>
 }
 
@@ -15919,7 +15919,9 @@ export interface ClusterPutSettingsRequest extends RequestBase {
   master_timeout?: Duration
   /** Explicit operation timeout */
   timeout?: Duration
+  /** The settings that persist after the cluster restarts. */
   persistent?: Record<string, any>
+  /** The settings that do not persist after the cluster restarts. */
   transient?: Record<string, any>
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { flat_settings?: never, master_timeout?: never, timeout?: never, persistent?: never, transient?: never }
@@ -17643,6 +17645,7 @@ export interface EsqlEsqlClusterDetails {
   indices: string
   took?: DurationValue<UnitMillis>
   _shards?: EsqlEsqlShardInfo
+  failures?: EsqlEsqlShardFailure[]
 }
 
 export interface EsqlEsqlClusterInfo {
@@ -17679,8 +17682,8 @@ export interface EsqlEsqlResult {
 }
 
 export interface EsqlEsqlShardFailure {
-  shard: Id
-  index: IndexName
+  shard: integer
+  index: IndexName | null
   node?: NodeId
   reason: ErrorCause
 }
@@ -17690,7 +17693,6 @@ export interface EsqlEsqlShardInfo {
   successful?: integer
   skipped?: integer
   failed?: integer
-  failures?: EsqlEsqlShardFailure[]
 }
 
 export interface EsqlTableValuesContainer {
@@ -17717,14 +17719,6 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   drop_null_columns?: boolean
   /** A short version of the Accept header, for example `json` or `yaml`. */
   format?: EsqlEsqlFormat
-  /** The period for which the query and its results are stored in the cluster.
-    * The default period is five days.
-    * When this period expires, the query and its results are deleted, even if the query is still ongoing.
-    * If the `keep_on_completion` parameter is false, Elasticsearch only stores async queries that do not complete within the period set by the `wait_for_completion_timeout` parameter, regardless of this value. */
-  keep_alive?: Duration
-  /** Indicates whether the query and its results are stored in the cluster.
-    * If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter. */
-  keep_on_completion?: boolean
   /** By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results. */
   columnar?: boolean
   /** Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on. */
@@ -17751,10 +17745,18 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
     * If the query completes during this period, results are returned
     * Otherwise, a query ID is returned that can later be used to retrieve the results. */
   wait_for_completion_timeout?: Duration
+  /** The period for which the query and its results are stored in the cluster.
+    * The default period is five days.
+    * When this period expires, the query and its results are deleted, even if the query is still ongoing.
+    * If the `keep_on_completion` parameter is false, Elasticsearch only stores async queries that do not complete within the period set by the `wait_for_completion_timeout` parameter, regardless of this value. */
+  keep_alive?: Duration
+  /** Indicates whether the query and its results are stored in the cluster.
+    * If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter. */
+  keep_on_completion?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, wait_for_completion_timeout?: never }
+  body?: string | { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, keep_alive?: never, keep_on_completion?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, wait_for_completion_timeout?: never }
+  querystring?: { [key: string]: any } & { delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
 }
 
 export type EsqlAsyncQueryResponse = EsqlAsyncEsqlResult
@@ -18776,7 +18778,8 @@ export interface IndicesIndexSettingsKeys {
   max_shingle_diff?: integer
   blocks?: IndicesIndexSettingBlocks
   max_refresh_listeners?: integer
-  /** Settings to define analyzers, tokenizers, token filters and character filters. */
+  /** Settings to define analyzers, tokenizers, token filters and character filters.
+    * Refer to the linked documentation for step-by-step examples of updating analyzers on existing indices. */
   analyze?: IndicesSettingsAnalyze
   highlight?: IndicesSettingsHighlight
   max_terms_count?: integer
@@ -19349,8 +19352,7 @@ export interface IndicesClearCacheRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, clears the fields cache.
     * Use the `fields` parameter to clear the cache of specific fields only. */
@@ -19418,8 +19420,7 @@ export interface IndicesCloseRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -19592,8 +19593,7 @@ export interface IndicesDeleteRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -19747,8 +19747,7 @@ export interface IndicesExistsRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
@@ -19777,8 +19776,7 @@ export interface IndicesExistsAliasRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, requests that include a missing data stream or index in the target indices or data streams return an error. */
   ignore_unavailable?: boolean
@@ -19935,8 +19933,7 @@ export interface IndicesFlushRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, the request forces a flush even if there are no changes to commit to the index. */
   force?: boolean
@@ -20038,8 +20035,7 @@ export interface IndicesGetAliasRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -20065,8 +20061,7 @@ export interface IndicesGetDataLifecycleRequest extends RequestBase {
     * To target all data streams, omit this parameter or use `*` or `_all`. */
   name: DataStreamNames
   /** Type of data stream that wildcard patterns can match.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, return all default settings in the response. */
   include_defaults?: boolean
@@ -20146,8 +20141,7 @@ export interface IndicesGetFieldMappingRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -20208,8 +20202,7 @@ export interface IndicesGetMappingRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -20397,8 +20390,7 @@ export interface IndicesOpenRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -20482,8 +20474,7 @@ export interface IndicesPutDataLifecycleRequest extends RequestBase {
     * To target all data streams use `*` or `_all`. */
   name: DataStreamNames
   /** Type of data stream that wildcard patterns can match.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `hidden`, `open`, `closed`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** Period to wait for a connection to the master node. If no response is
     * received before the timeout expires, the request fails and returns an
@@ -20587,8 +20578,7 @@ export interface IndicesPutMappingRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -20843,8 +20833,7 @@ export interface IndicesRefreshRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -20902,7 +20891,6 @@ export interface IndicesResolveClusterRequest extends RequestBase {
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
     * NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index
     * options to the `_resolve/cluster` API endpoint that takes no index expression. */
   expand_wildcards?: ExpandWildcards
@@ -20952,8 +20940,7 @@ export interface IndicesResolveIndexRequest extends RequestBase {
   name: Names
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -21075,8 +21062,7 @@ export interface IndicesSegmentsRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `false`, the request returns an error if it targets a missing or closed index. */
   ignore_unavailable?: boolean
@@ -21630,8 +21616,7 @@ export interface IndicesValidateQueryRequest extends RequestBase {
   df?: string
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-    * Supports comma-separated values, such as `open,hidden`.
-    * Valid values are: `all`, `open`, `closed`, `hidden`, `none`. */
+    * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, the response returns detailed information if an error has occurred. */
   explain?: boolean
@@ -22349,13 +22334,47 @@ export type InferenceJinaAITaskType = 'rerank' | 'text_embedding'
 export type InferenceJinaAITextEmbeddingTask = 'classification' | 'clustering' | 'ingest' | 'search'
 
 export interface InferenceMessage {
-  /** The content of the message. */
+  /** The content of the message.
+    *
+    * String example:
+    * ```
+    * {
+    *    "content": "Some string"
+    * }
+    * ```
+    *
+    * Object example:
+    * ```
+    * {
+    *   "content": [
+    *       {
+    *        "text": "Some text",
+    *        "type": "text"
+    *       }
+    *    ]
+    * }
+    * ``` */
   content?: InferenceMessageContent
-  /** The role of the message author. */
+  /** The role of the message author. Valid values are `user`, `assistant`, `system`, and `tool`. */
   role: string
-  /** The tool call that this message is responding to. */
+  /** Only for `tool` role messages. The tool call that this message is responding to. */
   tool_call_id?: Id
-  /** The tool calls generated by the model. */
+  /** Only for `assistant` role messages. The tool calls generated by the model. If it's specified, the `content` field is optional.
+    * Example:
+    * ```
+    * {
+    *   "tool_calls": [
+    *       {
+    *           "id": "call_KcAjWtAww20AihPHphUh46Gd",
+    *           "type": "function",
+    *           "function": {
+    *               "name": "get_current_weather",
+    *               "arguments": "{\"location\":\"Boston, MA\"}"
+    *           }
+    *       }
+    *   ]
+    * }
+    * ``` */
   tool_calls?: InferenceToolCall[]
 }
 
@@ -22430,7 +22449,25 @@ export interface InferenceRankedDocument {
 }
 
 export interface InferenceRateLimitSetting {
-  /** The number of requests allowed per minute. */
+  /** The number of requests allowed per minute.
+    * By default, the number of requests allowed per minute is set by each service as follows:
+    *
+    * * `alibabacloud-ai-search` service: `1000`
+    * * `anthropic` service: `50`
+    * * `azureaistudio` service: `240`
+    * * `azureopenai` service and task type `text_embedding`: `1440`
+    * * `azureopenai` service and task type `completion`: `120`
+    * * `cohere` service: `10000`
+    * * `elastic` service and task type `chat_completion`: `240`
+    * * `googleaistudio` service: `360`
+    * * `googlevertexai` service: `30000`
+    * * `hugging_face` service: `3000`
+    * * `jinaai` service: `2000`
+    * * `mistral` service: `240`
+    * * `openai` service and task type `text_embedding`: `3000`
+    * * `openai` service and task type `completion`: `500`
+    * * `voyageai` service: `2000`
+    * * `watsonxai` service: `120` */
   requests_per_minute?: integer
 }
 
@@ -22447,9 +22484,46 @@ export interface InferenceRequestChatCompletion {
   stop?: string[]
   /** The sampling temperature to use. */
   temperature?: float
-  /** Controls which tool is called by the model. */
+  /** Controls which tool is called by the model.
+    * String representation: One of `auto`, `none`, or `requrired`. `auto` allows the model to choose between calling tools and generating a message. `none` causes the model to not call any tools. `required` forces the model to call one or more tools.
+    * Example (object representation):
+    * ```
+    * {
+    *   "tool_choice": {
+    *       "type": "function",
+    *       "function": {
+    *           "name": "get_current_weather"
+    *       }
+    *   }
+    * }
+    * ``` */
   tool_choice?: InferenceCompletionToolType
-  /** A list of tools that the model can call. */
+  /** A list of tools that the model can call.
+    * Example:
+    * ```
+    * {
+    *   "tools": [
+    *       {
+    *           "type": "function",
+    *           "function": {
+    *               "name": "get_price_of_item",
+    *               "description": "Get the current price of an item",
+    *               "parameters": {
+    *                   "type": "object",
+    *                   "properties": {
+    *                       "item": {
+    *                           "id": "12345"
+    *                       },
+    *                       "unit": {
+    *                           "type": "currency"
+    *                       }
+    *                   }
+    *               }
+    *           }
+    *       }
+    *   ]
+    * }
+    * ``` */
   tools?: InferenceCompletionTool[]
   /** Nucleus sampling, an alternative to sampling with temperature. */
   top_p?: float
@@ -22698,7 +22772,7 @@ export interface InferenceInferenceRequest extends RequestBase {
 export type InferenceInferenceResponse = InferenceInferenceResult
 
 export interface InferencePutRequest extends RequestBase {
-  /** The task type */
+  /** The task type. Refer to the integration list in the API description for the available task types. */
   task_type?: InferenceTaskType
   /** The inference Id */
   inference_id: Id
@@ -28417,13 +28491,7 @@ export interface MlPutJobRequest extends RequestBase {
     * `_all` string or when no indices are specified. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
-    * whether wildcard expressions match hidden data streams. Supports comma-separated values. Valid values are:
-    *
-    * * `all`: Match any data stream or index, including hidden ones.
-    * * `closed`: Match closed, non-hidden indices. Also matches any non-hidden data stream. Data streams cannot be closed.
-    * * `hidden`: Match hidden data streams and hidden indices. Must be combined with `open`, `closed`, or both.
-    * * `none`: Wildcard patterns are not accepted.
-    * * `open`: Match open, non-hidden indices. Also matches any non-hidden data stream. */
+    * whether wildcard expressions match hidden data streams. Supports comma-separated values. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
@@ -28954,13 +29022,7 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
     * `_all` string or when no indices are specified. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
-    * whether wildcard expressions match hidden data streams. Supports comma-separated values. Valid values are:
-    *
-    * * `all`: Match any data stream or index, including hidden ones.
-    * * `closed`: Match closed, non-hidden indices. Also matches any non-hidden data stream. Data streams cannot be closed.
-    * * `hidden`: Match hidden data streams and hidden indices. Must be combined with `open`, `closed`, or both.
-    * * `none`: Wildcard patterns are not accepted.
-    * * `open`: Match open, non-hidden indices. Also matches any non-hidden data stream. */
+    * whether wildcard expressions match hidden data streams. Supports comma-separated values. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
@@ -33835,6 +33897,14 @@ export interface SlmSnapshotLifecycle {
   stats: SlmStatistics
 }
 
+export interface SlmSnapshotPolicyStats {
+  policy: string
+  snapshots_taken: long
+  snapshots_failed: long
+  snapshots_deleted: long
+  snapshot_deletion_failures: long
+}
+
 export interface SlmStatistics {
   retention_deletion_time?: Duration
   retention_deletion_time_millis?: DurationValue<UnitMillis>
@@ -33945,7 +34015,7 @@ export interface SlmGetStatsResponse {
   total_snapshot_deletion_failures: long
   total_snapshots_failed: long
   total_snapshots_taken: long
-  policy_stats: string[]
+  policy_stats: SlmSnapshotPolicyStats[]
 }
 
 export interface SlmGetStatusRequest extends RequestBase {

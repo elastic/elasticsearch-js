@@ -3540,7 +3540,7 @@ export default class Ml {
   }
 
   /**
-    * Create a datafeed. Datafeeds retrieve data from Elasticsearch for analysis by an anomaly detection job. You can associate only one datafeed with each anomaly detection job. The datafeed contains a query that runs at a defined interval (`frequency`). If you are concerned about delayed data, you can add a delay (`query_delay') at each interval. By default, the datafeed uses the following query: `{"match_all": {"boost": 1}}`. When Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead. You must use Kibana, this API, or the create anomaly detection jobs API to create a datafeed. Do not add a datafeed directly to the `.ml-config` index. Do not give users `write` privileges on the `.ml-config` index.
+    * Create a datafeed. Datafeeds retrieve data from Elasticsearch for analysis by an anomaly detection job. You can associate only one datafeed with each anomaly detection job. The datafeed contains a query that runs at a defined interval (`frequency`). If you are concerned about delayed data, you can add a delay (`query_delay`) at each interval. By default, the datafeed uses the following query: `{"match_all": {"boost": 1}}`. When Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead. You must use Kibana, this API, or the create anomaly detection jobs API to create a datafeed. Do not add a datafeed directly to the `.ml-config` index. Do not give users `write` privileges on the `.ml-config` index.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-put-datafeed | Elasticsearch API documentation}
     */
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutDatafeedResponse>
@@ -4826,7 +4826,7 @@ export default class Ml {
 
   /**
     * Validate an anomaly detection job.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/ | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch | Elasticsearch API documentation}
     */
   async validateDetector (this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateDetectorResponse>
   async validateDetector (this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlValidateDetectorResponse, unknown>>
