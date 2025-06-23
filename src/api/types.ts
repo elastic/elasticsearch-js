@@ -1734,6 +1734,7 @@ export type SearchSourceConfig = boolean | SearchSourceFilter | Fields
 export type SearchSourceConfigParam = boolean | Fields
 
 export interface SearchSourceFilter {
+  exclude_vectors?: boolean
   excludes?: Fields
   exclude?: Fields
   includes?: Fields
@@ -3176,6 +3177,7 @@ export interface AggregationsBoxPlotAggregate extends AggregationsAggregateBase 
 
 export interface AggregationsBoxplotAggregation extends AggregationsMetricAggregationBase {
   compression?: double
+  execution_hint?: AggregationsTDigestExecutionHint
 }
 
 export interface AggregationsBucketAggregationBase {
@@ -3835,6 +3837,7 @@ export interface AggregationsMedianAbsoluteDeviationAggregate extends Aggregatio
 
 export interface AggregationsMedianAbsoluteDeviationAggregation extends AggregationsFormatMetricAggregationBase {
   compression?: double
+  execution_hint?: AggregationsTDigestExecutionHint
 }
 
 export interface AggregationsMetricAggregationBase {
@@ -4245,7 +4248,10 @@ export interface AggregationsSumBucketAggregation extends AggregationsPipelineAg
 
 export interface AggregationsTDigest {
   compression?: integer
+  execution_hint?: AggregationsTDigestExecutionHint
 }
+
+export type AggregationsTDigestExecutionHint = 'default' | 'high_accuracy'
 
 export interface AggregationsTDigestPercentileRanksAggregate extends AggregationsPercentilesAggregateBase {
 }
@@ -10627,8 +10633,6 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   delimiter?: string
   drop_null_columns?: boolean
   format?: EsqlQueryEsqlFormat
-  keep_alive?: Duration
-  keep_on_completion?: boolean
   columnar?: boolean
   filter?: QueryDslQueryContainer
   locale?: string
@@ -10638,6 +10642,8 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   tables?: Record<string, Record<string, EsqlTableValuesContainer>>
   include_ccs_metadata?: boolean
   wait_for_completion_timeout?: Duration
+  keep_alive?: Duration
+  keep_on_completion?: boolean
 }
 
 export type EsqlAsyncQueryResponse = EsqlResult
@@ -11019,6 +11025,7 @@ export interface IlmExplainLifecycleLifecycleExplainManaged {
   step_time_millis?: EpochTime<UnitMillis>
   phase_execution?: IlmExplainLifecycleLifecycleExplainPhaseExecution
   time_since_index_creation?: Duration
+  skip: boolean
 }
 
 export interface IlmExplainLifecycleLifecycleExplainPhaseExecution {
@@ -13268,11 +13275,17 @@ export interface InferenceHuggingFaceServiceSettings {
   api_key: string
   rate_limit?: InferenceRateLimitSetting
   url: string
+  model_id?: string
 }
 
 export type InferenceHuggingFaceServiceType = 'hugging_face'
 
-export type InferenceHuggingFaceTaskType = 'text_embedding'
+export interface InferenceHuggingFaceTaskSettings {
+  return_documents?: boolean
+  top_n?: integer
+}
+
+export type InferenceHuggingFaceTaskType = 'chat_completion' | 'completion' | 'rerank' | 'text_embedding'
 
 export interface InferenceInferenceChunkingSettings {
   max_chunk_size?: integer
@@ -13351,7 +13364,7 @@ export interface InferenceMistralServiceSettings {
 
 export type InferenceMistralServiceType = 'mistral'
 
-export type InferenceMistralTaskType = 'text_embedding'
+export type InferenceMistralTaskType = 'text_embedding' | 'completion' | 'chat_completion'
 
 export interface InferenceOpenAIServiceSettings {
   api_key: string
@@ -13639,6 +13652,7 @@ export interface InferencePutHuggingFaceRequest extends RequestBase {
   chunking_settings?: InferenceInferenceChunkingSettings
   service: InferenceHuggingFaceServiceType
   service_settings: InferenceHuggingFaceServiceSettings
+  task_settings?: InferenceHuggingFaceTaskSettings
 }
 
 export type InferencePutHuggingFaceResponse = InferenceInferenceEndpointInfo
