@@ -10789,8 +10789,6 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   delimiter?: string
   drop_null_columns?: boolean
   format?: EsqlQueryEsqlFormat
-  keep_alive?: Duration
-  keep_on_completion?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     columnar?: boolean
@@ -10802,6 +10800,8 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
     tables?: Record<string, Record<string, EsqlTableValuesContainer>>
     include_ccs_metadata?: boolean
     wait_for_completion_timeout?: Duration
+    keep_alive?: Duration
+    keep_on_completion?: boolean
   }
 }
 

@@ -469,7 +469,7 @@ export default class Cluster {
   }
 
   /**
-    * Get remote cluster information. Get information about configured remote clusters. The API returns connection and endpoint information keyed by the configured remote cluster alias. > info > This API returns information that reflects current state on the local cluster. > The `connected` field does not necessarily reflect whether a remote cluster is down or unavailable, only whether there is currently an open connection to it. > Elasticsearch does not spontaneously try to reconnect to a disconnected remote cluster. > To trigger a reconnection, attempt a cross-cluster search, ES|QL cross-cluster search, or try the [resolve cluster endpoint](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-resolve-cluster).
+    * Get remote cluster information. Get information about configured remote clusters. The API returns connection and endpoint information keyed by the configured remote cluster alias. > info > This API returns information that reflects current state on the local cluster. > The `connected` field does not necessarily reflect whether a remote cluster is down or unavailable, only whether there is currently an open connection to it. > Elasticsearch does not spontaneously try to reconnect to a disconnected remote cluster. > To trigger a reconnection, attempt a cross-cluster search, ES|QL cross-cluster search, or try the `/_resolve/cluster` endpoint.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/cluster-remote-info.html | Elasticsearch API documentation}
     */
   async remoteInfo (this: That, params?: T.ClusterRemoteInfoRequest | TB.ClusterRemoteInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterRemoteInfoResponse>

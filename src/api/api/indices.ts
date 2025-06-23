@@ -79,7 +79,7 @@ export default class Indices {
 
   /**
     * Get tokens from text analysis. The analyze API performs analysis on a text string and returns the resulting tokens. Generating excessive amount of tokens may cause a node to run out of memory. The `index.analyze.max_token_count` setting enables you to limit the number of tokens that can be produced. If more than this limit of tokens gets generated, an error occurs. The `_analyze` endpoint without a specified index will always use `10000` as its limit.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.18/indices-analyze.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-analyze | Elasticsearch API documentation}
     */
   async analyze (this: That, params?: T.IndicesAnalyzeRequest | TB.IndicesAnalyzeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesAnalyzeResponse>
   async analyze (this: That, params?: T.IndicesAnalyzeRequest | TB.IndicesAnalyzeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesAnalyzeResponse, unknown>>
