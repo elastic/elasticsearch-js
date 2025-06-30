@@ -4149,7 +4149,7 @@ export type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
 export interface LinearRetriever extends RetrieverBase {
   /** Inner retrievers. */
   retrievers?: InnerRetriever[]
-  rank_window_size: integer
+  rank_window_size?: integer
 }
 
 export type MapboxVectorTiles = ArrayBuffer
@@ -4253,7 +4253,7 @@ export interface PinnedRetriever extends RetrieverBase {
   retriever: RetrieverContainer
   ids?: string[]
   docs?: SpecifiedDocument[]
-  rank_window_size: integer
+  rank_window_size?: integer
 }
 
 export type PipelineName = string
@@ -4678,9 +4678,9 @@ export interface TextSimilarityReranker extends RetrieverBase {
   /** Unique identifier of the inference endpoint created using the inference API. */
   inference_id?: string
   /** The text snippet used as the basis for similarity comparison */
-  inference_text?: string
+  inference_text: string
   /** The document field to be used for text similarity comparisons. This field should contain the text that will be evaluated against the inference_text */
-  field?: string
+  field: string
 }
 
 export type ThreadType = 'cpu' | 'wait' | 'block' | 'gpu' | 'mem'
@@ -8377,6 +8377,10 @@ export interface MappingSearchAsYouTypeProperty extends MappingCorePropertyBase 
   type: 'search_as_you_type'
 }
 
+export interface MappingSemanticTextIndexOptions {
+  dense_vector?: MappingDenseVectorIndexOptions
+}
+
 export interface MappingSemanticTextProperty {
   type: 'semantic_text'
   meta?: Record<string, string>
@@ -8388,6 +8392,9 @@ export interface MappingSemanticTextProperty {
     * You can update this parameter by using the Update mapping API. Use the Create inference API to create the endpoint.
     * If not specified, the inference endpoint defined by inference_id will be used at both index and query time. */
   search_inference_id?: Id
+  /** Settings for index_options that override any defaults used by semantic_text, for example
+    * specific quantization settings. */
+  index_options?: MappingSemanticTextIndexOptions
   /** Settings for chunking text into smaller passages. If specified, these will override the
     * chunking settings sent in the inference endpoint associated with inference_id. If chunking settings are updated,
     * they will not be applied to existing documents until they are reindexed. */
@@ -9729,14 +9736,12 @@ export interface QueryDslSparseVectorQuery extends QueryDslQueryBase {
   query?: string
   /** Whether to perform pruning, omitting the non-significant tokens from the query to improve query performance.
     * If prune is true but the pruning_config is not specified, pruning will occur but default values will be used.
-    * Default: false
-    * @experimental */
+    * Default: false */
   prune?: boolean
   /** Optional pruning configuration.
     * If enabled, this will omit non-significant tokens from the query in order to improve query performance.
     * This is only used if prune is set to true.
-    * If prune is set to true but pruning_config is not specified, default values will be used.
-    * @experimental */
+    * If prune is set to true but pruning_config is not specified, default values will be used. */
   pruning_config?: QueryDslTokenPruningConfig
 }
 
@@ -17837,6 +17842,8 @@ export interface EsqlAsyncQueryGetRequest extends RequestBase {
   /** Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
     * If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns. */
   drop_null_columns?: boolean
+  /** A short version of the Accept header, for example `json` or `yaml`. */
+  format?: EsqlEsqlFormat
   /** The period for which the query and its results are stored in the cluster.
     * When this period expires, the query and its results are deleted, even if the query is still ongoing. */
   keep_alive?: Duration
@@ -17846,9 +17853,9 @@ export interface EsqlAsyncQueryGetRequest extends RequestBase {
     * Otherwise, the response returns an `is_running` value of `true` and no results. */
   wait_for_completion_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, drop_null_columns?: never, keep_alive?: never, wait_for_completion_timeout?: never }
+  body?: string | { [key: string]: any } & { id?: never, drop_null_columns?: never, format?: never, keep_alive?: never, wait_for_completion_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, drop_null_columns?: never, keep_alive?: never, wait_for_completion_timeout?: never }
+  querystring?: { [key: string]: any } & { id?: never, drop_null_columns?: never, format?: never, keep_alive?: never, wait_for_completion_timeout?: never }
 }
 
 export type EsqlAsyncQueryGetResponse = EsqlAsyncEsqlResult
@@ -20190,10 +20197,6 @@ export interface IndicesGetRequest extends RequestBase {
 
 export type IndicesGetResponse = Record<IndexName, IndicesIndexState>
 
-export interface IndicesGetAliasIndexAliases {
-  aliases: Record<string, IndicesAliasDefinition>
-}
-
 export interface IndicesGetAliasRequest extends RequestBase {
   /** Comma-separated list of aliases to retrieve.
     * Supports wildcards (`*`).
@@ -20222,6 +20225,17 @@ export interface IndicesGetAliasRequest extends RequestBase {
 }
 
 export type IndicesGetAliasResponse = Record<IndexName, IndicesGetAliasIndexAliases>
+
+export interface IndicesGetAliasIndexAliases {
+  aliases: Record<string, IndicesAliasDefinition>
+}
+
+export interface IndicesGetAliasNotFoundAliasesKeys {
+  error: string
+  status: number
+}
+export type IndicesGetAliasNotFoundAliases = IndicesGetAliasNotFoundAliasesKeys
+& { [property: string]: IndicesGetAliasIndexAliases | string | number }
 
 export interface IndicesGetDataLifecycleDataStreamWithLifecycle {
   name: DataStreamName

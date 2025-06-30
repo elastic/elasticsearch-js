@@ -733,6 +733,14 @@ export default class Indices {
           'resource'
         ]
       },
+      'indices.remove_block': {
+        path: [
+          'index',
+          'block'
+        ],
+        body: [],
+        query: []
+      },
       'indices.resolve_cluster': {
         path: [
           'name'
@@ -3715,6 +3723,52 @@ export default class Indices {
       name: 'indices.reload_search_analyzers',
       pathParts: {
         index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Removes a block from an index.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-blocks.html | Elasticsearch API documentation}
+    */
+  async removeBlock (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async removeBlock (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async removeBlock (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async removeBlock (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.remove_block']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = `/${encodeURIComponent(params.index.toString())}/_block/${encodeURIComponent(params.block.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.remove_block',
+      pathParts: {
+        index: params.index,
+        block: params.block
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

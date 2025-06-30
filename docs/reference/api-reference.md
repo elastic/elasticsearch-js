@@ -1577,54 +1577,6 @@ Internally, Elasticsearch translates a vector tile search API request into a sea
 * Optionally, a `geo_bounds` aggregation on the `<field>`. The search only includes this aggregation if the `exact_bounds` parameter is `true`.
 * If the optional parameter `with_labels` is `true`, the internal search will include a dynamic runtime field that calls the `getLabelPosition` function of the geometry doc value. This enables the generation of new point features containing suggested geometry labels, so that, for example, multi-polygons will have only one label.
 
-For example, Elasticsearch may translate a vector tile search API request with a `grid_agg` argument of `geotile` and an `exact_bounds` argument of `true` into the following search
-
-```
-GET my-index/_search
-{
-  "size": 10000,
-  "query": {
-    "geo_bounding_box": {
-      "my-geo-field": {
-        "top_left": {
-          "lat": -40.979898069620134,
-          "lon": -45
-        },
-        "bottom_right": {
-          "lat": -66.51326044311186,
-          "lon": 0
-        }
-      }
-    }
-  },
-  "aggregations": {
-    "grid": {
-      "geotile_grid": {
-        "field": "my-geo-field",
-        "precision": 11,
-        "size": 65536,
-        "bounds": {
-          "top_left": {
-            "lat": -40.979898069620134,
-            "lon": -45
-          },
-          "bottom_right": {
-            "lat": -66.51326044311186,
-            "lon": 0
-          }
-        }
-      }
-    },
-    "bounds": {
-      "geo_bounds": {
-        "field": "my-geo-field",
-        "wrap_longitude": false
-      }
-    }
-  }
-}
-```
-
 The API returns results as a binary Mapbox vector tile.
 Mapbox vector tiles are encoded as Google Protobufs (PBF). By default, the tile contains three layers:
 
@@ -1699,6 +1651,8 @@ Hexagonal cells don't align perfectly on a vector tile.
 Some cells may intersect more than one vector tile.
 To compute the H3 resolution for each precision, Elasticsearch compares the average density of hexagonal bins at each resolution with the average density of tile bins at each zoom level.
 Elasticsearch uses the H3 resolution that is closest to the corresponding geotile density.
+
+Learn how to use the vector tile search API with practical examples in the [Vector tile search examples](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/vector-tile-search) guide.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-mvt)
 
@@ -4701,6 +4655,7 @@ A query ID is provided in the ES|QL async query API response for a query that do
 A query ID is also provided when the request was submitted with the `keep_on_completion` parameter set to `true`.
 - **`drop_null_columns` (Optional, boolean)**: Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
 If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
+- **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile" \| "arrow"))**: A short version of the Accept header, for example `json` or `yaml`.
 - **`keep_alive` (Optional, string \| -1 \| 0)**: The period for which the query and its results are stored in the cluster.
 When this period expires, the query and its results are deleted, even if the query is still ongoing.
 - **`wait_for_completion_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the request to finish.
@@ -6704,7 +6659,7 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 - **`numeric_detection` (Optional, boolean)**: Automatically map strings into numeric data types for all fields.
-- **`properties` (Optional, Record<string, { type } \| { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } \| { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } \| { relations, eager_global_ordinals, type } \| { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } \| { type, fields, meta, copy_to } \| { type } \| { positive_score_impact, type } \| { positive_score_impact, type } \| { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { type } \| { type, null_value } \| { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } \| { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } \| { type, default_metric, metrics, time_series_metric } \| { type, dims, element_type, index, index_options, similarity } \| { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } \| { enabled, include_in_parent, include_in_root, type } \| { enabled, subobjects, type } \| { type, enabled, priority, time_series_dimension } \| { type, meta, inference_id, search_inference_id, chunking_settings } \| { type } \| { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } \| { value, type } \| { type, index } \| { path, type } \| { ignore_malformed, type } \| { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } \| { type } \| { analyzer, boost, index, null_value, enable_position_increments, type } \| { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } \| { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } \| { ignore_malformed, ignore_z_value, null_value, type } \| { coerce, ignore_malformed, ignore_z_value, orientation, type } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value, scaling_factor } \| { type, null_value } \| { type, null_value } \| { format, type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
+- **`properties` (Optional, Record<string, { type } \| { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } \| { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } \| { relations, eager_global_ordinals, type } \| { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } \| { type, fields, meta, copy_to } \| { type } \| { positive_score_impact, type } \| { positive_score_impact, type } \| { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { type } \| { type, null_value } \| { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } \| { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } \| { type, default_metric, metrics, time_series_metric } \| { type, dims, element_type, index, index_options, similarity } \| { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } \| { enabled, include_in_parent, include_in_root, type } \| { enabled, subobjects, type } \| { type, enabled, priority, time_series_dimension } \| { type, meta, inference_id, search_inference_id, index_options, chunking_settings } \| { type } \| { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } \| { value, type } \| { type, index } \| { path, type } \| { ignore_malformed, type } \| { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } \| { type } \| { analyzer, boost, index, null_value, enable_position_increments, type } \| { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } \| { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } \| { ignore_malformed, ignore_z_value, null_value, type } \| { coerce, ignore_malformed, ignore_z_value, orientation, type } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value, scaling_factor } \| { type, null_value } \| { type, null_value } \| { format, type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
@@ -6971,6 +6926,16 @@ client.indices.reloadSearchAnalyzers({ index })
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
 - **`resource` (Optional, string)**: Changed resource to reload analyzers from if applicable
+
+## client.indices.removeBlock [_indices.remove_block]
+Removes a block from an index.
+
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-blocks.html)
+
+```ts
+client.indices.removeBlock()
+```
+
 
 ## client.indices.resolveCluster [_indices.resolve_cluster]
 Resolve the cluster.
@@ -12662,6 +12627,7 @@ You can optionally filter the results with a query.
 To use this API, you must have at least the `manage_own_api_key` or the `read_security` cluster privileges.
 If you have only the `manage_own_api_key` privilege, this API returns only the API keys that you own.
 If you have the `read_security`, `manage_api_key`, or greater privileges (including `manage_security`), this API returns all API keys regardless of ownership.
+Refer to the linked documentation for examples of how to find API keys:
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-query-api-keys)
 
@@ -13041,6 +13007,8 @@ This API supports updates to an API key's access scope, metadata, and expiration
 The owner user's information, such as the `username` and `realm`, is also updated automatically on every call.
 
 NOTE: This API cannot update REST API keys, which should be updated by either the update API key or bulk update API keys API.
+
+To learn more about how to use this API, refer to the [Update cross cluter API key API examples page](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/update-cc-api-key-examples).
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-update-cross-cluster-api-key)
 
@@ -14006,6 +13974,12 @@ If this detail is not needed or you want to obtain information about one or more
 If you omit the `<snapshot>` request path parameter, the request retrieves information only for currently running snapshots.
 This usage is preferred.
 If needed, you can specify `<repository>` and `<snapshot>` to retrieve information for specific snapshots, even if they're not currently running.
+
+Note that the stats will not be available for any shard snapshots in an ongoing snapshot completed by a node that (even momentarily) left the cluster.
+Loading the stats from the repository is an expensive operation (see the WARNING below).
+Therefore the stats values for such shards will be -1 even though the "stage" value will be "DONE", in order to minimize latency.
+A "description" field will be present for a shard snapshot completed by a departed node explaining why the shard snapshot's stats results are invalid.
+Consequently, the total stats for the index will be less than expected due to the missing values from these shards.
 
 WARNING: Using the API to return the status of any snapshots other than currently running snapshots can be expensive.
 The API requires a read from the repository for each shard in each snapshot.
@@ -15310,6 +15284,7 @@ When Elasticsearch security features are enabled on your cluster, watches are ru
 If your user is allowed to read index `a`, but not index `b`, then the exact same set of rules will apply during execution of a watch.
 
 When using the run watch API, the authorization data of the user that called the API will be used as a base, instead of the information who stored the watch.
+Refer to the external documentation for examples of watch execution requests, including existing, customized, and inline watches.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-execute-watch)
 
