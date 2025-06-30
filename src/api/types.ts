@@ -4141,7 +4141,7 @@ export type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
 export interface LinearRetriever extends RetrieverBase {
   /** Inner retrievers. */
   retrievers?: InnerRetriever[]
-  rank_window_size: integer
+  rank_window_size?: integer
 }
 
 export type MapboxVectorTiles = ArrayBuffer
@@ -4245,7 +4245,7 @@ export interface PinnedRetriever extends RetrieverBase {
   retriever: RetrieverContainer
   ids?: string[]
   docs?: SpecifiedDocument[]
-  rank_window_size: integer
+  rank_window_size?: integer
 }
 
 export type PipelineName = string
@@ -4670,9 +4670,9 @@ export interface TextSimilarityReranker extends RetrieverBase {
   /** Unique identifier of the inference endpoint created using the inference API. */
   inference_id?: string
   /** The text snippet used as the basis for similarity comparison */
-  inference_text?: string
+  inference_text: string
   /** The document field to be used for text similarity comparisons. This field should contain the text that will be evaluated against the inference_text */
-  field?: string
+  field: string
 }
 
 export type ThreadType = 'cpu' | 'wait' | 'block' | 'gpu' | 'mem'

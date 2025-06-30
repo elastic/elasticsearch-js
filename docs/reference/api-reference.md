@@ -1577,54 +1577,6 @@ Internally, Elasticsearch translates a vector tile search API request into a sea
 * Optionally, a `geo_bounds` aggregation on the `<field>`. The search only includes this aggregation if the `exact_bounds` parameter is `true`.
 * If the optional parameter `with_labels` is `true`, the internal search will include a dynamic runtime field that calls the `getLabelPosition` function of the geometry doc value. This enables the generation of new point features containing suggested geometry labels, so that, for example, multi-polygons will have only one label.
 
-For example, Elasticsearch may translate a vector tile search API request with a `grid_agg` argument of `geotile` and an `exact_bounds` argument of `true` into the following search
-
-```
-GET my-index/_search
-{
-  "size": 10000,
-  "query": {
-    "geo_bounding_box": {
-      "my-geo-field": {
-        "top_left": {
-          "lat": -40.979898069620134,
-          "lon": -45
-        },
-        "bottom_right": {
-          "lat": -66.51326044311186,
-          "lon": 0
-        }
-      }
-    }
-  },
-  "aggregations": {
-    "grid": {
-      "geotile_grid": {
-        "field": "my-geo-field",
-        "precision": 11,
-        "size": 65536,
-        "bounds": {
-          "top_left": {
-            "lat": -40.979898069620134,
-            "lon": -45
-          },
-          "bottom_right": {
-            "lat": -66.51326044311186,
-            "lon": 0
-          }
-        }
-      }
-    },
-    "bounds": {
-      "geo_bounds": {
-        "field": "my-geo-field",
-        "wrap_longitude": false
-      }
-    }
-  }
-}
-```
-
 The API returns results as a binary Mapbox vector tile.
 Mapbox vector tiles are encoded as Google Protobufs (PBF). By default, the tile contains three layers:
 
@@ -1699,6 +1651,8 @@ Hexagonal cells don't align perfectly on a vector tile.
 Some cells may intersect more than one vector tile.
 To compute the H3 resolution for each precision, Elasticsearch compares the average density of hexagonal bins at each resolution with the average density of tile bins at each zoom level.
 Elasticsearch uses the H3 resolution that is closest to the corresponding geotile density.
+
+Learn how to use the vector tile search API with practical examples in the [Vector tile search examples](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/vector-tile-search) guide.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-search-mvt)
 
@@ -12502,6 +12456,7 @@ You can optionally filter the results with a query.
 To use this API, you must have at least the `manage_own_api_key` or the `read_security` cluster privileges.
 If you have only the `manage_own_api_key` privilege, this API returns only the API keys that you own.
 If you have the `read_security`, `manage_api_key`, or greater privileges (including `manage_security`), this API returns all API keys regardless of ownership.
+Refer to the linked documentation for examples of how to find API keys:
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-query-api-keys)
 
@@ -12881,6 +12836,8 @@ This API supports updates to an API key's access scope, metadata, and expiration
 The owner user's information, such as the `username` and `realm`, is also updated automatically on every call.
 
 NOTE: This API cannot update REST API keys, which should be updated by either the update API key or bulk update API keys API.
+
+To learn more about how to use this API, refer to the [Update cross cluter API key API examples page](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/update-cc-api-key-examples).
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-update-cross-cluster-api-key)
 
@@ -15069,6 +15026,7 @@ When Elasticsearch security features are enabled on your cluster, watches are ru
 If your user is allowed to read index `a`, but not index `b`, then the exact same set of rules will apply during execution of a watch.
 
 When using the run watch API, the authorization data of the user that called the API will be used as a base, instead of the information who stored the watch.
+Refer to the external documentation for examples of watch execution requests, including existing, customized, and inline watches.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-watcher-execute-watch)
 
