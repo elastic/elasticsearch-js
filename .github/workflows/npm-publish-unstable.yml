@@ -34,7 +34,7 @@ jobs:
 
   test:
     name: Run tests and publish unstable
-    if: needs.paths-filter.outputs.src == 'true'
+    if: ${{ needs.paths-filter.outputs.src == 'true' }}
     runs-on: ubuntu-latest
     steps:
       # pause for 30 minutes to avoid publishing more than 2x per hour
