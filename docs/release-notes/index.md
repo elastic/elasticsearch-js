@@ -20,6 +20,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 
+## 9.0.3
+
+### Fixes [elasticsearch-javascript-client-9.0.3-fixes]
+
+**Improved compatibility with Elasticsearch 9.0:** Several fixes and improvements have been made to APIs and TypeScript type definitions to better reflect the Elasticsearch 9.0 specification.
+
 ## 9.0.2
 
 ### Fixes [elasticsearch-javascript-client-9.0.2-fixes]
