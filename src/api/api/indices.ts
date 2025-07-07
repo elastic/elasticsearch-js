@@ -419,6 +419,13 @@ export default class Indices {
           'verbose'
         ]
       },
+      'indices.get_data_stream_mappings': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
       'indices.get_data_stream_options': {
         path: [
           'name'
@@ -589,6 +596,13 @@ export default class Indices {
           'timeout'
         ]
       },
+      'indices.put_data_stream_mappings': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
       'indices.put_data_stream_options': {
         path: [
           'name'
@@ -739,7 +753,13 @@ export default class Indices {
           'block'
         ],
         body: [],
-        query: []
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'master_timeout',
+          'timeout'
+        ]
       },
       'indices.resolve_cluster': {
         path: [
@@ -2487,6 +2507,51 @@ export default class Indices {
   }
 
   /**
+    * Gets a data stream's mappings
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
+    */
+  async getDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_data_stream_mappings']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_mappings`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_data_stream_mappings',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Get data stream options. Get the data stream options configuration of one or more data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html | Elasticsearch API documentation}
     */
@@ -3249,6 +3314,51 @@ export default class Indices {
   }
 
   /**
+    * Updates a data stream's mappings
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
+    */
+  async putDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.put_data_stream_mappings']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_mappings`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_data_stream_mappings',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Update data stream options. Update the data stream options of the specified data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html | Elasticsearch API documentation}
     */
@@ -3729,13 +3839,13 @@ export default class Indices {
   }
 
   /**
-    * Removes a block from an index.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-blocks.html | Elasticsearch API documentation}
+    * Remove an index block. Remove an index block from an index. Index blocks limit the operations allowed on an index by blocking specific operation types.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-remove-block | Elasticsearch API documentation}
     */
-  async removeBlock (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async removeBlock (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async removeBlock (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async removeBlock (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async removeBlock (this: That, params: T.IndicesRemoveBlockRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRemoveBlockResponse>
+  async removeBlock (this: That, params: T.IndicesRemoveBlockRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesRemoveBlockResponse, unknown>>
+  async removeBlock (this: That, params: T.IndicesRemoveBlockRequest, options?: TransportRequestOptions): Promise<T.IndicesRemoveBlockResponse>
+  async removeBlock (this: That, params: T.IndicesRemoveBlockRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this.acceptedParams['indices.remove_block']
@@ -3753,11 +3863,11 @@ export default class Indices {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
