@@ -70,6 +70,7 @@ export default class Esql {
         body: [],
         query: [
           'drop_null_columns',
+          'format',
           'keep_alive',
           'wait_for_completion_timeout'
         ]

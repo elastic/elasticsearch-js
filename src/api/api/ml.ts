@@ -4382,7 +4382,7 @@ export default class Ml {
 
   /**
     * Update a data frame analytics job.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-update-data-frame-analytics | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-data-frame-analytics | Elasticsearch API documentation}
     */
   async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateDataFrameAnalyticsResponse>
   async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateDataFrameAnalyticsResponse, unknown>>

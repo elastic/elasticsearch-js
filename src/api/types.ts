@@ -812,7 +812,7 @@ export interface GetRequest extends RequestBase {
   /** The name of the index that contains the document. */
   index: IndexName
   /** Indicates whether the request forces synthetic `_source`.
-    * Use this paramater to test if the mapping supports synthetic `_source` and to get a sense of the worst case performance.
+    * Use this parameter to test if the mapping supports synthetic `_source` and to get a sense of the worst case performance.
     * Fetches with this parameter enabled will be slower than enabling synthetic source natively in the index. */
   force_synthetic_source?: boolean
   /** The node or shard the operation should be performed on.
@@ -844,8 +844,8 @@ export interface GetRequest extends RequestBase {
   /** A comma-separated list of stored fields to return as part of a hit.
     * If no fields are specified, no stored fields are included in the response.
     * If this field is specified, the `_source` parameter defaults to `false`.
-    * Only leaf fields can be retrieved with the `stored_field` option.
-    * Object fields can't be returned;if specified, the request fails. */
+    * Only leaf fields can be retrieved with the `stored_fields` option.
+    * Object fields can't be returned; if specified, the request fails. */
   stored_fields?: Fields
   /** The version number for concurrency control.
     * It must match the current version of the document for the request to succeed. */
@@ -6711,6 +6711,10 @@ export interface AnalysisArabicNormalizationTokenFilter extends AnalysisTokenFil
   type: 'arabic_normalization'
 }
 
+export interface AnalysisArabicStemTokenFilter extends AnalysisTokenFilterBase {
+  type: 'arabic_stem'
+}
+
 export interface AnalysisArmenianAnalyzer {
   type: 'armenian'
   stopwords?: AnalysisStopWords
@@ -6738,10 +6742,18 @@ export interface AnalysisBengaliAnalyzer {
   stem_exclusion?: string[]
 }
 
+export interface AnalysisBengaliNormalizationTokenFilter extends AnalysisTokenFilterBase {
+  type: 'bengali_normalization'
+}
+
 export interface AnalysisBrazilianAnalyzer {
   type: 'brazilian'
   stopwords?: AnalysisStopWords
   stopwords_path?: string
+}
+
+export interface AnalysisBrazilianStemTokenFilter extends AnalysisTokenFilterBase {
+  type: 'brazilian_stem'
 }
 
 export interface AnalysisBulgarianAnalyzer {
@@ -6873,6 +6885,10 @@ export interface AnalysisCzechAnalyzer {
   stem_exclusion?: string[]
 }
 
+export interface AnalysisCzechStemTokenFilter extends AnalysisTokenFilterBase {
+  type: 'czech_stem'
+}
+
 export interface AnalysisDanishAnalyzer {
   type: 'danish'
   stopwords?: AnalysisStopWords
@@ -6904,6 +6920,10 @@ export interface AnalysisDutchAnalyzer {
   stem_exclusion?: string[]
 }
 
+export interface AnalysisDutchStemTokenFilter extends AnalysisTokenFilterBase {
+  type: 'dutch_stem'
+}
+
 export type AnalysisEdgeNGramSide = 'front' | 'back'
 
 export interface AnalysisEdgeNGramTokenFilter extends AnalysisTokenFilterBase {
@@ -6923,7 +6943,7 @@ export interface AnalysisEdgeNGramTokenizer extends AnalysisTokenizerBase {
   custom_token_chars?: string
   max_gram?: integer
   min_gram?: integer
-  token_chars?: AnalysisTokenChar[]
+  token_chars?: string | AnalysisTokenChar[]
 }
 
 export interface AnalysisElisionTokenFilter extends AnalysisTokenFilterBase {
@@ -6996,6 +7016,10 @@ export interface AnalysisFrenchAnalyzer {
   stem_exclusion?: string[]
 }
 
+export interface AnalysisFrenchStemTokenFilter extends AnalysisTokenFilterBase {
+  type: 'french_stem'
+}
+
 export interface AnalysisGalicianAnalyzer {
   type: 'galician'
   stopwords?: AnalysisStopWords
@@ -7012,6 +7036,10 @@ export interface AnalysisGermanAnalyzer {
 
 export interface AnalysisGermanNormalizationTokenFilter extends AnalysisTokenFilterBase {
   type: 'german_normalization'
+}
+
+export interface AnalysisGermanStemTokenFilter extends AnalysisTokenFilterBase {
+  type: 'german_stem'
 }
 
 export interface AnalysisGreekAnalyzer {
@@ -7090,16 +7118,16 @@ export type AnalysisIcuCollationStrength = 'primary' | 'secondary' | 'tertiary' 
 export interface AnalysisIcuCollationTokenFilter extends AnalysisTokenFilterBase {
   type: 'icu_collation'
   alternate?: AnalysisIcuCollationAlternate
-  case_first?: AnalysisIcuCollationCaseFirst
-  case_level?: boolean
+  caseFirst?: AnalysisIcuCollationCaseFirst
+  caseLevel?: boolean
   country?: string
   decomposition?: AnalysisIcuCollationDecomposition
-  hiragana_quaternary_mode?: boolean
+  hiraganaQuaternaryMode?: boolean
   language?: string
   numeric?: boolean
   rules?: string
   strength?: AnalysisIcuCollationStrength
-  variable_top?: string
+  variableTop?: string
   variant?: string
 }
 
@@ -7438,6 +7466,7 @@ export interface AnalysisPatternReplaceTokenFilter extends AnalysisTokenFilterBa
   type: 'pattern_replace'
   /** If `true`, all substrings matching the pattern parameter’s regular expression are replaced. If `false`, the filter replaces only the first matching substring in each token. Defaults to `true`. */
   all?: boolean
+  flags?: string
   /** Regular expression, written in Java’s regular expression syntax. The filter replaces token substrings matching this pattern with the substring in the `replacement` parameter. */
   pattern: string
   /** Replacement substring. Defaults to an empty substring (`""`). */
@@ -7459,6 +7488,10 @@ export interface AnalysisPersianAnalyzer {
 
 export interface AnalysisPersianNormalizationTokenFilter extends AnalysisTokenFilterBase {
   type: 'persian_normalization'
+}
+
+export interface AnalysisPersianStemTokenFilter extends AnalysisTokenFilterBase {
+  type: 'persian_stem'
 }
 
 export type AnalysisPhoneticEncoder = 'metaphone' | 'double_metaphone' | 'soundex' | 'refined_soundex' | 'caverphone1' | 'caverphone2' | 'cologne' | 'nysiis' | 'koelnerphonetik' | 'haasephonetik' | 'beider_morse' | 'daitch_mokotoff'
@@ -7516,6 +7549,10 @@ export interface AnalysisRussianAnalyzer {
   stopwords?: AnalysisStopWords
   stopwords_path?: string
   stem_exclusion?: string[]
+}
+
+export interface AnalysisRussianStemTokenFilter extends AnalysisTokenFilterBase {
+  type: 'russian_stem'
 }
 
 export interface AnalysisScandinavianFoldingTokenFilter extends AnalysisTokenFilterBase {
@@ -7714,7 +7751,7 @@ export interface AnalysisTokenFilterBase {
   version?: VersionString
 }
 
-export type AnalysisTokenFilterDefinition = AnalysisApostropheTokenFilter | AnalysisArabicNormalizationTokenFilter | AnalysisAsciiFoldingTokenFilter | AnalysisCjkBigramTokenFilter | AnalysisCjkWidthTokenFilter | AnalysisClassicTokenFilter | AnalysisCommonGramsTokenFilter | AnalysisConditionTokenFilter | AnalysisDecimalDigitTokenFilter | AnalysisDelimitedPayloadTokenFilter | AnalysisEdgeNGramTokenFilter | AnalysisElisionTokenFilter | AnalysisFingerprintTokenFilter | AnalysisFlattenGraphTokenFilter | AnalysisGermanNormalizationTokenFilter | AnalysisHindiNormalizationTokenFilter | AnalysisHunspellTokenFilter | AnalysisHyphenationDecompounderTokenFilter | AnalysisIndicNormalizationTokenFilter | AnalysisKeepTypesTokenFilter | AnalysisKeepWordsTokenFilter | AnalysisKeywordMarkerTokenFilter | AnalysisKeywordRepeatTokenFilter | AnalysisKStemTokenFilter | AnalysisLengthTokenFilter | AnalysisLimitTokenCountTokenFilter | AnalysisLowercaseTokenFilter | AnalysisMinHashTokenFilter | AnalysisMultiplexerTokenFilter | AnalysisNGramTokenFilter | AnalysisNoriPartOfSpeechTokenFilter | AnalysisPatternCaptureTokenFilter | AnalysisPatternReplaceTokenFilter | AnalysisPersianNormalizationTokenFilter | AnalysisPorterStemTokenFilter | AnalysisPredicateTokenFilter | AnalysisRemoveDuplicatesTokenFilter | AnalysisReverseTokenFilter | AnalysisScandinavianFoldingTokenFilter | AnalysisScandinavianNormalizationTokenFilter | AnalysisSerbianNormalizationTokenFilter | AnalysisShingleTokenFilter | AnalysisSnowballTokenFilter | AnalysisSoraniNormalizationTokenFilter | AnalysisStemmerOverrideTokenFilter | AnalysisStemmerTokenFilter | AnalysisStopTokenFilter | AnalysisSynonymGraphTokenFilter | AnalysisSynonymTokenFilter | AnalysisTrimTokenFilter | AnalysisTruncateTokenFilter | AnalysisUniqueTokenFilter | AnalysisUppercaseTokenFilter | AnalysisWordDelimiterGraphTokenFilter | AnalysisWordDelimiterTokenFilter | AnalysisJaStopTokenFilter | AnalysisKuromojiStemmerTokenFilter | AnalysisKuromojiReadingFormTokenFilter | AnalysisKuromojiPartOfSpeechTokenFilter | AnalysisIcuCollationTokenFilter | AnalysisIcuFoldingTokenFilter | AnalysisIcuNormalizationTokenFilter | AnalysisIcuTransformTokenFilter | AnalysisPhoneticTokenFilter | AnalysisDictionaryDecompounderTokenFilter
+export type AnalysisTokenFilterDefinition = AnalysisApostropheTokenFilter | AnalysisArabicStemTokenFilter | AnalysisArabicNormalizationTokenFilter | AnalysisAsciiFoldingTokenFilter | AnalysisBengaliNormalizationTokenFilter | AnalysisBrazilianStemTokenFilter | AnalysisCjkBigramTokenFilter | AnalysisCjkWidthTokenFilter | AnalysisClassicTokenFilter | AnalysisCommonGramsTokenFilter | AnalysisConditionTokenFilter | AnalysisCzechStemTokenFilter | AnalysisDecimalDigitTokenFilter | AnalysisDelimitedPayloadTokenFilter | AnalysisDutchStemTokenFilter | AnalysisEdgeNGramTokenFilter | AnalysisElisionTokenFilter | AnalysisFingerprintTokenFilter | AnalysisFlattenGraphTokenFilter | AnalysisFrenchStemTokenFilter | AnalysisGermanNormalizationTokenFilter | AnalysisGermanStemTokenFilter | AnalysisHindiNormalizationTokenFilter | AnalysisHunspellTokenFilter | AnalysisHyphenationDecompounderTokenFilter | AnalysisIndicNormalizationTokenFilter | AnalysisKeepTypesTokenFilter | AnalysisKeepWordsTokenFilter | AnalysisKeywordMarkerTokenFilter | AnalysisKeywordRepeatTokenFilter | AnalysisKStemTokenFilter | AnalysisLengthTokenFilter | AnalysisLimitTokenCountTokenFilter | AnalysisLowercaseTokenFilter | AnalysisMinHashTokenFilter | AnalysisMultiplexerTokenFilter | AnalysisNGramTokenFilter | AnalysisNoriPartOfSpeechTokenFilter | AnalysisPatternCaptureTokenFilter | AnalysisPatternReplaceTokenFilter | AnalysisPersianNormalizationTokenFilter | AnalysisPersianStemTokenFilter | AnalysisPorterStemTokenFilter | AnalysisPredicateTokenFilter | AnalysisRemoveDuplicatesTokenFilter | AnalysisReverseTokenFilter | AnalysisRussianStemTokenFilter | AnalysisScandinavianFoldingTokenFilter | AnalysisScandinavianNormalizationTokenFilter | AnalysisSerbianNormalizationTokenFilter | AnalysisShingleTokenFilter | AnalysisSnowballTokenFilter | AnalysisSoraniNormalizationTokenFilter | AnalysisStemmerOverrideTokenFilter | AnalysisStemmerTokenFilter | AnalysisStopTokenFilter | AnalysisSynonymGraphTokenFilter | AnalysisSynonymTokenFilter | AnalysisTrimTokenFilter | AnalysisTruncateTokenFilter | AnalysisUniqueTokenFilter | AnalysisUppercaseTokenFilter | AnalysisWordDelimiterGraphTokenFilter | AnalysisWordDelimiterTokenFilter | AnalysisJaStopTokenFilter | AnalysisKuromojiStemmerTokenFilter | AnalysisKuromojiReadingFormTokenFilter | AnalysisKuromojiPartOfSpeechTokenFilter | AnalysisIcuCollationTokenFilter | AnalysisIcuFoldingTokenFilter | AnalysisIcuNormalizationTokenFilter | AnalysisIcuTransformTokenFilter | AnalysisPhoneticTokenFilter | AnalysisDictionaryDecompounderTokenFilter
 
 export type AnalysisTokenizer = string | AnalysisTokenizerDefinition
 
@@ -7811,6 +7848,7 @@ export interface AnalysisWordDelimiterTokenFilterBase extends AnalysisTokenFilte
 export interface MappingAggregateMetricDoubleProperty extends MappingPropertyBase {
   type: 'aggregate_metric_double'
   default_metric: string
+  ignore_malformed?: boolean
   metrics: string[]
   time_series_metric?: MappingTimeSeriesMetricType
 }
@@ -8054,6 +8092,7 @@ export interface MappingFlattenedProperty extends MappingPropertyBase {
   null_value?: string
   similarity?: string
   split_queries_on_whitespace?: boolean
+  time_series_dimensions?: string[]
   type: 'flattened'
 }
 
@@ -8068,6 +8107,8 @@ export interface MappingFloatRangeProperty extends MappingRangePropertyBase {
 
 export type MappingGeoOrientation = 'right' | 'RIGHT' | 'counterclockwise' | 'ccw' | 'left' | 'LEFT' | 'clockwise' | 'cw'
 
+export type MappingGeoPointMetricType = 'gauge' | 'counter' | 'position'
+
 export interface MappingGeoPointProperty extends MappingDocValuesPropertyBase {
   ignore_malformed?: boolean
   ignore_z_value?: boolean
@@ -8076,6 +8117,7 @@ export interface MappingGeoPointProperty extends MappingDocValuesPropertyBase {
   on_script_error?: MappingOnScriptError
   script?: Script | ScriptSource
   type: 'geo_point'
+  time_series_metric?: MappingGeoPointMetricType
 }
 
 export interface MappingGeoShapeProperty extends MappingDocValuesPropertyBase {
@@ -8253,7 +8295,7 @@ export interface MappingPointProperty extends MappingDocValuesPropertyBase {
   type: 'point'
 }
 
-export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingPassthroughObjectProperty | MappingSemanticTextProperty | MappingSparseVectorProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingCountedKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty | MappingIcuCollationProperty
+export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingPassthroughObjectProperty | MappingRankVectorProperty | MappingSemanticTextProperty | MappingSparseVectorProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingCountedKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty | MappingIcuCollationProperty
 
 export interface MappingPropertyBase {
   /** Metadata about the field. */
@@ -8279,6 +8321,14 @@ export interface MappingRankFeatureProperty extends MappingPropertyBase {
 export interface MappingRankFeaturesProperty extends MappingPropertyBase {
   positive_score_impact?: boolean
   type: 'rank_features'
+}
+
+export type MappingRankVectorElementType = 'byte' | 'float' | 'bit'
+
+export interface MappingRankVectorProperty extends MappingPropertyBase {
+  type: 'rank_vectors'
+  element_type?: MappingRankVectorElementType
+  dims?: integer
 }
 
 export interface MappingRoutingField {
@@ -8374,6 +8424,7 @@ export interface MappingSourceField {
 export type MappingSourceFieldMode = 'disabled' | 'stored' | 'synthetic'
 
 export interface MappingSparseVectorProperty extends MappingPropertyBase {
+  store?: boolean
   type: 'sparse_vector'
 }
 
@@ -10161,8 +10212,28 @@ export type CatCatNodeColumn = 'build' | 'b' | 'completion.size' | 'cs' | 'compl
 
 export type CatCatNodeColumns = CatCatNodeColumn | CatCatNodeColumn[]
 
+export type CatCatRecoveryColumn = 'index' | 'i' | 'idx' | 'shard' | 's' | 'sh' | 'time' | 't' | 'ti' | 'primaryOrReplica' | 'type' | 'stage' | 'st' | 'source_host' | 'shost' | 'source_node' | 'snode' | 'target_host' | 'thost' | 'target_node' | 'tnode' | 'repository' | 'tnode' | 'snapshot' | 'snap' | 'files' | 'f' | 'files_recovered' | 'fr' | 'files_percent' | 'fp' | 'files_total' | 'tf' | 'bytes' | 'b' | 'bytes_recovered' | 'br' | 'bytes_percent' | 'bp' | 'bytes_total' | 'tb' | 'translog_ops' | 'to' | 'translog_ops_recovered' | 'tor' | 'translog_ops_percent' | 'top' | 'start_time' | 'start' | 'start_time_millis' | 'start_millis' | 'stop_time' | 'stop' | 'stop_time_millis' | 'stop_millis' | string
+
+export type CatCatRecoveryColumns = CatCatRecoveryColumn | CatCatRecoveryColumn[]
+
 export interface CatCatRequestBase extends RequestBase, SpecUtilsCommonCatQueryParameters {
 }
+
+export type CatCatSegmentsColumn = 'index' | 'i' | 'idx' | 'shard' | 's' | 'sh' | 'prirep' | 'p' | 'pr' | 'primaryOrReplica' | 'ip' | 'segment' | 'generation' | 'docs.count' | 'docs.deleted' | 'size' | 'size.memory' | 'committed' | 'searchable' | 'version' | 'compound' | 'id' | string
+
+export type CatCatSegmentsColumns = CatCatSegmentsColumn | CatCatSegmentsColumn[]
+
+export type CatCatShardColumn = 'completion.size' | 'cs' | 'completionSize' | 'dataset.size' | 'dense_vector.value_count' | 'dvc' | 'denseVectorCount' | 'docs' | 'd' | 'dc' | 'fielddata.evictions' | 'fe' | 'fielddataEvictions' | 'fielddata.memory_size' | 'fm' | 'fielddataMemory' | 'flush.total' | 'ft' | 'flushTotal' | 'flush.total_time' | 'ftt' | 'flushTotalTime' | 'get.current' | 'gc' | 'getCurrent' | 'get.exists_time' | 'geti' | 'getExistsTime' | 'get.exists_total' | 'geto' | 'getExistsTotal' | 'get.missing_time' | 'gmti' | 'getMissingTime' | 'get.missing_total' | 'gmto' | 'getMissingTotal' | 'get.time' | 'gti' | 'getTime' | 'get.total' | 'gto' | 'getTotal' | 'id' | 'index' | 'i' | 'idx' | 'indexing.delete_current' | 'idc' | 'indexingDeleteCurrent' | 'indexing.delete_time' | 'idti' | 'indexingDeleteTime' | 'indexing.delete_total' | 'idto' | 'indexingDeleteTotal' | 'indexing.index_current' | 'iic' | 'indexingIndexCurrent' | 'indexing.index_failed_due_to_version_conflict' | 'iifvc' | 'indexingIndexFailedDueToVersionConflict' | 'indexing.index_failed' | 'iif' | 'indexingIndexFailed' | 'indexing.index_time' | 'iiti' | 'indexingIndexTime' | 'indexing.index_total' | 'iito' | 'indexingIndexTotal' | 'ip' | 'merges.current' | 'mc' | 'mergesCurrent' | 'merges.current_docs' | 'mcd' | 'mergesCurrentDocs' | 'merges.current_size' | 'mcs' | 'mergesCurrentSize' | 'merges.total' | 'mt' | 'mergesTotal' | 'merges.total_docs' | 'mtd' | 'mergesTotalDocs' | 'merges.total_size' | 'mts' | 'mergesTotalSize' | 'merges.total_time' | 'mtt' | 'mergesTotalTime' | 'node' | 'n' | 'prirep' | 'p' | 'pr' | 'primaryOrReplica' | 'query_cache.evictions' | 'qce' | 'queryCacheEvictions' | 'query_cache.memory_size' | 'qcm' | 'queryCacheMemory' | 'recoverysource.type' | 'rs' | 'refresh.time' | 'rti' | 'refreshTime' | 'refresh.total' | 'rto' | 'refreshTotal' | 'search.fetch_current' | 'sfc' | 'searchFetchCurrent' | 'search.fetch_time' | 'sfti' | 'searchFetchTime' | 'search.fetch_total' | 'sfto' | 'searchFetchTotal' | 'search.open_contexts' | 'so' | 'searchOpenContexts' | 'search.query_current' | 'sqc' | 'searchQueryCurrent' | 'search.query_time' | 'sqti' | 'searchQueryTime' | 'search.query_total' | 'sqto' | 'searchQueryTotal' | 'search.scroll_current' | 'scc' | 'searchScrollCurrent' | 'search.scroll_time' | 'scti' | 'searchScrollTime' | 'search.scroll_total' | 'scto' | 'searchScrollTotal' | 'segments.count' | 'sc' | 'segmentsCount' | 'segments.fixed_bitset_memory' | 'sfbm' | 'fixedBitsetMemory' | 'segments.index_writer_memory' | 'siwm' | 'segmentsIndexWriterMemory' | 'segments.memory' | 'sm' | 'segmentsMemory' | 'segments.version_map_memory' | 'svmm' | 'segmentsVersionMapMemory' | 'seq_no.global_checkpoint' | 'sqg' | 'globalCheckpoint' | 'seq_no.local_checkpoint' | 'sql' | 'localCheckpoint' | 'seq_no.max' | 'sqm' | 'maxSeqNo' | 'shard' | 's' | 'sh' | 'dsparse_vector.value_count' | 'svc' | 'sparseVectorCount' | 'state' | 'st' | 'store' | 'sto' | 'suggest.current' | 'suc' | 'suggestCurrent' | 'suggest.time' | 'suti' | 'suggestTime' | 'suggest.total' | 'suto' | 'suggestTotal' | 'sync_id' | 'unassigned.at' | 'ua' | 'unassigned.details' | 'ud' | 'unassigned.for' | 'uf' | 'unassigned.reason' | 'ur' | string
+
+export type CatCatShardColumns = CatCatShardColumn | CatCatShardColumn[]
+
+export type CatCatSnapshotsColumn = 'id' | 'snapshot' | 'repository' | 're' | 'repo' | 'status' | 's' | 'start_epoch' | 'ste' | 'startEpoch' | 'start_time' | 'sti' | 'startTime' | 'end_epoch' | 'ete' | 'endEpoch' | 'end_time' | 'eti' | 'endTime' | 'duration' | 'dur' | 'indices' | 'i' | 'successful_shards' | 'ss' | 'failed_shards' | 'fs' | 'total_shards' | 'ts' | 'reason' | 'r' | string
+
+export type CatCatSnapshotsColumns = CatCatSnapshotsColumn | CatCatNodeColumn[]
+
+export type CatCatThreadPoolColumn = 'active' | 'a' | 'completed' | 'c' | 'core' | 'cr' | 'ephemeral_id' | 'eid' | 'host' | 'h' | 'ip' | 'i' | 'keep_alive' | 'k' | 'largest' | 'l' | 'max' | 'mx' | 'name' | 'node_id' | 'id' | 'node_name' | 'pid' | 'p' | 'pool_size' | 'psz' | 'port' | 'po' | 'queue' | 'q' | 'queue_size' | 'qs' | 'rejected' | 'r' | 'size' | 'sz' | 'type' | 't' | string
+
+export type CatCatThreadPoolColumns = CatCatThreadPoolColumn | CatCatThreadPoolColumn[]
 
 export type CatCatTrainedModelsColumn = 'create_time' | 'ct' | 'created_by' | 'c' | 'createdBy' | 'data_frame_analytics_id' | 'df' | 'dataFrameAnalytics' | 'dfid' | 'description' | 'd' | 'heap_size' | 'hs' | 'modelHeapSize' | 'id' | 'ingest.count' | 'ic' | 'ingestCount' | 'ingest.current' | 'icurr' | 'ingestCurrent' | 'ingest.failed' | 'if' | 'ingestFailed' | 'ingest.pipelines' | 'ip' | 'ingestPipelines' | 'ingest.time' | 'it' | 'ingestTime' | 'license' | 'l' | 'operations' | 'o' | 'modelOperations' | 'version' | 'v'
 
@@ -13489,13 +13560,14 @@ export interface CatRecoveryRequest extends CatCatRequestBase {
   bytes?: Bytes
   /** If `true`, the response includes detailed information about shard recoveries. */
   detailed?: boolean
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
-  /** List of columns that determine how the table should be sorted.
+  /** A comma-separated list of columns names to display.
+    * It supports simple wildcards. */
+  h?: CatCatRecoveryColumns
+  /** A comma-separated list of column names or aliases that determines the sort order.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
   s?: Names
-  /** Unit used to display time values. */
+  /** The unit used to display time values. */
   time?: TimeUnit
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, active_only?: never, bytes?: never, detailed?: never, h?: never, s?: never, time?: never }
@@ -13547,9 +13619,10 @@ export interface CatSegmentsRequest extends CatCatRequestBase {
   index?: Indices
   /** The unit used to display byte values. */
   bytes?: Bytes
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
-  /** List of columns that determine how the table should be sorted.
+  /** A comma-separated list of columns names to display.
+    * It supports simple wildcards. */
+  h?: CatCatSegmentsColumns
+  /** A comma-separated list of column names or aliases that determines the sort order.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
   s?: Names
@@ -13714,14 +13787,14 @@ export interface CatShardsRequest extends CatCatRequestBase {
   /** The unit used to display byte values. */
   bytes?: Bytes
   /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
-  /** List of columns that determine how the table should be sorted.
+  h?: CatCatShardColumns
+  /** A comma-separated list of column names or aliases that determines the sort order.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
   s?: Names
-  /** Period to wait for a connection to the master node. */
+  /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** Unit used to display time values. */
+  /** The unit used to display time values. */
   time?: TimeUnit
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, bytes?: never, h?: never, s?: never, master_timeout?: never, time?: never }
@@ -14351,8 +14424,9 @@ export interface CatSnapshotsRequest extends CatCatRequestBase {
   repository?: Names
   /** If `true`, the response does not include information from unavailable snapshots. */
   ignore_unavailable?: boolean
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display.
+    * It supports simple wildcards. */
+  h?: CatCatSnapshotsColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -14638,8 +14712,8 @@ export interface CatThreadPoolRequest extends CatCatRequestBase {
     * Accepts wildcard expressions. */
   thread_pool_patterns?: Names
   /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
-  /** List of columns that determine how the table should be sorted.
+  h?: CatCatThreadPoolColumns
+  /** A comma-separated list of column names or aliases that determines the sort order.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
   s?: Names
@@ -14650,7 +14724,7 @@ export interface CatThreadPoolRequest extends CatCatRequestBase {
     * from the cluster state of the master node. In both cases the coordinating
     * node will send requests for further information to each selected node. */
   local?: boolean
-  /** Period to wait for a connection to the master node. */
+  /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { thread_pool_patterns?: never, h?: never, s?: never, time?: never, local?: never, master_timeout?: never }
@@ -17782,6 +17856,8 @@ export interface EsqlAsyncQueryGetRequest extends RequestBase {
   /** Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
     * If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns. */
   drop_null_columns?: boolean
+  /** A short version of the Accept header, for example `json` or `yaml`. */
+  format?: EsqlEsqlFormat
   /** The period for which the query and its results are stored in the cluster.
     * When this period expires, the query and its results are deleted, even if the query is still ongoing. */
   keep_alive?: Duration
@@ -17791,9 +17867,9 @@ export interface EsqlAsyncQueryGetRequest extends RequestBase {
     * Otherwise, the response returns an `is_running` value of `true` and no results. */
   wait_for_completion_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, drop_null_columns?: never, keep_alive?: never, wait_for_completion_timeout?: never }
+  body?: string | { [key: string]: any } & { id?: never, drop_null_columns?: never, format?: never, keep_alive?: never, wait_for_completion_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, drop_null_columns?: never, keep_alive?: never, wait_for_completion_timeout?: never }
+  querystring?: { [key: string]: any } & { id?: never, drop_null_columns?: never, format?: never, keep_alive?: never, wait_for_completion_timeout?: never }
 }
 
 export type EsqlAsyncQueryGetResponse = EsqlAsyncEsqlResult
@@ -19155,6 +19231,8 @@ export interface IndicesStorage {
     * setting is useful, for example, if you are in an environment where you can not control the ability to create a lot
     * of memory maps so you need disable the ability to use memory-mapping. */
   allow_mmap?: boolean
+  /** How often store statistics are refreshed */
+  stats_refresh_interval?: Duration
 }
 
 export type IndicesStorageType = 'fs' | 'niofs' | 'mmapfs' | 'hybridfs' | string
@@ -20017,10 +20095,6 @@ export interface IndicesGetRequest extends RequestBase {
 
 export type IndicesGetResponse = Record<IndexName, IndicesIndexState>
 
-export interface IndicesGetAliasIndexAliases {
-  aliases: Record<string, IndicesAliasDefinition>
-}
-
 export interface IndicesGetAliasRequest extends RequestBase {
   /** Comma-separated list of aliases to retrieve.
     * Supports wildcards (`*`).
@@ -20049,6 +20123,17 @@ export interface IndicesGetAliasRequest extends RequestBase {
 }
 
 export type IndicesGetAliasResponse = Record<IndexName, IndicesGetAliasIndexAliases>
+
+export interface IndicesGetAliasIndexAliases {
+  aliases: Record<string, IndicesAliasDefinition>
+}
+
+export interface IndicesGetAliasNotFoundAliasesKeys {
+  error: string
+  status: number
+}
+export type IndicesGetAliasNotFoundAliases = IndicesGetAliasNotFoundAliasesKeys
+& { [property: string]: IndicesGetAliasIndexAliases | string | number }
 
 export interface IndicesGetDataLifecycleDataStreamWithLifecycle {
   name: DataStreamName
@@ -30196,15 +30281,16 @@ export interface NodesInfoNodeInfo {
   /** Short hash of the last git commit in this release. */
   build_hash: string
   build_type: string
+  component_versions: Record<Name, integer>
   /** The node’s host name. */
   host: Host
   http?: NodesInfoNodeInfoHttp
+  index_version: VersionNumber
   /** The node’s IP address. */
   ip: Ip
   jvm?: NodesInfoNodeJvmInfo
   /** The node's name */
   name: Name
-  network?: NodesInfoNodeInfoNetwork
   os?: NodesInfoNodeOperatingSystemInfo
   plugins?: PluginStats[]
   process?: NodesInfoNodeProcessInfo
@@ -30218,11 +30304,13 @@ export interface NodesInfoNodeInfo {
   transport?: NodesInfoNodeInfoTransport
   /** Host and port where transport HTTP connections are accepted. */
   transport_address: TransportAddress
+  transport_version: VersionNumber
   /** Elasticsearch version running on this node. */
   version: VersionString
   modules?: PluginStats[]
   ingest?: NodesInfoNodeInfoIngest
   aggregations?: Record<string, NodesInfoNodeInfoAggregation>
+  remote_cluster_server?: NodesInfoRemoveClusterServer
 }
 
 export interface NodesInfoNodeInfoAction {
@@ -30242,7 +30330,7 @@ export interface NodesInfoNodeInfoClient {
 }
 
 export interface NodesInfoNodeInfoDiscoverKeys {
-  seed_hosts?: string[]
+  seed_hosts?: string[] | string
   type?: string
   seed_providers?: string[]
 }
@@ -30288,17 +30376,6 @@ export interface NodesInfoNodeInfoJvmMemory {
 export interface NodesInfoNodeInfoMemory {
   total: string
   total_in_bytes: long
-}
-
-export interface NodesInfoNodeInfoNetwork {
-  primary_interface: NodesInfoNodeInfoNetworkInterface
-  refresh_interval: integer
-}
-
-export interface NodesInfoNodeInfoNetworkInterface {
-  address: string
-  mac_address: string
-  name: Name
 }
 
 export interface NodesInfoNodeInfoOSCPU {
@@ -30362,7 +30439,7 @@ export interface NodesInfoNodeInfoSettingsCluster {
   name: Name
   routing?: IndicesIndexRouting
   election: NodesInfoNodeInfoSettingsClusterElection
-  initial_master_nodes?: string[]
+  initial_master_nodes?: string[] | string
   deprecation_indexing?: NodesInfoDeprecationIndexing
 }
 
@@ -30432,6 +30509,8 @@ export interface NodesInfoNodeInfoSettingsTransport {
   type: NodesInfoNodeInfoSettingsTransportType | string
   'type.default'?: string
   features?: NodesInfoNodeInfoSettingsTransportFeatures
+  /** Only used in unit tests */
+  ignore_deserialization_errors?: SpecUtilsStringified<boolean>
 }
 
 export interface NodesInfoNodeInfoSettingsTransportFeatures {
@@ -30509,8 +30588,6 @@ export interface NodesInfoNodeJvmInfo {
   vm_vendor: string
   vm_version: VersionString
   using_bundled_jdk: boolean
-  /** @alias using_bundled_jdk */
-  bundled_jdk: boolean
   using_compressed_ordinary_object_pointers?: boolean | string
   input_arguments: string[]
 }
@@ -30550,6 +30627,11 @@ export interface NodesInfoNodeThreadPoolInfo {
   queue_size: integer
   size?: integer
   type: string
+}
+
+export interface NodesInfoRemoveClusterServer {
+  bound_address: TransportAddress[]
+  publish_address: TransportAddress
 }
 
 export interface NodesInfoRequest extends RequestBase {
