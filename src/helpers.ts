@@ -1004,7 +1004,6 @@ export default class Helpers {
 
         params.format = 'json'
         params.columnar = false
-        // @ts-expect-error it's typed as ArrayBuffer but we know it will be JSON
         const response: EsqlResponse = await client.esql.query(params, reqOptions)
         const records: TDocument[] = toRecords(response)
         const { columns } = response
@@ -1019,7 +1018,8 @@ export default class Helpers {
 
         params.format = 'arrow'
 
-        const response = await client.esql.query(params, reqOptions)
+        // @ts-expect-error the return type will be ArrayBuffer when the format is set to 'arrow'
+        const response: ArrayBuffer = await client.esql.query(params, reqOptions)
         return tableFromIPC(response)
       },
 
