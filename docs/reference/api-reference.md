@@ -1857,6 +1857,7 @@ The document must still be reindexed, but using this API removes some network ro
 
 The `_source` field must be enabled to use this API.
 In addition to `_source`, you can access the following variables through the `ctx` map: `_index`, `_type`, `_id`, `_version`, `_routing`, and `_now` (the current timestamp).
+For usage examples such as partial updates, upserts, and scripted updates, see the External documentation.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-update)
 
@@ -1914,6 +1915,30 @@ A bulk update request is performed for each batch of matching documents.
 Any query or update failures cause the update by query request to fail and the failures are shown in the response.
 Any update requests that completed successfully still stick, they are not rolled back.
 
+**Refreshing shards**
+
+Specifying the `refresh` parameter refreshes all shards once the request completes.
+This is different to the update API's `refresh` parameter, which causes only the shard
+that received the request to be refreshed. Unlike the update API, it does not support
+`wait_for`.
+
+**Running update by query asynchronously**
+
+If the request contains `wait_for_completion=false`, Elasticsearch
+performs some preflight checks, launches the request, and returns a
+[task](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks) you can use to cancel or get the status of the task.
+Elasticsearch creates a record of this task as a document at `.tasks/task/${taskId}`.
+
+**Waiting for active shards**
+
+`wait_for_active_shards` controls how many copies of a shard must be active
+before proceeding with the request. See [`wait_for_active_shards`](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-create#operation-create-wait_for_active_shards)
+for details. `timeout` controls how long each write request waits for unavailable
+shards to become available. Both work exactly the way they work in the
+[Bulk API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk). Update by query uses scrolled searches, so you can also
+specify the `scroll` parameter to control how long it keeps the search context
+alive, for example `?scroll=10m`. The default is 5 minutes.
+
 **Throttling update requests**
 
 To control the rate at which update by query issues batches of update operations, you can set `requests_per_second` to any positive decimal number.
@@ -1958,22 +1983,7 @@ If you're slicing manually or otherwise tuning automatic slicing, keep in mind t
 * Update performance scales linearly across available resources with the number of slices.
 
 Whether query or update performance dominates the runtime depends on the documents being reindexed and cluster resources.
-
-**Update the document source**
-
-Update by query supports scripts to update the document source.
-As with the update API, you can set `ctx.op` to change the operation that is performed.
-
-Set `ctx.op = "noop"` if your script decides that it doesn't have to make any changes.
-The update by query operation skips updating the document and increments the `noop` counter.
-
-Set `ctx.op = "delete"` if your script decides that the document should be deleted.
-The update by query operation deletes the document and increments the `deleted` counter.
-
-Update by query supports only `index`, `noop`, and `delete`.
-Setting `ctx.op` to anything else is an error.
-Setting any other field in `ctx` is an error.
-This API enables you to only modify the source of matching documents; you cannot move them.
+Refer to the linked documentation for examples of how to update documents using the `_update_by_query` API:
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-update-by-query)
 
@@ -2795,11 +2805,12 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 - **`active_only` (Optional, boolean)**: If `true`, the response only includes ongoing shard recoveries.
 - **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, Enum("index" \| "shard" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis") \| Enum("index" \| "shard" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis")[])**: A list of columns names to display.
+It supports simple wildcards.
+- **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 
 ## client.cat.repositories [_cat.repositories]
 Get snapshot repository information.
@@ -2846,8 +2857,9 @@ client.cat.segments({ ... })
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, Enum("index" \| "shard" \| "prirep" \| "ip" \| "segment" \| "generation" \| "docs.count" \| "docs.deleted" \| "size" \| "size.memory" \| "committed" \| "searchable" \| "version" \| "compound" \| "id") \| Enum("index" \| "shard" \| "prirep" \| "ip" \| "segment" \| "generation" \| "docs.count" \| "docs.deleted" \| "size" \| "size.memory" \| "committed" \| "searchable" \| "version" \| "compound" \| "id")[])**: A list of columns names to display.
+It supports simple wildcards.
+- **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`local` (Optional, boolean)**: If `true`, the request computes the list of selected nodes from the
@@ -2876,12 +2888,12 @@ client.cat.shards({ ... })
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, Enum("completion.size" \| "dataset.size" \| "dense_vector.value_count" \| "docs" \| "fielddata.evictions" \| "fielddata.memory_size" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "id" \| "index" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_failed" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "node" \| "prirep" \| "query_cache.evictions" \| "query_cache.memory_size" \| "recoverysource.type" \| "refresh.time" \| "refresh.total" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "seq_no.global_checkpoint" \| "seq_no.local_checkpoint" \| "seq_no.max" \| "shard" \| "dsparse_vector.value_count" \| "state" \| "store" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "sync_id" \| "unassigned.at" \| "unassigned.details" \| "unassigned.for" \| "unassigned.reason") \| Enum("completion.size" \| "dataset.size" \| "dense_vector.value_count" \| "docs" \| "fielddata.evictions" \| "fielddata.memory_size" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "id" \| "index" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_failed" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "node" \| "prirep" \| "query_cache.evictions" \| "query_cache.memory_size" \| "recoverysource.type" \| "refresh.time" \| "refresh.total" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "seq_no.global_checkpoint" \| "seq_no.local_checkpoint" \| "seq_no.max" \| "shard" \| "dsparse_vector.value_count" \| "state" \| "store" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "sync_id" \| "unassigned.at" \| "unassigned.details" \| "unassigned.for" \| "unassigned.reason")[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
+- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 
 ## client.cat.snapshots [_cat.snapshots]
 Get snapshot information.
@@ -2904,7 +2916,8 @@ Accepts wildcard expressions.
 `_all` returns all repositories.
 If any repository fails during the request, Elasticsearch returns an error.
 - **`ignore_unavailable` (Optional, boolean)**: If `true`, the response does not include information from unavailable snapshots.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("id" \| "repository" \| "status" \| "start_epoch" \| "start_time" \| "end_epoch" \| "end_time" \| "duration" \| "indices" \| "successful_shards" \| "failed_shards" \| "total_shards" \| "reason") \| Enum("build" \| "completion.size" \| "cpu" \| "disk.avail" \| "disk.total" \| "disk.used" \| "disk.used_percent" \| "fielddata.evictions" \| "fielddata.memory_size" \| "file_desc.current" \| "file_desc.max" \| "file_desc.percent" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "heap.current" \| "heap.max" \| "heap.percent" \| "http_address" \| "id" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "jdk" \| "load_1m" \| "load_5m" \| "load_15m" \| "mappings.total_count" \| "mappings.total_estimated_overhead_in_bytes" \| "master" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "name" \| "node.role" \| "pid" \| "port" \| "query_cache.memory_size" \| "query_cache.evictions" \| "query_cache.hit_count" \| "query_cache.miss_count" \| "ram.current" \| "ram.max" \| "ram.percent" \| "refresh.total" \| "refresh.time" \| "request_cache.memory_size" \| "request_cache.evictions" \| "request_cache.hit_count" \| "request_cache.miss_count" \| "script.compilations" \| "script.cache_evictions" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "shard_stats.total_count" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "uptime" \| "version")[])**: A list of columns names to display.
+It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2985,8 +2998,8 @@ client.cat.threadPool({ ... })
 #### Request (object) [_request_cat.thread_pool]
 - **`thread_pool_patterns` (Optional, string \| string[])**: A list of thread pool names used to limit the request.
 Accepts wildcard expressions.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
-- **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
+- **`h` (Optional, Enum("active" \| "completed" \| "core" \| "ephemeral_id" \| "host" \| "ip" \| "keep_alive" \| "largest" \| "max" \| "name" \| "node_id" \| "node_name" \| "pid" \| "pool_size" \| "port" \| "queue" \| "queue_size" \| "rejected" \| "size" \| "type") \| Enum("active" \| "completed" \| "core" \| "ephemeral_id" \| "host" \| "ip" \| "keep_alive" \| "largest" \| "max" \| "name" \| "node_id" \| "node_name" \| "pid" \| "pool_size" \| "port" \| "queue" \| "queue_size" \| "rejected" \| "size" \| "type")[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
@@ -2994,7 +3007,7 @@ or `:desc` as a suffix to the column name.
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 
 ## client.cat.transforms [_cat.transforms]
 Get transform information.
@@ -5265,7 +5278,7 @@ This could be a built-in analyzer, or an analyzer that’s been configured in th
 - **`field` (Optional, string)**: Field used to derive the analyzer.
 To use this parameter, you must specify an index.
 If specified, the `analyzer` parameter overrides this value.
-- **`filter` (Optional, string \| { type } \| { type } \| { type, preserve_original } \| { type, ignored_scripts, output_unigrams } \| { type } \| { type } \| { type, common_words, common_words_path, ignore_case, query_mode } \| { type, filter, script } \| { type } \| { type, delimiter, encoding } \| { type, max_gram, min_gram, side, preserve_original } \| { type, articles, articles_path, articles_case } \| { type, max_output_size, separator } \| { type } \| { type } \| { type } \| { type, dedup, dictionary, locale, longest_only } \| { type, hyphenation_patterns_path, no_sub_matches, no_overlapping_matches } \| { type } \| { type, mode, types } \| { type, keep_words, keep_words_case, keep_words_path } \| { type, ignore_case, keywords, keywords_path, keywords_pattern } \| { type } \| { type } \| { type, max, min } \| { type, consume_all_tokens, max_token_count } \| { type, language } \| { type, bucket_count, hash_count, hash_set_size, with_rotation } \| { type, filters, preserve_original } \| { type, max_gram, min_gram, preserve_original } \| { type, stoptags } \| { type, patterns, preserve_original } \| { type, all, pattern, replacement } \| { type } \| { type } \| { type, script } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, filler_token, max_shingle_size, min_shingle_size, output_unigrams, output_unigrams_if_no_shingles, token_separator } \| { type, language } \| { type } \| { type, rules, rules_path } \| { type, language } \| { type, ignore_case, remove_trailing, stopwords, stopwords_path } \| { type } \| { type } \| { type } \| { type, length } \| { type, only_on_same_position } \| { type } \| { type, adjust_offsets, ignore_keywords } \| { type } \| { type, stopwords } \| { type, minimum_length } \| { type, use_romaji } \| { type, stoptags } \| { type, alternate, case_first, case_level, country, decomposition, hiragana_quaternary_mode, language, numeric, rules, strength, variable_top, variant } \| { type, unicode_set_filter } \| { type, name } \| { type, dir, id } \| { type, encoder, languageset, max_code_len, name_type, replace, rule_type } \| { type }[])**: Array of token filters used to apply after the tokenizer.
+- **`filter` (Optional, string \| { type } \| { type } \| { type } \| { type, preserve_original } \| { type } \| { type } \| { type, ignored_scripts, output_unigrams } \| { type } \| { type } \| { type, common_words, common_words_path, ignore_case, query_mode } \| { type, filter, script } \| { type } \| { type } \| { type, delimiter, encoding } \| { type } \| { type, max_gram, min_gram, side, preserve_original } \| { type, articles, articles_path, articles_case } \| { type, max_output_size, separator } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, dedup, dictionary, locale, longest_only } \| { type, hyphenation_patterns_path, no_sub_matches, no_overlapping_matches } \| { type } \| { type, mode, types } \| { type, keep_words, keep_words_case, keep_words_path } \| { type, ignore_case, keywords, keywords_path, keywords_pattern } \| { type } \| { type } \| { type, max, min } \| { type, consume_all_tokens, max_token_count } \| { type, language } \| { type, bucket_count, hash_count, hash_set_size, with_rotation } \| { type, filters, preserve_original } \| { type, max_gram, min_gram, preserve_original } \| { type, stoptags } \| { type, patterns, preserve_original } \| { type, all, flags, pattern, replacement } \| { type } \| { type } \| { type } \| { type, script } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, filler_token, max_shingle_size, min_shingle_size, output_unigrams, output_unigrams_if_no_shingles, token_separator } \| { type, language } \| { type } \| { type, rules, rules_path } \| { type, language } \| { type, ignore_case, remove_trailing, stopwords, stopwords_path } \| { type } \| { type } \| { type } \| { type, length } \| { type, only_on_same_position } \| { type } \| { type, adjust_offsets, ignore_keywords } \| { type } \| { type, stopwords } \| { type, minimum_length } \| { type, use_romaji } \| { type, stoptags } \| { type, alternate, caseFirst, caseLevel, country, decomposition, hiraganaQuaternaryMode, language, numeric, rules, strength, variableTop, variant } \| { type, unicode_set_filter } \| { type, name } \| { type, dir, id } \| { type, encoder, languageset, max_code_len, name_type, replace, rule_type } \| { type }[])**: Array of token filters used to apply after the tokenizer.
 - **`normalizer` (Optional, string)**: Normalizer to use to convert text into a single token.
 - **`text` (Optional, string \| string[])**: Text to analyze.
 If an array of strings is provided, it is analyzed as a multi-value field.
@@ -6659,7 +6672,7 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 - **`numeric_detection` (Optional, boolean)**: Automatically map strings into numeric data types for all fields.
-- **`properties` (Optional, Record<string, { type } \| { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } \| { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } \| { relations, eager_global_ordinals, type } \| { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } \| { type, fields, meta, copy_to } \| { type } \| { positive_score_impact, type } \| { positive_score_impact, type } \| { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { type } \| { type, null_value } \| { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } \| { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } \| { type, default_metric, metrics, time_series_metric } \| { type, dims, element_type, index, index_options, similarity } \| { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } \| { enabled, include_in_parent, include_in_root, type } \| { enabled, subobjects, type } \| { type, enabled, priority, time_series_dimension } \| { type, meta, inference_id, search_inference_id, index_options, chunking_settings } \| { type } \| { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } \| { value, type } \| { type, index } \| { path, type } \| { ignore_malformed, type } \| { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } \| { type } \| { analyzer, boost, index, null_value, enable_position_increments, type } \| { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } \| { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } \| { ignore_malformed, ignore_z_value, null_value, type } \| { coerce, ignore_malformed, ignore_z_value, orientation, type } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value, scaling_factor } \| { type, null_value } \| { type, null_value } \| { format, type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
+- **`properties` (Optional, Record<string, { type } \| { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } \| { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } \| { relations, eager_global_ordinals, type } \| { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } \| { type, fields, meta, copy_to } \| { type } \| { positive_score_impact, type } \| { positive_score_impact, type } \| { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { type } \| { type, null_value } \| { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } \| { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } \| { type, default_metric, ignore_malformed, metrics, time_series_metric } \| { type, dims, element_type, index, index_options, similarity } \| { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, time_series_dimensions, type } \| { enabled, include_in_parent, include_in_root, type } \| { enabled, subobjects, type } \| { type, enabled, priority, time_series_dimension } \| { type, element_type, dims } \| { type, meta, inference_id, search_inference_id, index_options, chunking_settings } \| { store, type, index_options } \| { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } \| { value, type } \| { type, index } \| { path, type } \| { ignore_malformed, type } \| { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } \| { type } \| { analyzer, boost, index, null_value, enable_position_increments, type } \| { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type, time_series_metric } \| { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } \| { ignore_malformed, ignore_z_value, null_value, type } \| { coerce, ignore_malformed, ignore_z_value, orientation, type } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value, scaling_factor } \| { type, null_value } \| { type, null_value } \| { format, type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
@@ -6928,14 +6941,38 @@ client.indices.reloadSearchAnalyzers({ index })
 - **`resource` (Optional, string)**: Changed resource to reload analyzers from if applicable
 
 ## client.indices.removeBlock [_indices.remove_block]
-Removes a block from an index.
+Remove an index block.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-blocks.html)
+Remove an index block from an index.
+Index blocks limit the operations allowed on an index by blocking specific operation types.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-remove-block)
 
 ```ts
-client.indices.removeBlock()
+client.indices.removeBlock({ index, block })
 ```
 
+### Arguments [_arguments_indices.remove_block]
+
+#### Request (object) [_request_indices.remove_block]
+- **`index` (string)**: A list or wildcard expression of index names used to limit the request.
+By default, you must explicitly name the indices you are removing blocks from.
+To allow the removal of blocks from indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`.
+You can update this setting in the `elasticsearch.yml` file or by using the cluster update settings API.
+- **`block` (Enum("metadata" \| "read" \| "read_only" \| "write"))**: The block type to remove from the index.
+- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
+This behavior applies even if the request targets other open indices.
+For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match.
+If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+It supports a list of values, such as `open,hidden`.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
+If the master node is not available before the timeout expires, the request fails and returns an error.
+It can also be set to `-1` to indicate that the request should never timeout.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged.
+It can also be set to `-1` to indicate that the request should never timeout.
 
 ## client.indices.resolveCluster [_indices.resolve_cluster]
 Resolve the cluster.
@@ -7563,6 +7600,7 @@ The following integrations are available through the inference API. You can find
 * Azure AI Studio (`completion`, `text_embedding`)
 * Azure OpenAI (`completion`, `text_embedding`)
 * Cohere (`completion`, `rerank`, `text_embedding`)
+* DeepSeek (`completion`, `chat_completion`)
 * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland)
 * ELSER (`sparse_embedding`)
 * Google AI Studio (`completion`, `text_embedding`)
@@ -7633,6 +7671,16 @@ client.inference.putAmazonbedrock({ task_type, amazonbedrock_inference_id, servi
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { max_new_tokens, temperature, top_k, top_p })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+
+## client.inference.putAmazonsagemaker [_inference.put_amazonsagemaker]
+Configure a Amazon SageMaker inference endpoint
+
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/infer-service-amazon-sagemaker.html)
+
+```ts
+client.inference.putAmazonsagemaker()
+```
+
 
 ## client.inference.putAnthropic [_inference.put_anthropic]
 Create an Anthropic inference endpoint.
@@ -7731,6 +7779,27 @@ These settings are specific to the `cohere` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { input_type, return_documents, top_n, truncate })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+
+## client.inference.putDeepseek [_inference.put_deepseek]
+Create a DeepSeek inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `deepseek` service.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-deepseek)
+
+```ts
+client.inference.putDeepseek({ task_type, deepseek_inference_id, service, service_settings })
+```
+
+### Arguments [_arguments_inference.put_deepseek]
+
+#### Request (object) [_request_inference.put_deepseek]
+- **`task_type` (Enum("completion" \| "chat_completion"))**: The type of the inference task that the model will perform.
+- **`deepseek_inference_id` (string)**: The unique identifier of the inference endpoint.
+- **`service` (Enum("deepseek"))**: The type of service supported for the specified task type. In this case, `deepseek`.
+- **`service_settings` ({ api_key, model_id, url })**: Settings used to install the inference model.
+These settings are specific to the `deepseek` service.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 
 ## client.inference.putElasticsearch [_inference.put_elasticsearch]
 Create an Elasticsearch inference endpoint.
@@ -10997,32 +11066,7 @@ The following functionality is not available:
 `size`: Because rollups work on pre-aggregated data, no search hits can be returned and so size must be set to zero or omitted entirely.
 `highlighter`, `suggestors`, `post_filter`, `profile`, `explain`: These are similarly disallowed.
 
-**Searching both historical rollup and non-rollup data**
-
-The rollup search API has the capability to search across both "live" non-rollup data and the aggregated rollup data.
-This is done by simply adding the live indices to the URI. For example:
-
-```
-GET sensor-1,sensor_rollup/_rollup_search
-{
-  "size": 0,
-  "aggregations": {
-     "max_temperature": {
-      "max": {
-        "field": "temperature"
-      }
-    }
-  }
-}
-```
-
-The rollup search endpoint does two things when the search runs:
-
-* The original request is sent to the non-rollup index unaltered.
-* A rewritten version of the original request is sent to the rollup index.
-
-When the two responses are received, the endpoint rewrites the rollup response and merges the two together.
-During the merging process, if there is any overlap in buckets between the two responses, the buckets from the non-rollup index are used.
+For more detailed examples of using the rollup search API, including querying rolled-up data only or combining rolled-up and live data, refer to the External documentation.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-rollup-search)
 
@@ -14302,6 +14346,8 @@ If you need to manage more synonym rules, you can create multiple synonym sets.
 
 When an existing synonyms set is updated, the search analyzers that use the synonyms set are reloaded automatically for all indices.
 This is equivalent to invoking the reload search analyzers API for all indices that use the synonyms set.
+
+For practical examples of how to create or update a synonyms set, refer to the External documentation.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-put-synonym)
 
