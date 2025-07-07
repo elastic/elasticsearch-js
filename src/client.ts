@@ -256,10 +256,12 @@ export default class Client extends API {
       }
     }
 
-    const headers: Record<string, any> = {
+    const headers: Record<string, any> = Object.assign({}, {
       'user-agent': `elasticsearch-js/${clientVersion} (${os.platform()} ${os.release()}-${os.arch()}; Node.js ${nodeVersion}; Transport ${transportVersion})`
-    }
+    }, opts.headers ?? {})
     if (opts.serverMode === 'serverless') headers['elastic-api-version'] = serverlessApiVersion
+
+    const redaction = Object.assign({}, { type: 'replace', additionalKeys: [] }, opts.redaction ?? {})
 
     const options: Required<ClientOptions> = Object.assign({}, {
       Connection: UndiciConnection,
@@ -277,7 +279,6 @@ export default class Client extends API {
       tls: null,
       caFingerprint: null,
       agent: null,
-      headers,
       nodeFilter: null,
       generateRequestId: null,
       name: 'elasticsearch-js',
@@ -288,12 +289,8 @@ export default class Client extends API {
       enableMetaHeader: true,
       maxResponseSize: null,
       maxCompressedResponseSize: null,
-      redaction: {
-        type: 'replace',
-        additionalKeys: []
-      },
       serverMode: 'stack'
-    }, opts)
+    }, opts, { headers, redaction })
 
     if (options.caFingerprint != null && isHttpConnection(opts.node ?? opts.nodes)) {
       throw new errors.ConfigurationError('You can\'t configure the caFingerprint with a http connection')
