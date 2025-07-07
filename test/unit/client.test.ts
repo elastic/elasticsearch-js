@@ -98,6 +98,28 @@ test('Custom headers', t => {
   t.end()
 })
 
+test('Custom headers should merge, not overwrite', t => {
+  const client = new Client({
+    node: 'http://localhost:9200',
+    headers: { foo: 'bar' }
+  })
+  t.ok(client.transport[symbols.kHeaders]['user-agent']?.startsWith('elasticsearch-js/'))
+  t.end()
+})
+
+test('Redaction options should merge, not overwrite', t => {
+  const client = new Client({
+    node: 'http://localhost:9200',
+    // @ts-expect-error
+    redaction: {
+      additionalKeys: ['foo'],
+    }
+  })
+  t.equal(client.transport[symbols.kRedaction].type, 'replace')
+  t.match(client.transport[symbols.kRedaction].additionalKeys, ['foo'])
+  t.end()
+})
+
 test('Basic auth', async t => {
   t.plan(1)
 
