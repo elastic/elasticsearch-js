@@ -62,7 +62,7 @@
     "@sinonjs/fake-timers": "14.0.0",
     "@types/debug": "4.1.12",
     "@types/ms": "2.1.0",
-    "@types/node": "22.15.32",
+    "@types/node": "22.16.0",
     "@types/sinonjs__fake-timers": "8.1.5",
     "@types/split2": "4.2.3",
     "@types/stoppable": "1.1.3",
@@ -88,7 +88,7 @@
     "typescript": "5.8.3",
     "workq": "3.0.0",
     "xmlbuilder2": "3.1.1",
-    "zx": "8.5.5"
+    "zx": "8.6.1"
   },
   "dependencies": {
     "@elastic/transport": "^9.0.1",
