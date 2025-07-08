@@ -262,7 +262,7 @@ export default class Inference {
   }
 
   /**
-    * Create an inference endpoint. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. The following integrations are available through the inference API. You can find the available task types next to the integration name: * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Amazon Bedrock (`completion`, `text_embedding`) * Anthropic (`completion`) * Azure AI Studio (`completion`, `text_embedding`) * Azure OpenAI (`completion`, `text_embedding`) * Cohere (`completion`, `rerank`, `text_embedding`) * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland) * ELSER (`sparse_embedding`) * Google AI Studio (`completion`, `text_embedding`) * Google Vertex AI (`rerank`, `text_embedding`) * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`) * Mistral (`chat_completion`, `completion`, `text_embedding`) * OpenAI (`chat_completion`, `completion`, `text_embedding`) * VoyageAI (`text_embedding`, `rerank`) * Watsonx inference integration (`text_embedding`) * JinaAI (`text_embedding`, `rerank`)
+    * Create an inference endpoint. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. The following integrations are available through the inference API. You can find the available task types next to the integration name: * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Amazon Bedrock (`completion`, `text_embedding`) * Anthropic (`completion`) * Azure AI Studio (`completion`, `text_embedding`) * Azure OpenAI (`completion`, `text_embedding`) * Cohere (`completion`, `rerank`, `text_embedding`) * DeepSeek (`completion`, `chat_completion`) * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland) * ELSER (`sparse_embedding`) * Google AI Studio (`completion`, `text_embedding`) * Google Vertex AI (`rerank`, `text_embedding`) * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`) * Mistral (`chat_completion`, `completion`, `text_embedding`) * OpenAI (`chat_completion`, `completion`, `text_embedding`) * VoyageAI (`text_embedding`, `rerank`) * Watsonx inference integration (`text_embedding`) * JinaAI (`text_embedding`, `rerank`)
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-inference-api.html | Elasticsearch API documentation}
     */
   async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutResponse>
@@ -391,6 +391,39 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         amazonbedrock_inference_id: params.amazonbedrock_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Configure a Amazon SageMaker inference endpoint
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-amazon-sagemaker.html | Elasticsearch API documentation}
+    */
+  async putAmazonsagemaker (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putAmazonsagemaker (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putAmazonsagemaker (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putAmazonsagemaker (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['task_type', 'amazonsagemaker_inference_id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.amazonsagemaker_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_amazonsagemaker',
+      pathParts: {
+        task_type: params.task_type,
+        amazonsagemaker_inference_id: params.amazonsagemaker_inference_id
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -571,6 +604,51 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         cohere_inference_id: params.cohere_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create a DeepSeek inference endpoint. Create an inference endpoint to perform an inference task with the `deepseek` service.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-deepseek.html | Elasticsearch API documentation}
+    */
+  async putDeepseek (this: That, params: T.InferencePutDeepseekRequest | TB.InferencePutDeepseekRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutDeepseekResponse>
+  async putDeepseek (this: That, params: T.InferencePutDeepseekRequest | TB.InferencePutDeepseekRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutDeepseekResponse, unknown>>
+  async putDeepseek (this: That, params: T.InferencePutDeepseekRequest | TB.InferencePutDeepseekRequest, options?: TransportRequestOptions): Promise<T.InferencePutDeepseekResponse>
+  async putDeepseek (this: That, params: T.InferencePutDeepseekRequest | TB.InferencePutDeepseekRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['task_type', 'deepseek_inference_id']
+    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.deepseek_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_deepseek',
+      pathParts: {
+        task_type: params.task_type,
+        deepseek_inference_id: params.deepseek_inference_id
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

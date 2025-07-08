@@ -862,7 +862,6 @@ client.getSource({ id, index })
 ** *`_source` (Optional, boolean | string | string[])*: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
 ** *`_source_excludes` (Optional, string | string[])*: A list of source fields to exclude in the response.
 ** *`_source_includes` (Optional, string | string[])*: A list of source fields to include in the response.
-** *`stored_fields` (Optional, string | string[])*: A list of stored fields to return as part of a hit.
 ** *`version` (Optional, number)*: The version number for concurrency control. It must match the current version of the document for the request to succeed.
 ** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: The version type.
 
@@ -1048,6 +1047,7 @@ client.index({ index })
 ** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: The version type.
 ** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: The number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active.
 ** *`require_alias` (Optional, boolean)*: If `true`, the destination must be an index alias.
+** *`require_data_stream` (Optional, boolean)*: If `true`, the request's actions must target a data stream (existing or to be created).
 
 [discrete]
 === info
@@ -3131,11 +3131,12 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 ** *`active_only` (Optional, boolean)*: If `true`, the response only includes ongoing shard recoveries.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`detailed` (Optional, boolean)*: If `true`, the response includes detailed information about shard recoveries.
-** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
-** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+** *`h` (Optional, Enum("index" | "shard" | "time" | "type" | "stage" | "source_host" | "source_node" | "target_host" | "target_node" | "repository" | "snapshot" | "files" | "files_recovered" | "files_percent" | "files_total" | "bytes" | "bytes_recovered" | "bytes_percent" | "bytes_total" | "translog_ops" | "translog_ops_recovered" | "translog_ops_percent" | "start_time" | "start_time_millis" | "stop_time" | "stop_time_millis") | Enum("index" | "shard" | "time" | "type" | "stage" | "source_host" | "source_node" | "target_host" | "target_node" | "repository" | "snapshot" | "files" | "files_recovered" | "files_percent" | "files_total" | "bytes" | "bytes_recovered" | "bytes_percent" | "bytes_total" | "translog_ops" | "translog_ops_recovered" | "translog_ops_percent" | "start_time" | "start_time_millis" | "stop_time" | "stop_time_millis")[])*: A list of columns names to display.
+It supports simple wildcards.
+** *`s` (Optional, string | string[])*: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
+** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 
 [discrete]
 ==== repositories
@@ -3186,8 +3187,9 @@ client.cat.segments({ ... })
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
-** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
-** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+** *`h` (Optional, Enum("index" | "shard" | "prirep" | "ip" | "segment" | "generation" | "docs.count" | "docs.deleted" | "size" | "size.memory" | "committed" | "searchable" | "version" | "compound" | "id") | Enum("index" | "shard" | "prirep" | "ip" | "segment" | "generation" | "docs.count" | "docs.deleted" | "size" | "size.memory" | "committed" | "searchable" | "version" | "compound" | "id")[])*: A list of columns names to display.
+It supports simple wildcards.
+** *`s` (Optional, string | string[])*: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 ** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
@@ -3218,12 +3220,12 @@ client.cat.shards({ ... })
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
-** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
-** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+** *`h` (Optional, Enum("completion.size" | "dataset.size" | "dense_vector.value_count" | "docs" | "fielddata.evictions" | "fielddata.memory_size" | "flush.total" | "flush.total_time" | "get.current" | "get.exists_time" | "get.exists_total" | "get.missing_time" | "get.missing_total" | "get.time" | "get.total" | "id" | "index" | "indexing.delete_current" | "indexing.delete_time" | "indexing.delete_total" | "indexing.index_current" | "indexing.index_failed_due_to_version_conflict" | "indexing.index_failed" | "indexing.index_time" | "indexing.index_total" | "ip" | "merges.current" | "merges.current_docs" | "merges.current_size" | "merges.total" | "merges.total_docs" | "merges.total_size" | "merges.total_time" | "node" | "prirep" | "query_cache.evictions" | "query_cache.memory_size" | "recoverysource.type" | "refresh.time" | "refresh.total" | "search.fetch_current" | "search.fetch_time" | "search.fetch_total" | "search.open_contexts" | "search.query_current" | "search.query_time" | "search.query_total" | "search.scroll_current" | "search.scroll_time" | "search.scroll_total" | "segments.count" | "segments.fixed_bitset_memory" | "segments.index_writer_memory" | "segments.memory" | "segments.version_map_memory" | "seq_no.global_checkpoint" | "seq_no.local_checkpoint" | "seq_no.max" | "shard" | "dsparse_vector.value_count" | "state" | "store" | "suggest.current" | "suggest.time" | "suggest.total" | "sync_id" | "unassigned.at" | "unassigned.details" | "unassigned.for" | "unassigned.reason") | Enum("completion.size" | "dataset.size" | "dense_vector.value_count" | "docs" | "fielddata.evictions" | "fielddata.memory_size" | "flush.total" | "flush.total_time" | "get.current" | "get.exists_time" | "get.exists_total" | "get.missing_time" | "get.missing_total" | "get.time" | "get.total" | "id" | "index" | "indexing.delete_current" | "indexing.delete_time" | "indexing.delete_total" | "indexing.index_current" | "indexing.index_failed_due_to_version_conflict" | "indexing.index_failed" | "indexing.index_time" | "indexing.index_total" | "ip" | "merges.current" | "merges.current_docs" | "merges.current_size" | "merges.total" | "merges.total_docs" | "merges.total_size" | "merges.total_time" | "node" | "prirep" | "query_cache.evictions" | "query_cache.memory_size" | "recoverysource.type" | "refresh.time" | "refresh.total" | "search.fetch_current" | "search.fetch_time" | "search.fetch_total" | "search.open_contexts" | "search.query_current" | "search.query_time" | "search.query_total" | "search.scroll_current" | "search.scroll_time" | "search.scroll_total" | "segments.count" | "segments.fixed_bitset_memory" | "segments.index_writer_memory" | "segments.memory" | "segments.version_map_memory" | "seq_no.global_checkpoint" | "seq_no.local_checkpoint" | "seq_no.max" | "shard" | "dsparse_vector.value_count" | "state" | "store" | "suggest.current" | "suggest.time" | "suggest.total" | "sync_id" | "unassigned.at" | "unassigned.details" | "unassigned.for" | "unassigned.reason")[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 
 [discrete]
 ==== snapshots
@@ -3248,7 +3250,8 @@ Accepts wildcard expressions.
 `_all` returns all repositories.
 If any repository fails during the request, Elasticsearch returns an error.
 ** *`ignore_unavailable` (Optional, boolean)*: If `true`, the response does not include information from unavailable snapshots.
-** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`h` (Optional, Enum("id" | "repository" | "status" | "start_epoch" | "start_time" | "end_epoch" | "end_time" | "duration" | "indices" | "successful_shards" | "failed_shards" | "total_shards" | "reason") | Enum("build" | "completion.size" | "cpu" | "disk.avail" | "disk.total" | "disk.used" | "disk.used_percent" | "fielddata.evictions" | "fielddata.memory_size" | "file_desc.current" | "file_desc.max" | "file_desc.percent" | "flush.total" | "flush.total_time" | "get.current" | "get.exists_time" | "get.exists_total" | "get.missing_time" | "get.missing_total" | "get.time" | "get.total" | "heap.current" | "heap.max" | "heap.percent" | "http_address" | "id" | "indexing.delete_current" | "indexing.delete_time" | "indexing.delete_total" | "indexing.index_current" | "indexing.index_failed" | "indexing.index_failed_due_to_version_conflict" | "indexing.index_time" | "indexing.index_total" | "ip" | "jdk" | "load_1m" | "load_5m" | "load_15m" | "mappings.total_count" | "mappings.total_estimated_overhead_in_bytes" | "master" | "merges.current" | "merges.current_docs" | "merges.current_size" | "merges.total" | "merges.total_docs" | "merges.total_size" | "merges.total_time" | "name" | "node.role" | "pid" | "port" | "query_cache.memory_size" | "query_cache.evictions" | "query_cache.hit_count" | "query_cache.miss_count" | "ram.current" | "ram.max" | "ram.percent" | "refresh.total" | "refresh.time" | "request_cache.memory_size" | "request_cache.evictions" | "request_cache.hit_count" | "request_cache.miss_count" | "script.compilations" | "script.cache_evictions" | "search.fetch_current" | "search.fetch_time" | "search.fetch_total" | "search.open_contexts" | "search.query_current" | "search.query_time" | "search.query_total" | "search.scroll_current" | "search.scroll_time" | "search.scroll_total" | "segments.count" | "segments.fixed_bitset_memory" | "segments.index_writer_memory" | "segments.memory" | "segments.version_map_memory" | "shard_stats.total_count" | "suggest.current" | "suggest.time" | "suggest.total" | "uptime" | "version")[])*: A list of columns names to display.
+It supports simple wildcards.
 ** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -3335,8 +3338,8 @@ client.cat.threadPool({ ... })
 * *Request (object):*
 ** *`thread_pool_patterns` (Optional, string | string[])*: A list of thread pool names used to limit the request.
 Accepts wildcard expressions.
-** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
-** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
+** *`h` (Optional, Enum("active" | "completed" | "core" | "ephemeral_id" | "host" | "ip" | "keep_alive" | "largest" | "max" | "name" | "node_id" | "node_name" | "pid" | "pool_size" | "port" | "queue" | "queue_size" | "rejected" | "size" | "type") | Enum("active" | "completed" | "core" | "ephemeral_id" | "host" | "ip" | "keep_alive" | "largest" | "max" | "name" | "node_id" | "node_name" | "pid" | "pool_size" | "port" | "queue" | "queue_size" | "rejected" | "size" | "type")[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`s` (Optional, string | string[])*: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 ** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
@@ -3344,7 +3347,7 @@ or `:desc` as a suffix to the column name.
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
-** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
 
 [discrete]
 ==== transforms
@@ -4038,6 +4041,7 @@ To unset `_meta`, replace the template without specifying this information.
 ** *`deprecated` (Optional, boolean)*: Marks this index template as deprecated. When creating or updating a non-deprecated index template
 that uses deprecated components, Elasticsearch will emit a deprecation warning.
 ** *`create` (Optional, boolean)*: If `true`, this request cannot replace or update existing component templates.
+** *`cause` (Optional, string)*: User defined reason for create the component template.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -5154,6 +5158,7 @@ A query ID is provided in the ES|QL async query API response for a query that do
 A query ID is also provided when the request was submitted with the `keep_on_completion` parameter set to `true`.
 ** *`drop_null_columns` (Optional, boolean)*: Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
 If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
+** *`format` (Optional, Enum("csv" | "json" | "tsv" | "txt" | "yaml" | "cbor" | "smile" | "arrow"))*: A short version of the Accept header, for example `json` or `yaml`.
 ** *`keep_alive` (Optional, string | -1 | 0)*: The period for which the query and its results are stored in the cluster.
 When this period expires, the query and its results are deleted, even if the query is still ongoing.
 ** *`wait_for_completion_timeout` (Optional, string | -1 | 0)*: The period to wait for the request to finish.
@@ -5791,7 +5796,7 @@ This could be a built-in analyzer, or an analyzer that’s been configured in th
 ** *`field` (Optional, string)*: Field used to derive the analyzer.
 To use this parameter, you must specify an index.
 If specified, the `analyzer` parameter overrides this value.
-** *`filter` (Optional, string | { type } | { type } | { type, preserve_original } | { type, ignored_scripts, output_unigrams } | { type } | { type } | { type, common_words, common_words_path, ignore_case, query_mode } | { type, filter, script } | { type } | { type, delimiter, encoding } | { type, max_gram, min_gram, side, preserve_original } | { type, articles, articles_path, articles_case } | { type, max_output_size, separator } | { type } | { type } | { type } | { type, dedup, dictionary, locale, longest_only } | { type, hyphenation_patterns_path, no_sub_matches, no_overlapping_matches } | { type } | { type, mode, types } | { type, keep_words, keep_words_case, keep_words_path } | { type, ignore_case, keywords, keywords_path, keywords_pattern } | { type } | { type } | { type, max, min } | { type, consume_all_tokens, max_token_count } | { type, language } | { type, bucket_count, hash_count, hash_set_size, with_rotation } | { type, filters, preserve_original } | { type, max_gram, min_gram, preserve_original } | { type, stoptags } | { type, patterns, preserve_original } | { type, all, pattern, replacement } | { type } | { type } | { type, script } | { type } | { type } | { type } | { type } | { type } | { type, filler_token, max_shingle_size, min_shingle_size, output_unigrams, output_unigrams_if_no_shingles, token_separator } | { type, language } | { type } | { type, rules, rules_path } | { type, language } | { type, ignore_case, remove_trailing, stopwords, stopwords_path } | { type } | { type } | { type } | { type, length } | { type, only_on_same_position } | { type } | { type, adjust_offsets, ignore_keywords } | { type } | { type, stopwords } | { type, minimum_length } | { type, use_romaji } | { type, stoptags } | { type, alternate, case_first, case_level, country, decomposition, hiragana_quaternary_mode, language, numeric, rules, strength, variable_top, variant } | { type, unicode_set_filter } | { type, name } | { type, dir, id } | { type, encoder, languageset, max_code_len, name_type, replace, rule_type } | { type }[])*: Array of token filters used to apply after the tokenizer.
+** *`filter` (Optional, string | { type } | { type } | { type } | { type, preserve_original } | { type } | { type } | { type, ignored_scripts, output_unigrams } | { type } | { type } | { type, common_words, common_words_path, ignore_case, query_mode } | { type, filter, script } | { type } | { type } | { type, delimiter, encoding } | { type } | { type, max_gram, min_gram, side, preserve_original } | { type, articles, articles_path, articles_case } | { type, max_output_size, separator } | { type } | { type } | { type } | { type } | { type } | { type, dedup, dictionary, locale, longest_only } | { type, hyphenation_patterns_path, no_sub_matches, no_overlapping_matches } | { type } | { type, mode, types } | { type, keep_words, keep_words_case, keep_words_path } | { type, ignore_case, keywords, keywords_path, keywords_pattern } | { type } | { type } | { type, max, min } | { type, consume_all_tokens, max_token_count } | { type, language } | { type, bucket_count, hash_count, hash_set_size, with_rotation } | { type, filters, preserve_original } | { type, max_gram, min_gram, preserve_original } | { type, stoptags } | { type, patterns, preserve_original } | { type, all, flags, pattern, replacement } | { type } | { type } | { type } | { type, script } | { type } | { type } | { type } | { type } | { type } | { type } | { type, filler_token, max_shingle_size, min_shingle_size, output_unigrams, output_unigrams_if_no_shingles, token_separator } | { type, language } | { type } | { type, rules, rules_path } | { type, language } | { type, ignore_case, remove_trailing, stopwords, stopwords_path } | { type } | { type } | { type } | { type, length } | { type, only_on_same_position } | { type } | { type, adjust_offsets, ignore_keywords } | { type } | { type, stopwords } | { type, minimum_length } | { type, use_romaji } | { type, stoptags } | { type, alternate, caseFirst, caseLevel, country, decomposition, hiraganaQuaternaryMode, language, numeric, rules, strength, variableTop, variant } | { type, unicode_set_filter } | { type, name } | { type, dir, id } | { type, encoder, languageset, max_code_len, name_type, replace, rule_type } | { type }[])*: Array of token filters used to apply after the tokenizer.
 ** *`normalizer` (Optional, string)*: Normalizer to use to convert text into a single token.
 ** *`text` (Optional, string | string[])*: Text to analyze.
 If an array of strings is provided, it is analyzed as a multi-value field.
@@ -7214,7 +7219,7 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 ** *`numeric_detection` (Optional, boolean)*: Automatically map strings into numeric data types for all fields.
-** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { positive_score_impact, type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, dims, element_type, index, index_options, similarity } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, subobjects, type } | { type, enabled, priority, time_series_dimension } | { type, meta, inference_id, search_inference_id, chunking_settings } | { type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { type, index } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } | { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type } | { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)*: Mapping for a field. For new fields, this mapping can include:
+** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { positive_score_impact, type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } | { type, default_metric, ignore_malformed, metrics, time_series_metric } | { type, dims, element_type, index, index_options, similarity } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, time_series_dimensions, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, subobjects, type } | { type, enabled, priority, time_series_dimension } | { type, element_type, dims } | { type, meta, inference_id, search_inference_id, index_options, chunking_settings } | { store, type, index_options } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { type, index } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type, time_series_metric } | { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type } | { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)*: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
@@ -8183,6 +8188,7 @@ The following integrations are available through the inference API. You can find
 * Azure AI Studio (`completion`, `text_embedding`)
 * Azure OpenAI (`completion`, `text_embedding`)
 * Cohere (`completion`, `rerank`, `text_embedding`)
+* DeepSeek (`completion`, `chat_completion`)
 * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland)
 * ELSER (`sparse_embedding`)
 * Google AI Studio (`completion`, `text_embedding`)
@@ -8258,6 +8264,15 @@ client.inference.putAmazonbedrock({ task_type, amazonbedrock_inference_id, servi
 ** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
 ** *`task_settings` (Optional, { max_new_tokens, temperature, top_k, top_p })*: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+
+[discrete]
+==== put_amazonsagemaker
+Configure a Amazon SageMaker inference endpoint
+[source,ts]
+----
+client.inference.putAmazonsagemaker()
+----
+
 
 [discrete]
 ==== put_anthropic
@@ -8364,6 +8379,27 @@ These settings are specific to the `cohere` service.
 ** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
 ** *`task_settings` (Optional, { input_type, return_documents, top_n, truncate })*: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+
+[discrete]
+==== put_deepseek
+Create a DeepSeek inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `deepseek` service.
+[source,ts]
+----
+client.inference.putDeepseek({ task_type, deepseek_inference_id, service, service_settings })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`task_type` (Enum("completion" | "chat_completion"))*: The type of the inference task that the model will perform.
+** *`deepseek_inference_id` (string)*: The unique identifier of the inference endpoint.
+** *`service` (Enum("deepseek"))*: The type of service supported for the specified task type. In this case, `deepseek`.
+** *`service_settings` ({ api_key, model_id, url })*: Settings used to install the inference model.
+These settings are specific to the `deepseek` service.
+** *`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })*: The chunking configuration object.
 
 [discrete]
 ==== put_elasticsearch
@@ -8900,9 +8936,6 @@ client.ingest.getIpLocationDatabase({ ... })
 ** *`id` (Optional, string | string[])*: List of database configuration IDs to retrieve.
 Wildcard (`*`) expressions are supported.
 To get all database configurations, omit this parameter or use `*`.
-** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
-If no response is received before the timeout expires, the request fails and returns an error.
-A value of `-1` indicates that the request should never time out.
 
 [discrete]
 ==== get_pipeline
@@ -9186,7 +9219,7 @@ client.license.postStartTrial({ ... })
 
 * *Request (object):*
 ** *`acknowledge` (Optional, boolean)*: whether the user has acknowledged acknowledge messages (default: false)
-** *`type_query_string` (Optional, string)*
+** *`type` (Optional, string)*: The type of trial license to generate (default: "trial")
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 
 [discrete]
