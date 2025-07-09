@@ -34,6 +34,7 @@ jobs:
 
   test:
     name: Run tests and publish unstable
+    needs: paths-filter
     if: ${{ needs.paths-filter.outputs.src == 'true' }}
     runs-on: ubuntu-latest
     steps:
@@ -62,6 +63,9 @@ jobs:
     name: Publish unstable
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
     steps:
       - name: npm publish
         run: |
