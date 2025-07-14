@@ -831,7 +831,6 @@ client.getSource({ id, index })
 - **`_source` (Optional, boolean \| string \| string[])**: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
 - **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude in the response.
 - **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response.
-- **`stored_fields` (Optional, string \| string[])**: A list of stored fields to return as part of a hit.
 - **`version` (Optional, number)**: The version number for concurrency control. It must match the current version of the document for the request to succeed.
 - **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
 
@@ -1014,6 +1013,7 @@ client.index({ index })
 - **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
 - **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active.
 - **`require_alias` (Optional, boolean)**: If `true`, the destination must be an index alias.
+- **`require_data_stream` (Optional, boolean)**: If `true`, the request's actions must target a data stream (existing or to be created).
 
 ## client.info [_info]
 Get cluster info.
@@ -3464,6 +3464,7 @@ client.cluster.getComponentTemplate({ ... })
 - **`name` (Optional, string)**: List of component template names used to limit the request.
 Wildcard (`*`) expressions are supported.
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
+- **`settings_filter` (Optional, string \| string[])**: Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys
 - **`include_defaults` (Optional, boolean)**: Return all default configurations for the component template (default: false)
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only.
 If `false`, information is retrieved from the master node.
@@ -3648,6 +3649,7 @@ To unset `_meta`, replace the template without specifying this information.
 - **`deprecated` (Optional, boolean)**: Marks this index template as deprecated. When creating or updating a non-deprecated index template
 that uses deprecated components, Elasticsearch will emit a deprecation warning.
 - **`create` (Optional, boolean)**: If `true`, this request cannot replace or update existing component templates.
+- **`cause` (Optional, string)**: User defined reason for create the component template.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -7858,7 +7860,7 @@ The only valid task type for the model to perform is `text_embedding`.
 - **`service_settings` ({ api_key, api_version, model_id, project_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `watsonxai` service.
 
 ## client.inference.rerank [_inference.rerank]
-Perform rereanking inference on the service
+Perform reranking inference on the service
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-inference)
 
@@ -8066,9 +8068,6 @@ client.ingest.getIpLocationDatabase({ ... })
 - **`id` (Optional, string \| string[])**: List of database configuration IDs to retrieve.
 Wildcard (`*`) expressions are supported.
 To get all database configurations, omit this parameter or use `*`.
-- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
-If no response is received before the timeout expires, the request fails and returns an error.
-A value of `-1` indicates that the request should never time out.
 
 ## client.ingest.getPipeline [_ingest.get_pipeline]
 Get pipelines.
@@ -8327,7 +8326,7 @@ client.license.postStartTrial({ ... })
 
 #### Request (object) [_request_license.post_start_trial]
 - **`acknowledge` (Optional, boolean)**: whether the user has acknowledged acknowledge messages (default: false)
-- **`type_query_string` (Optional, string)**
+- **`type` (Optional, string)**: The type of trial license to generate (default: "trial")
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.logstash.deletePipeline [_logstash.delete_pipeline]
@@ -12007,15 +12006,9 @@ To check whether a user has a specific list of privileges, use the has privilege
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-user-privileges)
 
 ```ts
-client.security.getUserPrivileges({ ... })
+client.security.getUserPrivileges()
 ```
 
-### Arguments [_arguments_security.get_user_privileges]
-
-#### Request (object) [_request_security.get_user_privileges]
-- **`application` (Optional, string)**: The name of the application. Application privileges are always associated with exactly one application. If you do not specify this parameter, the API returns information about all privileges for all applications.
-- **`priviledge` (Optional, string)**: The name of the privilege. If you do not specify this parameter, the API returns information about all privileges for the requested application.
-- **`username` (Optional, string \| null)**
 
 ## client.security.getUserProfile [_security.get_user_profile]
 Get a user profile.
@@ -12086,6 +12079,10 @@ It is not valid with other grant types.
 If you specify the `password` grant type, this parameter is required.
 It is not valid with other grant types.
 - **`run_as` (Optional, string)**: The name of the user to be impersonated.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If 'true', Elasticsearch refreshes the affected shards to make this operation
+visible to search.
+If 'wait_for', it waits for a refresh to make this operation visible to search.
+If 'false', nothing is done with refreshes.
 
 ## client.security.hasPrivileges [_security.has_privileges]
 Check user privileges.
@@ -13391,6 +13388,8 @@ It also accepts wildcards (`*`).
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
+- **`wait_for_completion` (Optional, boolean)**: If `true`, the request returns a response when the matching snapshots are all deleted.
+If `false`, the request returns a response as soon as the deletes are scheduled.
 
 ## client.snapshot.deleteRepository [_snapshot.delete_repository]
 Delete snapshot repositories.

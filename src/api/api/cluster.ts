@@ -84,6 +84,7 @@ export default class Cluster {
         body: [],
         query: [
           'flat_settings',
+          'settings_filter',
           'include_defaults',
           'local',
           'master_timeout'
@@ -155,6 +156,7 @@ export default class Cluster {
         ],
         query: [
           'create',
+          'cause',
           'master_timeout'
         ]
       },
