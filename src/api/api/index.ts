@@ -49,7 +49,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'version',
       'version_type',
       'wait_for_active_shards',
-      'require_alias'
+      'require_alias',
+      'require_data_stream'
     ]
   }
 }

@@ -87,7 +87,7 @@ export default class License {
         body: [],
         query: [
           'acknowledge',
-          'type_query_string',
+          'type',
           'master_timeout'
         ]
       }

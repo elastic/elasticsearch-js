@@ -60,6 +60,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'grid_precision',
       'grid_type',
       'size',
+      'track_total_hits',
       'with_labels'
     ]
   }

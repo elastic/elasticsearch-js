@@ -97,7 +97,8 @@ export default class Snapshot {
         ],
         body: [],
         query: [
-          'master_timeout'
+          'master_timeout',
+          'wait_for_completion'
         ]
       },
       'snapshot.delete_repository': {
