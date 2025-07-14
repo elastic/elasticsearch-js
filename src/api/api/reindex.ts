@@ -44,6 +44,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'requests_per_second',
       'scroll',
       'slices',
+      'max_docs',
       'timeout',
       'wait_for_active_shards',
       'wait_for_completion',

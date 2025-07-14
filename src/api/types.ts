@@ -944,17 +944,15 @@ export interface GetSourceRequest extends RequestBase {
   _source_excludes?: Fields
   /** A comma-separated list of source fields to include in the response. */
   _source_includes?: Fields
-  /** A comma-separated list of stored fields to return as part of a hit. */
-  stored_fields?: Fields
   /** The version number for concurrency control.
     * It must match the current version of the document for the request to succeed. */
   version?: VersionNumber
   /** The version type. */
   version_type?: VersionType
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, version?: never, version_type?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, version?: never, version_type?: never }
 }
 
 export type GetSourceResponse<TDocument = unknown> = TDocument
@@ -1206,11 +1204,13 @@ export interface IndexRequest<TDocument = unknown> extends RequestBase {
   wait_for_active_shards?: WaitForActiveShards
   /** If `true`, the destination must be an index alias. */
   require_alias?: boolean
+  /** If `true`, the request's actions must target a data stream (existing or to be created). */
+  require_data_stream?: boolean
   document?: TDocument
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, document?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, document?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, document?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, document?: never }
 }
 
 export type IndexResponse = WriteResponseBase
@@ -15739,6 +15739,8 @@ export interface ClusterGetComponentTemplateRequest extends RequestBase {
   name?: Name
   /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
+  /** Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys */
+  settings_filter?: string | string[]
   /** Return all default configurations for the component template (default: false) */
   include_defaults?: boolean
   /** If `true`, the request retrieves information from the local node only.
@@ -15748,9 +15750,9 @@ export interface ClusterGetComponentTemplateRequest extends RequestBase {
     * If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, flat_settings?: never, include_defaults?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { name?: never, flat_settings?: never, settings_filter?: never, include_defaults?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, flat_settings?: never, include_defaults?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { name?: never, flat_settings?: never, settings_filter?: never, include_defaults?: never, local?: never, master_timeout?: never }
 }
 
 export interface ClusterGetComponentTemplateResponse {
@@ -15961,6 +15963,8 @@ export interface ClusterPutComponentTemplateRequest extends RequestBase {
   name: Name
   /** If `true`, this request cannot replace or update existing component templates. */
   create?: boolean
+  /** User defined reason for create the component template. */
+  cause?: string
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
@@ -15979,9 +15983,9 @@ export interface ClusterPutComponentTemplateRequest extends RequestBase {
     * that uses deprecated components, Elasticsearch will emit a deprecation warning. */
   deprecated?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, template?: never, version?: never, _meta?: never, deprecated?: never }
+  body?: string | { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, template?: never, version?: never, _meta?: never, deprecated?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, template?: never, version?: never, _meta?: never, deprecated?: never }
+  querystring?: { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, template?: never, version?: never, _meta?: never, deprecated?: never }
 }
 
 export type ClusterPutComponentTemplateResponse = AcknowledgedResponseBase
@@ -24404,14 +24408,10 @@ export interface IngestGetIpLocationDatabaseRequest extends RequestBase {
     * Wildcard (`*`) expressions are supported.
     * To get all database configurations, omit this parameter or use `*`. */
   id?: Ids
-  /** The period to wait for a connection to the master node.
-    * If no response is received before the timeout expires, the request fails and returns an error.
-    * A value of `-1` indicates that the request should never time out. */
-  master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { id?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export interface IngestGetIpLocationDatabaseResponse {
@@ -24674,13 +24674,14 @@ export interface LicensePostStartBasicResponse {
 export interface LicensePostStartTrialRequest extends RequestBase {
   /** whether the user has acknowledged acknowledge messages (default: false) */
   acknowledge?: boolean
-  type_query_string?: string
+  /** The type of trial license to generate (default: "trial") */
+  type?: string
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { acknowledge?: never, type_query_string?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { acknowledge?: never, type?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { acknowledge?: never, type_query_string?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { acknowledge?: never, type?: never, master_timeout?: never }
 }
 
 export interface LicensePostStartTrialResponse {
@@ -32721,15 +32722,10 @@ export interface SecurityGetUserRequest extends RequestBase {
 export type SecurityGetUserResponse = Record<string, SecurityUser>
 
 export interface SecurityGetUserPrivilegesRequest extends RequestBase {
-  /** The name of the application. Application privileges are always associated with exactly one application. If you do not specify this parameter, the API returns information about all privileges for all applications. */
-  application?: Name
-  /** The name of the privilege. If you do not specify this parameter, the API returns information about all privileges for the requested application. */
-  priviledge?: Name
-  username?: Name | null
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { application?: never, priviledge?: never, username?: never }
+  body?: string | { [key: string]: any }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { application?: never, priviledge?: never, username?: never }
+  querystring?: { [key: string]: any }
 }
 
 export interface SecurityGetUserPrivilegesResponse {
@@ -32786,6 +32782,11 @@ export interface SecurityGrantApiKeyGrantApiKey {
 }
 
 export interface SecurityGrantApiKeyRequest extends RequestBase {
+  /** If 'true', Elasticsearch refreshes the affected shards to make this operation
+    * visible to search.
+    * If 'wait_for', it waits for a refresh to make this operation visible to search.
+    * If 'false', nothing is done with refreshes. */
+  refresh?: Refresh
   /** The API key. */
   api_key: SecurityGrantApiKeyGrantApiKey
   /** The type of grant. Supported grant types are: `access_token`, `password`. */
@@ -32805,9 +32806,9 @@ export interface SecurityGrantApiKeyRequest extends RequestBase {
   /** The name of the user to be impersonated. */
   run_as?: Username
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { api_key?: never, grant_type?: never, access_token?: never, username?: never, password?: never, run_as?: never }
+  body?: string | { [key: string]: any } & { refresh?: never, api_key?: never, grant_type?: never, access_token?: never, username?: never, password?: never, run_as?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { api_key?: never, grant_type?: never, access_token?: never, username?: never, password?: never, run_as?: never }
+  querystring?: { [key: string]: any } & { refresh?: never, api_key?: never, grant_type?: never, access_token?: never, username?: never, password?: never, run_as?: never }
 }
 
 export interface SecurityGrantApiKeyResponse {
@@ -34735,10 +34736,13 @@ export interface SnapshotDeleteRequest extends RequestBase {
     * If the master node is not available before the timeout expires, the request fails and returns an error.
     * To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** If `true`, the request returns a response when the matching snapshots are all deleted.
+    * If `false`, the request returns a response as soon as the deletes are scheduled. */
+  wait_for_completion?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never }
 }
 
 export type SnapshotDeleteResponse = AcknowledgedResponseBase

@@ -82,9 +82,7 @@ export default class Ingest {
           'id'
         ],
         body: [],
-        query: [
-          'master_timeout'
-        ]
+        query: []
       },
       'ingest.get_pipeline': {
         path: [

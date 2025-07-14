@@ -1626,7 +1626,7 @@ export default class Inference {
   }
 
   /**
-    * Perform rereanking inference on the service
+    * Perform reranking inference on the service
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-inference | Elasticsearch API documentation}
     */
   async rerank (this: That, params: T.InferenceRerankRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceRerankResponse>
