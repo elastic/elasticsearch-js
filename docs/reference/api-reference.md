@@ -754,6 +754,7 @@ client.get({ id, index })
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
 - **`_source` (Optional, boolean \| string \| string[])**: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
 - **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+- **`_source_exclude_vectors` (Optional, boolean)**: Whether vectors should be excluded from _source
 - **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
 - **`stored_fields` (Optional, string \| string[])**: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`. Only leaf fields can be retrieved with the `stored_fields` option. Object fields can't be returned; if specified, the request fails.
 - **`version` (Optional, number)**: The version number for concurrency control. It must match the current version of the document for the request to succeed.
@@ -831,7 +832,6 @@ client.getSource({ id, index })
 - **`_source` (Optional, boolean \| string \| string[])**: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
 - **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude in the response.
 - **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response.
-- **`stored_fields` (Optional, string \| string[])**: A list of stored fields to return as part of a hit.
 - **`version` (Optional, number)**: The version number for concurrency control. It must match the current version of the document for the request to succeed.
 - **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
 
@@ -1014,6 +1014,7 @@ client.index({ index })
 - **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
 - **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active.
 - **`require_alias` (Optional, boolean)**: If `true`, the destination must be an index alias.
+- **`require_data_stream` (Optional, boolean)**: If `true`, the request's actions must target a data stream (existing or to be created).
 
 ## client.info [_info]
 Get cluster info.
@@ -1559,6 +1560,7 @@ client.search({ ... })
 - **`typed_keys` (Optional, boolean)**: If `true`, aggregation and suggester names are be prefixed by their respective types in the response.
 - **`rest_total_hits_as_int` (Optional, boolean)**: Indicates whether `hits.total` should be rendered as an integer or an object in the rest search response.
 - **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
+- **`_source_exclude_vectors` (Optional, boolean)**: Whether vectors should be excluded from _source
 - **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
 - **`q` (Optional, string)**: A query in the Lucene query string syntax. Query parameter searches do not support the full Elasticsearch Query DSL but are handy for testing. IMPORTANT: This parameter overrides the query parameter in the request body. If both parameters are specified, documents matching the query request body parameter are not returned.
 - **`force_synthetic_source` (Optional, boolean)**: Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index.
@@ -3464,6 +3466,7 @@ client.cluster.getComponentTemplate({ ... })
 - **`name` (Optional, string)**: List of component template names used to limit the request.
 Wildcard (`*`) expressions are supported.
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
+- **`settings_filter` (Optional, string \| string[])**: Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys
 - **`include_defaults` (Optional, boolean)**: Return all default configurations for the component template (default: false)
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only.
 If `false`, information is retrieved from the master node.
@@ -3649,6 +3652,7 @@ To unset `_meta`, replace the template without specifying this information.
 - **`deprecated` (Optional, boolean)**: Marks this index template as deprecated. When creating or updating a non-deprecated index template
 that uses deprecated components, Elasticsearch will emit a deprecation warning.
 - **`create` (Optional, boolean)**: If `true`, this request cannot replace or update existing component templates.
+- **`cause` (Optional, string)**: User defined reason for create the component template.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -3778,7 +3782,7 @@ client.cluster.state({ ... })
 - **`flat_settings` (Optional, boolean)**: Return settings in flat format (default: false)
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
 - **`local` (Optional, boolean)**: Return local information, do not retrieve the state from master node (default: false)
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Timeout for waiting for new cluster state in case it is blocked
 - **`wait_for_metadata_version` (Optional, number)**: Wait for the metadata version to be equal or greater than the specified metadata version
 - **`wait_for_timeout` (Optional, string \| -1 \| 0)**: The maximum time to wait for wait_for_metadata_version before timing out
 
@@ -6119,6 +6123,25 @@ Supports a list of values, such as `open,hidden`.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 - **`verbose` (Optional, boolean)**: Whether the maximum timestamp for each data stream should be calculated and returned.
 
+## client.indices.getDataStreamMappings [_indices.get_data_stream_mappings]
+Get data stream mappings.
+
+Get mapping information for one or more data streams.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-mappings)
+
+```ts
+client.indices.getDataStreamMappings({ name })
+```
+
+### Arguments [_arguments_indices.get_data_stream_mappings]
+
+#### Request (object) [_request_indices.get_data_stream_mappings]
+- **`name` (string \| string[])**: A list of data streams or data stream patterns. Supports wildcards (`*`).
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node. If no response is
+received before the timeout expires, the request fails and returns an
+error.
+
 ## client.indices.getDataStreamOptions [_indices.get_data_stream_options]
 Get data stream options.
 
@@ -6509,6 +6532,33 @@ received before the timeout expires, the request fails and returns an
 error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
+
+## client.indices.putDataStreamMappings [_indices.put_data_stream_mappings]
+Update data stream mappings.
+
+This API can be used to override mappings on specific data streams. These overrides will take precedence over what
+is specified in the template that the data stream matches. The mapping change is only applied to new write indices
+that are created during rollover after this API is called. No indices are changed by this API.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-mappings)
+
+```ts
+client.indices.putDataStreamMappings({ name })
+```
+
+### Arguments [_arguments_indices.put_data_stream_mappings]
+
+#### Request (object) [_request_indices.put_data_stream_mappings]
+- **`name` (string \| string[])**: A list of data streams or data stream patterns.
+- **`mappings` (Optional, { all_field, date_detection, dynamic, dynamic_date_formats, dynamic_templates, _field_names, index_field, _meta, numeric_detection, properties, _routing, _size, _source, runtime, enabled, subobjects, _data_stream_timestamp })**
+- **`dry_run` (Optional, boolean)**: If `true`, the request does not actually change the mappings on any data streams. Instead, it
+simulates changing the settings and reports back to the user what would have happened had these settings
+actually been applied.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node. If no response is
+received before the timeout expires, the request fails and returns an
+error.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response. If no response is received before the
+ timeout expires, the request fails and returns an error.
 
 ## client.indices.putDataStreamOptions [_indices.put_data_stream_options]
 Update data stream options.
@@ -7582,6 +7632,16 @@ It can be a single string or an array.
 - **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The type of inference task that the model performs.
 - **`query` (Optional, string)**: The query input, which is required only for the `rerank` task.
 It is not required for other tasks.
+- **`input_type` (Optional, string)**: Specifies the input data type for the text embedding model. The `input_type` parameter only applies to Inference Endpoints with the `text_embedding` task type. Possible values include:
+* `SEARCH`
+* `INGEST`
+* `CLASSIFICATION`
+* `CLUSTERING`
+Not all services support all values. Unsupported values will trigger a validation exception.
+Accepted values depend on the configured inference service, refer to the relevant service-specific documentation for more info.
+
+> info
+> The `input_type` parameter specified on the root level of the request body will take precedence over the `input_type` parameter specified in `task_settings`.
 - **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request.
 These settings are specific to the task type you specified and override the task settings specified when initializing the service.
 - **`timeout` (Optional, string \| -1 \| 0)**: The amount of time to wait for the inference request to complete.
@@ -8084,7 +8144,7 @@ client.inference.putWatsonx({ task_type, watsonx_inference_id, service, service_
 - **`service_settings` ({ api_key, api_version, model_id, project_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `watsonxai` service.
 
 ## client.inference.rerank [_inference.rerank]
-Perform rereanking inference on the service
+Perform reranking inference on the service
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
 
@@ -8292,9 +8352,6 @@ client.ingest.getIpLocationDatabase({ ... })
 - **`id` (Optional, string \| string[])**: List of database configuration IDs to retrieve.
 Wildcard (`*`) expressions are supported.
 To get all database configurations, omit this parameter or use `*`.
-- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
-If no response is received before the timeout expires, the request fails and returns an error.
-A value of `-1` indicates that the request should never time out.
 
 ## client.ingest.getPipeline [_ingest.get_pipeline]
 Get pipelines.
@@ -8553,7 +8610,7 @@ client.license.postStartTrial({ ... })
 
 #### Request (object) [_request_license.post_start_trial]
 - **`acknowledge` (Optional, boolean)**: whether the user has acknowledged acknowledge messages (default: false)
-- **`type_query_string` (Optional, string)**
+- **`type` (Optional, string)**: The type of trial license to generate (default: "trial")
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.logstash.deletePipeline [_logstash.delete_pipeline]
@@ -12233,15 +12290,9 @@ To check whether a user has a specific list of privileges, use the has privilege
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-user-privileges)
 
 ```ts
-client.security.getUserPrivileges({ ... })
+client.security.getUserPrivileges()
 ```
 
-### Arguments [_arguments_security.get_user_privileges]
-
-#### Request (object) [_request_security.get_user_privileges]
-- **`application` (Optional, string)**: The name of the application. Application privileges are always associated with exactly one application. If you do not specify this parameter, the API returns information about all privileges for all applications.
-- **`priviledge` (Optional, string)**: The name of the privilege. If you do not specify this parameter, the API returns information about all privileges for the requested application.
-- **`username` (Optional, string \| null)**
 
 ## client.security.getUserProfile [_security.get_user_profile]
 Get a user profile.
@@ -12312,6 +12363,10 @@ It is not valid with other grant types.
 If you specify the `password` grant type, this parameter is required.
 It is not valid with other grant types.
 - **`run_as` (Optional, string)**: The name of the user to be impersonated.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If 'true', Elasticsearch refreshes the affected shards to make this operation
+visible to search.
+If 'wait_for', it waits for a refresh to make this operation visible to search.
+If 'false', nothing is done with refreshes.
 
 ## client.security.hasPrivileges [_security.has_privileges]
 Check user privileges.
@@ -13617,6 +13672,8 @@ It also accepts wildcards (`*`).
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
+- **`wait_for_completion` (Optional, boolean)**: If `true`, the request returns a response when the matching snapshots are all deleted.
+If `false`, the request returns a response as soon as the deletes are scheduled.
 
 ## client.snapshot.deleteRepository [_snapshot.delete_repository]
 Delete snapshot repositories.

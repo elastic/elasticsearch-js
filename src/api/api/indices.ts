@@ -424,7 +424,9 @@ export default class Indices {
           'name'
         ],
         body: [],
-        query: []
+        query: [
+          'master_timeout'
+        ]
       },
       'indices.get_data_stream_options': {
         path: [
@@ -600,8 +602,14 @@ export default class Indices {
         path: [
           'name'
         ],
-        body: [],
-        query: []
+        body: [
+          'mappings'
+        ],
+        query: [
+          'dry_run',
+          'master_timeout',
+          'timeout'
+        ]
       },
       'indices.put_data_stream_options': {
         path: [
@@ -2507,13 +2515,13 @@ export default class Indices {
   }
 
   /**
-    * Gets a data stream's mappings
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
+    * Get data stream mappings. Get mapping information for one or more data streams.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-mappings | Elasticsearch API documentation}
     */
-  async getDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getDataStreamMappings (this: That, params: T.IndicesGetDataStreamMappingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamMappingsResponse>
+  async getDataStreamMappings (this: That, params: T.IndicesGetDataStreamMappingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataStreamMappingsResponse, unknown>>
+  async getDataStreamMappings (this: That, params: T.IndicesGetDataStreamMappingsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataStreamMappingsResponse>
+  async getDataStreamMappings (this: That, params: T.IndicesGetDataStreamMappingsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this.acceptedParams['indices.get_data_stream_mappings']
@@ -2531,11 +2539,11 @@ export default class Indices {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -3314,36 +3322,38 @@ export default class Indices {
   }
 
   /**
-    * Updates a data stream's mappings
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
+    * Update data stream mappings. This API can be used to override mappings on specific data streams. These overrides will take precedence over what is specified in the template that the data stream matches. The mapping change is only applied to new write indices that are created during rollover after this API is called. No indices are changed by this API.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-mappings | Elasticsearch API documentation}
     */
-  async putDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putDataStreamMappings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async putDataStreamMappings (this: That, params: T.IndicesPutDataStreamMappingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataStreamMappingsResponse>
+  async putDataStreamMappings (this: That, params: T.IndicesPutDataStreamMappingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutDataStreamMappingsResponse, unknown>>
+  async putDataStreamMappings (this: That, params: T.IndicesPutDataStreamMappingsRequest, options?: TransportRequestOptions): Promise<T.IndicesPutDataStreamMappingsResponse>
+  async putDataStreamMappings (this: That, params: T.IndicesPutDataStreamMappingsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this.acceptedParams['indices.put_data_stream_mappings']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
-    let body: Record<string, any> | string | undefined
-    const userBody = params?.body
-    if (userBody != null) {
-      if (typeof userBody === 'string') {
-        body = userBody
-      } else {
-        body = { ...userBody }
-      }
-    }
-
-    params = params ?? {}
+    let body: any = params.body ?? undefined
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

@@ -836,6 +836,8 @@ export interface GetRequest extends RequestBase {
     * You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.
     * If the `_source` parameter is `false`, this parameter is ignored. */
   _source_excludes?: Fields
+  /** Whether vectors should be excluded from _source */
+  _source_exclude_vectors?: boolean
   /** A comma-separated list of source fields to include in the response.
     * If this parameter is specified, only these source fields are returned.
     * You can exclude fields from this subset using the `_source_excludes` query parameter.
@@ -853,9 +855,9 @@ export interface GetRequest extends RequestBase {
   /** The version type. */
   version_type?: VersionType
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
 }
 
 export type GetResponse<TDocument = unknown> = GetGetResult<TDocument>
@@ -944,17 +946,15 @@ export interface GetSourceRequest extends RequestBase {
   _source_excludes?: Fields
   /** A comma-separated list of source fields to include in the response. */
   _source_includes?: Fields
-  /** A comma-separated list of stored fields to return as part of a hit. */
-  stored_fields?: Fields
   /** The version number for concurrency control.
     * It must match the current version of the document for the request to succeed. */
   version?: VersionNumber
   /** The version type. */
   version_type?: VersionType
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, version?: never, version_type?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, version?: never, version_type?: never }
 }
 
 export type GetSourceResponse<TDocument = unknown> = TDocument
@@ -1206,11 +1206,13 @@ export interface IndexRequest<TDocument = unknown> extends RequestBase {
   wait_for_active_shards?: WaitForActiveShards
   /** If `true`, the destination must be an index alias. */
   require_alias?: boolean
+  /** If `true`, the request's actions must target a data stream (existing or to be created). */
+  require_data_stream?: boolean
   document?: TDocument
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, document?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, document?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, document?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, document?: never }
 }
 
 export type IndexResponse = WriteResponseBase
@@ -2077,6 +2079,8 @@ export interface SearchRequest extends RequestBase {
     * You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.
     * If the `_source` parameter is `false`, this parameter is ignored. */
   _source_excludes?: Fields
+  /** Whether vectors should be excluded from _source */
+  _source_exclude_vectors?: boolean
   /** A comma-separated list of source fields to include in the response.
     * If this parameter is specified, only these source fields are returned.
     * You can exclude fields from this subset using the `_source_excludes` query parameter.
@@ -2202,9 +2206,9 @@ export interface SearchRequest extends RequestBase {
     * You can retrieve these stats using the indices stats API. */
   stats?: string[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
 }
 
 export type SearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
@@ -15810,6 +15814,8 @@ export interface ClusterGetComponentTemplateRequest extends RequestBase {
   name?: Name
   /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
+  /** Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys */
+  settings_filter?: string | string[]
   /** Return all default configurations for the component template (default: false) */
   include_defaults?: boolean
   /** If `true`, the request retrieves information from the local node only.
@@ -15819,9 +15825,9 @@ export interface ClusterGetComponentTemplateRequest extends RequestBase {
     * If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, flat_settings?: never, include_defaults?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { name?: never, flat_settings?: never, settings_filter?: never, include_defaults?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, flat_settings?: never, include_defaults?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { name?: never, flat_settings?: never, settings_filter?: never, include_defaults?: never, local?: never, master_timeout?: never }
 }
 
 export interface ClusterGetComponentTemplateResponse {
@@ -16032,6 +16038,8 @@ export interface ClusterPutComponentTemplateRequest extends RequestBase {
   name: Name
   /** If `true`, this request cannot replace or update existing component templates. */
   create?: boolean
+  /** User defined reason for create the component template. */
+  cause?: string
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
@@ -16050,9 +16058,9 @@ export interface ClusterPutComponentTemplateRequest extends RequestBase {
     * that uses deprecated components, Elasticsearch will emit a deprecation warning. */
   deprecated?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, template?: never, version?: never, _meta?: never, deprecated?: never }
+  body?: string | { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, template?: never, version?: never, _meta?: never, deprecated?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, create?: never, master_timeout?: never, template?: never, version?: never, _meta?: never, deprecated?: never }
+  querystring?: { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, template?: never, version?: never, _meta?: never, deprecated?: never }
 }
 
 export type ClusterPutComponentTemplateResponse = AcknowledgedResponseBase
@@ -16242,7 +16250,7 @@ export interface ClusterStateRequest extends RequestBase {
   ignore_unavailable?: boolean
   /** Return local information, do not retrieve the state from master node (default: false) */
   local?: boolean
-  /** Specify timeout for connection to master */
+  /** Timeout for waiting for new cluster state in case it is blocked */
   master_timeout?: Duration
   /** Wait for the metadata version to be equal or greater than the specified metadata version */
   wait_for_metadata_version?: VersionNumber
@@ -18802,6 +18810,9 @@ export interface IndicesDataStream {
   /** The settings specific to this data stream that will take precedence over the settings in the matching index
     * template. */
   settings: IndicesIndexSettings
+  /** The mappings specific to this data stream that will take precedence over the mappings in the matching index
+    * template. */
+  mappings?: MappingTypeMapping
   /** Health status of the data stream.
     * This health status is based on the state of the primary and replica shards of the stream’s backing indices. */
   status: HealthStatus
@@ -20407,6 +20418,33 @@ export interface IndicesGetDataStreamResponse {
   data_streams: IndicesDataStream[]
 }
 
+export interface IndicesGetDataStreamMappingsDataStreamMappings {
+  /** The name of the data stream. */
+  name: string
+  /** The settings specific to this data stream */
+  mappings: MappingTypeMapping
+  /** The settings specific to this data stream merged with the settings from its template. These `effective_settings`
+    * are the settings that will be used when a new index is created for this data stream. */
+  effective_mappings: MappingTypeMapping
+}
+
+export interface IndicesGetDataStreamMappingsRequest extends RequestBase {
+  /** A comma-separated list of data streams or data stream patterns. Supports wildcards (`*`). */
+  name: Indices
+  /** The period to wait for a connection to the master node. If no response is
+    * received before the timeout expires, the request fails and returns an
+    * error. */
+  master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
+}
+
+export interface IndicesGetDataStreamMappingsResponse {
+  data_streams: IndicesGetDataStreamMappingsDataStreamMappings[]
+}
+
 export interface IndicesGetDataStreamOptionsDataStreamWithOptions {
   name: DataStreamName
   options?: IndicesDataStreamOptions
@@ -20828,6 +20866,46 @@ export interface IndicesPutDataLifecycleRequest extends RequestBase {
 }
 
 export type IndicesPutDataLifecycleResponse = AcknowledgedResponseBase
+
+export interface IndicesPutDataStreamMappingsRequest extends RequestBase {
+  /** A comma-separated list of data streams or data stream patterns. */
+  name: Indices
+  /** If `true`, the request does not actually change the mappings on any data streams. Instead, it
+    * simulates changing the settings and reports back to the user what would have happened had these settings
+    * actually been applied. */
+  dry_run?: boolean
+  /** The period to wait for a connection to the master node. If no response is
+    * received before the timeout expires, the request fails and returns an
+    * error. */
+  master_timeout?: Duration
+  /** The period to wait for a response. If no response is received before the
+    *  timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  mappings?: MappingTypeMapping
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, dry_run?: never, master_timeout?: never, timeout?: never, mappings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, dry_run?: never, master_timeout?: never, timeout?: never, mappings?: never }
+}
+
+export interface IndicesPutDataStreamMappingsResponse {
+  data_streams: IndicesPutDataStreamMappingsUpdatedDataStreamMappings[]
+}
+
+export interface IndicesPutDataStreamMappingsUpdatedDataStreamMappings {
+  /** The data stream name. */
+  name: IndexName
+  /** If the mappings were successfully applied to the data stream (or would have been, if running in `dry_run`
+    * mode), it is `true`. If an error occurred, it is `false`. */
+  applied_to_data_stream: boolean
+  /** A message explaining why the mappings could not be applied to the data stream. */
+  error?: string
+  /** The mappings that are specfic to this data stream that will override any mappings from the matching index template. */
+  mappings?: MappingTypeMapping
+  /** The mappings that are effective on this data stream, taking into account the mappings from the matching index
+    * template and the mappings specific to this data stream. */
+  effective_mappings?: MappingTypeMapping
+}
 
 export interface IndicesPutDataStreamOptionsRequest extends RequestBase {
   /** Comma-separated list of data streams used to limit the request.
@@ -23262,13 +23340,24 @@ export interface InferenceInferenceRequest extends RequestBase {
     * > info
     * > Inference endpoints for the `completion` task type currently only support a single string as input. */
   input: string | string[]
+  /** Specifies the input data type for the text embedding model. The `input_type` parameter only applies to Inference Endpoints with the `text_embedding` task type. Possible values include:
+    * * `SEARCH`
+    * * `INGEST`
+    * * `CLASSIFICATION`
+    * * `CLUSTERING`
+    * Not all services support all values. Unsupported values will trigger a validation exception.
+    * Accepted values depend on the configured inference service, refer to the relevant service-specific documentation for more info.
+    *
+    * > info
+    * > The `input_type` parameter specified on the root level of the request body will take precedence over the `input_type` parameter specified in `task_settings`. */
+  input_type?: string
   /** Task settings for the individual inference request.
     * These settings are specific to the task type you specified and override the task settings specified when initializing the service. */
   task_settings?: InferenceTaskSettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, query?: never, input?: never, task_settings?: never }
+  body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, query?: never, input?: never, input_type?: never, task_settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, query?: never, input?: never, task_settings?: never }
+  querystring?: { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, query?: never, input?: never, input_type?: never, task_settings?: never }
 }
 
 export type InferenceInferenceResponse = InferenceInferenceResult
@@ -24842,14 +24931,10 @@ export interface IngestGetIpLocationDatabaseRequest extends RequestBase {
     * Wildcard (`*`) expressions are supported.
     * To get all database configurations, omit this parameter or use `*`. */
   id?: Ids
-  /** The period to wait for a connection to the master node.
-    * If no response is received before the timeout expires, the request fails and returns an error.
-    * A value of `-1` indicates that the request should never time out. */
-  master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { id?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { id?: never }
 }
 
 export interface IngestGetIpLocationDatabaseResponse {
@@ -25112,13 +25197,14 @@ export interface LicensePostStartBasicResponse {
 export interface LicensePostStartTrialRequest extends RequestBase {
   /** whether the user has acknowledged acknowledge messages (default: false) */
   acknowledge?: boolean
-  type_query_string?: string
+  /** The type of trial license to generate (default: "trial") */
+  type?: string
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { acknowledge?: never, type_query_string?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { acknowledge?: never, type?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { acknowledge?: never, type_query_string?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { acknowledge?: never, type?: never, master_timeout?: never }
 }
 
 export interface LicensePostStartTrialResponse {
@@ -33160,15 +33246,10 @@ export interface SecurityGetUserRequest extends RequestBase {
 export type SecurityGetUserResponse = Record<string, SecurityUser>
 
 export interface SecurityGetUserPrivilegesRequest extends RequestBase {
-  /** The name of the application. Application privileges are always associated with exactly one application. If you do not specify this parameter, the API returns information about all privileges for all applications. */
-  application?: Name
-  /** The name of the privilege. If you do not specify this parameter, the API returns information about all privileges for the requested application. */
-  priviledge?: Name
-  username?: Name | null
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { application?: never, priviledge?: never, username?: never }
+  body?: string | { [key: string]: any }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { application?: never, priviledge?: never, username?: never }
+  querystring?: { [key: string]: any }
 }
 
 export interface SecurityGetUserPrivilegesResponse {
@@ -33225,6 +33306,11 @@ export interface SecurityGrantApiKeyGrantApiKey {
 }
 
 export interface SecurityGrantApiKeyRequest extends RequestBase {
+  /** If 'true', Elasticsearch refreshes the affected shards to make this operation
+    * visible to search.
+    * If 'wait_for', it waits for a refresh to make this operation visible to search.
+    * If 'false', nothing is done with refreshes. */
+  refresh?: Refresh
   /** The API key. */
   api_key: SecurityGrantApiKeyGrantApiKey
   /** The type of grant. Supported grant types are: `access_token`, `password`. */
@@ -33244,9 +33330,9 @@ export interface SecurityGrantApiKeyRequest extends RequestBase {
   /** The name of the user to be impersonated. */
   run_as?: Username
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { api_key?: never, grant_type?: never, access_token?: never, username?: never, password?: never, run_as?: never }
+  body?: string | { [key: string]: any } & { refresh?: never, api_key?: never, grant_type?: never, access_token?: never, username?: never, password?: never, run_as?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { api_key?: never, grant_type?: never, access_token?: never, username?: never, password?: never, run_as?: never }
+  querystring?: { [key: string]: any } & { refresh?: never, api_key?: never, grant_type?: never, access_token?: never, username?: never, password?: never, run_as?: never }
 }
 
 export interface SecurityGrantApiKeyResponse {
@@ -35176,10 +35262,13 @@ export interface SnapshotDeleteRequest extends RequestBase {
     * If the master node is not available before the timeout expires, the request fails and returns an error.
     * To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
+  /** If `true`, the request returns a response when the matching snapshots are all deleted.
+    * If `false`, the request returns a response as soon as the deletes are scheduled. */
+  wait_for_completion?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never }
 }
 
 export type SnapshotDeleteResponse = AcknowledgedResponseBase

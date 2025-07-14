@@ -351,11 +351,7 @@ export default class Security {
       'security.get_user_privileges': {
         path: [],
         body: [],
-        query: [
-          'application',
-          'priviledge',
-          'username'
-        ]
+        query: []
       },
       'security.get_user_profile': {
         path: [
@@ -376,7 +372,9 @@ export default class Security {
           'password',
           'run_as'
         ],
-        query: []
+        query: [
+          'refresh'
+        ]
       },
       'security.has_privileges': {
         path: [
