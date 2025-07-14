@@ -9383,6 +9383,7 @@ export type ClusterExistsComponentTemplateResponse = boolean
 export interface ClusterGetComponentTemplateRequest extends RequestBase {
   name?: Name
   flat_settings?: boolean
+  settings_filter?: string | string[]
   include_defaults?: boolean
   local?: boolean
   master_timeout?: Duration
@@ -13782,6 +13783,7 @@ export interface InferenceInferenceRequest extends RequestBase {
   timeout?: Duration
   query?: string
   input: string | string[]
+  input_type?: string
   task_settings?: InferenceTaskSettings
 }
 
@@ -19595,9 +19597,6 @@ export interface SecurityGetUserRequest extends RequestBase {
 export type SecurityGetUserResponse = Record<string, SecurityUser>
 
 export interface SecurityGetUserPrivilegesRequest extends RequestBase {
-  application?: Name
-  priviledge?: Name
-  username?: Name | null
 }
 
 export interface SecurityGetUserPrivilegesResponse {
@@ -19635,6 +19634,7 @@ export interface SecurityGrantApiKeyGrantApiKey {
 }
 
 export interface SecurityGrantApiKeyRequest extends RequestBase {
+  refresh?: Refresh
   api_key: SecurityGrantApiKeyGrantApiKey
   grant_type: SecurityGrantApiKeyApiKeyGrantType
   access_token?: string
@@ -20596,6 +20596,7 @@ export interface SnapshotDeleteRequest extends RequestBase {
   repository: Name
   snapshot: Name
   master_timeout?: Duration
+  wait_for_completion?: boolean
 }
 
 export type SnapshotDeleteResponse = AcknowledgedResponseBase

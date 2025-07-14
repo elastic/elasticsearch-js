@@ -3845,6 +3845,7 @@ client.cluster.getComponentTemplate({ ... })
 ** *`name` (Optional, string)*: List of component template names used to limit the request.
 Wildcard (`*`) expressions are supported.
 ** *`flat_settings` (Optional, boolean)*: If `true`, returns settings in flat format.
+** *`settings_filter` (Optional, string | string[])*: Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys
 ** *`include_defaults` (Optional, boolean)*: Return all default configurations for the component template (default: false)
 ** *`local` (Optional, boolean)*: If `true`, the request retrieves information from the local node only.
 If `false`, information is retrieved from the master node.
@@ -8169,6 +8170,16 @@ It can be a single string or an array.
 ** *`task_type` (Optional, Enum("sparse_embedding" | "text_embedding" | "rerank" | "completion" | "chat_completion"))*: The type of inference task that the model performs.
 ** *`query` (Optional, string)*: The query input, which is required only for the `rerank` task.
 It is not required for other tasks.
+** *`input_type` (Optional, string)*: Specifies the input data type for the text embedding model. The `input_type` parameter only applies to Inference Endpoints with the `text_embedding` task type. Possible values include:
+* `SEARCH`
+* `INGEST`
+* `CLASSIFICATION`
+* `CLUSTERING`
+Not all services support all values. Unsupported values will trigger a validation exception.
+Accepted values depend on the configured inference service, refer to the relevant service-specific documentation for more info.
+
+> info
+> The `input_type` parameter specified on the root level of the request body will take precedence over the `input_type` parameter specified in `task_settings`.
 ** *`task_settings` (Optional, User-defined value)*: Task settings for the individual inference request.
 These settings are specific to the task type you specified and override the task settings specified when initializing the service.
 ** *`timeout` (Optional, string | -1 | 0)*: The amount of time to wait for the inference request to complete.
@@ -8706,7 +8717,7 @@ The only valid task type for the model to perform is `text_embedding`.
 
 [discrete]
 ==== rerank
-Perform rereanking inference on the service
+Perform reranking inference on the service
 
 {ref}/post-inference-api.html[Endpoint documentation]
 [source,ts]
@@ -13238,16 +13249,9 @@ To check whether a user has a specific list of privileges, use the has privilege
 {ref}/security-api-get-user-privileges.html[Endpoint documentation]
 [source,ts]
 ----
-client.security.getUserPrivileges({ ... })
+client.security.getUserPrivileges()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
-** *`application` (Optional, string)*: The name of the application. Application privileges are always associated with exactly one application. If you do not specify this parameter, the API returns information about all privileges for all applications.
-** *`priviledge` (Optional, string)*: The name of the privilege. If you do not specify this parameter, the API returns information about all privileges for the requested application.
-** *`username` (Optional, string | null)*
 
 [discrete]
 ==== get_user_profile
@@ -13322,6 +13326,10 @@ It is not valid with other grant types.
 If you specify the `password` grant type, this parameter is required.
 It is not valid with other grant types.
 ** *`run_as` (Optional, string)*: The name of the user to be impersonated.
+** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If 'true', Elasticsearch refreshes the affected shards to make this operation
+visible to search.
+If 'wait_for', it waits for a refresh to make this operation visible to search.
+If 'false', nothing is done with refreshes.
 
 [discrete]
 ==== has_privileges
@@ -14670,6 +14678,8 @@ client.snapshot.delete({ repository, snapshot })
 ** *`repository` (string)*: A repository name
 ** *`snapshot` (string)*: A list of snapshot names
 ** *`master_timeout` (Optional, string | -1 | 0)*: Explicit operation timeout for connection to master node
+** *`wait_for_completion` (Optional, boolean)*: If `true`, the request returns a response when the matching snapshots are all deleted.
+If `false`, the request returns a response as soon as the deletes are scheduled.
 
 [discrete]
 ==== delete_repository
