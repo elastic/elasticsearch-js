@@ -218,7 +218,7 @@ export default class Inference {
   async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<T.InferenceInferenceResponse>
   async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['task_type', 'inference_id']
-    const acceptedBody: string[] = ['query', 'input', 'task_settings']
+    const acceptedBody: string[] = ['query', 'input', 'input_type', 'task_settings']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -1105,7 +1105,7 @@ export default class Inference {
   }
 
   /**
-    * Perform rereanking inference on the service
+    * Perform reranking inference on the service
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/post-inference-api.html | Elasticsearch API documentation}
     */
   async rerank (this: That, params: T.InferenceRerankRequest | TB.InferenceRerankRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceRerankResponse>

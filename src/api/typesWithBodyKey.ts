@@ -9479,6 +9479,7 @@ export type ClusterExistsComponentTemplateResponse = boolean
 export interface ClusterGetComponentTemplateRequest extends RequestBase {
   name?: Name
   flat_settings?: boolean
+  settings_filter?: string | string[]
   include_defaults?: boolean
   local?: boolean
   master_timeout?: Duration
@@ -14030,6 +14031,7 @@ export interface InferenceInferenceRequest extends RequestBase {
   body?: {
     query?: string
     input: string | string[]
+    input_type?: string
     task_settings?: InferenceTaskSettings
   }
 }
@@ -20097,9 +20099,6 @@ export interface SecurityGetUserRequest extends RequestBase {
 export type SecurityGetUserResponse = Record<string, SecurityUser>
 
 export interface SecurityGetUserPrivilegesRequest extends RequestBase {
-  application?: Name
-  priviledge?: Name
-  username?: Name | null
 }
 
 export interface SecurityGetUserPrivilegesResponse {
@@ -20137,6 +20136,7 @@ export interface SecurityGrantApiKeyGrantApiKey {
 }
 
 export interface SecurityGrantApiKeyRequest extends RequestBase {
+  refresh?: Refresh
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     api_key: SecurityGrantApiKeyGrantApiKey
@@ -21188,6 +21188,7 @@ export interface SnapshotDeleteRequest extends RequestBase {
   repository: Name
   snapshot: Name
   master_timeout?: Duration
+  wait_for_completion?: boolean
 }
 
 export type SnapshotDeleteResponse = AcknowledgedResponseBase
