@@ -70,10 +70,10 @@ jobs:
       - name: npm publish
         run: |
           # set unstable version value
-          unstable_tag=$(echo "unstable.$(date --utc +%Y%m%d%H%M%S)")
+          unstable_tag="unstable.$(date --utc +%Y%m%d%H%M%S)"
           latest=$(npm view @elastic/elasticsearch --json | jq -r '.["dist-tags"].latest')
           next=$(npx -y 'semver@^7.7.0' -i minor "$latest")
-          unstable_version=$(echo "$next-$unstable_tag")
+          unstable_version="$next-$unstable_tag"
 
           # overwrite package.json with unstable version value
           mv package.json package.json.bak
