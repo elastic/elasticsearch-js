@@ -38,10 +38,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'document'
     ],
     query: [
-      'if_primary_term',
-      'if_seq_no',
       'include_source_on_error',
-      'op_type',
       'pipeline',
       'refresh',
       'require_alias',

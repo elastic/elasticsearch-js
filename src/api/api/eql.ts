@@ -87,6 +87,7 @@ export default class Eql {
           'allow_partial_search_results',
           'allow_partial_sequence_results',
           'expand_wildcards',
+          'ccs_minimize_roundtrips',
           'ignore_unavailable',
           'keep_alive',
           'keep_on_completion',
