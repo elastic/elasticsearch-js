@@ -306,10 +306,7 @@ client.create({ id, index })
 - **`id` (string)**: A unique identifier for the document. To automatically generate a document ID, use the `POST /<target>/_doc/` request format.
 - **`index` (string)**: The name of the data stream or index to target. If the target doesn't exist and matches the name or wildcard (`*`) pattern of an index template with a `data_stream` definition, this request creates the data stream. If the target doesn't exist and doesn’t match a data stream template, this request creates the index.
 - **`document` (Optional, object)**: A document.
-- **`if_primary_term` (Optional, number)**: Only perform the operation if the document has this primary term.
-- **`if_seq_no` (Optional, number)**: Only perform the operation if the document has this sequence number.
 - **`include_source_on_error` (Optional, boolean)**: True or false if to include the document source in the error message in case of parsing errors.
-- **`op_type` (Optional, Enum("index" \| "create"))**: Set to `create` to only index the document if it does not already exist (put if absent). If a document with the specified `_id` already exists, the indexing operation will fail. The behavior is the same as using the `<index>/_create` endpoint. If a document ID is specified, this paramater defaults to `index`. Otherwise, it defaults to `create`. If the request targets a data stream, an `op_type` of `create` is required.
 - **`pipeline` (Optional, string)**: The ID of the pipeline to use to preprocess incoming documents. If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request. If a final pipeline is configured, it will always run regardless of the value of this parameter.
 - **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes.
 - **`require_alias` (Optional, boolean)**: If `true`, the destination must be an index alias.
@@ -2520,7 +2517,7 @@ client.cat.indices({ ... })
 Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match.
-- **`health` (Optional, Enum("green" \| "yellow" \| "red"))**: The health status used to limit returned indices. By default, the response includes indices of any health status.
+- **`health` (Optional, Enum("green" \| "yellow" \| "red" \| "unknown" \| "unavailable"))**: The health status used to limit returned indices. By default, the response includes indices of any health status.
 - **`include_unloaded_segments` (Optional, boolean)**: If true, the response includes information from segments that are not loaded into memory.
 - **`pri` (Optional, boolean)**: If true, the response only includes information from primary shards.
 - **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
@@ -2918,7 +2915,7 @@ Accepts wildcard expressions.
 `_all` returns all repositories.
 If any repository fails during the request, Elasticsearch returns an error.
 - **`ignore_unavailable` (Optional, boolean)**: If `true`, the response does not include information from unavailable snapshots.
-- **`h` (Optional, Enum("id" \| "repository" \| "status" \| "start_epoch" \| "start_time" \| "end_epoch" \| "end_time" \| "duration" \| "indices" \| "successful_shards" \| "failed_shards" \| "total_shards" \| "reason") \| Enum("build" \| "completion.size" \| "cpu" \| "disk.avail" \| "disk.total" \| "disk.used" \| "disk.used_percent" \| "fielddata.evictions" \| "fielddata.memory_size" \| "file_desc.current" \| "file_desc.max" \| "file_desc.percent" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "heap.current" \| "heap.max" \| "heap.percent" \| "http_address" \| "id" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "jdk" \| "load_1m" \| "load_5m" \| "load_15m" \| "mappings.total_count" \| "mappings.total_estimated_overhead_in_bytes" \| "master" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "name" \| "node.role" \| "pid" \| "port" \| "query_cache.memory_size" \| "query_cache.evictions" \| "query_cache.hit_count" \| "query_cache.miss_count" \| "ram.current" \| "ram.max" \| "ram.percent" \| "refresh.total" \| "refresh.time" \| "request_cache.memory_size" \| "request_cache.evictions" \| "request_cache.hit_count" \| "request_cache.miss_count" \| "script.compilations" \| "script.cache_evictions" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "shard_stats.total_count" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "uptime" \| "version")[])**: A list of columns names to display.
+- **`h` (Optional, Enum("id" \| "repository" \| "status" \| "start_epoch" \| "start_time" \| "end_epoch" \| "end_time" \| "duration" \| "indices" \| "successful_shards" \| "failed_shards" \| "total_shards" \| "reason") \| Enum("id" \| "repository" \| "status" \| "start_epoch" \| "start_time" \| "end_epoch" \| "end_time" \| "duration" \| "indices" \| "successful_shards" \| "failed_shards" \| "total_shards" \| "reason")[])**: A list of columns names to display.
 It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
@@ -3367,6 +3364,7 @@ It can also be set to `-1` to indicate that the request should never timeout.
 ## client.cluster.allocationExplain [_cluster.allocation_explain]
 Explain the shard allocations.
 Get explanations for shard allocations in the cluster.
+This API accepts the current_node, index, primary and shard parameters in the request body or in query parameters, but not in both at the same time.
 For unassigned shards, it provides an explanation for why the shard is unassigned.
 For assigned shards, it provides an explanation for why the shard is remaining on its current node and has not moved or rebalanced to another node.
 This API can be very useful when attempting to diagnose why a shard is unassigned or why a shard continues to remain on its current node when you might expect otherwise.
@@ -3381,10 +3379,10 @@ client.cluster.allocationExplain({ ... })
 ### Arguments [_arguments_cluster.allocation_explain]
 
 #### Request (object) [_request_cluster.allocation_explain]
-- **`current_node` (Optional, string)**: Specifies the node ID or the name of the node to only explain a shard that is currently located on the specified node.
-- **`index` (Optional, string)**: Specifies the name of the index that you would like an explanation for.
-- **`primary` (Optional, boolean)**: If true, returns explanation for the primary shard for the given shard ID.
-- **`shard` (Optional, number)**: Specifies the ID of the shard that you would like an explanation for.
+- **`index` (Optional, string)**: The name of the index that you would like an explanation for.
+- **`shard` (Optional, number)**: An identifier for the shard that you would like an explanation for.
+- **`primary` (Optional, boolean)**: If true, returns an explanation for the primary shard for the specified shard ID.
+- **`current_node` (Optional, string)**: Explain a shard only if it is currently located on the specified node name or node ID.
 - **`include_disk_info` (Optional, boolean)**: If true, returns information about disk usage and shard sizes.
 - **`include_yes_decisions` (Optional, boolean)**: If true, returns YES decisions in explanation.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
@@ -3527,7 +3525,7 @@ client.cluster.health({ ... })
 - **`wait_for_nodes` (Optional, string \| number)**: The request waits until the specified number N of nodes is available. It also accepts >=N, <=N, >N and <N. Alternatively, it is possible to use ge(N), le(N), gt(N) and lt(N) notation.
 - **`wait_for_no_initializing_shards` (Optional, boolean)**: A boolean value which controls whether to wait (until the timeout provided) for the cluster to have no shard initializations. Defaults to false, which means it will not wait for initializing shards.
 - **`wait_for_no_relocating_shards` (Optional, boolean)**: A boolean value which controls whether to wait (until the timeout provided) for the cluster to have no shard relocations. Defaults to false, which means it will not wait for relocating shards.
-- **`wait_for_status` (Optional, Enum("green" \| "yellow" \| "red"))**: One of green, yellow or red. Will wait (until the timeout provided) until the status of the cluster changes to the one provided or better, i.e. green > yellow > red. By default, will not wait for any status.
+- **`wait_for_status` (Optional, Enum("green" \| "yellow" \| "red" \| "unknown" \| "unavailable"))**: One of green, yellow or red. Will wait (until the timeout provided) until the status of the cluster changes to the one provided or better, i.e. green > yellow > red. By default, will not wait for any status.
 
 ## client.cluster.info [_cluster.info]
 Get cluster info.
@@ -4577,8 +4575,9 @@ If false, the sequence query will return successfully, but will always have empt
 - **`max_samples_per_key` (Optional, number)**: By default, the response of a sample query contains up to `10` samples, with one sample per unique set of join keys. Use the `size`
 parameter to get a smaller or larger set of samples. To retrieve more than one sample per set of join keys, use the
 `max_samples_per_key` parameter. Pipes are not supported for sample queries.
-- **`allow_no_indices` (Optional, boolean)**
-- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**
+- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+- **`ccs_minimize_roundtrips` (Optional, boolean)**: Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
 - **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
 
 ## client.esql.asyncQuery [_esql.async_query]
@@ -6923,6 +6922,12 @@ Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`active_only` (Optional, boolean)**: If `true`, the response only includes ongoing shard recoveries.
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
+- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
+This behavior applies even if the request targets other open indices.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
+If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+Supports a list of values, such as `open,hidden`.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 
 ## client.indices.refresh [_indices.refresh]
 Refresh an index.
@@ -7684,6 +7689,7 @@ client.inference.put({ inference_id })
 - **`inference_id` (string)**: The inference Id
 - **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The task type. Refer to the integration list in the API description for the available task types.
 - **`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })**
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putAlibabacloud [_inference.put_alibabacloud]
 Create an AlibabaCloud AI Search inference endpoint.
@@ -7706,6 +7712,7 @@ client.inference.putAlibabacloud({ task_type, alibabacloud_inference_id, service
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { input_type, return_token })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putAmazonbedrock [_inference.put_amazonbedrock]
 Create an Amazon Bedrock inference endpoint.
@@ -7731,6 +7738,7 @@ client.inference.putAmazonbedrock({ task_type, amazonbedrock_inference_id, servi
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { max_new_tokens, temperature, top_k, top_p })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putAmazonsagemaker [_inference.put_amazonsagemaker]
 Configure a Amazon SageMaker inference endpoint
@@ -7764,6 +7772,7 @@ The only valid task type for the model to perform is `completion`.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { max_tokens, temperature, top_k, top_p })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putAzureaistudio [_inference.put_azureaistudio]
 Create an Azure AI studio inference endpoint.
@@ -7786,6 +7795,7 @@ client.inference.putAzureaistudio({ task_type, azureaistudio_inference_id, servi
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { do_sample, max_new_tokens, temperature, top_p, user })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putAzureopenai [_inference.put_azureopenai]
 Create an Azure OpenAI inference endpoint.
@@ -7816,6 +7826,7 @@ NOTE: The `chat_completion` task type only supports streaming and only through t
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { user })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putCohere [_inference.put_cohere]
 Create a Cohere inference endpoint.
@@ -7839,6 +7850,7 @@ These settings are specific to the `cohere` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { input_type, return_documents, top_n, truncate })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putDeepseek [_inference.put_deepseek]
 Create a DeepSeek inference endpoint.
@@ -7860,6 +7872,7 @@ client.inference.putDeepseek({ task_type, deepseek_inference_id, service, servic
 - **`service_settings` ({ api_key, model_id, url })**: Settings used to install the inference model.
 These settings are specific to the `deepseek` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putElasticsearch [_inference.put_elasticsearch]
 Create an Elasticsearch inference endpoint.
@@ -7896,6 +7909,7 @@ The must not match the `model_id`.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { return_documents })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putElser [_inference.put_elser]
 Create an ELSER inference endpoint.
@@ -7930,6 +7944,7 @@ client.inference.putElser({ task_type, elser_inference_id, service, service_sett
 - **`service` (Enum("elser"))**: The type of service supported for the specified task type. In this case, `elser`.
 - **`service_settings` ({ adaptive_allocations, num_allocations, num_threads })**: Settings used to install the inference model. These settings are specific to the `elser` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putGoogleaistudio [_inference.put_googleaistudio]
 Create an Google AI Studio inference endpoint.
@@ -7950,6 +7965,7 @@ client.inference.putGoogleaistudio({ task_type, googleaistudio_inference_id, ser
 - **`service` (Enum("googleaistudio"))**: The type of service supported for the specified task type. In this case, `googleaistudio`.
 - **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `googleaistudio` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putGooglevertexai [_inference.put_googlevertexai]
 Create a Google Vertex AI inference endpoint.
@@ -7972,6 +7988,7 @@ client.inference.putGooglevertexai({ task_type, googlevertexai_inference_id, ser
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { auto_truncate, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putHuggingFace [_inference.put_hugging_face]
 Create a Hugging Face inference endpoint.
@@ -8029,6 +8046,7 @@ client.inference.putHuggingFace({ task_type, huggingface_inference_id, service, 
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { return_documents, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putJinaai [_inference.put_jinaai]
 Create an JinaAI inference endpoint.
@@ -8054,6 +8072,7 @@ client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_se
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { return_documents, task, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putMistral [_inference.put_mistral]
 Create a Mistral inference endpoint.
@@ -8074,6 +8093,7 @@ client.inference.putMistral({ task_type, mistral_inference_id, service, service_
 - **`service` (Enum("mistral"))**: The type of service supported for the specified task type. In this case, `mistral`.
 - **`service_settings` ({ api_key, max_input_tokens, model, rate_limit })**: Settings used to install the inference model. These settings are specific to the `mistral` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putOpenai [_inference.put_openai]
 Create an OpenAI inference endpoint.
@@ -8097,6 +8117,7 @@ NOTE: The `chat_completion` task type only supports streaming and only through t
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { user })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putVoyageai [_inference.put_voyageai]
 Create a VoyageAI inference endpoint.
@@ -8121,6 +8142,7 @@ client.inference.putVoyageai({ task_type, voyageai_inference_id, service, servic
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { input_type, return_documents, top_k, truncation })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putWatsonx [_inference.put_watsonx]
 Create a Watsonx inference endpoint.
@@ -8142,6 +8164,7 @@ client.inference.putWatsonx({ task_type, watsonx_inference_id, service, service_
 - **`watsonx_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("watsonxai"))**: The type of service supported for the specified task type. In this case, `watsonxai`.
 - **`service_settings` ({ api_key, api_version, model_id, project_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `watsonxai` service.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.rerank [_inference.rerank]
 Perform reranking inference on the service
@@ -8208,6 +8231,7 @@ It can be a single string or an array.
 
 NOTE: Inference endpoints for the completion task type currently only support a single string as input.
 - **`task_settings` (Optional, User-defined value)**: Optional task settings
+- **`timeout` (Optional, string \| -1 \| 0)**: The amount of time to wait for the inference request to complete.
 
 ## client.inference.textEmbedding [_inference.text_embedding]
 Perform text embedding inference on the service
