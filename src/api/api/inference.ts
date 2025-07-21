@@ -99,7 +99,9 @@ export default class Inference {
         body: [
           'inference_config'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_alibabacloud': {
         path: [
@@ -112,7 +114,9 @@ export default class Inference {
           'service_settings',
           'task_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_amazonbedrock': {
         path: [
@@ -125,7 +129,9 @@ export default class Inference {
           'service_settings',
           'task_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_anthropic': {
         path: [
@@ -138,7 +144,9 @@ export default class Inference {
           'service_settings',
           'task_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_azureaistudio': {
         path: [
@@ -151,7 +159,9 @@ export default class Inference {
           'service_settings',
           'task_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_azureopenai': {
         path: [
@@ -164,7 +174,9 @@ export default class Inference {
           'service_settings',
           'task_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_cohere': {
         path: [
@@ -177,7 +189,9 @@ export default class Inference {
           'service_settings',
           'task_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_elasticsearch': {
         path: [
@@ -190,7 +204,9 @@ export default class Inference {
           'service_settings',
           'task_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_elser': {
         path: [
@@ -202,7 +218,9 @@ export default class Inference {
           'service',
           'service_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_googleaistudio': {
         path: [
@@ -214,7 +232,9 @@ export default class Inference {
           'service',
           'service_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_googlevertexai': {
         path: [
@@ -227,7 +247,9 @@ export default class Inference {
           'service_settings',
           'task_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_hugging_face': {
         path: [
@@ -239,7 +261,9 @@ export default class Inference {
           'service',
           'service_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_jinaai': {
         path: [
@@ -252,7 +276,9 @@ export default class Inference {
           'service_settings',
           'task_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_mistral': {
         path: [
@@ -264,7 +290,9 @@ export default class Inference {
           'service',
           'service_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_openai': {
         path: [
@@ -277,7 +305,9 @@ export default class Inference {
           'service_settings',
           'task_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_voyageai': {
         path: [
@@ -290,7 +320,9 @@ export default class Inference {
           'service_settings',
           'task_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.put_watsonx': {
         path: [
@@ -301,7 +333,9 @@ export default class Inference {
           'service',
           'service_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.rerank': {
         path: [
@@ -336,7 +370,9 @@ export default class Inference {
           'input',
           'task_settings'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       },
       'inference.text_embedding': {
         path: [
