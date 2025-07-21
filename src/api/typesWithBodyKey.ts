@@ -174,10 +174,7 @@ export interface CountResponse {
 export interface CreateRequest<TDocument = unknown> extends RequestBase {
   id: Id
   index: IndexName
-  if_primary_term?: long
-  if_seq_no?: SequenceNumber
   include_source_on_error?: boolean
-  op_type?: OpType
   pipeline?: string
   refresh?: Refresh
   require_alias?: boolean
@@ -549,7 +546,7 @@ export interface HealthReportImpact {
 
 export type HealthReportImpactArea = 'search' | 'ingest' | 'backup' | 'deployment_management'
 
-export type HealthReportIndicatorHealthStatus = 'green' | 'yellow' | 'red' | 'unknown'
+export type HealthReportIndicatorHealthStatus = 'green' | 'yellow' | 'red' | 'unknown' | 'unavailable'
 
 export interface HealthReportIndicatorNode {
   name: string | null
@@ -2287,6 +2284,8 @@ export type DistanceUnit = 'in' | 'ft' | 'yd' | 'mi' | 'nmi' | 'km' | 'm' | 'cm'
 export interface DocStats {
   count: long
   deleted?: long
+  total_size_in_bytes: long
+  total_size?: ByteSize
 }
 
 export type Duration = string | -1 | 0
@@ -2370,6 +2369,7 @@ export interface FielddataStats {
   memory_size?: ByteSize
   memory_size_in_bytes: long
   fields?: Record<Field, FieldMemoryUsage>
+  global_ordinals: GlobalOrdinalsStats
 }
 
 export type Fields = Field | Field[]
@@ -2436,9 +2436,21 @@ export interface GetStats {
   total: long
 }
 
+export interface GlobalOrdinalFieldStats {
+  build_time_in_millis: UnitMillis
+  build_time?: string
+  shard_max_value_count: long
+}
+
+export interface GlobalOrdinalsStats {
+  build_time_in_millis: UnitMillis
+  build_time?: string
+  fields?: Record<Name, GlobalOrdinalFieldStats>
+}
+
 export type GrokPattern = string
 
-export type HealthStatus = 'green' | 'GREEN' | 'yellow' | 'YELLOW' | 'red' | 'RED'
+export type HealthStatus = 'green' | 'GREEN' | 'yellow' | 'YELLOW' | 'red' | 'RED' | 'unknown' | 'unavailable'
 
 export type Host = string
 
@@ -2556,6 +2568,9 @@ export type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
 export interface LinearRetriever extends RetrieverBase {
   retrievers?: InnerRetriever[]
   rank_window_size?: integer
+  query?: string
+  fields?: string[]
+  normalizer?: ScoreNormalizer
 }
 
 export type MapboxVectorTiles = ArrayBuffer
@@ -2690,6 +2705,8 @@ export interface RRFRetriever extends RetrieverBase {
   retrievers: RetrieverContainer[]
   rank_constant?: integer
   rank_window_size?: integer
+  query?: string
+  fields?: string[]
 }
 
 export interface RankBase {
@@ -2861,7 +2878,6 @@ export interface SegmentsStats {
   fixed_bit_set?: ByteSize
   fixed_bit_set_memory_in_bytes: long
   index_writer_memory?: ByteSize
-  index_writer_max_memory_in_bytes?: long
   index_writer_memory_in_bytes: long
   max_unsafe_auto_id_timestamp: long
   memory?: ByteSize
@@ -2870,11 +2886,11 @@ export interface SegmentsStats {
   norms_memory_in_bytes: long
   points_memory?: ByteSize
   points_memory_in_bytes: long
-  stored_memory?: ByteSize
   stored_fields_memory_in_bytes: long
+  stored_fields_memory?: ByteSize
   terms_memory_in_bytes: long
   terms_memory?: ByteSize
-  term_vectory_memory?: ByteSize
+  term_vectors_memory?: ByteSize
   term_vectors_memory_in_bytes: long
   version_map_memory?: ByteSize
   version_map_memory_in_bytes: long
@@ -7175,7 +7191,7 @@ export type CatCatShardColumns = CatCatShardColumn | CatCatShardColumn[]
 
 export type CatCatSnapshotsColumn = 'id' | 'snapshot' | 'repository' | 're' | 'repo' | 'status' | 's' | 'start_epoch' | 'ste' | 'startEpoch' | 'start_time' | 'sti' | 'startTime' | 'end_epoch' | 'ete' | 'endEpoch' | 'end_time' | 'eti' | 'endTime' | 'duration' | 'dur' | 'indices' | 'i' | 'successful_shards' | 'ss' | 'failed_shards' | 'fs' | 'total_shards' | 'ts' | 'reason' | 'r' | string
 
-export type CatCatSnapshotsColumns = CatCatSnapshotsColumn | CatCatNodeColumn[]
+export type CatCatSnapshotsColumns = CatCatSnapshotsColumn | CatCatSnapshotsColumn[]
 
 export type CatCatThreadPoolColumn = 'active' | 'a' | 'completed' | 'c' | 'core' | 'cr' | 'ephemeral_id' | 'eid' | 'host' | 'h' | 'ip' | 'i' | 'keep_alive' | 'k' | 'largest' | 'l' | 'max' | 'mx' | 'name' | 'node_id' | 'id' | 'node_name' | 'pid' | 'p' | 'pool_size' | 'psz' | 'port' | 'po' | 'queue' | 'q' | 'queue_size' | 'qs' | 'rejected' | 'r' | 'size' | 'sz' | 'type' | 't' | string
 
@@ -9799,26 +9815,44 @@ export interface ClusterStatsCharFilterTypes {
   char_filter_types: ClusterStatsFieldTypes[]
   filter_types: ClusterStatsFieldTypes[]
   tokenizer_types: ClusterStatsFieldTypes[]
+  synonyms: Record<Name, ClusterStatsSynonymsStats>
 }
 
 export interface ClusterStatsClusterFileSystem {
-  available_in_bytes: long
-  free_in_bytes: long
-  total_in_bytes: long
+  path?: string
+  mount?: string
+  type?: string
+  available_in_bytes?: long
+  available?: ByteSize
+  free_in_bytes?: long
+  free?: ByteSize
+  total_in_bytes?: long
+  total?: ByteSize
+  low_watermark_free_space?: ByteSize
+  low_watermark_free_space_in_bytes?: long
+  high_watermark_free_space?: ByteSize
+  high_watermark_free_space_in_bytes?: long
+  flood_stage_free_space?: ByteSize
+  flood_stage_free_space_in_bytes?: long
+  frozen_flood_stage_free_space?: ByteSize
+  frozen_flood_stage_free_space_in_bytes?: long
 }
 
 export interface ClusterStatsClusterIndices {
-  analysis: ClusterStatsCharFilterTypes
+  analysis?: ClusterStatsCharFilterTypes
   completion: CompletionStats
   count: long
   docs: DocStats
   fielddata: FielddataStats
   query_cache: QueryCacheStats
+  search: ClusterStatsSearchUsageStats
   segments: SegmentsStats
   shards: ClusterStatsClusterIndicesShards
   store: StoreStats
-  mappings: ClusterStatsFieldTypesMappings
+  mappings?: ClusterStatsFieldTypesMappings
   versions?: ClusterStatsIndicesVersions[]
+  dense_vector: ClusterStatsDenseVectorStats
+  sparse_vector: ClusterStatsSparseVectorStats
 }
 
 export interface ClusterStatsClusterIndicesShards {
@@ -9841,6 +9875,7 @@ export interface ClusterStatsClusterIngest {
 
 export interface ClusterStatsClusterJvm {
   max_uptime_in_millis: DurationValue<UnitMillis>
+  max_uptime?: Duration
   mem: ClusterStatsClusterJvmMemory
   threads: long
   versions: ClusterStatsClusterJvmVersion[]
@@ -9848,7 +9883,9 @@ export interface ClusterStatsClusterJvm {
 
 export interface ClusterStatsClusterJvmMemory {
   heap_max_in_bytes: long
+  heap_max?: ByteSize
   heap_used_in_bytes: long
+  heap_used?: ByteSize
 }
 
 export interface ClusterStatsClusterJvmVersion {
@@ -9867,20 +9904,22 @@ export interface ClusterStatsClusterNetworkTypes {
 }
 
 export interface ClusterStatsClusterNodeCount {
-  coordinating_only: integer
-  data: integer
-  data_cold: integer
-  data_content: integer
-  data_frozen?: integer
-  data_hot: integer
-  data_warm: integer
-  ingest: integer
-  master: integer
-  ml: integer
-  remote_cluster_client: integer
   total: integer
-  transform: integer
-  voting_only: integer
+  coordinating_only?: integer
+  data?: integer
+  data_cold?: integer
+  data_content?: integer
+  data_frozen?: integer
+  data_hot?: integer
+  data_warm?: integer
+  index?: integer
+  ingest?: integer
+  master?: integer
+  ml?: integer
+  remote_cluster_client?: integer
+  search?: integer
+  transform?: integer
+  voting_only?: integer
 }
 
 export interface ClusterStatsClusterNodes {
@@ -9951,50 +9990,62 @@ export interface ClusterStatsClusterShardMetrics {
   min: double
 }
 
+export interface ClusterStatsClusterSnapshotStats {
+  current_counts: ClusterStatsSnapshotCurrentCounts
+  repositories: Record<Name, ClusterStatsPerRepositoryStats>
+}
+
+export interface ClusterStatsDenseVectorOffHeapStats {
+  total_size_bytes: long
+  total_size?: ByteSize
+  total_veb_size_bytes: long
+  total_veb_size?: ByteSize
+  total_vec_size_bytes: long
+  total_vec_size?: ByteSize
+  total_veq_size_bytes: long
+  total_veq_size?: ByteSize
+  total_vex_size_bytes: long
+  total_vex_size?: ByteSize
+  fielddata?: Record<string, Record<string, long>>
+}
+
+export interface ClusterStatsDenseVectorStats {
+  value_count: long
+  off_heap?: ClusterStatsDenseVectorOffHeapStats
+}
+
 export interface ClusterStatsFieldTypes {
   name: Name
   count: integer
   index_count: integer
-  indexed_vector_count?: long
-  indexed_vector_dim_max?: long
-  indexed_vector_dim_min?: long
+  indexed_vector_count?: integer
+  indexed_vector_dim_max?: integer
+  indexed_vector_dim_min?: integer
   script_count?: integer
+  vector_index_type_count?: Record<Name, integer>
+  vector_similarity_type_count?: Record<Name, integer>
+  vector_element_type_count?: Record<Name, integer>
 }
 
 export interface ClusterStatsFieldTypesMappings {
   field_types: ClusterStatsFieldTypes[]
-  runtime_field_types?: ClusterStatsRuntimeFieldTypes[]
-  total_field_count?: integer
-  total_deduplicated_field_count?: integer
+  runtime_field_types: ClusterStatsRuntimeFieldTypes[]
+  total_field_count?: long
+  total_deduplicated_field_count?: long
   total_deduplicated_mapping_size?: ByteSize
   total_deduplicated_mapping_size_in_bytes?: long
+  source_modes: Record<Name, integer>
 }
 
 export interface ClusterStatsIndexingPressure {
-  memory: ClusterStatsIndexingPressureMemory
-}
-
-export interface ClusterStatsIndexingPressureMemory {
-  current: ClusterStatsIndexingPressureMemorySummary
-  limit_in_bytes: long
-  total: ClusterStatsIndexingPressureMemorySummary
-}
-
-export interface ClusterStatsIndexingPressureMemorySummary {
-  all_in_bytes: long
-  combined_coordinating_and_primary_in_bytes: long
-  coordinating_in_bytes: long
-  coordinating_rejections?: long
-  primary_in_bytes: long
-  primary_rejections?: long
-  replica_in_bytes: long
-  replica_rejections?: long
+  memory: NodesIndexingPressureMemory
 }
 
 export interface ClusterStatsIndicesVersions {
   index_count: integer
   primary_shard_count: integer
   total_primary_bytes: long
+  total_primary_size?: ByteSize
   version: VersionString
 }
 
@@ -10006,18 +10057,29 @@ export interface ClusterStatsNodePackagingType {
 
 export interface ClusterStatsOperatingSystemMemoryInfo {
   adjusted_total_in_bytes?: long
+  adjusted_total?: ByteSize
   free_in_bytes: long
+  free?: ByteSize
   free_percent: integer
   total_in_bytes: long
+  total?: ByteSize
   used_in_bytes: long
+  used?: ByteSize
   used_percent: integer
+}
+
+export interface ClusterStatsPerRepositoryStats {
+  type: string
+  oldest_start_time_millis: UnitMillis
+  oldest_start_time?: DateFormat
+  current_counts: ClusterStatsRepositoryStatsCurrentCounts
 }
 
 export interface ClusterStatsRemoteClusterInfo {
   cluster_uuid: string
   mode: string
   skip_unavailable: boolean
-  transport_compress: string
+  'transport.compress': string
   status: HealthStatus
   version: VersionString[]
   nodes_count: integer
@@ -10029,6 +10091,23 @@ export interface ClusterStatsRemoteClusterInfo {
   max_heap?: string
   mem_total_in_bytes: long
   mem_total?: string
+}
+
+export interface ClusterStatsRepositoryStatsCurrentCounts {
+  snapshots: integer
+  clones: integer
+  finalizations: integer
+  deletions: integer
+  snapshot_deletions: integer
+  active_deletions: integer
+  shards: ClusterStatsRepositoryStatsShards
+}
+
+export interface ClusterStatsRepositoryStatsShards {
+  total: integer
+  complete: integer
+  incomplete: integer
+  states: Record<ClusterStatsShardState, integer>
 }
 
 export interface ClusterStatsRequest extends RequestBase {
@@ -10056,14 +10135,43 @@ export interface ClusterStatsRuntimeFieldTypes {
   source_total: integer
 }
 
+export interface ClusterStatsSearchUsageStats {
+  total: long
+  queries: Record<Name, long>
+  rescorers: Record<Name, long>
+  sections: Record<Name, long>
+  retrievers: Record<Name, long>
+}
+
+export type ClusterStatsShardState = 'INIT' | 'SUCCESS' | 'FAILED' | 'ABORTED' | 'MISSING' | 'WAITING' | 'QUEUED' | 'PAUSED_FOR_NODE_REMOVAL'
+
+export interface ClusterStatsSnapshotCurrentCounts {
+  snapshots: integer
+  shard_snapshots: integer
+  snapshot_deletions: integer
+  concurrent_operations: integer
+  cleanups: integer
+}
+
+export interface ClusterStatsSparseVectorStats {
+  value_count: long
+}
+
 export interface ClusterStatsStatsResponseBase extends NodesNodesResponseBase {
   cluster_name: Name
   cluster_uuid: Uuid
   indices: ClusterStatsClusterIndices
   nodes: ClusterStatsClusterNodes
-  status: HealthStatus
+  repositories: Record<Name, Record<Name, long>>
+  snapshots: ClusterStatsClusterSnapshotStats
+  status?: HealthStatus
   timestamp: long
   ccs: ClusterStatsCCSStats
+}
+
+export interface ClusterStatsSynonymsStats {
+  count: integer
+  index_count: integer
 }
 
 export interface ConnectorConnector {
@@ -10839,6 +10947,7 @@ export interface EqlSearchRequest extends RequestBase {
   index: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
+  ccs_minimize_roundtrips?: boolean
   ignore_unavailable?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
@@ -12205,6 +12314,10 @@ export interface IndicesDeleteRequest extends RequestBase {
 
 export type IndicesDeleteResponse = IndicesResponseBase
 
+export interface IndicesDeleteAliasIndicesAliasesResponseBody extends AcknowledgedResponseBase {
+  errors?: boolean
+}
+
 export interface IndicesDeleteAliasRequest extends RequestBase {
   index: Indices
   name: Names
@@ -12212,7 +12325,7 @@ export interface IndicesDeleteAliasRequest extends RequestBase {
   timeout?: Duration
 }
 
-export type IndicesDeleteAliasResponse = AcknowledgedResponseBase
+export type IndicesDeleteAliasResponse = IndicesDeleteAliasIndicesAliasesResponseBody
 
 export interface IndicesDeleteDataLifecycleRequest extends RequestBase {
   name: DataStreamNames
@@ -12851,6 +12964,9 @@ export interface IndicesRecoveryRequest extends RequestBase {
   index?: Indices
   active_only?: boolean
   detailed?: boolean
+  allow_no_indices?: boolean
+  expand_wildcards?: ExpandWildcards
+  ignore_unavailable?: boolean
 }
 
 export type IndicesRecoveryResponse = Record<IndexName, IndicesRecoveryRecoveryStatus>
@@ -14041,6 +14157,7 @@ export type InferenceInferenceResponse = InferenceInferenceResult
 export interface InferencePutRequest extends RequestBase {
   task_type?: InferenceTaskType
   inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, use 'inference_config' instead. */
   body?: InferenceInferenceEndpoint
 }
@@ -14050,6 +14167,7 @@ export type InferencePutResponse = InferenceInferenceEndpointInfo
 export interface InferencePutAlibabacloudRequest extends RequestBase {
   task_type: InferenceAlibabaCloudTaskType
   alibabacloud_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14064,6 +14182,7 @@ export type InferencePutAlibabacloudResponse = InferenceInferenceEndpointInfoAli
 export interface InferencePutAmazonbedrockRequest extends RequestBase {
   task_type: InferenceAmazonBedrockTaskType
   amazonbedrock_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14078,6 +14197,7 @@ export type InferencePutAmazonbedrockResponse = InferenceInferenceEndpointInfoAm
 export interface InferencePutAnthropicRequest extends RequestBase {
   task_type: InferenceAnthropicTaskType
   anthropic_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14092,6 +14212,7 @@ export type InferencePutAnthropicResponse = InferenceInferenceEndpointInfoAnthro
 export interface InferencePutAzureaistudioRequest extends RequestBase {
   task_type: InferenceAzureAiStudioTaskType
   azureaistudio_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14106,6 +14227,7 @@ export type InferencePutAzureaistudioResponse = InferenceInferenceEndpointInfoAz
 export interface InferencePutAzureopenaiRequest extends RequestBase {
   task_type: InferenceAzureOpenAITaskType
   azureopenai_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14120,6 +14242,7 @@ export type InferencePutAzureopenaiResponse = InferenceInferenceEndpointInfoAzur
 export interface InferencePutCohereRequest extends RequestBase {
   task_type: InferenceCohereTaskType
   cohere_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14134,6 +14257,7 @@ export type InferencePutCohereResponse = InferenceInferenceEndpointInfoCohere
 export interface InferencePutDeepseekRequest extends RequestBase {
   task_type: InferenceTaskTypeDeepSeek
   deepseek_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14147,6 +14271,7 @@ export type InferencePutDeepseekResponse = InferenceInferenceEndpointInfoDeepSee
 export interface InferencePutElasticsearchRequest extends RequestBase {
   task_type: InferenceElasticsearchTaskType
   elasticsearch_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14161,6 +14286,7 @@ export type InferencePutElasticsearchResponse = InferenceInferenceEndpointInfoEl
 export interface InferencePutElserRequest extends RequestBase {
   task_type: InferenceElserTaskType
   elser_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14174,6 +14300,7 @@ export type InferencePutElserResponse = InferenceInferenceEndpointInfoELSER
 export interface InferencePutGoogleaistudioRequest extends RequestBase {
   task_type: InferenceGoogleAiStudioTaskType
   googleaistudio_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14187,6 +14314,7 @@ export type InferencePutGoogleaistudioResponse = InferenceInferenceEndpointInfoG
 export interface InferencePutGooglevertexaiRequest extends RequestBase {
   task_type: InferenceGoogleVertexAITaskType
   googlevertexai_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14201,6 +14329,7 @@ export type InferencePutGooglevertexaiResponse = InferenceInferenceEndpointInfoG
 export interface InferencePutHuggingFaceRequest extends RequestBase {
   task_type: InferenceHuggingFaceTaskType
   huggingface_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14215,6 +14344,7 @@ export type InferencePutHuggingFaceResponse = InferenceInferenceEndpointInfoHugg
 export interface InferencePutJinaaiRequest extends RequestBase {
   task_type: InferenceJinaAITaskType
   jinaai_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14229,6 +14359,7 @@ export type InferencePutJinaaiResponse = InferenceInferenceEndpointInfoJinaAi
 export interface InferencePutMistralRequest extends RequestBase {
   task_type: InferenceMistralTaskType
   mistral_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14242,6 +14373,7 @@ export type InferencePutMistralResponse = InferenceInferenceEndpointInfoMistral
 export interface InferencePutOpenaiRequest extends RequestBase {
   task_type: InferenceOpenAITaskType
   openai_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14256,6 +14388,7 @@ export type InferencePutOpenaiResponse = InferenceInferenceEndpointInfoOpenAI
 export interface InferencePutVoyageaiRequest extends RequestBase {
   task_type: InferenceVoyageAITaskType
   voyageai_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     chunking_settings?: InferenceInferenceChunkingSettings
@@ -14270,6 +14403,7 @@ export type InferencePutVoyageaiResponse = InferenceInferenceEndpointInfoVoyageA
 export interface InferencePutWatsonxRequest extends RequestBase {
   task_type: InferenceWatsonxTaskType
   watsonx_inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     service: InferenceWatsonxServiceType
@@ -14306,6 +14440,7 @@ export type InferenceSparseEmbeddingResponse = InferenceSparseEmbeddingInference
 
 export interface InferenceStreamCompletionRequest extends RequestBase {
   inference_id: Id
+  timeout?: Duration
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     input: string | string[]
@@ -18180,6 +18315,7 @@ export interface NodesJvmMemoryStats {
   heap_used_percent?: long
   heap_committed_in_bytes?: long
   heap_max_in_bytes?: long
+  heap_max?: ByteSize
   non_heap_used_in_bytes?: long
   non_heap_committed_in_bytes?: long
   pools?: Record<string, NodesPool>
@@ -18254,6 +18390,8 @@ export interface NodesPressureMemory {
   coordinating_rejections?: long
   primary_rejections?: long
   replica_rejections?: long
+  primary_document_rejections?: long
+  large_operation_rejections?: long
 }
 
 export interface NodesProcess {
