@@ -652,7 +652,10 @@ export default class Indices {
         body: [],
         query: [
           'active_only',
-          'detailed'
+          'detailed',
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable'
         ]
       },
       'indices.refresh': {
