@@ -38,7 +38,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 
 /**
   * Performs a kNN search.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/search-search.html | Elasticsearch API documentation}
   */
 export default async function KnnSearchApi (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
 export default async function KnnSearchApi (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>

@@ -53,7 +53,7 @@ export default class Streams {
 
   /**
     * Disable the Logs Streams feature for this cluster
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/streams-logs-disable.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/streams-logs-disable.html | Elasticsearch API documentation}
     */
   async logsDisable (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async logsDisable (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -95,7 +95,7 @@ export default class Streams {
 
   /**
     * Enable the Logs Streams feature for this cluster
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/streams-logs-enable.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/streams-logs-enable.html | Elasticsearch API documentation}
     */
   async logsEnable (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async logsEnable (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -137,7 +137,7 @@ export default class Streams {
 
   /**
     * Return the current status of the streams feature for each streams type
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/streams-status.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/streams-status.html | Elasticsearch API documentation}
     */
   async status (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async status (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>

@@ -108,7 +108,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'version',
       '_source',
       '_source_excludes',
-      '_source_exclude_vectors',
       '_source_includes',
       'seq_no_primary_term',
       'q',

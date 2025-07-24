@@ -41,7 +41,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'routing',
       '_source',
       '_source_excludes',
-      '_source_exclude_vectors',
       '_source_includes',
       'stored_fields',
       'version',

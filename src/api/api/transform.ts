@@ -234,7 +234,7 @@ export default class Transform {
 
   /**
     * Retrieves transform usage information for transform nodes.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-transform-node-stats.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/get-transform-node-stats.html | Elasticsearch API documentation}
     */
   async getNodeStats (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async getNodeStats (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>

@@ -4771,7 +4771,7 @@ export default class Ml {
 
   /**
     * Validate an anomaly detection job.
-    * @see {@link https://www.elastic.co/guide/en/machine-learning/master/ml-jobs.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/machine-learning/9.1/ml-jobs.html | Elasticsearch API documentation}
     */
   async validate (this: That, params?: T.MlValidateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateResponse>
   async validate (this: That, params?: T.MlValidateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlValidateResponse, unknown>>

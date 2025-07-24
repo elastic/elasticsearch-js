@@ -751,7 +751,6 @@ client.get({ id, index })
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
 - **`_source` (Optional, boolean \| string \| string[])**: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
 - **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
-- **`_source_exclude_vectors` (Optional, boolean)**: Whether vectors should be excluded from _source
 - **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
 - **`stored_fields` (Optional, string \| string[])**: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`. Only leaf fields can be retrieved with the `stored_fields` option. Object fields can't be returned; if specified, the request fails.
 - **`version` (Optional, number)**: The version number for concurrency control. It must match the current version of the document for the request to succeed.
@@ -1557,7 +1556,6 @@ client.search({ ... })
 - **`typed_keys` (Optional, boolean)**: If `true`, aggregation and suggester names are be prefixed by their respective types in the response.
 - **`rest_total_hits_as_int` (Optional, boolean)**: Indicates whether `hits.total` should be rendered as an integer or an object in the rest search response.
 - **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
-- **`_source_exclude_vectors` (Optional, boolean)**: Whether vectors should be excluded from _source
 - **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
 - **`q` (Optional, string)**: A query in the Lucene query string syntax. Query parameter searches do not support the full Elasticsearch Query DSL but are handy for testing. IMPORTANT: This parameter overrides the query parameter in the request body. If both parameters are specified, documents matching the query request body parameter are not returned.
 - **`force_synthetic_source` (Optional, boolean)**: Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index.
@@ -3364,7 +3362,6 @@ It can also be set to `-1` to indicate that the request should never timeout.
 ## client.cluster.allocationExplain [_cluster.allocation_explain]
 Explain the shard allocations.
 Get explanations for shard allocations in the cluster.
-This API accepts the current_node, index, primary and shard parameters in the request body or in query parameters, but not in both at the same time.
 For unassigned shards, it provides an explanation for why the shard is unassigned.
 For assigned shards, it provides an explanation for why the shard is remaining on its current node and has not moved or rebalanced to another node.
 This API can be very useful when attempting to diagnose why a shard is unassigned or why a shard continues to remain on its current node when you might expect otherwise.
@@ -3379,10 +3376,10 @@ client.cluster.allocationExplain({ ... })
 ### Arguments [_arguments_cluster.allocation_explain]
 
 #### Request (object) [_request_cluster.allocation_explain]
-- **`index` (Optional, string)**: The name of the index that you would like an explanation for.
-- **`shard` (Optional, number)**: An identifier for the shard that you would like an explanation for.
-- **`primary` (Optional, boolean)**: If true, returns an explanation for the primary shard for the specified shard ID.
-- **`current_node` (Optional, string)**: Explain a shard only if it is currently located on the specified node name or node ID.
+- **`current_node` (Optional, string)**: Specifies the node ID or the name of the node to only explain a shard that is currently located on the specified node.
+- **`index` (Optional, string)**: Specifies the name of the index that you would like an explanation for.
+- **`primary` (Optional, boolean)**: If true, returns explanation for the primary shard for the given shard ID.
+- **`shard` (Optional, number)**: Specifies the ID of the shard that you would like an explanation for.
 - **`include_disk_info` (Optional, boolean)**: If true, returns information about disk usage and shard sizes.
 - **`include_yes_decisions` (Optional, boolean)**: If true, returns YES decisions in explanation.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
@@ -3780,7 +3777,7 @@ client.cluster.state({ ... })
 - **`flat_settings` (Optional, boolean)**: Return settings in flat format (default: false)
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
 - **`local` (Optional, boolean)**: Return local information, do not retrieve the state from master node (default: false)
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Timeout for waiting for new cluster state in case it is blocked
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
 - **`wait_for_metadata_version` (Optional, number)**: Wait for the metadata version to be equal or greater than the specified metadata version
 - **`wait_for_timeout` (Optional, string \| -1 \| 0)**: The maximum time to wait for wait_for_metadata_version before timing out
 
@@ -6122,25 +6119,6 @@ Supports a list of values, such as `open,hidden`.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 - **`verbose` (Optional, boolean)**: Whether the maximum timestamp for each data stream should be calculated and returned.
 
-## client.indices.getDataStreamMappings [_indices.get_data_stream_mappings]
-Get data stream mappings.
-
-Get mapping information for one or more data streams.
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-mappings)
-
-```ts
-client.indices.getDataStreamMappings({ name })
-```
-
-### Arguments [_arguments_indices.get_data_stream_mappings]
-
-#### Request (object) [_request_indices.get_data_stream_mappings]
-- **`name` (string \| string[])**: A list of data streams or data stream patterns. Supports wildcards (`*`).
-- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node. If no response is
-received before the timeout expires, the request fails and returns an
-error.
-
 ## client.indices.getDataStreamOptions [_indices.get_data_stream_options]
 Get data stream options.
 
@@ -6532,33 +6510,6 @@ error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
-## client.indices.putDataStreamMappings [_indices.put_data_stream_mappings]
-Update data stream mappings.
-
-This API can be used to override mappings on specific data streams. These overrides will take precedence over what
-is specified in the template that the data stream matches. The mapping change is only applied to new write indices
-that are created during rollover after this API is called. No indices are changed by this API.
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-mappings)
-
-```ts
-client.indices.putDataStreamMappings({ name })
-```
-
-### Arguments [_arguments_indices.put_data_stream_mappings]
-
-#### Request (object) [_request_indices.put_data_stream_mappings]
-- **`name` (string \| string[])**: A list of data streams or data stream patterns.
-- **`mappings` (Optional, { all_field, date_detection, dynamic, dynamic_date_formats, dynamic_templates, _field_names, index_field, _meta, numeric_detection, properties, _routing, _size, _source, runtime, enabled, subobjects, _data_stream_timestamp })**
-- **`dry_run` (Optional, boolean)**: If `true`, the request does not actually change the mappings on any data streams. Instead, it
-simulates changing the settings and reports back to the user what would have happened had these settings
-actually been applied.
-- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node. If no response is
-received before the timeout expires, the request fails and returns an
-error.
-- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response. If no response is received before the
- timeout expires, the request fails and returns an error.
-
 ## client.indices.putDataStreamOptions [_indices.put_data_stream_options]
 Update data stream options.
 Update the data stream options of the specified data streams.
@@ -6721,7 +6672,7 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 - **`numeric_detection` (Optional, boolean)**: Automatically map strings into numeric data types for all fields.
-- **`properties` (Optional, Record<string, { type } \| { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } \| { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } \| { relations, eager_global_ordinals, type } \| { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } \| { type, fields, meta, copy_to } \| { type } \| { positive_score_impact, type } \| { positive_score_impact, type } \| { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { type } \| { type, null_value } \| { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } \| { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } \| { type, default_metric, ignore_malformed, metrics, time_series_metric } \| { type, dims, element_type, index, index_options, similarity } \| { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, time_series_dimensions, type } \| { enabled, include_in_parent, include_in_root, type } \| { enabled, subobjects, type } \| { type, enabled, priority, time_series_dimension } \| { type, element_type, dims } \| { type, meta, inference_id, search_inference_id, index_options, chunking_settings } \| { store, type, index_options } \| { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } \| { value, type } \| { type, index } \| { path, type } \| { ignore_malformed, type } \| { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } \| { type } \| { analyzer, boost, index, null_value, enable_position_increments, type } \| { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type, time_series_metric } \| { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } \| { ignore_malformed, ignore_z_value, null_value, type } \| { coerce, ignore_malformed, ignore_z_value, orientation, type } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value, scaling_factor } \| { type, null_value } \| { type, null_value } \| { format, type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
+- **`properties` (Optional, Record<string, { type } \| { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } \| { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } \| { relations, eager_global_ordinals, type } \| { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } \| { type, fields, meta, copy_to } \| { type } \| { positive_score_impact, type } \| { positive_score_impact, type } \| { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { type } \| { type, null_value } \| { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } \| { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } \| { type, default_metric, ignore_malformed, metrics, time_series_metric } \| { type, dims, element_type, index, index_options, similarity } \| { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, time_series_dimensions, type } \| { enabled, include_in_parent, include_in_root, type } \| { enabled, subobjects, type } \| { type, enabled, priority, time_series_dimension } \| { type, element_type, dims } \| { type, meta, inference_id, search_inference_id, chunking_settings } \| { store, type, index_options } \| { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } \| { value, type } \| { type, index } \| { path, type } \| { ignore_malformed, type } \| { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } \| { type } \| { analyzer, boost, index, null_value, enable_position_increments, type } \| { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type, time_series_metric } \| { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } \| { ignore_malformed, ignore_z_value, null_value, type } \| { coerce, ignore_malformed, ignore_z_value, orientation, type } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value, scaling_factor } \| { type, null_value } \| { type, null_value } \| { format, type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
@@ -7851,6 +7802,68 @@ These settings are specific to the `cohere` service.
 - **`task_settings` (Optional, { input_type, return_documents, top_n, truncate })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
+
+## client.inference.putCustom [_inference.put_custom]
+Create a custom inference endpoint.
+
+The custom service gives more control over how to interact with external inference services that aren't explicitly supported through dedicated integrations.
+The custom service gives you the ability to define the headers, url, query parameters, request body, and secrets.
+The custom service supports the template replacement functionality, which enables you to define a template that can be replaced with the value associated with that key.
+Templates are portions of a string that start with `${` and end with `}`.
+The parameters `secret_parameters` and `task_settings` are checked for keys for template replacement. Template replacement is supported in the `request`, `headers`, `url`, and `query_parameters`.
+If the definition (key) is not found for a template, an error message is returned.
+In case of an endpoint definition like the following:
+```
+PUT _inference/text_embedding/test-text-embedding
+{
+  "service": "custom",
+  "service_settings": {
+     "secret_parameters": {
+          "api_key": "<some api key>"
+     },
+     "url": "...endpoints.huggingface.cloud/v1/embeddings",
+     "headers": {
+         "Authorization": "Bearer ${api_key}",
+         "Content-Type": "application/json"
+     },
+     "request": "{\"input\": ${input}}",
+     "response": {
+         "json_parser": {
+             "text_embeddings":"$.data[*].embedding[*]"
+         }
+     }
+  }
+}
+```
+To replace `${api_key}` the `secret_parameters` and `task_settings` are checked for a key named `api_key`.
+
+> info
+> Templates should not be surrounded by quotes.
+
+Pre-defined templates:
+* `${input}` refers to the array of input strings that comes from the `input` field of the subsequent inference requests.
+* `${input_type}` refers to the input type translation values.
+* `${query}` refers to the query field used specifically for reranking tasks.
+* `${top_n}` refers to the `top_n` field available when performing rerank requests.
+* `${return_documents}` refers to the `return_documents` field available when performing rerank requests.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-custom)
+
+```ts
+client.inference.putCustom({ task_type, custom_inference_id, service, service_settings })
+```
+
+### Arguments [_arguments_inference.put_custom]
+
+#### Request (object) [_request_inference.put_custom]
+- **`task_type` (Enum("text_embedding" \| "sparse_embedding" \| "rerank" \| "completion"))**: The type of the inference task that the model will perform.
+- **`custom_inference_id` (string)**: The unique identifier of the inference endpoint.
+- **`service` (Enum("custom"))**: The type of service supported for the specified task type. In this case, `custom`.
+- **`service_settings` ({ headers, input_type, query_parameters, request, response, secret_parameters, url })**: Settings used to install the inference model.
+These settings are specific to the `custom` service.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`task_settings` (Optional, { parameters })**: Settings to configure the inference task.
+These settings are specific to the task type you specified.
 
 ## client.inference.putDeepseek [_inference.put_deepseek]
 Create a DeepSeek inference endpoint.
@@ -14099,12 +14112,6 @@ If this detail is not needed or you want to obtain information about one or more
 If you omit the `<snapshot>` request path parameter, the request retrieves information only for currently running snapshots.
 This usage is preferred.
 If needed, you can specify `<repository>` and `<snapshot>` to retrieve information for specific snapshots, even if they're not currently running.
-
-Note that the stats will not be available for any shard snapshots in an ongoing snapshot completed by a node that (even momentarily) left the cluster.
-Loading the stats from the repository is an expensive operation (see the WARNING below).
-Therefore the stats values for such shards will be -1 even though the "stage" value will be "DONE", in order to minimize latency.
-A "description" field will be present for a shard snapshot completed by a departed node explaining why the shard snapshot's stats results are invalid.
-Consequently, the total stats for the index will be less than expected due to the missing values from these shards.
 
 WARNING: Using the API to return the status of any snapshots other than currently running snapshots can be expensive.
 The API requires a read from the repository for each shard in each snapshot.
