@@ -193,6 +193,14 @@ export default class Inference {
           'timeout'
         ]
       },
+      'inference.put_custom': {
+        path: [
+          'task_type',
+          'custom_inference_id'
+        ],
+        body: [],
+        query: []
+      },
       'inference.put_elasticsearch': {
         path: [
           'task_type',
@@ -1076,6 +1084,52 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         cohere_inference_id: params.cohere_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Configure a custom inference endpoint
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-custom | Elasticsearch API documentation}
+    */
+  async putCustom (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putCustom (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putCustom (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putCustom (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['inference.put_custom']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.custom_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_custom',
+      pathParts: {
+        task_type: params.task_type,
+        custom_inference_id: params.custom_inference_id
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
