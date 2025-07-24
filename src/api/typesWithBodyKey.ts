@@ -3566,9 +3566,10 @@ export interface AggregationsFiltersAggregation extends AggregationsBucketAggreg
 }
 
 export interface AggregationsFiltersBucketKeys extends AggregationsMultiBucketBase {
+  key?: string
 }
 export type AggregationsFiltersBucket = AggregationsFiltersBucketKeys
-& { [property: string]: AggregationsAggregate | long }
+& { [property: string]: AggregationsAggregate | string | long }
 
 export interface AggregationsFormatMetricAggregationBase extends AggregationsMetricAggregationBase {
   format?: string
@@ -4734,7 +4735,7 @@ export interface AnalysisEdgeNGramTokenizer extends AnalysisTokenizerBase {
   custom_token_chars?: string
   max_gram?: integer
   min_gram?: integer
-  token_chars?: string | AnalysisTokenChar[]
+  token_chars?: AnalysisTokenChar[]
 }
 
 export interface AnalysisElisionTokenFilter extends AnalysisTokenFilterBase {
@@ -7010,7 +7011,6 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   ignore_unavailable?: boolean
   lenient?: boolean
   max_concurrent_shard_requests?: long
-  min_compatible_shard_node?: VersionString
   preference?: string
   request_cache?: boolean
   routing?: Routing
@@ -7203,7 +7203,6 @@ export interface CatAliasesRequest extends CatCatRequestBase {
   s?: Names
   expand_wildcards?: ExpandWildcards
   local?: boolean
-  master_timeout?: Duration
 }
 
 export type CatAliasesResponse = CatAliasesAliasesRecord[]
