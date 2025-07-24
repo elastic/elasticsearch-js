@@ -35,7 +35,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 }
 
 /**
-  * Get cluster info. Get basic build, version, and cluster information.
+  * Get cluster info. Get basic build, version, and cluster information. ::: In Serverless, this API is retained for backward compatibility only. Some response fields, such as the version number, should be ignored.
   * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-info | Elasticsearch API documentation}
   */
 export default async function InfoApi (this: That, params?: T.InfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InfoResponse>

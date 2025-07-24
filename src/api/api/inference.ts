@@ -202,6 +202,19 @@ export default class Inference {
           'timeout'
         ]
       },
+      'inference.put_custom': {
+        path: [
+          'task_type',
+          'custom_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: []
+      },
       'inference.put_deepseek': {
         path: [
           'task_type',
@@ -703,7 +716,7 @@ export default class Inference {
   }
 
   /**
-    * Create an inference endpoint. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. The following integrations are available through the inference API. You can find the available task types next to the integration name: * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Amazon Bedrock (`completion`, `text_embedding`) * Anthropic (`completion`) * Azure AI Studio (`completion`, `text_embedding`) * Azure OpenAI (`completion`, `text_embedding`) * Cohere (`completion`, `rerank`, `text_embedding`) * DeepSeek (`completion`, `chat_completion`) * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland) * ELSER (`sparse_embedding`) * Google AI Studio (`completion`, `text_embedding`) * Google Vertex AI (`rerank`, `text_embedding`) * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`) * Mistral (`chat_completion`, `completion`, `text_embedding`) * OpenAI (`chat_completion`, `completion`, `text_embedding`) * VoyageAI (`text_embedding`, `rerank`) * Watsonx inference integration (`text_embedding`) * JinaAI (`text_embedding`, `rerank`)
+    * Create an inference endpoint. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. The following integrations are available through the inference API. You can find the available task types next to the integration name: * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Amazon Bedrock (`completion`, `text_embedding`) * Anthropic (`completion`) * Azure AI Studio (`completion`, 'rerank', `text_embedding`) * Azure OpenAI (`completion`, `text_embedding`) * Cohere (`completion`, `rerank`, `text_embedding`) * DeepSeek (`completion`, `chat_completion`) * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland) * ELSER (`sparse_embedding`) * Google AI Studio (`completion`, `text_embedding`) * Google Vertex AI (`rerank`, `text_embedding`) * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`) * Mistral (`chat_completion`, `completion`, `text_embedding`) * OpenAI (`chat_completion`, `completion`, `text_embedding`) * VoyageAI (`text_embedding`, `rerank`) * Watsonx inference integration (`text_embedding`) * JinaAI (`text_embedding`, `rerank`)
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put | Elasticsearch API documentation}
     */
   async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutResponse>
@@ -1146,6 +1159,64 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         cohere_inference_id: params.cohere_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create a custom inference endpoint. The custom service gives more control over how to interact with external inference services that aren't explicitly supported through dedicated integrations. The custom service gives you the ability to define the headers, url, query parameters, request body, and secrets. The custom service supports the template replacement functionality, which enables you to define a template that can be replaced with the value associated with that key. Templates are portions of a string that start with `${` and end with `}`. The parameters `secret_parameters` and `task_settings` are checked for keys for template replacement. Template replacement is supported in the `request`, `headers`, `url`, and `query_parameters`. If the definition (key) is not found for a template, an error message is returned. In case of an endpoint definition like the following: ``` PUT _inference/text_embedding/test-text-embedding { "service": "custom", "service_settings": { "secret_parameters": { "api_key": "<some api key>" }, "url": "...endpoints.huggingface.cloud/v1/embeddings", "headers": { "Authorization": "Bearer ${api_key}", "Content-Type": "application/json" }, "request": "{\"input\": ${input}}", "response": { "json_parser": { "text_embeddings":"$.data[*].embedding[*]" } } } } ``` To replace `${api_key}` the `secret_parameters` and `task_settings` are checked for a key named `api_key`. > info > Templates should not be surrounded by quotes. Pre-defined templates: * `${input}` refers to the array of input strings that comes from the `input` field of the subsequent inference requests. * `${input_type}` refers to the input type translation values. * `${query}` refers to the query field used specifically for reranking tasks. * `${top_n}` refers to the `top_n` field available when performing rerank requests. * `${return_documents}` refers to the `return_documents` field available when performing rerank requests.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-custom | Elasticsearch API documentation}
+    */
+  async putCustom (this: That, params: T.InferencePutCustomRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutCustomResponse>
+  async putCustom (this: That, params: T.InferencePutCustomRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutCustomResponse, unknown>>
+  async putCustom (this: That, params: T.InferencePutCustomRequest, options?: TransportRequestOptions): Promise<T.InferencePutCustomResponse>
+  async putCustom (this: That, params: T.InferencePutCustomRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_custom']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.custom_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_custom',
+      pathParts: {
+        task_type: params.task_type,
+        custom_inference_id: params.custom_inference_id
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

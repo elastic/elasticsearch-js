@@ -3852,7 +3852,10 @@ export interface ElasticsearchVersionInfo {
   /** The minimum node version with which the responding node can communicate.
     * Also the minimum version from which you can perform a rolling upgrade. */
   minimum_wire_compatibility_version: VersionString
-  /** The Elasticsearch version number. */
+  /** The Elasticsearch version number.
+    *
+    * ::: IMPORTANT: For Serverless deployments, this static value is always `8.11.0` and is used solely for backward compatibility with legacy clients.
+    *  Serverless environments are versionless and automatically upgraded, so this value can be safely ignored. */
   number: string
 }
 
@@ -5518,9 +5521,10 @@ export interface AggregationsFiltersAggregation extends AggregationsBucketAggreg
 }
 
 export interface AggregationsFiltersBucketKeys extends AggregationsMultiBucketBase {
+  key?: string
 }
 export type AggregationsFiltersBucket = AggregationsFiltersBucketKeys
-& { [property: string]: AggregationsAggregate | long }
+& { [property: string]: AggregationsAggregate | string | long }
 
 export interface AggregationsFormatMetricAggregationBase extends AggregationsMetricAggregationBase {
   format?: string
@@ -6988,7 +6992,7 @@ export interface AnalysisEdgeNGramTokenizer extends AnalysisTokenizerBase {
   custom_token_chars?: string
   max_gram?: integer
   min_gram?: integer
-  token_chars?: string | AnalysisTokenChar[]
+  token_chars?: AnalysisTokenChar[]
 }
 
 export interface AnalysisElisionTokenFilter extends AnalysisTokenFilterBase {
@@ -7935,8 +7939,30 @@ export interface MappingByteNumberProperty extends MappingNumberPropertyBase {
 }
 
 export interface MappingChunkingSettings {
-  /** The chunking strategy: `sentence` or `word`. */
+  /** The chunking strategy: `sentence`, `word`, `none` or `recursive`.
+    *
+    *  * If `strategy` is set to `recursive`, you must also specify:
+    *
+    * - `max_chunk_size`
+    * - either `separators` or`separator_group`
+    *
+    * Learn more about different chunking strategies in the linked documentation. */
   strategy: string
+  /** This parameter is only applicable when using the `recursive` chunking strategy.
+    *
+    * Sets a predefined list of separators in the saved chunking settings based on the selected text type.
+    * Values can be `markdown` or `plaintext`.
+    *
+    * Using this parameter is an alternative to manually specifying a custom `separators` list. */
+  separator_group: string
+  /** A list of strings used as possible split points when chunking text with the `recursive` strategy.
+    *
+    * Each string can be a plain string or a regular expression (regex) pattern.
+    * The system tries each separator in order to split the text, starting from the first item in the list.
+    *
+    * After splitting, it attempts to recombine smaller pieces into larger chunks that stay within
+    * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
+  separators: string[]
   /** The maximum size of a chunk in words.
     * This value cannot be higher than `300` or lower than `20` (for `sentence` strategy) or `10` (for `word` strategy). */
   max_chunk_size: integer
@@ -22524,9 +22550,14 @@ export interface InferenceAzureAiStudioTaskSettings {
   /** For a `text_embedding` task, specify the user issuing the request.
     * This information can be used for abuse detection. */
   user?: string
+  /** For a `rerank` task, return doc text within the results. */
+  return_documents?: boolean
+  /** For a `rerank` task, the number of most relevant documents to return.
+    * It defaults to the number of the documents. */
+  top_n?: integer
 }
 
-export type InferenceAzureAiStudioTaskType = 'completion' | 'text_embedding'
+export type InferenceAzureAiStudioTaskType = 'completion' | 'rerank' | 'text_embedding'
 
 export interface InferenceAzureOpenAIServiceSettings {
   /** A valid API key for your Azure OpenAI account.
@@ -22684,6 +22715,229 @@ export interface InferenceContentObject {
   /** The type of content. */
   type: string
 }
+
+export interface InferenceCustomRequestParams {
+  /** The body structure of the request. It requires passing in the string-escaped result of the JSON format HTTP request body.
+    * For example:
+    * ```
+    * "request": "{\"input\":${input}}"
+    * ```
+    * > info
+    * > The content string needs to be a single line except when using the Kibana console. */
+  content: string
+}
+
+export interface InferenceCustomResponseParams {
+  /** Specifies the JSON parser that is used to parse the response from the custom service.
+    * Different task types require different json_parser parameters.
+    * For example:
+    * ```
+    * # text_embedding
+    * # For a response like this:
+    *
+    * {
+    *  "object": "list",
+    *  "data": [
+    *      {
+    *        "object": "embedding",
+    *        "index": 0,
+    *        "embedding": [
+    *            0.014539449,
+    *            -0.015288644
+    *        ]
+    *      }
+    *  ],
+    *  "model": "text-embedding-ada-002-v2",
+    *  "usage": {
+    *      "prompt_tokens": 8,
+    *      "total_tokens": 8
+    *  }
+    * }
+    *
+    * # the json_parser definition should look like this:
+    *
+    * "response":{
+    *   "json_parser":{
+    *     "text_embeddings":"$.data[*].embedding[*]"
+    *   }
+    * }
+    *
+    * # sparse_embedding
+    * # For a response like this:
+    *
+    * {
+    *   "request_id": "75C50B5B-E79E-4930-****-F48DBB392231",
+    *   "latency": 22,
+    *   "usage": {
+    *      "token_count": 11
+    *   },
+    *   "result": {
+    *      "sparse_embeddings": [
+    *         {
+    *           "index": 0,
+    *           "embedding": [
+    *             {
+    *               "token_id": 6,
+    *               "weight": 0.101
+    *             },
+    *             {
+    *               "token_id": 163040,
+    *               "weight": 0.28417
+    *             }
+    *           ]
+    *         }
+    *      ]
+    *   }
+    * }
+    *
+    * # the json_parser definition should look like this:
+    *
+    * "response":{
+    *   "json_parser":{
+    *     "token_path":"$.result.sparse_embeddings[*].embedding[*].token_id",
+    *     "weight_path":"$.result.sparse_embeddings[*].embedding[*].weight"
+    *   }
+    * }
+    *
+    * # rerank
+    * # For a response like this:
+    *
+    * {
+    *   "results": [
+    *     {
+    *       "index": 3,
+    *       "relevance_score": 0.999071,
+    *       "document": "abc"
+    *     },
+    *     {
+    *       "index": 4,
+    *       "relevance_score": 0.7867867,
+    *       "document": "123"
+    *     },
+    *     {
+    *       "index": 0,
+    *       "relevance_score": 0.32713068,
+    *       "document": "super"
+    *     }
+    *   ],
+    * }
+    *
+    * # the json_parser definition should look like this:
+    *
+    * "response":{
+    *   "json_parser":{
+    *     "reranked_index":"$.result.scores[*].index",    // optional
+    *     "relevance_score":"$.result.scores[*].score",
+    *     "document_text":"xxx"    // optional
+    *   }
+    * }
+    *
+    * # completion
+    * # For a response like this:
+    *
+    * {
+    *  "id": "chatcmpl-B9MBs8CjcvOU2jLn4n570S5qMJKcT",
+    *  "object": "chat.completion",
+    *  "created": 1741569952,
+    *  "model": "gpt-4.1-2025-04-14",
+    *  "choices": [
+    *    {
+    *     "index": 0,
+    *     "message": {
+    *       "role": "assistant",
+    *       "content": "Hello! How can I assist you today?",
+    *       "refusal": null,
+    *       "annotations": []
+    *     },
+    *     "logprobs": null,
+    *     "finish_reason": "stop"
+    *   }
+    *  ]
+    * }
+    *
+    * # the json_parser definition should look like this:
+    *
+    * "response":{
+    *   "json_parser":{
+    *     "completion_result":"$.choices[*].message.content"
+    *   }
+    * } */
+  json_parser: any
+}
+
+export interface InferenceCustomServiceSettings {
+  /** Specifies the HTTPS header parameters – such as `Authentication` or `Contet-Type` – that are required to access the custom service.
+    * For example:
+    * ```
+    * "headers":{
+    *   "Authorization": "Bearer ${api_key}",
+    *   "Content-Type": "application/json;charset=utf-8"
+    * }
+    * ``` */
+  headers?: any
+  /** Specifies the input type translation values that are used to replace the `${input_type}` template in the request body.
+    * For example:
+    * ```
+    * "input_type": {
+    *   "translation": {
+    *     "ingest": "do_ingest",
+    *     "search": "do_search"
+    *   },
+    *   "default": "a_default"
+    * },
+    * ```
+    * If the subsequent inference requests come from a search context, the `search` key will be used and the template will be replaced with `do_search`.
+    * If it comes from the ingest context `do_ingest` is used. If it's a different context that is not specified, the default value will be used. If no default is specified an empty string is used.
+    * `translation` can be:
+    * * `classification`
+    * * `clustering`
+    * * `ingest`
+    * * `search` */
+  input_type?: any
+  /** Specifies the query parameters as a list of tuples. The arrays inside the `query_parameters` must have two items, a key and a value.
+    * For example:
+    * ```
+    * "query_parameters":[
+    *   ["param_key", "some_value"],
+    *   ["param_key", "another_value"],
+    *   ["other_key", "other_value"]
+    * ]
+    * ```
+    * If the base url is `https://www.elastic.co` it results in: `https://www.elastic.co?param_key=some_value&param_key=another_value&other_key=other_value`. */
+  query_parameters?: any
+  /** The request configuration object. */
+  request: InferenceCustomRequestParams
+  /** The response configuration object. */
+  response: InferenceCustomResponseParams
+  /** Specifies secret parameters, like `api_key` or `api_token`, that are required to access the custom service.
+    * For example:
+    * ```
+    * "secret_parameters":{
+    *   "api_key":"<api_key>"
+    * }
+    * ``` */
+  secret_parameters: any
+  /** The URL endpoint to use for the requests. */
+  url?: string
+}
+
+export type InferenceCustomServiceType = 'custom'
+
+export interface InferenceCustomTaskSettings {
+  /** Specifies parameters that are required to run the custom service. The parameters depend on the model your custom service uses.
+    * For example:
+    * ```
+    * "task_settings":{
+    *   "parameters":{
+    *     "input_type":"query",
+    *     "return_token":true
+    *   }
+    * }
+    * ``` */
+  parameters?: any
+}
+
+export type InferenceCustomTaskType = 'text_embedding' | 'sparse_embedding' | 'rerank' | 'completion'
 
 export interface InferenceDeepSeekServiceSettings {
   /** A valid API key for your DeepSeek account.
@@ -22862,7 +23116,29 @@ export interface InferenceInferenceChunkingSettings {
     * It is applicable only for a `sentence` chunking strategy.
     * It can be either `1` or `0`. */
   sentence_overlap?: integer
-  /** The chunking strategy: `sentence` or `word`. */
+  /** This parameter is only applicable when using the `recursive` chunking strategy.
+    *
+    * Sets a predefined list of separators in the saved chunking settings based on the selected text type.
+    * Values can be `markdown` or `plaintext`.
+    *
+    * Using this parameter is an alternative to manually specifying a custom `separators` list. */
+  separator_group: string
+  /** A list of strings used as possible split points when chunking text with the `recursive` strategy.
+    *
+    * Each string can be a plain string or a regular expression (regex) pattern.
+    * The system tries each separator in order to split the text, starting from the first item in the list.
+    *
+    * After splitting, it attempts to recombine smaller pieces into larger chunks that stay within
+    * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
+  separators: string[]
+  /** The chunking strategy: `sentence`, `word`, `none` or `recursive`.
+    *
+    *  * If `strategy` is set to `recursive`, you must also specify:
+    *
+    * - `max_chunk_size`
+    * - either `separators` or`separator_group`
+    *
+    * Learn more about different chunking strategies in the linked documentation. */
   strategy?: string
 }
 
@@ -22924,6 +23200,13 @@ export interface InferenceInferenceEndpointInfoCohere extends InferenceInference
   inference_id: string
   /** The task type */
   task_type: InferenceTaskTypeCohere
+}
+
+export interface InferenceInferenceEndpointInfoCustom extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeCustom
 }
 
 export interface InferenceInferenceEndpointInfoDeepSeek extends InferenceInferenceEndpoint {
@@ -23280,11 +23563,13 @@ export type InferenceTaskTypeAmazonBedrock = 'text_embedding' | 'completion'
 
 export type InferenceTaskTypeAnthropic = 'completion'
 
-export type InferenceTaskTypeAzureAIStudio = 'text_embedding' | 'completion'
+export type InferenceTaskTypeAzureAIStudio = 'text_embedding' | 'completion' | 'rerank'
 
 export type InferenceTaskTypeAzureOpenAI = 'text_embedding' | 'completion'
 
 export type InferenceTaskTypeCohere = 'text_embedding' | 'rerank' | 'completion'
+
+export type InferenceTaskTypeCustom = 'text_embedding' | 'sparse_embedding' | 'rerank' | 'completion'
 
 export type InferenceTaskTypeDeepSeek = 'completion' | 'chat_completion'
 
@@ -23672,6 +23957,29 @@ export interface InferencePutCohereRequest extends RequestBase {
 }
 
 export type InferencePutCohereResponse = InferenceInferenceEndpointInfoCohere
+
+export interface InferencePutCustomRequest extends RequestBase {
+  /** The type of the inference task that the model will perform. */
+  task_type: InferenceCustomTaskType
+  /** The unique identifier of the inference endpoint. */
+  custom_inference_id: Id
+  /** The chunking configuration object. */
+  chunking_settings?: InferenceInferenceChunkingSettings
+  /** The type of service supported for the specified task type. In this case, `custom`. */
+  service: InferenceCustomServiceType
+  /** Settings used to install the inference model.
+    * These settings are specific to the `custom` service. */
+  service_settings: InferenceCustomServiceSettings
+  /** Settings to configure the inference task.
+    * These settings are specific to the task type you specified. */
+  task_settings?: InferenceCustomTaskSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, custom_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, custom_inference_id?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+}
+
+export type InferencePutCustomResponse = InferenceInferenceEndpointInfoCustom
 
 export interface InferencePutDeepseekRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */

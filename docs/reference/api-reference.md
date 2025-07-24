@@ -1016,6 +1016,7 @@ client.index({ index })
 ## client.info [_info]
 Get cluster info.
 Get basic build, version, and cluster information.
+::: In Serverless, this API is retained for backward compatibility only. Some response fields, such as the version number, should be ignored.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-info)
 
@@ -7662,7 +7663,7 @@ The following integrations are available through the inference API. You can find
 * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`)
 * Amazon Bedrock (`completion`, `text_embedding`)
 * Anthropic (`completion`)
-* Azure AI Studio (`completion`, `text_embedding`)
+* Azure AI Studio (`completion`, 'rerank', `text_embedding`)
 * Azure OpenAI (`completion`, `text_embedding`)
 * Cohere (`completion`, `rerank`, `text_embedding`)
 * DeepSeek (`completion`, `chat_completion`)
@@ -7709,7 +7710,7 @@ client.inference.putAlibabacloud({ task_type, alibabacloud_inference_id, service
 - **`alibabacloud_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("alibabacloud-ai-search"))**: The type of service supported for the specified task type. In this case, `alibabacloud-ai-search`.
 - **`service_settings` ({ api_key, host, rate_limit, service_id, workspace })**: Settings used to install the inference model. These settings are specific to the `alibabacloud-ai-search` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { input_type, return_token })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7735,7 +7736,7 @@ client.inference.putAmazonbedrock({ task_type, amazonbedrock_inference_id, servi
 - **`amazonbedrock_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("amazonbedrock"))**: The type of service supported for the specified task type. In this case, `amazonbedrock`.
 - **`service_settings` ({ access_key, model, provider, region, rate_limit, secret_key })**: Settings used to install the inference model. These settings are specific to the `amazonbedrock` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { max_new_tokens, temperature, top_k, top_p })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7769,7 +7770,7 @@ The only valid task type for the model to perform is `completion`.
 - **`anthropic_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("anthropic"))**: The type of service supported for the specified task type. In this case, `anthropic`.
 - **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `watsonxai` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { max_tokens, temperature, top_k, top_p })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7788,12 +7789,12 @@ client.inference.putAzureaistudio({ task_type, azureaistudio_inference_id, servi
 ### Arguments [_arguments_inference.put_azureaistudio]
 
 #### Request (object) [_request_inference.put_azureaistudio]
-- **`task_type` (Enum("completion" \| "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("completion" \| "rerank" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`azureaistudio_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("azureaistudio"))**: The type of service supported for the specified task type. In this case, `azureaistudio`.
 - **`service_settings` ({ api_key, endpoint_type, target, provider, rate_limit })**: Settings used to install the inference model. These settings are specific to the `openai` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
-- **`task_settings` (Optional, { do_sample, max_new_tokens, temperature, top_p, user })**: Settings to configure the inference task.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+- **`task_settings` (Optional, { do_sample, max_new_tokens, temperature, top_p, user, return_documents, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
@@ -7823,7 +7824,7 @@ NOTE: The `chat_completion` task type only supports streaming and only through t
 - **`azureopenai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("azureopenai"))**: The type of service supported for the specified task type. In this case, `azureopenai`.
 - **`service_settings` ({ api_key, api_version, deployment_id, entra_id, rate_limit, resource_name })**: Settings used to install the inference model. These settings are specific to the `azureopenai` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { user })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7847,10 +7848,72 @@ client.inference.putCohere({ task_type, cohere_inference_id, service, service_se
 - **`service` (Enum("cohere"))**: The type of service supported for the specified task type. In this case, `cohere`.
 - **`service_settings` ({ api_key, embedding_type, model_id, rate_limit, similarity })**: Settings used to install the inference model.
 These settings are specific to the `cohere` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { input_type, return_documents, top_n, truncate })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
+
+## client.inference.putCustom [_inference.put_custom]
+Create a custom inference endpoint.
+
+The custom service gives more control over how to interact with external inference services that aren't explicitly supported through dedicated integrations.
+The custom service gives you the ability to define the headers, url, query parameters, request body, and secrets.
+The custom service supports the template replacement functionality, which enables you to define a template that can be replaced with the value associated with that key.
+Templates are portions of a string that start with `${` and end with `}`.
+The parameters `secret_parameters` and `task_settings` are checked for keys for template replacement. Template replacement is supported in the `request`, `headers`, `url`, and `query_parameters`.
+If the definition (key) is not found for a template, an error message is returned.
+In case of an endpoint definition like the following:
+```
+PUT _inference/text_embedding/test-text-embedding
+{
+  "service": "custom",
+  "service_settings": {
+     "secret_parameters": {
+          "api_key": "<some api key>"
+     },
+     "url": "...endpoints.huggingface.cloud/v1/embeddings",
+     "headers": {
+         "Authorization": "Bearer ${api_key}",
+         "Content-Type": "application/json"
+     },
+     "request": "{\"input\": ${input}}",
+     "response": {
+         "json_parser": {
+             "text_embeddings":"$.data[*].embedding[*]"
+         }
+     }
+  }
+}
+```
+To replace `${api_key}` the `secret_parameters` and `task_settings` are checked for a key named `api_key`.
+
+> info
+> Templates should not be surrounded by quotes.
+
+Pre-defined templates:
+* `${input}` refers to the array of input strings that comes from the `input` field of the subsequent inference requests.
+* `${input_type}` refers to the input type translation values.
+* `${query}` refers to the query field used specifically for reranking tasks.
+* `${top_n}` refers to the `top_n` field available when performing rerank requests.
+* `${return_documents}` refers to the `return_documents` field available when performing rerank requests.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-custom)
+
+```ts
+client.inference.putCustom({ task_type, custom_inference_id, service, service_settings })
+```
+
+### Arguments [_arguments_inference.put_custom]
+
+#### Request (object) [_request_inference.put_custom]
+- **`task_type` (Enum("text_embedding" \| "sparse_embedding" \| "rerank" \| "completion"))**: The type of the inference task that the model will perform.
+- **`custom_inference_id` (string)**: The unique identifier of the inference endpoint.
+- **`service` (Enum("custom"))**: The type of service supported for the specified task type. In this case, `custom`.
+- **`service_settings` ({ headers, input_type, query_parameters, request, response, secret_parameters, url })**: Settings used to install the inference model.
+These settings are specific to the `custom` service.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+- **`task_settings` (Optional, { parameters })**: Settings to configure the inference task.
+These settings are specific to the task type you specified.
 
 ## client.inference.putDeepseek [_inference.put_deepseek]
 Create a DeepSeek inference endpoint.
@@ -7871,7 +7934,7 @@ client.inference.putDeepseek({ task_type, deepseek_inference_id, service, servic
 - **`service` (Enum("deepseek"))**: The type of service supported for the specified task type. In this case, `deepseek`.
 - **`service_settings` ({ api_key, model_id, url })**: Settings used to install the inference model.
 These settings are specific to the `deepseek` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putElasticsearch [_inference.put_elasticsearch]
@@ -7906,7 +7969,7 @@ client.inference.putElasticsearch({ task_type, elasticsearch_inference_id, servi
 The must not match the `model_id`.
 - **`service` (Enum("elasticsearch"))**: The type of service supported for the specified task type. In this case, `elasticsearch`.
 - **`service_settings` ({ adaptive_allocations, deployment_id, model_id, num_allocations, num_threads })**: Settings used to install the inference model. These settings are specific to the `elasticsearch` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { return_documents })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7943,7 +8006,7 @@ client.inference.putElser({ task_type, elser_inference_id, service, service_sett
 - **`elser_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("elser"))**: The type of service supported for the specified task type. In this case, `elser`.
 - **`service_settings` ({ adaptive_allocations, num_allocations, num_threads })**: Settings used to install the inference model. These settings are specific to the `elser` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putGoogleaistudio [_inference.put_googleaistudio]
@@ -7964,7 +8027,7 @@ client.inference.putGoogleaistudio({ task_type, googleaistudio_inference_id, ser
 - **`googleaistudio_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("googleaistudio"))**: The type of service supported for the specified task type. In this case, `googleaistudio`.
 - **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `googleaistudio` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putGooglevertexai [_inference.put_googlevertexai]
@@ -7985,7 +8048,7 @@ client.inference.putGooglevertexai({ task_type, googlevertexai_inference_id, ser
 - **`googlevertexai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("googlevertexai"))**: The type of service supported for the specified task type. In this case, `googlevertexai`.
 - **`service_settings` ({ location, model_id, project_id, rate_limit, service_account_json })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { auto_truncate, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8043,7 +8106,7 @@ client.inference.putHuggingFace({ task_type, huggingface_inference_id, service, 
 - **`huggingface_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("hugging_face"))**: The type of service supported for the specified task type. In this case, `hugging_face`.
 - **`service_settings` ({ api_key, rate_limit, url, model_id })**: Settings used to install the inference model. These settings are specific to the `hugging_face` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { return_documents, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8069,7 +8132,7 @@ client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_se
 - **`jinaai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("jinaai"))**: The type of service supported for the specified task type. In this case, `jinaai`.
 - **`service_settings` ({ api_key, model_id, rate_limit, similarity })**: Settings used to install the inference model. These settings are specific to the `jinaai` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { return_documents, task, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8092,7 +8155,7 @@ client.inference.putMistral({ task_type, mistral_inference_id, service, service_
 - **`mistral_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("mistral"))**: The type of service supported for the specified task type. In this case, `mistral`.
 - **`service_settings` ({ api_key, max_input_tokens, model, rate_limit })**: Settings used to install the inference model. These settings are specific to the `mistral` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putOpenai [_inference.put_openai]
@@ -8114,7 +8177,7 @@ NOTE: The `chat_completion` task type only supports streaming and only through t
 - **`openai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("openai"))**: The type of service supported for the specified task type. In this case, `openai`.
 - **`service_settings` ({ api_key, dimensions, model_id, organization_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `openai` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { user })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8139,7 +8202,7 @@ client.inference.putVoyageai({ task_type, voyageai_inference_id, service, servic
 - **`voyageai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("voyageai"))**: The type of service supported for the specified task type. In this case, `voyageai`.
 - **`service_settings` ({ dimensions, model_id, rate_limit, embedding_type })**: Settings used to install the inference model. These settings are specific to the `voyageai` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, strategy })**: The chunking configuration object.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { input_type, return_documents, top_k, truncation })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
