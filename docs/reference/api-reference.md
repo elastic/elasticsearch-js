@@ -7609,6 +7609,16 @@ These settings are specific to the `cohere` service.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
+## client.inference.putCustom [_inference.put_custom]
+Configure a custom inference endpoint
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-custom)
+
+```ts
+client.inference.putCustom()
+```
+
+
 ## client.inference.putElasticsearch [_inference.put_elasticsearch]
 Create an Elasticsearch inference endpoint.
 
