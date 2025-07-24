@@ -3500,9 +3500,10 @@ export interface AggregationsFiltersAggregation extends AggregationsBucketAggreg
 }
 
 export interface AggregationsFiltersBucketKeys extends AggregationsMultiBucketBase {
+  key?: string
 }
 export type AggregationsFiltersBucket = AggregationsFiltersBucketKeys
-& { [property: string]: AggregationsAggregate | long }
+& { [property: string]: AggregationsAggregate | string | long }
 
 export interface AggregationsFormatMetricAggregationBase extends AggregationsMetricAggregationBase {
   format?: string
@@ -4672,7 +4673,7 @@ export interface AnalysisEdgeNGramTokenizer extends AnalysisTokenizerBase {
   custom_token_chars?: string
   max_gram?: integer
   min_gram?: integer
-  token_chars?: string | AnalysisTokenChar[]
+  token_chars?: AnalysisTokenChar[]
 }
 
 export interface AnalysisElisionTokenFilter extends AnalysisTokenFilterBase {
@@ -6961,7 +6962,6 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   ignore_unavailable?: boolean
   lenient?: boolean
   max_concurrent_shard_requests?: long
-  min_compatible_shard_node?: VersionString
   preference?: string
   request_cache?: boolean
   routing?: Routing
@@ -7150,7 +7150,6 @@ export interface CatAliasesRequest extends CatCatRequestBase {
   s?: Names
   expand_wildcards?: ExpandWildcards
   local?: boolean
-  master_timeout?: Duration
 }
 
 export type CatAliasesResponse = CatAliasesAliasesRecord[]
@@ -10809,7 +10808,14 @@ export interface EsqlAsyncEsqlResult extends EsqlEsqlResult {
   is_running: boolean
 }
 
-export interface EsqlClusterInfo {
+export interface EsqlEsqlClusterDetails {
+  status: EsqlEsqlClusterStatus
+  indices: string
+  took?: DurationValue<UnitMillis>
+  _shards?: EsqlEsqlShardInfo
+}
+
+export interface EsqlEsqlClusterInfo {
   total: integer
   successful: integer
   running: integer
@@ -10819,27 +10825,20 @@ export interface EsqlClusterInfo {
   details: Record<string, EsqlEsqlClusterDetails>
 }
 
-export interface EsqlColumnInfo {
+export type EsqlEsqlClusterStatus = 'running' | 'successful' | 'partial' | 'skipped' | 'failed'
+
+export interface EsqlEsqlColumnInfo {
   name: string
   type: string
 }
 
-export interface EsqlEsqlClusterDetails {
-  status: EsqlEsqlClusterStatus
-  indices: string
-  took?: DurationValue<UnitMillis>
-  _shards?: EsqlEsqlShardInfo
-}
-
-export type EsqlEsqlClusterStatus = 'running' | 'successful' | 'partial' | 'skipped' | 'failed'
-
 export interface EsqlEsqlResult {
   took?: DurationValue<UnitMillis>
   is_partial?: boolean
-  all_columns?: EsqlColumnInfo[]
-  columns: EsqlColumnInfo[]
+  all_columns?: EsqlEsqlColumnInfo[]
+  columns: EsqlEsqlColumnInfo[]
   values: FieldValue[][]
-  _clusters?: EsqlClusterInfo
+  _clusters?: EsqlEsqlClusterInfo
   profile?: any
 }
 
@@ -13471,6 +13470,32 @@ export interface InferenceContentObject {
   type: string
 }
 
+export interface InferenceCustomRequestParams {
+  content: string
+}
+
+export interface InferenceCustomResponseParams {
+  json_parser: any
+}
+
+export interface InferenceCustomServiceSettings {
+  headers?: any
+  input_type?: any
+  query_parameters?: any
+  request: InferenceCustomRequestParams
+  response: InferenceCustomResponseParams
+  secret_parameters: any
+  url?: string
+}
+
+export type InferenceCustomServiceType = 'custom'
+
+export interface InferenceCustomTaskSettings {
+  parameters?: any
+}
+
+export type InferenceCustomTaskType = 'text_embedding' | 'sparse_embedding' | 'rerank' | 'completion'
+
 export interface InferenceDeepSeekServiceSettings {
   api_key: string
   model_id: string
@@ -13603,6 +13628,11 @@ export interface InferenceInferenceEndpointInfoAzureOpenAI extends InferenceInfe
 export interface InferenceInferenceEndpointInfoCohere extends InferenceInferenceEndpoint {
   inference_id: string
   task_type: InferenceTaskTypeCohere
+}
+
+export interface InferenceInferenceEndpointInfoCustom extends InferenceInferenceEndpoint {
+  inference_id: string
+  task_type: InferenceTaskTypeCustom
 }
 
 export interface InferenceInferenceEndpointInfoDeepSeek extends InferenceInferenceEndpoint {
@@ -13779,6 +13809,8 @@ export type InferenceTaskTypeAzureAIStudio = 'text_embedding' | 'completion'
 export type InferenceTaskTypeAzureOpenAI = 'text_embedding' | 'completion'
 
 export type InferenceTaskTypeCohere = 'text_embedding' | 'rerank' | 'completion'
+
+export type InferenceTaskTypeCustom = 'text_embedding' | 'sparse_embedding' | 'rerank' | 'completion'
 
 export type InferenceTaskTypeDeepSeek = 'completion' | 'chat_completion'
 
@@ -13985,6 +14017,17 @@ export interface InferencePutCohereRequest extends RequestBase {
 }
 
 export type InferencePutCohereResponse = InferenceInferenceEndpointInfoCohere
+
+export interface InferencePutCustomRequest extends RequestBase {
+  task_type: InferenceCustomTaskType
+  custom_inference_id: Id
+  chunking_settings?: InferenceInferenceChunkingSettings
+  service: InferenceCustomServiceType
+  service_settings: InferenceCustomServiceSettings
+  task_settings?: InferenceCustomTaskSettings
+}
+
+export type InferencePutCustomResponse = InferenceInferenceEndpointInfoCustom
 
 export interface InferencePutDeepseekRequest extends RequestBase {
   task_type: InferenceTaskTypeDeepSeek
