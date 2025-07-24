@@ -43,6 +43,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'ignore_throttled',
       'ignore_unavailable',
       'include_named_queries_score',
+      'index',
       'max_concurrent_searches',
       'max_concurrent_shard_requests',
       'pre_filter_shard_size',
