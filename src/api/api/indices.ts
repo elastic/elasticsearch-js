@@ -419,15 +419,6 @@ export default class Indices {
           'verbose'
         ]
       },
-      'indices.get_data_stream_mappings': {
-        path: [
-          'name'
-        ],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      },
       'indices.get_data_stream_options': {
         path: [
           'name'
@@ -594,19 +585,6 @@ export default class Indices {
         ],
         query: [
           'expand_wildcards',
-          'master_timeout',
-          'timeout'
-        ]
-      },
-      'indices.put_data_stream_mappings': {
-        path: [
-          'name'
-        ],
-        body: [
-          'mappings'
-        ],
-        query: [
-          'dry_run',
           'master_timeout',
           'timeout'
         ]
@@ -1661,7 +1639,7 @@ export default class Indices {
 
   /**
     * Delete data stream options. Removes the data stream options from a data stream.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/index.html | Elasticsearch API documentation}
     */
   async deleteDataStreamOptions (this: That, params: T.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataStreamOptionsResponse>
   async deleteDataStreamOptions (this: That, params: T.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteDataStreamOptionsResponse, unknown>>
@@ -2518,53 +2496,8 @@ export default class Indices {
   }
 
   /**
-    * Get data stream mappings. Get mapping information for one or more data streams.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-mappings | Elasticsearch API documentation}
-    */
-  async getDataStreamMappings (this: That, params: T.IndicesGetDataStreamMappingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamMappingsResponse>
-  async getDataStreamMappings (this: That, params: T.IndicesGetDataStreamMappingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataStreamMappingsResponse, unknown>>
-  async getDataStreamMappings (this: That, params: T.IndicesGetDataStreamMappingsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataStreamMappingsResponse>
-  async getDataStreamMappings (this: That, params: T.IndicesGetDataStreamMappingsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this.acceptedParams['indices.get_data_stream_mappings']
-
-    const userQuery = params?.querystring
-    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
-
-    let body: Record<string, any> | string | undefined
-    const userBody = params?.body
-    if (userBody != null) {
-      if (typeof userBody === 'string') {
-        body = userBody
-      } else {
-        body = { ...userBody }
-      }
-    }
-
-    for (const key in params) {
-      if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'GET'
-    const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_mappings`
-    const meta: TransportRequestMetadata = {
-      name: 'indices.get_data_stream_mappings',
-      pathParts: {
-        name: params.name
-      }
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
     * Get data stream options. Get the data stream options configuration of one or more data streams.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/index.html | Elasticsearch API documentation}
     */
   async getDataStreamOptions (this: That, params: T.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamOptionsResponse>
   async getDataStreamOptions (this: That, params: T.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataStreamOptionsResponse, unknown>>
@@ -3325,55 +3258,8 @@ export default class Indices {
   }
 
   /**
-    * Update data stream mappings. This API can be used to override mappings on specific data streams. These overrides will take precedence over what is specified in the template that the data stream matches. The mapping change is only applied to new write indices that are created during rollover after this API is called. No indices are changed by this API.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-mappings | Elasticsearch API documentation}
-    */
-  async putDataStreamMappings (this: That, params: T.IndicesPutDataStreamMappingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataStreamMappingsResponse>
-  async putDataStreamMappings (this: That, params: T.IndicesPutDataStreamMappingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutDataStreamMappingsResponse, unknown>>
-  async putDataStreamMappings (this: That, params: T.IndicesPutDataStreamMappingsRequest, options?: TransportRequestOptions): Promise<T.IndicesPutDataStreamMappingsResponse>
-  async putDataStreamMappings (this: That, params: T.IndicesPutDataStreamMappingsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this.acceptedParams['indices.put_data_stream_mappings']
-
-    const userQuery = params?.querystring
-    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
-
-    let body: any = params.body ?? undefined
-    for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        body = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
-      }
-    }
-
-    const method = 'PUT'
-    const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_mappings`
-    const meta: TransportRequestMetadata = {
-      name: 'indices.put_data_stream_mappings',
-      pathParts: {
-        name: params.name
-      }
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
     * Update data stream options. Update the data stream options of the specified data streams.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/index.html | Elasticsearch API documentation}
     */
   async putDataStreamOptions (this: That, params: T.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataStreamOptionsResponse>
   async putDataStreamOptions (this: That, params: T.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutDataStreamOptionsResponse, unknown>>
