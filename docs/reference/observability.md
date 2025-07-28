@@ -35,6 +35,41 @@ To start sending Elasticsearch trace data to your OpenTelemetry endpoint, follow
 node --require '@opentelemetry/auto-instrumentations-node/register' index.js
 ```
 
+### Disabling OpenTelemetry collection [disable-otel]
+
+As of `@elastic/transport` version 9.1.0&mdash;or 8.10.0 when using `@elastic/elasticsearch` 8.x&mdash;OpenTelemetry tracing can be disabled in multiple ways.
+
+To entirely disable OpenTelemetry collection, you can provide a custom `Transport` at client instantiation time that sets `openTelemetry.enabled` to `false`:
+
+```typscript
+import { Transport } from '@elastic/transport'
+
+class MyTransport extends Transport {
+  async request(params, options = {}): Promise<any> {
+    options.openTelemetry = { enabled: false }
+    return super.request(params, options)
+  }
+}
+
+const client = new Client({
+  node: '...',
+  auth: { ... },
+  Transport: MyTransport
+})
+```
+
+Alternatively, you can also export an environment variable `OTEL_ELASTICSEARCH_ENABLED=false` to achieve the same effect.
+
+If you would not like OpenTelemetry to be disabled entirely, but would like the client to suppress tracing, you can use the option `openTelemetry.suppressInternalInstrumentation = false` instead.
+
+If you would like to keep either option enabled by default, but want to disable them for a single API call, you can pass `Transport` options as a second argument to any API function call:
+
+```typescript
+const response = await client.search({ ... }, {
+  openTelemetry: { enabled: false }
+})
+```
+
 ## Events [_events]
 
 The client is an event emitter. This means that you can listen for its events to add additional logic to your code, without needing to change the client’s internals or how you use the client. You can find the events' names by accessing the `events` key of the client:

@@ -12,7 +12,7 @@ const { Client } = require('@elastic/elasticsearch')
 const { Transport } = require('@elastic/transport')
 
 class MyTransport extends Transport {
-  request (params, options, callback) {
+  request (params, options) {
     // your code
   }
 }
@@ -26,9 +26,9 @@ Sometimes you need to inject a small snippet of your code and then continue to u
 
 ```js
 class MyTransport extends Transport {
-  request (params, options, callback) {
+  request (params, options) {
     // your code
-    return super.request(params, options, callback)
+    return super.request(params, options)
   }
 }
 ```
