@@ -3839,7 +3839,10 @@ export interface ElasticsearchVersionInfo {
   /** The minimum node version with which the responding node can communicate.
     * Also the minimum version from which you can perform a rolling upgrade. */
   minimum_wire_compatibility_version: VersionString
-  /** The Elasticsearch version number. */
+  /** The Elasticsearch version number.
+    *
+    * ::: IMPORTANT: For Serverless deployments, this static value is always `8.11.0` and is used solely for backward compatibility with legacy clients.
+    *  Serverless environments are versionless and automatically upgraded, so this value can be safely ignored. */
   number: string
 }
 

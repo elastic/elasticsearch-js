@@ -1015,6 +1015,7 @@ client.index({ index })
 ## client.info [_info]
 Get cluster info.
 Get basic build, version, and cluster information.
+::: In Serverless, this API is retained for backward compatibility only. Some response fields, such as the version number, should be ignored.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-info)
 
