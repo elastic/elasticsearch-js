@@ -60,7 +60,7 @@ const client = new Client({
 
 Alternatively, you can also export an environment variable `OTEL_ELASTICSEARCH_ENABLED=false` to achieve the same effect.
 
-If you would not like OpenTelemetry to be disabled entirely, but would like the client to suppress tracing, you can use the option `openTelemetry.suppressInternalInstrumentation = false` instead.
+If you would not like OpenTelemetry to be disabled entirely, but would like the client to suppress tracing, you can use the option `openTelemetry.suppressInternalInstrumentation = true` instead.
 
 If you would like to keep either option enabled by default, but want to disable them for a single API call, you can pass `Transport` options as a second argument to any API function call:
 
