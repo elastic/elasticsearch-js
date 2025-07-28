@@ -41,7 +41,7 @@ As of `@elastic/transport` version 9.1.0&mdash;or 8.10.0 when using `@elastic/el
 
 To entirely disable OpenTelemetry collection, you can provide a custom `Transport` at client instantiation time that sets `openTelemetry.enabled` to `false`:
 
-```typscript
+```typescript
 import { Transport } from '@elastic/transport'
 
 class MyTransport extends Transport {
