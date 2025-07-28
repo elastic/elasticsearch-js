@@ -8,10 +8,12 @@ import { URL } from 'node:url'
 import { setTimeout } from 'node:timers/promises'
 import { test } from 'tap'
 import FakeTimers from '@sinonjs/fake-timers'
+import { Transport } from '@elastic/transport'
 import { buildServer, connection } from '../utils'
 import { Client, errors, SniffingTransport } from '../..'
 import * as symbols from '@elastic/transport/lib/symbols'
 import { BaseConnectionPool, CloudConnectionPool, WeightedConnectionPool, HttpConnection } from '@elastic/transport'
+import { BasicTracerProvider, InMemorySpanExporter, SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base'
 
 let clientVersion: string = require('../../package.json').version // eslint-disable-line
 if (clientVersion.includes('-')) {
@@ -124,7 +126,7 @@ test('Basic auth', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest (opts) {
+    onRequest(opts) {
       t.match(opts.headers, { authorization: 'Basic aGVsbG86d29ybGQ=' })
       return {
         statusCode: 200,
@@ -149,7 +151,7 @@ test('Basic auth via url', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest (opts) {
+    onRequest(opts) {
       t.match(opts.headers, { authorization: 'Basic aGVsbG86d29ybGQ=' })
       return {
         statusCode: 200,
@@ -170,7 +172,7 @@ test('ApiKey as string', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest (opts) {
+    onRequest(opts) {
       t.match(opts.headers, { authorization: 'ApiKey foobar' })
       return {
         statusCode: 200,
@@ -194,7 +196,7 @@ test('ApiKey as object', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest (opts) {
+    onRequest(opts) {
       t.match(opts.headers, { authorization: 'ApiKey Zm9vOmJhcg==' })
       return {
         statusCode: 200,
@@ -221,7 +223,7 @@ test('Bearer auth', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest (opts) {
+    onRequest(opts) {
       t.match(opts.headers, { authorization: 'Bearer token' })
       return {
         statusCode: 200,
@@ -245,7 +247,7 @@ test('Override authentication per request', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest (opts) {
+    onRequest(opts) {
       t.match(opts.headers, { authorization: 'Basic foobar' })
       return {
         statusCode: 200,
@@ -273,7 +275,7 @@ test('Custom headers per request', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest (opts) {
+    onRequest(opts) {
       t.match(opts.headers, {
         foo: 'bar',
         faz: 'bar'
@@ -301,7 +303,7 @@ test('Close the client', async t => {
   t.plan(1)
 
   class MyConnectionPool extends BaseConnectionPool {
-    async empty (): Promise<void> {
+    async empty(): Promise<void> {
       t.pass('called')
     }
   }
@@ -336,10 +338,10 @@ test('Elastic Cloud config', t => {
 
   t.test('Invalid Cloud ID will throw ConfigurationError', t => {
     t.throws(() => new Client({
-      cloud : {
-        id : 'invalidCloudIdThatIsNotBase64'
+      cloud: {
+        id: 'invalidCloudIdThatIsNotBase64'
       },
-      auth : {
+      auth: {
         username: 'elastic',
         password: 'changeme'
       }
@@ -414,7 +416,7 @@ test('Meta header enabled by default', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest (opts) {
+    onRequest(opts) {
       t.match(opts.headers, { 'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${transportVersion},hc=${nodeVersion}` })
       return {
         statusCode: 200,
@@ -435,7 +437,7 @@ test('Meta header disabled', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest (opts) {
+    onRequest(opts) {
       t.notOk(opts.headers?.['x-elastic-client-meta'])
       return {
         statusCode: 200,
@@ -456,12 +458,13 @@ test('Meta header disabled', async t => {
 test('Meta header indicates when UndiciConnection is used', async t => {
   t.plan(1)
 
-  function handler (req: http.IncomingMessage, res: http.ServerResponse) {
+  function handler(req: http.IncomingMessage, res: http.ServerResponse) {
     t.equal(req.headers['x-elastic-client-meta'], `es=${clientVersion},js=${nodeVersion},t=${transportVersion},un=${nodeVersion}`)
     res.end('ok')
   }
 
   const [{ port }, server] = await buildServer(handler)
+  t.after(() => server.stop())
 
   const client = new Client({
     node: `http://localhost:${port}`,
@@ -469,18 +472,18 @@ test('Meta header indicates when UndiciConnection is used', async t => {
   })
 
   await client.transport.request({ method: 'GET', path: '/' })
-  server.stop()
 })
 
 test('Meta header indicates when HttpConnection is used', async t => {
   t.plan(1)
 
-  function handler (req: http.IncomingMessage, res: http.ServerResponse) {
+  function handler(req: http.IncomingMessage, res: http.ServerResponse) {
     t.equal(req.headers['x-elastic-client-meta'], `es=${clientVersion},js=${nodeVersion},t=${transportVersion},hc=${nodeVersion}`)
     res.end('ok')
   }
 
   const [{ port }, server] = await buildServer(handler)
+  t.after(() => server.stop())
 
   const client = new Client({
     node: `http://localhost:${port}`,
@@ -488,7 +491,6 @@ test('Meta header indicates when HttpConnection is used', async t => {
   })
 
   await client.transport.request({ method: 'GET', path: '/' })
-  server.stop()
 })
 
 test('caFingerprint', t => {
@@ -503,9 +505,9 @@ test('caFingerprint', t => {
 
 test('caFingerprint can\'t be configured over http / 1', t => {
   t.throws(() => new Client({
-      node: 'http://localhost:9200',
-      caFingerprint: 'FO:OB:AR'
-    }),
+    node: 'http://localhost:9200',
+    caFingerprint: 'FO:OB:AR'
+  }),
     errors.ConfigurationError
   )
   t.end()
@@ -513,9 +515,9 @@ test('caFingerprint can\'t be configured over http / 1', t => {
 
 test('caFingerprint can\'t be configured over http / 2', t => {
   t.throws(() => new Client({
-      nodes: ['http://localhost:9200'],
-      caFingerprint: 'FO:OB:AR'
-    }),
+    nodes: ['http://localhost:9200'],
+    caFingerprint: 'FO:OB:AR'
+  }),
     errors.ConfigurationError
   )
   t.end()
@@ -551,7 +553,7 @@ test('Ensure new client does not time out if requestTimeout is not set', async t
   const clock = FakeTimers.install({ toFake: ['setTimeout'] })
   t.teardown(() => clock.uninstall())
 
-  function handler (_req: http.IncomingMessage, res: http.ServerResponse) {
+  function handler(_req: http.IncomingMessage, res: http.ServerResponse) {
     setTimeout(1000 * 60 * 60).then(() => {
       t.ok('timeout ended')
       res.setHeader('content-type', 'application/json')
@@ -660,7 +662,7 @@ test('serverless defaults', t => {
     t.plan(1)
 
     const Connection = connection.buildMockConnection({
-      onRequest (opts) {
+      onRequest(opts) {
         t.equal(opts.headers?.['elastic-api-version'], '2023-10-31')
         return {
           statusCode: 200,
@@ -684,5 +686,114 @@ test('serverless defaults', t => {
     t.end()
   })
 
+  t.end()
+})
+
+test('custom transport: class', async t => {
+  t.plan(3)
+
+  class MyTransport extends Transport {
+    async request(params, options): Promise<any> {
+      t.ok(true, 'custom Transport request function should be called')
+      return super.request(params, options)
+    }
+  }
+
+  function handler(_req: http.IncomingMessage, res: http.ServerResponse) {
+    t.ok(true, 'handler should be called')
+    res.end('ok')
+  }
+
+  const [{ port }, server] = await buildServer(handler)
+  t.after(() => server.stop())
+
+  const client = new Client({
+    node: `http://localhost:${port}`,
+    Transport: MyTransport
+  })
+
+  t.ok(client.transport instanceof MyTransport, 'Custom transport should be used')
+
+  client.transport.request({ method: 'GET', path: '/' })
+})
+
+test('custom transport: disable otel via options', async t => {
+  const exporter = new InMemorySpanExporter()
+  const processor = new SimpleSpanProcessor(exporter)
+  const provider = new BasicTracerProvider({
+    spanProcessors: [processor]
+  })
+  provider.register()
+
+  t.after(async () => {
+    await provider.forceFlush()
+    exporter.reset()
+    await provider.shutdown()
+  })
+
+  class MyTransport extends Transport {
+    async request(params, options = {}): Promise<any> {
+      // @ts-expect-error
+      options.openTelemetry = { enabled: false }
+      return super.request(params, options)
+    }
+  }
+
+  function handler(_req: http.IncomingMessage, res: http.ServerResponse) {
+    res.end('ok')
+  }
+
+  const [{ port }, server] = await buildServer(handler)
+  t.after(() => server.stop())
+
+  const client = new Client({
+    node: `http://localhost:${port}`,
+    Transport: MyTransport
+  })
+
+  await client.transport.request({
+    path: '/hello',
+    method: 'GET',
+    meta: { name: 'hello' },
+  })
+
+  t.equal(exporter.getFinishedSpans().length, 0)
+  t.end()
+})
+
+test('custom transport: disable otel via env var', async t => {
+  const exporter = new InMemorySpanExporter()
+  const processor = new SimpleSpanProcessor(exporter)
+  const provider = new BasicTracerProvider({
+    spanProcessors: [processor]
+  })
+  provider.register()
+
+  t.after(async () => {
+    await provider.forceFlush()
+    exporter.reset()
+    await provider.shutdown()
+  })
+
+  function handler(_req: http.IncomingMessage, res: http.ServerResponse) {
+    res.end('ok')
+  }
+
+  const [{ port }, server] = await buildServer(handler)
+  t.after(() => server.stop())
+
+  const client = new Client({
+    node: `http://localhost:${port}`,
+  })
+
+  process.env.OTEL_ELASTICSEARCH_ENABLED = 'false'
+
+  await client.transport.request({
+    path: '/hello',
+    method: 'GET',
+    meta: { name: 'hello' },
+  })
+
+  t.equal(exporter.getFinishedSpans().length, 0)
   t.end()
 })
