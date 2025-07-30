@@ -20,6 +20,16 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.1.0 [elasticsearch-javascript-client-9.1.0-release-notes]
+
+### Features and enhancements [elasticsearch-javascript-client-9.1.0-features-enhancements]
+
+- **Compatibility with Elasticsearch 9.1:** All changes and additions to Elasticsearch APIs for its 9.1 release are reflected in this release.
+
+### Fixes [elasticsearch-javascript-client-9.1.0-fixes]
+
+- **Deep merge nested options on client instantiation:** If custom values for `redaction` and `headers` options were set by the user during `Client` instantiation, nested default values would be dropped rather than deep-merged. This has been fixed.
+
 ## 9.0.3
 
 ### Fixes [elasticsearch-javascript-client-9.0.3-fixes]
