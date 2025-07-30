@@ -2,6 +2,26 @@
 == Release notes
 
 [discrete]
+=== 8.19.0
+
+[discrete]
+==== Features
+
+[discrete]
+===== Support for Elasticsearch `v8.19`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.19/release-notes-8.19.0.html[here].
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Deep merge nested options on client instantiation
+
+If custom values for `redaction` and `headers` options were set by the user during `Client` instantiation, nested default values would be dropped rather than deep-merged. This has been fixed.
+
+[discrete]
 === 8.18.2
 
 [discrete]
