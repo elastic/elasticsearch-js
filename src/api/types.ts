@@ -3848,7 +3848,10 @@ export interface ElasticsearchVersionInfo {
   /** The minimum node version with which the responding node can communicate.
     * Also the minimum version from which you can perform a rolling upgrade. */
   minimum_wire_compatibility_version: VersionString
-  /** The Elasticsearch version number. */
+  /** The Elasticsearch version number.
+    *
+    * ::: IMPORTANT: For Serverless deployments, this static value is always `8.11.0` and is used solely for backward compatibility with legacy clients.
+    *  Serverless environments are versionless and automatically upgraded, so this value can be safely ignored. */
   number: string
 }
 
@@ -17916,7 +17919,13 @@ export type EqlSearchResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEven
 export type EqlSearchResultPosition = 'tail' | 'head'
 
 export interface EsqlAsyncEsqlResult extends EsqlEsqlResult {
+  /** The ID of the async query, to be used in subsequent requests to check the status or retrieve results.
+    *
+    * Also available in the `X-Elasticsearch-Async-Id` HTTP header. */
   id?: string
+  /** Indicates whether the async query is still running or has completed.
+    *
+    * Also available in the `X-Elasticsearch-Async-Is-Running` HTTP header. */
   is_running: boolean
 }
 
@@ -18002,7 +18011,12 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   /** Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
     * If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns. */
   drop_null_columns?: boolean
-  /** A short version of the Accept header, for example `json` or `yaml`. */
+  /** A short version of the Accept header, e.g. json, yaml.
+    *
+    * `csv`, `tsv`, and `txt` formats will return results in a tabular format, excluding other metadata fields from the response.
+    *
+    * For async requests, nothing will be returned if the async query doesn't finish within the timeout.
+    * The query ID and running status are available in the `X-Elasticsearch-Async-Id` and `X-Elasticsearch-Async-Is-Running` HTTP headers of the response, respectively. */
   format?: EsqlEsqlFormat
   /** By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results. */
   columnar?: boolean
@@ -18140,7 +18154,9 @@ export interface EsqlListQueriesResponse {
 }
 
 export interface EsqlQueryRequest extends RequestBase {
-  /** A short version of the Accept header, e.g. json, yaml. */
+  /** A short version of the Accept header, e.g. json, yaml.
+    *
+    * `csv`, `tsv`, and `txt` formats will return results in a tabular format, excluding other metadata fields from the response. */
   format?: EsqlEsqlFormat
   /** The character to use between values within a CSV row. Only valid for the CSV format. */
   delimiter?: string
@@ -22360,6 +22376,55 @@ export interface InferenceAmazonBedrockTaskSettings {
 
 export type InferenceAmazonBedrockTaskType = 'completion' | 'text_embedding'
 
+export type InferenceAmazonSageMakerApi = 'openai' | 'elastic'
+
+export interface InferenceAmazonSageMakerServiceSettings {
+  /** A valid AWS access key that has permissions to use Amazon SageMaker and access to models for invoking requests. */
+  access_key: string
+  /** The name of the SageMaker endpoint. */
+  endpoint_name: string
+  /** The API format to use when calling SageMaker.
+    * Elasticsearch will convert the POST _inference request to this data format when invoking the SageMaker endpoint. */
+  api: InferenceAmazonSageMakerApi
+  /** The region that your endpoint or Amazon Resource Name (ARN) is deployed in.
+    * The list of available regions per model can be found in the Amazon SageMaker documentation. */
+  region: string
+  /** A valid AWS secret key that is paired with the `access_key`.
+    * For information about creating and managing access and secret keys, refer to the AWS documentation. */
+  secret_key: string
+  /** The model ID when calling a multi-model endpoint. */
+  target_model?: string
+  /** The container to directly invoke when calling a multi-container endpoint. */
+  target_container_hostname?: string
+  /** The inference component to directly invoke when calling a multi-component endpoint. */
+  inference_component_name?: string
+  /** The maximum number of inputs in each batch. This value is used by inference ingestion pipelines
+    * when processing semantic values. It correlates to the number of times the SageMaker endpoint is
+    * invoked (one per batch of input). */
+  batch_size?: integer
+  /** The number of dimensions returned by the text embedding models. If this value is not provided, then
+    * it is guessed by making invoking the endpoint for the `text_embedding` task. */
+  dimensions?: integer
+}
+
+export type InferenceAmazonSageMakerServiceType = 'amazon_sagemaker'
+
+export interface InferenceAmazonSageMakerTaskSettings {
+  /** The AWS custom attributes passed verbatim through to the model running in the SageMaker Endpoint.
+    * Values will be returned in the `X-elastic-sagemaker-custom-attributes` header. */
+  custom_attributes?: string
+  /** The optional JMESPath expression used to override the EnableExplanations provided during endpoint creation. */
+  enable_explanations?: string
+  /** The capture data ID when enabled in the endpoint. */
+  inference_id?: string
+  /** The stateful session identifier for a new or existing session.
+    * New sessions will be returned in the `X-elastic-sagemaker-new-session-id` header.
+    * Closed sessions will be returned in the `X-elastic-sagemaker-closed-session-id` header. */
+  session_id?: string
+  /** Specifies the variant when running with multi-variant Endpoints. */
+  target_variant?: string
+}
+
 export interface InferenceAnthropicServiceSettings {
   /** A valid API key for the Anthropic API. */
   api_key: string
@@ -23043,6 +23108,13 @@ export interface InferenceInferenceEndpointInfoAmazonBedrock extends InferenceIn
   task_type: InferenceTaskTypeAmazonBedrock
 }
 
+export interface InferenceInferenceEndpointInfoAmazonSageMaker extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeAmazonSageMaker
+}
+
 export interface InferenceInferenceEndpointInfoAnthropic extends InferenceInferenceEndpoint {
   /** The inference Id */
   inference_id: string
@@ -23430,6 +23502,8 @@ export type InferenceTaskTypeAlibabaCloudAI = 'text_embedding' | 'rerank' | 'com
 
 export type InferenceTaskTypeAmazonBedrock = 'text_embedding' | 'completion'
 
+export type InferenceTaskTypeAmazonSageMaker = 'text_embedding' | 'completion' | 'chat_completion' | 'sparse_embedding' | 'rerank'
+
 export type InferenceTaskTypeAnthropic = 'completion'
 
 export type InferenceTaskTypeAzureAIStudio = 'text_embedding' | 'completion'
@@ -23727,6 +23801,31 @@ export interface InferencePutAmazonbedrockRequest extends RequestBase {
 }
 
 export type InferencePutAmazonbedrockResponse = InferenceInferenceEndpointInfoAmazonBedrock
+
+export interface InferencePutAmazonsagemakerRequest extends RequestBase {
+  /** The type of the inference task that the model will perform. */
+  task_type: InferenceTaskTypeAmazonSageMaker
+  /** The unique identifier of the inference endpoint. */
+  amazonsagemaker_inference_id: Id
+  /** Specifies the amount of time to wait for the inference endpoint to be created. */
+  timeout?: Duration
+  /** The chunking configuration object. */
+  chunking_settings?: InferenceInferenceChunkingSettings
+  /** The type of service supported for the specified task type. In this case, `amazon_sagemaker`. */
+  service: InferenceAmazonSageMakerServiceType
+  /** Settings used to install the inference model.
+    * These settings are specific to the `amazon_sagemaker` service and `service_settings.api` you specified. */
+  service_settings: InferenceAmazonSageMakerServiceSettings
+  /** Settings to configure the inference task.
+    * These settings are specific to the task type and `service_settings.api` you specified. */
+  task_settings?: InferenceAmazonSageMakerTaskSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, amazonsagemaker_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, amazonsagemaker_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+}
+
+export type InferencePutAmazonsagemakerResponse = InferenceInferenceEndpointInfoAmazonSageMaker
 
 export interface InferencePutAnthropicRequest extends RequestBase {
   /** The task type.
