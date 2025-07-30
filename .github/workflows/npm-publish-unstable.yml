@@ -37,6 +37,9 @@ jobs:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.src == 'true' }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
     steps:
       # pause for 30 minutes to avoid publishing more than 2x per hour
       - name: Debounce 30 minutes
@@ -57,21 +60,8 @@ jobs:
           npm install
       - name: Run tests
         run: npm test
-
-  # if tests pass, publish unstable
-  publish:
-    name: Publish unstable
-    needs: test
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      id-token: write
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        with:
-          persist-credentials: false
-          ref: main
-      - name: npm publish
+      # if tests pass, publish unstable
+      - name: publish unstable build
         run: |
           # set unstable version value
           unstable_tag="unstable.$(date --utc +%Y%m%d%H%M%S)"
