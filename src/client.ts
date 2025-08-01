@@ -408,6 +408,8 @@ export default class Client extends API {
       maxResponseSize: options.maxResponseSize,
       maxCompressedResponseSize: options.maxCompressedResponseSize,
       redaction: options.redaction,
+      /* eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error */
+      // @ts-ignore enableMetaHeader will be available in transport v9.1.1
       enableMetaHeader: options.enableMetaHeader
     }
     if (options.serverMode !== 'serverless') {
