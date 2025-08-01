@@ -407,7 +407,9 @@ export default class Client extends API {
       productCheck: 'Elasticsearch',
       maxResponseSize: options.maxResponseSize,
       maxCompressedResponseSize: options.maxCompressedResponseSize,
-      redaction: options.redaction
+      redaction: options.redaction,
+      // @ts-expect-error new option being added to transport in next minor
+      enableClientMeta: options.enableMetaHeader
     }
     if (options.serverMode !== 'serverless') {
       transportOptions = Object.assign({}, transportOptions, {
