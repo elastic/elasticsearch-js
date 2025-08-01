@@ -408,7 +408,6 @@ export default class Client extends API {
       maxResponseSize: options.maxResponseSize,
       maxCompressedResponseSize: options.maxCompressedResponseSize,
       redaction: options.redaction,
-      // @ts-expect-error new option being added to transport in next minor
       enableMetaHeader: options.enableMetaHeader
     }
     if (options.serverMode !== 'serverless') {
