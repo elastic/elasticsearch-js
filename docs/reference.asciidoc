@@ -15204,7 +15204,7 @@ If `false`, Elasticsearch only stores async searches that don't finish before th
 ** *`page_timeout` (Optional, string | -1 | 0)*: The minimum retention period for the scroll cursor.
 After this time period, a pagination request might fail because the scroll cursor is no longer available.
 Subsequent scroll requests prolong the lifetime of the scroll cursor by the duration of `page_timeout` in the scroll request.
-** *`params` (Optional, Record<string, User-defined value>)*: The values for parameters in the query.
+** *`params` (Optional, User-defined value[])*: The values for parameters in the query.
 ** *`query` (Optional, string)*: The SQL query to run.
 ** *`request_timeout` (Optional, string | -1 | 0)*: The timeout before the request fails.
 ** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: One or more runtime fields for the search request.
