@@ -4620,7 +4620,12 @@ If false, the query and its results are stored in the cluster only if the reques
 It is valid only for the CSV format.
 - **`drop_null_columns` (Optional, boolean)**: Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
 If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
-- **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile" \| "arrow"))**: A short version of the Accept header, for example `json` or `yaml`.
+- **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile" \| "arrow"))**: A short version of the Accept header, e.g. json, yaml.
+
+`csv`, `tsv`, and `txt` formats will return results in a tabular format, excluding other metadata fields from the response.
+
+For async requests, nothing will be returned if the async query doesn't finish within the timeout.
+The query ID and running status are available in the `X-Elasticsearch-Async-Id` and `X-Elasticsearch-Async-Is-Running` HTTP headers of the response, respectively.
 
 ## client.esql.asyncQueryDelete [_esql.async_query_delete]
 Delete an async ES|QL query.
@@ -4721,6 +4726,8 @@ name and the next level key is the column name.
 object with information about the clusters that participated in the search along with info such as shards
 count.
 - **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile" \| "arrow"))**: A short version of the Accept header, e.g. json, yaml.
+
+`csv`, `tsv`, and `txt` formats will return results in a tabular format, excluding other metadata fields from the response.
 - **`delimiter` (Optional, string)**: The character to use between values within a CSV row. Only valid for the CSV format.
 - **`drop_null_columns` (Optional, boolean)**: Should columns that are entirely `null` be removed from the `columns` and `values` portion of the results?
 Defaults to `false`. If `true` then the response will include an extra section under the name `all_columns` which has the name of all columns.
