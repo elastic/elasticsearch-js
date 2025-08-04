@@ -21496,7 +21496,7 @@ export interface SqlQueryRequest extends RequestBase {
     keep_alive?: Duration
     keep_on_completion?: boolean
     page_timeout?: Duration
-    params?: Record<string, any>
+    params?: any[]
     query?: string
     request_timeout?: Duration
     runtime_mappings?: MappingRuntimeFields
