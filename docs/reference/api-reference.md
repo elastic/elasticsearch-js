@@ -4628,7 +4628,12 @@ To override the default behavior, you can set the `esql.query.allow_partial_resu
 It is valid only for the CSV format.
 - **`drop_null_columns` (Optional, boolean)**: Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
 If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
-- **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile" \| "arrow"))**: A short version of the Accept header, for example `json` or `yaml`.
+- **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile" \| "arrow"))**: A short version of the Accept header, e.g. json, yaml.
+
+`csv`, `tsv`, and `txt` formats will return results in a tabular format, excluding other metadata fields from the response.
+
+For async requests, nothing will be returned if the async query doesn't finish within the timeout.
+The query ID and running status are available in the `X-Elasticsearch-Async-Id` and `X-Elasticsearch-Async-Is-Running` HTTP headers of the response, respectively.
 
 ## client.esql.asyncQueryDelete [_esql.async_query_delete]
 Delete an async ES|QL query.
@@ -4749,6 +4754,8 @@ name and the next level key is the column name.
 object with information about the clusters that participated in the search along with info such as shards
 count.
 - **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile" \| "arrow"))**: A short version of the Accept header, e.g. json, yaml.
+
+`csv`, `tsv`, and `txt` formats will return results in a tabular format, excluding other metadata fields from the response.
 - **`delimiter` (Optional, string)**: The character to use between values within a CSV row. Only valid for the CSV format.
 - **`drop_null_columns` (Optional, boolean)**: Should columns that are entirely `null` be removed from the `columns` and `values` portion of the results?
 Defaults to `false`. If `true` then the response will include an extra section under the name `all_columns` which has the name of all columns.
@@ -7662,6 +7669,7 @@ However, if you do not plan to use the inference APIs to use these models or if 
 The following integrations are available through the inference API. You can find the available task types next to the integration name:
 * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`)
 * Amazon Bedrock (`completion`, `text_embedding`)
+* Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`)
 * Anthropic (`completion`)
 * Azure AI Studio (`completion`, 'rerank', `text_embedding`)
 * Azure OpenAI (`completion`, `text_embedding`)
@@ -7742,14 +7750,28 @@ These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putAmazonsagemaker [_inference.put_amazonsagemaker]
-Configure a Amazon SageMaker inference endpoint
+Create an Amazon SageMaker inference endpoint.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/infer-service-amazon-sagemaker.html)
+Create an inference endpoint to perform an inference task with the `amazon_sagemaker` service.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-amazonsagemaker)
 
 ```ts
-client.inference.putAmazonsagemaker()
+client.inference.putAmazonsagemaker({ task_type, amazonsagemaker_inference_id, service, service_settings })
 ```
 
+### Arguments [_arguments_inference.put_amazonsagemaker]
+
+#### Request (object) [_request_inference.put_amazonsagemaker]
+- **`task_type` (Enum("text_embedding" \| "completion" \| "chat_completion" \| "sparse_embedding" \| "rerank"))**: The type of the inference task that the model will perform.
+- **`amazonsagemaker_inference_id` (string)**: The unique identifier of the inference endpoint.
+- **`service` (Enum("amazon_sagemaker"))**: The type of service supported for the specified task type. In this case, `amazon_sagemaker`.
+- **`service_settings` ({ access_key, endpoint_name, api, region, secret_key, target_model, target_container_hostname, inference_component_name, batch_size, dimensions })**: Settings used to install the inference model.
+These settings are specific to the `amazon_sagemaker` service and `service_settings.api` you specified.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+- **`task_settings` (Optional, { custom_attributes, enable_explanations, inference_id, session_id, target_variant })**: Settings to configure the inference task.
+These settings are specific to the task type and `service_settings.api` you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putAnthropic [_inference.put_anthropic]
 Create an Anthropic inference endpoint.
@@ -14326,7 +14348,7 @@ If `false`, Elasticsearch only stores async searches that don't finish before th
 - **`page_timeout` (Optional, string \| -1 \| 0)**: The minimum retention period for the scroll cursor.
 After this time period, a pagination request might fail because the scroll cursor is no longer available.
 Subsequent scroll requests prolong the lifetime of the scroll cursor by the duration of `page_timeout` in the scroll request.
-- **`params` (Optional, Record<string, User-defined value>)**: The values for parameters in the query.
+- **`params` (Optional, User-defined value[])**: The values for parameters in the query.
 - **`query` (Optional, string)**: The SQL query to run.
 - **`request_timeout` (Optional, string \| -1 \| 0)**: The timeout before the request fails.
 - **`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)**: One or more runtime fields for the search request.
