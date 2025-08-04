@@ -17850,7 +17850,13 @@ export type EqlSearchResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEven
 export type EqlSearchResultPosition = 'tail' | 'head'
 
 export interface EsqlAsyncEsqlResult extends EsqlEsqlResult {
+  /** The ID of the async query, to be used in subsequent requests to check the status or retrieve results.
+    *
+    * Also available in the `X-Elasticsearch-Async-Id` HTTP header. */
   id?: string
+  /** Indicates whether the async query is still running or has completed.
+    *
+    * Also available in the `X-Elasticsearch-Async-Is-Running` HTTP header. */
   is_running: boolean
 }
 
@@ -17931,7 +17937,12 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   /** Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
     * If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns. */
   drop_null_columns?: boolean
-  /** A short version of the Accept header, for example `json` or `yaml`. */
+  /** A short version of the Accept header, e.g. json, yaml.
+    *
+    * `csv`, `tsv`, and `txt` formats will return results in a tabular format, excluding other metadata fields from the response.
+    *
+    * For async requests, nothing will be returned if the async query doesn't finish within the timeout.
+    * The query ID and running status are available in the `X-Elasticsearch-Async-Id` and `X-Elasticsearch-Async-Is-Running` HTTP headers of the response, respectively. */
   format?: EsqlEsqlFormat
   /** By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results. */
   columnar?: boolean
@@ -18031,7 +18042,9 @@ export interface EsqlAsyncQueryStopRequest extends RequestBase {
 export type EsqlAsyncQueryStopResponse = EsqlEsqlResult
 
 export interface EsqlQueryRequest extends RequestBase {
-  /** A short version of the Accept header, e.g. json, yaml. */
+  /** A short version of the Accept header, e.g. json, yaml.
+    *
+    * `csv`, `tsv`, and `txt` formats will return results in a tabular format, excluding other metadata fields from the response. */
   format?: EsqlEsqlFormat
   /** The character to use between values within a CSV row. Only valid for the CSV format. */
   delimiter?: string
