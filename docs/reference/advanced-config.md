@@ -59,6 +59,10 @@ const client = new Client({
 })
 ```
 
+`@elastic/transport` provides two `Connection` implementations:
+
+- `UndiciConnection`: manages HTTP connections using [Undici](https://undici.nodejs.org/), Node.js's high-performance HTTP client implementation; this is the default value of `Connection` and is recommended unless you have a use case that is not yet supported by Undici or `UndiciConnection`
+- `HttpConnection`: manages HTTP connections using [the `http` package](https://nodejs.org/api/http.html) from Node.js's standard library
 
 ## `Serializer` [_serializer]
 

@@ -184,12 +184,12 @@ const client = new Client({
 })
 ```
 
-### `agent`
+### `agent` [agent-config]
 
-Type: `http.AgentOptions, function`<br>
+Type: `http.AgentOptions, undici.PoolOptions, function`<br>
 Default: `null`
 
-http agent [options](https://nodejs.org/api/http.html#http_new_agent_options), or a function that returns an actual http agent instance. If you want to disable the http agent use entirely (and disable the `keep-alive` feature), set the agent to `false`.
+If using the default `UndiciConnection` from `@elastic/transport`, this value can be an [Undici `PoolOptions` object](https://undici.nodejs.org/#/docs/api/Pool?id=parameter-pooloptions) or a function that receives all connection-related options and returns an [Undici `Agent`](https://undici.nodejs.org/#/docs/api/Agent.md) instance. If using the legacy `HttpConnection` from `@elastic/transport`, this value can be [the options object passed to an `http.Agent`](https://nodejs.org/api/http.html#new-agentoptions), a function that returns an `http.Agent` (and thus also an [`https.Agent`](https://nodejs.org/api/https.html#class-httpsagent) or any implementaiton that follows the same conventions, like [`hpagent`](https://www.npmjs.com/package/hpagent)), or `false` to disable all agent usage, including the `keep-alive` feature.
 
 ```js
 const client = new Client({
@@ -210,6 +210,10 @@ const client = new Client({
   agent: false
 })
 ```
+
+::::{warning}
+If you have set [the `agent` option](/reference/basic-config.md#agent-config) on your client instance to a function and are using `UndiciConnection`&mdash;the default [`Connection`](/reference/advanced-config.md#_connection) value starting in 8.0&mdash;all `caFingerprint` and `tls` options will be ignored. It is your responsibility to ensure that your custom agent will properly verify HTTPS connections.
+::::
 
 ### `nodeFilter`
 
