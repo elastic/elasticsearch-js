@@ -6,7 +6,7 @@ mapped_pages:
 
 # Getting started [getting-started-js]
 
-This page guides you through the installation process of the Node.js client, shows you how to instantiate the client, and how to perform basic Elasticsearch operations with it.
+This page guides you through the installation process of the Node.js client, shows you how to instantiate the client, and how to perform basic {{es}} operations with it.
 
 
 ### Requirements [_requirements]
@@ -28,7 +28,7 @@ Refer to the [*Installation*](/reference/installation.md) page to learn more.
 
 ### Connecting [_connecting]
 
-You can connect to the Elastic Cloud using an API key and the Elasticsearch endpoint.
+You can connect to the Elastic Cloud using an API key and the {{es}} endpoint.
 
 ```js
 const { Client } = require('@elastic/elasticsearch')
@@ -43,9 +43,9 @@ const client = new Client({
 })
 ```
 
-Your Elasticsearch endpoint can be found on the **My deployment** page of your deployment:
+Your {{es}} endpoint can be found on the **My deployment** page of your deployment:
 
-![Finding Elasticsearch endpoint](images/es-endpoint.jpg)
+![Finding {{es}} endpoint](images/es-endpoint.jpg)
 
 You can generate an API key on the **Management** page under Security.
 
@@ -56,7 +56,7 @@ For other connection options, refer to the [*Connecting*](/reference/connecting.
 
 ### Operations [_operations]
 
-Time to use Elasticsearch! This section walks you through the basic, and most important, operations of Elasticsearch.
+Time to use {{es}}! This section walks you through the basic, and most important, operations of {{es}}.
 
 
 #### Creating an index [_creating_an_index]

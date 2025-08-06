@@ -5,7 +5,7 @@ mapped_pages:
 
 # TypeScript support [typescript]
 
-The client offers a first-class support for TypeScript, shipping a complete set of type definitions of Elasticsearch’s API surface.
+The client offers a first-class support for TypeScript, shipping a complete set of type definitions of {{es}}'s API surface.
 
 The types are not 100% complete yet. Some APIs are missing (the newest ones, e.g. EQL), and others may contain some errors, but we are continuously pushing fixes & improvements. Contribute type fixes and improvements to [elasticsearch-specification github repository](https://github.com/elastic/elasticsearch-specification).
 

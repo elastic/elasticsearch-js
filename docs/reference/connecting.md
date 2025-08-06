@@ -332,7 +332,7 @@ The supported request specific options are:
 | Option | Description |
 | --- | ----------- |
 | `ignore` | `number[]` -  HTTP status codes which should not be considered errors for this request.<br>*Default:* `null` |
-| `requestTimeout` | `number` or `string` - Max request timeout for the request in milliseconds. This overrides the client default, which is to not time out at all. See [Elasticsearch best practices for HTML clients](elasticsearch://reference/elasticsearch/configuration-reference/networking-settings.md#_http_client_configuration) for more info.<br>_Default:_ No timeout |
+| `requestTimeout` | `number` or `string` - Max request timeout for the request in milliseconds. This overrides the client default, which is to not time out at all. See [{{es}} best practices for HTML clients](elasticsearch://reference/elasticsearch/configuration-reference/networking-settings.md#_http_client_configuration) for more info.<br>_Default:_ No timeout |connecting
 | `retryOnTimeout` | `boolean` - Retry requests that have timed out.*Default:* `false` |
 | `maxRetries` | `number` - Max number of retries for the request, it overrides the client default.<br>*Default:* `3` |
 | `compression` | `string` or  `boolean` - Enables body compression for the request.<br>*Options:* `false`, `'gzip'`<br>*Default:* `false` |
@@ -477,7 +477,7 @@ You can find the errors exported by the client in the table below.
 
 ## Keep-alive connections [keep-alive]
 
-By default, the client uses persistent, keep-alive connections to reduce the overhead of creating a new HTTP connection for each Elasticsearch request. If you are using the default `UndiciConnection` connection class, it maintains a pool of 256 connections with a keep-alive of 10 minutes. If you are using the legacy `HttpConnection` connection class, it maintains a pool of 256 connections with a keep-alive of 1 minute.
+By default, the client uses persistent, keep-alive connections to reduce the overhead of creating a new HTTP connection for each {{es}} request. If you are using the default `UndiciConnection` connection class, it maintains a pool of 256 connections with a keep-alive of 10 minutes. If you are using the legacy `HttpConnection` connection class, it maintains a pool of 256 connections with a keep-alive of 1 minute.
 
 If you need to disable keep-alive connections, you can override the HTTP agent with your preferred [HTTP agent options](https://nodejs.org/api/http.md#http_new_agent_options):
 
@@ -513,4 +513,4 @@ client.close();
 
 ## Automatic product check [product-check]
 
-Since v7.14.0, the client performs a required product check before the first call. This pre-flight product check allows the client to establish the version of Elasticsearch that it is communicating with. The product check requires one additional HTTP request to be sent to the server as part of the request pipeline before the main API call is sent. In most cases, this will succeed during the very first API call that the client sends. Once the product check completes, no further product check HTTP requests are sent for subsequent API calls.
+Since v7.14.0, the client performs a required product check before the first call. This pre-flight product check allows the client to establish the version of {{es}} that it is communicating with. The product check requires one additional HTTP request to be sent to the server as part of the request pipeline before the main API call is sent. In most cases, this will succeed during the very first API call that the client sends. Once the product check completes, no further product check HTTP requests are sent for subsequent API calls.

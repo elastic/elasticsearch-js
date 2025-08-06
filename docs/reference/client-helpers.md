@@ -93,7 +93,7 @@ To create a new instance of the Bulk helper, access it as shown in the example a
     ```
 
 `onSuccess`
-:   A function that is called for each successful operation in the bulk request, which includes the result from Elasticsearch along with the original document that was sent, or `null` for delete operations.
+:   A function that is called for each successful operation in the bulk request, which includes the result from {{es}} along with the original document that was sent, or `null` for delete operations.
 
     ```js
     const b = client.helpers.bulk({
@@ -307,7 +307,7 @@ console.log(result)
 
 Added in `v8.8.2`
 
-If you need to modify documents in your datasource before it is sent to Elasticsearch, you can return an array in the `onDocument` function rather than an operation object. The first item in the array must be the operation object, and the second item must be the document or partial document object as you’d like it to be sent to Elasticsearch.
+If you need to modify documents in your datasource before it is sent to {{es}}, you can return an array in the `onDocument` function rather than an operation object. The first item in the array must be the operation object, and the second item must be the document or partial document object as you’d like it to be sent to {{es}}.
 
 ```js
 const { Client } = require('@elastic/elasticsearch')
