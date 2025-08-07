@@ -6706,7 +6706,7 @@ You can use the update mapping API to:
 - Change a field's mapping using reindexing
 - Rename a field using a field alias
 
-Learn how to use the update mapping API with practical examples in the [Update mapping API examples](https://www.elastic.co/docs//manage-data/data-store/mapping/update-mappings-examples) guide.
+Learn how to use the update mapping API with practical examples in the [Update mapping API examples](docs-content://manage-data/data-store/mapping/update-mappings-examples.md) guide.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-mapping)
 
