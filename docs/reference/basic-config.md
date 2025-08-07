@@ -186,10 +186,19 @@ const client = new Client({
 
 ### `agent` [agent-config]
 
-Type: `http.AgentOptions, undici.PoolOptions, function`<br>
+Type: `http.AgentOptions, undici.PoolOptions, function, false`<br>
 Default: `null`
 
-If using the default `UndiciConnection` from `@elastic/transport`, this value can be an [Undici `PoolOptions` object](https://undici.nodejs.org/#/docs/api/Pool?id=parameter-pooloptions) or a function that receives all connection-related options and returns an [Undici `Agent`](https://undici.nodejs.org/#/docs/api/Agent.md) instance. If using the legacy `HttpConnection` from `@elastic/transport`, this value can be [the options object passed to an `http.Agent`](https://nodejs.org/api/http.html#new-agentoptions), a function that returns an `http.Agent` (and thus also an [`https.Agent`](https://nodejs.org/api/https.html#class-httpsagent) or any implementaiton that follows the same conventions, like [`hpagent`](https://www.npmjs.com/package/hpagent)), or `false` to disable all agent usage, including the `keep-alive` feature.
+If using the default `UndiciConnection` from `@elastic/transport`, this value can be:
+
+- an [Undici `PoolOptions` object](https://undici.nodejs.org/#/docs/api/Pool?id=parameter-pooloptions)
+- a function that receives all connection-related options and returns an [Undici `Agent`](https://undici.nodejs.org/#/docs/api/Agent.md) instance (or any other object that follows [Undici's `Dispatch.request()`](https://undici.nodejs.org/#/docs/api/Dispatcher?id=dispatcherrequestoptions-callback) conventions)
+
+If using the legacy `HttpConnection` from `@elastic/transport`, this value can be:
+
+- [the options object passed to an `http.Agent`](https://nodejs.org/api/http.html#new-agentoptions)
+- a function that returns an `http.Agent` (and thus also an [`https.Agent`](https://nodejs.org/api/https.html#class-httpsagent), or any implementation that follows the same conventions, like [`hpagent`](https://www.npmjs.com/package/hpagent))
+- `false` to disable all agent usage, including the `keep-alive` feature
 
 ```js
 const client = new Client({
