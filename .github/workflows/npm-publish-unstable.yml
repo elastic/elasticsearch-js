@@ -71,7 +71,7 @@ jobs:
 
           # overwrite package.json with unstable version value
           mv package.json package.json.bak
-          jq --arg v "$unstable_version" ".version = $v" package.json.bak > package.json
+          jq --arg v "$unstable_version" '.version = $v' package.json.bak > package.json
           rm package.json.bak
 
           # publish to npm
