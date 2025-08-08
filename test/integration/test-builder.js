@@ -76,6 +76,8 @@ const stackSkips = [
   'text_structure/10_basic.yml',
   // test definition bug: illegal_argument_exception
   'transform/10_basic.yml',
+  // attempts to retrieve index.routing.allocation.include, which does not exist
+  'watcher/10_basic.yml'
 ]
 
 const serverlessSkips = [
