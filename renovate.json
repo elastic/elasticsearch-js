@@ -10,14 +10,9 @@
   "baseBranchPatterns": [
     "main",
     "8.19",
-    "/^9\./"
+    "/^9\\./"
   ],
   "packageRules": [
-    {
-      "matchDepTypes": [
-        "devDependencies"
-      ]
-    },
     {
       "matchManagers": [
         "dockerfile",
