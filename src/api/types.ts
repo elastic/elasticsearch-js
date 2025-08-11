@@ -3400,7 +3400,7 @@ export interface TermvectorsRequest<TDocument = unknown> extends RequestBase {
   per_field_analyzer?: Record<Field, string>
   /** A list of fields to include in the statistics.
     * It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters. */
-  fields?: Fields
+  fields?: Field[]
   /** If `true`, the response includes:
     *
     * * The document count (how many documents contain this field).
@@ -7935,8 +7935,30 @@ export interface MappingByteNumberProperty extends MappingNumberPropertyBase {
 }
 
 export interface MappingChunkingSettings {
-  /** The chunking strategy: `sentence` or `word`. */
+  /** The chunking strategy: `sentence`, `word`, `none` or `recursive`.
+    *
+    *  * If `strategy` is set to `recursive`, you must also specify:
+    *
+    * - `max_chunk_size`
+    * - either `separators` or`separator_group`
+    *
+    * Learn more about different chunking strategies in the linked documentation. */
   strategy: string
+  /** This parameter is only applicable when using the `recursive` chunking strategy.
+    *
+    * Sets a predefined list of separators in the saved chunking settings based on the selected text type.
+    * Values can be `markdown` or `plaintext`.
+    *
+    * Using this parameter is an alternative to manually specifying a custom `separators` list. */
+  separator_group: string
+  /** A list of strings used as possible split points when chunking text with the `recursive` strategy.
+    *
+    * Each string can be a plain string or a regular expression (regex) pattern.
+    * The system tries each separator in order to split the text, starting from the first item in the list.
+    *
+    * After splitting, it attempts to recombine smaller pieces into larger chunks that stay within
+    * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
+  separators: string[]
   /** The maximum size of a chunk in words.
     * This value cannot be higher than `300` or lower than `20` (for `sentence` strategy) or `10` (for `word` strategy). */
   max_chunk_size: integer
@@ -22577,10 +22599,8 @@ export interface InferenceCohereServiceSettings {
     *
     * * For the available `completion` models, refer to the [Cohere command docs](https://docs.cohere.com/docs/models#command).
     * * For the available `rerank` models, refer to the [Cohere rerank docs](https://docs.cohere.com/reference/rerank-1).
-    * * For the available `text_embedding` models, refer to [Cohere embed docs](https://docs.cohere.com/reference/embed).
-    *
-    * The default value for a text embedding task is `embed-english-v2.0`. */
-  model_id?: string
+    * * For the available `text_embedding` models, refer to [Cohere embed docs](https://docs.cohere.com/reference/embed). */
+  model_id: string
   /** This setting helps to minimize the number of rate limit errors returned from Cohere.
     * By default, the `cohere` service sets the number of requests allowed per minute to 10000. */
   rate_limit?: InferenceRateLimitSetting
@@ -22604,7 +22624,7 @@ export interface InferenceCohereTaskSettings {
     * * `search`: Use it for storing embeddings of search queries run against a vector database to find relevant documents.
     *
     * IMPORTANT: The `input_type` field is required when using embedding models `v3` and higher. */
-  input_type?: InferenceCohereInputType
+  input_type: InferenceCohereInputType
   /** For a `rerank` task, return doc text within the results. */
   return_documents?: boolean
   /** For a `rerank` task, the number of most relevant documents to return.
@@ -23072,7 +23092,29 @@ export interface InferenceInferenceChunkingSettings {
     * It is applicable only for a `sentence` chunking strategy.
     * It can be either `1` or `0`. */
   sentence_overlap?: integer
-  /** The chunking strategy: `sentence` or `word`. */
+  /** This parameter is only applicable when using the `recursive` chunking strategy.
+    *
+    * Sets a predefined list of separators in the saved chunking settings based on the selected text type.
+    * Values can be `markdown` or `plaintext`.
+    *
+    * Using this parameter is an alternative to manually specifying a custom `separators` list. */
+  separator_group: string
+  /** A list of strings used as possible split points when chunking text with the `recursive` strategy.
+    *
+    * Each string can be a plain string or a regular expression (regex) pattern.
+    * The system tries each separator in order to split the text, starting from the first item in the list.
+    *
+    * After splitting, it attempts to recombine smaller pieces into larger chunks that stay within
+    * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
+  separators: string[]
+  /** The chunking strategy: `sentence`, `word`, `none` or `recursive`.
+    *
+    *  * If `strategy` is set to `recursive`, you must also specify:
+    *
+    * - `max_chunk_size`
+    * - either `separators` or`separator_group`
+    *
+    * Learn more about different chunking strategies in the linked documentation. */
   strategy?: string
 }
 
@@ -36390,7 +36432,7 @@ export interface SqlQueryRequest extends RequestBase {
     * Subsequent scroll requests prolong the lifetime of the scroll cursor by the duration of `page_timeout` in the scroll request. */
   page_timeout?: Duration
   /** The values for parameters in the query. */
-  params?: Record<string, any>
+  params?: any[]
   /** The SQL query to run. */
   query?: string
   /** The timeout before the request fails. */
