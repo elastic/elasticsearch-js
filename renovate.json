@@ -1,34 +1,30 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>elastic/renovate-config"
+    "local>elastic/renovate-config",
+    "schedule:automergeMonthly",
+    "npm:unpublishSafe",
+    "mergeConfidence:all-badges"
   ],
-  "schedule": [
-    "* * * * 0"
+  "prConcurrentLimit": 10,
+  "baseBranchPatterns": [
+    "main",
+    "8.19",
+    "/^9\\./"
   ],
   "packageRules": [
     {
-      "matchDepTypes": [
-        "devDependencies"
-      ],
-      "automerge": true,
-      "labels": [
-        "backport 8.x"
-      ]
-    },
-    {
       "matchManagers": [
-        "dockerfile"
-      ],
-      "pinDigests": false,
-      "automerge": true
-    },
-    {
-      "matchDatasources": [
+        "dockerfile",
         "docker"
       ],
-      "pinDigests": false,
-      "automerge": true
+      "pinDigests": false
+    },
+    {
+      "matchDepNames": [
+        "@types/**"
+      ],
+      "bumpVersion": "minor"
     }
   ]
 }
