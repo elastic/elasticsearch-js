@@ -104,6 +104,19 @@ export default class Inference {
           'timeout'
         ]
       },
+      'inference.put_ai21': {
+        path: [
+          'task_type',
+          'ai21_inference_id'
+        ],
+        body: [
+          'service',
+          'service_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
       'inference.put_alibabacloud': {
         path: [
           'task_type',
@@ -319,6 +332,20 @@ export default class Inference {
           'service',
           'service_settings',
           'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_llama': {
+        path: [
+          'task_type',
+          'llama_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings'
         ],
         query: [
           'timeout'
@@ -723,7 +750,7 @@ export default class Inference {
   }
 
   /**
-    * Create an inference endpoint. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. The following integrations are available through the inference API. You can find the available task types next to the integration name: * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Amazon Bedrock (`completion`, `text_embedding`) * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Anthropic (`completion`) * Azure AI Studio (`completion`, 'rerank', `text_embedding`) * Azure OpenAI (`completion`, `text_embedding`) * Cohere (`completion`, `rerank`, `text_embedding`) * DeepSeek (`completion`, `chat_completion`) * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland) * ELSER (`sparse_embedding`) * Google AI Studio (`completion`, `text_embedding`) * Google Vertex AI (`rerank`, `text_embedding`) * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`) * Mistral (`chat_completion`, `completion`, `text_embedding`) * OpenAI (`chat_completion`, `completion`, `text_embedding`) * VoyageAI (`text_embedding`, `rerank`) * Watsonx inference integration (`text_embedding`) * JinaAI (`text_embedding`, `rerank`)
+    * Create an inference endpoint. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. The following integrations are available through the inference API. You can find the available task types next to the integration name: * AI21 (`chat_completion`, `completion`) * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Amazon Bedrock (`completion`, `text_embedding`) * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Anthropic (`completion`) * Azure AI Studio (`completion`, 'rerank', `text_embedding`) * Azure OpenAI (`completion`, `text_embedding`) * Cohere (`completion`, `rerank`, `text_embedding`) * DeepSeek (`chat_completion`, `completion`) * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland) * ELSER (`sparse_embedding`) * Google AI Studio (`completion`, `text_embedding`) * Google Vertex AI (`chat_completion`, `completion`, `rerank`, `text_embedding`) * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`) * JinaAI (`rerank`, `text_embedding`) * Llama (`chat_completion`, `completion`, `text_embedding`) * Mistral (`chat_completion`, `completion`, `text_embedding`) * OpenAI (`chat_completion`, `completion`, `text_embedding`) * VoyageAI (`rerank`, `text_embedding`) * Watsonx inference integration (`text_embedding`)
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put | Elasticsearch API documentation}
     */
   async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutResponse>
@@ -772,6 +799,64 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         inference_id: params.inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create a AI21 inference endpoint. Create an inference endpoint to perform an inference task with the `ai21` service.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-ai21 | Elasticsearch API documentation}
+    */
+  async putAi21 (this: That, params: T.InferencePutAi21Request, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAi21Response>
+  async putAi21 (this: That, params: T.InferencePutAi21Request, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAi21Response, unknown>>
+  async putAi21 (this: That, params: T.InferencePutAi21Request, options?: TransportRequestOptions): Promise<T.InferencePutAi21Response>
+  async putAi21 (this: That, params: T.InferencePutAi21Request, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_ai21']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.ai21_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_ai21',
+      pathParts: {
+        task_type: params.task_type,
+        ai21_inference_id: params.ai21_inference_id
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -1642,6 +1727,64 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         jinaai_inference_id: params.jinaai_inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create a Llama inference endpoint. Create an inference endpoint to perform an inference task with the `llama` service.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-llama | Elasticsearch API documentation}
+    */
+  async putLlama (this: That, params: T.InferencePutLlamaRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutLlamaResponse>
+  async putLlama (this: That, params: T.InferencePutLlamaRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutLlamaResponse, unknown>>
+  async putLlama (this: That, params: T.InferencePutLlamaRequest, options?: TransportRequestOptions): Promise<T.InferencePutLlamaResponse>
+  async putLlama (this: That, params: T.InferencePutLlamaRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_llama']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.llama_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_llama',
+      pathParts: {
+        task_type: params.task_type,
+        llama_inference_id: params.llama_inference_id
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

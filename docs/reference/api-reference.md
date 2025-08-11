@@ -76,6 +76,7 @@ Some of the officially supported clients provide helpers to assist with bulk req
 * JavaScript: Check out `client.helpers.*`
 * .NET: Check out `BulkAllObservable`
 * PHP: Check out bulk indexing.
+* Ruby: Check out `Elasticsearch::Helpers::BulkHelper`
 
 **Submitting bulk requests with cURL**
 
@@ -1825,7 +1826,7 @@ client.termvectors({ index })
 - **`doc` (Optional, object)**: An artificial document (a document not present in the index) for which you want to retrieve term vectors.
 - **`filter` (Optional, { max_doc_freq, max_num_terms, max_term_freq, max_word_length, min_doc_freq, min_term_freq, min_word_length })**: Filter terms based on their tf-idf scores. This could be useful in order find out a good characteristic vector of a document. This feature works in a similar manner to the second phase of the More Like This Query.
 - **`per_field_analyzer` (Optional, Record<string, string>)**: Override the default per-field analyzer. This is useful in order to generate term vectors in any fashion, especially when using artificial documents. When providing an analyzer for a field that already stores term vectors, the term vectors will be regenerated.
-- **`fields` (Optional, string \| string[])**: A list of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
+- **`fields` (Optional, string[])**: A list of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
 - **`field_statistics` (Optional, boolean)**: If `true`, the response includes: * The document count (how many documents contain this field). * The sum of document frequencies (the sum of document frequencies for all terms in this field). * The sum of total term frequencies (the sum of total term frequencies of each term in this field).
 - **`offsets` (Optional, boolean)**: If `true`, the response includes term offsets.
 - **`payloads` (Optional, boolean)**: If `true`, the response includes term payloads.
@@ -3487,7 +3488,12 @@ client.cluster.getSettings({ ... })
 
 #### Request (object) [_request_cluster.get_settings]
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
-- **`include_defaults` (Optional, boolean)**: If `true`, returns default cluster settings from the local node.
+- **`include_defaults` (Optional, boolean)**: If `true`, also returns default values for all other cluster settings, reflecting the values
+in the `elasticsearch.yml` file of one of the nodes in the cluster. If the nodes in your
+cluster do not all have the same values in their `elasticsearch.yml` config files then the
+values returned by this API may vary from invocation to invocation and may not reflect the
+values that Elasticsearch uses in all situations. Use the `GET _nodes/settings` API to
+fetch the settings for each individual node in your cluster.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
@@ -6706,7 +6712,7 @@ You can use the update mapping API to:
 - Change a field's mapping using reindexing
 - Rename a field using a field alias
 
-Learn how to use the update mapping API with practical examples in the [Update mapping API examples](docs-content://manage-data/data-store/mapping/update-mappings-examples.md) guide.
+Learn how to use the update mapping API with practical examples in the [Update mapping API examples](https://www.elastic.co/docs/manage-data/data-store/mapping/update-mappings-examples) guide.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-mapping)
 
@@ -7667,6 +7673,7 @@ For built-in models and models uploaded through Eland, the inference APIs offer 
 However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
 
 The following integrations are available through the inference API. You can find the available task types next to the integration name:
+* AI21 (`chat_completion`, `completion`)
 * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`)
 * Amazon Bedrock (`completion`, `text_embedding`)
 * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`)
@@ -7674,17 +7681,18 @@ The following integrations are available through the inference API. You can find
 * Azure AI Studio (`completion`, 'rerank', `text_embedding`)
 * Azure OpenAI (`completion`, `text_embedding`)
 * Cohere (`completion`, `rerank`, `text_embedding`)
-* DeepSeek (`completion`, `chat_completion`)
+* DeepSeek (`chat_completion`, `completion`)
 * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland)
 * ELSER (`sparse_embedding`)
 * Google AI Studio (`completion`, `text_embedding`)
-* Google Vertex AI (`rerank`, `text_embedding`)
+* Google Vertex AI (`chat_completion`, `completion`, `rerank`, `text_embedding`)
 * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`)
+* JinaAI (`rerank`, `text_embedding`)
+* Llama (`chat_completion`, `completion`, `text_embedding`)
 * Mistral (`chat_completion`, `completion`, `text_embedding`)
 * OpenAI (`chat_completion`, `completion`, `text_embedding`)
-* VoyageAI (`text_embedding`, `rerank`)
+* VoyageAI (`rerank`, `text_embedding`)
 * Watsonx inference integration (`text_embedding`)
-* JinaAI (`text_embedding`, `rerank`)
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put)
 
@@ -7698,6 +7706,26 @@ client.inference.put({ inference_id })
 - **`inference_id` (string)**: The inference Id
 - **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The task type. Refer to the integration list in the API description for the available task types.
 - **`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })**
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
+
+## client.inference.putAi21 [_inference.put_ai21]
+Create a AI21 inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `ai21` service.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-ai21)
+
+```ts
+client.inference.putAi21({ task_type, ai21_inference_id, service, service_settings })
+```
+
+### Arguments [_arguments_inference.put_ai21]
+
+#### Request (object) [_request_inference.put_ai21]
+- **`task_type` (Enum("completion" \| "chat_completion"))**: The type of the inference task that the model will perform.
+- **`ai21_inference_id` (string)**: The unique identifier of the inference endpoint.
+- **`service` (Enum("ai21"))**: The type of service supported for the specified task type. In this case, `ai21`.
+- **`service_settings` ({ model_id, api_key, rate_limit })**: Settings used to install the inference model. These settings are specific to the `ai21` service.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putAlibabacloud [_inference.put_alibabacloud]
@@ -8157,6 +8185,27 @@ client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_se
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { return_documents, task, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
+
+## client.inference.putLlama [_inference.put_llama]
+Create a Llama inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `llama` service.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-llama)
+
+```ts
+client.inference.putLlama({ task_type, llama_inference_id, service, service_settings })
+```
+
+### Arguments [_arguments_inference.put_llama]
+
+#### Request (object) [_request_inference.put_llama]
+- **`task_type` (Enum("text_embedding" \| "completion" \| "chat_completion"))**: The type of the inference task that the model will perform.
+- **`llama_inference_id` (string)**: The unique identifier of the inference endpoint.
+- **`service` (Enum("llama"))**: The type of service supported for the specified task type. In this case, `llama`.
+- **`service_settings` ({ url, model_id, max_input_tokens, similarity, rate_limit })**: Settings used to install the inference model. These settings are specific to the `llama` service.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putMistral [_inference.put_mistral]
