@@ -3419,7 +3419,7 @@ export default class Indices {
   }
 
   /**
-    * Update field mappings. Add new fields to an existing data stream or index. You can use the update mapping API to: - Add a new field to an existing index - Update mappings for multiple indices in a single request - Add new properties to an object field - Enable multi-fields for an existing field - Update supported mapping parameters - Change a field's mapping using reindexing - Rename a field using a field alias Learn how to use the update mapping API with practical examples in the [Update mapping API examples](https://www.elastic.co/docs//manage-data/data-store/mapping/update-mappings-examples) guide.
+    * Update field mappings. Add new fields to an existing data stream or index. You can use the update mapping API to: - Add a new field to an existing index - Update mappings for multiple indices in a single request - Add new properties to an object field - Enable multi-fields for an existing field - Update supported mapping parameters - Change a field's mapping using reindexing - Rename a field using a field alias Learn how to use the update mapping API with practical examples in the [Update mapping API examples](https://www.elastic.co/docs/manage-data/data-store/mapping/update-mappings-examples) guide.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-mapping | Elasticsearch API documentation}
     */
   async putMapping (this: That, params: T.IndicesPutMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutMappingResponse>
