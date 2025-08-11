@@ -93,6 +93,7 @@ Some of the officially supported clients provide helpers to assist with bulk req
 * JavaScript: Check out `client.helpers.*`
 * .NET: Check out `BulkAllObservable`
 * PHP: Check out bulk indexing.
+* Ruby: Check out `Elasticsearch::Helpers::BulkHelper`
 
 **Submitting bulk requests with cURL**
 
