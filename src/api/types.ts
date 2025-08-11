@@ -3404,7 +3404,7 @@ export interface TermvectorsRequest<TDocument = unknown> extends RequestBase {
   per_field_analyzer?: Record<Field, string>
   /** A list of fields to include in the statistics.
     * It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters. */
-  fields?: Fields
+  fields?: Field[]
   /** If `true`, the response includes:
     *
     * * The document count (how many documents contain this field).
@@ -15875,7 +15875,12 @@ export interface ClusterGetComponentTemplateResponse {
 export interface ClusterGetSettingsRequest extends RequestBase {
   /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
-  /** If `true`, returns default cluster settings from the local node. */
+  /** If `true`, also returns default values for all other cluster settings, reflecting the values
+    * in the `elasticsearch.yml` file of one of the nodes in the cluster. If the nodes in your
+    * cluster do not all have the same values in their `elasticsearch.yml` config files then the
+    * values returned by this API may vary from invocation to invocation and may not reflect the
+    * values that Elasticsearch uses in all situations. Use the `GET _nodes/settings` API to
+    * fetch the settings for each individual node in your cluster. */
   include_defaults?: boolean
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
@@ -22377,6 +22382,29 @@ export interface InferenceAdaptiveAllocations {
   min_number_of_allocations?: integer
 }
 
+export interface InferenceAi21ServiceSettings {
+  /** The name of the model to use for the inference task.
+    * Refer to the AI21 models documentation for the list of supported models and versions.
+    * Service has been tested and confirmed to be working for `completion` and `chat_completion` tasks with the following models:
+    * * `jamba-mini`
+    * * `jamba-large` */
+  model_id: string
+  /** A valid API key for accessing AI21 API.
+    *
+    * IMPORTANT: You need to provide the API key only once, during the inference model creation.
+    * The get inference endpoint API does not retrieve your API key.
+    * After creating the inference model, you cannot change the associated API key.
+    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+  api_key?: string
+  /** This setting helps to minimize the number of rate limit errors returned from the AI21 API.
+    * By default, the `ai21` service sets the number of requests allowed per minute to 200. Please refer to AI21 documentation for more details. */
+  rate_limit?: InferenceRateLimitSetting
+}
+
+export type InferenceAi21ServiceType = 'ai21'
+
+export type InferenceAi21TaskType = 'completion' | 'chat_completion'
+
 export interface InferenceAlibabaCloudServiceSettings {
   /** A valid API key for the AlibabaCloud AI Search API. */
   api_key: string
@@ -23222,6 +23250,13 @@ export interface InferenceInferenceEndpointInfo extends InferenceInferenceEndpoi
   task_type: InferenceTaskType
 }
 
+export interface InferenceInferenceEndpointInfoAi21 extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeAi21
+}
+
 export interface InferenceInferenceEndpointInfoAlibabaCloudAI extends InferenceInferenceEndpoint {
   /** The inference Id */
   inference_id: string
@@ -23327,6 +23362,13 @@ export interface InferenceInferenceEndpointInfoJinaAi extends InferenceInference
   task_type: InferenceTaskTypeJinaAi
 }
 
+export interface InferenceInferenceEndpointInfoLlama extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeLlama
+}
+
 export interface InferenceInferenceEndpointInfoMistral extends InferenceInferenceEndpoint {
   /** The inference Id */
   inference_id: string
@@ -23409,6 +23451,33 @@ export interface InferenceJinaAITaskSettings {
 export type InferenceJinaAITaskType = 'rerank' | 'text_embedding'
 
 export type InferenceJinaAITextEmbeddingTask = 'classification' | 'clustering' | 'ingest' | 'search'
+
+export interface InferenceLlamaServiceSettings {
+  /** The URL endpoint of the Llama stack endpoint.
+    * URL must contain:
+    * * For `text_embedding` task - `/v1/inference/embeddings`.
+    * * For `completion` and `chat_completion` tasks - `/v1/openai/v1/chat/completions`. */
+  url: string
+  /** The name of the model to use for the inference task.
+    * Refer to the Llama downloading models documentation for different ways of getting a list of available models and downloading them.
+    * Service has been tested and confirmed to be working with the following models:
+    * * For `text_embedding` task - `all-MiniLM-L6-v2`.
+    * * For `completion` and `chat_completion` tasks - `llama3.2:3b`. */
+  model_id: string
+  /** For a `text_embedding` task, the maximum number of tokens per input before chunking occurs. */
+  max_input_tokens?: integer
+  /** For a `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm. */
+  similarity?: InferenceLlamaSimilarityType
+  /** This setting helps to minimize the number of rate limit errors returned from the Llama API.
+    * By default, the `llama` service sets the number of requests allowed per minute to 3000. */
+  rate_limit?: InferenceRateLimitSetting
+}
+
+export type InferenceLlamaServiceType = 'llama'
+
+export type InferenceLlamaSimilarityType = 'cosine' | 'dot_product' | 'l2_norm'
+
+export type InferenceLlamaTaskType = 'text_embedding' | 'completion' | 'chat_completion'
 
 export interface InferenceMessage {
   /** The content of the message.
@@ -23540,6 +23609,7 @@ export interface InferenceRateLimitSetting {
     * * `googlevertexai` service: `30000`
     * * `hugging_face` service: `3000`
     * * `jinaai` service: `2000`
+    * * `llama` service: `3000`
     * * `mistral` service: `240`
     * * `openai` service and task type `text_embedding`: `3000`
     * * `openai` service and task type `completion`: `500`
@@ -23626,6 +23696,8 @@ export type InferenceTaskSettings = any
 
 export type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank' | 'completion' | 'chat_completion'
 
+export type InferenceTaskTypeAi21 = 'completion' | 'chat_completion'
+
 export type InferenceTaskTypeAlibabaCloudAI = 'text_embedding' | 'rerank' | 'completion' | 'sparse_embedding'
 
 export type InferenceTaskTypeAmazonBedrock = 'text_embedding' | 'completion'
@@ -23655,6 +23727,8 @@ export type InferenceTaskTypeGoogleVertexAI = 'text_embedding' | 'rerank'
 export type InferenceTaskTypeHuggingFace = 'chat_completion' | 'completion' | 'rerank' | 'text_embedding'
 
 export type InferenceTaskTypeJinaAi = 'text_embedding' | 'rerank'
+
+export type InferenceTaskTypeLlama = 'text_embedding' | 'chat_completion' | 'completion'
 
 export type InferenceTaskTypeMistral = 'text_embedding' | 'chat_completion' | 'completion'
 
@@ -23881,6 +23955,25 @@ export interface InferencePutRequest extends RequestBase {
 }
 
 export type InferencePutResponse = InferenceInferenceEndpointInfo
+
+export interface InferencePutAi21Request extends RequestBase {
+  /** The type of the inference task that the model will perform. */
+  task_type: InferenceAi21TaskType
+  /** The unique identifier of the inference endpoint. */
+  ai21_inference_id: Id
+  /** Specifies the amount of time to wait for the inference endpoint to be created. */
+  timeout?: Duration
+  /** The type of service supported for the specified task type. In this case, `ai21`. */
+  service: InferenceAi21ServiceType
+  /** Settings used to install the inference model. These settings are specific to the `ai21` service. */
+  service_settings: InferenceAi21ServiceSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, ai21_inference_id?: never, timeout?: never, service?: never, service_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, ai21_inference_id?: never, timeout?: never, service?: never, service_settings?: never }
+}
+
+export type InferencePutAi21Response = InferenceInferenceEndpointInfoAi21
 
 export interface InferencePutAlibabacloudRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -24237,6 +24330,27 @@ export interface InferencePutJinaaiRequest extends RequestBase {
 }
 
 export type InferencePutJinaaiResponse = InferenceInferenceEndpointInfoJinaAi
+
+export interface InferencePutLlamaRequest extends RequestBase {
+  /** The type of the inference task that the model will perform. */
+  task_type: InferenceLlamaTaskType
+  /** The unique identifier of the inference endpoint. */
+  llama_inference_id: Id
+  /** Specifies the amount of time to wait for the inference endpoint to be created. */
+  timeout?: Duration
+  /** The chunking configuration object. */
+  chunking_settings?: InferenceInferenceChunkingSettings
+  /** The type of service supported for the specified task type. In this case, `llama`. */
+  service: InferenceLlamaServiceType
+  /** Settings used to install the inference model. These settings are specific to the `llama` service. */
+  service_settings: InferenceLlamaServiceSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, llama_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, llama_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never }
+}
+
+export type InferencePutLlamaResponse = InferenceInferenceEndpointInfoLlama
 
 export interface InferencePutMistralRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
