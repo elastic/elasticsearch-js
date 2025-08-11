@@ -10,8 +10,7 @@
   "packageRules": [
     {
       "matchManagers": [
-        "dockerfile",
-        "docker"
+        "dockerfile"
       ],
       "pinDigests": false
     },
