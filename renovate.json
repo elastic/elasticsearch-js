@@ -7,11 +7,6 @@
     "mergeConfidence:all-badges"
   ],
   "prConcurrentLimit": 10,
-  "baseBranchPatterns": [
-    "main",
-    "8.19",
-    "/^9\\./"
-  ],
   "packageRules": [
     {
       "matchManagers": [
