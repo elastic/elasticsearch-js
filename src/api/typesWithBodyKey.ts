@@ -2024,7 +2024,7 @@ export interface TermvectorsRequest<TDocument = unknown> extends RequestBase {
     doc?: TDocument
     filter?: TermvectorsFilter
     per_field_analyzer?: Record<Field, string>
-    fields?: Fields
+    fields?: Field[]
     field_statistics?: boolean
     offsets?: boolean
     payloads?: boolean
