@@ -6,6 +6,9 @@
     "npm:unpublishSafe",
     "mergeConfidence:all-badges"
   ],
+  "schedule": [
+    "* 0-3 1 * *"
+  ],
   "prConcurrentLimit": 10,
   "packageRules": [
     {
