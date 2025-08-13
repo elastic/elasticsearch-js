@@ -5,7 +5,7 @@ mapped_pages:
 
 # Observability [observability]
 
-To observe and measure Elasticsearch client usage, several client features are provided.
+To observe and measure {{es}} client usage, several client features are provided.
 
 First, as of 8.15.0, the client provides native support for OpenTelemetry, which allows you to send client usage data to any endpoint that supports OpenTelemetry without having to make any changes to your JavaScript codebase.
 
@@ -17,9 +17,9 @@ All of these observability features are documented below.
 
 ## OpenTelemetry [_opentelemetry]
 
-The client supports OpenTelemetry’s [zero-code instrumentation](https://opentelemetry.io/docs/zero-code/js/) to enable tracking each client request as an [OpenTelemetry span](https://opentelemetry.io/docs/concepts/signals/traces/#spans). These spans follow all of the [semantic OpenTelemetry conventions for Elasticsearch](https://opentelemetry.io/docs/specs/semconv/database/elasticsearch/) except for `db.query.text`.
+The client supports OpenTelemetry’s [zero-code instrumentation](https://opentelemetry.io/docs/zero-code/js/) to enable tracking each client request as an [OpenTelemetry span](https://opentelemetry.io/docs/concepts/signals/traces/#spans). These spans follow all of the [semantic OpenTelemetry conventions for {{es}}](https://opentelemetry.io/docs/specs/semconv/database/elasticsearch/) except for `db.query.text`.
 
-To start sending Elasticsearch trace data to your OpenTelemetry endpoint, follow [OpenTelemetry’s zero-code instrumentation guide](https://opentelemetry.io/docs/zero-code/js/), or the following steps:
+To start sending {{es}} trace data to your OpenTelemetry endpoint, follow [OpenTelemetry’s zero-code instrumentation guide](https://opentelemetry.io/docs/zero-code/js/), or the following steps:
 
 1. Install `@opentelemetry/api` and `@opentelemetry/auto-instrumentations-node` as Node.js dependencies
 2. Export the following environment variables with the appropriate values:
