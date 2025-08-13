@@ -89,7 +89,7 @@
     "typescript": "5.9.2",
     "workq": "3.0.0",
     "xmlbuilder2": "3.1.1",
-    "zx": "8.7.2"
+    "zx": "8.8.0"
   },
   "dependencies": {
     "@elastic/transport": "^9.0.1",
