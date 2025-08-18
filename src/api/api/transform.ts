@@ -134,6 +134,11 @@ export default class Transform {
           'timeout'
         ]
       },
+      'transform.set_upgrade_mode': {
+        path: [],
+        body: [],
+        query: []
+      },
       'transform.start_transform': {
         path: [
           'transform_id'
@@ -580,6 +585,48 @@ export default class Transform {
       pathParts: {
         transform_id: params.transform_id
       }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/transform-set-upgrade-mode.html | Elasticsearch API documentation}
+    */
+  async setUpgradeMode (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async setUpgradeMode (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async setUpgradeMode (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async setUpgradeMode (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['transform.set_upgrade_mode']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = '/_transform/set_upgrade_mode'
+    const meta: TransportRequestMetadata = {
+      name: 'transform.set_upgrade_mode'
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
