@@ -4377,6 +4377,8 @@ It supports the implementation of services that utilize the connector protocol t
 
 To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
 This service runs automatically on Elastic Cloud for Elastic managed connectors.
+
+{ref}/claim-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.connector.syncJobClaim({ connector_sync_job_id, worker_hostname })
@@ -15966,6 +15968,15 @@ client.transform.scheduleNowTransform({ transform_id })
 * *Request (object):*
 ** *`transform_id` (string)*: Identifier for the transform.
 ** *`timeout` (Optional, string | -1 | 0)*: Controls the time to wait for the scheduling to take place
+
+[discrete]
+==== set_upgrade_mode
+Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
+[source,ts]
+----
+client.transform.setUpgradeMode()
+----
+
 
 [discrete]
 ==== start_transform
