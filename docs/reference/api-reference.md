@@ -76,6 +76,7 @@ Some of the officially supported clients provide helpers to assist with bulk req
 * JavaScript: Check out `client.helpers.*`
 * .NET: Check out `BulkAllObservable`
 * PHP: Check out bulk indexing.
+* Ruby: Check out `Elasticsearch::Helpers::BulkHelper`
 
 **Submitting bulk requests with cURL**
 
@@ -1340,6 +1341,12 @@ In this case, the response includes a count of the version conflicts that were e
 Note that the handling of other error types is unaffected by the `conflicts` property.
 Additionally, if you opt to count version conflicts, the operation could attempt to reindex more documents from the source than `max_docs` until it has successfully indexed `max_docs` documents into the target or it has gone through every document in the source query.
 
+It's recommended to reindex on indices with a green status. Reindexing can fail when a node shuts down or crashes.
+* When requested with `wait_for_completion=true` (default), the request fails if the node shuts down.
+* When requested with `wait_for_completion=false`, a task id is returned, which can be used via the task management API to monitor, debug, or cancel the task. The task may disappear or fail if the node shuts down.
+When retrying a failed reindex operation, it might be necessary to set `conflicts=proceed` or to first delete the partial destination index.
+Additionally, dry runs, checking disk space, and fetching index recovery information can help address the root cause.
+
 Refer to the linked documentation for examples of how to reindex documents.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-reindex)
@@ -1823,7 +1830,7 @@ client.termvectors({ index })
 - **`doc` (Optional, object)**: An artificial document (a document not present in the index) for which you want to retrieve term vectors.
 - **`filter` (Optional, { max_doc_freq, max_num_terms, max_term_freq, max_word_length, min_doc_freq, min_term_freq, min_word_length })**: Filter terms based on their tf-idf scores. This could be useful in order find out a good characteristic vector of a document. This feature works in a similar manner to the second phase of the More Like This Query.
 - **`per_field_analyzer` (Optional, Record<string, string>)**: Override the default per-field analyzer. This is useful in order to generate term vectors in any fashion, especially when using artificial documents. When providing an analyzer for a field that already stores term vectors, the term vectors will be regenerated.
-- **`fields` (Optional, string \| string[])**: A list of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
+- **`fields` (Optional, string[])**: A list of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
 - **`field_statistics` (Optional, boolean)**: If `true`, the response includes: * The document count (how many documents contain this field). * The sum of document frequencies (the sum of document frequencies for all terms in this field). * The sum of total term frequencies (the sum of total term frequencies of each term in this field).
 - **`offsets` (Optional, boolean)**: If `true`, the response includes term offsets.
 - **`payloads` (Optional, boolean)**: If `true`, the response includes term payloads.
@@ -2323,7 +2330,7 @@ client.cat.aliases({ ... })
 
 #### Request (object) [_request_cat.aliases]
 - **`name` (Optional, string \| string[])**: A list of aliases to retrieve. Supports wildcards (`*`).  To retrieve all aliases, omit this parameter or use `*` or `_all`.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("alias" \| "index" \| "filter" \| "routing.index" \| "routing.search" \| "is_write_index") \| Enum("alias" \| "index" \| "filter" \| "routing.index" \| "routing.search" \| "is_write_index")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2352,7 +2359,7 @@ client.cat.allocation({ ... })
 #### Request (object) [_request_cat.allocation]
 - **`node_id` (Optional, string \| string[])**: A list of node identifiers or names used to limit the returned information.
 - **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("shards" \| "shards.undesired" \| "write_load.forecast" \| "disk.indices.forecast" \| "disk.indices" \| "disk.used" \| "disk.avail" \| "disk.total" \| "disk.percent" \| "host" \| "ip" \| "node" \| "node.role") \| Enum("shards" \| "shards.undesired" \| "write_load.forecast" \| "disk.indices.forecast" \| "disk.indices" \| "disk.used" \| "disk.avail" \| "disk.total" \| "disk.percent" \| "host" \| "ip" \| "node" \| "node.role")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2383,7 +2390,7 @@ client.cat.componentTemplates({ ... })
 - **`name` (Optional, string)**: The name of the component template.
 It accepts wildcard expressions.
 If it is omitted, all component templates are returned.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("name" \| "version" \| "alias_count" \| "mapping_count" \| "settings_count" \| "metadata_count" \| "included_in") \| Enum("name" \| "version" \| "alias_count" \| "mapping_count" \| "settings_count" \| "metadata_count" \| "included_in")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2414,7 +2421,7 @@ client.cat.count({ ... })
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases used to limit the request.
 It supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("epoch" \| "timestamp" \| "count") \| Enum("epoch" \| "timestamp" \| "count")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2439,7 +2446,7 @@ client.cat.fielddata({ ... })
 - **`fields` (Optional, string \| string[])**: List of fields used to limit returned information.
 To retrieve all fields, omit this parameter.
 - **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("id" \| "host" \| "ip" \| "node" \| "field" \| "size") \| Enum("id" \| "host" \| "ip" \| "node" \| "field" \| "size")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -6518,7 +6525,7 @@ You can use the update mapping API to:
 - Change a field's mapping using reindexing
 - Rename a field using a field alias
 
-Learn how to use the update mapping API with practical examples in the [Update mapping API examples](https://www.elastic.co/docs//manage-data/data-store/mapping/update-mappings-examples) guide.
+Learn how to use the update mapping API with practical examples in the [Update mapping API examples](https://www.elastic.co/docs/manage-data/data-store/mapping/update-mappings-examples) guide.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-put-mapping)
 
@@ -13914,7 +13921,7 @@ If `false`, Elasticsearch only stores async searches that don't finish before th
 - **`page_timeout` (Optional, string \| -1 \| 0)**: The minimum retention period for the scroll cursor.
 After this time period, a pagination request might fail because the scroll cursor is no longer available.
 Subsequent scroll requests prolong the lifetime of the scroll cursor by the duration of `page_timeout` in the scroll request.
-- **`params` (Optional, Record<string, User-defined value>)**: The values for parameters in the query.
+- **`params` (Optional, User-defined value[])**: The values for parameters in the query.
 - **`query` (Optional, string)**: The SQL query to run.
 - **`request_timeout` (Optional, string \| -1 \| 0)**: The timeout before the request fails.
 - **`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)**: One or more runtime fields for the search request.
@@ -14832,6 +14839,16 @@ client.transform.scheduleNowTransform({ transform_id })
 #### Request (object) [_request_transform.schedule_now_transform]
 - **`transform_id` (string)**: Identifier for the transform.
 - **`timeout` (Optional, string \| -1 \| 0)**: Controls the time to wait for the scheduling to take place
+
+## client.transform.setUpgradeMode [_transform.set_upgrade_mode]
+Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
+
+[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/transform-set-upgrade-mode.html)
+
+```ts
+client.transform.setUpgradeMode()
+```
+
 
 ## client.transform.startTransform [_transform.start_transform]
 Start a transform.
