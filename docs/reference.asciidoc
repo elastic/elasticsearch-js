@@ -3863,7 +3863,12 @@ client.cluster.getSettings({ ... })
 
 * *Request (object):*
 ** *`flat_settings` (Optional, boolean)*: If `true`, returns settings in flat format.
-** *`include_defaults` (Optional, boolean)*: If `true`, returns default cluster settings from the local node.
+** *`include_defaults` (Optional, boolean)*: If `true`, also returns default values for all other cluster settings, reflecting the values
+in the `elasticsearch.yml` file of one of the nodes in the cluster. If the nodes in your
+cluster do not all have the same values in their `elasticsearch.yml` config files then the
+values returned by this API may vary from invocation to invocation and may not reflect the
+values that Elasticsearch uses in all situations. Use the `GET _nodes/settings` API to
+fetch the settings for each individual node in your cluster.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response.
@@ -4379,6 +4384,8 @@ It supports the implementation of services that utilize the connector protocol t
 
 To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
 This service runs automatically on Elastic Cloud for Elastic managed connectors.
+
+{ref}/claim-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.connector.syncJobClaim({ connector_sync_job_id, worker_hostname })
@@ -16176,6 +16183,15 @@ client.transform.scheduleNowTransform({ transform_id })
 * *Request (object):*
 ** *`transform_id` (string)*: Identifier for the transform.
 ** *`timeout` (Optional, string | -1 | 0)*: Controls the time to wait for the scheduling to take place
+
+[discrete]
+==== set_upgrade_mode
+Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
+[source,ts]
+----
+client.transform.setUpgradeMode()
+----
+
 
 [discrete]
 ==== start_transform
