@@ -47,7 +47,7 @@ export default async function DeleteByQueryApi (this: That, params: T.DeleteByQu
 export default async function DeleteByQueryApi (this: That, params: T.DeleteByQueryRequest | TB.DeleteByQueryRequest, options?: TransportRequestOptions): Promise<T.DeleteByQueryResponse>
 export default async function DeleteByQueryApi (this: That, params: T.DeleteByQueryRequest | TB.DeleteByQueryRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['max_docs', 'query', 'slice']
+  const acceptedBody: string[] = ['max_docs', 'query', 'slice', 'sort']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   const userBody: any = params?.body
