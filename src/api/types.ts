@@ -216,7 +216,6 @@ export interface DeleteByQueryRequest extends RequestBase {
   search_timeout?: Duration
   search_type?: SearchType
   slices?: Slices
-  sort?: string[]
   stats?: string[]
   terminate_after?: long
   timeout?: Duration
@@ -226,6 +225,7 @@ export interface DeleteByQueryRequest extends RequestBase {
   max_docs?: long
   query?: QueryDslQueryContainer
   slice?: SlicedScroll
+  sort?: Sort
 }
 
 export interface DeleteByQueryResponse {
