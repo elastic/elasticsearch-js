@@ -54,11 +54,18 @@ elasticsearch*
 # because we should copy them in the main .d.ts file
 api/generated.d.ts
 
-# Ignore doc folder
+# Ignore docs
 docs
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
 
-# Ignore test folder
+# Ignore test-related files
+codecov.yml
 test
+.tap
+rest-api-spec
+yaml-rest-tests
+generated-tests
 
 # Ignore scripts folder
 scripts
@@ -68,12 +75,14 @@ scripts
 .buildkite
 certs
 .github
-CODE_OF_CONDUCT.md
-CONTRIBUTING.md
+.dockerignore
 
+# ignore unbuilt source
 src
+
+# Bun artifact
 bun.lockb
-.tap
-rest-api-spec
-yaml-rest-tests
-generated-tests
+
+# Elastic org artifacts
+renovate.json
+catalog-info.yaml
