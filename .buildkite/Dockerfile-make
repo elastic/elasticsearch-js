@@ -12,6 +12,7 @@ RUN apt-get clean -y && \
     apt-get install -y zip
 
 # Set user permissions and directory
+# Use getent instead of id to handle cross-platform UID/GID conflicts (macOS vs Linux)
 RUN (getent group ${BUILDER_GID} || groupadd --system -g ${BUILDER_GID} ${BUILDER_GROUP}) \
     && (getent passwd ${BUILDER_UID} || useradd --system --shell /bin/bash -u ${BUILDER_UID} -g ${BUILDER_GID} -m elastic) \
     && mkdir -p /usr/src/elasticsearch-js \

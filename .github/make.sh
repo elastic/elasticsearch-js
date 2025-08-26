@@ -2,6 +2,7 @@
 # ------------------------------------------------------- #
 #
 # Build entry script for elasticsearch-js
+# Cross-platform compatible (macOS & Linux)
 #
 # Must be called: ./.github/make.sh <target> <params>
 #
@@ -22,7 +23,13 @@
 # ------------------------------------------------------- #
 # Bootstrap
 # ------------------------------------------------------- #
-script_path=$(dirname "$(realpath "$0")")
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS doesn't support -s flag
+  script_path=$(dirname "$(realpath "$0")")
+else
+  # Linux supports -s flag
+  script_path=$(dirname "$(realpath -s "$0")")
+fi
 repo=$(realpath "$script_path/../")
 
 # shellcheck disable=SC1090
