@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,27 +21,57 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  knn_search: {
+    path: [
+      'index'
+    ],
+    body: [
+      '_source',
+      'docvalue_fields',
+      'stored_fields',
+      'fields',
+      'filter',
+      'knn'
+    ],
+    query: [
+      'routing'
+    ]
+  }
+}
 
 /**
   * Run a knn search. NOTE: The kNN search API has been replaced by the `knn` option in the search API. Perform a k-nearest neighbor (kNN) search on a dense_vector field and return the matching documents. Given a query vector, the API finds the k closest vectors and returns those documents as search hits. Elasticsearch uses the HNSW algorithm to support efficient kNN search. Like most kNN algorithms, HNSW is an approximate method that sacrifices result accuracy for improved search speed. This means the results returned are not always the true k closest neighbors. The kNN search API supports restricting the search using a filter. The search will return the top k documents that also match the filter query. A kNN search response has the exact same structure as a search API response. However, certain sections have a meaning specific to kNN search: * The document `_score` is determined by the similarity between the query and document vector. * The `hits.total` object contains the total number of nearest neighbor candidates considered, which is `num_candidates * num_shards`. The `hits.total.relation` will always be `eq`, indicating an exact value.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/knn-search-api.html | Elasticsearch API documentation}
   */
-export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest | TB.KnnSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.KnnSearchResponse<TDocument>>
-export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest | TB.KnnSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.KnnSearchResponse<TDocument>, unknown>>
-export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest | TB.KnnSearchRequest, options?: TransportRequestOptions): Promise<T.KnnSearchResponse<TDocument>>
-export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest | TB.KnnSearchRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['_source', 'docvalue_fields', 'stored_fields', 'fields', 'filter', 'knn']
-  const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
+export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.KnnSearchResponse<TDocument>>
+export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.KnnSearchResponse<TDocument>, unknown>>
+export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest, options?: TransportRequestOptions): Promise<T.KnnSearchResponse<TDocument>>
+export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest, options?: TransportRequestOptions): Promise<any> {
+  const {
+    path: acceptedPath,
+    body: acceptedBody,
+    query: acceptedQuery
+  } = acceptedParams.knn_search
+
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
   }
 
   for (const key in params) {
@@ -65,9 +81,15 @@ export default async function KnnSearchApi<TDocument = unknown> (this: That, par
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
-      // @ts-expect-error
-      querystring[key] = params[key]
+    } else if (key !== 'body' && key !== 'querystring') {
+      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      } else {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     }
   }
 

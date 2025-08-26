@@ -12,8 +12,8 @@ RUN apt-get clean -y && \
     apt-get install -y zip
 
 # Set user permissions and directory
-RUN (getent group ${BUILDER_GID} || groupadd --system -g ${BUILDER_GID} ${BUILDER_GROUP}) \
-    && (getent passwd ${BUILDER_UID} || useradd --system --shell /bin/bash -u ${BUILDER_UID} -g ${BUILDER_GID} -m elastic) \
+RUN (id -g ${BUILDER_GID} || groupadd --system -g ${BUILDER_GID} ${BUILDER_GROUP}) \
+    && (id -u ${BUILDER_UID} || useradd --system --shell /bin/bash -u ${BUILDER_UID} -g ${BUILDER_GID} -m elastic) \
     && mkdir -p /usr/src/elasticsearch-js \
     && chown -R ${BUILDER_UID}:${BUILDER_GID} /usr/src/
 

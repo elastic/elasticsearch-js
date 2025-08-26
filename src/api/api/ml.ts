@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,31 +21,989 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Ml {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'ml.clear_trained_model_deployment_cache': {
+        path: [
+          'model_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.close_job': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'allow_no_match',
+          'force',
+          'timeout'
+        ],
+        query: [
+          'allow_no_match',
+          'force',
+          'timeout'
+        ]
+      },
+      'ml.delete_calendar': {
+        path: [
+          'calendar_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.delete_calendar_event': {
+        path: [
+          'calendar_id',
+          'event_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.delete_calendar_job': {
+        path: [
+          'calendar_id',
+          'job_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.delete_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'force',
+          'timeout'
+        ]
+      },
+      'ml.delete_datafeed': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [],
+        query: [
+          'force'
+        ]
+      },
+      'ml.delete_expired_data': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'requests_per_second',
+          'timeout'
+        ],
+        query: [
+          'requests_per_second',
+          'timeout'
+        ]
+      },
+      'ml.delete_filter': {
+        path: [
+          'filter_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.delete_forecast': {
+        path: [
+          'job_id',
+          'forecast_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_forecasts',
+          'timeout'
+        ]
+      },
+      'ml.delete_job': {
+        path: [
+          'job_id'
+        ],
+        body: [],
+        query: [
+          'force',
+          'delete_user_annotations',
+          'wait_for_completion'
+        ]
+      },
+      'ml.delete_model_snapshot': {
+        path: [
+          'job_id',
+          'snapshot_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.delete_trained_model': {
+        path: [
+          'model_id'
+        ],
+        body: [],
+        query: [
+          'force',
+          'timeout'
+        ]
+      },
+      'ml.delete_trained_model_alias': {
+        path: [
+          'model_alias',
+          'model_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.estimate_model_memory': {
+        path: [],
+        body: [
+          'analysis_config',
+          'max_bucket_cardinality',
+          'overall_cardinality'
+        ],
+        query: []
+      },
+      'ml.evaluate_data_frame': {
+        path: [],
+        body: [
+          'evaluation',
+          'index',
+          'query'
+        ],
+        query: []
+      },
+      'ml.explain_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [
+          'source',
+          'dest',
+          'analysis',
+          'description',
+          'model_memory_limit',
+          'max_num_threads',
+          'analyzed_fields',
+          'allow_lazy_start'
+        ],
+        query: []
+      },
+      'ml.flush_job': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'advance_time',
+          'calc_interim',
+          'end',
+          'skip_time',
+          'start'
+        ],
+        query: [
+          'advance_time',
+          'calc_interim',
+          'end',
+          'skip_time',
+          'start'
+        ]
+      },
+      'ml.forecast': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'duration',
+          'expires_in',
+          'max_model_memory'
+        ],
+        query: [
+          'duration',
+          'expires_in',
+          'max_model_memory'
+        ]
+      },
+      'ml.get_buckets': {
+        path: [
+          'job_id',
+          'timestamp'
+        ],
+        body: [
+          'anomaly_score',
+          'desc',
+          'end',
+          'exclude_interim',
+          'expand',
+          'page',
+          'sort',
+          'start'
+        ],
+        query: [
+          'anomaly_score',
+          'desc',
+          'end',
+          'exclude_interim',
+          'expand',
+          'from',
+          'size',
+          'sort',
+          'start'
+        ]
+      },
+      'ml.get_calendar_events': {
+        path: [
+          'calendar_id'
+        ],
+        body: [],
+        query: [
+          'end',
+          'from',
+          'job_id',
+          'size',
+          'start'
+        ]
+      },
+      'ml.get_calendars': {
+        path: [
+          'calendar_id'
+        ],
+        body: [
+          'page'
+        ],
+        query: [
+          'from',
+          'size'
+        ]
+      },
+      'ml.get_categories': {
+        path: [
+          'job_id',
+          'category_id'
+        ],
+        body: [
+          'page'
+        ],
+        query: [
+          'from',
+          'partition_field_value',
+          'size'
+        ]
+      },
+      'ml.get_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'from',
+          'size',
+          'exclude_generated'
+        ]
+      },
+      'ml.get_data_frame_analytics_stats': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'from',
+          'size',
+          'verbose'
+        ]
+      },
+      'ml.get_datafeed_stats': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match'
+        ]
+      },
+      'ml.get_datafeeds': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'exclude_generated'
+        ]
+      },
+      'ml.get_filters': {
+        path: [
+          'filter_id'
+        ],
+        body: [],
+        query: [
+          'from',
+          'size'
+        ]
+      },
+      'ml.get_influencers': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'page'
+        ],
+        query: [
+          'desc',
+          'end',
+          'exclude_interim',
+          'influencer_score',
+          'from',
+          'size',
+          'sort',
+          'start'
+        ]
+      },
+      'ml.get_job_stats': {
+        path: [
+          'job_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match'
+        ]
+      },
+      'ml.get_jobs': {
+        path: [
+          'job_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'exclude_generated'
+        ]
+      },
+      'ml.get_memory_stats': {
+        path: [
+          'node_id'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'ml.get_model_snapshot_upgrade_stats': {
+        path: [
+          'job_id',
+          'snapshot_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match'
+        ]
+      },
+      'ml.get_model_snapshots': {
+        path: [
+          'job_id',
+          'snapshot_id'
+        ],
+        body: [
+          'desc',
+          'end',
+          'page',
+          'sort',
+          'start'
+        ],
+        query: [
+          'desc',
+          'end',
+          'from',
+          'size',
+          'sort',
+          'start'
+        ]
+      },
+      'ml.get_overall_buckets': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'allow_no_match',
+          'bucket_span',
+          'end',
+          'exclude_interim',
+          'overall_score',
+          'start',
+          'top_n'
+        ],
+        query: [
+          'allow_no_match',
+          'bucket_span',
+          'end',
+          'exclude_interim',
+          'overall_score',
+          'start',
+          'top_n'
+        ]
+      },
+      'ml.get_records': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'desc',
+          'end',
+          'exclude_interim',
+          'page',
+          'record_score',
+          'sort',
+          'start'
+        ],
+        query: [
+          'desc',
+          'end',
+          'exclude_interim',
+          'from',
+          'record_score',
+          'size',
+          'sort',
+          'start'
+        ]
+      },
+      'ml.get_trained_models': {
+        path: [
+          'model_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'decompress_definition',
+          'exclude_generated',
+          'from',
+          'include',
+          'include_model_definition',
+          'size',
+          'tags'
+        ]
+      },
+      'ml.get_trained_models_stats': {
+        path: [
+          'model_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'from',
+          'size'
+        ]
+      },
+      'ml.infer_trained_model': {
+        path: [
+          'model_id'
+        ],
+        body: [
+          'docs',
+          'inference_config'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'ml.info': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'ml.open_job': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'timeout'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'ml.post_calendar_events': {
+        path: [
+          'calendar_id'
+        ],
+        body: [
+          'events'
+        ],
+        query: []
+      },
+      'ml.post_data': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'data'
+        ],
+        query: [
+          'reset_end',
+          'reset_start'
+        ]
+      },
+      'ml.preview_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [
+          'config'
+        ],
+        query: []
+      },
+      'ml.preview_datafeed': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [
+          'datafeed_config',
+          'job_config'
+        ],
+        query: [
+          'start',
+          'end'
+        ]
+      },
+      'ml.put_calendar': {
+        path: [
+          'calendar_id'
+        ],
+        body: [
+          'job_ids',
+          'description'
+        ],
+        query: []
+      },
+      'ml.put_calendar_job': {
+        path: [
+          'calendar_id',
+          'job_id'
+        ],
+        body: [],
+        query: []
+      },
+      'ml.put_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [
+          'allow_lazy_start',
+          'analysis',
+          'analyzed_fields',
+          'description',
+          'dest',
+          'max_num_threads',
+          '_meta',
+          'model_memory_limit',
+          'source',
+          'headers',
+          'version'
+        ],
+        query: []
+      },
+      'ml.put_datafeed': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [
+          'aggregations',
+          'aggs',
+          'chunking_config',
+          'delayed_data_check_config',
+          'frequency',
+          'indices',
+          'indexes',
+          'indices_options',
+          'job_id',
+          'max_empty_searches',
+          'query',
+          'query_delay',
+          'runtime_mappings',
+          'script_fields',
+          'scroll_size',
+          'headers'
+        ],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_throttled',
+          'ignore_unavailable'
+        ]
+      },
+      'ml.put_filter': {
+        path: [
+          'filter_id'
+        ],
+        body: [
+          'description',
+          'items'
+        ],
+        query: []
+      },
+      'ml.put_job': {
+        path: [],
+        body: [
+          'allow_lazy_open',
+          'analysis_config',
+          'analysis_limits',
+          'background_persist_interval',
+          'custom_settings',
+          'daily_model_snapshot_retention_after_days',
+          'data_description',
+          'datafeed_config',
+          'description',
+          'job_id',
+          'groups',
+          'model_plot_config',
+          'model_snapshot_retention_days',
+          'renormalization_window_days',
+          'results_index_name',
+          'results_retention_days'
+        ],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_throttled',
+          'ignore_unavailable'
+        ]
+      },
+      'ml.put_trained_model': {
+        path: [
+          'model_id'
+        ],
+        body: [
+          'compressed_definition',
+          'definition',
+          'description',
+          'inference_config',
+          'input',
+          'metadata',
+          'model_type',
+          'model_size_bytes',
+          'platform_architecture',
+          'tags',
+          'prefix_strings'
+        ],
+        query: [
+          'defer_definition_decompression',
+          'wait_for_completion'
+        ]
+      },
+      'ml.put_trained_model_alias': {
+        path: [
+          'model_alias',
+          'model_id'
+        ],
+        body: [],
+        query: [
+          'reassign'
+        ]
+      },
+      'ml.put_trained_model_definition_part': {
+        path: [
+          'model_id',
+          'part'
+        ],
+        body: [
+          'definition',
+          'total_definition_length',
+          'total_parts'
+        ],
+        query: []
+      },
+      'ml.put_trained_model_vocabulary': {
+        path: [
+          'model_id'
+        ],
+        body: [
+          'vocabulary',
+          'merges',
+          'scores'
+        ],
+        query: []
+      },
+      'ml.reset_job': {
+        path: [
+          'job_id'
+        ],
+        body: [],
+        query: [
+          'wait_for_completion',
+          'delete_user_annotations'
+        ]
+      },
+      'ml.revert_model_snapshot': {
+        path: [
+          'job_id',
+          'snapshot_id'
+        ],
+        body: [
+          'delete_intervening_results'
+        ],
+        query: [
+          'delete_intervening_results'
+        ]
+      },
+      'ml.set_upgrade_mode': {
+        path: [],
+        body: [],
+        query: [
+          'enabled',
+          'timeout'
+        ]
+      },
+      'ml.start_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'timeout'
+        ]
+      },
+      'ml.start_datafeed': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [
+          'end',
+          'start',
+          'timeout'
+        ],
+        query: [
+          'end',
+          'start',
+          'timeout'
+        ]
+      },
+      'ml.start_trained_model_deployment': {
+        path: [
+          'model_id'
+        ],
+        body: [
+          'adaptive_allocations'
+        ],
+        query: [
+          'cache_size',
+          'deployment_id',
+          'number_of_allocations',
+          'priority',
+          'queue_capacity',
+          'threads_per_allocation',
+          'timeout',
+          'wait_for'
+        ]
+      },
+      'ml.stop_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'force',
+          'timeout'
+        ]
+      },
+      'ml.stop_datafeed': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [
+          'allow_no_match',
+          'force',
+          'timeout'
+        ],
+        query: [
+          'allow_no_match',
+          'force',
+          'timeout'
+        ]
+      },
+      'ml.stop_trained_model_deployment': {
+        path: [
+          'model_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'force'
+        ]
+      },
+      'ml.update_data_frame_analytics': {
+        path: [
+          'id'
+        ],
+        body: [
+          'description',
+          'model_memory_limit',
+          'max_num_threads',
+          'allow_lazy_start'
+        ],
+        query: []
+      },
+      'ml.update_datafeed': {
+        path: [
+          'datafeed_id'
+        ],
+        body: [
+          'aggregations',
+          'chunking_config',
+          'delayed_data_check_config',
+          'frequency',
+          'indices',
+          'indexes',
+          'indices_options',
+          'job_id',
+          'max_empty_searches',
+          'query',
+          'query_delay',
+          'runtime_mappings',
+          'script_fields',
+          'scroll_size'
+        ],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_throttled',
+          'ignore_unavailable'
+        ]
+      },
+      'ml.update_filter': {
+        path: [
+          'filter_id'
+        ],
+        body: [
+          'add_items',
+          'description',
+          'remove_items'
+        ],
+        query: []
+      },
+      'ml.update_job': {
+        path: [
+          'job_id'
+        ],
+        body: [
+          'allow_lazy_open',
+          'analysis_limits',
+          'background_persist_interval',
+          'custom_settings',
+          'categorization_filters',
+          'description',
+          'model_plot_config',
+          'model_prune_window',
+          'daily_model_snapshot_retention_after_days',
+          'model_snapshot_retention_days',
+          'renormalization_window_days',
+          'results_retention_days',
+          'groups',
+          'detectors',
+          'per_partition_categorization'
+        ],
+        query: []
+      },
+      'ml.update_model_snapshot': {
+        path: [
+          'job_id',
+          'snapshot_id'
+        ],
+        body: [
+          'description',
+          'retain'
+        ],
+        query: []
+      },
+      'ml.update_trained_model_deployment': {
+        path: [
+          'model_id'
+        ],
+        body: [
+          'number_of_allocations',
+          'adaptive_allocations'
+        ],
+        query: [
+          'number_of_allocations'
+        ]
+      },
+      'ml.upgrade_job_snapshot': {
+        path: [
+          'job_id',
+          'snapshot_id'
+        ],
+        body: [],
+        query: [
+          'wait_for_completion',
+          'timeout'
+        ]
+      },
+      'ml.validate': {
+        path: [],
+        body: [
+          'job_id',
+          'analysis_config',
+          'analysis_limits',
+          'data_description',
+          'description',
+          'model_plot',
+          'model_snapshot_id',
+          'model_snapshot_retention_days',
+          'results_index_name'
+        ],
+        query: []
+      },
+      'ml.validate_detector': {
+        path: [],
+        body: [
+          'detector'
+        ],
+        query: []
+      }
+    }
   }
 
   /**
     * Clear trained model deployment cache. Cache will be cleared on all nodes where the trained model is assigned. A trained model deployment may have an inference cache enabled. As requests are handled by each allocated node, their responses may be cached on that individual node. Calling this API clears the caches without restarting the deployment.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/clear-trained-model-deployment-cache.html | Elasticsearch API documentation}
     */
-  async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest | TB.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlClearTrainedModelDeploymentCacheResponse>
-  async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest | TB.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlClearTrainedModelDeploymentCacheResponse, unknown>>
-  async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest | TB.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptions): Promise<T.MlClearTrainedModelDeploymentCacheResponse>
-  async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest | TB.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlClearTrainedModelDeploymentCacheResponse>
+  async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlClearTrainedModelDeploymentCacheResponse, unknown>>
+  async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptions): Promise<T.MlClearTrainedModelDeploymentCacheResponse>
+  async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.clear_trained_model_deployment_cache']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -80,20 +1024,27 @@ export default class Ml {
     * Close anomaly detection jobs. A job can be opened and closed multiple times throughout its lifecycle. A closed job cannot receive data or perform analysis operations, but you can still explore and navigate results. When you close a job, it runs housekeeping tasks such as pruning the model history, flushing buffers, calculating final results and persisting the model snapshots. Depending upon the size of the job, it could take several minutes to close and the equivalent time to re-open. After it is closed, the job has a minimal overhead on the cluster except for maintaining its meta data. Therefore it is a best practice to close jobs that are no longer required to process data. If you close an anomaly detection job whose datafeed is running, the request first tries to stop the datafeed. This behavior is equivalent to calling stop datafeed API with the same timeout and force parameters as the close job request. When a datafeed that has a specified end date stops, it automatically closes its associated job.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-close-job.html | Elasticsearch API documentation}
     */
-  async closeJob (this: That, params: T.MlCloseJobRequest | TB.MlCloseJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlCloseJobResponse>
-  async closeJob (this: That, params: T.MlCloseJobRequest | TB.MlCloseJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlCloseJobResponse, unknown>>
-  async closeJob (this: That, params: T.MlCloseJobRequest | TB.MlCloseJobRequest, options?: TransportRequestOptions): Promise<T.MlCloseJobResponse>
-  async closeJob (this: That, params: T.MlCloseJobRequest | TB.MlCloseJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['allow_no_match', 'force', 'timeout']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async closeJob (this: That, params: T.MlCloseJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlCloseJobResponse>
+  async closeJob (this: That, params: T.MlCloseJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlCloseJobResponse, unknown>>
+  async closeJob (this: That, params: T.MlCloseJobRequest, options?: TransportRequestOptions): Promise<T.MlCloseJobResponse>
+  async closeJob (this: That, params: T.MlCloseJobRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.close_job']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -103,9 +1054,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -124,18 +1081,31 @@ export default class Ml {
     * Delete a calendar. Remove all scheduled events from a calendar, then delete it.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-delete-calendar.html | Elasticsearch API documentation}
     */
-  async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest | TB.MlDeleteCalendarRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarResponse>
-  async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest | TB.MlDeleteCalendarRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteCalendarResponse, unknown>>
-  async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest | TB.MlDeleteCalendarRequest, options?: TransportRequestOptions): Promise<T.MlDeleteCalendarResponse>
-  async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest | TB.MlDeleteCalendarRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarResponse>
+  async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteCalendarResponse, unknown>>
+  async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest, options?: TransportRequestOptions): Promise<T.MlDeleteCalendarResponse>
+  async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_calendar']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -156,18 +1126,31 @@ export default class Ml {
     * Delete events from a calendar.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-delete-calendar-event.html | Elasticsearch API documentation}
     */
-  async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest | TB.MlDeleteCalendarEventRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarEventResponse>
-  async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest | TB.MlDeleteCalendarEventRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteCalendarEventResponse, unknown>>
-  async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest | TB.MlDeleteCalendarEventRequest, options?: TransportRequestOptions): Promise<T.MlDeleteCalendarEventResponse>
-  async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest | TB.MlDeleteCalendarEventRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id', 'event_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarEventResponse>
+  async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteCalendarEventResponse, unknown>>
+  async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest, options?: TransportRequestOptions): Promise<T.MlDeleteCalendarEventResponse>
+  async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_calendar_event']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -189,18 +1172,31 @@ export default class Ml {
     * Delete anomaly jobs from a calendar.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-delete-calendar-job.html | Elasticsearch API documentation}
     */
-  async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest | TB.MlDeleteCalendarJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarJobResponse>
-  async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest | TB.MlDeleteCalendarJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteCalendarJobResponse, unknown>>
-  async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest | TB.MlDeleteCalendarJobRequest, options?: TransportRequestOptions): Promise<T.MlDeleteCalendarJobResponse>
-  async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest | TB.MlDeleteCalendarJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id', 'job_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarJobResponse>
+  async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteCalendarJobResponse, unknown>>
+  async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest, options?: TransportRequestOptions): Promise<T.MlDeleteCalendarJobResponse>
+  async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_calendar_job']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -222,18 +1218,31 @@ export default class Ml {
     * Delete a data frame analytics job.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-dfanalytics.html | Elasticsearch API documentation}
     */
-  async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest | TB.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteDataFrameAnalyticsResponse>
-  async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest | TB.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteDataFrameAnalyticsResponse, unknown>>
-  async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest | TB.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlDeleteDataFrameAnalyticsResponse>
-  async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest | TB.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteDataFrameAnalyticsResponse>
+  async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteDataFrameAnalyticsResponse, unknown>>
+  async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlDeleteDataFrameAnalyticsResponse>
+  async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_data_frame_analytics']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -254,18 +1263,31 @@ export default class Ml {
     * Delete a datafeed.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-delete-datafeed.html | Elasticsearch API documentation}
     */
-  async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest | TB.MlDeleteDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteDatafeedResponse>
-  async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest | TB.MlDeleteDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteDatafeedResponse, unknown>>
-  async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest | TB.MlDeleteDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlDeleteDatafeedResponse>
-  async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest | TB.MlDeleteDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteDatafeedResponse>
+  async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteDatafeedResponse, unknown>>
+  async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlDeleteDatafeedResponse>
+  async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_datafeed']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -286,20 +1308,27 @@ export default class Ml {
     * Delete expired ML data. Delete all job results, model snapshots and forecast data that have exceeded their retention days period. Machine learning state documents that are not associated with any job are also deleted. You can limit the request to a single or set of anomaly detection jobs by using a job identifier, a group name, a comma-separated list of jobs, or a wildcard expression. You can delete expired data for all anomaly detection jobs by using `_all`, by specifying `*` as the `<job_id>`, or by omitting the `<job_id>`.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-delete-expired-data.html | Elasticsearch API documentation}
     */
-  async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest | TB.MlDeleteExpiredDataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteExpiredDataResponse>
-  async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest | TB.MlDeleteExpiredDataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteExpiredDataResponse, unknown>>
-  async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest | TB.MlDeleteExpiredDataRequest, options?: TransportRequestOptions): Promise<T.MlDeleteExpiredDataResponse>
-  async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest | TB.MlDeleteExpiredDataRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['requests_per_second', 'timeout']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteExpiredDataResponse>
+  async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteExpiredDataResponse, unknown>>
+  async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest, options?: TransportRequestOptions): Promise<T.MlDeleteExpiredDataResponse>
+  async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.delete_expired_data']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -310,9 +1339,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -338,18 +1373,31 @@ export default class Ml {
     * Delete a filter. If an anomaly detection job references the filter, you cannot delete the filter. You must update or delete the job before you can delete the filter.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-delete-filter.html | Elasticsearch API documentation}
     */
-  async deleteFilter (this: That, params: T.MlDeleteFilterRequest | TB.MlDeleteFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteFilterResponse>
-  async deleteFilter (this: That, params: T.MlDeleteFilterRequest | TB.MlDeleteFilterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteFilterResponse, unknown>>
-  async deleteFilter (this: That, params: T.MlDeleteFilterRequest | TB.MlDeleteFilterRequest, options?: TransportRequestOptions): Promise<T.MlDeleteFilterResponse>
-  async deleteFilter (this: That, params: T.MlDeleteFilterRequest | TB.MlDeleteFilterRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['filter_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteFilter (this: That, params: T.MlDeleteFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteFilterResponse>
+  async deleteFilter (this: That, params: T.MlDeleteFilterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteFilterResponse, unknown>>
+  async deleteFilter (this: That, params: T.MlDeleteFilterRequest, options?: TransportRequestOptions): Promise<T.MlDeleteFilterResponse>
+  async deleteFilter (this: That, params: T.MlDeleteFilterRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_filter']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -370,18 +1418,31 @@ export default class Ml {
     * Delete forecasts from a job. By default, forecasts are retained for 14 days. You can specify a different retention period with the `expires_in` parameter in the forecast jobs API. The delete forecast API enables you to delete one or more forecasts before they expire.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-delete-forecast.html | Elasticsearch API documentation}
     */
-  async deleteForecast (this: That, params: T.MlDeleteForecastRequest | TB.MlDeleteForecastRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteForecastResponse>
-  async deleteForecast (this: That, params: T.MlDeleteForecastRequest | TB.MlDeleteForecastRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteForecastResponse, unknown>>
-  async deleteForecast (this: That, params: T.MlDeleteForecastRequest | TB.MlDeleteForecastRequest, options?: TransportRequestOptions): Promise<T.MlDeleteForecastResponse>
-  async deleteForecast (this: That, params: T.MlDeleteForecastRequest | TB.MlDeleteForecastRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'forecast_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteForecast (this: That, params: T.MlDeleteForecastRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteForecastResponse>
+  async deleteForecast (this: That, params: T.MlDeleteForecastRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteForecastResponse, unknown>>
+  async deleteForecast (this: That, params: T.MlDeleteForecastRequest, options?: TransportRequestOptions): Promise<T.MlDeleteForecastResponse>
+  async deleteForecast (this: That, params: T.MlDeleteForecastRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_forecast']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -410,18 +1471,31 @@ export default class Ml {
     * Delete an anomaly detection job. All job configuration, model state and results are deleted. It is not currently possible to delete multiple jobs using wildcards or a comma separated list. If you delete a job that has a datafeed, the request first tries to delete the datafeed. This behavior is equivalent to calling the delete datafeed API with the same timeout and force parameters as the delete job request.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-delete-job.html | Elasticsearch API documentation}
     */
-  async deleteJob (this: That, params: T.MlDeleteJobRequest | TB.MlDeleteJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteJobResponse>
-  async deleteJob (this: That, params: T.MlDeleteJobRequest | TB.MlDeleteJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteJobResponse, unknown>>
-  async deleteJob (this: That, params: T.MlDeleteJobRequest | TB.MlDeleteJobRequest, options?: TransportRequestOptions): Promise<T.MlDeleteJobResponse>
-  async deleteJob (this: That, params: T.MlDeleteJobRequest | TB.MlDeleteJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteJob (this: That, params: T.MlDeleteJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteJobResponse>
+  async deleteJob (this: That, params: T.MlDeleteJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteJobResponse, unknown>>
+  async deleteJob (this: That, params: T.MlDeleteJobRequest, options?: TransportRequestOptions): Promise<T.MlDeleteJobResponse>
+  async deleteJob (this: That, params: T.MlDeleteJobRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_job']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -442,18 +1516,31 @@ export default class Ml {
     * Delete a model snapshot. You cannot delete the active model snapshot. To delete that snapshot, first revert to a different one. To identify the active model snapshot, refer to the `model_snapshot_id` in the results from the get jobs API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-delete-snapshot.html | Elasticsearch API documentation}
     */
-  async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest | TB.MlDeleteModelSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteModelSnapshotResponse>
-  async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest | TB.MlDeleteModelSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteModelSnapshotResponse, unknown>>
-  async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest | TB.MlDeleteModelSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlDeleteModelSnapshotResponse>
-  async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest | TB.MlDeleteModelSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'snapshot_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteModelSnapshotResponse>
+  async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteModelSnapshotResponse, unknown>>
+  async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlDeleteModelSnapshotResponse>
+  async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_model_snapshot']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -475,18 +1562,31 @@ export default class Ml {
     * Delete an unreferenced trained model. The request deletes a trained inference model that is not referenced by an ingest pipeline.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-trained-models.html | Elasticsearch API documentation}
     */
-  async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest | TB.MlDeleteTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteTrainedModelResponse>
-  async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest | TB.MlDeleteTrainedModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteTrainedModelResponse, unknown>>
-  async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest | TB.MlDeleteTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlDeleteTrainedModelResponse>
-  async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest | TB.MlDeleteTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteTrainedModelResponse>
+  async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteTrainedModelResponse, unknown>>
+  async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlDeleteTrainedModelResponse>
+  async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_trained_model']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -507,18 +1607,31 @@ export default class Ml {
     * Delete a trained model alias. This API deletes an existing model alias that refers to a trained model. If the model alias is missing or refers to a model other than the one identified by the `model_id`, this API returns an error.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-trained-models-aliases.html | Elasticsearch API documentation}
     */
-  async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest | TB.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteTrainedModelAliasResponse>
-  async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest | TB.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteTrainedModelAliasResponse, unknown>>
-  async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest | TB.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<T.MlDeleteTrainedModelAliasResponse>
-  async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest | TB.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_alias', 'model_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteTrainedModelAliasResponse>
+  async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteTrainedModelAliasResponse, unknown>>
+  async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<T.MlDeleteTrainedModelAliasResponse>
+  async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.delete_trained_model_alias']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -540,20 +1653,27 @@ export default class Ml {
     * Estimate job model memory usage. Make an estimation of the memory usage for an anomaly detection job model. The estimate is based on analysis configuration details for the job and cardinality estimates for the fields it references.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-estimate-model-memory.html | Elasticsearch API documentation}
     */
-  async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest | TB.MlEstimateModelMemoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlEstimateModelMemoryResponse>
-  async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest | TB.MlEstimateModelMemoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlEstimateModelMemoryResponse, unknown>>
-  async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest | TB.MlEstimateModelMemoryRequest, options?: TransportRequestOptions): Promise<T.MlEstimateModelMemoryResponse>
-  async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest | TB.MlEstimateModelMemoryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['analysis_config', 'max_bucket_cardinality', 'overall_cardinality']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlEstimateModelMemoryResponse>
+  async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlEstimateModelMemoryResponse, unknown>>
+  async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest, options?: TransportRequestOptions): Promise<T.MlEstimateModelMemoryResponse>
+  async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.estimate_model_memory']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -564,9 +1684,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -582,20 +1708,27 @@ export default class Ml {
     * Evaluate data frame analytics. The API packages together commonly used evaluation metrics for various types of machine learning features. This has been designed for use on indexes created by data frame analytics. Evaluation requires both a ground truth field and an analytics result field to be present.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/evaluate-dfanalytics.html | Elasticsearch API documentation}
     */
-  async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest | TB.MlEvaluateDataFrameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlEvaluateDataFrameResponse>
-  async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest | TB.MlEvaluateDataFrameRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlEvaluateDataFrameResponse, unknown>>
-  async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest | TB.MlEvaluateDataFrameRequest, options?: TransportRequestOptions): Promise<T.MlEvaluateDataFrameResponse>
-  async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest | TB.MlEvaluateDataFrameRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['evaluation', 'index', 'query']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlEvaluateDataFrameResponse>
+  async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlEvaluateDataFrameResponse, unknown>>
+  async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest, options?: TransportRequestOptions): Promise<T.MlEvaluateDataFrameResponse>
+  async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.evaluate_data_frame']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -605,9 +1738,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -623,20 +1762,27 @@ export default class Ml {
     * Explain data frame analytics config. This API provides explanations for a data frame analytics config that either exists already or one that has not been created yet. The following explanations are provided: * which fields are included or not in the analysis and why, * how much memory is estimated to be required. The estimate can be used when deciding the appropriate value for model_memory_limit setting later on. If you have object fields or fields that are excluded via source filtering, they are not included in the explanation.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/explain-dfanalytics.html | Elasticsearch API documentation}
     */
-  async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlExplainDataFrameAnalyticsResponse>
-  async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlExplainDataFrameAnalyticsResponse, unknown>>
-  async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlExplainDataFrameAnalyticsResponse>
-  async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['source', 'dest', 'analysis', 'description', 'model_memory_limit', 'max_num_threads', 'analyzed_fields', 'allow_lazy_start']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlExplainDataFrameAnalyticsResponse>
+  async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlExplainDataFrameAnalyticsResponse, unknown>>
+  async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlExplainDataFrameAnalyticsResponse>
+  async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.explain_data_frame_analytics']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -647,9 +1793,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -675,20 +1827,27 @@ export default class Ml {
     * Force buffered data to be processed. The flush jobs API is only applicable when sending data for analysis using the post data API. Depending on the content of the buffer, then it might additionally calculate new results. Both flush and close operations are similar, however the flush is more efficient if you are expecting to send more data for analysis. When flushing, the job remains open and is available to continue analyzing data. A close operation additionally prunes and persists the model state to disk and the job must be opened again before analyzing further data.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-flush-job.html | Elasticsearch API documentation}
     */
-  async flushJob (this: That, params: T.MlFlushJobRequest | TB.MlFlushJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlFlushJobResponse>
-  async flushJob (this: That, params: T.MlFlushJobRequest | TB.MlFlushJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlFlushJobResponse, unknown>>
-  async flushJob (this: That, params: T.MlFlushJobRequest | TB.MlFlushJobRequest, options?: TransportRequestOptions): Promise<T.MlFlushJobResponse>
-  async flushJob (this: That, params: T.MlFlushJobRequest | TB.MlFlushJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['advance_time', 'calc_interim', 'end', 'skip_time', 'start']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async flushJob (this: That, params: T.MlFlushJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlFlushJobResponse>
+  async flushJob (this: That, params: T.MlFlushJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlFlushJobResponse, unknown>>
+  async flushJob (this: That, params: T.MlFlushJobRequest, options?: TransportRequestOptions): Promise<T.MlFlushJobResponse>
+  async flushJob (this: That, params: T.MlFlushJobRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.flush_job']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -698,9 +1857,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -719,20 +1884,27 @@ export default class Ml {
     * Predict future behavior of a time series. Forecasts are not supported for jobs that perform population analysis; an error occurs if you try to create a forecast for a job that has an `over_field_name` in its configuration. Forcasts predict future behavior based on historical data.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-forecast.html | Elasticsearch API documentation}
     */
-  async forecast (this: That, params: T.MlForecastRequest | TB.MlForecastRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlForecastResponse>
-  async forecast (this: That, params: T.MlForecastRequest | TB.MlForecastRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlForecastResponse, unknown>>
-  async forecast (this: That, params: T.MlForecastRequest | TB.MlForecastRequest, options?: TransportRequestOptions): Promise<T.MlForecastResponse>
-  async forecast (this: That, params: T.MlForecastRequest | TB.MlForecastRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['duration', 'expires_in', 'max_model_memory']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async forecast (this: That, params: T.MlForecastRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlForecastResponse>
+  async forecast (this: That, params: T.MlForecastRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlForecastResponse, unknown>>
+  async forecast (this: That, params: T.MlForecastRequest, options?: TransportRequestOptions): Promise<T.MlForecastResponse>
+  async forecast (this: That, params: T.MlForecastRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.forecast']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -742,9 +1914,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -763,20 +1941,27 @@ export default class Ml {
     * Get anomaly detection job results for buckets. The API presents a chronological view of the records, grouped by bucket.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-bucket.html | Elasticsearch API documentation}
     */
-  async getBuckets (this: That, params: T.MlGetBucketsRequest | TB.MlGetBucketsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetBucketsResponse>
-  async getBuckets (this: That, params: T.MlGetBucketsRequest | TB.MlGetBucketsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetBucketsResponse, unknown>>
-  async getBuckets (this: That, params: T.MlGetBucketsRequest | TB.MlGetBucketsRequest, options?: TransportRequestOptions): Promise<T.MlGetBucketsResponse>
-  async getBuckets (this: That, params: T.MlGetBucketsRequest | TB.MlGetBucketsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'timestamp']
-    const acceptedBody: string[] = ['anomaly_score', 'desc', 'end', 'exclude_interim', 'expand', 'page', 'sort', 'start']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async getBuckets (this: That, params: T.MlGetBucketsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetBucketsResponse>
+  async getBuckets (this: That, params: T.MlGetBucketsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetBucketsResponse, unknown>>
+  async getBuckets (this: That, params: T.MlGetBucketsRequest, options?: TransportRequestOptions): Promise<T.MlGetBucketsResponse>
+  async getBuckets (this: That, params: T.MlGetBucketsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_buckets']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -786,9 +1971,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -815,18 +2006,31 @@ export default class Ml {
     * Get info about events in calendars.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-calendar-event.html | Elasticsearch API documentation}
     */
-  async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest | TB.MlGetCalendarEventsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCalendarEventsResponse>
-  async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest | TB.MlGetCalendarEventsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetCalendarEventsResponse, unknown>>
-  async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest | TB.MlGetCalendarEventsRequest, options?: TransportRequestOptions): Promise<T.MlGetCalendarEventsResponse>
-  async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest | TB.MlGetCalendarEventsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCalendarEventsResponse>
+  async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetCalendarEventsResponse, unknown>>
+  async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest, options?: TransportRequestOptions): Promise<T.MlGetCalendarEventsResponse>
+  async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_calendar_events']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -847,20 +2051,27 @@ export default class Ml {
     * Get calendar configuration info.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-calendar.html | Elasticsearch API documentation}
     */
-  async getCalendars (this: That, params?: T.MlGetCalendarsRequest | TB.MlGetCalendarsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCalendarsResponse>
-  async getCalendars (this: That, params?: T.MlGetCalendarsRequest | TB.MlGetCalendarsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetCalendarsResponse, unknown>>
-  async getCalendars (this: That, params?: T.MlGetCalendarsRequest | TB.MlGetCalendarsRequest, options?: TransportRequestOptions): Promise<T.MlGetCalendarsResponse>
-  async getCalendars (this: That, params?: T.MlGetCalendarsRequest | TB.MlGetCalendarsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id']
-    const acceptedBody: string[] = ['page']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async getCalendars (this: That, params?: T.MlGetCalendarsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCalendarsResponse>
+  async getCalendars (this: That, params?: T.MlGetCalendarsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetCalendarsResponse, unknown>>
+  async getCalendars (this: That, params?: T.MlGetCalendarsRequest, options?: TransportRequestOptions): Promise<T.MlGetCalendarsResponse>
+  async getCalendars (this: That, params?: T.MlGetCalendarsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_calendars']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -871,9 +2082,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -899,20 +2116,27 @@ export default class Ml {
     * Get anomaly detection job results for categories.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-category.html | Elasticsearch API documentation}
     */
-  async getCategories (this: That, params: T.MlGetCategoriesRequest | TB.MlGetCategoriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCategoriesResponse>
-  async getCategories (this: That, params: T.MlGetCategoriesRequest | TB.MlGetCategoriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetCategoriesResponse, unknown>>
-  async getCategories (this: That, params: T.MlGetCategoriesRequest | TB.MlGetCategoriesRequest, options?: TransportRequestOptions): Promise<T.MlGetCategoriesResponse>
-  async getCategories (this: That, params: T.MlGetCategoriesRequest | TB.MlGetCategoriesRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'category_id']
-    const acceptedBody: string[] = ['page']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async getCategories (this: That, params: T.MlGetCategoriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCategoriesResponse>
+  async getCategories (this: That, params: T.MlGetCategoriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetCategoriesResponse, unknown>>
+  async getCategories (this: That, params: T.MlGetCategoriesRequest, options?: TransportRequestOptions): Promise<T.MlGetCategoriesResponse>
+  async getCategories (this: That, params: T.MlGetCategoriesRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_categories']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -922,9 +2146,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -951,19 +2181,32 @@ export default class Ml {
     * Get data frame analytics job configuration info. You can get information for multiple data frame analytics jobs in a single API request by using a comma-separated list of data frame analytics jobs or a wildcard expression.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-dfanalytics.html | Elasticsearch API documentation}
     */
-  async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest | TB.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDataFrameAnalyticsResponse>
-  async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest | TB.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDataFrameAnalyticsResponse, unknown>>
-  async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest | TB.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlGetDataFrameAnalyticsResponse>
-  async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest | TB.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDataFrameAnalyticsResponse>
+  async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDataFrameAnalyticsResponse, unknown>>
+  async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlGetDataFrameAnalyticsResponse>
+  async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_data_frame_analytics']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -991,19 +2234,32 @@ export default class Ml {
     * Get data frame analytics job stats.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-dfanalytics-stats.html | Elasticsearch API documentation}
     */
-  async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest | TB.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDataFrameAnalyticsStatsResponse>
-  async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest | TB.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDataFrameAnalyticsStatsResponse, unknown>>
-  async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest | TB.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetDataFrameAnalyticsStatsResponse>
-  async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest | TB.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDataFrameAnalyticsStatsResponse>
+  async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDataFrameAnalyticsStatsResponse, unknown>>
+  async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetDataFrameAnalyticsStatsResponse>
+  async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_data_frame_analytics_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1031,19 +2287,32 @@ export default class Ml {
     * Get datafeed stats. You can get statistics for multiple datafeeds in a single API request by using a comma-separated list of datafeeds or a wildcard expression. You can get statistics for all datafeeds by using `_all`, by specifying `*` as the `<feed_id>`, or by omitting the `<feed_id>`. If the datafeed is stopped, the only information you receive is the `datafeed_id` and the `state`. This API returns a maximum of 10,000 datafeeds.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-datafeed-stats.html | Elasticsearch API documentation}
     */
-  async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest | TB.MlGetDatafeedStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDatafeedStatsResponse>
-  async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest | TB.MlGetDatafeedStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDatafeedStatsResponse, unknown>>
-  async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest | TB.MlGetDatafeedStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetDatafeedStatsResponse>
-  async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest | TB.MlGetDatafeedStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDatafeedStatsResponse>
+  async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDatafeedStatsResponse, unknown>>
+  async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetDatafeedStatsResponse>
+  async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_datafeed_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1071,19 +2340,32 @@ export default class Ml {
     * Get datafeeds configuration info. You can get information for multiple datafeeds in a single API request by using a comma-separated list of datafeeds or a wildcard expression. You can get information for all datafeeds by using `_all`, by specifying `*` as the `<feed_id>`, or by omitting the `<feed_id>`. This API returns a maximum of 10,000 datafeeds.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-datafeed.html | Elasticsearch API documentation}
     */
-  async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest | TB.MlGetDatafeedsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDatafeedsResponse>
-  async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest | TB.MlGetDatafeedsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDatafeedsResponse, unknown>>
-  async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest | TB.MlGetDatafeedsRequest, options?: TransportRequestOptions): Promise<T.MlGetDatafeedsResponse>
-  async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest | TB.MlGetDatafeedsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDatafeedsResponse>
+  async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDatafeedsResponse, unknown>>
+  async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest, options?: TransportRequestOptions): Promise<T.MlGetDatafeedsResponse>
+  async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_datafeeds']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1111,19 +2393,32 @@ export default class Ml {
     * Get filters. You can get a single filter or all filters.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-filter.html | Elasticsearch API documentation}
     */
-  async getFilters (this: That, params?: T.MlGetFiltersRequest | TB.MlGetFiltersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetFiltersResponse>
-  async getFilters (this: That, params?: T.MlGetFiltersRequest | TB.MlGetFiltersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetFiltersResponse, unknown>>
-  async getFilters (this: That, params?: T.MlGetFiltersRequest | TB.MlGetFiltersRequest, options?: TransportRequestOptions): Promise<T.MlGetFiltersResponse>
-  async getFilters (this: That, params?: T.MlGetFiltersRequest | TB.MlGetFiltersRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['filter_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getFilters (this: That, params?: T.MlGetFiltersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetFiltersResponse>
+  async getFilters (this: That, params?: T.MlGetFiltersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetFiltersResponse, unknown>>
+  async getFilters (this: That, params?: T.MlGetFiltersRequest, options?: TransportRequestOptions): Promise<T.MlGetFiltersResponse>
+  async getFilters (this: That, params?: T.MlGetFiltersRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_filters']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1151,20 +2446,27 @@ export default class Ml {
     * Get anomaly detection job results for influencers. Influencers are the entities that have contributed to, or are to blame for, the anomalies. Influencer results are available only if an `influencer_field_name` is specified in the job configuration.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-influencer.html | Elasticsearch API documentation}
     */
-  async getInfluencers (this: That, params: T.MlGetInfluencersRequest | TB.MlGetInfluencersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetInfluencersResponse>
-  async getInfluencers (this: That, params: T.MlGetInfluencersRequest | TB.MlGetInfluencersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetInfluencersResponse, unknown>>
-  async getInfluencers (this: That, params: T.MlGetInfluencersRequest | TB.MlGetInfluencersRequest, options?: TransportRequestOptions): Promise<T.MlGetInfluencersResponse>
-  async getInfluencers (this: That, params: T.MlGetInfluencersRequest | TB.MlGetInfluencersRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['page']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async getInfluencers (this: That, params: T.MlGetInfluencersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetInfluencersResponse>
+  async getInfluencers (this: That, params: T.MlGetInfluencersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetInfluencersResponse, unknown>>
+  async getInfluencers (this: That, params: T.MlGetInfluencersRequest, options?: TransportRequestOptions): Promise<T.MlGetInfluencersResponse>
+  async getInfluencers (this: That, params: T.MlGetInfluencersRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_influencers']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1174,9 +2476,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1195,19 +2503,32 @@ export default class Ml {
     * Get anomaly detection job stats.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-job-stats.html | Elasticsearch API documentation}
     */
-  async getJobStats (this: That, params?: T.MlGetJobStatsRequest | TB.MlGetJobStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetJobStatsResponse>
-  async getJobStats (this: That, params?: T.MlGetJobStatsRequest | TB.MlGetJobStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetJobStatsResponse, unknown>>
-  async getJobStats (this: That, params?: T.MlGetJobStatsRequest | TB.MlGetJobStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetJobStatsResponse>
-  async getJobStats (this: That, params?: T.MlGetJobStatsRequest | TB.MlGetJobStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getJobStats (this: That, params?: T.MlGetJobStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetJobStatsResponse>
+  async getJobStats (this: That, params?: T.MlGetJobStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetJobStatsResponse, unknown>>
+  async getJobStats (this: That, params?: T.MlGetJobStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetJobStatsResponse>
+  async getJobStats (this: That, params?: T.MlGetJobStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_job_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1235,19 +2556,32 @@ export default class Ml {
     * Get anomaly detection jobs configuration info. You can get information for multiple anomaly detection jobs in a single API request by using a group name, a comma-separated list of jobs, or a wildcard expression. You can get information for all anomaly detection jobs by using `_all`, by specifying `*` as the `<job_id>`, or by omitting the `<job_id>`.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-job.html | Elasticsearch API documentation}
     */
-  async getJobs (this: That, params?: T.MlGetJobsRequest | TB.MlGetJobsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetJobsResponse>
-  async getJobs (this: That, params?: T.MlGetJobsRequest | TB.MlGetJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetJobsResponse, unknown>>
-  async getJobs (this: That, params?: T.MlGetJobsRequest | TB.MlGetJobsRequest, options?: TransportRequestOptions): Promise<T.MlGetJobsResponse>
-  async getJobs (this: That, params?: T.MlGetJobsRequest | TB.MlGetJobsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getJobs (this: That, params?: T.MlGetJobsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetJobsResponse>
+  async getJobs (this: That, params?: T.MlGetJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetJobsResponse, unknown>>
+  async getJobs (this: That, params?: T.MlGetJobsRequest, options?: TransportRequestOptions): Promise<T.MlGetJobsResponse>
+  async getJobs (this: That, params?: T.MlGetJobsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_jobs']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1275,19 +2609,32 @@ export default class Ml {
     * Get machine learning memory usage info. Get information about how machine learning jobs and trained models are using memory, on each node, both within the JVM heap, and natively, outside of the JVM.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-ml-memory.html | Elasticsearch API documentation}
     */
-  async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest | TB.MlGetMemoryStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetMemoryStatsResponse>
-  async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest | TB.MlGetMemoryStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetMemoryStatsResponse, unknown>>
-  async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest | TB.MlGetMemoryStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetMemoryStatsResponse>
-  async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest | TB.MlGetMemoryStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['node_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetMemoryStatsResponse>
+  async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetMemoryStatsResponse, unknown>>
+  async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetMemoryStatsResponse>
+  async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_memory_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1315,18 +2662,31 @@ export default class Ml {
     * Get anomaly detection job model snapshot upgrade usage info.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-job-model-snapshot-upgrade-stats.html | Elasticsearch API documentation}
     */
-  async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest | TB.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetModelSnapshotUpgradeStatsResponse>
-  async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest | TB.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetModelSnapshotUpgradeStatsResponse, unknown>>
-  async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest | TB.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetModelSnapshotUpgradeStatsResponse>
-  async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest | TB.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'snapshot_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetModelSnapshotUpgradeStatsResponse>
+  async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetModelSnapshotUpgradeStatsResponse, unknown>>
+  async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetModelSnapshotUpgradeStatsResponse>
+  async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_model_snapshot_upgrade_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1348,20 +2708,27 @@ export default class Ml {
     * Get model snapshots info.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-snapshot.html | Elasticsearch API documentation}
     */
-  async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetModelSnapshotsResponse>
-  async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetModelSnapshotsResponse, unknown>>
-  async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<T.MlGetModelSnapshotsResponse>
-  async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'snapshot_id']
-    const acceptedBody: string[] = ['desc', 'end', 'page', 'sort', 'start']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetModelSnapshotsResponse>
+  async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetModelSnapshotsResponse, unknown>>
+  async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<T.MlGetModelSnapshotsResponse>
+  async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_model_snapshots']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1371,9 +2738,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1400,20 +2773,27 @@ export default class Ml {
     * Get overall bucket results. Retrievs overall bucket results that summarize the bucket results of multiple anomaly detection jobs. The `overall_score` is calculated by combining the scores of all the buckets within the overall bucket span. First, the maximum `anomaly_score` per anomaly detection job in the overall bucket is calculated. Then the `top_n` of those scores are averaged to result in the `overall_score`. This means that you can fine-tune the `overall_score` so that it is more or less sensitive to the number of jobs that detect an anomaly at the same time. For example, if you set `top_n` to `1`, the `overall_score` is the maximum bucket score in the overall bucket. Alternatively, if you set `top_n` to the number of jobs, the `overall_score` is high only when all jobs detect anomalies in that overall bucket. If you set the `bucket_span` parameter (to a value greater than its default), the `overall_score` is the maximum `overall_score` of the overall buckets that have a span equal to the jobs' largest bucket span.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-overall-buckets.html | Elasticsearch API documentation}
     */
-  async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest | TB.MlGetOverallBucketsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetOverallBucketsResponse>
-  async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest | TB.MlGetOverallBucketsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetOverallBucketsResponse, unknown>>
-  async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest | TB.MlGetOverallBucketsRequest, options?: TransportRequestOptions): Promise<T.MlGetOverallBucketsResponse>
-  async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest | TB.MlGetOverallBucketsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['allow_no_match', 'bucket_span', 'end', 'exclude_interim', 'overall_score', 'start', 'top_n']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetOverallBucketsResponse>
+  async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetOverallBucketsResponse, unknown>>
+  async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest, options?: TransportRequestOptions): Promise<T.MlGetOverallBucketsResponse>
+  async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_overall_buckets']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1423,9 +2803,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1444,20 +2830,27 @@ export default class Ml {
     * Get anomaly records for an anomaly detection job. Records contain the detailed analytical results. They describe the anomalous activity that has been identified in the input data based on the detector configuration. There can be many anomaly records depending on the characteristics and size of the input data. In practice, there are often too many to be able to manually process them. The machine learning features therefore perform a sophisticated aggregation of the anomaly records into buckets. The number of record results depends on the number of anomalies found in each bucket, which relates to the number of time series being modeled and the number of detectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-record.html | Elasticsearch API documentation}
     */
-  async getRecords (this: That, params: T.MlGetRecordsRequest | TB.MlGetRecordsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetRecordsResponse>
-  async getRecords (this: That, params: T.MlGetRecordsRequest | TB.MlGetRecordsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetRecordsResponse, unknown>>
-  async getRecords (this: That, params: T.MlGetRecordsRequest | TB.MlGetRecordsRequest, options?: TransportRequestOptions): Promise<T.MlGetRecordsResponse>
-  async getRecords (this: That, params: T.MlGetRecordsRequest | TB.MlGetRecordsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['desc', 'end', 'exclude_interim', 'page', 'record_score', 'sort', 'start']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async getRecords (this: That, params: T.MlGetRecordsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetRecordsResponse>
+  async getRecords (this: That, params: T.MlGetRecordsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetRecordsResponse, unknown>>
+  async getRecords (this: That, params: T.MlGetRecordsRequest, options?: TransportRequestOptions): Promise<T.MlGetRecordsResponse>
+  async getRecords (this: That, params: T.MlGetRecordsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.get_records']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1467,9 +2860,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1488,19 +2887,32 @@ export default class Ml {
     * Get trained model configuration info.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-trained-models.html | Elasticsearch API documentation}
     */
-  async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest | TB.MlGetTrainedModelsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetTrainedModelsResponse>
-  async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest | TB.MlGetTrainedModelsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetTrainedModelsResponse, unknown>>
-  async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest | TB.MlGetTrainedModelsRequest, options?: TransportRequestOptions): Promise<T.MlGetTrainedModelsResponse>
-  async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest | TB.MlGetTrainedModelsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetTrainedModelsResponse>
+  async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetTrainedModelsResponse, unknown>>
+  async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest, options?: TransportRequestOptions): Promise<T.MlGetTrainedModelsResponse>
+  async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_trained_models']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1528,19 +2940,32 @@ export default class Ml {
     * Get trained models usage info. You can get usage information for multiple trained models in a single API request by using a comma-separated list of model IDs or a wildcard expression.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-trained-models-stats.html | Elasticsearch API documentation}
     */
-  async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest | TB.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetTrainedModelsStatsResponse>
-  async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest | TB.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetTrainedModelsStatsResponse, unknown>>
-  async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest | TB.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetTrainedModelsStatsResponse>
-  async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest | TB.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetTrainedModelsStatsResponse>
+  async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetTrainedModelsStatsResponse, unknown>>
+  async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetTrainedModelsStatsResponse>
+  async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.get_trained_models_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1568,20 +2993,27 @@ export default class Ml {
     * Evaluate a trained model.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-trained-model.html | Elasticsearch API documentation}
     */
-  async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest | TB.MlInferTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInferTrainedModelResponse>
-  async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest | TB.MlInferTrainedModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlInferTrainedModelResponse, unknown>>
-  async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest | TB.MlInferTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlInferTrainedModelResponse>
-  async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest | TB.MlInferTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['docs', 'inference_config']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInferTrainedModelResponse>
+  async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlInferTrainedModelResponse, unknown>>
+  async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlInferTrainedModelResponse>
+  async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.infer_trained_model']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1591,9 +3023,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1612,19 +3050,32 @@ export default class Ml {
     * Get machine learning information. Get defaults and limits used by machine learning. This endpoint is designed to be used by a user interface that needs to fully understand machine learning configurations where some options are not specified, meaning that the defaults should be used. This endpoint may be used to find out what those defaults are. It also provides information about the maximum size of machine learning jobs that could run in the current cluster configuration.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-ml-info.html | Elasticsearch API documentation}
     */
-  async info (this: That, params?: T.MlInfoRequest | TB.MlInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInfoResponse>
-  async info (this: That, params?: T.MlInfoRequest | TB.MlInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlInfoResponse, unknown>>
-  async info (this: That, params?: T.MlInfoRequest | TB.MlInfoRequest, options?: TransportRequestOptions): Promise<T.MlInfoResponse>
-  async info (this: That, params?: T.MlInfoRequest | TB.MlInfoRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async info (this: That, params?: T.MlInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInfoResponse>
+  async info (this: That, params?: T.MlInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlInfoResponse, unknown>>
+  async info (this: That, params?: T.MlInfoRequest, options?: TransportRequestOptions): Promise<T.MlInfoResponse>
+  async info (this: That, params?: T.MlInfoRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.info']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1642,20 +3093,27 @@ export default class Ml {
     * Open anomaly detection jobs. An anomaly detection job must be opened to be ready to receive and analyze data. It can be opened and closed multiple times throughout its lifecycle. When you open a new job, it starts with an empty model. When you open an existing job, the most recent model state is automatically loaded. The job is ready to resume its analysis from where it left off, once new data is received.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-open-job.html | Elasticsearch API documentation}
     */
-  async openJob (this: That, params: T.MlOpenJobRequest | TB.MlOpenJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlOpenJobResponse>
-  async openJob (this: That, params: T.MlOpenJobRequest | TB.MlOpenJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlOpenJobResponse, unknown>>
-  async openJob (this: That, params: T.MlOpenJobRequest | TB.MlOpenJobRequest, options?: TransportRequestOptions): Promise<T.MlOpenJobResponse>
-  async openJob (this: That, params: T.MlOpenJobRequest | TB.MlOpenJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['timeout']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async openJob (this: That, params: T.MlOpenJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlOpenJobResponse>
+  async openJob (this: That, params: T.MlOpenJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlOpenJobResponse, unknown>>
+  async openJob (this: That, params: T.MlOpenJobRequest, options?: TransportRequestOptions): Promise<T.MlOpenJobResponse>
+  async openJob (this: That, params: T.MlOpenJobRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.open_job']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1665,9 +3123,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1686,20 +3150,27 @@ export default class Ml {
     * Add scheduled events to the calendar.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-post-calendar-event.html | Elasticsearch API documentation}
     */
-  async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest | TB.MlPostCalendarEventsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPostCalendarEventsResponse>
-  async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest | TB.MlPostCalendarEventsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPostCalendarEventsResponse, unknown>>
-  async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest | TB.MlPostCalendarEventsRequest, options?: TransportRequestOptions): Promise<T.MlPostCalendarEventsResponse>
-  async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest | TB.MlPostCalendarEventsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id']
-    const acceptedBody: string[] = ['events']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPostCalendarEventsResponse>
+  async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPostCalendarEventsResponse, unknown>>
+  async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest, options?: TransportRequestOptions): Promise<T.MlPostCalendarEventsResponse>
+  async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.post_calendar_events']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1709,9 +3180,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1730,25 +3207,35 @@ export default class Ml {
     * Send data to an anomaly detection job for analysis. IMPORTANT: For each job, data can be accepted from only a single connection at a time. It is not currently possible to post data to multiple jobs using wildcards or a comma-separated list.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-post-data.html | Elasticsearch API documentation}
     */
-  async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData> | TB.MlPostDataRequest<TData>, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPostDataResponse>
-  async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData> | TB.MlPostDataRequest<TData>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPostDataResponse, unknown>>
-  async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData> | TB.MlPostDataRequest<TData>, options?: TransportRequestOptions): Promise<T.MlPostDataResponse>
-  async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData> | TB.MlPostDataRequest<TData>, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['data']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+  async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData>, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPostDataResponse>
+  async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPostDataResponse, unknown>>
+  async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData>, options?: TransportRequestOptions): Promise<T.MlPostDataResponse>
+  async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData>, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.post_data']
 
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1767,20 +3254,27 @@ export default class Ml {
     * Preview features used by data frame analytics. Preview the extracted features used by a data frame analytics config.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/preview-dfanalytics.html | Elasticsearch API documentation}
     */
-  async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest | TB.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPreviewDataFrameAnalyticsResponse>
-  async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest | TB.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPreviewDataFrameAnalyticsResponse, unknown>>
-  async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest | TB.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlPreviewDataFrameAnalyticsResponse>
-  async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest | TB.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['config']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPreviewDataFrameAnalyticsResponse>
+  async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPreviewDataFrameAnalyticsResponse, unknown>>
+  async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlPreviewDataFrameAnalyticsResponse>
+  async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.preview_data_frame_analytics']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -1791,9 +3285,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1819,20 +3319,27 @@ export default class Ml {
     * Preview a datafeed. This API returns the first "page" of search results from a datafeed. You can preview an existing datafeed or provide configuration details for a datafeed and anomaly detection job in the API. The preview shows the structure of the data that will be passed to the anomaly detection engine. IMPORTANT: When Elasticsearch security features are enabled, the preview uses the credentials of the user that called the API. However, when the datafeed starts it uses the roles of the last user that created or updated the datafeed. To get a preview that accurately reflects the behavior of the datafeed, use the appropriate credentials. You can also use secondary authorization headers to supply the credentials.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-preview-datafeed.html | Elasticsearch API documentation}
     */
-  async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest | TB.MlPreviewDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPreviewDatafeedResponse<TDocument>>
-  async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest | TB.MlPreviewDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPreviewDatafeedResponse<TDocument>, unknown>>
-  async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest | TB.MlPreviewDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlPreviewDatafeedResponse<TDocument>>
-  async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest | TB.MlPreviewDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['datafeed_config', 'job_config']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPreviewDatafeedResponse<TDocument>>
+  async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPreviewDatafeedResponse<TDocument>, unknown>>
+  async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlPreviewDatafeedResponse<TDocument>>
+  async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.preview_datafeed']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -1843,9 +3350,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1871,20 +3384,27 @@ export default class Ml {
     * Create a calendar.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-put-calendar.html | Elasticsearch API documentation}
     */
-  async putCalendar (this: That, params: T.MlPutCalendarRequest | TB.MlPutCalendarRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutCalendarResponse>
-  async putCalendar (this: That, params: T.MlPutCalendarRequest | TB.MlPutCalendarRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutCalendarResponse, unknown>>
-  async putCalendar (this: That, params: T.MlPutCalendarRequest | TB.MlPutCalendarRequest, options?: TransportRequestOptions): Promise<T.MlPutCalendarResponse>
-  async putCalendar (this: That, params: T.MlPutCalendarRequest | TB.MlPutCalendarRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id']
-    const acceptedBody: string[] = ['job_ids', 'description']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putCalendar (this: That, params: T.MlPutCalendarRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutCalendarResponse>
+  async putCalendar (this: That, params: T.MlPutCalendarRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutCalendarResponse, unknown>>
+  async putCalendar (this: That, params: T.MlPutCalendarRequest, options?: TransportRequestOptions): Promise<T.MlPutCalendarResponse>
+  async putCalendar (this: That, params: T.MlPutCalendarRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_calendar']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1894,9 +3414,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1915,18 +3441,31 @@ export default class Ml {
     * Add anomaly detection job to calendar.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-put-calendar-job.html | Elasticsearch API documentation}
     */
-  async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest | TB.MlPutCalendarJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutCalendarJobResponse>
-  async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest | TB.MlPutCalendarJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutCalendarJobResponse, unknown>>
-  async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest | TB.MlPutCalendarJobRequest, options?: TransportRequestOptions): Promise<T.MlPutCalendarJobResponse>
-  async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest | TB.MlPutCalendarJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['calendar_id', 'job_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutCalendarJobResponse>
+  async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutCalendarJobResponse, unknown>>
+  async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest, options?: TransportRequestOptions): Promise<T.MlPutCalendarJobResponse>
+  async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.put_calendar_job']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1948,20 +3487,27 @@ export default class Ml {
     * Create a data frame analytics job. This API creates a data frame analytics job that performs an analysis on the source indices and stores the outcome in a destination index. By default, the query used in the source configuration is `{"match_all": {}}`. If the destination index does not exist, it is created automatically when you start the job. If you supply only a subset of the regression or classification parameters, hyperparameter optimization occurs. It determines a value for each of the undefined parameters.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-dfanalytics.html | Elasticsearch API documentation}
     */
-  async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest | TB.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutDataFrameAnalyticsResponse>
-  async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest | TB.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutDataFrameAnalyticsResponse, unknown>>
-  async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest | TB.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlPutDataFrameAnalyticsResponse>
-  async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest | TB.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['allow_lazy_start', 'analysis', 'analyzed_fields', 'description', 'dest', 'max_num_threads', '_meta', 'model_memory_limit', 'source', 'headers', 'version']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutDataFrameAnalyticsResponse>
+  async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutDataFrameAnalyticsResponse, unknown>>
+  async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlPutDataFrameAnalyticsResponse>
+  async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_data_frame_analytics']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1971,9 +3517,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1992,20 +3544,27 @@ export default class Ml {
     * Create a datafeed. Datafeeds retrieve data from Elasticsearch for analysis by an anomaly detection job. You can associate only one datafeed with each anomaly detection job. The datafeed contains a query that runs at a defined interval (`frequency`). If you are concerned about delayed data, you can add a delay (`query_delay') at each interval. By default, the datafeed uses the following query: `{"match_all": {"boost": 1}}`. When Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead. You must use Kibana, this API, or the create anomaly detection jobs API to create a datafeed. Do not add a datafeed directly to the `.ml-config` index. Do not give users `write` privileges on the `.ml-config` index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-put-datafeed.html | Elasticsearch API documentation}
     */
-  async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutDatafeedResponse>
-  async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutDatafeedResponse, unknown>>
-  async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlPutDatafeedResponse>
-  async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['aggregations', 'aggs', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', 'headers']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putDatafeed (this: That, params: T.MlPutDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutDatafeedResponse>
+  async putDatafeed (this: That, params: T.MlPutDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutDatafeedResponse, unknown>>
+  async putDatafeed (this: That, params: T.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlPutDatafeedResponse>
+  async putDatafeed (this: That, params: T.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_datafeed']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2015,9 +3574,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2036,20 +3601,27 @@ export default class Ml {
     * Create a filter. A filter contains a list of strings. It can be used by one or more anomaly detection jobs. Specifically, filters are referenced in the `custom_rules` property of detector configuration objects.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-put-filter.html | Elasticsearch API documentation}
     */
-  async putFilter (this: That, params: T.MlPutFilterRequest | TB.MlPutFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutFilterResponse>
-  async putFilter (this: That, params: T.MlPutFilterRequest | TB.MlPutFilterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutFilterResponse, unknown>>
-  async putFilter (this: That, params: T.MlPutFilterRequest | TB.MlPutFilterRequest, options?: TransportRequestOptions): Promise<T.MlPutFilterResponse>
-  async putFilter (this: That, params: T.MlPutFilterRequest | TB.MlPutFilterRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['filter_id']
-    const acceptedBody: string[] = ['description', 'items']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putFilter (this: That, params: T.MlPutFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutFilterResponse>
+  async putFilter (this: That, params: T.MlPutFilterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutFilterResponse, unknown>>
+  async putFilter (this: That, params: T.MlPutFilterRequest, options?: TransportRequestOptions): Promise<T.MlPutFilterResponse>
+  async putFilter (this: That, params: T.MlPutFilterRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_filter']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2059,9 +3631,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2080,20 +3658,27 @@ export default class Ml {
     * Create an anomaly detection job. If you include a `datafeed_config`, you must have read index privileges on the source index. If you include a `datafeed_config` but do not provide a query, the datafeed uses `{"match_all": {"boost": 1}}`.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-put-job.html | Elasticsearch API documentation}
     */
-  async putJob (this: That, params: T.MlPutJobRequest | TB.MlPutJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutJobResponse>
-  async putJob (this: That, params: T.MlPutJobRequest | TB.MlPutJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutJobResponse, unknown>>
-  async putJob (this: That, params: T.MlPutJobRequest | TB.MlPutJobRequest, options?: TransportRequestOptions): Promise<T.MlPutJobResponse>
-  async putJob (this: That, params: T.MlPutJobRequest | TB.MlPutJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['allow_lazy_open', 'analysis_config', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'daily_model_snapshot_retention_after_days', 'data_description', 'datafeed_config', 'description', 'job_id', 'groups', 'model_plot_config', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_index_name', 'results_retention_days']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putJob (this: That, params: T.MlPutJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutJobResponse>
+  async putJob (this: That, params: T.MlPutJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutJobResponse, unknown>>
+  async putJob (this: That, params: T.MlPutJobRequest, options?: TransportRequestOptions): Promise<T.MlPutJobResponse>
+  async putJob (this: That, params: T.MlPutJobRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_job']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2103,9 +3688,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2124,20 +3715,27 @@ export default class Ml {
     * Create a trained model. Enable you to supply a trained model that is not created by data frame analytics.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-trained-models.html | Elasticsearch API documentation}
     */
-  async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelResponse>
-  async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelResponse, unknown>>
-  async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelResponse>
-  async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['compressed_definition', 'definition', 'description', 'inference_config', 'input', 'metadata', 'model_type', 'model_size_bytes', 'platform_architecture', 'tags', 'prefix_strings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelResponse>
+  async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelResponse, unknown>>
+  async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelResponse>
+  async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_trained_model']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2147,9 +3745,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2168,18 +3772,31 @@ export default class Ml {
     * Create or update a trained model alias. A trained model alias is a logical name used to reference a single trained model. You can use aliases instead of trained model identifiers to make it easier to reference your models. For example, you can use aliases in inference aggregations and processors. An alias must be unique and refer to only a single trained model. However, you can have multiple aliases for each trained model. If you use this API to update an alias such that it references a different trained model ID and the model uses a different type of data frame analytics, an error occurs. For example, this situation occurs if you have a trained model for regression analysis and a trained model for classification analysis; you cannot reassign an alias from one type of trained model to another. If you use this API to update an alias and there are very few input fields in common between the old and new trained models for the model alias, the API returns a warning.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-trained-models-aliases.html | Elasticsearch API documentation}
     */
-  async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest | TB.MlPutTrainedModelAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelAliasResponse>
-  async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest | TB.MlPutTrainedModelAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelAliasResponse, unknown>>
-  async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest | TB.MlPutTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelAliasResponse>
-  async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest | TB.MlPutTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_alias', 'model_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelAliasResponse>
+  async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelAliasResponse, unknown>>
+  async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelAliasResponse>
+  async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.put_trained_model_alias']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2201,20 +3818,27 @@ export default class Ml {
     * Create part of a trained model definition.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-trained-model-definition-part.html | Elasticsearch API documentation}
     */
-  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelDefinitionPartResponse>
-  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelDefinitionPartResponse, unknown>>
-  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelDefinitionPartResponse>
-  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id', 'part']
-    const acceptedBody: string[] = ['definition', 'total_definition_length', 'total_parts']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelDefinitionPartResponse>
+  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelDefinitionPartResponse, unknown>>
+  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelDefinitionPartResponse>
+  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_trained_model_definition_part']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2224,9 +3848,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2246,20 +3876,27 @@ export default class Ml {
     * Create a trained model vocabulary. This API is supported only for natural language processing (NLP) models. The vocabulary is stored in the index as described in `inference_config.*.vocabulary` of the trained model definition.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-trained-model-vocabulary.html | Elasticsearch API documentation}
     */
-  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelVocabularyResponse>
-  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelVocabularyResponse, unknown>>
-  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelVocabularyResponse>
-  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['vocabulary', 'merges', 'scores']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelVocabularyResponse>
+  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelVocabularyResponse, unknown>>
+  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelVocabularyResponse>
+  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.put_trained_model_vocabulary']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2269,9 +3906,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2290,18 +3933,31 @@ export default class Ml {
     * Reset an anomaly detection job. All model state and results are deleted. The job is ready to start over as if it had just been created. It is not currently possible to reset multiple jobs using wildcards or a comma separated list.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-reset-job.html | Elasticsearch API documentation}
     */
-  async resetJob (this: That, params: T.MlResetJobRequest | TB.MlResetJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlResetJobResponse>
-  async resetJob (this: That, params: T.MlResetJobRequest | TB.MlResetJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlResetJobResponse, unknown>>
-  async resetJob (this: That, params: T.MlResetJobRequest | TB.MlResetJobRequest, options?: TransportRequestOptions): Promise<T.MlResetJobResponse>
-  async resetJob (this: That, params: T.MlResetJobRequest | TB.MlResetJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async resetJob (this: That, params: T.MlResetJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlResetJobResponse>
+  async resetJob (this: That, params: T.MlResetJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlResetJobResponse, unknown>>
+  async resetJob (this: That, params: T.MlResetJobRequest, options?: TransportRequestOptions): Promise<T.MlResetJobResponse>
+  async resetJob (this: That, params: T.MlResetJobRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.reset_job']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2322,20 +3978,27 @@ export default class Ml {
     * Revert to a snapshot. The machine learning features react quickly to anomalous input, learning new behaviors in data. Highly anomalous input increases the variance in the models whilst the system learns whether this is a new step-change in behavior or a one-off event. In the case where this anomalous input is known to be a one-off, then it might be appropriate to reset the model state to a time before this event. For example, you might consider reverting to a saved snapshot after Black Friday or a critical system failure.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-revert-snapshot.html | Elasticsearch API documentation}
     */
-  async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest | TB.MlRevertModelSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlRevertModelSnapshotResponse>
-  async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest | TB.MlRevertModelSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlRevertModelSnapshotResponse, unknown>>
-  async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest | TB.MlRevertModelSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlRevertModelSnapshotResponse>
-  async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest | TB.MlRevertModelSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'snapshot_id']
-    const acceptedBody: string[] = ['delete_intervening_results']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlRevertModelSnapshotResponse>
+  async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlRevertModelSnapshotResponse, unknown>>
+  async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlRevertModelSnapshotResponse>
+  async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.revert_model_snapshot']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2345,9 +4008,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2367,19 +4036,32 @@ export default class Ml {
     * Set upgrade_mode for ML indices. Sets a cluster wide upgrade_mode setting that prepares machine learning indices for an upgrade. When upgrading your cluster, in some circumstances you must restart your nodes and reindex your machine learning indices. In those circumstances, there must be no machine learning jobs running. You can close the machine learning jobs, do the upgrade, then open all the jobs again. Alternatively, you can use this API to temporarily halt tasks associated with the jobs and datafeeds and prevent new jobs from opening. You can also use this API during upgrades that do not require you to reindex your machine learning indices, though stopping jobs is not a requirement in that case. You can see the current value for the upgrade_mode setting by using the get machine learning info API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-set-upgrade-mode.html | Elasticsearch API documentation}
     */
-  async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest | TB.MlSetUpgradeModeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlSetUpgradeModeResponse>
-  async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest | TB.MlSetUpgradeModeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlSetUpgradeModeResponse, unknown>>
-  async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest | TB.MlSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<T.MlSetUpgradeModeResponse>
-  async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest | TB.MlSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlSetUpgradeModeResponse>
+  async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlSetUpgradeModeResponse, unknown>>
+  async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<T.MlSetUpgradeModeResponse>
+  async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.set_upgrade_mode']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2397,18 +4079,31 @@ export default class Ml {
     * Start a data frame analytics job. A data frame analytics job can be started and stopped multiple times throughout its lifecycle. If the destination index does not exist, it is created automatically the first time you start the data frame analytics job. The `index.number_of_shards` and `index.number_of_replicas` settings for the destination index are copied from the source index. If there are multiple source indices, the destination index copies the highest setting values. The mappings for the destination index are also copied from the source indices. If there are any mapping conflicts, the job fails to start. If the destination index exists, it is used as is. You can therefore set up the destination index in advance with custom settings and mappings.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/start-dfanalytics.html | Elasticsearch API documentation}
     */
-  async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest | TB.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartDataFrameAnalyticsResponse>
-  async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest | TB.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartDataFrameAnalyticsResponse, unknown>>
-  async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest | TB.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlStartDataFrameAnalyticsResponse>
-  async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest | TB.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartDataFrameAnalyticsResponse>
+  async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartDataFrameAnalyticsResponse, unknown>>
+  async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlStartDataFrameAnalyticsResponse>
+  async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.start_data_frame_analytics']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2429,20 +4124,27 @@ export default class Ml {
     * Start datafeeds. A datafeed must be started in order to retrieve data from Elasticsearch. A datafeed can be started and stopped multiple times throughout its lifecycle. Before you can start a datafeed, the anomaly detection job must be open. Otherwise, an error occurs. If you restart a stopped datafeed, it continues processing input data from the next millisecond after it was stopped. If new data was indexed for that exact millisecond between stopping and starting, it will be ignored. When Elasticsearch security features are enabled, your datafeed remembers which roles the last user to create or update it had at the time of creation or update and runs the query using those same roles. If you provided secondary authorization headers when you created or updated the datafeed, those credentials are used instead.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-start-datafeed.html | Elasticsearch API documentation}
     */
-  async startDatafeed (this: That, params: T.MlStartDatafeedRequest | TB.MlStartDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartDatafeedResponse>
-  async startDatafeed (this: That, params: T.MlStartDatafeedRequest | TB.MlStartDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartDatafeedResponse, unknown>>
-  async startDatafeed (this: That, params: T.MlStartDatafeedRequest | TB.MlStartDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlStartDatafeedResponse>
-  async startDatafeed (this: That, params: T.MlStartDatafeedRequest | TB.MlStartDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['end', 'start', 'timeout']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async startDatafeed (this: That, params: T.MlStartDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartDatafeedResponse>
+  async startDatafeed (this: That, params: T.MlStartDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartDatafeedResponse, unknown>>
+  async startDatafeed (this: That, params: T.MlStartDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlStartDatafeedResponse>
+  async startDatafeed (this: That, params: T.MlStartDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.start_datafeed']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2452,9 +4154,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2473,20 +4181,27 @@ export default class Ml {
     * Start a trained model deployment. It allocates the model to every machine learning node.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/start-trained-model-deployment.html | Elasticsearch API documentation}
     */
-  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartTrainedModelDeploymentResponse>
-  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartTrainedModelDeploymentResponse, unknown>>
-  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlStartTrainedModelDeploymentResponse>
-  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['adaptive_allocations']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartTrainedModelDeploymentResponse>
+  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartTrainedModelDeploymentResponse, unknown>>
+  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlStartTrainedModelDeploymentResponse>
+  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.start_trained_model_deployment']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2496,9 +4211,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2517,18 +4238,31 @@ export default class Ml {
     * Stop data frame analytics jobs. A data frame analytics job can be started and stopped multiple times throughout its lifecycle.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/stop-dfanalytics.html | Elasticsearch API documentation}
     */
-  async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest | TB.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopDataFrameAnalyticsResponse>
-  async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest | TB.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopDataFrameAnalyticsResponse, unknown>>
-  async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest | TB.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlStopDataFrameAnalyticsResponse>
-  async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest | TB.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopDataFrameAnalyticsResponse>
+  async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopDataFrameAnalyticsResponse, unknown>>
+  async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlStopDataFrameAnalyticsResponse>
+  async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.stop_data_frame_analytics']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2549,20 +4283,27 @@ export default class Ml {
     * Stop datafeeds. A datafeed that is stopped ceases to retrieve data from Elasticsearch. A datafeed can be started and stopped multiple times throughout its lifecycle.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-stop-datafeed.html | Elasticsearch API documentation}
     */
-  async stopDatafeed (this: That, params: T.MlStopDatafeedRequest | TB.MlStopDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopDatafeedResponse>
-  async stopDatafeed (this: That, params: T.MlStopDatafeedRequest | TB.MlStopDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopDatafeedResponse, unknown>>
-  async stopDatafeed (this: That, params: T.MlStopDatafeedRequest | TB.MlStopDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlStopDatafeedResponse>
-  async stopDatafeed (this: That, params: T.MlStopDatafeedRequest | TB.MlStopDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['allow_no_match', 'force', 'timeout']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async stopDatafeed (this: That, params: T.MlStopDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopDatafeedResponse>
+  async stopDatafeed (this: That, params: T.MlStopDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopDatafeedResponse, unknown>>
+  async stopDatafeed (this: That, params: T.MlStopDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlStopDatafeedResponse>
+  async stopDatafeed (this: That, params: T.MlStopDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.stop_datafeed']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2572,9 +4313,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2593,18 +4340,31 @@ export default class Ml {
     * Stop a trained model deployment.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/stop-trained-model-deployment.html | Elasticsearch API documentation}
     */
-  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopTrainedModelDeploymentResponse>
-  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopTrainedModelDeploymentResponse, unknown>>
-  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlStopTrainedModelDeploymentResponse>
-  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopTrainedModelDeploymentResponse>
+  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopTrainedModelDeploymentResponse, unknown>>
+  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlStopTrainedModelDeploymentResponse>
+  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.stop_trained_model_deployment']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2625,20 +4385,27 @@ export default class Ml {
     * Update a data frame analytics job.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ml-update-data-frame-analytics | Elasticsearch API documentation}
     */
-  async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest | TB.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateDataFrameAnalyticsResponse>
-  async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest | TB.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateDataFrameAnalyticsResponse, unknown>>
-  async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest | TB.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlUpdateDataFrameAnalyticsResponse>
-  async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest | TB.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['description', 'model_memory_limit', 'max_num_threads', 'allow_lazy_start']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateDataFrameAnalyticsResponse>
+  async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateDataFrameAnalyticsResponse, unknown>>
+  async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlUpdateDataFrameAnalyticsResponse>
+  async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.update_data_frame_analytics']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2648,9 +4415,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2669,20 +4442,27 @@ export default class Ml {
     * Update a datafeed. You must stop and start the datafeed for the changes to be applied. When Elasticsearch security features are enabled, your datafeed remembers which roles the user who updated it had at the time of the update and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-update-datafeed.html | Elasticsearch API documentation}
     */
-  async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest | TB.MlUpdateDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateDatafeedResponse>
-  async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest | TB.MlUpdateDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateDatafeedResponse, unknown>>
-  async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest | TB.MlUpdateDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlUpdateDatafeedResponse>
-  async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest | TB.MlUpdateDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateDatafeedResponse>
+  async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateDatafeedResponse, unknown>>
+  async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlUpdateDatafeedResponse>
+  async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.update_datafeed']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2692,9 +4472,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2713,20 +4499,27 @@ export default class Ml {
     * Update a filter. Updates the description of a filter, adds items, or removes items from the list.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-update-filter.html | Elasticsearch API documentation}
     */
-  async updateFilter (this: That, params: T.MlUpdateFilterRequest | TB.MlUpdateFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateFilterResponse>
-  async updateFilter (this: That, params: T.MlUpdateFilterRequest | TB.MlUpdateFilterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateFilterResponse, unknown>>
-  async updateFilter (this: That, params: T.MlUpdateFilterRequest | TB.MlUpdateFilterRequest, options?: TransportRequestOptions): Promise<T.MlUpdateFilterResponse>
-  async updateFilter (this: That, params: T.MlUpdateFilterRequest | TB.MlUpdateFilterRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['filter_id']
-    const acceptedBody: string[] = ['add_items', 'description', 'remove_items']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateFilter (this: That, params: T.MlUpdateFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateFilterResponse>
+  async updateFilter (this: That, params: T.MlUpdateFilterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateFilterResponse, unknown>>
+  async updateFilter (this: That, params: T.MlUpdateFilterRequest, options?: TransportRequestOptions): Promise<T.MlUpdateFilterResponse>
+  async updateFilter (this: That, params: T.MlUpdateFilterRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.update_filter']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2736,9 +4529,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2757,20 +4556,27 @@ export default class Ml {
     * Update an anomaly detection job. Updates certain properties of an anomaly detection job.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-update-job.html | Elasticsearch API documentation}
     */
-  async updateJob (this: That, params: T.MlUpdateJobRequest | TB.MlUpdateJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateJobResponse>
-  async updateJob (this: That, params: T.MlUpdateJobRequest | TB.MlUpdateJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateJobResponse, unknown>>
-  async updateJob (this: That, params: T.MlUpdateJobRequest | TB.MlUpdateJobRequest, options?: TransportRequestOptions): Promise<T.MlUpdateJobResponse>
-  async updateJob (this: That, params: T.MlUpdateJobRequest | TB.MlUpdateJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['allow_lazy_open', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'categorization_filters', 'description', 'model_plot_config', 'model_prune_window', 'daily_model_snapshot_retention_after_days', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_retention_days', 'groups', 'detectors', 'per_partition_categorization']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateJob (this: That, params: T.MlUpdateJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateJobResponse>
+  async updateJob (this: That, params: T.MlUpdateJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateJobResponse, unknown>>
+  async updateJob (this: That, params: T.MlUpdateJobRequest, options?: TransportRequestOptions): Promise<T.MlUpdateJobResponse>
+  async updateJob (this: That, params: T.MlUpdateJobRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.update_job']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2780,9 +4586,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2801,20 +4613,27 @@ export default class Ml {
     * Update a snapshot. Updates certain properties of a snapshot.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-update-snapshot.html | Elasticsearch API documentation}
     */
-  async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest | TB.MlUpdateModelSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateModelSnapshotResponse>
-  async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest | TB.MlUpdateModelSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateModelSnapshotResponse, unknown>>
-  async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest | TB.MlUpdateModelSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlUpdateModelSnapshotResponse>
-  async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest | TB.MlUpdateModelSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'snapshot_id']
-    const acceptedBody: string[] = ['description', 'retain']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateModelSnapshotResponse>
+  async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateModelSnapshotResponse, unknown>>
+  async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlUpdateModelSnapshotResponse>
+  async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.update_model_snapshot']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2824,9 +4643,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2846,20 +4671,27 @@ export default class Ml {
     * Update a trained model deployment.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ml-update-trained-model-deployment | Elasticsearch API documentation}
     */
-  async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest | TB.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateTrainedModelDeploymentResponse>
-  async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest | TB.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateTrainedModelDeploymentResponse, unknown>>
-  async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest | TB.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlUpdateTrainedModelDeploymentResponse>
-  async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest | TB.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['number_of_allocations', 'adaptive_allocations']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateTrainedModelDeploymentResponse>
+  async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateTrainedModelDeploymentResponse, unknown>>
+  async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlUpdateTrainedModelDeploymentResponse>
+  async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.update_trained_model_deployment']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2869,9 +4701,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2890,18 +4728,31 @@ export default class Ml {
     * Upgrade a snapshot. Upgrade an anomaly detection model snapshot to the latest major version. Over time, older snapshot formats are deprecated and removed. Anomaly detection jobs support only snapshots that are from the current or previous major version. This API provides a means to upgrade a snapshot to the current major version. This aids in preparing the cluster for an upgrade to the next major version. Only one snapshot per anomaly detection job can be upgraded at a time and the upgraded snapshot cannot be the current snapshot of the anomaly detection job.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-upgrade-job-model-snapshot.html | Elasticsearch API documentation}
     */
-  async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest | TB.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpgradeJobSnapshotResponse>
-  async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest | TB.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpgradeJobSnapshotResponse, unknown>>
-  async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest | TB.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlUpgradeJobSnapshotResponse>
-  async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest | TB.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['job_id', 'snapshot_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpgradeJobSnapshotResponse>
+  async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpgradeJobSnapshotResponse, unknown>>
+  async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlUpgradeJobSnapshotResponse>
+  async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ml.upgrade_job_snapshot']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2923,20 +4774,27 @@ export default class Ml {
     * Validate an anomaly detection job.
     * @see {@link https://www.elastic.co/guide/en/machine-learning/8.19/ml-jobs.html | Elasticsearch API documentation}
     */
-  async validate (this: That, params?: T.MlValidateRequest | TB.MlValidateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateResponse>
-  async validate (this: That, params?: T.MlValidateRequest | TB.MlValidateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlValidateResponse, unknown>>
-  async validate (this: That, params?: T.MlValidateRequest | TB.MlValidateRequest, options?: TransportRequestOptions): Promise<T.MlValidateResponse>
-  async validate (this: That, params?: T.MlValidateRequest | TB.MlValidateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['job_id', 'analysis_config', 'analysis_limits', 'data_description', 'description', 'model_plot', 'model_snapshot_id', 'model_snapshot_retention_days', 'results_index_name']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async validate (this: That, params?: T.MlValidateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateResponse>
+  async validate (this: That, params?: T.MlValidateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlValidateResponse, unknown>>
+  async validate (this: That, params?: T.MlValidateRequest, options?: TransportRequestOptions): Promise<T.MlValidateResponse>
+  async validate (this: That, params?: T.MlValidateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.validate']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -2947,9 +4805,15 @@ export default class Ml {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2965,25 +4829,35 @@ export default class Ml {
     * Validate an anomaly detection job.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8 | Elasticsearch API documentation}
     */
-  async validateDetector (this: That, params: T.MlValidateDetectorRequest | TB.MlValidateDetectorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateDetectorResponse>
-  async validateDetector (this: That, params: T.MlValidateDetectorRequest | TB.MlValidateDetectorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlValidateDetectorResponse, unknown>>
-  async validateDetector (this: That, params: T.MlValidateDetectorRequest | TB.MlValidateDetectorRequest, options?: TransportRequestOptions): Promise<T.MlValidateDetectorResponse>
-  async validateDetector (this: That, params: T.MlValidateDetectorRequest | TB.MlValidateDetectorRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['detector']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+  async validateDetector (this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateDetectorResponse>
+  async validateDetector (this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlValidateDetectorResponse, unknown>>
+  async validateDetector (this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptions): Promise<T.MlValidateDetectorResponse>
+  async validateDetector (this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ml.validate_detector']
 
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

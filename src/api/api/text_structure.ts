@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,31 +21,124 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class TextStructure {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'text_structure.find_field_structure': {
+        path: [],
+        body: [],
+        query: [
+          'column_names',
+          'delimiter',
+          'documents_to_sample',
+          'ecs_compatibility',
+          'explain',
+          'field',
+          'format',
+          'grok_pattern',
+          'index',
+          'quote',
+          'should_trim_fields',
+          'timeout',
+          'timestamp_field',
+          'timestamp_format'
+        ]
+      },
+      'text_structure.find_message_structure': {
+        path: [],
+        body: [
+          'messages'
+        ],
+        query: [
+          'column_names',
+          'delimiter',
+          'ecs_compatibility',
+          'explain',
+          'format',
+          'grok_pattern',
+          'quote',
+          'should_trim_fields',
+          'timeout',
+          'timestamp_field',
+          'timestamp_format'
+        ]
+      },
+      'text_structure.find_structure': {
+        path: [],
+        body: [
+          'text_files'
+        ],
+        query: [
+          'charset',
+          'column_names',
+          'delimiter',
+          'ecs_compatibility',
+          'explain',
+          'format',
+          'grok_pattern',
+          'has_header_row',
+          'line_merge_size_limit',
+          'lines_to_sample',
+          'quote',
+          'should_trim_fields',
+          'timeout',
+          'timestamp_field',
+          'timestamp_format'
+        ]
+      },
+      'text_structure.test_grok_pattern': {
+        path: [],
+        body: [
+          'grok_pattern',
+          'text'
+        ],
+        query: [
+          'ecs_compatibility'
+        ]
+      }
+    }
   }
 
   /**
     * Find the structure of a text field. Find the structure of a text field in an Elasticsearch index. This API provides a starting point for extracting further information from log messages already ingested into Elasticsearch. For example, if you have ingested data into a very simple index that has just `@timestamp` and message fields, you can use this API to see what common structure exists in the message field. The response from the API contains: * Sample messages. * Statistics that reveal the most common values for all fields detected within the text and basic numeric statistics for numeric fields. * Information about the structure of the text, which is useful when you write ingest configurations to index it or similarly formatted text. * Appropriate mappings for an Elasticsearch index, which you could use to ingest the text. All this information can be calculated by the structure finder with no guidance. However, you can optionally override some of the decisions about the text structure by specifying one or more query parameters. If the structure finder produces unexpected results, specify the `explain` query parameter and an explanation will appear in the response. It helps determine why the returned structure was chosen.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/find-field-structure.html | Elasticsearch API documentation}
     */
-  async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest | TB.TextStructureFindFieldStructureRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureFindFieldStructureResponse>
-  async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest | TB.TextStructureFindFieldStructureRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindFieldStructureResponse, unknown>>
-  async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest | TB.TextStructureFindFieldStructureRequest, options?: TransportRequestOptions): Promise<T.TextStructureFindFieldStructureResponse>
-  async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest | TB.TextStructureFindFieldStructureRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureFindFieldStructureResponse>
+  async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindFieldStructureResponse, unknown>>
+  async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest, options?: TransportRequestOptions): Promise<T.TextStructureFindFieldStructureResponse>
+  async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['text_structure.find_field_structure']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -77,20 +156,27 @@ export default class TextStructure {
     * Find the structure of text messages. Find the structure of a list of text messages. The messages must contain data that is suitable to be ingested into Elasticsearch. This API provides a starting point for ingesting data into Elasticsearch in a format that is suitable for subsequent use with other Elastic Stack functionality. Use this API rather than the find text structure API if your input text has already been split up into separate messages by some other process. The response from the API contains: * Sample messages. * Statistics that reveal the most common values for all fields detected within the text and basic numeric statistics for numeric fields. * Information about the structure of the text, which is useful when you write ingest configurations to index it or similarly formatted text. Appropriate mappings for an Elasticsearch index, which you could use to ingest the text. All this information can be calculated by the structure finder with no guidance. However, you can optionally override some of the decisions about the text structure by specifying one or more query parameters. If the structure finder produces unexpected results, specify the `explain` query parameter and an explanation will appear in the response. It helps determine why the returned structure was chosen.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/find-message-structure.html | Elasticsearch API documentation}
     */
-  async findMessageStructure (this: That, params: T.TextStructureFindMessageStructureRequest | TB.TextStructureFindMessageStructureRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureFindMessageStructureResponse>
-  async findMessageStructure (this: That, params: T.TextStructureFindMessageStructureRequest | TB.TextStructureFindMessageStructureRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindMessageStructureResponse, unknown>>
-  async findMessageStructure (this: That, params: T.TextStructureFindMessageStructureRequest | TB.TextStructureFindMessageStructureRequest, options?: TransportRequestOptions): Promise<T.TextStructureFindMessageStructureResponse>
-  async findMessageStructure (this: That, params: T.TextStructureFindMessageStructureRequest | TB.TextStructureFindMessageStructureRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['messages']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async findMessageStructure (this: That, params: T.TextStructureFindMessageStructureRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureFindMessageStructureResponse>
+  async findMessageStructure (this: That, params: T.TextStructureFindMessageStructureRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindMessageStructureResponse, unknown>>
+  async findMessageStructure (this: That, params: T.TextStructureFindMessageStructureRequest, options?: TransportRequestOptions): Promise<T.TextStructureFindMessageStructureResponse>
+  async findMessageStructure (this: That, params: T.TextStructureFindMessageStructureRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['text_structure.find_message_structure']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -100,9 +186,15 @@ export default class TextStructure {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -118,25 +210,35 @@ export default class TextStructure {
     * Find the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch. This API provides a starting point for ingesting data into Elasticsearch in a format that is suitable for subsequent use with other Elastic Stack functionality. Unlike other Elasticsearch endpoints, the data that is posted to this endpoint does not need to be UTF-8 encoded and in JSON format. It must, however, be text; binary text formats are not currently supported. The size is limited to the Elasticsearch HTTP receive buffer size, which defaults to 100 Mb. The response from the API contains: * A couple of messages from the beginning of the text. * Statistics that reveal the most common values for all fields detected within the text and basic numeric statistics for numeric fields. * Information about the structure of the text, which is useful when you write ingest configurations to index it or similarly formatted text. * Appropriate mappings for an Elasticsearch index, which you could use to ingest the text. All this information can be calculated by the structure finder with no guidance. However, you can optionally override some of the decisions about the text structure by specifying one or more query parameters.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/find-structure.html | Elasticsearch API documentation}
     */
-  async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument> | TB.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureFindStructureResponse>
-  async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument> | TB.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindStructureResponse, unknown>>
-  async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument> | TB.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptions): Promise<T.TextStructureFindStructureResponse>
-  async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument> | TB.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['text_files']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+  async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureFindStructureResponse>
+  async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindStructureResponse, unknown>>
+  async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptions): Promise<T.TextStructureFindStructureResponse>
+  async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['text_structure.find_structure']
 
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -152,20 +254,27 @@ export default class TextStructure {
     * Test a Grok pattern. Test a Grok pattern on one or more lines of text. The API indicates whether the lines match the pattern together with the offsets and lengths of the matched substrings.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/test-grok-pattern.html | Elasticsearch API documentation}
     */
-  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureTestGrokPatternResponse>
-  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureTestGrokPatternResponse, unknown>>
-  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptions): Promise<T.TextStructureTestGrokPatternResponse>
-  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['grok_pattern', 'text']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureTestGrokPatternResponse>
+  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureTestGrokPatternResponse, unknown>>
+  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest, options?: TransportRequestOptions): Promise<T.TextStructureTestGrokPatternResponse>
+  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['text_structure.test_grok_pattern']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -175,9 +284,15 @@ export default class TextStructure {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

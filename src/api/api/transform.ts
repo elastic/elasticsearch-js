@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,31 +21,209 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Transform {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'transform.delete_transform': {
+        path: [
+          'transform_id'
+        ],
+        body: [],
+        query: [
+          'force',
+          'delete_dest_index',
+          'timeout'
+        ]
+      },
+      'transform.get_node_stats': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'transform.get_transform': {
+        path: [
+          'transform_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'from',
+          'size',
+          'exclude_generated'
+        ]
+      },
+      'transform.get_transform_stats': {
+        path: [
+          'transform_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'from',
+          'size',
+          'timeout'
+        ]
+      },
+      'transform.preview_transform': {
+        path: [
+          'transform_id'
+        ],
+        body: [
+          'dest',
+          'description',
+          'frequency',
+          'pivot',
+          'source',
+          'settings',
+          'sync',
+          'retention_policy',
+          'latest'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'transform.put_transform': {
+        path: [
+          'transform_id'
+        ],
+        body: [
+          'dest',
+          'description',
+          'frequency',
+          'latest',
+          '_meta',
+          'pivot',
+          'retention_policy',
+          'settings',
+          'source',
+          'sync'
+        ],
+        query: [
+          'defer_validation',
+          'timeout'
+        ]
+      },
+      'transform.reset_transform': {
+        path: [
+          'transform_id'
+        ],
+        body: [],
+        query: [
+          'force',
+          'timeout'
+        ]
+      },
+      'transform.schedule_now_transform': {
+        path: [
+          'transform_id'
+        ],
+        body: [],
+        query: [
+          'timeout'
+        ]
+      },
+      'transform.set_upgrade_mode': {
+        path: [],
+        body: [],
+        query: [
+          'enabled',
+          'timeout'
+        ]
+      },
+      'transform.start_transform': {
+        path: [
+          'transform_id'
+        ],
+        body: [],
+        query: [
+          'timeout',
+          'from'
+        ]
+      },
+      'transform.stop_transform': {
+        path: [
+          'transform_id'
+        ],
+        body: [],
+        query: [
+          'allow_no_match',
+          'force',
+          'timeout',
+          'wait_for_checkpoint',
+          'wait_for_completion'
+        ]
+      },
+      'transform.update_transform': {
+        path: [
+          'transform_id'
+        ],
+        body: [
+          'dest',
+          'description',
+          'frequency',
+          '_meta',
+          'source',
+          'settings',
+          'sync',
+          'retention_policy'
+        ],
+        query: [
+          'defer_validation',
+          'timeout'
+        ]
+      },
+      'transform.upgrade_transforms': {
+        path: [],
+        body: [],
+        query: [
+          'dry_run',
+          'timeout'
+        ]
+      }
+    }
   }
 
   /**
     * Delete a transform.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-transform.html | Elasticsearch API documentation}
     */
-  async deleteTransform (this: That, params: T.TransformDeleteTransformRequest | TB.TransformDeleteTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformDeleteTransformResponse>
-  async deleteTransform (this: That, params: T.TransformDeleteTransformRequest | TB.TransformDeleteTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformDeleteTransformResponse, unknown>>
-  async deleteTransform (this: That, params: T.TransformDeleteTransformRequest | TB.TransformDeleteTransformRequest, options?: TransportRequestOptions): Promise<T.TransformDeleteTransformResponse>
-  async deleteTransform (this: That, params: T.TransformDeleteTransformRequest | TB.TransformDeleteTransformRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['transform_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteTransform (this: That, params: T.TransformDeleteTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformDeleteTransformResponse>
+  async deleteTransform (this: That, params: T.TransformDeleteTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformDeleteTransformResponse, unknown>>
+  async deleteTransform (this: That, params: T.TransformDeleteTransformRequest, options?: TransportRequestOptions): Promise<T.TransformDeleteTransformResponse>
+  async deleteTransform (this: That, params: T.TransformDeleteTransformRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['transform.delete_transform']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -80,19 +244,32 @@ export default class Transform {
     * Retrieves transform usage information for transform nodes.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-transform-node-stats.html | Elasticsearch API documentation}
     */
-  async getNodeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getNodeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getNodeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getNodeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getNodeStats (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getNodeStats (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getNodeStats (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getNodeStats (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['transform.get_node_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }
@@ -109,19 +286,32 @@ export default class Transform {
     * Get transforms. Get configuration information for transforms.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-transform.html | Elasticsearch API documentation}
     */
-  async getTransform (this: That, params?: T.TransformGetTransformRequest | TB.TransformGetTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetTransformResponse>
-  async getTransform (this: That, params?: T.TransformGetTransformRequest | TB.TransformGetTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformGetTransformResponse, unknown>>
-  async getTransform (this: That, params?: T.TransformGetTransformRequest | TB.TransformGetTransformRequest, options?: TransportRequestOptions): Promise<T.TransformGetTransformResponse>
-  async getTransform (this: That, params?: T.TransformGetTransformRequest | TB.TransformGetTransformRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['transform_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getTransform (this: That, params?: T.TransformGetTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetTransformResponse>
+  async getTransform (this: That, params?: T.TransformGetTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformGetTransformResponse, unknown>>
+  async getTransform (this: That, params?: T.TransformGetTransformRequest, options?: TransportRequestOptions): Promise<T.TransformGetTransformResponse>
+  async getTransform (this: That, params?: T.TransformGetTransformRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['transform.get_transform']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -149,18 +339,31 @@ export default class Transform {
     * Get transform stats. Get usage information for transforms.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-transform-stats.html | Elasticsearch API documentation}
     */
-  async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest | TB.TransformGetTransformStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetTransformStatsResponse>
-  async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest | TB.TransformGetTransformStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformGetTransformStatsResponse, unknown>>
-  async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest | TB.TransformGetTransformStatsRequest, options?: TransportRequestOptions): Promise<T.TransformGetTransformStatsResponse>
-  async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest | TB.TransformGetTransformStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['transform_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetTransformStatsResponse>
+  async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformGetTransformStatsResponse, unknown>>
+  async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest, options?: TransportRequestOptions): Promise<T.TransformGetTransformStatsResponse>
+  async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['transform.get_transform_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -181,20 +384,27 @@ export default class Transform {
     * Preview a transform. Generates a preview of the results that you will get when you create a transform with the same configuration. It returns a maximum of 100 results. The calculations are based on all the current data in the source index. It also generates a list of mappings and settings for the destination index. These values are determined based on the field types of the source index and the transform aggregations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/preview-transform.html | Elasticsearch API documentation}
     */
-  async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest | TB.TransformPreviewTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformPreviewTransformResponse<TTransform>>
-  async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest | TB.TransformPreviewTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformPreviewTransformResponse<TTransform>, unknown>>
-  async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest | TB.TransformPreviewTransformRequest, options?: TransportRequestOptions): Promise<T.TransformPreviewTransformResponse<TTransform>>
-  async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest | TB.TransformPreviewTransformRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['transform_id']
-    const acceptedBody: string[] = ['dest', 'description', 'frequency', 'pivot', 'source', 'settings', 'sync', 'retention_policy', 'latest']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformPreviewTransformResponse<TTransform>>
+  async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformPreviewTransformResponse<TTransform>, unknown>>
+  async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest, options?: TransportRequestOptions): Promise<T.TransformPreviewTransformResponse<TTransform>>
+  async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['transform.preview_transform']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -205,9 +415,15 @@ export default class Transform {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -233,20 +449,27 @@ export default class Transform {
     * Create a transform. Creates a transform. A transform copies data from source indices, transforms it, and persists it into an entity-centric destination index. You can also think of the destination index as a two-dimensional tabular data structure (known as a data frame). The ID for each document in the data frame is generated from a hash of the entity, so there is a unique row per entity. You must choose either the latest or pivot method for your transform; you cannot use both in a single transform. If you choose to use the pivot method for your transform, the entities are defined by the set of `group_by` fields in the pivot object. If you choose to use the latest method, the entities are defined by the `unique_key` field values in the latest object. You must have `create_index`, `index`, and `read` privileges on the destination index and `read` and `view_index_metadata` privileges on the source indices. When Elasticsearch security features are enabled, the transform remembers which roles the user that created it had at the time of creation and uses those same roles. If those roles do not have the required privileges on the source and destination indices, the transform fails when it attempts unauthorized operations. NOTE: You must use Kibana or this API to create a transform. Do not add a transform directly into any `.transform-internal*` indices using the Elasticsearch index API. If Elasticsearch security features are enabled, do not give users any privileges on `.transform-internal*` indices. If you used transforms prior to 7.5, also do not give users any privileges on `.data-frame-internal*` indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-transform.html | Elasticsearch API documentation}
     */
-  async putTransform (this: That, params: T.TransformPutTransformRequest | TB.TransformPutTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformPutTransformResponse>
-  async putTransform (this: That, params: T.TransformPutTransformRequest | TB.TransformPutTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformPutTransformResponse, unknown>>
-  async putTransform (this: That, params: T.TransformPutTransformRequest | TB.TransformPutTransformRequest, options?: TransportRequestOptions): Promise<T.TransformPutTransformResponse>
-  async putTransform (this: That, params: T.TransformPutTransformRequest | TB.TransformPutTransformRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['transform_id']
-    const acceptedBody: string[] = ['dest', 'description', 'frequency', 'latest', '_meta', 'pivot', 'retention_policy', 'settings', 'source', 'sync']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putTransform (this: That, params: T.TransformPutTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformPutTransformResponse>
+  async putTransform (this: That, params: T.TransformPutTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformPutTransformResponse, unknown>>
+  async putTransform (this: That, params: T.TransformPutTransformRequest, options?: TransportRequestOptions): Promise<T.TransformPutTransformResponse>
+  async putTransform (this: That, params: T.TransformPutTransformRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['transform.put_transform']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -256,9 +479,15 @@ export default class Transform {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -277,18 +506,31 @@ export default class Transform {
     * Reset a transform. Before you can reset it, you must stop it; alternatively, use the `force` query parameter. If the destination index was created by the transform, it is deleted.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/reset-transform.html | Elasticsearch API documentation}
     */
-  async resetTransform (this: That, params: T.TransformResetTransformRequest | TB.TransformResetTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformResetTransformResponse>
-  async resetTransform (this: That, params: T.TransformResetTransformRequest | TB.TransformResetTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformResetTransformResponse, unknown>>
-  async resetTransform (this: That, params: T.TransformResetTransformRequest | TB.TransformResetTransformRequest, options?: TransportRequestOptions): Promise<T.TransformResetTransformResponse>
-  async resetTransform (this: That, params: T.TransformResetTransformRequest | TB.TransformResetTransformRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['transform_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async resetTransform (this: That, params: T.TransformResetTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformResetTransformResponse>
+  async resetTransform (this: That, params: T.TransformResetTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformResetTransformResponse, unknown>>
+  async resetTransform (this: That, params: T.TransformResetTransformRequest, options?: TransportRequestOptions): Promise<T.TransformResetTransformResponse>
+  async resetTransform (this: That, params: T.TransformResetTransformRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['transform.reset_transform']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -309,18 +551,31 @@ export default class Transform {
     * Schedule a transform to start now. Instantly run a transform to process data. If you run this API, the transform will process the new data instantly, without waiting for the configured frequency interval. After the API is called, the transform will be processed again at `now + frequency` unless the API is called again in the meantime.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/schedule-now-transform.html | Elasticsearch API documentation}
     */
-  async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest | TB.TransformScheduleNowTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformScheduleNowTransformResponse>
-  async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest | TB.TransformScheduleNowTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformScheduleNowTransformResponse, unknown>>
-  async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest | TB.TransformScheduleNowTransformRequest, options?: TransportRequestOptions): Promise<T.TransformScheduleNowTransformResponse>
-  async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest | TB.TransformScheduleNowTransformRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['transform_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformScheduleNowTransformResponse>
+  async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformScheduleNowTransformResponse, unknown>>
+  async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest, options?: TransportRequestOptions): Promise<T.TransformScheduleNowTransformResponse>
+  async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['transform.schedule_now_transform']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -338,22 +593,36 @@ export default class Transform {
   }
 
   /**
-    * Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/transform-set-upgrade-mode.html | Elasticsearch API documentation}
+    * Set upgrade_mode for transform indices. Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade. When upgrading your cluster, in some circumstances you must restart your nodes and reindex your transform indices. In those circumstances, there must be no transforms running. You can close the transforms, do the upgrade, then open all the transforms again. Alternatively, you can use this API to temporarily halt tasks associated with the transforms and prevent new transforms from opening. You can also use this API during upgrades that do not require you to reindex your transform indices, though stopping transforms is not a requirement in that case. You can see the current value for the upgrade_mode setting by using the get transform info API.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-set-upgrade-mode | Elasticsearch API documentation}
     */
-  async setUpgradeMode (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async setUpgradeMode (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async setUpgradeMode (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async setUpgradeMode (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async setUpgradeMode (this: That, params?: T.TransformSetUpgradeModeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformSetUpgradeModeResponse>
+  async setUpgradeMode (this: That, params?: T.TransformSetUpgradeModeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformSetUpgradeModeResponse, unknown>>
+  async setUpgradeMode (this: That, params?: T.TransformSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<T.TransformSetUpgradeModeResponse>
+  async setUpgradeMode (this: That, params?: T.TransformSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['transform.set_upgrade_mode']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -370,18 +639,31 @@ export default class Transform {
     * Start a transform. When you start a transform, it creates the destination index if it does not already exist. The `number_of_shards` is set to `1` and the `auto_expand_replicas` is set to `0-1`. If it is a pivot transform, it deduces the mapping definitions for the destination index from the source indices and the transform aggregations. If fields in the destination index are derived from scripts (as in the case of `scripted_metric` or `bucket_script` aggregations), the transform uses dynamic mappings unless an index template exists. If it is a latest transform, it does not deduce mapping definitions; it uses dynamic mappings. To use explicit mappings, create the destination index before you start the transform. Alternatively, you can create an index template, though it does not affect the deduced mappings in a pivot transform. When the transform starts, a series of validations occur to ensure its success. If you deferred validation when you created the transform, they occur when you start the transform—with the exception of privilege checks. When Elasticsearch security features are enabled, the transform remembers which roles the user that created it had at the time of creation and uses those same roles. If those roles do not have the required privileges on the source and destination indices, the transform fails when it attempts unauthorized operations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/start-transform.html | Elasticsearch API documentation}
     */
-  async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformStartTransformResponse>
-  async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformStartTransformResponse, unknown>>
-  async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptions): Promise<T.TransformStartTransformResponse>
-  async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['transform_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async startTransform (this: That, params: T.TransformStartTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformStartTransformResponse>
+  async startTransform (this: That, params: T.TransformStartTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformStartTransformResponse, unknown>>
+  async startTransform (this: That, params: T.TransformStartTransformRequest, options?: TransportRequestOptions): Promise<T.TransformStartTransformResponse>
+  async startTransform (this: That, params: T.TransformStartTransformRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['transform.start_transform']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -402,18 +684,31 @@ export default class Transform {
     * Stop transforms. Stops one or more transforms.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/stop-transform.html | Elasticsearch API documentation}
     */
-  async stopTransform (this: That, params: T.TransformStopTransformRequest | TB.TransformStopTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformStopTransformResponse>
-  async stopTransform (this: That, params: T.TransformStopTransformRequest | TB.TransformStopTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformStopTransformResponse, unknown>>
-  async stopTransform (this: That, params: T.TransformStopTransformRequest | TB.TransformStopTransformRequest, options?: TransportRequestOptions): Promise<T.TransformStopTransformResponse>
-  async stopTransform (this: That, params: T.TransformStopTransformRequest | TB.TransformStopTransformRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['transform_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async stopTransform (this: That, params: T.TransformStopTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformStopTransformResponse>
+  async stopTransform (this: That, params: T.TransformStopTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformStopTransformResponse, unknown>>
+  async stopTransform (this: That, params: T.TransformStopTransformRequest, options?: TransportRequestOptions): Promise<T.TransformStopTransformResponse>
+  async stopTransform (this: That, params: T.TransformStopTransformRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['transform.stop_transform']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -434,20 +729,27 @@ export default class Transform {
     * Update a transform. Updates certain properties of a transform. All updated properties except `description` do not take effect until after the transform starts the next checkpoint, thus there is data consistency in each checkpoint. To use this API, you must have `read` and `view_index_metadata` privileges for the source indices. You must also have `index` and `read` privileges for the destination index. When Elasticsearch security features are enabled, the transform remembers which roles the user who updated it had at the time of update and runs with those privileges.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-transform-update-transform | Elasticsearch API documentation}
     */
-  async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformUpdateTransformResponse>
-  async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformUpdateTransformResponse, unknown>>
-  async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptions): Promise<T.TransformUpdateTransformResponse>
-  async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['transform_id']
-    const acceptedBody: string[] = ['dest', 'description', 'frequency', '_meta', 'source', 'settings', 'sync', 'retention_policy']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateTransform (this: That, params: T.TransformUpdateTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformUpdateTransformResponse>
+  async updateTransform (this: That, params: T.TransformUpdateTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformUpdateTransformResponse, unknown>>
+  async updateTransform (this: That, params: T.TransformUpdateTransformRequest, options?: TransportRequestOptions): Promise<T.TransformUpdateTransformResponse>
+  async updateTransform (this: That, params: T.TransformUpdateTransformRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['transform.update_transform']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -457,9 +759,15 @@ export default class Transform {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -478,19 +786,32 @@ export default class Transform {
     * Upgrade all transforms. Transforms are compatible across minor versions and between supported major versions. However, over time, the format of transform configuration information may change. This API identifies transforms that have a legacy configuration format and upgrades them to the latest version. It also cleans up the internal data structures that store the transform state and checkpoints. The upgrade does not affect the source and destination indices. The upgrade also does not affect the roles that transforms use when Elasticsearch security features are enabled; the role used to read source data and write to the destination index remains unchanged. If a transform upgrade step fails, the upgrade stops and an error is returned about the underlying issue. Resolve the issue then re-run the process again. A summary is returned when the upgrade is finished. To ensure continuous transforms remain running during a major version upgrade of the cluster – for example, from 7.16 to 8.0 – it is recommended to upgrade transforms before upgrading the cluster. You may want to perform a recent cluster backup prior to the upgrade.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-transform-upgrade-transforms | Elasticsearch API documentation}
     */
-  async upgradeTransforms (this: That, params?: T.TransformUpgradeTransformsRequest | TB.TransformUpgradeTransformsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformUpgradeTransformsResponse>
-  async upgradeTransforms (this: That, params?: T.TransformUpgradeTransformsRequest | TB.TransformUpgradeTransformsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformUpgradeTransformsResponse, unknown>>
-  async upgradeTransforms (this: That, params?: T.TransformUpgradeTransformsRequest | TB.TransformUpgradeTransformsRequest, options?: TransportRequestOptions): Promise<T.TransformUpgradeTransformsResponse>
-  async upgradeTransforms (this: That, params?: T.TransformUpgradeTransformsRequest | TB.TransformUpgradeTransformsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async upgradeTransforms (this: That, params?: T.TransformUpgradeTransformsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformUpgradeTransformsResponse>
+  async upgradeTransforms (this: That, params?: T.TransformUpgradeTransformsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformUpgradeTransformsResponse, unknown>>
+  async upgradeTransforms (this: That, params?: T.TransformUpgradeTransformsRequest, options?: TransportRequestOptions): Promise<T.TransformUpgradeTransformsResponse>
+  async upgradeTransforms (this: That, params?: T.TransformUpgradeTransformsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['transform.upgrade_transforms']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }

@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,31 +21,216 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Ccr {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'ccr.delete_auto_follow_pattern': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.follow': {
+        path: [
+          'index'
+        ],
+        body: [
+          'data_stream_name',
+          'leader_index',
+          'max_outstanding_read_requests',
+          'max_outstanding_write_requests',
+          'max_read_request_operation_count',
+          'max_read_request_size',
+          'max_retry_delay',
+          'max_write_buffer_count',
+          'max_write_buffer_size',
+          'max_write_request_operation_count',
+          'max_write_request_size',
+          'read_poll_timeout',
+          'remote_cluster',
+          'settings'
+        ],
+        query: [
+          'master_timeout',
+          'wait_for_active_shards'
+        ]
+      },
+      'ccr.follow_info': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.follow_stats': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'timeout'
+        ]
+      },
+      'ccr.forget_follower': {
+        path: [
+          'index'
+        ],
+        body: [
+          'follower_cluster',
+          'follower_index',
+          'follower_index_uuid',
+          'leader_remote_cluster'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'ccr.get_auto_follow_pattern': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.pause_auto_follow_pattern': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.pause_follow': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.put_auto_follow_pattern': {
+        path: [
+          'name'
+        ],
+        body: [
+          'remote_cluster',
+          'follow_index_pattern',
+          'leader_index_patterns',
+          'leader_index_exclusion_patterns',
+          'max_outstanding_read_requests',
+          'settings',
+          'max_outstanding_write_requests',
+          'read_poll_timeout',
+          'max_read_request_operation_count',
+          'max_read_request_size',
+          'max_retry_delay',
+          'max_write_buffer_count',
+          'max_write_buffer_size',
+          'max_write_request_operation_count',
+          'max_write_request_size'
+        ],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.resume_auto_follow_pattern': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.resume_follow': {
+        path: [
+          'index'
+        ],
+        body: [
+          'max_outstanding_read_requests',
+          'max_outstanding_write_requests',
+          'max_read_request_operation_count',
+          'max_read_request_size',
+          'max_retry_delay',
+          'max_write_buffer_count',
+          'max_write_buffer_size',
+          'max_write_request_operation_count',
+          'max_write_request_size',
+          'read_poll_timeout'
+        ],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'ccr.stats': {
+        path: [],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'ccr.unfollow': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      }
+    }
   }
 
   /**
     * Delete auto-follow patterns. Delete a collection of cross-cluster replication auto-follow patterns.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ccr-delete-auto-follow-pattern.html | Elasticsearch API documentation}
     */
-  async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest | TB.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrDeleteAutoFollowPatternResponse>
-  async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest | TB.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrDeleteAutoFollowPatternResponse, unknown>>
-  async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest | TB.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrDeleteAutoFollowPatternResponse>
-  async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest | TB.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrDeleteAutoFollowPatternResponse>
+  async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrDeleteAutoFollowPatternResponse, unknown>>
+  async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrDeleteAutoFollowPatternResponse>
+  async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.delete_auto_follow_pattern']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -80,20 +251,27 @@ export default class Ccr {
     * Create a follower. Create a cross-cluster replication follower index that follows a specific leader index. When the API returns, the follower index exists and cross-cluster replication starts replicating operations from the leader index to the follower index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ccr-put-follow.html | Elasticsearch API documentation}
     */
-  async follow (this: That, params: T.CcrFollowRequest | TB.CcrFollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrFollowResponse>
-  async follow (this: That, params: T.CcrFollowRequest | TB.CcrFollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrFollowResponse, unknown>>
-  async follow (this: That, params: T.CcrFollowRequest | TB.CcrFollowRequest, options?: TransportRequestOptions): Promise<T.CcrFollowResponse>
-  async follow (this: That, params: T.CcrFollowRequest | TB.CcrFollowRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['data_stream_name', 'leader_index', 'max_outstanding_read_requests', 'max_outstanding_write_requests', 'max_read_request_operation_count', 'max_read_request_size', 'max_retry_delay', 'max_write_buffer_count', 'max_write_buffer_size', 'max_write_request_operation_count', 'max_write_request_size', 'read_poll_timeout', 'remote_cluster', 'settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async follow (this: That, params: T.CcrFollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrFollowResponse>
+  async follow (this: That, params: T.CcrFollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrFollowResponse, unknown>>
+  async follow (this: That, params: T.CcrFollowRequest, options?: TransportRequestOptions): Promise<T.CcrFollowResponse>
+  async follow (this: That, params: T.CcrFollowRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ccr.follow']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -103,9 +281,15 @@ export default class Ccr {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -124,18 +308,31 @@ export default class Ccr {
     * Get follower information. Get information about all cross-cluster replication follower indices. For example, the results include follower index names, leader index names, replication options, and whether the follower indices are active or paused.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ccr-get-follow-info.html | Elasticsearch API documentation}
     */
-  async followInfo (this: That, params: T.CcrFollowInfoRequest | TB.CcrFollowInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrFollowInfoResponse>
-  async followInfo (this: That, params: T.CcrFollowInfoRequest | TB.CcrFollowInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrFollowInfoResponse, unknown>>
-  async followInfo (this: That, params: T.CcrFollowInfoRequest | TB.CcrFollowInfoRequest, options?: TransportRequestOptions): Promise<T.CcrFollowInfoResponse>
-  async followInfo (this: That, params: T.CcrFollowInfoRequest | TB.CcrFollowInfoRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async followInfo (this: That, params: T.CcrFollowInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrFollowInfoResponse>
+  async followInfo (this: That, params: T.CcrFollowInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrFollowInfoResponse, unknown>>
+  async followInfo (this: That, params: T.CcrFollowInfoRequest, options?: TransportRequestOptions): Promise<T.CcrFollowInfoResponse>
+  async followInfo (this: That, params: T.CcrFollowInfoRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.follow_info']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -156,18 +353,31 @@ export default class Ccr {
     * Get follower stats. Get cross-cluster replication follower stats. The API returns shard-level stats about the "following tasks" associated with each shard for the specified indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ccr-get-follow-stats.html | Elasticsearch API documentation}
     */
-  async followStats (this: That, params: T.CcrFollowStatsRequest | TB.CcrFollowStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrFollowStatsResponse>
-  async followStats (this: That, params: T.CcrFollowStatsRequest | TB.CcrFollowStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrFollowStatsResponse, unknown>>
-  async followStats (this: That, params: T.CcrFollowStatsRequest | TB.CcrFollowStatsRequest, options?: TransportRequestOptions): Promise<T.CcrFollowStatsResponse>
-  async followStats (this: That, params: T.CcrFollowStatsRequest | TB.CcrFollowStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async followStats (this: That, params: T.CcrFollowStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrFollowStatsResponse>
+  async followStats (this: That, params: T.CcrFollowStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrFollowStatsResponse, unknown>>
+  async followStats (this: That, params: T.CcrFollowStatsRequest, options?: TransportRequestOptions): Promise<T.CcrFollowStatsResponse>
+  async followStats (this: That, params: T.CcrFollowStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.follow_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -188,20 +398,27 @@ export default class Ccr {
     * Forget a follower. Remove the cross-cluster replication follower retention leases from the leader. A following index takes out retention leases on its leader index. These leases are used to increase the likelihood that the shards of the leader index retain the history of operations that the shards of the following index need to run replication. When a follower index is converted to a regular index by the unfollow API (either by directly calling the API or by index lifecycle management tasks), these leases are removed. However, removal of the leases can fail, for example when the remote cluster containing the leader index is unavailable. While the leases will eventually expire on their own, their extended existence can cause the leader index to hold more history than necessary and prevent index lifecycle management from performing some operations on the leader index. This API exists to enable manually removing the leases when the unfollow API is unable to do so. NOTE: This API does not stop replication by a following index. If you use this API with a follower index that is still actively following, the following index will add back retention leases on the leader. The only purpose of this API is to handle the case of failure to remove the following retention leases after the unfollow API is invoked.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ccr-post-forget-follower.html | Elasticsearch API documentation}
     */
-  async forgetFollower (this: That, params: T.CcrForgetFollowerRequest | TB.CcrForgetFollowerRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrForgetFollowerResponse>
-  async forgetFollower (this: That, params: T.CcrForgetFollowerRequest | TB.CcrForgetFollowerRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrForgetFollowerResponse, unknown>>
-  async forgetFollower (this: That, params: T.CcrForgetFollowerRequest | TB.CcrForgetFollowerRequest, options?: TransportRequestOptions): Promise<T.CcrForgetFollowerResponse>
-  async forgetFollower (this: That, params: T.CcrForgetFollowerRequest | TB.CcrForgetFollowerRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['follower_cluster', 'follower_index', 'follower_index_uuid', 'leader_remote_cluster']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async forgetFollower (this: That, params: T.CcrForgetFollowerRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrForgetFollowerResponse>
+  async forgetFollower (this: That, params: T.CcrForgetFollowerRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrForgetFollowerResponse, unknown>>
+  async forgetFollower (this: That, params: T.CcrForgetFollowerRequest, options?: TransportRequestOptions): Promise<T.CcrForgetFollowerResponse>
+  async forgetFollower (this: That, params: T.CcrForgetFollowerRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ccr.forget_follower']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -211,9 +428,15 @@ export default class Ccr {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -232,19 +455,32 @@ export default class Ccr {
     * Get auto-follow patterns. Get cross-cluster replication auto-follow patterns.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ccr-get-auto-follow-pattern.html | Elasticsearch API documentation}
     */
-  async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest | TB.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrGetAutoFollowPatternResponse>
-  async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest | TB.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrGetAutoFollowPatternResponse, unknown>>
-  async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest | TB.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrGetAutoFollowPatternResponse>
-  async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest | TB.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrGetAutoFollowPatternResponse>
+  async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrGetAutoFollowPatternResponse, unknown>>
+  async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrGetAutoFollowPatternResponse>
+  async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.get_auto_follow_pattern']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -272,18 +508,31 @@ export default class Ccr {
     * Pause an auto-follow pattern. Pause a cross-cluster replication auto-follow pattern. When the API returns, the auto-follow pattern is inactive. New indices that are created on the remote cluster and match the auto-follow patterns are ignored. You can resume auto-following with the resume auto-follow pattern API. When it resumes, the auto-follow pattern is active again and automatically configures follower indices for newly created indices on the remote cluster that match its patterns. Remote indices that were created while the pattern was paused will also be followed, unless they have been deleted or closed in the interim.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ccr-pause-auto-follow-pattern.html | Elasticsearch API documentation}
     */
-  async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest | TB.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrPauseAutoFollowPatternResponse>
-  async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest | TB.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrPauseAutoFollowPatternResponse, unknown>>
-  async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest | TB.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrPauseAutoFollowPatternResponse>
-  async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest | TB.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrPauseAutoFollowPatternResponse>
+  async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrPauseAutoFollowPatternResponse, unknown>>
+  async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrPauseAutoFollowPatternResponse>
+  async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.pause_auto_follow_pattern']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -304,18 +553,31 @@ export default class Ccr {
     * Pause a follower. Pause a cross-cluster replication follower index. The follower index will not fetch any additional operations from the leader index. You can resume following with the resume follower API. You can pause and resume a follower index to change the configuration of the following task.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ccr-post-pause-follow.html | Elasticsearch API documentation}
     */
-  async pauseFollow (this: That, params: T.CcrPauseFollowRequest | TB.CcrPauseFollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrPauseFollowResponse>
-  async pauseFollow (this: That, params: T.CcrPauseFollowRequest | TB.CcrPauseFollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrPauseFollowResponse, unknown>>
-  async pauseFollow (this: That, params: T.CcrPauseFollowRequest | TB.CcrPauseFollowRequest, options?: TransportRequestOptions): Promise<T.CcrPauseFollowResponse>
-  async pauseFollow (this: That, params: T.CcrPauseFollowRequest | TB.CcrPauseFollowRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async pauseFollow (this: That, params: T.CcrPauseFollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrPauseFollowResponse>
+  async pauseFollow (this: That, params: T.CcrPauseFollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrPauseFollowResponse, unknown>>
+  async pauseFollow (this: That, params: T.CcrPauseFollowRequest, options?: TransportRequestOptions): Promise<T.CcrPauseFollowResponse>
+  async pauseFollow (this: That, params: T.CcrPauseFollowRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.pause_follow']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -336,20 +598,27 @@ export default class Ccr {
     * Create or update auto-follow patterns. Create a collection of cross-cluster replication auto-follow patterns for a remote cluster. Newly created indices on the remote cluster that match any of the patterns are automatically configured as follower indices. Indices on the remote cluster that were created before the auto-follow pattern was created will not be auto-followed even if they match the pattern. This API can also be used to update auto-follow patterns. NOTE: Follower indices that were configured automatically before updating an auto-follow pattern will remain unchanged even if they do not match against the new patterns.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ccr-put-auto-follow-pattern.html | Elasticsearch API documentation}
     */
-  async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest | TB.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrPutAutoFollowPatternResponse>
-  async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest | TB.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrPutAutoFollowPatternResponse, unknown>>
-  async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest | TB.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrPutAutoFollowPatternResponse>
-  async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest | TB.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['remote_cluster', 'follow_index_pattern', 'leader_index_patterns', 'leader_index_exclusion_patterns', 'max_outstanding_read_requests', 'settings', 'max_outstanding_write_requests', 'read_poll_timeout', 'max_read_request_operation_count', 'max_read_request_size', 'max_retry_delay', 'max_write_buffer_count', 'max_write_buffer_size', 'max_write_request_operation_count', 'max_write_request_size']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrPutAutoFollowPatternResponse>
+  async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrPutAutoFollowPatternResponse, unknown>>
+  async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrPutAutoFollowPatternResponse>
+  async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ccr.put_auto_follow_pattern']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -359,9 +628,15 @@ export default class Ccr {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -380,18 +655,31 @@ export default class Ccr {
     * Resume an auto-follow pattern. Resume a cross-cluster replication auto-follow pattern that was paused. The auto-follow pattern will resume configuring following indices for newly created indices that match its patterns on the remote cluster. Remote indices created while the pattern was paused will also be followed unless they have been deleted or closed in the interim.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ccr-resume-auto-follow-pattern.html | Elasticsearch API documentation}
     */
-  async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest | TB.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrResumeAutoFollowPatternResponse>
-  async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest | TB.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrResumeAutoFollowPatternResponse, unknown>>
-  async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest | TB.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrResumeAutoFollowPatternResponse>
-  async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest | TB.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrResumeAutoFollowPatternResponse>
+  async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrResumeAutoFollowPatternResponse, unknown>>
+  async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrResumeAutoFollowPatternResponse>
+  async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.resume_auto_follow_pattern']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -412,20 +700,27 @@ export default class Ccr {
     * Resume a follower. Resume a cross-cluster replication follower index that was paused. The follower index could have been paused with the pause follower API. Alternatively it could be paused due to replication that cannot be retried due to failures during following tasks. When this API returns, the follower index will resume fetching operations from the leader index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ccr-post-resume-follow.html | Elasticsearch API documentation}
     */
-  async resumeFollow (this: That, params: T.CcrResumeFollowRequest | TB.CcrResumeFollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrResumeFollowResponse>
-  async resumeFollow (this: That, params: T.CcrResumeFollowRequest | TB.CcrResumeFollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrResumeFollowResponse, unknown>>
-  async resumeFollow (this: That, params: T.CcrResumeFollowRequest | TB.CcrResumeFollowRequest, options?: TransportRequestOptions): Promise<T.CcrResumeFollowResponse>
-  async resumeFollow (this: That, params: T.CcrResumeFollowRequest | TB.CcrResumeFollowRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['max_outstanding_read_requests', 'max_outstanding_write_requests', 'max_read_request_operation_count', 'max_read_request_size', 'max_retry_delay', 'max_write_buffer_count', 'max_write_buffer_size', 'max_write_request_operation_count', 'max_write_request_size', 'read_poll_timeout']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async resumeFollow (this: That, params: T.CcrResumeFollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrResumeFollowResponse>
+  async resumeFollow (this: That, params: T.CcrResumeFollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrResumeFollowResponse, unknown>>
+  async resumeFollow (this: That, params: T.CcrResumeFollowRequest, options?: TransportRequestOptions): Promise<T.CcrResumeFollowResponse>
+  async resumeFollow (this: That, params: T.CcrResumeFollowRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ccr.resume_follow']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -435,9 +730,15 @@ export default class Ccr {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -456,19 +757,32 @@ export default class Ccr {
     * Get cross-cluster replication stats. This API returns stats about auto-following and the same shard-level stats as the get follower stats API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ccr-get-stats.html | Elasticsearch API documentation}
     */
-  async stats (this: That, params?: T.CcrStatsRequest | TB.CcrStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrStatsResponse>
-  async stats (this: That, params?: T.CcrStatsRequest | TB.CcrStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrStatsResponse, unknown>>
-  async stats (this: That, params?: T.CcrStatsRequest | TB.CcrStatsRequest, options?: TransportRequestOptions): Promise<T.CcrStatsResponse>
-  async stats (this: That, params?: T.CcrStatsRequest | TB.CcrStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async stats (this: That, params?: T.CcrStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrStatsResponse>
+  async stats (this: That, params?: T.CcrStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrStatsResponse, unknown>>
+  async stats (this: That, params?: T.CcrStatsRequest, options?: TransportRequestOptions): Promise<T.CcrStatsResponse>
+  async stats (this: That, params?: T.CcrStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -486,18 +800,31 @@ export default class Ccr {
     * Unfollow an index. Convert a cross-cluster replication follower index to a regular index. The API stops the following task associated with a follower index and removes index metadata and settings associated with cross-cluster replication. The follower index must be paused and closed before you call the unfollow API. > info > Currently cross-cluster replication does not support converting an existing regular index to a follower index. Converting a follower index to a regular index is an irreversible operation.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ccr-post-unfollow.html | Elasticsearch API documentation}
     */
-  async unfollow (this: That, params: T.CcrUnfollowRequest | TB.CcrUnfollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrUnfollowResponse>
-  async unfollow (this: That, params: T.CcrUnfollowRequest | TB.CcrUnfollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrUnfollowResponse, unknown>>
-  async unfollow (this: That, params: T.CcrUnfollowRequest | TB.CcrUnfollowRequest, options?: TransportRequestOptions): Promise<T.CcrUnfollowResponse>
-  async unfollow (this: That, params: T.CcrUnfollowRequest | TB.CcrUnfollowRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async unfollow (this: That, params: T.CcrUnfollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrUnfollowResponse>
+  async unfollow (this: That, params: T.CcrUnfollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrUnfollowResponse, unknown>>
+  async unfollow (this: That, params: T.CcrUnfollowRequest, options?: TransportRequestOptions): Promise<T.CcrUnfollowResponse>
+  async unfollow (this: That, params: T.CcrUnfollowRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ccr.unfollow']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }

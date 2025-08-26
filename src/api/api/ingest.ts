@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,31 +21,171 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Ingest {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'ingest.delete_geoip_database': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'ingest.delete_ip_location_database': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'ingest.delete_pipeline': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'ingest.geo_ip_stats': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'ingest.get_geoip_database': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'ingest.get_ip_location_database': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'ingest.get_pipeline': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'summary'
+        ]
+      },
+      'ingest.processor_grok': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'ingest.put_geoip_database': {
+        path: [
+          'id'
+        ],
+        body: [
+          'name',
+          'maxmind'
+        ],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'ingest.put_ip_location_database': {
+        path: [
+          'id'
+        ],
+        body: [
+          'configuration'
+        ],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'ingest.put_pipeline': {
+        path: [
+          'id'
+        ],
+        body: [
+          '_meta',
+          'description',
+          'on_failure',
+          'processors',
+          'version',
+          'deprecated'
+        ],
+        query: [
+          'master_timeout',
+          'timeout',
+          'if_version'
+        ]
+      },
+      'ingest.simulate': {
+        path: [
+          'id'
+        ],
+        body: [
+          'docs',
+          'pipeline'
+        ],
+        query: [
+          'verbose'
+        ]
+      }
+    }
   }
 
   /**
     * Delete GeoIP database configurations. Delete one or more IP geolocation database configurations.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ingest-delete-geoip-database | Elasticsearch API documentation}
     */
-  async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest | TB.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeleteGeoipDatabaseResponse>
-  async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest | TB.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestDeleteGeoipDatabaseResponse, unknown>>
-  async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest | TB.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestDeleteGeoipDatabaseResponse>
-  async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest | TB.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeleteGeoipDatabaseResponse>
+  async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestDeleteGeoipDatabaseResponse, unknown>>
+  async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestDeleteGeoipDatabaseResponse>
+  async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ingest.delete_geoip_database']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -80,18 +206,31 @@ export default class Ingest {
     * Delete IP geolocation database configurations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-ip-location-database-api.html | Elasticsearch API documentation}
     */
-  async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest | TB.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeleteIpLocationDatabaseResponse>
-  async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest | TB.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestDeleteIpLocationDatabaseResponse, unknown>>
-  async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest | TB.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestDeleteIpLocationDatabaseResponse>
-  async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest | TB.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeleteIpLocationDatabaseResponse>
+  async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestDeleteIpLocationDatabaseResponse, unknown>>
+  async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestDeleteIpLocationDatabaseResponse>
+  async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ingest.delete_ip_location_database']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -112,18 +251,31 @@ export default class Ingest {
     * Delete pipelines. Delete one or more ingest pipelines.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-pipeline-api.html | Elasticsearch API documentation}
     */
-  async deletePipeline (this: That, params: T.IngestDeletePipelineRequest | TB.IngestDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeletePipelineResponse>
-  async deletePipeline (this: That, params: T.IngestDeletePipelineRequest | TB.IngestDeletePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestDeletePipelineResponse, unknown>>
-  async deletePipeline (this: That, params: T.IngestDeletePipelineRequest | TB.IngestDeletePipelineRequest, options?: TransportRequestOptions): Promise<T.IngestDeletePipelineResponse>
-  async deletePipeline (this: That, params: T.IngestDeletePipelineRequest | TB.IngestDeletePipelineRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deletePipeline (this: That, params: T.IngestDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeletePipelineResponse>
+  async deletePipeline (this: That, params: T.IngestDeletePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestDeletePipelineResponse, unknown>>
+  async deletePipeline (this: That, params: T.IngestDeletePipelineRequest, options?: TransportRequestOptions): Promise<T.IngestDeletePipelineResponse>
+  async deletePipeline (this: That, params: T.IngestDeletePipelineRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ingest.delete_pipeline']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -144,19 +296,32 @@ export default class Ingest {
     * Get GeoIP statistics. Get download statistics for GeoIP2 databases that are used with the GeoIP processor.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/geoip-processor.html | Elasticsearch API documentation}
     */
-  async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest | TB.IngestGeoIpStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGeoIpStatsResponse>
-  async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest | TB.IngestGeoIpStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGeoIpStatsResponse, unknown>>
-  async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest | TB.IngestGeoIpStatsRequest, options?: TransportRequestOptions): Promise<T.IngestGeoIpStatsResponse>
-  async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest | TB.IngestGeoIpStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGeoIpStatsResponse>
+  async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGeoIpStatsResponse, unknown>>
+  async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest, options?: TransportRequestOptions): Promise<T.IngestGeoIpStatsResponse>
+  async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ingest.geo_ip_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -174,19 +339,32 @@ export default class Ingest {
     * Get GeoIP database configurations. Get information about one or more IP geolocation database configurations.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ingest-get-geoip-database | Elasticsearch API documentation}
     */
-  async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest | TB.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetGeoipDatabaseResponse>
-  async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest | TB.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGetGeoipDatabaseResponse, unknown>>
-  async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest | TB.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestGetGeoipDatabaseResponse>
-  async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest | TB.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetGeoipDatabaseResponse>
+  async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGetGeoipDatabaseResponse, unknown>>
+  async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestGetGeoipDatabaseResponse>
+  async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ingest.get_geoip_database']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -214,19 +392,32 @@ export default class Ingest {
     * Get IP geolocation database configurations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-ip-location-database-api.html | Elasticsearch API documentation}
     */
-  async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest | TB.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetIpLocationDatabaseResponse>
-  async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest | TB.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGetIpLocationDatabaseResponse, unknown>>
-  async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest | TB.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestGetIpLocationDatabaseResponse>
-  async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest | TB.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetIpLocationDatabaseResponse>
+  async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGetIpLocationDatabaseResponse, unknown>>
+  async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestGetIpLocationDatabaseResponse>
+  async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ingest.get_ip_location_database']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -254,19 +445,32 @@ export default class Ingest {
     * Get pipelines. Get information about one or more ingest pipelines. This API returns a local reference of the pipeline.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-pipeline-api.html | Elasticsearch API documentation}
     */
-  async getPipeline (this: That, params?: T.IngestGetPipelineRequest | TB.IngestGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetPipelineResponse>
-  async getPipeline (this: That, params?: T.IngestGetPipelineRequest | TB.IngestGetPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGetPipelineResponse, unknown>>
-  async getPipeline (this: That, params?: T.IngestGetPipelineRequest | TB.IngestGetPipelineRequest, options?: TransportRequestOptions): Promise<T.IngestGetPipelineResponse>
-  async getPipeline (this: That, params?: T.IngestGetPipelineRequest | TB.IngestGetPipelineRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getPipeline (this: That, params?: T.IngestGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetPipelineResponse>
+  async getPipeline (this: That, params?: T.IngestGetPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGetPipelineResponse, unknown>>
+  async getPipeline (this: That, params?: T.IngestGetPipelineRequest, options?: TransportRequestOptions): Promise<T.IngestGetPipelineResponse>
+  async getPipeline (this: That, params?: T.IngestGetPipelineRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ingest.get_pipeline']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -294,19 +498,32 @@ export default class Ingest {
     * Run a grok processor. Extract structured fields out of a single text field within a document. You must choose which field to extract matched fields from, as well as the grok pattern you expect will match. A grok pattern is like a regular expression that supports aliased expressions that can be reused.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/grok-processor.html | Elasticsearch API documentation}
     */
-  async processorGrok (this: That, params?: T.IngestProcessorGrokRequest | TB.IngestProcessorGrokRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestProcessorGrokResponse>
-  async processorGrok (this: That, params?: T.IngestProcessorGrokRequest | TB.IngestProcessorGrokRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestProcessorGrokResponse, unknown>>
-  async processorGrok (this: That, params?: T.IngestProcessorGrokRequest | TB.IngestProcessorGrokRequest, options?: TransportRequestOptions): Promise<T.IngestProcessorGrokResponse>
-  async processorGrok (this: That, params?: T.IngestProcessorGrokRequest | TB.IngestProcessorGrokRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async processorGrok (this: That, params?: T.IngestProcessorGrokRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestProcessorGrokResponse>
+  async processorGrok (this: That, params?: T.IngestProcessorGrokRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestProcessorGrokResponse, unknown>>
+  async processorGrok (this: That, params?: T.IngestProcessorGrokRequest, options?: TransportRequestOptions): Promise<T.IngestProcessorGrokResponse>
+  async processorGrok (this: That, params?: T.IngestProcessorGrokRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ingest.processor_grok']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -324,20 +541,27 @@ export default class Ingest {
     * Create or update a GeoIP database configuration. Refer to the create or update IP geolocation database configuration API.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ingest-put-geoip-database | Elasticsearch API documentation}
     */
-  async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest | TB.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutGeoipDatabaseResponse>
-  async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest | TB.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestPutGeoipDatabaseResponse, unknown>>
-  async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest | TB.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestPutGeoipDatabaseResponse>
-  async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest | TB.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['name', 'maxmind']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutGeoipDatabaseResponse>
+  async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestPutGeoipDatabaseResponse, unknown>>
+  async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestPutGeoipDatabaseResponse>
+  async putGeoipDatabase (this: That, params: T.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ingest.put_geoip_database']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -347,9 +571,15 @@ export default class Ingest {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -368,25 +598,35 @@ export default class Ingest {
     * Create or update an IP geolocation database configuration.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-ip-location-database-api.html | Elasticsearch API documentation}
     */
-  async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest | TB.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutIpLocationDatabaseResponse>
-  async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest | TB.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestPutIpLocationDatabaseResponse, unknown>>
-  async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest | TB.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestPutIpLocationDatabaseResponse>
-  async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest | TB.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['configuration']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+  async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutIpLocationDatabaseResponse>
+  async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestPutIpLocationDatabaseResponse, unknown>>
+  async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<T.IngestPutIpLocationDatabaseResponse>
+  async putIpLocationDatabase (this: That, params: T.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ingest.put_ip_location_database']
 
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -405,20 +645,27 @@ export default class Ingest {
     * Create or update a pipeline. Changes made using this API take effect immediately.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ingest.html | Elasticsearch API documentation}
     */
-  async putPipeline (this: That, params: T.IngestPutPipelineRequest | TB.IngestPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutPipelineResponse>
-  async putPipeline (this: That, params: T.IngestPutPipelineRequest | TB.IngestPutPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestPutPipelineResponse, unknown>>
-  async putPipeline (this: That, params: T.IngestPutPipelineRequest | TB.IngestPutPipelineRequest, options?: TransportRequestOptions): Promise<T.IngestPutPipelineResponse>
-  async putPipeline (this: That, params: T.IngestPutPipelineRequest | TB.IngestPutPipelineRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['_meta', 'description', 'on_failure', 'processors', 'version', 'deprecated']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putPipeline (this: That, params: T.IngestPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutPipelineResponse>
+  async putPipeline (this: That, params: T.IngestPutPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestPutPipelineResponse, unknown>>
+  async putPipeline (this: That, params: T.IngestPutPipelineRequest, options?: TransportRequestOptions): Promise<T.IngestPutPipelineResponse>
+  async putPipeline (this: That, params: T.IngestPutPipelineRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ingest.put_pipeline']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -428,9 +675,15 @@ export default class Ingest {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -449,20 +702,27 @@ export default class Ingest {
     * Simulate a pipeline. Run an ingest pipeline against a set of provided documents. You can either specify an existing pipeline to use with the provided documents or supply a pipeline definition in the body of the request.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/simulate-pipeline-api.html | Elasticsearch API documentation}
     */
-  async simulate (this: That, params: T.IngestSimulateRequest | TB.IngestSimulateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestSimulateResponse>
-  async simulate (this: That, params: T.IngestSimulateRequest | TB.IngestSimulateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestSimulateResponse, unknown>>
-  async simulate (this: That, params: T.IngestSimulateRequest | TB.IngestSimulateRequest, options?: TransportRequestOptions): Promise<T.IngestSimulateResponse>
-  async simulate (this: That, params: T.IngestSimulateRequest | TB.IngestSimulateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['docs', 'pipeline']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async simulate (this: That, params: T.IngestSimulateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestSimulateResponse>
+  async simulate (this: That, params: T.IngestSimulateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestSimulateResponse, unknown>>
+  async simulate (this: That, params: T.IngestSimulateRequest, options?: TransportRequestOptions): Promise<T.IngestSimulateResponse>
+  async simulate (this: That, params: T.IngestSimulateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['ingest.simulate']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -472,9 +732,15 @@ export default class Ingest {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

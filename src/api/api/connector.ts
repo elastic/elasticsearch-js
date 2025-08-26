@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,31 +21,369 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Connector {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'connector.check_in': {
+        path: [
+          'connector_id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.delete': {
+        path: [
+          'connector_id'
+        ],
+        body: [],
+        query: [
+          'delete_sync_jobs'
+        ]
+      },
+      'connector.get': {
+        path: [
+          'connector_id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.last_sync': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'last_access_control_sync_error',
+          'last_access_control_sync_scheduled_at',
+          'last_access_control_sync_status',
+          'last_deleted_document_count',
+          'last_incremental_sync_scheduled_at',
+          'last_indexed_document_count',
+          'last_seen',
+          'last_sync_error',
+          'last_sync_scheduled_at',
+          'last_sync_status',
+          'last_synced',
+          'sync_cursor'
+        ],
+        query: []
+      },
+      'connector.list': {
+        path: [],
+        body: [],
+        query: [
+          'from',
+          'size',
+          'index_name',
+          'connector_name',
+          'service_type',
+          'query'
+        ]
+      },
+      'connector.post': {
+        path: [],
+        body: [
+          'description',
+          'index_name',
+          'is_native',
+          'language',
+          'name',
+          'service_type'
+        ],
+        query: []
+      },
+      'connector.put': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'description',
+          'index_name',
+          'is_native',
+          'language',
+          'name',
+          'service_type'
+        ],
+        query: []
+      },
+      'connector.secret_delete': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.secret_get': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.secret_post': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'connector.secret_put': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.sync_job_cancel': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.sync_job_check_in': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.sync_job_claim': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [
+          'sync_cursor',
+          'worker_hostname'
+        ],
+        query: []
+      },
+      'connector.sync_job_delete': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.sync_job_error': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [
+          'error'
+        ],
+        query: []
+      },
+      'connector.sync_job_get': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.sync_job_list': {
+        path: [],
+        body: [],
+        query: [
+          'from',
+          'size',
+          'status',
+          'connector_id',
+          'job_type'
+        ]
+      },
+      'connector.sync_job_post': {
+        path: [],
+        body: [
+          'id',
+          'job_type',
+          'trigger_method'
+        ],
+        query: []
+      },
+      'connector.sync_job_update_stats': {
+        path: [
+          'connector_sync_job_id'
+        ],
+        body: [
+          'deleted_document_count',
+          'indexed_document_count',
+          'indexed_document_volume',
+          'last_seen',
+          'metadata',
+          'total_document_count'
+        ],
+        query: []
+      },
+      'connector.update_active_filtering': {
+        path: [
+          'connector_id'
+        ],
+        body: [],
+        query: []
+      },
+      'connector.update_api_key_id': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'api_key_id',
+          'api_key_secret_id'
+        ],
+        query: []
+      },
+      'connector.update_configuration': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'configuration',
+          'values'
+        ],
+        query: []
+      },
+      'connector.update_error': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'error'
+        ],
+        query: []
+      },
+      'connector.update_features': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'features'
+        ],
+        query: []
+      },
+      'connector.update_filtering': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'filtering',
+          'rules',
+          'advanced_snippet'
+        ],
+        query: []
+      },
+      'connector.update_filtering_validation': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'validation'
+        ],
+        query: []
+      },
+      'connector.update_index_name': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'index_name'
+        ],
+        query: []
+      },
+      'connector.update_name': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'name',
+          'description'
+        ],
+        query: []
+      },
+      'connector.update_native': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'is_native'
+        ],
+        query: []
+      },
+      'connector.update_pipeline': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'pipeline'
+        ],
+        query: []
+      },
+      'connector.update_scheduling': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'scheduling'
+        ],
+        query: []
+      },
+      'connector.update_service_type': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'service_type'
+        ],
+        query: []
+      },
+      'connector.update_status': {
+        path: [
+          'connector_id'
+        ],
+        body: [
+          'status'
+        ],
+        query: []
+      }
+    }
   }
 
   /**
     * Check in a connector. Update the `last_seen` field in the connector and set it to the current timestamp.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/check-in-connector-api.html | Elasticsearch API documentation}
     */
-  async checkIn (this: That, params: T.ConnectorCheckInRequest | TB.ConnectorCheckInRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorCheckInResponse>
-  async checkIn (this: That, params: T.ConnectorCheckInRequest | TB.ConnectorCheckInRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorCheckInResponse, unknown>>
-  async checkIn (this: That, params: T.ConnectorCheckInRequest | TB.ConnectorCheckInRequest, options?: TransportRequestOptions): Promise<T.ConnectorCheckInResponse>
-  async checkIn (this: That, params: T.ConnectorCheckInRequest | TB.ConnectorCheckInRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async checkIn (this: That, params: T.ConnectorCheckInRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorCheckInResponse>
+  async checkIn (this: That, params: T.ConnectorCheckInRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorCheckInResponse, unknown>>
+  async checkIn (this: That, params: T.ConnectorCheckInRequest, options?: TransportRequestOptions): Promise<T.ConnectorCheckInResponse>
+  async checkIn (this: That, params: T.ConnectorCheckInRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.check_in']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -80,18 +404,31 @@ export default class Connector {
     * Delete a connector. Removes a connector and associated sync jobs. This is a destructive action that is not recoverable. NOTE: This action doesn’t delete any API keys, ingest pipelines, or data indices associated with the connector. These need to be removed manually.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-connector-api.html | Elasticsearch API documentation}
     */
-  async delete (this: That, params: T.ConnectorDeleteRequest | TB.ConnectorDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorDeleteResponse>
-  async delete (this: That, params: T.ConnectorDeleteRequest | TB.ConnectorDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorDeleteResponse, unknown>>
-  async delete (this: That, params: T.ConnectorDeleteRequest | TB.ConnectorDeleteRequest, options?: TransportRequestOptions): Promise<T.ConnectorDeleteResponse>
-  async delete (this: That, params: T.ConnectorDeleteRequest | TB.ConnectorDeleteRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async delete (this: That, params: T.ConnectorDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorDeleteResponse>
+  async delete (this: That, params: T.ConnectorDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorDeleteResponse, unknown>>
+  async delete (this: That, params: T.ConnectorDeleteRequest, options?: TransportRequestOptions): Promise<T.ConnectorDeleteResponse>
+  async delete (this: That, params: T.ConnectorDeleteRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.delete']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -112,18 +449,31 @@ export default class Connector {
     * Get a connector. Get the details about a connector.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-connector-api.html | Elasticsearch API documentation}
     */
-  async get (this: That, params: T.ConnectorGetRequest | TB.ConnectorGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorGetResponse>
-  async get (this: That, params: T.ConnectorGetRequest | TB.ConnectorGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorGetResponse, unknown>>
-  async get (this: That, params: T.ConnectorGetRequest | TB.ConnectorGetRequest, options?: TransportRequestOptions): Promise<T.ConnectorGetResponse>
-  async get (this: That, params: T.ConnectorGetRequest | TB.ConnectorGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async get (this: That, params: T.ConnectorGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorGetResponse>
+  async get (this: That, params: T.ConnectorGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorGetResponse, unknown>>
+  async get (this: That, params: T.ConnectorGetRequest, options?: TransportRequestOptions): Promise<T.ConnectorGetResponse>
+  async get (this: That, params: T.ConnectorGetRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.get']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -144,20 +494,27 @@ export default class Connector {
     * Update the connector last sync stats. Update the fields related to the last sync of a connector. This action is used for analytics and monitoring.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-last-sync-api.html | Elasticsearch API documentation}
     */
-  async lastSync (this: That, params: T.ConnectorLastSyncRequest | TB.ConnectorLastSyncRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorLastSyncResponse>
-  async lastSync (this: That, params: T.ConnectorLastSyncRequest | TB.ConnectorLastSyncRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorLastSyncResponse, unknown>>
-  async lastSync (this: That, params: T.ConnectorLastSyncRequest | TB.ConnectorLastSyncRequest, options?: TransportRequestOptions): Promise<T.ConnectorLastSyncResponse>
-  async lastSync (this: That, params: T.ConnectorLastSyncRequest | TB.ConnectorLastSyncRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['last_access_control_sync_error', 'last_access_control_sync_scheduled_at', 'last_access_control_sync_status', 'last_deleted_document_count', 'last_incremental_sync_scheduled_at', 'last_indexed_document_count', 'last_seen', 'last_sync_error', 'last_sync_scheduled_at', 'last_sync_status', 'last_synced', 'sync_cursor']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async lastSync (this: That, params: T.ConnectorLastSyncRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorLastSyncResponse>
+  async lastSync (this: That, params: T.ConnectorLastSyncRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorLastSyncResponse, unknown>>
+  async lastSync (this: That, params: T.ConnectorLastSyncRequest, options?: TransportRequestOptions): Promise<T.ConnectorLastSyncResponse>
+  async lastSync (this: That, params: T.ConnectorLastSyncRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.last_sync']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -167,9 +524,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -188,19 +551,32 @@ export default class Connector {
     * Get all connectors. Get information about all connectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/list-connector-api.html | Elasticsearch API documentation}
     */
-  async list (this: That, params?: T.ConnectorListRequest | TB.ConnectorListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorListResponse>
-  async list (this: That, params?: T.ConnectorListRequest | TB.ConnectorListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorListResponse, unknown>>
-  async list (this: That, params?: T.ConnectorListRequest | TB.ConnectorListRequest, options?: TransportRequestOptions): Promise<T.ConnectorListResponse>
-  async list (this: That, params?: T.ConnectorListRequest | TB.ConnectorListRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async list (this: That, params?: T.ConnectorListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorListResponse>
+  async list (this: That, params?: T.ConnectorListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorListResponse, unknown>>
+  async list (this: That, params?: T.ConnectorListRequest, options?: TransportRequestOptions): Promise<T.ConnectorListResponse>
+  async list (this: That, params?: T.ConnectorListRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.list']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -218,20 +594,27 @@ export default class Connector {
     * Create a connector. Connectors are Elasticsearch integrations that bring content from third-party data sources, which can be deployed on Elastic Cloud or hosted on your own infrastructure. Elastic managed connectors (Native connectors) are a managed service on Elastic Cloud. Self-managed connectors (Connector clients) are self-managed on your infrastructure.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/create-connector-api.html | Elasticsearch API documentation}
     */
-  async post (this: That, params?: T.ConnectorPostRequest | TB.ConnectorPostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorPostResponse>
-  async post (this: That, params?: T.ConnectorPostRequest | TB.ConnectorPostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorPostResponse, unknown>>
-  async post (this: That, params?: T.ConnectorPostRequest | TB.ConnectorPostRequest, options?: TransportRequestOptions): Promise<T.ConnectorPostResponse>
-  async post (this: That, params?: T.ConnectorPostRequest | TB.ConnectorPostRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['description', 'index_name', 'is_native', 'language', 'name', 'service_type']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async post (this: That, params?: T.ConnectorPostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorPostResponse>
+  async post (this: That, params?: T.ConnectorPostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorPostResponse, unknown>>
+  async post (this: That, params?: T.ConnectorPostRequest, options?: TransportRequestOptions): Promise<T.ConnectorPostResponse>
+  async post (this: That, params?: T.ConnectorPostRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.post']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -242,9 +625,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -260,20 +649,27 @@ export default class Connector {
     * Create or update a connector.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/create-connector-api.html | Elasticsearch API documentation}
     */
-  async put (this: That, params?: T.ConnectorPutRequest | TB.ConnectorPutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorPutResponse>
-  async put (this: That, params?: T.ConnectorPutRequest | TB.ConnectorPutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorPutResponse, unknown>>
-  async put (this: That, params?: T.ConnectorPutRequest | TB.ConnectorPutRequest, options?: TransportRequestOptions): Promise<T.ConnectorPutResponse>
-  async put (this: That, params?: T.ConnectorPutRequest | TB.ConnectorPutRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['description', 'index_name', 'is_native', 'language', 'name', 'service_type']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async put (this: That, params?: T.ConnectorPutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorPutResponse>
+  async put (this: That, params?: T.ConnectorPutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorPutResponse, unknown>>
+  async put (this: That, params?: T.ConnectorPutRequest, options?: TransportRequestOptions): Promise<T.ConnectorPutResponse>
+  async put (this: That, params?: T.ConnectorPutRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.put']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -284,9 +680,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -311,19 +713,32 @@ export default class Connector {
   /**
     * Deletes a connector secret.
     */
-  async secretDelete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async secretDelete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async secretDelete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async secretDelete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.secret_delete']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }
@@ -342,19 +757,32 @@ export default class Connector {
   /**
     * Retrieves a secret stored by Connectors.
     */
-  async secretGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async secretGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async secretGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async secretGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.secret_get']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }
@@ -373,19 +801,32 @@ export default class Connector {
   /**
     * Creates a secret for a Connector.
     */
-  async secretPost (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async secretPost (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async secretPost (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async secretPost (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.secret_post']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }
@@ -401,19 +842,32 @@ export default class Connector {
   /**
     * Creates or updates a secret for a Connector.
     */
-  async secretPut (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async secretPut (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async secretPut (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async secretPut (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.secret_put']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }
@@ -433,18 +887,31 @@ export default class Connector {
     * Cancel a connector sync job. Cancel a connector sync job, which sets the status to cancelling and updates `cancellation_requested_at` to the current time. The connector service is then responsible for setting the status of connector sync jobs to cancelled.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/cancel-connector-sync-job-api.html | Elasticsearch API documentation}
     */
-  async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest | TB.ConnectorSyncJobCancelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobCancelResponse>
-  async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest | TB.ConnectorSyncJobCancelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobCancelResponse, unknown>>
-  async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest | TB.ConnectorSyncJobCancelRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobCancelResponse>
-  async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest | TB.ConnectorSyncJobCancelRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobCancelResponse>
+  async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobCancelResponse, unknown>>
+  async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobCancelResponse>
+  async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.sync_job_cancel']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -465,18 +932,31 @@ export default class Connector {
     * Check in a connector sync job. Check in a connector sync job and set the `last_seen` field to the current time before updating it in the internal index. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/check-in-connector-sync-job-api.html | Elasticsearch API documentation}
     */
-  async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest | TB.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobCheckInResponse>
-  async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest | TB.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobCheckInResponse, unknown>>
-  async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest | TB.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobCheckInResponse>
-  async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest | TB.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobCheckInResponse>
+  async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobCheckInResponse, unknown>>
+  async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobCheckInResponse>
+  async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.sync_job_check_in']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -497,20 +977,27 @@ export default class Connector {
     * Claim a connector sync job. This action updates the job status to `in_progress` and sets the `last_seen` and `started_at` timestamps to the current time. Additionally, it can set the `sync_cursor` property for the sync job. This API is not intended for direct connector management by users. It supports the implementation of services that utilize the connector protocol to communicate with Elasticsearch. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/claim-connector-sync-job-api.html | Elasticsearch API documentation}
     */
-  async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest | TB.ConnectorSyncJobClaimRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobClaimResponse>
-  async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest | TB.ConnectorSyncJobClaimRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobClaimResponse, unknown>>
-  async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest | TB.ConnectorSyncJobClaimRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobClaimResponse>
-  async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest | TB.ConnectorSyncJobClaimRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
-    const acceptedBody: string[] = ['sync_cursor', 'worker_hostname']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobClaimResponse>
+  async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobClaimResponse, unknown>>
+  async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobClaimResponse>
+  async syncJobClaim (this: That, params: T.ConnectorSyncJobClaimRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.sync_job_claim']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -520,9 +1007,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -541,18 +1034,31 @@ export default class Connector {
     * Delete a connector sync job. Remove a connector sync job and its associated data. This is a destructive action that is not recoverable.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-connector-sync-job-api.html | Elasticsearch API documentation}
     */
-  async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest | TB.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobDeleteResponse>
-  async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest | TB.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobDeleteResponse, unknown>>
-  async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest | TB.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobDeleteResponse>
-  async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest | TB.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobDeleteResponse>
+  async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobDeleteResponse, unknown>>
+  async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobDeleteResponse>
+  async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.sync_job_delete']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -573,20 +1079,27 @@ export default class Connector {
     * Set a connector sync job error. Set the `error` field for a connector sync job and set its `status` to `error`. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/set-connector-sync-job-error-api.html | Elasticsearch API documentation}
     */
-  async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest | TB.ConnectorSyncJobErrorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobErrorResponse>
-  async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest | TB.ConnectorSyncJobErrorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobErrorResponse, unknown>>
-  async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest | TB.ConnectorSyncJobErrorRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobErrorResponse>
-  async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest | TB.ConnectorSyncJobErrorRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
-    const acceptedBody: string[] = ['error']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobErrorResponse>
+  async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobErrorResponse, unknown>>
+  async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobErrorResponse>
+  async syncJobError (this: That, params: T.ConnectorSyncJobErrorRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.sync_job_error']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -596,9 +1109,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -617,18 +1136,31 @@ export default class Connector {
     * Get a connector sync job.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-connector-sync-job-api.html | Elasticsearch API documentation}
     */
-  async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest | TB.ConnectorSyncJobGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobGetResponse>
-  async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest | TB.ConnectorSyncJobGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobGetResponse, unknown>>
-  async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest | TB.ConnectorSyncJobGetRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobGetResponse>
-  async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest | TB.ConnectorSyncJobGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobGetResponse>
+  async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobGetResponse, unknown>>
+  async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobGetResponse>
+  async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.sync_job_get']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -649,19 +1181,32 @@ export default class Connector {
     * Get all connector sync jobs. Get information about all stored connector sync jobs listed by their creation date in ascending order.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/list-connector-sync-jobs-api.html | Elasticsearch API documentation}
     */
-  async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest | TB.ConnectorSyncJobListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobListResponse>
-  async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest | TB.ConnectorSyncJobListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobListResponse, unknown>>
-  async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest | TB.ConnectorSyncJobListRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobListResponse>
-  async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest | TB.ConnectorSyncJobListRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobListResponse>
+  async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobListResponse, unknown>>
+  async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobListResponse>
+  async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.sync_job_list']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -679,20 +1224,27 @@ export default class Connector {
     * Create a connector sync job. Create a connector sync job document in the internal index and initialize its counters and timestamps with default values.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/create-connector-sync-job-api.html | Elasticsearch API documentation}
     */
-  async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest | TB.ConnectorSyncJobPostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobPostResponse>
-  async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest | TB.ConnectorSyncJobPostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobPostResponse, unknown>>
-  async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest | TB.ConnectorSyncJobPostRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobPostResponse>
-  async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest | TB.ConnectorSyncJobPostRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['id', 'job_type', 'trigger_method']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobPostResponse>
+  async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobPostResponse, unknown>>
+  async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobPostResponse>
+  async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.sync_job_post']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -702,9 +1254,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -720,20 +1278,27 @@ export default class Connector {
     * Set the connector sync job stats. Stats include: `deleted_document_count`, `indexed_document_count`, `indexed_document_volume`, and `total_document_count`. You can also update `last_seen`. This API is mainly used by the connector service for updating sync job information. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/set-connector-sync-job-stats-api.html | Elasticsearch API documentation}
     */
-  async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest | TB.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobUpdateStatsResponse>
-  async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest | TB.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobUpdateStatsResponse, unknown>>
-  async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest | TB.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobUpdateStatsResponse>
-  async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest | TB.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_sync_job_id']
-    const acceptedBody: string[] = ['deleted_document_count', 'indexed_document_count', 'indexed_document_volume', 'last_seen', 'metadata', 'total_document_count']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobUpdateStatsResponse>
+  async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSyncJobUpdateStatsResponse, unknown>>
+  async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptions): Promise<T.ConnectorSyncJobUpdateStatsResponse>
+  async syncJobUpdateStats (this: That, params: T.ConnectorSyncJobUpdateStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.sync_job_update_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -743,9 +1308,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -764,18 +1335,31 @@ export default class Connector {
     * Activate the connector draft filter. Activates the valid draft filtering for a connector.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-filtering-api.html | Elasticsearch API documentation}
     */
-  async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest | TB.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateActiveFilteringResponse>
-  async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest | TB.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateActiveFilteringResponse, unknown>>
-  async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest | TB.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateActiveFilteringResponse>
-  async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest | TB.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateActiveFilteringResponse>
+  async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateActiveFilteringResponse, unknown>>
+  async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateActiveFilteringResponse>
+  async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['connector.update_active_filtering']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -796,20 +1380,27 @@ export default class Connector {
     * Update the connector API key ID. Update the `api_key_id` and `api_key_secret_id` fields of a connector. You can specify the ID of the API key used for authorization and the ID of the connector secret where the API key is stored. The connector secret ID is required only for Elastic managed (native) connectors. Self-managed connectors (connector clients) do not use this field.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-api-key-id-api.html | Elasticsearch API documentation}
     */
-  async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest | TB.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateApiKeyIdResponse>
-  async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest | TB.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateApiKeyIdResponse, unknown>>
-  async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest | TB.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateApiKeyIdResponse>
-  async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest | TB.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['api_key_id', 'api_key_secret_id']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateApiKeyIdResponse>
+  async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateApiKeyIdResponse, unknown>>
+  async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateApiKeyIdResponse>
+  async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_api_key_id']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -819,9 +1410,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -840,20 +1437,27 @@ export default class Connector {
     * Update the connector configuration. Update the configuration field in the connector document.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-configuration-api.html | Elasticsearch API documentation}
     */
-  async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest | TB.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateConfigurationResponse>
-  async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest | TB.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateConfigurationResponse, unknown>>
-  async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest | TB.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateConfigurationResponse>
-  async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest | TB.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['configuration', 'values']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateConfigurationResponse>
+  async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateConfigurationResponse, unknown>>
+  async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateConfigurationResponse>
+  async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_configuration']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -863,9 +1467,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -884,20 +1494,27 @@ export default class Connector {
     * Update the connector error field. Set the error field for the connector. If the error provided in the request body is non-null, the connector’s status is updated to error. Otherwise, if the error is reset to null, the connector status is updated to connected.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-error-api.html | Elasticsearch API documentation}
     */
-  async updateError (this: That, params: T.ConnectorUpdateErrorRequest | TB.ConnectorUpdateErrorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateErrorResponse>
-  async updateError (this: That, params: T.ConnectorUpdateErrorRequest | TB.ConnectorUpdateErrorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateErrorResponse, unknown>>
-  async updateError (this: That, params: T.ConnectorUpdateErrorRequest | TB.ConnectorUpdateErrorRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateErrorResponse>
-  async updateError (this: That, params: T.ConnectorUpdateErrorRequest | TB.ConnectorUpdateErrorRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['error']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateError (this: That, params: T.ConnectorUpdateErrorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateErrorResponse>
+  async updateError (this: That, params: T.ConnectorUpdateErrorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateErrorResponse, unknown>>
+  async updateError (this: That, params: T.ConnectorUpdateErrorRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateErrorResponse>
+  async updateError (this: That, params: T.ConnectorUpdateErrorRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_error']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -907,9 +1524,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -928,20 +1551,27 @@ export default class Connector {
     * Update the connector features. Update the connector features in the connector document. This API can be used to control the following aspects of a connector: * document-level security * incremental syncs * advanced sync rules * basic sync rules Normally, the running connector service automatically manages these features. However, you can use this API to override the default behavior. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-features-api.html | Elasticsearch API documentation}
     */
-  async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest | TB.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFeaturesResponse>
-  async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest | TB.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFeaturesResponse, unknown>>
-  async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest | TB.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateFeaturesResponse>
-  async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest | TB.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['features']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFeaturesResponse>
+  async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFeaturesResponse, unknown>>
+  async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateFeaturesResponse>
+  async updateFeatures (this: That, params: T.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_features']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -951,9 +1581,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -972,20 +1608,27 @@ export default class Connector {
     * Update the connector filtering. Update the draft filtering configuration of a connector and marks the draft validation state as edited. The filtering draft is activated once validated by the running Elastic connector service. The filtering property is used to configure sync rules (both basic and advanced) for a connector.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-filtering-api.html | Elasticsearch API documentation}
     */
-  async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest | TB.ConnectorUpdateFilteringRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFilteringResponse>
-  async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest | TB.ConnectorUpdateFilteringRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFilteringResponse, unknown>>
-  async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest | TB.ConnectorUpdateFilteringRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateFilteringResponse>
-  async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest | TB.ConnectorUpdateFilteringRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['filtering', 'rules', 'advanced_snippet']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFilteringResponse>
+  async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFilteringResponse, unknown>>
+  async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateFilteringResponse>
+  async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_filtering']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -995,9 +1638,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1016,20 +1665,27 @@ export default class Connector {
     * Update the connector draft filtering validation. Update the draft filtering validation info for a connector.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-filtering-validation-api.html | Elasticsearch API documentation}
     */
-  async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest | TB.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFilteringValidationResponse>
-  async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest | TB.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFilteringValidationResponse, unknown>>
-  async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest | TB.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateFilteringValidationResponse>
-  async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest | TB.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['validation']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFilteringValidationResponse>
+  async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFilteringValidationResponse, unknown>>
+  async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateFilteringValidationResponse>
+  async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_filtering_validation']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1039,9 +1695,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1060,20 +1722,27 @@ export default class Connector {
     * Update the connector index name. Update the `index_name` field of a connector, specifying the index where the data ingested by the connector is stored.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-index-name-api.html | Elasticsearch API documentation}
     */
-  async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest | TB.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateIndexNameResponse>
-  async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest | TB.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateIndexNameResponse, unknown>>
-  async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest | TB.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateIndexNameResponse>
-  async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest | TB.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['index_name']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateIndexNameResponse>
+  async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateIndexNameResponse, unknown>>
+  async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateIndexNameResponse>
+  async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_index_name']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1083,9 +1752,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1104,20 +1779,27 @@ export default class Connector {
     * Update the connector name and description.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-name-description-api.html | Elasticsearch API documentation}
     */
-  async updateName (this: That, params: T.ConnectorUpdateNameRequest | TB.ConnectorUpdateNameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateNameResponse>
-  async updateName (this: That, params: T.ConnectorUpdateNameRequest | TB.ConnectorUpdateNameRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateNameResponse, unknown>>
-  async updateName (this: That, params: T.ConnectorUpdateNameRequest | TB.ConnectorUpdateNameRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateNameResponse>
-  async updateName (this: That, params: T.ConnectorUpdateNameRequest | TB.ConnectorUpdateNameRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['name', 'description']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateName (this: That, params: T.ConnectorUpdateNameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateNameResponse>
+  async updateName (this: That, params: T.ConnectorUpdateNameRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateNameResponse, unknown>>
+  async updateName (this: That, params: T.ConnectorUpdateNameRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateNameResponse>
+  async updateName (this: That, params: T.ConnectorUpdateNameRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_name']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1127,9 +1809,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1148,20 +1836,27 @@ export default class Connector {
     * Update the connector is_native flag.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-native-api.html | Elasticsearch API documentation}
     */
-  async updateNative (this: That, params: T.ConnectorUpdateNativeRequest | TB.ConnectorUpdateNativeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateNativeResponse>
-  async updateNative (this: That, params: T.ConnectorUpdateNativeRequest | TB.ConnectorUpdateNativeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateNativeResponse, unknown>>
-  async updateNative (this: That, params: T.ConnectorUpdateNativeRequest | TB.ConnectorUpdateNativeRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateNativeResponse>
-  async updateNative (this: That, params: T.ConnectorUpdateNativeRequest | TB.ConnectorUpdateNativeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['is_native']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateNative (this: That, params: T.ConnectorUpdateNativeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateNativeResponse>
+  async updateNative (this: That, params: T.ConnectorUpdateNativeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateNativeResponse, unknown>>
+  async updateNative (this: That, params: T.ConnectorUpdateNativeRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateNativeResponse>
+  async updateNative (this: That, params: T.ConnectorUpdateNativeRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_native']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1171,9 +1866,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1192,20 +1893,27 @@ export default class Connector {
     * Update the connector pipeline. When you create a new connector, the configuration of an ingest pipeline is populated with default settings.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-pipeline-api.html | Elasticsearch API documentation}
     */
-  async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest | TB.ConnectorUpdatePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdatePipelineResponse>
-  async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest | TB.ConnectorUpdatePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdatePipelineResponse, unknown>>
-  async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest | TB.ConnectorUpdatePipelineRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdatePipelineResponse>
-  async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest | TB.ConnectorUpdatePipelineRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['pipeline']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdatePipelineResponse>
+  async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdatePipelineResponse, unknown>>
+  async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdatePipelineResponse>
+  async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_pipeline']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1215,9 +1923,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1236,20 +1950,27 @@ export default class Connector {
     * Update the connector scheduling.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-scheduling-api.html | Elasticsearch API documentation}
     */
-  async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest | TB.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateSchedulingResponse>
-  async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest | TB.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateSchedulingResponse, unknown>>
-  async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest | TB.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateSchedulingResponse>
-  async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest | TB.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['scheduling']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateSchedulingResponse>
+  async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateSchedulingResponse, unknown>>
+  async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateSchedulingResponse>
+  async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_scheduling']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1259,9 +1980,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1280,20 +2007,27 @@ export default class Connector {
     * Update the connector service type.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-service-type-api.html | Elasticsearch API documentation}
     */
-  async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest | TB.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateServiceTypeResponse>
-  async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest | TB.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateServiceTypeResponse, unknown>>
-  async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest | TB.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateServiceTypeResponse>
-  async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest | TB.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['service_type']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateServiceTypeResponse>
+  async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateServiceTypeResponse, unknown>>
+  async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateServiceTypeResponse>
+  async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_service_type']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1303,9 +2037,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1324,20 +2064,27 @@ export default class Connector {
     * Update the connector status.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-status-api.html | Elasticsearch API documentation}
     */
-  async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest | TB.ConnectorUpdateStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateStatusResponse>
-  async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest | TB.ConnectorUpdateStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateStatusResponse, unknown>>
-  async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest | TB.ConnectorUpdateStatusRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateStatusResponse>
-  async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest | TB.ConnectorUpdateStatusRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['connector_id']
-    const acceptedBody: string[] = ['status']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateStatusResponse>
+  async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateStatusResponse, unknown>>
+  async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest, options?: TransportRequestOptions): Promise<T.ConnectorUpdateStatusResponse>
+  async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['connector.update_status']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1347,9 +2094,15 @@ export default class Connector {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

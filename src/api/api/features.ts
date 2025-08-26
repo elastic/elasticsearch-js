@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,32 +21,65 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
 
 export default class Features {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'features.get_features': {
+        path: [],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'features.reset_features': {
+        path: [],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      }
+    }
   }
 
   /**
     * Get the features. Get a list of features that can be included in snapshots using the `feature_states` field when creating a snapshot. You can use this API to determine which feature states to include when taking a snapshot. By default, all feature states are included in a snapshot if that snapshot includes the global state, or none if it does not. A feature state includes one or more system indices necessary for a given feature to function. In order to ensure data integrity, all system indices that comprise a feature state are snapshotted and restored together. The features listed by this API are a combination of built-in features and features defined by plugins. In order for a feature state to be listed in this API and recognized as a valid feature state by the create snapshot API, the plugin that defines that feature must be installed on the master node.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-features-api.html | Elasticsearch API documentation}
     */
-  async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest | TB.FeaturesGetFeaturesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FeaturesGetFeaturesResponse>
-  async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest | TB.FeaturesGetFeaturesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FeaturesGetFeaturesResponse, unknown>>
-  async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest | TB.FeaturesGetFeaturesRequest, options?: TransportRequestOptions): Promise<T.FeaturesGetFeaturesResponse>
-  async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest | TB.FeaturesGetFeaturesRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FeaturesGetFeaturesResponse>
+  async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FeaturesGetFeaturesResponse, unknown>>
+  async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest, options?: TransportRequestOptions): Promise<T.FeaturesGetFeaturesResponse>
+  async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['features.get_features']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -78,19 +97,32 @@ export default class Features {
     * Reset the features. Clear all of the state information stored in system indices by Elasticsearch features, including the security and machine learning indices. WARNING: Intended for development and testing use only. Do not reset features on a production cluster. Return a cluster to the same state as a new installation by resetting the feature state for all Elasticsearch features. This deletes all state information stored in system indices. The response code is HTTP 200 if the state is successfully reset for all features. It is HTTP 500 if the reset operation failed for any feature. Note that select features might provide a way to reset particular system indices. Using this API resets all features, both those that are built-in and implemented as plugins. To list the features that will be affected, use the get features API. IMPORTANT: The features installed on the node you submit this request to are the features that will be reset. Run on the master node if you have any doubts about which plugins are installed on individual nodes.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/reset-features-api.html | Elasticsearch API documentation}
     */
-  async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest | TB.FeaturesResetFeaturesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FeaturesResetFeaturesResponse>
-  async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest | TB.FeaturesResetFeaturesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FeaturesResetFeaturesResponse, unknown>>
-  async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest | TB.FeaturesResetFeaturesRequest, options?: TransportRequestOptions): Promise<T.FeaturesResetFeaturesResponse>
-  async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest | TB.FeaturesResetFeaturesRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FeaturesResetFeaturesResponse>
+  async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FeaturesResetFeaturesResponse, unknown>>
+  async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest, options?: TransportRequestOptions): Promise<T.FeaturesResetFeaturesResponse>
+  async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['features.reset_features']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }

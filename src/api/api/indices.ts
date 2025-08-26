@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,31 +21,929 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Indices {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'indices.add_block': {
+        path: [
+          'index',
+          'block'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'indices.analyze': {
+        path: [
+          'index'
+        ],
+        body: [
+          'analyzer',
+          'attributes',
+          'char_filter',
+          'explain',
+          'field',
+          'filter',
+          'normalizer',
+          'text',
+          'tokenizer'
+        ],
+        query: [
+          'index'
+        ]
+      },
+      'indices.cancel_migrate_reindex': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: []
+      },
+      'indices.clear_cache': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'index',
+          'allow_no_indices',
+          'expand_wildcards',
+          'fielddata',
+          'fields',
+          'ignore_unavailable',
+          'query',
+          'request'
+        ]
+      },
+      'indices.clone': {
+        path: [
+          'index',
+          'target'
+        ],
+        body: [
+          'aliases',
+          'settings'
+        ],
+        query: [
+          'master_timeout',
+          'timeout',
+          'wait_for_active_shards'
+        ]
+      },
+      'indices.close': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'master_timeout',
+          'timeout',
+          'wait_for_active_shards'
+        ]
+      },
+      'indices.create': {
+        path: [
+          'index'
+        ],
+        body: [
+          'aliases',
+          'mappings',
+          'settings'
+        ],
+        query: [
+          'master_timeout',
+          'timeout',
+          'wait_for_active_shards'
+        ]
+      },
+      'indices.create_data_stream': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'indices.create_from': {
+        path: [
+          'source',
+          'dest'
+        ],
+        body: [
+          'create_from'
+        ],
+        query: []
+      },
+      'indices.data_streams_stats': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'expand_wildcards'
+        ]
+      },
+      'indices.delete': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'indices.delete_alias': {
+        path: [
+          'index',
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'indices.delete_data_lifecycle': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'expand_wildcards',
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'indices.delete_data_stream': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'expand_wildcards'
+        ]
+      },
+      'indices.delete_data_stream_options': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
+      'indices.delete_index_template': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'indices.delete_template': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'indices.disk_usage': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'flush',
+          'ignore_unavailable',
+          'run_expensive_tasks'
+        ]
+      },
+      'indices.downsample': {
+        path: [
+          'index',
+          'target_index'
+        ],
+        body: [
+          'config'
+        ],
+        query: []
+      },
+      'indices.exists': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'flat_settings',
+          'ignore_unavailable',
+          'include_defaults',
+          'local'
+        ]
+      },
+      'indices.exists_alias': {
+        path: [
+          'name',
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'local'
+        ]
+      },
+      'indices.exists_index_template': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'local',
+          'flat_settings',
+          'master_timeout'
+        ]
+      },
+      'indices.exists_template': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'flat_settings',
+          'local',
+          'master_timeout'
+        ]
+      },
+      'indices.explain_data_lifecycle': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'include_defaults',
+          'master_timeout'
+        ]
+      },
+      'indices.field_usage_stats': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'fields'
+        ]
+      },
+      'indices.flush': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'force',
+          'ignore_unavailable',
+          'wait_if_ongoing'
+        ]
+      },
+      'indices.forcemerge': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'flush',
+          'ignore_unavailable',
+          'max_num_segments',
+          'only_expunge_deletes',
+          'wait_for_completion'
+        ]
+      },
+      'indices.get': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'flat_settings',
+          'ignore_unavailable',
+          'include_defaults',
+          'local',
+          'master_timeout',
+          'features'
+        ]
+      },
+      'indices.get_alias': {
+        path: [
+          'name',
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'local'
+        ]
+      },
+      'indices.get_data_lifecycle': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'expand_wildcards',
+          'include_defaults',
+          'master_timeout'
+        ]
+      },
+      'indices.get_data_lifecycle_stats': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'indices.get_data_stream': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'expand_wildcards',
+          'include_defaults',
+          'master_timeout',
+          'verbose'
+        ]
+      },
+      'indices.get_data_stream_options': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
+      'indices.get_data_stream_settings': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
+      'indices.get_field_mapping': {
+        path: [
+          'fields',
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'include_defaults',
+          'local'
+        ]
+      },
+      'indices.get_index_template': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'local',
+          'flat_settings',
+          'master_timeout',
+          'include_defaults'
+        ]
+      },
+      'indices.get_mapping': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'local',
+          'master_timeout'
+        ]
+      },
+      'indices.get_migrate_reindex_status': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: []
+      },
+      'indices.get_settings': {
+        path: [
+          'index',
+          'name'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'flat_settings',
+          'ignore_unavailable',
+          'include_defaults',
+          'local',
+          'master_timeout'
+        ]
+      },
+      'indices.get_template': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'flat_settings',
+          'local',
+          'master_timeout'
+        ]
+      },
+      'indices.migrate_reindex': {
+        path: [],
+        body: [
+          'reindex'
+        ],
+        query: []
+      },
+      'indices.migrate_to_data_stream': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'indices.modify_data_stream': {
+        path: [],
+        body: [
+          'actions'
+        ],
+        query: []
+      },
+      'indices.open': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'master_timeout',
+          'timeout',
+          'wait_for_active_shards'
+        ]
+      },
+      'indices.promote_data_stream': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'indices.put_alias': {
+        path: [
+          'index',
+          'name'
+        ],
+        body: [
+          'filter',
+          'index_routing',
+          'is_write_index',
+          'routing',
+          'search_routing'
+        ],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'indices.put_data_lifecycle': {
+        path: [
+          'name'
+        ],
+        body: [
+          'data_retention',
+          'downsampling',
+          'enabled'
+        ],
+        query: [
+          'expand_wildcards',
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'indices.put_data_stream_options': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
+      'indices.put_data_stream_settings': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
+      'indices.put_index_template': {
+        path: [
+          'name'
+        ],
+        body: [
+          'index_patterns',
+          'composed_of',
+          'template',
+          'data_stream',
+          'priority',
+          'version',
+          '_meta',
+          'allow_auto_create',
+          'ignore_missing_component_templates',
+          'deprecated'
+        ],
+        query: [
+          'create',
+          'master_timeout',
+          'cause'
+        ]
+      },
+      'indices.put_mapping': {
+        path: [
+          'index'
+        ],
+        body: [
+          'date_detection',
+          'dynamic',
+          'dynamic_date_formats',
+          'dynamic_templates',
+          '_field_names',
+          '_meta',
+          'numeric_detection',
+          'properties',
+          '_routing',
+          '_source',
+          'runtime'
+        ],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'master_timeout',
+          'timeout',
+          'write_index_only'
+        ]
+      },
+      'indices.put_settings': {
+        path: [
+          'index'
+        ],
+        body: [
+          'settings'
+        ],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'flat_settings',
+          'ignore_unavailable',
+          'master_timeout',
+          'preserve_existing',
+          'reopen',
+          'timeout'
+        ]
+      },
+      'indices.put_template': {
+        path: [
+          'name'
+        ],
+        body: [
+          'aliases',
+          'index_patterns',
+          'mappings',
+          'order',
+          'settings',
+          'version'
+        ],
+        query: [
+          'create',
+          'master_timeout',
+          'order',
+          'cause'
+        ]
+      },
+      'indices.recovery': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'active_only',
+          'detailed',
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable'
+        ]
+      },
+      'indices.refresh': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable'
+        ]
+      },
+      'indices.reload_search_analyzers': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'resource'
+        ]
+      },
+      'indices.resolve_cluster': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_throttled',
+          'ignore_unavailable',
+          'timeout'
+        ]
+      },
+      'indices.resolve_index': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'expand_wildcards',
+          'ignore_unavailable',
+          'allow_no_indices'
+        ]
+      },
+      'indices.rollover': {
+        path: [
+          'alias',
+          'new_index'
+        ],
+        body: [
+          'aliases',
+          'conditions',
+          'mappings',
+          'settings'
+        ],
+        query: [
+          'dry_run',
+          'master_timeout',
+          'timeout',
+          'wait_for_active_shards',
+          'lazy'
+        ]
+      },
+      'indices.segments': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'verbose'
+        ]
+      },
+      'indices.shard_stores': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'status'
+        ]
+      },
+      'indices.shrink': {
+        path: [
+          'index',
+          'target'
+        ],
+        body: [
+          'aliases',
+          'settings'
+        ],
+        query: [
+          'master_timeout',
+          'timeout',
+          'wait_for_active_shards'
+        ]
+      },
+      'indices.simulate_index_template': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'create',
+          'cause',
+          'master_timeout',
+          'include_defaults'
+        ]
+      },
+      'indices.simulate_template': {
+        path: [
+          'name'
+        ],
+        body: [
+          'allow_auto_create',
+          'index_patterns',
+          'composed_of',
+          'template',
+          'data_stream',
+          'priority',
+          'version',
+          '_meta',
+          'ignore_missing_component_templates',
+          'deprecated'
+        ],
+        query: [
+          'create',
+          'cause',
+          'master_timeout',
+          'include_defaults'
+        ]
+      },
+      'indices.split': {
+        path: [
+          'index',
+          'target'
+        ],
+        body: [
+          'aliases',
+          'settings'
+        ],
+        query: [
+          'master_timeout',
+          'timeout',
+          'wait_for_active_shards'
+        ]
+      },
+      'indices.stats': {
+        path: [
+          'metric',
+          'index'
+        ],
+        body: [],
+        query: [
+          'completion_fields',
+          'expand_wildcards',
+          'fielddata_fields',
+          'fields',
+          'forbid_closed_indices',
+          'groups',
+          'include_segment_file_sizes',
+          'include_unloaded_segments',
+          'level'
+        ]
+      },
+      'indices.unfreeze': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: [
+          'allow_no_indices',
+          'expand_wildcards',
+          'ignore_unavailable',
+          'master_timeout',
+          'timeout',
+          'wait_for_active_shards'
+        ]
+      },
+      'indices.update_aliases': {
+        path: [],
+        body: [
+          'actions'
+        ],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'indices.validate_query': {
+        path: [
+          'index'
+        ],
+        body: [
+          'query'
+        ],
+        query: [
+          'allow_no_indices',
+          'all_shards',
+          'analyzer',
+          'analyze_wildcard',
+          'default_operator',
+          'df',
+          'expand_wildcards',
+          'explain',
+          'ignore_unavailable',
+          'lenient',
+          'rewrite',
+          'q'
+        ]
+      }
+    }
   }
 
   /**
     * Add an index block. Add an index block to an index. Index blocks limit the operations allowed on an index by blocking specific operation types.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index-modules-blocks.html#add-index-block | Elasticsearch API documentation}
     */
-  async addBlock (this: That, params: T.IndicesAddBlockRequest | TB.IndicesAddBlockRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesAddBlockResponse>
-  async addBlock (this: That, params: T.IndicesAddBlockRequest | TB.IndicesAddBlockRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesAddBlockResponse, unknown>>
-  async addBlock (this: That, params: T.IndicesAddBlockRequest | TB.IndicesAddBlockRequest, options?: TransportRequestOptions): Promise<T.IndicesAddBlockResponse>
-  async addBlock (this: That, params: T.IndicesAddBlockRequest | TB.IndicesAddBlockRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index', 'block']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async addBlock (this: That, params: T.IndicesAddBlockRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesAddBlockResponse>
+  async addBlock (this: That, params: T.IndicesAddBlockRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesAddBlockResponse, unknown>>
+  async addBlock (this: That, params: T.IndicesAddBlockRequest, options?: TransportRequestOptions): Promise<T.IndicesAddBlockResponse>
+  async addBlock (this: That, params: T.IndicesAddBlockRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.add_block']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -81,20 +965,27 @@ export default class Indices {
     * Get tokens from text analysis. The analyze API performs analysis on a text string and returns the resulting tokens. Generating excessive amount of tokens may cause a node to run out of memory. The `index.analyze.max_token_count` setting enables you to limit the number of tokens that can be produced. If more than this limit of tokens gets generated, an error occurs. The `_analyze` endpoint without a specified index will always use `10000` as its limit.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-analyze | Elasticsearch API documentation}
     */
-  async analyze (this: That, params?: T.IndicesAnalyzeRequest | TB.IndicesAnalyzeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesAnalyzeResponse>
-  async analyze (this: That, params?: T.IndicesAnalyzeRequest | TB.IndicesAnalyzeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesAnalyzeResponse, unknown>>
-  async analyze (this: That, params?: T.IndicesAnalyzeRequest | TB.IndicesAnalyzeRequest, options?: TransportRequestOptions): Promise<T.IndicesAnalyzeResponse>
-  async analyze (this: That, params?: T.IndicesAnalyzeRequest | TB.IndicesAnalyzeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['analyzer', 'attributes', 'char_filter', 'explain', 'field', 'filter', 'normalizer', 'text', 'tokenizer']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async analyze (this: That, params?: T.IndicesAnalyzeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesAnalyzeResponse>
+  async analyze (this: That, params?: T.IndicesAnalyzeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesAnalyzeResponse, unknown>>
+  async analyze (this: That, params?: T.IndicesAnalyzeRequest, options?: TransportRequestOptions): Promise<T.IndicesAnalyzeResponse>
+  async analyze (this: That, params?: T.IndicesAnalyzeRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.analyze']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -105,9 +996,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -133,18 +1030,31 @@ export default class Indices {
     * Cancel a migration reindex operation. Cancel a migration reindex attempt for a data stream or index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/migrate-data-stream.html | Elasticsearch API documentation}
     */
-  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest | TB.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCancelMigrateReindexResponse>
-  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest | TB.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCancelMigrateReindexResponse, unknown>>
-  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest | TB.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptions): Promise<T.IndicesCancelMigrateReindexResponse>
-  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest | TB.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCancelMigrateReindexResponse>
+  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCancelMigrateReindexResponse, unknown>>
+  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptions): Promise<T.IndicesCancelMigrateReindexResponse>
+  async cancelMigrateReindex (this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.cancel_migrate_reindex']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -165,19 +1075,32 @@ export default class Indices {
     * Clear the cache. Clear the cache of one or more indices. For data streams, the API clears the caches of the stream's backing indices. By default, the clear cache API clears all caches. To clear only specific caches, use the `fielddata`, `query`, or `request` parameters. To clear the cache only of specific fields, use the `fields` parameter.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-clearcache.html | Elasticsearch API documentation}
     */
-  async clearCache (this: That, params?: T.IndicesClearCacheRequest | TB.IndicesClearCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesClearCacheResponse>
-  async clearCache (this: That, params?: T.IndicesClearCacheRequest | TB.IndicesClearCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesClearCacheResponse, unknown>>
-  async clearCache (this: That, params?: T.IndicesClearCacheRequest | TB.IndicesClearCacheRequest, options?: TransportRequestOptions): Promise<T.IndicesClearCacheResponse>
-  async clearCache (this: That, params?: T.IndicesClearCacheRequest | TB.IndicesClearCacheRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async clearCache (this: That, params?: T.IndicesClearCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesClearCacheResponse>
+  async clearCache (this: That, params?: T.IndicesClearCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesClearCacheResponse, unknown>>
+  async clearCache (this: That, params?: T.IndicesClearCacheRequest, options?: TransportRequestOptions): Promise<T.IndicesClearCacheResponse>
+  async clearCache (this: That, params?: T.IndicesClearCacheRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.clear_cache']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -205,20 +1128,27 @@ export default class Indices {
     * Clone an index. Clone an existing index into a new index. Each original primary shard is cloned into a new primary shard in the new index. IMPORTANT: Elasticsearch does not apply index templates to the resulting index. The API also does not copy index metadata from the original index. Index metadata includes aliases, index lifecycle management phase definitions, and cross-cluster replication (CCR) follower information. For example, if you clone a CCR follower index, the resulting clone will not be a follower index. The clone API copies most index settings from the source index to the resulting index, with the exception of `index.number_of_replicas` and `index.auto_expand_replicas`. To set the number of replicas in the resulting index, configure these settings in the clone request. Cloning works as follows: * First, it creates a new target index with the same definition as the source index. * Then it hard-links segments from the source index into the target index. If the file system does not support hard-linking, all segments are copied into the new index, which is a much more time consuming process. * Finally, it recovers the target index as though it were a closed index which had just been re-opened. IMPORTANT: Indices can only be cloned if they meet the following requirements: * The index must be marked as read-only and have a cluster health status of green. * The target index must not exist. * The source index must have the same number of primary shards as the target index. * The node handling the clone process must have sufficient free disk space to accommodate a second copy of the existing index. The current write index on a data stream cannot be cloned. In order to clone the current write index, the data stream must first be rolled over so that a new write index is created and then the previous write index can be cloned. NOTE: Mappings cannot be specified in the `_clone` request. The mappings of the source index will be used for the target index. **Monitor the cloning process** The cloning process can be monitored with the cat recovery API or the cluster health API can be used to wait until all primary shards have been allocated by setting the `wait_for_status` parameter to `yellow`. The `_clone` API returns as soon as the target index has been added to the cluster state, before any shards have been allocated. At this point, all shards are in the state unassigned. If, for any reason, the target index can't be allocated, its primary shard will remain unassigned until it can be allocated on that node. Once the primary shard is allocated, it moves to state initializing, and the clone process begins. When the clone operation completes, the shard will become active. At that point, Elasticsearch will try to allocate any replicas and may decide to relocate the primary shard to another node. **Wait for active shards** Because the clone operation creates a new index to clone the shards to, the wait for active shards setting on index creation applies to the clone index action as well.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-clone-index.html | Elasticsearch API documentation}
     */
-  async clone (this: That, params: T.IndicesCloneRequest | TB.IndicesCloneRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCloneResponse>
-  async clone (this: That, params: T.IndicesCloneRequest | TB.IndicesCloneRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCloneResponse, unknown>>
-  async clone (this: That, params: T.IndicesCloneRequest | TB.IndicesCloneRequest, options?: TransportRequestOptions): Promise<T.IndicesCloneResponse>
-  async clone (this: That, params: T.IndicesCloneRequest | TB.IndicesCloneRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index', 'target']
-    const acceptedBody: string[] = ['aliases', 'settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async clone (this: That, params: T.IndicesCloneRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCloneResponse>
+  async clone (this: That, params: T.IndicesCloneRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCloneResponse, unknown>>
+  async clone (this: That, params: T.IndicesCloneRequest, options?: TransportRequestOptions): Promise<T.IndicesCloneResponse>
+  async clone (this: That, params: T.IndicesCloneRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.clone']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -228,9 +1158,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -250,18 +1186,31 @@ export default class Indices {
     * Close an index. A closed index is blocked for read or write operations and does not allow all operations that opened indices allow. It is not possible to index documents or to search for documents in a closed index. Closed indices do not have to maintain internal data structures for indexing or searching documents, which results in a smaller overhead on the cluster. When opening or closing an index, the master node is responsible for restarting the index shards to reflect the new state of the index. The shards will then go through the normal recovery process. The data of opened and closed indices is automatically replicated by the cluster to ensure that enough shard copies are safely kept around at all times. You can open and close multiple indices. An error is thrown if the request explicitly refers to a missing index. This behaviour can be turned off using the `ignore_unavailable=true` parameter. By default, you must explicitly name the indices you are opening or closing. To open or close indices with `_all`, `*`, or other wildcard expressions, change the` action.destructive_requires_name` setting to `false`. This setting can also be changed with the cluster update settings API. Closed indices consume a significant amount of disk-space which can cause problems in managed environments. Closing indices can be turned off with the cluster settings API by setting `cluster.indices.close.enable` to `false`.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-close.html | Elasticsearch API documentation}
     */
-  async close (this: That, params: T.IndicesCloseRequest | TB.IndicesCloseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCloseResponse>
-  async close (this: That, params: T.IndicesCloseRequest | TB.IndicesCloseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCloseResponse, unknown>>
-  async close (this: That, params: T.IndicesCloseRequest | TB.IndicesCloseRequest, options?: TransportRequestOptions): Promise<T.IndicesCloseResponse>
-  async close (this: That, params: T.IndicesCloseRequest | TB.IndicesCloseRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async close (this: That, params: T.IndicesCloseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCloseResponse>
+  async close (this: That, params: T.IndicesCloseRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCloseResponse, unknown>>
+  async close (this: That, params: T.IndicesCloseRequest, options?: TransportRequestOptions): Promise<T.IndicesCloseResponse>
+  async close (this: That, params: T.IndicesCloseRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.close']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -282,20 +1231,27 @@ export default class Indices {
     * Create an index. You can use the create index API to add a new index to an Elasticsearch cluster. When creating an index, you can specify the following: * Settings for the index. * Mappings for fields in the index. * Index aliases **Wait for active shards** By default, index creation will only return a response to the client when the primary copies of each shard have been started, or the request times out. The index creation response will indicate what happened. For example, `acknowledged` indicates whether the index was successfully created in the cluster, `while shards_acknowledged` indicates whether the requisite number of shard copies were started for each shard in the index before timing out. Note that it is still possible for either `acknowledged` or `shards_acknowledged` to be `false`, but for the index creation to be successful. These values simply indicate whether the operation completed before the timeout. If `acknowledged` is false, the request timed out before the cluster state was updated with the newly created index, but it probably will be created sometime soon. If `shards_acknowledged` is false, then the request timed out before the requisite number of shards were started (by default just the primaries), even if the cluster state was successfully updated to reflect the newly created index (that is to say, `acknowledged` is `true`). You can change the default of only waiting for the primary shards to start through the index setting `index.write.wait_for_active_shards`. Note that changing this setting will also affect the `wait_for_active_shards` value on all subsequent write operations.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-create-index.html | Elasticsearch API documentation}
     */
-  async create (this: That, params: T.IndicesCreateRequest | TB.IndicesCreateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateResponse>
-  async create (this: That, params: T.IndicesCreateRequest | TB.IndicesCreateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateResponse, unknown>>
-  async create (this: That, params: T.IndicesCreateRequest | TB.IndicesCreateRequest, options?: TransportRequestOptions): Promise<T.IndicesCreateResponse>
-  async create (this: That, params: T.IndicesCreateRequest | TB.IndicesCreateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['aliases', 'mappings', 'settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async create (this: That, params: T.IndicesCreateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateResponse>
+  async create (this: That, params: T.IndicesCreateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateResponse, unknown>>
+  async create (this: That, params: T.IndicesCreateRequest, options?: TransportRequestOptions): Promise<T.IndicesCreateResponse>
+  async create (this: That, params: T.IndicesCreateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.create']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -305,9 +1261,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -326,18 +1288,31 @@ export default class Indices {
     * Create a data stream. You must have a matching index template with data stream enabled.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-create-data-stream.html | Elasticsearch API documentation}
     */
-  async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest | TB.IndicesCreateDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateDataStreamResponse>
-  async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest | TB.IndicesCreateDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateDataStreamResponse, unknown>>
-  async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest | TB.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesCreateDataStreamResponse>
-  async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest | TB.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateDataStreamResponse>
+  async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateDataStreamResponse, unknown>>
+  async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesCreateDataStreamResponse>
+  async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.create_data_stream']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -358,25 +1333,35 @@ export default class Indices {
     * Create an index from a source index. Copy the mappings and settings from the source index to a destination index while allowing request settings and mappings to override the source values.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/migrate-data-stream.html | Elasticsearch API documentation}
     */
-  async createFrom (this: That, params: T.IndicesCreateFromRequest | TB.IndicesCreateFromRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateFromResponse>
-  async createFrom (this: That, params: T.IndicesCreateFromRequest | TB.IndicesCreateFromRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateFromResponse, unknown>>
-  async createFrom (this: That, params: T.IndicesCreateFromRequest | TB.IndicesCreateFromRequest, options?: TransportRequestOptions): Promise<T.IndicesCreateFromResponse>
-  async createFrom (this: That, params: T.IndicesCreateFromRequest | TB.IndicesCreateFromRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['source', 'dest']
-    const acceptedBody: string[] = ['create_from']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+  async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateFromResponse>
+  async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesCreateFromResponse, unknown>>
+  async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptions): Promise<T.IndicesCreateFromResponse>
+  async createFrom (this: That, params: T.IndicesCreateFromRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.create_from']
 
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -396,19 +1381,32 @@ export default class Indices {
     * Get data stream stats. Get statistics for one or more data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-stream-stats-api.html | Elasticsearch API documentation}
     */
-  async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest | TB.IndicesDataStreamsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDataStreamsStatsResponse>
-  async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest | TB.IndicesDataStreamsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDataStreamsStatsResponse, unknown>>
-  async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest | TB.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesDataStreamsStatsResponse>
-  async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest | TB.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDataStreamsStatsResponse>
+  async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDataStreamsStatsResponse, unknown>>
+  async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesDataStreamsStatsResponse>
+  async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.data_streams_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -436,18 +1434,31 @@ export default class Indices {
     * Delete indices. Deleting an index deletes its documents, shards, and metadata. It does not delete related Kibana components, such as data views, visualizations, or dashboards. You cannot delete the current write index of a data stream. To delete the index, you must roll over the data stream so a new write index is created. You can then use the delete index API to delete the previous write index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-delete-index.html | Elasticsearch API documentation}
     */
-  async delete (this: That, params: T.IndicesDeleteRequest | TB.IndicesDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteResponse>
-  async delete (this: That, params: T.IndicesDeleteRequest | TB.IndicesDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteResponse, unknown>>
-  async delete (this: That, params: T.IndicesDeleteRequest | TB.IndicesDeleteRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteResponse>
-  async delete (this: That, params: T.IndicesDeleteRequest | TB.IndicesDeleteRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async delete (this: That, params: T.IndicesDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteResponse>
+  async delete (this: That, params: T.IndicesDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteResponse, unknown>>
+  async delete (this: That, params: T.IndicesDeleteRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteResponse>
+  async delete (this: That, params: T.IndicesDeleteRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.delete']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -468,18 +1479,31 @@ export default class Indices {
     * Delete an alias. Removes a data stream or index from an alias.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-delete-alias.html | Elasticsearch API documentation}
     */
-  async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest | TB.IndicesDeleteAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteAliasResponse>
-  async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest | TB.IndicesDeleteAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteAliasResponse, unknown>>
-  async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest | TB.IndicesDeleteAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteAliasResponse>
-  async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest | TB.IndicesDeleteAliasRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index', 'name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteAliasResponse>
+  async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteAliasResponse, unknown>>
+  async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteAliasResponse>
+  async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.delete_alias']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -508,18 +1532,31 @@ export default class Indices {
     * Delete data stream lifecycles. Removes the data stream lifecycle from a data stream, rendering it not managed by the data stream lifecycle.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams-delete-lifecycle.html | Elasticsearch API documentation}
     */
-  async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest | TB.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataLifecycleResponse>
-  async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest | TB.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteDataLifecycleResponse, unknown>>
-  async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest | TB.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteDataLifecycleResponse>
-  async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest | TB.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataLifecycleResponse>
+  async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteDataLifecycleResponse, unknown>>
+  async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteDataLifecycleResponse>
+  async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.delete_data_lifecycle']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -540,18 +1577,31 @@ export default class Indices {
     * Delete data streams. Deletes one or more data streams and their backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-delete-data-stream.html | Elasticsearch API documentation}
     */
-  async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest | TB.IndicesDeleteDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataStreamResponse>
-  async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest | TB.IndicesDeleteDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteDataStreamResponse, unknown>>
-  async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest | TB.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteDataStreamResponse>
-  async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest | TB.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataStreamResponse>
+  async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteDataStreamResponse, unknown>>
+  async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteDataStreamResponse>
+  async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.delete_data_stream']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -572,19 +1622,32 @@ export default class Indices {
     * Deletes the data stream options of the selected data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index.html | Elasticsearch API documentation}
     */
-  async deleteDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async deleteDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async deleteDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async deleteDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async deleteDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async deleteDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async deleteDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.delete_data_stream_options']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }
@@ -604,18 +1667,31 @@ export default class Indices {
     * Delete an index template. The provided <index-template> may contain multiple template names separated by a comma. If multiple template names are specified then there is no wildcard support and the provided names should match completely with existing templates.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-delete-template.html | Elasticsearch API documentation}
     */
-  async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest | TB.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteIndexTemplateResponse>
-  async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest | TB.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteIndexTemplateResponse, unknown>>
-  async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest | TB.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteIndexTemplateResponse>
-  async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest | TB.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteIndexTemplateResponse>
+  async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteIndexTemplateResponse, unknown>>
+  async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteIndexTemplateResponse>
+  async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.delete_index_template']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -636,18 +1712,31 @@ export default class Indices {
     * Delete a legacy index template. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-delete-template-v1.html | Elasticsearch API documentation}
     */
-  async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest | TB.IndicesDeleteTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteTemplateResponse>
-  async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest | TB.IndicesDeleteTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteTemplateResponse, unknown>>
-  async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest | TB.IndicesDeleteTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteTemplateResponse>
-  async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest | TB.IndicesDeleteTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteTemplateResponse>
+  async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteTemplateResponse, unknown>>
+  async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteTemplateResponse>
+  async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.delete_template']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -668,18 +1757,31 @@ export default class Indices {
     * Analyze the index disk usage. Analyze the disk usage of each field of an index or data stream. This API might not support indices created in previous Elasticsearch versions. The result of a small index can be inaccurate as some parts of an index might not be analyzed by the API. NOTE: The total size of fields of the analyzed shards of the index in the response is usually smaller than the index `store_size` value because some small metadata files are ignored and some parts of data files might not be scanned by the API. Since stored fields are stored together in a compressed format, the sizes of stored fields are also estimates and can be inaccurate. The stored size of the `_id` field is likely underestimated while the `_source` field is overestimated.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-disk-usage.html | Elasticsearch API documentation}
     */
-  async diskUsage (this: That, params: T.IndicesDiskUsageRequest | TB.IndicesDiskUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDiskUsageResponse>
-  async diskUsage (this: That, params: T.IndicesDiskUsageRequest | TB.IndicesDiskUsageRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDiskUsageResponse, unknown>>
-  async diskUsage (this: That, params: T.IndicesDiskUsageRequest | TB.IndicesDiskUsageRequest, options?: TransportRequestOptions): Promise<T.IndicesDiskUsageResponse>
-  async diskUsage (this: That, params: T.IndicesDiskUsageRequest | TB.IndicesDiskUsageRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async diskUsage (this: That, params: T.IndicesDiskUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDiskUsageResponse>
+  async diskUsage (this: That, params: T.IndicesDiskUsageRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDiskUsageResponse, unknown>>
+  async diskUsage (this: That, params: T.IndicesDiskUsageRequest, options?: TransportRequestOptions): Promise<T.IndicesDiskUsageResponse>
+  async diskUsage (this: That, params: T.IndicesDiskUsageRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.disk_usage']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -700,25 +1802,35 @@ export default class Indices {
     * Downsample an index. Aggregate a time series (TSDS) index and store pre-computed statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`) for each metric field grouped by a configured time interval. For example, a TSDS index that contains metrics sampled every 10 seconds can be downsampled to an hourly index. All documents within an hour interval are summarized and stored as a single document in the downsample index. NOTE: Only indices in a time series data stream are supported. Neither field nor document level security can be defined on the source index. The source index must be read only (`index.blocks.write: true`).
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-downsample-data-stream.html | Elasticsearch API documentation}
     */
-  async downsample (this: That, params: T.IndicesDownsampleRequest | TB.IndicesDownsampleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDownsampleResponse>
-  async downsample (this: That, params: T.IndicesDownsampleRequest | TB.IndicesDownsampleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDownsampleResponse, unknown>>
-  async downsample (this: That, params: T.IndicesDownsampleRequest | TB.IndicesDownsampleRequest, options?: TransportRequestOptions): Promise<T.IndicesDownsampleResponse>
-  async downsample (this: That, params: T.IndicesDownsampleRequest | TB.IndicesDownsampleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index', 'target_index']
-    const acceptedBody: string[] = ['config']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+  async downsample (this: That, params: T.IndicesDownsampleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDownsampleResponse>
+  async downsample (this: That, params: T.IndicesDownsampleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDownsampleResponse, unknown>>
+  async downsample (this: That, params: T.IndicesDownsampleRequest, options?: TransportRequestOptions): Promise<T.IndicesDownsampleResponse>
+  async downsample (this: That, params: T.IndicesDownsampleRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.downsample']
 
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -738,18 +1850,31 @@ export default class Indices {
     * Check indices. Check if one or more indices, index aliases, or data streams exist.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-exists.html | Elasticsearch API documentation}
     */
-  async exists (this: That, params: T.IndicesExistsRequest | TB.IndicesExistsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsResponse>
-  async exists (this: That, params: T.IndicesExistsRequest | TB.IndicesExistsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsResponse, unknown>>
-  async exists (this: That, params: T.IndicesExistsRequest | TB.IndicesExistsRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsResponse>
-  async exists (this: That, params: T.IndicesExistsRequest | TB.IndicesExistsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async exists (this: That, params: T.IndicesExistsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsResponse>
+  async exists (this: That, params: T.IndicesExistsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsResponse, unknown>>
+  async exists (this: That, params: T.IndicesExistsRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsResponse>
+  async exists (this: That, params: T.IndicesExistsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.exists']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -770,18 +1895,31 @@ export default class Indices {
     * Check aliases. Check if one or more data stream or index aliases exist.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-exists-alias | Elasticsearch API documentation}
     */
-  async existsAlias (this: That, params: T.IndicesExistsAliasRequest | TB.IndicesExistsAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsAliasResponse>
-  async existsAlias (this: That, params: T.IndicesExistsAliasRequest | TB.IndicesExistsAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsAliasResponse, unknown>>
-  async existsAlias (this: That, params: T.IndicesExistsAliasRequest | TB.IndicesExistsAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsAliasResponse>
-  async existsAlias (this: That, params: T.IndicesExistsAliasRequest | TB.IndicesExistsAliasRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name', 'index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async existsAlias (this: That, params: T.IndicesExistsAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsAliasResponse>
+  async existsAlias (this: That, params: T.IndicesExistsAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsAliasResponse, unknown>>
+  async existsAlias (this: That, params: T.IndicesExistsAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsAliasResponse>
+  async existsAlias (this: That, params: T.IndicesExistsAliasRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.exists_alias']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -810,18 +1948,31 @@ export default class Indices {
     * Check index templates. Check whether index templates exist.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-exists-index-template | Elasticsearch API documentation}
     */
-  async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest | TB.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsIndexTemplateResponse>
-  async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest | TB.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsIndexTemplateResponse, unknown>>
-  async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest | TB.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsIndexTemplateResponse>
-  async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest | TB.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsIndexTemplateResponse>
+  async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsIndexTemplateResponse, unknown>>
+  async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsIndexTemplateResponse>
+  async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.exists_index_template']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -842,18 +1993,31 @@ export default class Indices {
     * Check existence of index templates. Get information about whether index templates exist. Index templates define settings, mappings, and aliases that can be applied automatically to new indices. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-template-exists-v1.html | Elasticsearch API documentation}
     */
-  async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest | TB.IndicesExistsTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsTemplateResponse>
-  async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest | TB.IndicesExistsTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsTemplateResponse, unknown>>
-  async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest | TB.IndicesExistsTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsTemplateResponse>
-  async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest | TB.IndicesExistsTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsTemplateResponse>
+  async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsTemplateResponse, unknown>>
+  async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsTemplateResponse>
+  async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.exists_template']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -874,18 +2038,31 @@ export default class Indices {
     * Get the status for a data stream lifecycle. Get information about an index or data stream's current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams-explain-lifecycle.html | Elasticsearch API documentation}
     */
-  async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest | TB.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExplainDataLifecycleResponse>
-  async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest | TB.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExplainDataLifecycleResponse, unknown>>
-  async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest | TB.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesExplainDataLifecycleResponse>
-  async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest | TB.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExplainDataLifecycleResponse>
+  async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExplainDataLifecycleResponse, unknown>>
+  async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesExplainDataLifecycleResponse>
+  async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.explain_data_lifecycle']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -906,18 +2083,31 @@ export default class Indices {
     * Get field usage stats. Get field usage information for each shard and field of an index. Field usage statistics are automatically captured when queries are running on a cluster. A shard-level search request that accesses a given field, even if multiple times during that request, is counted as a single use. The response body reports the per-shard usage count of the data structures that back the fields in the index. A given request will increment each count by a maximum value of 1, even if the request accesses the same field multiple times.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/field-usage-stats.html | Elasticsearch API documentation}
     */
-  async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest | TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesFieldUsageStatsResponse>
-  async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest | TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesFieldUsageStatsResponse, unknown>>
-  async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest | TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesFieldUsageStatsResponse>
-  async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest | TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesFieldUsageStatsResponse>
+  async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesFieldUsageStatsResponse, unknown>>
+  async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesFieldUsageStatsResponse>
+  async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.field_usage_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -938,19 +2128,32 @@ export default class Indices {
     * Flush data streams or indices. Flushing a data stream or index is the process of making sure that any data that is currently only stored in the transaction log is also permanently stored in the Lucene index. When restarting, Elasticsearch replays any unflushed operations from the transaction log into the Lucene index to bring it back into the state that it was in before the restart. Elasticsearch automatically triggers flushes as needed, using heuristics that trade off the size of the unflushed transaction log against the cost of performing each flush. After each operation has been flushed it is permanently stored in the Lucene index. This may mean that there is no need to maintain an additional copy of it in the transaction log. The transaction log is made up of multiple files, called generations, and Elasticsearch will delete any generation files when they are no longer needed, freeing up disk space. It is also possible to trigger a flush on one or more indices using the flush API, although it is rare for users to need to call this API directly. If you call the flush API after indexing some documents then a successful response indicates that Elasticsearch has flushed all the documents that were indexed before the flush API was called.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-flush.html | Elasticsearch API documentation}
     */
-  async flush (this: That, params?: T.IndicesFlushRequest | TB.IndicesFlushRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesFlushResponse>
-  async flush (this: That, params?: T.IndicesFlushRequest | TB.IndicesFlushRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesFlushResponse, unknown>>
-  async flush (this: That, params?: T.IndicesFlushRequest | TB.IndicesFlushRequest, options?: TransportRequestOptions): Promise<T.IndicesFlushResponse>
-  async flush (this: That, params?: T.IndicesFlushRequest | TB.IndicesFlushRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async flush (this: That, params?: T.IndicesFlushRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesFlushResponse>
+  async flush (this: That, params?: T.IndicesFlushRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesFlushResponse, unknown>>
+  async flush (this: That, params?: T.IndicesFlushRequest, options?: TransportRequestOptions): Promise<T.IndicesFlushResponse>
+  async flush (this: That, params?: T.IndicesFlushRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.flush']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -978,19 +2181,32 @@ export default class Indices {
     * Force a merge. Perform the force merge operation on the shards of one or more indices. For data streams, the API forces a merge on the shards of the stream's backing indices. Merging reduces the number of segments in each shard by merging some of them together and also frees up the space used by deleted documents. Merging normally happens automatically, but sometimes it is useful to trigger a merge manually. WARNING: We recommend force merging only a read-only index (meaning the index is no longer receiving writes). When documents are updated or deleted, the old version is not immediately removed but instead soft-deleted and marked with a "tombstone". These soft-deleted documents are automatically cleaned up during regular segment merges. But force merge can cause very large (greater than 5 GB) segments to be produced, which are not eligible for regular merges. So the number of soft-deleted documents can then grow rapidly, resulting in higher disk usage and worse search performance. If you regularly force merge an index receiving writes, this can also make snapshots more expensive, since the new documents can't be backed up incrementally. **Blocks during a force merge** Calls to this API block until the merge is complete (unless request contains `wait_for_completion=false`). If the client connection is lost before completion then the force merge process will continue in the background. Any new requests to force merge the same indices will also block until the ongoing force merge is complete. **Running force merge asynchronously** If the request contains `wait_for_completion=false`, Elasticsearch performs some preflight checks, launches the request, and returns a task you can use to get the status of the task. However, you can not cancel this task as the force merge task is not cancelable. Elasticsearch creates a record of this task as a document at `_tasks/<task_id>`. When you are done with a task, you should delete the task document so Elasticsearch can reclaim the space. **Force merging multiple indices** You can force merge multiple indices with a single request by targeting: * One or more data streams that contain multiple backing indices * Multiple indices * One or more aliases * All data streams and indices in a cluster Each targeted shard is force-merged separately using the force_merge threadpool. By default each node only has a single `force_merge` thread which means that the shards on that node are force-merged one at a time. If you expand the `force_merge` threadpool on a node then it will force merge its shards in parallel Force merge makes the storage for the shard being merged temporarily increase, as it may require free space up to triple its size in case `max_num_segments parameter` is set to `1`, to rewrite all segments into a new one. **Data streams and time-based indices** Force-merging is useful for managing a data stream's older backing indices and other time-based indices, particularly after a rollover. In these cases, each index only receives indexing traffic for a certain period of time. Once an index receive no more writes, its shards can be force-merged to a single segment. This can be a good idea because single-segment shards can sometimes use simpler and more efficient data structures to perform searches. For example: ``` POST /.ds-my-data-stream-2099.03.07-000001/_forcemerge?max_num_segments=1 ```
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-forcemerge.html | Elasticsearch API documentation}
     */
-  async forcemerge (this: That, params?: T.IndicesForcemergeRequest | TB.IndicesForcemergeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesForcemergeResponse>
-  async forcemerge (this: That, params?: T.IndicesForcemergeRequest | TB.IndicesForcemergeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesForcemergeResponse, unknown>>
-  async forcemerge (this: That, params?: T.IndicesForcemergeRequest | TB.IndicesForcemergeRequest, options?: TransportRequestOptions): Promise<T.IndicesForcemergeResponse>
-  async forcemerge (this: That, params?: T.IndicesForcemergeRequest | TB.IndicesForcemergeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async forcemerge (this: That, params?: T.IndicesForcemergeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesForcemergeResponse>
+  async forcemerge (this: That, params?: T.IndicesForcemergeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesForcemergeResponse, unknown>>
+  async forcemerge (this: That, params?: T.IndicesForcemergeRequest, options?: TransportRequestOptions): Promise<T.IndicesForcemergeResponse>
+  async forcemerge (this: That, params?: T.IndicesForcemergeRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.forcemerge']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1018,18 +2234,31 @@ export default class Indices {
     * Get index information. Get information about one or more indices. For data streams, the API returns information about the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-get-index.html | Elasticsearch API documentation}
     */
-  async get (this: That, params: T.IndicesGetRequest | TB.IndicesGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetResponse>
-  async get (this: That, params: T.IndicesGetRequest | TB.IndicesGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetResponse, unknown>>
-  async get (this: That, params: T.IndicesGetRequest | TB.IndicesGetRequest, options?: TransportRequestOptions): Promise<T.IndicesGetResponse>
-  async get (this: That, params: T.IndicesGetRequest | TB.IndicesGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async get (this: That, params: T.IndicesGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetResponse>
+  async get (this: That, params: T.IndicesGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetResponse, unknown>>
+  async get (this: That, params: T.IndicesGetRequest, options?: TransportRequestOptions): Promise<T.IndicesGetResponse>
+  async get (this: That, params: T.IndicesGetRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1050,19 +2279,32 @@ export default class Indices {
     * Get aliases. Retrieves information for one or more data stream or index aliases.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-get-alias.html | Elasticsearch API documentation}
     */
-  async getAlias (this: That, params?: T.IndicesGetAliasRequest | TB.IndicesGetAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetAliasResponse>
-  async getAlias (this: That, params?: T.IndicesGetAliasRequest | TB.IndicesGetAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetAliasResponse, unknown>>
-  async getAlias (this: That, params?: T.IndicesGetAliasRequest | TB.IndicesGetAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesGetAliasResponse>
-  async getAlias (this: That, params?: T.IndicesGetAliasRequest | TB.IndicesGetAliasRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name', 'index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getAlias (this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetAliasResponse>
+  async getAlias (this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetAliasResponse, unknown>>
+  async getAlias (this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesGetAliasResponse>
+  async getAlias (this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_alias']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1097,18 +2339,31 @@ export default class Indices {
     * Get data stream lifecycles. Get the data stream lifecycle configuration of one or more data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams-get-lifecycle.html | Elasticsearch API documentation}
     */
-  async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest | TB.IndicesGetDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataLifecycleResponse>
-  async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest | TB.IndicesGetDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataLifecycleResponse, unknown>>
-  async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest | TB.IndicesGetDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataLifecycleResponse>
-  async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest | TB.IndicesGetDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataLifecycleResponse>
+  async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataLifecycleResponse, unknown>>
+  async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataLifecycleResponse>
+  async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_data_lifecycle']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1129,19 +2384,32 @@ export default class Indices {
     * Get data stream lifecycle stats. Get statistics about the data streams that are managed by a data stream lifecycle.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams-get-lifecycle-stats.html | Elasticsearch API documentation}
     */
-  async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest | TB.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataLifecycleStatsResponse>
-  async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest | TB.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataLifecycleStatsResponse, unknown>>
-  async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest | TB.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataLifecycleStatsResponse>
-  async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest | TB.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataLifecycleStatsResponse>
+  async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataLifecycleStatsResponse, unknown>>
+  async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataLifecycleStatsResponse>
+  async getDataLifecycleStats (this: That, params?: T.IndicesGetDataLifecycleStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_data_lifecycle_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1159,19 +2427,32 @@ export default class Indices {
     * Get data streams. Get information about one or more data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-get-data-stream.html | Elasticsearch API documentation}
     */
-  async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest | TB.IndicesGetDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamResponse>
-  async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest | TB.IndicesGetDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataStreamResponse, unknown>>
-  async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest | TB.IndicesGetDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataStreamResponse>
-  async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest | TB.IndicesGetDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamResponse>
+  async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataStreamResponse, unknown>>
+  async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataStreamResponse>
+  async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_data_stream']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1199,19 +2480,32 @@ export default class Indices {
     * Returns the data stream options of the selected data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index.html | Elasticsearch API documentation}
     */
-  async getDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_data_stream_options']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }
@@ -1231,19 +2525,32 @@ export default class Indices {
     * Gets a data stream's settings
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams.html | Elasticsearch API documentation}
     */
-  async getDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_data_stream_settings']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }
@@ -1263,18 +2570,31 @@ export default class Indices {
     * Get mapping definitions. Retrieves mapping definitions for one or more fields. For data streams, the API retrieves field mappings for the stream’s backing indices. This API is useful if you don't need a complete mapping or if an index mapping contains a large number of fields.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-get-field-mapping.html | Elasticsearch API documentation}
     */
-  async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest | TB.IndicesGetFieldMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetFieldMappingResponse>
-  async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest | TB.IndicesGetFieldMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetFieldMappingResponse, unknown>>
-  async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest | TB.IndicesGetFieldMappingRequest, options?: TransportRequestOptions): Promise<T.IndicesGetFieldMappingResponse>
-  async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest | TB.IndicesGetFieldMappingRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['fields', 'index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetFieldMappingResponse>
+  async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetFieldMappingResponse, unknown>>
+  async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest, options?: TransportRequestOptions): Promise<T.IndicesGetFieldMappingResponse>
+  async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_field_mapping']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1303,19 +2623,32 @@ export default class Indices {
     * Get index templates. Get information about one or more index templates.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-get-template.html | Elasticsearch API documentation}
     */
-  async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest | TB.IndicesGetIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetIndexTemplateResponse>
-  async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest | TB.IndicesGetIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetIndexTemplateResponse, unknown>>
-  async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest | TB.IndicesGetIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesGetIndexTemplateResponse>
-  async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest | TB.IndicesGetIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetIndexTemplateResponse>
+  async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetIndexTemplateResponse, unknown>>
+  async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesGetIndexTemplateResponse>
+  async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_index_template']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1343,19 +2676,32 @@ export default class Indices {
     * Get mapping definitions. For data streams, the API retrieves mappings for the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-get-mapping.html | Elasticsearch API documentation}
     */
-  async getMapping (this: That, params?: T.IndicesGetMappingRequest | TB.IndicesGetMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetMappingResponse>
-  async getMapping (this: That, params?: T.IndicesGetMappingRequest | TB.IndicesGetMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetMappingResponse, unknown>>
-  async getMapping (this: That, params?: T.IndicesGetMappingRequest | TB.IndicesGetMappingRequest, options?: TransportRequestOptions): Promise<T.IndicesGetMappingResponse>
-  async getMapping (this: That, params?: T.IndicesGetMappingRequest | TB.IndicesGetMappingRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getMapping (this: That, params?: T.IndicesGetMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetMappingResponse>
+  async getMapping (this: That, params?: T.IndicesGetMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetMappingResponse, unknown>>
+  async getMapping (this: That, params?: T.IndicesGetMappingRequest, options?: TransportRequestOptions): Promise<T.IndicesGetMappingResponse>
+  async getMapping (this: That, params?: T.IndicesGetMappingRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_mapping']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1383,18 +2729,31 @@ export default class Indices {
     * Get the migration reindexing status. Get the status of a migration reindex attempt for a data stream or index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/migrate-data-stream.html | Elasticsearch API documentation}
     */
-  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest | TB.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetMigrateReindexStatusResponse>
-  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest | TB.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetMigrateReindexStatusResponse, unknown>>
-  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest | TB.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptions): Promise<T.IndicesGetMigrateReindexStatusResponse>
-  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest | TB.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetMigrateReindexStatusResponse>
+  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetMigrateReindexStatusResponse, unknown>>
+  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptions): Promise<T.IndicesGetMigrateReindexStatusResponse>
+  async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_migrate_reindex_status']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1415,19 +2774,32 @@ export default class Indices {
     * Get index settings. Get setting information for one or more indices. For data streams, it returns setting information for the stream's backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-get-settings.html | Elasticsearch API documentation}
     */
-  async getSettings (this: That, params?: T.IndicesGetSettingsRequest | TB.IndicesGetSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSettingsResponse>
-  async getSettings (this: That, params?: T.IndicesGetSettingsRequest | TB.IndicesGetSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetSettingsResponse, unknown>>
-  async getSettings (this: That, params?: T.IndicesGetSettingsRequest | TB.IndicesGetSettingsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetSettingsResponse>
-  async getSettings (this: That, params?: T.IndicesGetSettingsRequest | TB.IndicesGetSettingsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index', 'name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getSettings (this: That, params?: T.IndicesGetSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSettingsResponse>
+  async getSettings (this: That, params?: T.IndicesGetSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetSettingsResponse, unknown>>
+  async getSettings (this: That, params?: T.IndicesGetSettingsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetSettingsResponse>
+  async getSettings (this: That, params?: T.IndicesGetSettingsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_settings']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1462,19 +2834,32 @@ export default class Indices {
     * Get legacy index templates. Get information about one or more index templates. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-get-template-v1.html | Elasticsearch API documentation}
     */
-  async getTemplate (this: That, params?: T.IndicesGetTemplateRequest | TB.IndicesGetTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetTemplateResponse>
-  async getTemplate (this: That, params?: T.IndicesGetTemplateRequest | TB.IndicesGetTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetTemplateResponse, unknown>>
-  async getTemplate (this: That, params?: T.IndicesGetTemplateRequest | TB.IndicesGetTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesGetTemplateResponse>
-  async getTemplate (this: That, params?: T.IndicesGetTemplateRequest | TB.IndicesGetTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getTemplate (this: That, params?: T.IndicesGetTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetTemplateResponse>
+  async getTemplate (this: That, params?: T.IndicesGetTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetTemplateResponse, unknown>>
+  async getTemplate (this: That, params?: T.IndicesGetTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesGetTemplateResponse>
+  async getTemplate (this: That, params?: T.IndicesGetTemplateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.get_template']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1502,25 +2887,35 @@ export default class Indices {
     * Reindex legacy backing indices. Reindex all legacy backing indices for a data stream. This operation occurs in a persistent task. The persistent task ID is returned immediately and the reindexing work is completed in that task.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/migrate-data-stream.html | Elasticsearch API documentation}
     */
-  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest | TB.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesMigrateReindexResponse>
-  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest | TB.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesMigrateReindexResponse, unknown>>
-  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest | TB.IndicesMigrateReindexRequest, options?: TransportRequestOptions): Promise<T.IndicesMigrateReindexResponse>
-  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest | TB.IndicesMigrateReindexRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['reindex']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesMigrateReindexResponse>
+  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesMigrateReindexResponse, unknown>>
+  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptions): Promise<T.IndicesMigrateReindexResponse>
+  async migrateReindex (this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.migrate_reindex']
 
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1536,18 +2931,31 @@ export default class Indices {
     * Convert an index alias to a data stream. Converts an index alias to a data stream. You must have a matching index template that is data stream enabled. The alias must meet the following criteria: The alias must have a write index; All indices for the alias must have a `@timestamp` field mapping of a `date` or `date_nanos` field type; The alias must not have any filters; The alias must not use custom routing. If successful, the request removes the alias and creates a data stream with the same name. The indices for the alias become hidden backing indices for the stream. The write index for the alias becomes the write index for the stream.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-migrate-to-data-stream | Elasticsearch API documentation}
     */
-  async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest | TB.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesMigrateToDataStreamResponse>
-  async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest | TB.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesMigrateToDataStreamResponse, unknown>>
-  async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest | TB.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesMigrateToDataStreamResponse>
-  async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest | TB.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesMigrateToDataStreamResponse>
+  async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesMigrateToDataStreamResponse, unknown>>
+  async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesMigrateToDataStreamResponse>
+  async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.migrate_to_data_stream']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1568,20 +2976,27 @@ export default class Indices {
     * Update data streams. Performs one or more data stream modification actions in a single atomic operation.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-modify-data-stream | Elasticsearch API documentation}
     */
-  async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest | TB.IndicesModifyDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesModifyDataStreamResponse>
-  async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest | TB.IndicesModifyDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesModifyDataStreamResponse, unknown>>
-  async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest | TB.IndicesModifyDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesModifyDataStreamResponse>
-  async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest | TB.IndicesModifyDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['actions']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesModifyDataStreamResponse>
+  async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesModifyDataStreamResponse, unknown>>
+  async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesModifyDataStreamResponse>
+  async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.modify_data_stream']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1591,9 +3006,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1609,18 +3030,31 @@ export default class Indices {
     * Open a closed index. For data streams, the API opens any closed backing indices. A closed index is blocked for read/write operations and does not allow all operations that opened indices allow. It is not possible to index documents or to search for documents in a closed index. This allows closed indices to not have to maintain internal data structures for indexing or searching documents, resulting in a smaller overhead on the cluster. When opening or closing an index, the master is responsible for restarting the index shards to reflect the new state of the index. The shards will then go through the normal recovery process. The data of opened or closed indices is automatically replicated by the cluster to ensure that enough shard copies are safely kept around at all times. You can open and close multiple indices. An error is thrown if the request explicitly refers to a missing index. This behavior can be turned off by using the `ignore_unavailable=true` parameter. By default, you must explicitly name the indices you are opening or closing. To open or close indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`. This setting can also be changed with the cluster update settings API. Closed indices consume a significant amount of disk-space which can cause problems in managed environments. Closing indices can be turned off with the cluster settings API by setting `cluster.indices.close.enable` to `false`. Because opening or closing an index allocates its shards, the `wait_for_active_shards` setting on index creation applies to the `_open` and `_close` index actions as well.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-open-close.html | Elasticsearch API documentation}
     */
-  async open (this: That, params: T.IndicesOpenRequest | TB.IndicesOpenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesOpenResponse>
-  async open (this: That, params: T.IndicesOpenRequest | TB.IndicesOpenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesOpenResponse, unknown>>
-  async open (this: That, params: T.IndicesOpenRequest | TB.IndicesOpenRequest, options?: TransportRequestOptions): Promise<T.IndicesOpenResponse>
-  async open (this: That, params: T.IndicesOpenRequest | TB.IndicesOpenRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async open (this: That, params: T.IndicesOpenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesOpenResponse>
+  async open (this: That, params: T.IndicesOpenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesOpenResponse, unknown>>
+  async open (this: That, params: T.IndicesOpenRequest, options?: TransportRequestOptions): Promise<T.IndicesOpenResponse>
+  async open (this: That, params: T.IndicesOpenRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.open']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1641,18 +3075,31 @@ export default class Indices {
     * Promote a data stream. Promote a data stream from a replicated data stream managed by cross-cluster replication (CCR) to a regular data stream. With CCR auto following, a data stream from a remote cluster can be replicated to the local cluster. These data streams can't be rolled over in the local cluster. These replicated data streams roll over only if the upstream data stream rolls over. In the event that the remote cluster is no longer available, the data stream in the local cluster can be promoted to a regular data stream, which allows these data streams to be rolled over in the local cluster. NOTE: When promoting a data stream, ensure the local cluster has a data stream enabled index template that matches the data stream. If this is missing, the data stream will not be able to roll over until a matching index template is created. This will affect the lifecycle management of the data stream and interfere with the data stream size and retention.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-promote-data-stream | Elasticsearch API documentation}
     */
-  async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest | TB.IndicesPromoteDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPromoteDataStreamResponse>
-  async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest | TB.IndicesPromoteDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPromoteDataStreamResponse, unknown>>
-  async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest | TB.IndicesPromoteDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesPromoteDataStreamResponse>
-  async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest | TB.IndicesPromoteDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPromoteDataStreamResponse>
+  async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPromoteDataStreamResponse, unknown>>
+  async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesPromoteDataStreamResponse>
+  async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.promote_data_stream']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1673,20 +3120,27 @@ export default class Indices {
     * Create or update an alias. Adds a data stream or index to an alias.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-put-alias | Elasticsearch API documentation}
     */
-  async putAlias (this: That, params: T.IndicesPutAliasRequest | TB.IndicesPutAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutAliasResponse>
-  async putAlias (this: That, params: T.IndicesPutAliasRequest | TB.IndicesPutAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutAliasResponse, unknown>>
-  async putAlias (this: That, params: T.IndicesPutAliasRequest | TB.IndicesPutAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesPutAliasResponse>
-  async putAlias (this: That, params: T.IndicesPutAliasRequest | TB.IndicesPutAliasRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index', 'name']
-    const acceptedBody: string[] = ['filter', 'index_routing', 'is_write_index', 'routing', 'search_routing']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putAlias (this: That, params: T.IndicesPutAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutAliasResponse>
+  async putAlias (this: That, params: T.IndicesPutAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutAliasResponse, unknown>>
+  async putAlias (this: That, params: T.IndicesPutAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesPutAliasResponse>
+  async putAlias (this: That, params: T.IndicesPutAliasRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.put_alias']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1696,9 +3150,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1725,20 +3185,27 @@ export default class Indices {
     * Update data stream lifecycles. Update the data stream lifecycle of the specified data streams.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-put-data-lifecycle | Elasticsearch API documentation}
     */
-  async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest | TB.IndicesPutDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataLifecycleResponse>
-  async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest | TB.IndicesPutDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutDataLifecycleResponse, unknown>>
-  async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest | TB.IndicesPutDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesPutDataLifecycleResponse>
-  async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest | TB.IndicesPutDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['data_retention', 'downsampling', 'enabled']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataLifecycleResponse>
+  async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutDataLifecycleResponse, unknown>>
+  async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest, options?: TransportRequestOptions): Promise<T.IndicesPutDataLifecycleResponse>
+  async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.put_data_lifecycle']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1748,9 +3215,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1769,19 +3242,32 @@ export default class Indices {
     * Updates the data stream options of the selected data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index.html | Elasticsearch API documentation}
     */
-  async putDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async putDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putDataStreamOptions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.put_data_stream_options']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }
@@ -1801,19 +3287,32 @@ export default class Indices {
     * Updates a data stream's settings
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams.html | Elasticsearch API documentation}
     */
-  async putDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async putDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putDataStreamSettings (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.put_data_stream_settings']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         querystring[key] = params[key]
       }
     }
@@ -1833,20 +3332,27 @@ export default class Indices {
     * Create or update an index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices. Elasticsearch applies templates to new indices based on an wildcard pattern that matches the index name. Index templates are applied during data stream or index creation. For data streams, these settings and mappings are applied when the stream's backing indices are created. Settings and mappings specified in a create index API request override any settings or mappings specified in an index template. Changes to index templates do not affect existing indices, including the existing backing indices of a data stream. You can use C-style `/* *\/` block comments in index templates. You can include comments anywhere in the request body, except before the opening curly bracket. **Multiple matching templates** If multiple index templates match the name of a new index or data stream, the template with the highest priority is used. Multiple templates with overlapping index patterns at the same priority are not allowed and an error will be thrown when attempting to create a template matching an existing index template at identical priorities. **Composing aliases, mappings, and settings** When multiple component templates are specified in the `composed_of` field for an index template, they are merged in the order specified, meaning that later component templates override earlier component templates. Any mappings, settings, or aliases from the parent index template are merged in next. Finally, any configuration on the index request itself is merged. Mapping definitions are merged recursively, which means that later mapping components can introduce new field mappings and update the mapping configuration. If a field mapping is already contained in an earlier component, its definition will be completely overwritten by the later one. This recursive merging strategy applies not only to field mappings, but also root options like `dynamic_templates` and `meta`. If an earlier component contains a `dynamic_templates` block, then by default new `dynamic_templates` entries are appended onto the end. If an entry already exists with the same key, then it is overwritten by the new definition.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-put-index-template | Elasticsearch API documentation}
     */
-  async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest | TB.IndicesPutIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutIndexTemplateResponse>
-  async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest | TB.IndicesPutIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutIndexTemplateResponse, unknown>>
-  async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest | TB.IndicesPutIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesPutIndexTemplateResponse>
-  async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest | TB.IndicesPutIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta', 'allow_auto_create', 'ignore_missing_component_templates', 'deprecated']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutIndexTemplateResponse>
+  async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutIndexTemplateResponse, unknown>>
+  async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesPutIndexTemplateResponse>
+  async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.put_index_template']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1856,9 +3362,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1877,20 +3389,27 @@ export default class Indices {
     * Update field mappings. Add new fields to an existing data stream or index. You can also use this API to change the search settings of existing fields and add new properties to existing object fields. For data streams, these changes are applied to all backing indices by default. **Add multi-fields to an existing field** Multi-fields let you index the same field in different ways. You can use this API to update the fields mapping parameter and enable multi-fields for an existing field. WARNING: If an index (or data stream) contains documents when you add a multi-field, those documents will not have values for the new multi-field. You can populate the new multi-field with the update by query API. **Change supported mapping parameters for an existing field** The documentation for each mapping parameter indicates whether you can update it for an existing field using this API. For example, you can use the update mapping API to update the `ignore_above` parameter. **Change the mapping of an existing field** Except for supported mapping parameters, you can't change the mapping or field type of an existing field. Changing an existing field could invalidate data that's already indexed. If you need to change the mapping of a field in a data stream's backing indices, refer to documentation about modifying data streams. If you need to change the mapping of a field in other indices, create a new index with the correct mapping and reindex your data into that index. **Rename a field** Renaming a field would invalidate data already indexed under the old field name. Instead, add an alias field to create an alternate field name.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-put-mapping.html | Elasticsearch API documentation}
     */
-  async putMapping (this: That, params: T.IndicesPutMappingRequest | TB.IndicesPutMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutMappingResponse>
-  async putMapping (this: That, params: T.IndicesPutMappingRequest | TB.IndicesPutMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutMappingResponse, unknown>>
-  async putMapping (this: That, params: T.IndicesPutMappingRequest | TB.IndicesPutMappingRequest, options?: TransportRequestOptions): Promise<T.IndicesPutMappingResponse>
-  async putMapping (this: That, params: T.IndicesPutMappingRequest | TB.IndicesPutMappingRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['date_detection', 'dynamic', 'dynamic_date_formats', 'dynamic_templates', '_field_names', '_meta', 'numeric_detection', 'properties', '_routing', '_source', 'runtime']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putMapping (this: That, params: T.IndicesPutMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutMappingResponse>
+  async putMapping (this: That, params: T.IndicesPutMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutMappingResponse, unknown>>
+  async putMapping (this: That, params: T.IndicesPutMappingRequest, options?: TransportRequestOptions): Promise<T.IndicesPutMappingResponse>
+  async putMapping (this: That, params: T.IndicesPutMappingRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.put_mapping']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1900,9 +3419,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1921,25 +3446,35 @@ export default class Indices {
     * Update index settings. Changes dynamic index settings in real time. For data streams, index setting changes are applied to all backing indices by default. To revert a setting to the default value, use a null value. The list of per-index settings that can be updated dynamically on live indices can be found in index settings documentation. To preserve existing settings from being updated, set the `preserve_existing` parameter to `true`. There are multiple valid ways to represent index settings in the request body. You can specify only the setting, for example: ``` { "number_of_replicas": 1 } ``` Or you can use an `index` setting object: ``` { "index": { "number_of_replicas": 1 } } ``` Or you can use dot annotation: ``` { "index.number_of_replicas": 1 } ``` Or you can embed any of the aforementioned options in a `settings` object. For example: ``` { "settings": { "index": { "number_of_replicas": 1 } } } ``` NOTE: You can only define new analyzers on closed indices. To add an analyzer, you must close the index, define the analyzer, and reopen the index. You cannot close the write index of a data stream. To update the analyzer for a data stream's write index and future backing indices, update the analyzer in the index template used by the stream. Then roll over the data stream to apply the new analyzer to the stream's write index and future backing indices. This affects searches and any new data added to the stream after the rollover. However, it does not affect the data stream's backing indices or their existing data. To change the analyzer for existing backing indices, you must create a new data stream and reindex your data into it.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-update-settings.html | Elasticsearch API documentation}
     */
-  async putSettings (this: That, params: T.IndicesPutSettingsRequest | TB.IndicesPutSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutSettingsResponse>
-  async putSettings (this: That, params: T.IndicesPutSettingsRequest | TB.IndicesPutSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutSettingsResponse, unknown>>
-  async putSettings (this: That, params: T.IndicesPutSettingsRequest | TB.IndicesPutSettingsRequest, options?: TransportRequestOptions): Promise<T.IndicesPutSettingsResponse>
-  async putSettings (this: That, params: T.IndicesPutSettingsRequest | TB.IndicesPutSettingsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+  async putSettings (this: That, params: T.IndicesPutSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutSettingsResponse>
+  async putSettings (this: That, params: T.IndicesPutSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutSettingsResponse, unknown>>
+  async putSettings (this: That, params: T.IndicesPutSettingsRequest, options?: TransportRequestOptions): Promise<T.IndicesPutSettingsResponse>
+  async putSettings (this: That, params: T.IndicesPutSettingsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.put_settings']
 
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1965,20 +3500,27 @@ export default class Indices {
     * Create or update a legacy index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices. Elasticsearch applies templates to new indices based on an index pattern that matches the index name. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8. Composable templates always take precedence over legacy templates. If no composable template matches a new index, matching legacy templates are applied according to their order. Index templates are only applied during index creation. Changes to index templates do not affect existing indices. Settings and mappings specified in create index API requests override any settings or mappings specified in an index template. You can use C-style `/* *\/` block comments in index templates. You can include comments anywhere in the request body, except before the opening curly bracket. **Indices matching multiple templates** Multiple index templates can potentially match an index, in this case, both the settings and mappings are merged into the final configuration of the index. The order of the merging can be controlled using the order parameter, with lower order being applied first, and higher orders overriding them. NOTE: Multiple matching templates with the same order value will result in a non-deterministic merging order.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-templates-v1.html | Elasticsearch API documentation}
     */
-  async putTemplate (this: That, params: T.IndicesPutTemplateRequest | TB.IndicesPutTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutTemplateResponse>
-  async putTemplate (this: That, params: T.IndicesPutTemplateRequest | TB.IndicesPutTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutTemplateResponse, unknown>>
-  async putTemplate (this: That, params: T.IndicesPutTemplateRequest | TB.IndicesPutTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesPutTemplateResponse>
-  async putTemplate (this: That, params: T.IndicesPutTemplateRequest | TB.IndicesPutTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['aliases', 'index_patterns', 'mappings', 'order', 'settings', 'version']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putTemplate (this: That, params: T.IndicesPutTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutTemplateResponse>
+  async putTemplate (this: That, params: T.IndicesPutTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutTemplateResponse, unknown>>
+  async putTemplate (this: That, params: T.IndicesPutTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesPutTemplateResponse>
+  async putTemplate (this: That, params: T.IndicesPutTemplateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.put_template']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1988,9 +3530,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2009,19 +3557,32 @@ export default class Indices {
     * Get index recovery information. Get information about ongoing and completed shard recoveries for one or more indices. For data streams, the API returns information for the stream's backing indices. All recoveries, whether ongoing or complete, are kept in the cluster state and may be reported on at any time. Shard recovery is the process of initializing a shard copy, such as restoring a primary shard from a snapshot or creating a replica shard from a primary shard. When a shard recovery completes, the recovered shard is available for search and indexing. Recovery automatically occurs during the following processes: * When creating an index for the first time. * When a node rejoins the cluster and starts up any missing primary shard copies using the data that it holds in its data path. * Creation of new replica shard copies from the primary. * Relocation of a shard copy to a different node in the same cluster. * A snapshot restore operation. * A clone, shrink, or split operation. You can determine the cause of a shard recovery using the recovery or cat recovery APIs. The index recovery API reports information about completed recoveries only for shard copies that currently exist in the cluster. It only reports the last recovery for each shard copy and does not report historical information about earlier recoveries, nor does it report information about the recoveries of shard copies that no longer exist. This means that if a shard copy completes a recovery and then Elasticsearch relocates it onto a different node then the information about the original recovery will not be shown in the recovery API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-recovery.html | Elasticsearch API documentation}
     */
-  async recovery (this: That, params?: T.IndicesRecoveryRequest | TB.IndicesRecoveryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRecoveryResponse>
-  async recovery (this: That, params?: T.IndicesRecoveryRequest | TB.IndicesRecoveryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesRecoveryResponse, unknown>>
-  async recovery (this: That, params?: T.IndicesRecoveryRequest | TB.IndicesRecoveryRequest, options?: TransportRequestOptions): Promise<T.IndicesRecoveryResponse>
-  async recovery (this: That, params?: T.IndicesRecoveryRequest | TB.IndicesRecoveryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async recovery (this: That, params?: T.IndicesRecoveryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRecoveryResponse>
+  async recovery (this: That, params?: T.IndicesRecoveryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesRecoveryResponse, unknown>>
+  async recovery (this: That, params?: T.IndicesRecoveryRequest, options?: TransportRequestOptions): Promise<T.IndicesRecoveryResponse>
+  async recovery (this: That, params?: T.IndicesRecoveryRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.recovery']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2049,19 +3610,32 @@ export default class Indices {
     * Refresh an index. A refresh makes recent operations performed on one or more indices available for search. For data streams, the API runs the refresh operation on the stream’s backing indices. By default, Elasticsearch periodically refreshes indices every second, but only on indices that have received one search request or more in the last 30 seconds. You can change this default interval with the `index.refresh_interval` setting. Refresh requests are synchronous and do not return a response until the refresh operation completes. Refreshes are resource-intensive. To ensure good cluster performance, it's recommended to wait for Elasticsearch's periodic refresh rather than performing an explicit refresh when possible. If your application workflow indexes documents and then runs a search to retrieve the indexed document, it's recommended to use the index API's `refresh=wait_for` query parameter option. This option ensures the indexing operation waits for a periodic refresh before running the search.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-refresh.html | Elasticsearch API documentation}
     */
-  async refresh (this: That, params?: T.IndicesRefreshRequest | TB.IndicesRefreshRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRefreshResponse>
-  async refresh (this: That, params?: T.IndicesRefreshRequest | TB.IndicesRefreshRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesRefreshResponse, unknown>>
-  async refresh (this: That, params?: T.IndicesRefreshRequest | TB.IndicesRefreshRequest, options?: TransportRequestOptions): Promise<T.IndicesRefreshResponse>
-  async refresh (this: That, params?: T.IndicesRefreshRequest | TB.IndicesRefreshRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async refresh (this: That, params?: T.IndicesRefreshRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRefreshResponse>
+  async refresh (this: That, params?: T.IndicesRefreshRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesRefreshResponse, unknown>>
+  async refresh (this: That, params?: T.IndicesRefreshRequest, options?: TransportRequestOptions): Promise<T.IndicesRefreshResponse>
+  async refresh (this: That, params?: T.IndicesRefreshRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.refresh']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2089,18 +3663,31 @@ export default class Indices {
     * Reload search analyzers. Reload an index's search analyzers and their resources. For data streams, the API reloads search analyzers and resources for the stream's backing indices. IMPORTANT: After reloading the search analyzers you should clear the request cache to make sure it doesn't contain responses derived from the previous versions of the analyzer. You can use the reload search analyzers API to pick up changes to synonym files used in the `synonym_graph` or `synonym` token filter of a search analyzer. To be eligible, the token filter must have an `updateable` flag of `true` and only be used in search analyzers. NOTE: This API does not perform a reload for each shard of an index. Instead, it performs a reload for each node containing index shards. As a result, the total shard count returned by the API can differ from the number of index shards. Because reloading affects every node with an index shard, it is important to update the synonym file on every data node in the cluster--including nodes that don't contain a shard replica--before using this API. This ensures the synonym file is updated everywhere in the cluster in case shards are relocated in the future.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-reload-analyzers.html | Elasticsearch API documentation}
     */
-  async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest | TB.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesReloadSearchAnalyzersResponse>
-  async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest | TB.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesReloadSearchAnalyzersResponse, unknown>>
-  async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest | TB.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptions): Promise<T.IndicesReloadSearchAnalyzersResponse>
-  async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest | TB.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesReloadSearchAnalyzersResponse>
+  async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesReloadSearchAnalyzersResponse, unknown>>
+  async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptions): Promise<T.IndicesReloadSearchAnalyzersResponse>
+  async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.reload_search_analyzers']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2121,19 +3708,32 @@ export default class Indices {
     * Resolve the cluster. Resolve the specified index expressions to return information about each cluster, including the local "querying" cluster, if included. If no index expression is provided, the API will return information about all the remote clusters that are configured on the querying cluster. This endpoint is useful before doing a cross-cluster search in order to determine which remote clusters should be included in a search. You use the same index expression with this endpoint as you would for cross-cluster search. Index and cluster exclusions are also supported with this endpoint. For each cluster in the index expression, information is returned about: * Whether the querying ("local") cluster is currently connected to each remote cluster specified in the index expression. Note that this endpoint actively attempts to contact the remote clusters, unlike the `remote/info` endpoint. * Whether each remote cluster is configured with `skip_unavailable` as `true` or `false`. * Whether there are any indices, aliases, or data streams on that cluster that match the index expression. * Whether the search is likely to have errors returned when you do the cross-cluster search (including any authorization errors if you do not have permission to query the index). * Cluster version information, including the Elasticsearch server version. For example, `GET /_resolve/cluster/my-index-*,cluster*:my-index-*` returns information about the local cluster and all remotely configured clusters that start with the alias `cluster*`. Each cluster returns information about whether it has any indices, aliases or data streams that match `my-index-*`. ## Note on backwards compatibility The ability to query without an index expression was added in version 8.18, so when querying remote clusters older than that, the local cluster will send the index expression `dummy*` to those remote clusters. Thus, if an errors occur, you may see a reference to that index expression even though you didn't request it. If it causes a problem, you can instead include an index expression like `*:*` to bypass the issue. ## Advantages of using this endpoint before a cross-cluster search You may want to exclude a cluster or index from a search when: * A remote cluster is not currently connected and is configured with `skip_unavailable=false`. Running a cross-cluster search under those conditions will cause the entire search to fail. * A cluster has no matching indices, aliases or data streams for the index expression (or your user does not have permissions to search them). For example, suppose your index expression is `logs*,remote1:logs*` and the remote1 cluster has no indices, aliases or data streams that match `logs*`. In that case, that cluster will return no results from that cluster if you include it in a cross-cluster search. * The index expression (combined with any query parameters you specify) will likely cause an exception to be thrown when you do the search. In these cases, the "error" field in the `_resolve/cluster` response will be present. (This is also where security/permission errors will be shown.) * A remote cluster is an older version that does not support the feature you want to use in your search. ## Test availability of remote clusters The `remote/info` endpoint is commonly used to test whether the "local" cluster (the cluster being queried) is connected to its remote clusters, but it does not necessarily reflect whether the remote cluster is available or not. The remote cluster may be available, while the local cluster is not currently connected to it. You can use the `_resolve/cluster` API to attempt to reconnect to remote clusters. For example with `GET _resolve/cluster` or `GET _resolve/cluster/*:*`. The `connected` field in the response will indicate whether it was successful. If a connection was (re-)established, this will also cause the `remote/info` endpoint to now indicate a connected status.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-resolve-cluster-api.html | Elasticsearch API documentation}
     */
-  async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest | TB.IndicesResolveClusterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesResolveClusterResponse>
-  async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest | TB.IndicesResolveClusterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesResolveClusterResponse, unknown>>
-  async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest | TB.IndicesResolveClusterRequest, options?: TransportRequestOptions): Promise<T.IndicesResolveClusterResponse>
-  async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest | TB.IndicesResolveClusterRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesResolveClusterResponse>
+  async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesResolveClusterResponse, unknown>>
+  async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest, options?: TransportRequestOptions): Promise<T.IndicesResolveClusterResponse>
+  async resolveCluster (this: That, params?: T.IndicesResolveClusterRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.resolve_cluster']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2161,18 +3761,31 @@ export default class Indices {
     * Resolve indices. Resolve the names and/or index patterns for indices, aliases, and data streams. Multiple patterns and remote clusters are supported.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-resolve-index-api.html | Elasticsearch API documentation}
     */
-  async resolveIndex (this: That, params: T.IndicesResolveIndexRequest | TB.IndicesResolveIndexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesResolveIndexResponse>
-  async resolveIndex (this: That, params: T.IndicesResolveIndexRequest | TB.IndicesResolveIndexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesResolveIndexResponse, unknown>>
-  async resolveIndex (this: That, params: T.IndicesResolveIndexRequest | TB.IndicesResolveIndexRequest, options?: TransportRequestOptions): Promise<T.IndicesResolveIndexResponse>
-  async resolveIndex (this: That, params: T.IndicesResolveIndexRequest | TB.IndicesResolveIndexRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async resolveIndex (this: That, params: T.IndicesResolveIndexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesResolveIndexResponse>
+  async resolveIndex (this: That, params: T.IndicesResolveIndexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesResolveIndexResponse, unknown>>
+  async resolveIndex (this: That, params: T.IndicesResolveIndexRequest, options?: TransportRequestOptions): Promise<T.IndicesResolveIndexResponse>
+  async resolveIndex (this: That, params: T.IndicesResolveIndexRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.resolve_index']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2193,20 +3806,27 @@ export default class Indices {
     * Roll over to a new index. TIP: It is recommended to use the index lifecycle rollover action to automate rollovers. The rollover API creates a new index for a data stream or index alias. The API behavior depends on the rollover target. **Roll over a data stream** If you roll over a data stream, the API creates a new write index for the stream. The stream's previous write index becomes a regular backing index. A rollover also increments the data stream's generation. **Roll over an index alias with a write index** TIP: Prior to Elasticsearch 7.9, you'd typically use an index alias with a write index to manage time series data. Data streams replace this functionality, require less maintenance, and automatically integrate with data tiers. If an index alias points to multiple indices, one of the indices must be a write index. The rollover API creates a new write index for the alias with `is_write_index` set to `true`. The API also `sets is_write_index` to `false` for the previous write index. **Roll over an index alias with one index** If you roll over an index alias that points to only one index, the API creates a new index for the alias and removes the original index from the alias. NOTE: A rollover creates a new index and is subject to the `wait_for_active_shards` setting. **Increment index names for an alias** When you roll over an index alias, you can specify a name for the new index. If you don't specify a name and the current index ends with `-` and a number, such as `my-index-000001` or `my-index-3`, the new index name increments that number. For example, if you roll over an alias with a current index of `my-index-000001`, the rollover creates a new index named `my-index-000002`. This number is always six characters and zero-padded, regardless of the previous index's name. If you use an index alias for time series data, you can use date math in the index name to track the rollover date. For example, you can create an alias that points to an index named `<my-index-{now/d}-000001>`. If you create the index on May 6, 2099, the index's name is `my-index-2099.05.06-000001`. If you roll over the alias on May 7, 2099, the new index's name is `my-index-2099.05.07-000002`.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-rollover-index.html | Elasticsearch API documentation}
     */
-  async rollover (this: That, params: T.IndicesRolloverRequest | TB.IndicesRolloverRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRolloverResponse>
-  async rollover (this: That, params: T.IndicesRolloverRequest | TB.IndicesRolloverRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesRolloverResponse, unknown>>
-  async rollover (this: That, params: T.IndicesRolloverRequest | TB.IndicesRolloverRequest, options?: TransportRequestOptions): Promise<T.IndicesRolloverResponse>
-  async rollover (this: That, params: T.IndicesRolloverRequest | TB.IndicesRolloverRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['alias', 'new_index']
-    const acceptedBody: string[] = ['aliases', 'conditions', 'mappings', 'settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async rollover (this: That, params: T.IndicesRolloverRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRolloverResponse>
+  async rollover (this: That, params: T.IndicesRolloverRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesRolloverResponse, unknown>>
+  async rollover (this: That, params: T.IndicesRolloverRequest, options?: TransportRequestOptions): Promise<T.IndicesRolloverResponse>
+  async rollover (this: That, params: T.IndicesRolloverRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.rollover']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2216,9 +3836,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2245,19 +3871,32 @@ export default class Indices {
     * Get index segments. Get low-level information about the Lucene segments in index shards. For data streams, the API returns information about the stream's backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-segments.html | Elasticsearch API documentation}
     */
-  async segments (this: That, params?: T.IndicesSegmentsRequest | TB.IndicesSegmentsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSegmentsResponse>
-  async segments (this: That, params?: T.IndicesSegmentsRequest | TB.IndicesSegmentsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSegmentsResponse, unknown>>
-  async segments (this: That, params?: T.IndicesSegmentsRequest | TB.IndicesSegmentsRequest, options?: TransportRequestOptions): Promise<T.IndicesSegmentsResponse>
-  async segments (this: That, params?: T.IndicesSegmentsRequest | TB.IndicesSegmentsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async segments (this: That, params?: T.IndicesSegmentsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSegmentsResponse>
+  async segments (this: That, params?: T.IndicesSegmentsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSegmentsResponse, unknown>>
+  async segments (this: That, params?: T.IndicesSegmentsRequest, options?: TransportRequestOptions): Promise<T.IndicesSegmentsResponse>
+  async segments (this: That, params?: T.IndicesSegmentsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.segments']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2285,19 +3924,32 @@ export default class Indices {
     * Get index shard stores. Get store information about replica shards in one or more indices. For data streams, the API retrieves store information for the stream's backing indices. The index shard stores API returns the following information: * The node on which each replica shard exists. * The allocation ID for each replica shard. * A unique ID for each replica shard. * Any errors encountered while opening the shard index or from an earlier failure. By default, the API returns store information only for primary shards that are unassigned or have one or more unassigned replica shards.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-shards-stores.html | Elasticsearch API documentation}
     */
-  async shardStores (this: That, params?: T.IndicesShardStoresRequest | TB.IndicesShardStoresRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesShardStoresResponse>
-  async shardStores (this: That, params?: T.IndicesShardStoresRequest | TB.IndicesShardStoresRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesShardStoresResponse, unknown>>
-  async shardStores (this: That, params?: T.IndicesShardStoresRequest | TB.IndicesShardStoresRequest, options?: TransportRequestOptions): Promise<T.IndicesShardStoresResponse>
-  async shardStores (this: That, params?: T.IndicesShardStoresRequest | TB.IndicesShardStoresRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async shardStores (this: That, params?: T.IndicesShardStoresRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesShardStoresResponse>
+  async shardStores (this: That, params?: T.IndicesShardStoresRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesShardStoresResponse, unknown>>
+  async shardStores (this: That, params?: T.IndicesShardStoresRequest, options?: TransportRequestOptions): Promise<T.IndicesShardStoresResponse>
+  async shardStores (this: That, params?: T.IndicesShardStoresRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.shard_stores']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2325,20 +3977,27 @@ export default class Indices {
     * Shrink an index. Shrink an index into a new index with fewer primary shards. Before you can shrink an index: * The index must be read-only. * A copy of every shard in the index must reside on the same node. * The index must have a green health status. To make shard allocation easier, we recommend you also remove the index's replica shards. You can later re-add replica shards as part of the shrink operation. The requested number of primary shards in the target index must be a factor of the number of shards in the source index. For example an index with 8 primary shards can be shrunk into 4, 2 or 1 primary shards or an index with 15 primary shards can be shrunk into 5, 3 or 1. If the number of shards in the index is a prime number it can only be shrunk into a single primary shard Before shrinking, a (primary or replica) copy of every shard in the index must be present on the same node. The current write index on a data stream cannot be shrunk. In order to shrink the current write index, the data stream must first be rolled over so that a new write index is created and then the previous write index can be shrunk. A shrink operation: * Creates a new target index with the same definition as the source index, but with a smaller number of primary shards. * Hard-links segments from the source index into the target index. If the file system does not support hard-linking, then all segments are copied into the new index, which is a much more time consuming process. Also if using multiple data paths, shards on different data paths require a full copy of segment files if they are not on the same disk since hardlinks do not work across disks. * Recovers the target index as though it were a closed index which had just been re-opened. Recovers shards to the `.routing.allocation.initial_recovery._id` index setting. IMPORTANT: Indices can only be shrunk if they satisfy the following requirements: * The target index must not exist. * The source index must have more primary shards than the target index. * The number of primary shards in the target index must be a factor of the number of primary shards in the source index. The source index must have more primary shards than the target index. * The index must not contain more than 2,147,483,519 documents in total across all shards that will be shrunk into a single shard on the target index as this is the maximum number of docs that can fit into a single shard. * The node handling the shrink process must have sufficient free disk space to accommodate a second copy of the existing index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-shrink-index.html | Elasticsearch API documentation}
     */
-  async shrink (this: That, params: T.IndicesShrinkRequest | TB.IndicesShrinkRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesShrinkResponse>
-  async shrink (this: That, params: T.IndicesShrinkRequest | TB.IndicesShrinkRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesShrinkResponse, unknown>>
-  async shrink (this: That, params: T.IndicesShrinkRequest | TB.IndicesShrinkRequest, options?: TransportRequestOptions): Promise<T.IndicesShrinkResponse>
-  async shrink (this: That, params: T.IndicesShrinkRequest | TB.IndicesShrinkRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index', 'target']
-    const acceptedBody: string[] = ['aliases', 'settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async shrink (this: That, params: T.IndicesShrinkRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesShrinkResponse>
+  async shrink (this: That, params: T.IndicesShrinkRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesShrinkResponse, unknown>>
+  async shrink (this: That, params: T.IndicesShrinkRequest, options?: TransportRequestOptions): Promise<T.IndicesShrinkResponse>
+  async shrink (this: That, params: T.IndicesShrinkRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.shrink']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2348,9 +4007,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2370,18 +4035,31 @@ export default class Indices {
     * Simulate an index. Get the index configuration that would be applied to the specified index from an existing index template.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-simulate-index.html | Elasticsearch API documentation}
     */
-  async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest | TB.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSimulateIndexTemplateResponse>
-  async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest | TB.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSimulateIndexTemplateResponse, unknown>>
-  async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest | TB.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesSimulateIndexTemplateResponse>
-  async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest | TB.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSimulateIndexTemplateResponse>
+  async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSimulateIndexTemplateResponse, unknown>>
+  async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesSimulateIndexTemplateResponse>
+  async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.simulate_index_template']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2402,20 +4080,27 @@ export default class Indices {
     * Simulate an index template. Get the index configuration that would be applied by a particular index template.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-simulate-template.html | Elasticsearch API documentation}
     */
-  async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest | TB.IndicesSimulateTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSimulateTemplateResponse>
-  async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest | TB.IndicesSimulateTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSimulateTemplateResponse, unknown>>
-  async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest | TB.IndicesSimulateTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesSimulateTemplateResponse>
-  async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest | TB.IndicesSimulateTemplateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['allow_auto_create', 'index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta', 'ignore_missing_component_templates', 'deprecated']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSimulateTemplateResponse>
+  async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSimulateTemplateResponse, unknown>>
+  async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesSimulateTemplateResponse>
+  async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.simulate_template']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -2426,9 +4111,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2454,20 +4145,27 @@ export default class Indices {
     * Split an index. Split an index into a new index with more primary shards. * Before you can split an index: * The index must be read-only. * The cluster health status must be green. You can do make an index read-only with the following request using the add index block API: ``` PUT /my_source_index/_block/write ``` The current write index on a data stream cannot be split. In order to split the current write index, the data stream must first be rolled over so that a new write index is created and then the previous write index can be split. The number of times the index can be split (and the number of shards that each original shard can be split into) is determined by the `index.number_of_routing_shards` setting. The number of routing shards specifies the hashing space that is used internally to distribute documents across shards with consistent hashing. For instance, a 5 shard index with `number_of_routing_shards` set to 30 (5 x 2 x 3) could be split by a factor of 2 or 3. A split operation: * Creates a new target index with the same definition as the source index, but with a larger number of primary shards. * Hard-links segments from the source index into the target index. If the file system doesn't support hard-linking, all segments are copied into the new index, which is a much more time consuming process. * Hashes all documents again, after low level files are created, to delete documents that belong to a different shard. * Recovers the target index as though it were a closed index which had just been re-opened. IMPORTANT: Indices can only be split if they satisfy the following requirements: * The target index must not exist. * The source index must have fewer primary shards than the target index. * The number of primary shards in the target index must be a multiple of the number of primary shards in the source index. * The node handling the split process must have sufficient free disk space to accommodate a second copy of the existing index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-split-index.html | Elasticsearch API documentation}
     */
-  async split (this: That, params: T.IndicesSplitRequest | TB.IndicesSplitRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSplitResponse>
-  async split (this: That, params: T.IndicesSplitRequest | TB.IndicesSplitRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSplitResponse, unknown>>
-  async split (this: That, params: T.IndicesSplitRequest | TB.IndicesSplitRequest, options?: TransportRequestOptions): Promise<T.IndicesSplitResponse>
-  async split (this: That, params: T.IndicesSplitRequest | TB.IndicesSplitRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index', 'target']
-    const acceptedBody: string[] = ['aliases', 'settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async split (this: That, params: T.IndicesSplitRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSplitResponse>
+  async split (this: That, params: T.IndicesSplitRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSplitResponse, unknown>>
+  async split (this: That, params: T.IndicesSplitRequest, options?: TransportRequestOptions): Promise<T.IndicesSplitResponse>
+  async split (this: That, params: T.IndicesSplitRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.split']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -2477,9 +4175,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2499,19 +4203,32 @@ export default class Indices {
     * Get index statistics. For data streams, the API retrieves statistics for the stream's backing indices. By default, the returned statistics are index-level with `primaries` and `total` aggregations. `primaries` are the values for only the primary shards. `total` are the accumulated values for both primary and replica shards. To get shard-level statistics, set the `level` parameter to `shards`. NOTE: When moving to another node, the shard-level statistics for a shard are cleared. Although the shard is no longer part of the node, that node retains any node-level statistics to which the shard contributed.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-stats.html | Elasticsearch API documentation}
     */
-  async stats (this: That, params?: T.IndicesStatsRequest | TB.IndicesStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesStatsResponse>
-  async stats (this: That, params?: T.IndicesStatsRequest | TB.IndicesStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesStatsResponse, unknown>>
-  async stats (this: That, params?: T.IndicesStatsRequest | TB.IndicesStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesStatsResponse>
-  async stats (this: That, params?: T.IndicesStatsRequest | TB.IndicesStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['metric', 'index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async stats (this: That, params?: T.IndicesStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesStatsResponse>
+  async stats (this: That, params?: T.IndicesStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesStatsResponse, unknown>>
+  async stats (this: That, params?: T.IndicesStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesStatsResponse>
+  async stats (this: That, params?: T.IndicesStatsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2546,18 +4263,31 @@ export default class Indices {
     * Unfreeze an index. When a frozen index is unfrozen, the index goes through the normal recovery process and becomes writeable again.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/unfreeze-index-api.html | Elasticsearch API documentation}
     */
-  async unfreeze (this: That, params: T.IndicesUnfreezeRequest | TB.IndicesUnfreezeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesUnfreezeResponse>
-  async unfreeze (this: That, params: T.IndicesUnfreezeRequest | TB.IndicesUnfreezeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesUnfreezeResponse, unknown>>
-  async unfreeze (this: That, params: T.IndicesUnfreezeRequest | TB.IndicesUnfreezeRequest, options?: TransportRequestOptions): Promise<T.IndicesUnfreezeResponse>
-  async unfreeze (this: That, params: T.IndicesUnfreezeRequest | TB.IndicesUnfreezeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async unfreeze (this: That, params: T.IndicesUnfreezeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesUnfreezeResponse>
+  async unfreeze (this: That, params: T.IndicesUnfreezeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesUnfreezeResponse, unknown>>
+  async unfreeze (this: That, params: T.IndicesUnfreezeRequest, options?: TransportRequestOptions): Promise<T.IndicesUnfreezeResponse>
+  async unfreeze (this: That, params: T.IndicesUnfreezeRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['indices.unfreeze']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -2578,20 +4308,27 @@ export default class Indices {
     * Create or update an alias. Adds a data stream or index to an alias.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-update-aliases | Elasticsearch API documentation}
     */
-  async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest | TB.IndicesUpdateAliasesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesUpdateAliasesResponse>
-  async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest | TB.IndicesUpdateAliasesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesUpdateAliasesResponse, unknown>>
-  async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest | TB.IndicesUpdateAliasesRequest, options?: TransportRequestOptions): Promise<T.IndicesUpdateAliasesResponse>
-  async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest | TB.IndicesUpdateAliasesRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['actions']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesUpdateAliasesResponse>
+  async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesUpdateAliasesResponse, unknown>>
+  async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest, options?: TransportRequestOptions): Promise<T.IndicesUpdateAliasesResponse>
+  async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.update_aliases']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -2602,9 +4339,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -2620,20 +4363,27 @@ export default class Indices {
     * Validate a query. Validates a query without running it.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/search-validate.html | Elasticsearch API documentation}
     */
-  async validateQuery (this: That, params?: T.IndicesValidateQueryRequest | TB.IndicesValidateQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesValidateQueryResponse>
-  async validateQuery (this: That, params?: T.IndicesValidateQueryRequest | TB.IndicesValidateQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesValidateQueryResponse, unknown>>
-  async validateQuery (this: That, params?: T.IndicesValidateQueryRequest | TB.IndicesValidateQueryRequest, options?: TransportRequestOptions): Promise<T.IndicesValidateQueryResponse>
-  async validateQuery (this: That, params?: T.IndicesValidateQueryRequest | TB.IndicesValidateQueryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['query']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async validateQuery (this: That, params?: T.IndicesValidateQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesValidateQueryResponse>
+  async validateQuery (this: That, params?: T.IndicesValidateQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesValidateQueryResponse, unknown>>
+  async validateQuery (this: That, params?: T.IndicesValidateQueryRequest, options?: TransportRequestOptions): Promise<T.IndicesValidateQueryResponse>
+  async validateQuery (this: That, params?: T.IndicesValidateQueryRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['indices.validate_query']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     params = params ?? {}
@@ -2644,9 +4394,15 @@ export default class Indices {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

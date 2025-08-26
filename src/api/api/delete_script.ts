@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,25 +21,53 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  delete_script: {
+    path: [
+      'id'
+    ],
+    body: [],
+    query: [
+      'master_timeout',
+      'timeout'
+    ]
+  }
+}
 
 /**
   * Delete a script or search template. Deletes a stored script or search template.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-stored-script-api.html | Elasticsearch API documentation}
   */
-export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteScriptResponse>
-export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteScriptResponse, unknown>>
-export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptions): Promise<T.DeleteScriptResponse>
-export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['id']
-  const querystring: Record<string, any> = {}
-  const body = undefined
+export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteScriptResponse>
+export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteScriptResponse, unknown>>
+export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest, options?: TransportRequestOptions): Promise<T.DeleteScriptResponse>
+export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest, options?: TransportRequestOptions): Promise<any> {
+  const {
+    path: acceptedPath
+  } = acceptedParams.delete_script
+
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
+  }
 
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else if (key !== 'body' && key !== 'querystring') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,27 +21,74 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  termvectors: {
+    path: [
+      'index',
+      'id'
+    ],
+    body: [
+      'doc',
+      'filter',
+      'per_field_analyzer',
+      'fields',
+      'field_statistics',
+      'offsets',
+      'payloads',
+      'positions',
+      'term_statistics',
+      'routing',
+      'version',
+      'version_type'
+    ],
+    query: [
+      'fields',
+      'field_statistics',
+      'offsets',
+      'payloads',
+      'positions',
+      'preference',
+      'realtime',
+      'routing',
+      'term_statistics',
+      'version',
+      'version_type'
+    ]
+  }
+}
 
 /**
   * Get term vector information. Get information and statistics about terms in the fields of a particular document. You can retrieve term vectors for documents stored in the index or for artificial documents passed in the body of the request. You can specify the fields you are interested in through the `fields` parameter or by adding the fields to the request body. For example: ``` GET /my-index-000001/_termvectors/1?fields=message ``` Fields can be specified using wildcards, similar to the multi match query. Term vectors are real-time by default, not near real-time. This can be changed by setting `realtime` parameter to `false`. You can request three types of values: _term information_, _term statistics_, and _field statistics_. By default, all term information and field statistics are returned for all fields but term statistics are excluded. **Term information** * term frequency in the field (always returned) * term positions (`positions: true`) * start and end offsets (`offsets: true`) * term payloads (`payloads: true`), as base64 encoded bytes If the requested information wasn't stored in the index, it will be computed on the fly if possible. Additionally, term vectors could be computed for documents not even existing in the index, but instead provided by the user. > warn > Start and end offsets assume UTF-16 encoding is being used. If you want to use these offsets in order to get the original text that produced this token, you should make sure that the string you are taking a sub-string of is also encoded using UTF-16. **Behaviour** The term and field statistics are not accurate. Deleted documents are not taken into account. The information is only retrieved for the shard the requested document resides in. The term and field statistics are therefore only useful as relative measures whereas the absolute numbers have no meaning in this context. By default, when requesting term vectors of artificial documents, a shard to get the statistics from is randomly selected. Use `routing` only to hit a particular shard.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/docs-termvectors.html | Elasticsearch API documentation}
   */
-export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument> | TB.TermvectorsRequest<TDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.TermvectorsResponse>
-export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument> | TB.TermvectorsRequest<TDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TermvectorsResponse, unknown>>
-export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument> | TB.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): Promise<T.TermvectorsResponse>
-export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument> | TB.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['index', 'id']
-  const acceptedBody: string[] = ['doc', 'filter', 'per_field_analyzer', 'fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'term_statistics', 'routing', 'version', 'version_type']
-  const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
+export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.TermvectorsResponse>
+export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TermvectorsResponse, unknown>>
+export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): Promise<T.TermvectorsResponse>
+export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): Promise<any> {
+  const {
+    path: acceptedPath,
+    body: acceptedBody,
+    query: acceptedQuery
+  } = acceptedParams.termvectors
+
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
   }
 
   for (const key in params) {
@@ -65,9 +98,15 @@ export default async function TermvectorsApi<TDocument = unknown> (this: That, p
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
-      // @ts-expect-error
-      querystring[key] = params[key]
+    } else if (key !== 'body' && key !== 'querystring') {
+      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      } else {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     }
   }
 

@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,33 +21,63 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Simulate {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'simulate.ingest': {
+        path: [
+          'index'
+        ],
+        body: [
+          'docs',
+          'component_template_substitutions',
+          'index_template_substitutions',
+          'mapping_addition',
+          'pipeline_substitutions'
+        ],
+        query: [
+          'pipeline'
+        ]
+      }
+    }
   }
 
   /**
     * Simulate data ingestion. Run ingest pipelines against a set of provided documents, optionally with substitute pipeline definitions, to simulate ingesting data into an index. This API is meant to be used for troubleshooting or pipeline development, as it does not actually index any data into Elasticsearch. The API runs the default and final pipeline for that index against a set of documents provided in the body of the request. If a pipeline contains a reroute processor, it follows that reroute processor to the new index, running that index's pipelines as well the same way that a non-simulated ingest would. No data is indexed into Elasticsearch. Instead, the transformed document is returned, along with the list of pipelines that have been run and the name of the index where the document would have been indexed if this were not a simulation. The transformed document is validated against the mappings that would apply to this index, and any validation error is reported in the result. This API differs from the simulate pipeline API in that you specify a single pipeline for that API, and it runs only that one pipeline. The simulate pipeline API is more useful for developing a single pipeline, while the simulate ingest API is more useful for troubleshooting the interaction of the various pipelines that get applied when ingesting into an index. By default, the pipeline definitions that are currently in the system are used. However, you can supply substitute pipeline definitions in the body of the request. These will be used in place of the pipeline definitions that are already in the system. This can be used to replace existing pipeline definitions or to create new ones. The pipeline substitutions are used only within this request.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/simulate-ingest-api.html | Elasticsearch API documentation}
     */
-  async ingest (this: That, params: T.SimulateIngestRequest | TB.SimulateIngestRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SimulateIngestResponse>
-  async ingest (this: That, params: T.SimulateIngestRequest | TB.SimulateIngestRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SimulateIngestResponse, unknown>>
-  async ingest (this: That, params: T.SimulateIngestRequest | TB.SimulateIngestRequest, options?: TransportRequestOptions): Promise<T.SimulateIngestResponse>
-  async ingest (this: That, params: T.SimulateIngestRequest | TB.SimulateIngestRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['docs', 'component_template_substitutions', 'index_template_substitutions', 'mapping_addition', 'pipeline_substitutions']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async ingest (this: That, params: T.SimulateIngestRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SimulateIngestResponse>
+  async ingest (this: That, params: T.SimulateIngestRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SimulateIngestResponse, unknown>>
+  async ingest (this: That, params: T.SimulateIngestRequest, options?: TransportRequestOptions): Promise<T.SimulateIngestResponse>
+  async ingest (this: That, params: T.SimulateIngestRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['simulate.ingest']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -71,9 +87,15 @@ export default class Simulate {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

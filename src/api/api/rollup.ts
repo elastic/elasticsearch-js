@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,31 +21,128 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Rollup {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'rollup.delete_job': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'rollup.get_jobs': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'rollup.get_rollup_caps': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'rollup.get_rollup_index_caps': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: []
+      },
+      'rollup.put_job': {
+        path: [
+          'id'
+        ],
+        body: [
+          'cron',
+          'groups',
+          'index_pattern',
+          'metrics',
+          'page_size',
+          'rollup_index',
+          'timeout',
+          'headers'
+        ],
+        query: []
+      },
+      'rollup.rollup_search': {
+        path: [
+          'index'
+        ],
+        body: [
+          'aggregations',
+          'aggs',
+          'query',
+          'size'
+        ],
+        query: [
+          'rest_total_hits_as_int',
+          'typed_keys'
+        ]
+      },
+      'rollup.start_job': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'rollup.stop_job': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'timeout',
+          'wait_for_completion'
+        ]
+      }
+    }
   }
 
   /**
     * Delete a rollup job. A job must be stopped before it can be deleted. If you attempt to delete a started job, an error occurs. Similarly, if you attempt to delete a nonexistent job, an exception occurs. IMPORTANT: When you delete a job, you remove only the process that is actively monitoring and rolling up data. The API does not delete any previously rolled up data. This is by design; a user may wish to roll up a static data set. Because the data set is static, after it has been fully rolled up there is no need to keep the indexing rollup job around (as there will be no new data). Thus the job can be deleted, leaving behind the rolled up data for analysis. If you wish to also remove the rollup data and the rollup index contains the data for only a single job, you can delete the whole rollup index. If the rollup index stores data from several jobs, you must issue a delete-by-query that targets the rollup job's identifier in the rollup index. For example: ``` POST my_rollup_index/_delete_by_query { "query": { "term": { "_rollup.id": "the_rollup_job_id" } } } ```
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/rollup-delete-job.html | Elasticsearch API documentation}
     */
-  async deleteJob (this: That, params: T.RollupDeleteJobRequest | TB.RollupDeleteJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupDeleteJobResponse>
-  async deleteJob (this: That, params: T.RollupDeleteJobRequest | TB.RollupDeleteJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupDeleteJobResponse, unknown>>
-  async deleteJob (this: That, params: T.RollupDeleteJobRequest | TB.RollupDeleteJobRequest, options?: TransportRequestOptions): Promise<T.RollupDeleteJobResponse>
-  async deleteJob (this: That, params: T.RollupDeleteJobRequest | TB.RollupDeleteJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteJob (this: That, params: T.RollupDeleteJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupDeleteJobResponse>
+  async deleteJob (this: That, params: T.RollupDeleteJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupDeleteJobResponse, unknown>>
+  async deleteJob (this: That, params: T.RollupDeleteJobRequest, options?: TransportRequestOptions): Promise<T.RollupDeleteJobResponse>
+  async deleteJob (this: That, params: T.RollupDeleteJobRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['rollup.delete_job']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -80,19 +163,32 @@ export default class Rollup {
     * Get rollup job information. Get the configuration, stats, and status of rollup jobs. NOTE: This API returns only active (both `STARTED` and `STOPPED`) jobs. If a job was created, ran for a while, then was deleted, the API does not return any details about it. For details about a historical rollup job, the rollup capabilities API may be more useful.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/rollup-get-job.html | Elasticsearch API documentation}
     */
-  async getJobs (this: That, params?: T.RollupGetJobsRequest | TB.RollupGetJobsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetJobsResponse>
-  async getJobs (this: That, params?: T.RollupGetJobsRequest | TB.RollupGetJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetJobsResponse, unknown>>
-  async getJobs (this: That, params?: T.RollupGetJobsRequest | TB.RollupGetJobsRequest, options?: TransportRequestOptions): Promise<T.RollupGetJobsResponse>
-  async getJobs (this: That, params?: T.RollupGetJobsRequest | TB.RollupGetJobsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getJobs (this: That, params?: T.RollupGetJobsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetJobsResponse>
+  async getJobs (this: That, params?: T.RollupGetJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetJobsResponse, unknown>>
+  async getJobs (this: That, params?: T.RollupGetJobsRequest, options?: TransportRequestOptions): Promise<T.RollupGetJobsResponse>
+  async getJobs (this: That, params?: T.RollupGetJobsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['rollup.get_jobs']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -120,19 +216,32 @@ export default class Rollup {
     * Get the rollup job capabilities. Get the capabilities of any rollup jobs that have been configured for a specific index or index pattern. This API is useful because a rollup job is often configured to rollup only a subset of fields from the source index. Furthermore, only certain aggregations can be configured for various fields, leading to a limited subset of functionality depending on that configuration. This API enables you to inspect an index and determine: 1. Does this index have associated rollup data somewhere in the cluster? 2. If yes to the first question, what fields were rolled up, what aggregations can be performed, and where does the data live?
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/rollup-get-rollup-caps.html | Elasticsearch API documentation}
     */
-  async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest | TB.RollupGetRollupCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetRollupCapsResponse>
-  async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest | TB.RollupGetRollupCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetRollupCapsResponse, unknown>>
-  async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest | TB.RollupGetRollupCapsRequest, options?: TransportRequestOptions): Promise<T.RollupGetRollupCapsResponse>
-  async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest | TB.RollupGetRollupCapsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetRollupCapsResponse>
+  async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetRollupCapsResponse, unknown>>
+  async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest, options?: TransportRequestOptions): Promise<T.RollupGetRollupCapsResponse>
+  async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['rollup.get_rollup_caps']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -160,18 +269,31 @@ export default class Rollup {
     * Get the rollup index capabilities. Get the rollup capabilities of all jobs inside of a rollup index. A single rollup index may store the data for multiple rollup jobs and may have a variety of capabilities depending on those jobs. This API enables you to determine: * What jobs are stored in an index (or indices specified via a pattern)? * What target indices were rolled up, what fields were used in those rollups, and what aggregations can be performed on each job?
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/rollup-get-rollup-index-caps.html | Elasticsearch API documentation}
     */
-  async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest | TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetRollupIndexCapsResponse>
-  async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest | TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetRollupIndexCapsResponse, unknown>>
-  async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest | TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptions): Promise<T.RollupGetRollupIndexCapsResponse>
-  async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest | TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetRollupIndexCapsResponse>
+  async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetRollupIndexCapsResponse, unknown>>
+  async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptions): Promise<T.RollupGetRollupIndexCapsResponse>
+  async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['rollup.get_rollup_index_caps']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -192,20 +314,27 @@ export default class Rollup {
     * Create a rollup job. WARNING: From 8.15.0, calling this API in a cluster with no rollup usage will fail with a message about the deprecation and planned removal of rollup features. A cluster needs to contain either a rollup job or a rollup index in order for this API to be allowed to run. The rollup job configuration contains all the details about how the job should run, when it indexes documents, and what future queries will be able to run against the rollup index. There are three main sections to the job configuration: the logistical details about the job (for example, the cron schedule), the fields that are used for grouping, and what metrics to collect for each group. Jobs are created in a `STOPPED` state. You can start them with the start rollup jobs API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/rollup-put-job.html | Elasticsearch API documentation}
     */
-  async putJob (this: That, params: T.RollupPutJobRequest | TB.RollupPutJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupPutJobResponse>
-  async putJob (this: That, params: T.RollupPutJobRequest | TB.RollupPutJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupPutJobResponse, unknown>>
-  async putJob (this: That, params: T.RollupPutJobRequest | TB.RollupPutJobRequest, options?: TransportRequestOptions): Promise<T.RollupPutJobResponse>
-  async putJob (this: That, params: T.RollupPutJobRequest | TB.RollupPutJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['cron', 'groups', 'index_pattern', 'metrics', 'page_size', 'rollup_index', 'timeout', 'headers']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putJob (this: That, params: T.RollupPutJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupPutJobResponse>
+  async putJob (this: That, params: T.RollupPutJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupPutJobResponse, unknown>>
+  async putJob (this: That, params: T.RollupPutJobRequest, options?: TransportRequestOptions): Promise<T.RollupPutJobResponse>
+  async putJob (this: That, params: T.RollupPutJobRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['rollup.put_job']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -215,9 +344,15 @@ export default class Rollup {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -236,20 +371,27 @@ export default class Rollup {
     * Search rolled-up data. The rollup search endpoint is needed because, internally, rolled-up documents utilize a different document structure than the original data. It rewrites standard Query DSL into a format that matches the rollup documents then takes the response and rewrites it back to what a client would expect given the original query. The request body supports a subset of features from the regular search API. The following functionality is not available: `size`: Because rollups work on pre-aggregated data, no search hits can be returned and so size must be set to zero or omitted entirely. `highlighter`, `suggestors`, `post_filter`, `profile`, `explain`: These are similarly disallowed. **Searching both historical rollup and non-rollup data** The rollup search API has the capability to search across both "live" non-rollup data and the aggregated rollup data. This is done by simply adding the live indices to the URI. For example: ``` GET sensor-1,sensor_rollup/_rollup_search { "size": 0, "aggregations": { "max_temperature": { "max": { "field": "temperature" } } } } ``` The rollup search endpoint does two things when the search runs: * The original request is sent to the non-rollup index unaltered. * A rewritten version of the original request is sent to the rollup index. When the two responses are received, the endpoint rewrites the rollup response and merges the two together. During the merging process, if there is any overlap in buckets between the two responses, the buckets from the non-rollup index are used.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/rollup-search.html | Elasticsearch API documentation}
     */
-  async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupRollupSearchResponse<TDocument, TAggregations>>
-  async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupRollupSearchResponse<TDocument, TAggregations>, unknown>>
-  async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<T.RollupRollupSearchResponse<TDocument, TAggregations>>
-  async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['aggregations', 'aggs', 'query', 'size']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupRollupSearchResponse<TDocument, TAggregations>>
+  async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupRollupSearchResponse<TDocument, TAggregations>, unknown>>
+  async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<T.RollupRollupSearchResponse<TDocument, TAggregations>>
+  async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['rollup.rollup_search']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -259,9 +401,15 @@ export default class Rollup {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -280,18 +428,31 @@ export default class Rollup {
     * Start rollup jobs. If you try to start a job that does not exist, an exception occurs. If you try to start a job that is already started, nothing happens.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/rollup-start-job.html | Elasticsearch API documentation}
     */
-  async startJob (this: That, params: T.RollupStartJobRequest | TB.RollupStartJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupStartJobResponse>
-  async startJob (this: That, params: T.RollupStartJobRequest | TB.RollupStartJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupStartJobResponse, unknown>>
-  async startJob (this: That, params: T.RollupStartJobRequest | TB.RollupStartJobRequest, options?: TransportRequestOptions): Promise<T.RollupStartJobResponse>
-  async startJob (this: That, params: T.RollupStartJobRequest | TB.RollupStartJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async startJob (this: That, params: T.RollupStartJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupStartJobResponse>
+  async startJob (this: That, params: T.RollupStartJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupStartJobResponse, unknown>>
+  async startJob (this: That, params: T.RollupStartJobRequest, options?: TransportRequestOptions): Promise<T.RollupStartJobResponse>
+  async startJob (this: That, params: T.RollupStartJobRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['rollup.start_job']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -312,18 +473,31 @@ export default class Rollup {
     * Stop rollup jobs. If you try to stop a job that does not exist, an exception occurs. If you try to stop a job that is already stopped, nothing happens. Since only a stopped job can be deleted, it can be useful to block the API until the indexer has fully stopped. This is accomplished with the `wait_for_completion` query parameter, and optionally a timeout. For example: ``` POST _rollup/job/sensor/_stop?wait_for_completion=true&timeout=10s ``` The parameter blocks the API call from returning until either the job has moved to STOPPED or the specified time has elapsed. If the specified time elapses without the job moving to STOPPED, a timeout exception occurs.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/rollup-stop-job.html | Elasticsearch API documentation}
     */
-  async stopJob (this: That, params: T.RollupStopJobRequest | TB.RollupStopJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupStopJobResponse>
-  async stopJob (this: That, params: T.RollupStopJobRequest | TB.RollupStopJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupStopJobResponse, unknown>>
-  async stopJob (this: That, params: T.RollupStopJobRequest | TB.RollupStopJobRequest, options?: TransportRequestOptions): Promise<T.RollupStopJobResponse>
-  async stopJob (this: That, params: T.RollupStopJobRequest | TB.RollupStopJobRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async stopJob (this: That, params: T.RollupStopJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupStopJobResponse>
+  async stopJob (this: That, params: T.RollupStopJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupStopJobResponse, unknown>>
+  async stopJob (this: That, params: T.RollupStopJobRequest, options?: TransportRequestOptions): Promise<T.RollupStopJobResponse>
+  async stopJob (this: That, params: T.RollupStopJobRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['rollup.stop_job']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }

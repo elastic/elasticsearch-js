@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,27 +21,64 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  mtermvectors: {
+    path: [
+      'index'
+    ],
+    body: [
+      'docs',
+      'ids'
+    ],
+    query: [
+      'ids',
+      'fields',
+      'field_statistics',
+      'offsets',
+      'payloads',
+      'positions',
+      'preference',
+      'realtime',
+      'routing',
+      'term_statistics',
+      'version',
+      'version_type'
+    ]
+  }
+}
 
 /**
   * Get multiple term vectors. Get multiple term vectors with a single request. You can specify existing documents by index and ID or provide artificial documents in the body of the request. You can specify the index in the request body or request URI. The response contains a `docs` array with all the fetched termvectors. Each element has the structure provided by the termvectors API. **Artificial documents** You can also use `mtermvectors` to generate term vectors for artificial documents provided in the body of the request. The mapping used is determined by the specified `_index`.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/docs-multi-termvectors.html | Elasticsearch API documentation}
   */
-export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MtermvectorsResponse>
-export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MtermvectorsResponse, unknown>>
-export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptions): Promise<T.MtermvectorsResponse>
-export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['docs', 'ids']
-  const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
+export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MtermvectorsResponse>
+export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MtermvectorsResponse, unknown>>
+export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest, options?: TransportRequestOptions): Promise<T.MtermvectorsResponse>
+export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest, options?: TransportRequestOptions): Promise<any> {
+  const {
+    path: acceptedPath,
+    body: acceptedBody,
+    query: acceptedQuery
+  } = acceptedParams.mtermvectors
+
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
   }
 
   params = params ?? {}
@@ -66,9 +89,15 @@ export default async function MtermvectorsApi (this: That, params?: T.Mtermvecto
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
-      // @ts-expect-error
-      querystring[key] = params[key]
+    } else if (key !== 'body' && key !== 'querystring') {
+      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      } else {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     }
   }
 

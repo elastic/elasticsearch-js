@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,33 +21,117 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Esql {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'esql.async_query': {
+        path: [],
+        body: [
+          'columnar',
+          'filter',
+          'locale',
+          'params',
+          'profile',
+          'query',
+          'tables',
+          'include_ccs_metadata',
+          'wait_for_completion_timeout',
+          'keep_alive',
+          'keep_on_completion'
+        ],
+        query: [
+          'allow_partial_results',
+          'delimiter',
+          'drop_null_columns',
+          'format'
+        ]
+      },
+      'esql.async_query_delete': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: []
+      },
+      'esql.async_query_get': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'drop_null_columns',
+          'format',
+          'keep_alive',
+          'wait_for_completion_timeout'
+        ]
+      },
+      'esql.async_query_stop': {
+        path: [
+          'id'
+        ],
+        body: [],
+        query: [
+          'drop_null_columns'
+        ]
+      },
+      'esql.query': {
+        path: [],
+        body: [
+          'columnar',
+          'filter',
+          'locale',
+          'params',
+          'profile',
+          'query',
+          'tables',
+          'include_ccs_metadata'
+        ],
+        query: [
+          'format',
+          'delimiter',
+          'drop_null_columns',
+          'allow_partial_results'
+        ]
+      }
+    }
   }
 
   /**
     * Run an async ES|QL query. Asynchronously run an ES|QL (Elasticsearch query language) query, monitor its progress, and retrieve results when they become available. The API accepts the same parameters and request body as the synchronous query API, along with additional async related properties.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/esql-async-query-api.html | Elasticsearch API documentation}
     */
-  async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest | TB.EsqlAsyncQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryResponse>
-  async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest | TB.EsqlAsyncQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryResponse, unknown>>
-  async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest | TB.EsqlAsyncQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryResponse>
-  async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest | TB.EsqlAsyncQueryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata', 'wait_for_completion_timeout', 'keep_alive', 'keep_on_completion']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryResponse>
+  async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryResponse, unknown>>
+  async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryResponse>
+  async asyncQuery (this: That, params: T.EsqlAsyncQueryRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['esql.async_query']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -71,9 +141,15 @@ export default class Esql {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -89,18 +165,31 @@ export default class Esql {
     * Delete an async ES|QL query. If the query is still running, it is cancelled. Otherwise, the stored results are deleted. If the Elasticsearch security features are enabled, only the following users can use this API to delete a query: * The authenticated user that submitted the original query request * Users with the `cancel_task` cluster privilege
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/esql-async-query-delete-api.html | Elasticsearch API documentation}
     */
-  async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest | TB.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryDeleteResponse>
-  async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest | TB.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryDeleteResponse, unknown>>
-  async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest | TB.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryDeleteResponse>
-  async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest | TB.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryDeleteResponse>
+  async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryDeleteResponse, unknown>>
+  async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryDeleteResponse>
+  async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['esql.async_query_delete']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -121,18 +210,31 @@ export default class Esql {
     * Get async ES|QL query results. Get the current status and available results or stored results for an ES|QL asynchronous query. If the Elasticsearch security features are enabled, only the user who first submitted the ES|QL query can retrieve the results using this API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/esql-async-query-get-api.html | Elasticsearch API documentation}
     */
-  async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest | TB.EsqlAsyncQueryGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryGetResponse>
-  async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest | TB.EsqlAsyncQueryGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryGetResponse, unknown>>
-  async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest | TB.EsqlAsyncQueryGetRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryGetResponse>
-  async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest | TB.EsqlAsyncQueryGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryGetResponse>
+  async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryGetResponse, unknown>>
+  async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryGetResponse>
+  async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['esql.async_query_get']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -153,18 +255,31 @@ export default class Esql {
     * Stop async ES|QL query. This API interrupts the query execution and returns the results so far. If the Elasticsearch security features are enabled, only the user who first submitted the ES|QL query can stop it.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/esql-async-query-stop-api.html | Elasticsearch API documentation}
     */
-  async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest | TB.EsqlAsyncQueryStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryStopResponse>
-  async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest | TB.EsqlAsyncQueryStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryStopResponse, unknown>>
-  async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest | TB.EsqlAsyncQueryStopRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryStopResponse>
-  async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest | TB.EsqlAsyncQueryStopRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryStopResponse>
+  async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlAsyncQueryStopResponse, unknown>>
+  async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest, options?: TransportRequestOptions): Promise<T.EsqlAsyncQueryStopResponse>
+  async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['esql.async_query_stop']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -185,20 +300,27 @@ export default class Esql {
     * Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query language) query.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/esql-rest.html | Elasticsearch API documentation}
     */
-  async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlQueryResponse>
-  async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlQueryResponse, unknown>>
-  async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlQueryResponse>
-  async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlQueryResponse>
+  async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlQueryResponse, unknown>>
+  async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlQueryResponse>
+  async query (this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['esql.query']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -208,9 +330,15 @@ export default class Esql {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

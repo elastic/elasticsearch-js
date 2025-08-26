@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,38 +21,461 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Inference {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'inference.chat_completion_unified': {
+        path: [
+          'inference_id'
+        ],
+        body: [
+          'chat_completion_request'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.completion': {
+        path: [
+          'inference_id'
+        ],
+        body: [
+          'input',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.delete': {
+        path: [
+          'task_type',
+          'inference_id'
+        ],
+        body: [],
+        query: [
+          'dry_run',
+          'force'
+        ]
+      },
+      'inference.get': {
+        path: [
+          'task_type',
+          'inference_id'
+        ],
+        body: [],
+        query: []
+      },
+      'inference.inference': {
+        path: [
+          'task_type',
+          'inference_id'
+        ],
+        body: [
+          'query',
+          'input',
+          'input_type',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put': {
+        path: [
+          'task_type',
+          'inference_id'
+        ],
+        body: [
+          'inference_config'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_alibabacloud': {
+        path: [
+          'task_type',
+          'alibabacloud_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_amazonbedrock': {
+        path: [
+          'task_type',
+          'amazonbedrock_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_amazonsagemaker': {
+        path: [
+          'task_type',
+          'amazonsagemaker_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_anthropic': {
+        path: [
+          'task_type',
+          'anthropic_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_azureaistudio': {
+        path: [
+          'task_type',
+          'azureaistudio_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_azureopenai': {
+        path: [
+          'task_type',
+          'azureopenai_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_cohere': {
+        path: [
+          'task_type',
+          'cohere_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_custom': {
+        path: [
+          'task_type',
+          'custom_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: []
+      },
+      'inference.put_deepseek': {
+        path: [
+          'task_type',
+          'deepseek_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_elasticsearch': {
+        path: [
+          'task_type',
+          'elasticsearch_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_elser': {
+        path: [
+          'task_type',
+          'elser_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_googleaistudio': {
+        path: [
+          'task_type',
+          'googleaistudio_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_googlevertexai': {
+        path: [
+          'task_type',
+          'googlevertexai_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_hugging_face': {
+        path: [
+          'task_type',
+          'huggingface_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_jinaai': {
+        path: [
+          'task_type',
+          'jinaai_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_mistral': {
+        path: [
+          'task_type',
+          'mistral_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_openai': {
+        path: [
+          'task_type',
+          'openai_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_voyageai': {
+        path: [
+          'task_type',
+          'voyageai_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.put_watsonx': {
+        path: [
+          'task_type',
+          'watsonx_inference_id'
+        ],
+        body: [
+          'service',
+          'service_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.rerank': {
+        path: [
+          'inference_id'
+        ],
+        body: [
+          'query',
+          'input',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.sparse_embedding': {
+        path: [
+          'inference_id'
+        ],
+        body: [
+          'input',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.stream_completion': {
+        path: [
+          'inference_id'
+        ],
+        body: [
+          'input',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.text_embedding': {
+        path: [
+          'inference_id'
+        ],
+        body: [
+          'input',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.update': {
+        path: [
+          'inference_id',
+          'task_type'
+        ],
+        body: [
+          'inference_config'
+        ],
+        query: []
+      }
+    }
   }
 
   /**
     * Perform chat completion inference The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. It only works with the `chat_completion` task type for `openai` and `elastic` inference services. NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming. The Chat completion inference API and the Stream inference API differ in their response structure and capabilities. The Chat completion inference API provides more comprehensive customization options through more fields and function calling support. If you use the `openai`, `hugging_face` or the `elastic` service, use the Chat completion inference API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/chat-completion-inference-api.html | Elasticsearch API documentation}
     */
-  async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest | TB.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceChatCompletionUnifiedResponse>
-  async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest | TB.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceChatCompletionUnifiedResponse, unknown>>
-  async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest | TB.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptions): Promise<T.InferenceChatCompletionUnifiedResponse>
-  async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest | TB.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['inference_id']
-    const acceptedBody: string[] = ['chat_completion_request']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+  async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceChatCompletionUnifiedResponse>
+  async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceChatCompletionUnifiedResponse, unknown>>
+  async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptions): Promise<T.InferenceChatCompletionUnifiedResponse>
+  async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.chat_completion_unified']
 
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -85,20 +494,27 @@ export default class Inference {
     * Perform completion inference on the service
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/post-inference-api.html | Elasticsearch API documentation}
     */
-  async completion (this: That, params: T.InferenceCompletionRequest | TB.InferenceCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceCompletionResponse>
-  async completion (this: That, params: T.InferenceCompletionRequest | TB.InferenceCompletionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceCompletionResponse, unknown>>
-  async completion (this: That, params: T.InferenceCompletionRequest | TB.InferenceCompletionRequest, options?: TransportRequestOptions): Promise<T.InferenceCompletionResponse>
-  async completion (this: That, params: T.InferenceCompletionRequest | TB.InferenceCompletionRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['inference_id']
-    const acceptedBody: string[] = ['input', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async completion (this: That, params: T.InferenceCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceCompletionResponse>
+  async completion (this: That, params: T.InferenceCompletionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceCompletionResponse, unknown>>
+  async completion (this: That, params: T.InferenceCompletionRequest, options?: TransportRequestOptions): Promise<T.InferenceCompletionResponse>
+  async completion (this: That, params: T.InferenceCompletionRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.completion']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -108,9 +524,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -129,18 +551,31 @@ export default class Inference {
     * Delete an inference endpoint
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-inference-api.html | Elasticsearch API documentation}
     */
-  async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteResponse>
-  async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceDeleteResponse, unknown>>
-  async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<T.InferenceDeleteResponse>
-  async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'inference_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteResponse>
+  async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceDeleteResponse, unknown>>
+  async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<T.InferenceDeleteResponse>
+  async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['inference.delete']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -169,19 +604,32 @@ export default class Inference {
     * Get an inference endpoint
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-inference-api.html | Elasticsearch API documentation}
     */
-  async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetResponse>
-  async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceGetResponse, unknown>>
-  async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptions): Promise<T.InferenceGetResponse>
-  async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'inference_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetResponse>
+  async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceGetResponse, unknown>>
+  async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptions): Promise<T.InferenceGetResponse>
+  async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['inference.get']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -213,20 +661,27 @@ export default class Inference {
     * Perform inference on the service. This API enables you to use machine learning models to perform specific tasks on data that you provide as an input. It returns a response with the results of the tasks. The inference endpoint you use can perform one specific task that has been defined when the endpoint was created with the create inference API. For details about using this API with a service, such as Amazon Bedrock, Anthropic, or HuggingFace, refer to the service-specific documentation. > info > The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/post-inference-api.html | Elasticsearch API documentation}
     */
-  async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceInferenceResponse>
-  async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceInferenceResponse, unknown>>
-  async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<T.InferenceInferenceResponse>
-  async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'inference_id']
-    const acceptedBody: string[] = ['query', 'input', 'input_type', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceInferenceResponse>
+  async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceInferenceResponse, unknown>>
+  async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<T.InferenceInferenceResponse>
+  async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.inference']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -236,9 +691,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -265,25 +726,35 @@ export default class Inference {
     * Create an inference endpoint. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. The following integrations are available through the inference API. You can find the available task types next to the integration name: * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Amazon Bedrock (`completion`, `text_embedding`) * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Anthropic (`completion`) * Azure AI Studio (`completion`, `text_embedding`) * Azure OpenAI (`completion`, `text_embedding`) * Cohere (`completion`, `rerank`, `text_embedding`) * DeepSeek (`chat_completion`, `completion`) * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland) * ELSER (`sparse_embedding`) * Google AI Studio (`completion`, `text_embedding`) * Google Vertex AI (`chat_completion`, `completion`, `rerank`, `text_embedding`) * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`) * JinaAI (`rerank`, `text_embedding`) * Llama (`chat_completion`, `completion`, `text_embedding`) * Mistral (`chat_completion`, `completion`, `text_embedding`) * OpenAI (`chat_completion`, `completion`, `text_embedding`) * VoyageAI (`rerank`, `text_embedding`) * Watsonx inference integration (`text_embedding`)
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-inference-api.html | Elasticsearch API documentation}
     */
-  async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutResponse>
-  async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutResponse, unknown>>
-  async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptions): Promise<T.InferencePutResponse>
-  async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'inference_id']
-    const acceptedBody: string[] = ['inference_config']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+  async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutResponse>
+  async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutResponse, unknown>>
+  async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptions): Promise<T.InferencePutResponse>
+  async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put']
 
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -310,20 +781,27 @@ export default class Inference {
     * Create an AlibabaCloud AI Search inference endpoint. Create an inference endpoint to perform an inference task with the `alibabacloud-ai-search` service.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-alibabacloud-ai-search.html | Elasticsearch API documentation}
     */
-  async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest | TB.InferencePutAlibabacloudRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAlibabacloudResponse>
-  async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest | TB.InferencePutAlibabacloudRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAlibabacloudResponse, unknown>>
-  async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest | TB.InferencePutAlibabacloudRequest, options?: TransportRequestOptions): Promise<T.InferencePutAlibabacloudResponse>
-  async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest | TB.InferencePutAlibabacloudRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'alibabacloud_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAlibabacloudResponse>
+  async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAlibabacloudResponse, unknown>>
+  async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest, options?: TransportRequestOptions): Promise<T.InferencePutAlibabacloudResponse>
+  async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_alibabacloud']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -333,9 +811,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -355,20 +839,27 @@ export default class Inference {
     * Create an Amazon Bedrock inference endpoint. Create an inference endpoint to perform an inference task with the `amazonbedrock` service. >info > You need to provide the access and secret keys only once, during the inference model creation. The get inference API does not retrieve your access or secret keys. After creating the inference model, you cannot change the associated key pairs. If you want to use a different access and secret key pair, delete the inference model and recreate it with the same name and the updated keys.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-amazon-bedrock.html | Elasticsearch API documentation}
     */
-  async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest | TB.InferencePutAmazonbedrockRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAmazonbedrockResponse>
-  async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest | TB.InferencePutAmazonbedrockRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAmazonbedrockResponse, unknown>>
-  async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest | TB.InferencePutAmazonbedrockRequest, options?: TransportRequestOptions): Promise<T.InferencePutAmazonbedrockResponse>
-  async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest | TB.InferencePutAmazonbedrockRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'amazonbedrock_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAmazonbedrockResponse>
+  async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAmazonbedrockResponse, unknown>>
+  async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest, options?: TransportRequestOptions): Promise<T.InferencePutAmazonbedrockResponse>
+  async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_amazonbedrock']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -378,9 +869,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -400,20 +897,27 @@ export default class Inference {
     * Create an Amazon SageMaker inference endpoint. Create an inference endpoint to perform an inference task with the `amazon_sagemaker` service.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-amazonsagemaker | Elasticsearch API documentation}
     */
-  async putAmazonsagemaker (this: That, params: T.InferencePutAmazonsagemakerRequest | TB.InferencePutAmazonsagemakerRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAmazonsagemakerResponse>
-  async putAmazonsagemaker (this: That, params: T.InferencePutAmazonsagemakerRequest | TB.InferencePutAmazonsagemakerRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAmazonsagemakerResponse, unknown>>
-  async putAmazonsagemaker (this: That, params: T.InferencePutAmazonsagemakerRequest | TB.InferencePutAmazonsagemakerRequest, options?: TransportRequestOptions): Promise<T.InferencePutAmazonsagemakerResponse>
-  async putAmazonsagemaker (this: That, params: T.InferencePutAmazonsagemakerRequest | TB.InferencePutAmazonsagemakerRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'amazonsagemaker_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putAmazonsagemaker (this: That, params: T.InferencePutAmazonsagemakerRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAmazonsagemakerResponse>
+  async putAmazonsagemaker (this: That, params: T.InferencePutAmazonsagemakerRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAmazonsagemakerResponse, unknown>>
+  async putAmazonsagemaker (this: That, params: T.InferencePutAmazonsagemakerRequest, options?: TransportRequestOptions): Promise<T.InferencePutAmazonsagemakerResponse>
+  async putAmazonsagemaker (this: That, params: T.InferencePutAmazonsagemakerRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_amazonsagemaker']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -423,9 +927,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -445,20 +955,27 @@ export default class Inference {
     * Create an Anthropic inference endpoint. Create an inference endpoint to perform an inference task with the `anthropic` service.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-anthropic.html | Elasticsearch API documentation}
     */
-  async putAnthropic (this: That, params: T.InferencePutAnthropicRequest | TB.InferencePutAnthropicRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAnthropicResponse>
-  async putAnthropic (this: That, params: T.InferencePutAnthropicRequest | TB.InferencePutAnthropicRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAnthropicResponse, unknown>>
-  async putAnthropic (this: That, params: T.InferencePutAnthropicRequest | TB.InferencePutAnthropicRequest, options?: TransportRequestOptions): Promise<T.InferencePutAnthropicResponse>
-  async putAnthropic (this: That, params: T.InferencePutAnthropicRequest | TB.InferencePutAnthropicRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'anthropic_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putAnthropic (this: That, params: T.InferencePutAnthropicRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAnthropicResponse>
+  async putAnthropic (this: That, params: T.InferencePutAnthropicRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAnthropicResponse, unknown>>
+  async putAnthropic (this: That, params: T.InferencePutAnthropicRequest, options?: TransportRequestOptions): Promise<T.InferencePutAnthropicResponse>
+  async putAnthropic (this: That, params: T.InferencePutAnthropicRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_anthropic']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -468,9 +985,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -490,20 +1013,27 @@ export default class Inference {
     * Create an Azure AI studio inference endpoint. Create an inference endpoint to perform an inference task with the `azureaistudio` service.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-azure-ai-studio.html | Elasticsearch API documentation}
     */
-  async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest | TB.InferencePutAzureaistudioRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAzureaistudioResponse>
-  async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest | TB.InferencePutAzureaistudioRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAzureaistudioResponse, unknown>>
-  async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest | TB.InferencePutAzureaistudioRequest, options?: TransportRequestOptions): Promise<T.InferencePutAzureaistudioResponse>
-  async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest | TB.InferencePutAzureaistudioRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'azureaistudio_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAzureaistudioResponse>
+  async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAzureaistudioResponse, unknown>>
+  async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest, options?: TransportRequestOptions): Promise<T.InferencePutAzureaistudioResponse>
+  async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_azureaistudio']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -513,9 +1043,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -535,20 +1071,27 @@ export default class Inference {
     * Create an Azure OpenAI inference endpoint. Create an inference endpoint to perform an inference task with the `azureopenai` service. The list of chat completion models that you can choose from in your Azure OpenAI deployment include: * [GPT-4 and GPT-4 Turbo models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-4-and-gpt-4-turbo-models) * [GPT-3.5](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-35) The list of embeddings models that you can choose from in your deployment can be found in the [Azure models documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#embeddings).
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-azure-openai.html | Elasticsearch API documentation}
     */
-  async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest | TB.InferencePutAzureopenaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAzureopenaiResponse>
-  async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest | TB.InferencePutAzureopenaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAzureopenaiResponse, unknown>>
-  async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest | TB.InferencePutAzureopenaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutAzureopenaiResponse>
-  async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest | TB.InferencePutAzureopenaiRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'azureopenai_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAzureopenaiResponse>
+  async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAzureopenaiResponse, unknown>>
+  async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutAzureopenaiResponse>
+  async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_azureopenai']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -558,9 +1101,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -580,20 +1129,27 @@ export default class Inference {
     * Create a Cohere inference endpoint. Create an inference endpoint to perform an inference task with the `cohere` service.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-cohere.html | Elasticsearch API documentation}
     */
-  async putCohere (this: That, params: T.InferencePutCohereRequest | TB.InferencePutCohereRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutCohereResponse>
-  async putCohere (this: That, params: T.InferencePutCohereRequest | TB.InferencePutCohereRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutCohereResponse, unknown>>
-  async putCohere (this: That, params: T.InferencePutCohereRequest | TB.InferencePutCohereRequest, options?: TransportRequestOptions): Promise<T.InferencePutCohereResponse>
-  async putCohere (this: That, params: T.InferencePutCohereRequest | TB.InferencePutCohereRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'cohere_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putCohere (this: That, params: T.InferencePutCohereRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutCohereResponse>
+  async putCohere (this: That, params: T.InferencePutCohereRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutCohereResponse, unknown>>
+  async putCohere (this: That, params: T.InferencePutCohereRequest, options?: TransportRequestOptions): Promise<T.InferencePutCohereResponse>
+  async putCohere (this: That, params: T.InferencePutCohereRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_cohere']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -603,9 +1159,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -625,20 +1187,27 @@ export default class Inference {
     * Create a custom inference endpoint. The custom service gives more control over how to interact with external inference services that aren't explicitly supported through dedicated integrations. The custom service gives you the ability to define the headers, url, query parameters, request body, and secrets. The custom service supports the template replacement functionality, which enables you to define a template that can be replaced with the value associated with that key. Templates are portions of a string that start with `${` and end with `}`. The parameters `secret_parameters` and `task_settings` are checked for keys for template replacement. Template replacement is supported in the `request`, `headers`, `url`, and `query_parameters`. If the definition (key) is not found for a template, an error message is returned. In case of an endpoint definition like the following: ``` PUT _inference/text_embedding/test-text-embedding { "service": "custom", "service_settings": { "secret_parameters": { "api_key": "<some api key>" }, "url": "...endpoints.huggingface.cloud/v1/embeddings", "headers": { "Authorization": "Bearer ${api_key}", "Content-Type": "application/json" }, "request": "{\"input\": ${input}}", "response": { "json_parser": { "text_embeddings":"$.data[*].embedding[*]" } } } } ``` To replace `${api_key}` the `secret_parameters` and `task_settings` are checked for a key named `api_key`. > info > Templates should not be surrounded by quotes. Pre-defined templates: * `${input}` refers to the array of input strings that comes from the `input` field of the subsequent inference requests. * `${input_type}` refers to the input type translation values. * `${query}` refers to the query field used specifically for reranking tasks. * `${top_n}` refers to the `top_n` field available when performing rerank requests. * `${return_documents}` refers to the `return_documents` field available when performing rerank requests.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-custom | Elasticsearch API documentation}
     */
-  async putCustom (this: That, params: T.InferencePutCustomRequest | TB.InferencePutCustomRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutCustomResponse>
-  async putCustom (this: That, params: T.InferencePutCustomRequest | TB.InferencePutCustomRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutCustomResponse, unknown>>
-  async putCustom (this: That, params: T.InferencePutCustomRequest | TB.InferencePutCustomRequest, options?: TransportRequestOptions): Promise<T.InferencePutCustomResponse>
-  async putCustom (this: That, params: T.InferencePutCustomRequest | TB.InferencePutCustomRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'custom_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putCustom (this: That, params: T.InferencePutCustomRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutCustomResponse>
+  async putCustom (this: That, params: T.InferencePutCustomRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutCustomResponse, unknown>>
+  async putCustom (this: That, params: T.InferencePutCustomRequest, options?: TransportRequestOptions): Promise<T.InferencePutCustomResponse>
+  async putCustom (this: That, params: T.InferencePutCustomRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_custom']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -648,9 +1217,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -670,20 +1245,27 @@ export default class Inference {
     * Create a DeepSeek inference endpoint. Create an inference endpoint to perform an inference task with the `deepseek` service.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-deepseek.html | Elasticsearch API documentation}
     */
-  async putDeepseek (this: That, params: T.InferencePutDeepseekRequest | TB.InferencePutDeepseekRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutDeepseekResponse>
-  async putDeepseek (this: That, params: T.InferencePutDeepseekRequest | TB.InferencePutDeepseekRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutDeepseekResponse, unknown>>
-  async putDeepseek (this: That, params: T.InferencePutDeepseekRequest | TB.InferencePutDeepseekRequest, options?: TransportRequestOptions): Promise<T.InferencePutDeepseekResponse>
-  async putDeepseek (this: That, params: T.InferencePutDeepseekRequest | TB.InferencePutDeepseekRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'deepseek_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putDeepseek (this: That, params: T.InferencePutDeepseekRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutDeepseekResponse>
+  async putDeepseek (this: That, params: T.InferencePutDeepseekRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutDeepseekResponse, unknown>>
+  async putDeepseek (this: That, params: T.InferencePutDeepseekRequest, options?: TransportRequestOptions): Promise<T.InferencePutDeepseekResponse>
+  async putDeepseek (this: That, params: T.InferencePutDeepseekRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_deepseek']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -693,9 +1275,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -715,20 +1303,27 @@ export default class Inference {
     * Create an Elasticsearch inference endpoint. Create an inference endpoint to perform an inference task with the `elasticsearch` service. > info > Your Elasticsearch deployment contains preconfigured ELSER and E5 inference endpoints, you only need to create the enpoints using the API if you want to customize the settings. If you use the ELSER or the E5 model through the `elasticsearch` service, the API request will automatically download and deploy the model if it isn't downloaded yet. > info > You might see a 502 bad gateway error in the response when using the Kibana Console. This error usually just reflects a timeout, while the model downloads in the background. You can check the download progress in the Machine Learning UI. If using the Python client, you can set the timeout parameter to a higher value. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-elasticsearch.html | Elasticsearch API documentation}
     */
-  async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest | TB.InferencePutElasticsearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutElasticsearchResponse>
-  async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest | TB.InferencePutElasticsearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutElasticsearchResponse, unknown>>
-  async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest | TB.InferencePutElasticsearchRequest, options?: TransportRequestOptions): Promise<T.InferencePutElasticsearchResponse>
-  async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest | TB.InferencePutElasticsearchRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'elasticsearch_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutElasticsearchResponse>
+  async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutElasticsearchResponse, unknown>>
+  async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest, options?: TransportRequestOptions): Promise<T.InferencePutElasticsearchResponse>
+  async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_elasticsearch']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -738,9 +1333,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -760,20 +1361,27 @@ export default class Inference {
     * Create an ELSER inference endpoint. Create an inference endpoint to perform an inference task with the `elser` service. You can also deploy ELSER by using the Elasticsearch inference integration. > info > Your Elasticsearch deployment contains a preconfigured ELSER inference endpoint, you only need to create the enpoint using the API if you want to customize the settings. The API request will automatically download and deploy the ELSER model if it isn't already downloaded. > info > You might see a 502 bad gateway error in the response when using the Kibana Console. This error usually just reflects a timeout, while the model downloads in the background. You can check the download progress in the Machine Learning UI. If using the Python client, you can set the timeout parameter to a higher value. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-elser.html | Elasticsearch API documentation}
     */
-  async putElser (this: That, params: T.InferencePutElserRequest | TB.InferencePutElserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutElserResponse>
-  async putElser (this: That, params: T.InferencePutElserRequest | TB.InferencePutElserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutElserResponse, unknown>>
-  async putElser (this: That, params: T.InferencePutElserRequest | TB.InferencePutElserRequest, options?: TransportRequestOptions): Promise<T.InferencePutElserResponse>
-  async putElser (this: That, params: T.InferencePutElserRequest | TB.InferencePutElserRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'elser_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putElser (this: That, params: T.InferencePutElserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutElserResponse>
+  async putElser (this: That, params: T.InferencePutElserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutElserResponse, unknown>>
+  async putElser (this: That, params: T.InferencePutElserRequest, options?: TransportRequestOptions): Promise<T.InferencePutElserResponse>
+  async putElser (this: That, params: T.InferencePutElserRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_elser']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -783,9 +1391,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -805,20 +1419,27 @@ export default class Inference {
     * Create an Google AI Studio inference endpoint. Create an inference endpoint to perform an inference task with the `googleaistudio` service.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-google-ai-studio.html | Elasticsearch API documentation}
     */
-  async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest | TB.InferencePutGoogleaistudioRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutGoogleaistudioResponse>
-  async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest | TB.InferencePutGoogleaistudioRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutGoogleaistudioResponse, unknown>>
-  async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest | TB.InferencePutGoogleaistudioRequest, options?: TransportRequestOptions): Promise<T.InferencePutGoogleaistudioResponse>
-  async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest | TB.InferencePutGoogleaistudioRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'googleaistudio_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutGoogleaistudioResponse>
+  async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutGoogleaistudioResponse, unknown>>
+  async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest, options?: TransportRequestOptions): Promise<T.InferencePutGoogleaistudioResponse>
+  async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_googleaistudio']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -828,9 +1449,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -850,20 +1477,27 @@ export default class Inference {
     * Create a Google Vertex AI inference endpoint. Create an inference endpoint to perform an inference task with the `googlevertexai` service.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-google-vertex-ai.html | Elasticsearch API documentation}
     */
-  async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest | TB.InferencePutGooglevertexaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutGooglevertexaiResponse>
-  async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest | TB.InferencePutGooglevertexaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutGooglevertexaiResponse, unknown>>
-  async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest | TB.InferencePutGooglevertexaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutGooglevertexaiResponse>
-  async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest | TB.InferencePutGooglevertexaiRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'googlevertexai_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutGooglevertexaiResponse>
+  async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutGooglevertexaiResponse, unknown>>
+  async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutGooglevertexaiResponse>
+  async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_googlevertexai']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -873,9 +1507,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -895,20 +1535,27 @@ export default class Inference {
     * Create a Hugging Face inference endpoint. Create an inference endpoint to perform an inference task with the `hugging_face` service. Supported tasks include: `text_embedding`, `completion`, and `chat_completion`. To configure the endpoint, first visit the Hugging Face Inference Endpoints page and create a new endpoint. Select a model that supports the task you intend to use. For Elastic's `text_embedding` task: The selected model must support the `Sentence Embeddings` task. On the new endpoint creation page, select the `Sentence Embeddings` task under the `Advanced Configuration` section. After the endpoint has initialized, copy the generated endpoint URL. Recommended models for `text_embedding` task: * `all-MiniLM-L6-v2` * `all-MiniLM-L12-v2` * `all-mpnet-base-v2` * `e5-base-v2` * `e5-small-v2` * `multilingual-e5-base` * `multilingual-e5-small` For Elastic's `chat_completion` and `completion` tasks: The selected model must support the `Text Generation` task and expose OpenAI API. HuggingFace supports both serverless and dedicated endpoints for `Text Generation`. When creating dedicated endpoint select the `Text Generation` task. After the endpoint is initialized (for dedicated) or ready (for serverless), ensure it supports the OpenAI API and includes `/v1/chat/completions` part in URL. Then, copy the full endpoint URL for use. Recommended models for `chat_completion` and `completion` tasks: * `Mistral-7B-Instruct-v0.2` * `QwQ-32B` * `Phi-3-mini-128k-instruct` For Elastic's `rerank` task: The selected model must support the `sentence-ranking` task and expose OpenAI API. HuggingFace supports only dedicated (not serverless) endpoints for `Rerank` so far. After the endpoint is initialized, copy the full endpoint URL for use. Tested models for `rerank` task: * `bge-reranker-base` * `jina-reranker-v1-turbo-en-GGUF`
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-hugging-face.html | Elasticsearch API documentation}
     */
-  async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest | TB.InferencePutHuggingFaceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutHuggingFaceResponse>
-  async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest | TB.InferencePutHuggingFaceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutHuggingFaceResponse, unknown>>
-  async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest | TB.InferencePutHuggingFaceRequest, options?: TransportRequestOptions): Promise<T.InferencePutHuggingFaceResponse>
-  async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest | TB.InferencePutHuggingFaceRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'huggingface_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutHuggingFaceResponse>
+  async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutHuggingFaceResponse, unknown>>
+  async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest, options?: TransportRequestOptions): Promise<T.InferencePutHuggingFaceResponse>
+  async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_hugging_face']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -918,9 +1565,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -940,20 +1593,27 @@ export default class Inference {
     * Create an JinaAI inference endpoint. Create an inference endpoint to perform an inference task with the `jinaai` service. To review the available `rerank` models, refer to <https://jina.ai/reranker>. To review the available `text_embedding` models, refer to the <https://jina.ai/embeddings/>.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-jinaai.html | Elasticsearch API documentation}
     */
-  async putJinaai (this: That, params: T.InferencePutJinaaiRequest | TB.InferencePutJinaaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutJinaaiResponse>
-  async putJinaai (this: That, params: T.InferencePutJinaaiRequest | TB.InferencePutJinaaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutJinaaiResponse, unknown>>
-  async putJinaai (this: That, params: T.InferencePutJinaaiRequest | TB.InferencePutJinaaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutJinaaiResponse>
-  async putJinaai (this: That, params: T.InferencePutJinaaiRequest | TB.InferencePutJinaaiRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'jinaai_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putJinaai (this: That, params: T.InferencePutJinaaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutJinaaiResponse>
+  async putJinaai (this: That, params: T.InferencePutJinaaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutJinaaiResponse, unknown>>
+  async putJinaai (this: That, params: T.InferencePutJinaaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutJinaaiResponse>
+  async putJinaai (this: That, params: T.InferencePutJinaaiRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_jinaai']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -963,9 +1623,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -985,20 +1651,27 @@ export default class Inference {
     * Create a Mistral inference endpoint. Create an inference endpoint to perform an inference task with the `mistral` service.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-mistral.html | Elasticsearch API documentation}
     */
-  async putMistral (this: That, params: T.InferencePutMistralRequest | TB.InferencePutMistralRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutMistralResponse>
-  async putMistral (this: That, params: T.InferencePutMistralRequest | TB.InferencePutMistralRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutMistralResponse, unknown>>
-  async putMistral (this: That, params: T.InferencePutMistralRequest | TB.InferencePutMistralRequest, options?: TransportRequestOptions): Promise<T.InferencePutMistralResponse>
-  async putMistral (this: That, params: T.InferencePutMistralRequest | TB.InferencePutMistralRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'mistral_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putMistral (this: That, params: T.InferencePutMistralRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutMistralResponse>
+  async putMistral (this: That, params: T.InferencePutMistralRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutMistralResponse, unknown>>
+  async putMistral (this: That, params: T.InferencePutMistralRequest, options?: TransportRequestOptions): Promise<T.InferencePutMistralResponse>
+  async putMistral (this: That, params: T.InferencePutMistralRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_mistral']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1008,9 +1681,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1030,20 +1709,27 @@ export default class Inference {
     * Create an OpenAI inference endpoint. Create an inference endpoint to perform an inference task with the `openai` service or `openai` compatible APIs.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-openai.html | Elasticsearch API documentation}
     */
-  async putOpenai (this: That, params: T.InferencePutOpenaiRequest | TB.InferencePutOpenaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutOpenaiResponse>
-  async putOpenai (this: That, params: T.InferencePutOpenaiRequest | TB.InferencePutOpenaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutOpenaiResponse, unknown>>
-  async putOpenai (this: That, params: T.InferencePutOpenaiRequest | TB.InferencePutOpenaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutOpenaiResponse>
-  async putOpenai (this: That, params: T.InferencePutOpenaiRequest | TB.InferencePutOpenaiRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'openai_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putOpenai (this: That, params: T.InferencePutOpenaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutOpenaiResponse>
+  async putOpenai (this: That, params: T.InferencePutOpenaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutOpenaiResponse, unknown>>
+  async putOpenai (this: That, params: T.InferencePutOpenaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutOpenaiResponse>
+  async putOpenai (this: That, params: T.InferencePutOpenaiRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_openai']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1053,9 +1739,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1075,20 +1767,27 @@ export default class Inference {
     * Create a VoyageAI inference endpoint. Create an inference endpoint to perform an inference task with the `voyageai` service. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-voyageai.html | Elasticsearch API documentation}
     */
-  async putVoyageai (this: That, params: T.InferencePutVoyageaiRequest | TB.InferencePutVoyageaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutVoyageaiResponse>
-  async putVoyageai (this: That, params: T.InferencePutVoyageaiRequest | TB.InferencePutVoyageaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutVoyageaiResponse, unknown>>
-  async putVoyageai (this: That, params: T.InferencePutVoyageaiRequest | TB.InferencePutVoyageaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutVoyageaiResponse>
-  async putVoyageai (this: That, params: T.InferencePutVoyageaiRequest | TB.InferencePutVoyageaiRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'voyageai_inference_id']
-    const acceptedBody: string[] = ['chunking_settings', 'service', 'service_settings', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putVoyageai (this: That, params: T.InferencePutVoyageaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutVoyageaiResponse>
+  async putVoyageai (this: That, params: T.InferencePutVoyageaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutVoyageaiResponse, unknown>>
+  async putVoyageai (this: That, params: T.InferencePutVoyageaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutVoyageaiResponse>
+  async putVoyageai (this: That, params: T.InferencePutVoyageaiRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_voyageai']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1098,9 +1797,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1120,20 +1825,27 @@ export default class Inference {
     * Create a Watsonx inference endpoint. Create an inference endpoint to perform an inference task with the `watsonxai` service. You need an IBM Cloud Databases for Elasticsearch deployment to use the `watsonxai` inference service. You can provision one through the IBM catalog, the Cloud Databases CLI plug-in, the Cloud Databases API, or Terraform.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-watsonx-ai.html | Elasticsearch API documentation}
     */
-  async putWatsonx (this: That, params: T.InferencePutWatsonxRequest | TB.InferencePutWatsonxRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutWatsonxResponse>
-  async putWatsonx (this: That, params: T.InferencePutWatsonxRequest | TB.InferencePutWatsonxRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutWatsonxResponse, unknown>>
-  async putWatsonx (this: That, params: T.InferencePutWatsonxRequest | TB.InferencePutWatsonxRequest, options?: TransportRequestOptions): Promise<T.InferencePutWatsonxResponse>
-  async putWatsonx (this: That, params: T.InferencePutWatsonxRequest | TB.InferencePutWatsonxRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['task_type', 'watsonx_inference_id']
-    const acceptedBody: string[] = ['service', 'service_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putWatsonx (this: That, params: T.InferencePutWatsonxRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutWatsonxResponse>
+  async putWatsonx (this: That, params: T.InferencePutWatsonxRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutWatsonxResponse, unknown>>
+  async putWatsonx (this: That, params: T.InferencePutWatsonxRequest, options?: TransportRequestOptions): Promise<T.InferencePutWatsonxResponse>
+  async putWatsonx (this: That, params: T.InferencePutWatsonxRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.put_watsonx']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1143,9 +1855,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1165,20 +1883,27 @@ export default class Inference {
     * Perform reranking inference on the service
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/post-inference-api.html | Elasticsearch API documentation}
     */
-  async rerank (this: That, params: T.InferenceRerankRequest | TB.InferenceRerankRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceRerankResponse>
-  async rerank (this: That, params: T.InferenceRerankRequest | TB.InferenceRerankRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceRerankResponse, unknown>>
-  async rerank (this: That, params: T.InferenceRerankRequest | TB.InferenceRerankRequest, options?: TransportRequestOptions): Promise<T.InferenceRerankResponse>
-  async rerank (this: That, params: T.InferenceRerankRequest | TB.InferenceRerankRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['inference_id']
-    const acceptedBody: string[] = ['query', 'input', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async rerank (this: That, params: T.InferenceRerankRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceRerankResponse>
+  async rerank (this: That, params: T.InferenceRerankRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceRerankResponse, unknown>>
+  async rerank (this: That, params: T.InferenceRerankRequest, options?: TransportRequestOptions): Promise<T.InferenceRerankResponse>
+  async rerank (this: That, params: T.InferenceRerankRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.rerank']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1188,9 +1913,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1209,20 +1940,27 @@ export default class Inference {
     * Perform sparse embedding inference on the service
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/post-inference-api.html | Elasticsearch API documentation}
     */
-  async sparseEmbedding (this: That, params: T.InferenceSparseEmbeddingRequest | TB.InferenceSparseEmbeddingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceSparseEmbeddingResponse>
-  async sparseEmbedding (this: That, params: T.InferenceSparseEmbeddingRequest | TB.InferenceSparseEmbeddingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceSparseEmbeddingResponse, unknown>>
-  async sparseEmbedding (this: That, params: T.InferenceSparseEmbeddingRequest | TB.InferenceSparseEmbeddingRequest, options?: TransportRequestOptions): Promise<T.InferenceSparseEmbeddingResponse>
-  async sparseEmbedding (this: That, params: T.InferenceSparseEmbeddingRequest | TB.InferenceSparseEmbeddingRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['inference_id']
-    const acceptedBody: string[] = ['input', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async sparseEmbedding (this: That, params: T.InferenceSparseEmbeddingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceSparseEmbeddingResponse>
+  async sparseEmbedding (this: That, params: T.InferenceSparseEmbeddingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceSparseEmbeddingResponse, unknown>>
+  async sparseEmbedding (this: That, params: T.InferenceSparseEmbeddingRequest, options?: TransportRequestOptions): Promise<T.InferenceSparseEmbeddingResponse>
+  async sparseEmbedding (this: That, params: T.InferenceSparseEmbeddingRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.sparse_embedding']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1232,9 +1970,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1253,20 +1997,27 @@ export default class Inference {
     * Perform streaming inference. Get real-time responses for completion tasks by delivering answers incrementally, reducing response times during computation. This API works only with the completion task type. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege). You must use a client that supports streaming.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/stream-inference-api.html | Elasticsearch API documentation}
     */
-  async streamCompletion (this: That, params: T.InferenceStreamCompletionRequest | TB.InferenceStreamCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceStreamCompletionResponse>
-  async streamCompletion (this: That, params: T.InferenceStreamCompletionRequest | TB.InferenceStreamCompletionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceStreamCompletionResponse, unknown>>
-  async streamCompletion (this: That, params: T.InferenceStreamCompletionRequest | TB.InferenceStreamCompletionRequest, options?: TransportRequestOptions): Promise<T.InferenceStreamCompletionResponse>
-  async streamCompletion (this: That, params: T.InferenceStreamCompletionRequest | TB.InferenceStreamCompletionRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['inference_id']
-    const acceptedBody: string[] = ['input', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async streamCompletion (this: That, params: T.InferenceStreamCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceStreamCompletionResponse>
+  async streamCompletion (this: That, params: T.InferenceStreamCompletionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceStreamCompletionResponse, unknown>>
+  async streamCompletion (this: That, params: T.InferenceStreamCompletionRequest, options?: TransportRequestOptions): Promise<T.InferenceStreamCompletionResponse>
+  async streamCompletion (this: That, params: T.InferenceStreamCompletionRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.stream_completion']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1276,9 +2027,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1297,20 +2054,27 @@ export default class Inference {
     * Perform text embedding inference on the service
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/post-inference-api.html | Elasticsearch API documentation}
     */
-  async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest | TB.InferenceTextEmbeddingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceTextEmbeddingResponse>
-  async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest | TB.InferenceTextEmbeddingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceTextEmbeddingResponse, unknown>>
-  async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest | TB.InferenceTextEmbeddingRequest, options?: TransportRequestOptions): Promise<T.InferenceTextEmbeddingResponse>
-  async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest | TB.InferenceTextEmbeddingRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['inference_id']
-    const acceptedBody: string[] = ['input', 'task_settings']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceTextEmbeddingResponse>
+  async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceTextEmbeddingResponse, unknown>>
+  async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest, options?: TransportRequestOptions): Promise<T.InferenceTextEmbeddingResponse>
+  async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.text_embedding']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -1320,9 +2084,15 @@ export default class Inference {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -1341,25 +2111,35 @@ export default class Inference {
     * Update an inference endpoint. Modify `task_settings`, secrets (within `service_settings`), or `num_allocations` for an inference endpoint, depending on the specific endpoint service and `task_type`. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-inference-api.html | Elasticsearch API documentation}
     */
-  async update (this: That, params: T.InferenceUpdateRequest | TB.InferenceUpdateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceUpdateResponse>
-  async update (this: That, params: T.InferenceUpdateRequest | TB.InferenceUpdateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceUpdateResponse, unknown>>
-  async update (this: That, params: T.InferenceUpdateRequest | TB.InferenceUpdateRequest, options?: TransportRequestOptions): Promise<T.InferenceUpdateResponse>
-  async update (this: That, params: T.InferenceUpdateRequest | TB.InferenceUpdateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['inference_id', 'task_type']
-    const acceptedBody: string[] = ['inference_config']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+  async update (this: That, params: T.InferenceUpdateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceUpdateResponse>
+  async update (this: That, params: T.InferenceUpdateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceUpdateResponse, unknown>>
+  async update (this: That, params: T.InferenceUpdateRequest, options?: TransportRequestOptions): Promise<T.InferenceUpdateResponse>
+  async update (this: That, params: T.InferenceUpdateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['inference.update']
 
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

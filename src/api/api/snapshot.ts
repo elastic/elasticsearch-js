@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,31 +21,238 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Snapshot {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'snapshot.cleanup_repository': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'snapshot.clone': {
+        path: [
+          'repository',
+          'snapshot',
+          'target_snapshot'
+        ],
+        body: [
+          'indices'
+        ],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'snapshot.create': {
+        path: [
+          'repository',
+          'snapshot'
+        ],
+        body: [
+          'ignore_unavailable',
+          'include_global_state',
+          'indices',
+          'feature_states',
+          'metadata',
+          'partial'
+        ],
+        query: [
+          'master_timeout',
+          'wait_for_completion'
+        ]
+      },
+      'snapshot.create_repository': {
+        path: [
+          'name'
+        ],
+        body: [
+          'repository'
+        ],
+        query: [
+          'master_timeout',
+          'timeout',
+          'verify'
+        ]
+      },
+      'snapshot.delete': {
+        path: [
+          'repository',
+          'snapshot'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'wait_for_completion'
+        ]
+      },
+      'snapshot.delete_repository': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'snapshot.get': {
+        path: [
+          'repository',
+          'snapshot'
+        ],
+        body: [],
+        query: [
+          'ignore_unavailable',
+          'master_timeout',
+          'verbose',
+          'index_details',
+          'index_names',
+          'include_repository',
+          'sort',
+          'size',
+          'order',
+          'after',
+          'offset',
+          'from_sort_value',
+          'slm_policy_filter'
+        ]
+      },
+      'snapshot.get_repository': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'local',
+          'master_timeout'
+        ]
+      },
+      'snapshot.repository_analyze': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'blob_count',
+          'concurrency',
+          'detailed',
+          'early_read_node_count',
+          'max_blob_size',
+          'max_total_data_size',
+          'rare_action_probability',
+          'rarely_abort_writes',
+          'read_node_count',
+          'register_operation_count',
+          'seed',
+          'timeout'
+        ]
+      },
+      'snapshot.repository_verify_integrity': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'meta_thread_pool_concurrency',
+          'blob_thread_pool_concurrency',
+          'snapshot_verification_concurrency',
+          'index_verification_concurrency',
+          'index_snapshot_verification_concurrency',
+          'max_failed_shard_snapshots',
+          'verify_blob_contents',
+          'max_bytes_per_sec'
+        ]
+      },
+      'snapshot.restore': {
+        path: [
+          'repository',
+          'snapshot'
+        ],
+        body: [
+          'feature_states',
+          'ignore_index_settings',
+          'ignore_unavailable',
+          'include_aliases',
+          'include_global_state',
+          'index_settings',
+          'indices',
+          'partial',
+          'rename_pattern',
+          'rename_replacement'
+        ],
+        query: [
+          'master_timeout',
+          'wait_for_completion'
+        ]
+      },
+      'snapshot.status': {
+        path: [
+          'repository',
+          'snapshot'
+        ],
+        body: [],
+        query: [
+          'ignore_unavailable',
+          'master_timeout'
+        ]
+      },
+      'snapshot.verify_repository': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      }
+    }
   }
 
   /**
     * Clean up the snapshot repository. Trigger the review of the contents of a snapshot repository and delete any stale data not referenced by existing snapshots.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/clean-up-snapshot-repo-api.html | Elasticsearch API documentation}
     */
-  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCleanupRepositoryResponse>
-  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCleanupRepositoryResponse, unknown>>
-  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCleanupRepositoryResponse>
-  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCleanupRepositoryResponse>
+  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCleanupRepositoryResponse, unknown>>
+  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCleanupRepositoryResponse>
+  async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['snapshot.cleanup_repository']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -80,20 +273,27 @@ export default class Snapshot {
     * Clone a snapshot. Clone part of all of a snapshot into another snapshot in the same repository.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/clone-snapshot-api.html | Elasticsearch API documentation}
     */
-  async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCloneResponse>
-  async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCloneResponse, unknown>>
-  async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptions): Promise<T.SnapshotCloneResponse>
-  async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['repository', 'snapshot', 'target_snapshot']
-    const acceptedBody: string[] = ['indices']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async clone (this: That, params: T.SnapshotCloneRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCloneResponse>
+  async clone (this: That, params: T.SnapshotCloneRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCloneResponse, unknown>>
+  async clone (this: That, params: T.SnapshotCloneRequest, options?: TransportRequestOptions): Promise<T.SnapshotCloneResponse>
+  async clone (this: That, params: T.SnapshotCloneRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['snapshot.clone']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -103,9 +303,15 @@ export default class Snapshot {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -126,20 +332,27 @@ export default class Snapshot {
     * Create a snapshot. Take a snapshot of a cluster or of data streams and indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/create-snapshot-api.html | Elasticsearch API documentation}
     */
-  async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateResponse>
-  async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateResponse, unknown>>
-  async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptions): Promise<T.SnapshotCreateResponse>
-  async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedBody: string[] = ['ignore_unavailable', 'include_global_state', 'indices', 'feature_states', 'metadata', 'partial']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async create (this: That, params: T.SnapshotCreateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateResponse>
+  async create (this: That, params: T.SnapshotCreateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateResponse, unknown>>
+  async create (this: That, params: T.SnapshotCreateRequest, options?: TransportRequestOptions): Promise<T.SnapshotCreateResponse>
+  async create (this: That, params: T.SnapshotCreateRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['snapshot.create']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -149,9 +362,15 @@ export default class Snapshot {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -171,25 +390,35 @@ export default class Snapshot {
     * Create or update a snapshot repository. IMPORTANT: If you are migrating searchable snapshots, the repository name must be identical in the source and destination clusters. To register a snapshot repository, the cluster's global metadata must be writeable. Ensure there are no cluster blocks (for example, `cluster.blocks.read_only` and `clsuter.blocks.read_only_allow_delete` settings) that prevent write access.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-snapshots.html | Elasticsearch API documentation}
     */
-  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateRepositoryResponse>
-  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateRepositoryResponse, unknown>>
-  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCreateRepositoryResponse>
-  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['repository']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateRepositoryResponse>
+  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateRepositoryResponse, unknown>>
+  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCreateRepositoryResponse>
+  async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['snapshot.create_repository']
 
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -208,18 +437,31 @@ export default class Snapshot {
     * Delete snapshots.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-snapshot-api.html | Elasticsearch API documentation}
     */
-  async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteResponse>
-  async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteResponse, unknown>>
-  async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<T.SnapshotDeleteResponse>
-  async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['repository', 'snapshot']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async delete (this: That, params: T.SnapshotDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteResponse>
+  async delete (this: That, params: T.SnapshotDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteResponse, unknown>>
+  async delete (this: That, params: T.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<T.SnapshotDeleteResponse>
+  async delete (this: That, params: T.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['snapshot.delete']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -241,18 +483,31 @@ export default class Snapshot {
     * Delete snapshot repositories. When a repository is unregistered, Elasticsearch removes only the reference to the location where the repository is storing the snapshots. The snapshots themselves are left untouched and in place.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-snapshot-repo-api.html | Elasticsearch API documentation}
     */
-  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteRepositoryResponse>
-  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteRepositoryResponse, unknown>>
-  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotDeleteRepositoryResponse>
-  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteRepositoryResponse>
+  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteRepositoryResponse, unknown>>
+  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotDeleteRepositoryResponse>
+  async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['snapshot.delete_repository']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -273,18 +528,31 @@ export default class Snapshot {
     * Get snapshot information.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-snapshot-api.html | Elasticsearch API documentation}
     */
-  async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetResponse>
-  async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetResponse, unknown>>
-  async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetResponse>
-  async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['repository', 'snapshot']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async get (this: That, params: T.SnapshotGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetResponse>
+  async get (this: That, params: T.SnapshotGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetResponse, unknown>>
+  async get (this: That, params: T.SnapshotGetRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetResponse>
+  async get (this: That, params: T.SnapshotGetRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['snapshot.get']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -306,19 +574,32 @@ export default class Snapshot {
     * Get snapshot repository information.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-snapshot-repo-api.html | Elasticsearch API documentation}
     */
-  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetRepositoryResponse>
-  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetRepositoryResponse, unknown>>
-  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetRepositoryResponse>
-  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetRepositoryResponse>
+  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetRepositoryResponse, unknown>>
+  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetRepositoryResponse>
+  async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['snapshot.get_repository']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -346,18 +627,31 @@ export default class Snapshot {
     * Analyze a snapshot repository. Analyze the performance characteristics and any incorrect behaviour found in a repository. The response exposes implementation details of the analysis which may change from version to version. The response body format is therefore not considered stable and may be different in newer versions. There are a large number of third-party storage systems available, not all of which are suitable for use as a snapshot repository by Elasticsearch. Some storage systems behave incorrectly, or perform poorly, especially when accessed concurrently by multiple clients as the nodes of an Elasticsearch cluster do. This API performs a collection of read and write operations on your repository which are designed to detect incorrect behaviour and to measure the performance characteristics of your storage system. The default values for the parameters are deliberately low to reduce the impact of running an analysis inadvertently and to provide a sensible starting point for your investigations. Run your first analysis with the default parameter values to check for simple problems. If successful, run a sequence of increasingly large analyses until you encounter a failure or you reach a `blob_count` of at least `2000`, a `max_blob_size` of at least `2gb`, a `max_total_data_size` of at least `1tb`, and a `register_operation_count` of at least `100`. Always specify a generous timeout, possibly `1h` or longer, to allow time for each analysis to run to completion. Perform the analyses using a multi-node cluster of a similar size to your production cluster so that it can detect any problems that only arise when the repository is accessed by many nodes at once. If the analysis fails, Elasticsearch detected that your repository behaved unexpectedly. This usually means you are using a third-party storage system with an incorrect or incompatible implementation of the API it claims to support. If so, this storage system is not suitable for use as a snapshot repository. You will need to work with the supplier of your storage system to address the incompatibilities that Elasticsearch detects. If the analysis is successful, the API returns details of the testing process, optionally including how long each operation took. You can use this information to determine the performance of your storage system. If any operation fails or returns an incorrect result, the API returns an error. If the API returns an error, it may not have removed all the data it wrote to the repository. The error will indicate the location of any leftover data and this path is also recorded in the Elasticsearch logs. You should verify that this location has been cleaned up correctly. If there is still leftover data at the specified location, you should manually remove it. If the connection from your client to Elasticsearch is closed while the client is waiting for the result of the analysis, the test is cancelled. Some clients are configured to close their connection if no response is received within a certain timeout. An analysis takes a long time to complete so you might need to relax any such client-side timeouts. On cancellation the analysis attempts to clean up the data it was writing, but it may not be able to remove it all. The path to the leftover data is recorded in the Elasticsearch logs. You should verify that this location has been cleaned up correctly. If there is still leftover data at the specified location, you should manually remove it. If the analysis is successful then it detected no incorrect behaviour, but this does not mean that correct behaviour is guaranteed. The analysis attempts to detect common bugs but it does not offer 100% coverage. Additionally, it does not test the following: * Your repository must perform durable writes. Once a blob has been written it must remain in place until it is deleted, even after a power loss or similar disaster. * Your repository must not suffer from silent data corruption. Once a blob has been written, its contents must remain unchanged until it is deliberately modified or deleted. * Your repository must behave correctly even if connectivity from the cluster is disrupted. Reads and writes may fail in this case, but they must not return incorrect results. IMPORTANT: An analysis writes a substantial amount of data to your repository and then reads it back again. This consumes bandwidth on the network between the cluster and the repository, and storage space and I/O bandwidth on the repository itself. You must ensure this load does not affect other users of these systems. Analyses respect the repository settings `max_snapshot_bytes_per_sec` and `max_restore_bytes_per_sec` if available and the cluster setting `indices.recovery.max_bytes_per_sec` which you can use to limit the bandwidth they consume. NOTE: This API is intended for exploratory use by humans. You should expect the request parameters and the response format to vary in future versions. NOTE: Different versions of Elasticsearch may perform different checks for repository compatibility, with newer versions typically being stricter than older ones. A storage system that passes repository analysis with one version of Elasticsearch may fail with a different version. This indicates it behaves incorrectly in ways that the former version did not detect. You must work with the supplier of your storage system to address the incompatibilities detected by the repository analysis API in any version of Elasticsearch. NOTE: This API may not work correctly in a mixed-version cluster. *Implementation details* NOTE: This section of documentation describes how the repository analysis API works in this version of Elasticsearch, but you should expect the implementation to vary between versions. The request parameters and response format depend on details of the implementation so may also be different in newer versions. The analysis comprises a number of blob-level tasks, as set by the `blob_count` parameter and a number of compare-and-exchange operations on linearizable registers, as set by the `register_operation_count` parameter. These tasks are distributed over the data and master-eligible nodes in the cluster for execution. For most blob-level tasks, the executing node first writes a blob to the repository and then instructs some of the other nodes in the cluster to attempt to read the data it just wrote. The size of the blob is chosen randomly, according to the `max_blob_size` and `max_total_data_size` parameters. If any of these reads fails then the repository does not implement the necessary read-after-write semantics that Elasticsearch requires. For some blob-level tasks, the executing node will instruct some of its peers to attempt to read the data before the writing process completes. These reads are permitted to fail, but must not return partial data. If any read returns partial data then the repository does not implement the necessary atomicity semantics that Elasticsearch requires. For some blob-level tasks, the executing node will overwrite the blob while its peers are reading it. In this case the data read may come from either the original or the overwritten blob, but the read operation must not return partial data or a mix of data from the two blobs. If any of these reads returns partial data or a mix of the two blobs then the repository does not implement the necessary atomicity semantics that Elasticsearch requires for overwrites. The executing node will use a variety of different methods to write the blob. For instance, where applicable, it will use both single-part and multi-part uploads. Similarly, the reading nodes will use a variety of different methods to read the data back again. For instance they may read the entire blob from start to end or may read only a subset of the data. For some blob-level tasks, the executing node will cancel the write before it is complete. In this case, it still instructs some of the other nodes in the cluster to attempt to read the blob but all of these reads must fail to find the blob. Linearizable registers are special blobs that Elasticsearch manipulates using an atomic compare-and-exchange operation. This operation ensures correct and strongly-consistent behavior even when the blob is accessed by multiple nodes at the same time. The detailed implementation of the compare-and-exchange operation on linearizable registers varies by repository type. Repository analysis verifies that that uncontended compare-and-exchange operations on a linearizable register blob always succeed. Repository analysis also verifies that contended operations either succeed or report the contention but do not return incorrect results. If an operation fails due to contention, Elasticsearch retries the operation until it succeeds. Most of the compare-and-exchange operations performed by repository analysis atomically increment a counter which is represented as an 8-byte blob. Some operations also verify the behavior on small blobs with sizes other than 8 bytes.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/repo-analysis-api.html | Elasticsearch API documentation}
     */
-  async repositoryAnalyze (this: That, params: T.SnapshotRepositoryAnalyzeRequest | TB.SnapshotRepositoryAnalyzeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRepositoryAnalyzeResponse>
-  async repositoryAnalyze (this: That, params: T.SnapshotRepositoryAnalyzeRequest | TB.SnapshotRepositoryAnalyzeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRepositoryAnalyzeResponse, unknown>>
-  async repositoryAnalyze (this: That, params: T.SnapshotRepositoryAnalyzeRequest | TB.SnapshotRepositoryAnalyzeRequest, options?: TransportRequestOptions): Promise<T.SnapshotRepositoryAnalyzeResponse>
-  async repositoryAnalyze (this: That, params: T.SnapshotRepositoryAnalyzeRequest | TB.SnapshotRepositoryAnalyzeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async repositoryAnalyze (this: That, params: T.SnapshotRepositoryAnalyzeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRepositoryAnalyzeResponse>
+  async repositoryAnalyze (this: That, params: T.SnapshotRepositoryAnalyzeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRepositoryAnalyzeResponse, unknown>>
+  async repositoryAnalyze (this: That, params: T.SnapshotRepositoryAnalyzeRequest, options?: TransportRequestOptions): Promise<T.SnapshotRepositoryAnalyzeResponse>
+  async repositoryAnalyze (this: That, params: T.SnapshotRepositoryAnalyzeRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['snapshot.repository_analyze']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -378,18 +672,31 @@ export default class Snapshot {
     * Verify the repository integrity. Verify the integrity of the contents of a snapshot repository. This API enables you to perform a comprehensive check of the contents of a repository, looking for any anomalies in its data or metadata which might prevent you from restoring snapshots from the repository or which might cause future snapshot create or delete operations to fail. If you suspect the integrity of the contents of one of your snapshot repositories, cease all write activity to this repository immediately, set its `read_only` option to `true`, and use this API to verify its integrity. Until you do so: * It may not be possible to restore some snapshots from this repository. * Searchable snapshots may report errors when searched or may have unassigned shards. * Taking snapshots into this repository may fail or may appear to succeed but have created a snapshot which cannot be restored. * Deleting snapshots from this repository may fail or may appear to succeed but leave the underlying data on disk. * Continuing to write to the repository while it is in an invalid state may causing additional damage to its contents. If the API finds any problems with the integrity of the contents of your repository, Elasticsearch will not be able to repair the damage. The only way to bring the repository back into a fully working state after its contents have been damaged is by restoring its contents from a repository backup which was taken before the damage occurred. You must also identify what caused the damage and take action to prevent it from happening again. If you cannot restore a repository backup, register a new repository and use this for all future snapshot operations. In some cases it may be possible to recover some of the contents of a damaged repository, either by restoring as many of its snapshots as needed and taking new snapshots of the restored data, or by using the reindex API to copy data from any searchable snapshots mounted from the damaged repository. Avoid all operations which write to the repository while the verify repository integrity API is running. If something changes the repository contents while an integrity verification is running then Elasticsearch may incorrectly report having detected some anomalies in its contents due to the concurrent writes. It may also incorrectly fail to report some anomalies that the concurrent writes prevented it from detecting. NOTE: This API is intended for exploratory use by humans. You should expect the request parameters and the response format to vary in future versions. NOTE: This API may not work correctly in a mixed-version cluster.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/verify-repo-integrity-api.html | Elasticsearch API documentation}
     */
-  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest | TB.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRepositoryVerifyIntegrityResponse>
-  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest | TB.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRepositoryVerifyIntegrityResponse, unknown>>
-  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest | TB.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptions): Promise<T.SnapshotRepositoryVerifyIntegrityResponse>
-  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest | TB.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRepositoryVerifyIntegrityResponse>
+  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRepositoryVerifyIntegrityResponse, unknown>>
+  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptions): Promise<T.SnapshotRepositoryVerifyIntegrityResponse>
+  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['snapshot.repository_verify_integrity']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -410,20 +717,27 @@ export default class Snapshot {
     * Restore a snapshot. Restore a snapshot of a cluster or data streams and indices. You can restore a snapshot only to a running cluster with an elected master node. The snapshot repository must be registered and available to the cluster. The snapshot and cluster versions must be compatible. To restore a snapshot, the cluster's global metadata must be writable. Ensure there are't any cluster blocks that prevent writes. The restore operation ignores index blocks. Before you restore a data stream, ensure the cluster contains a matching index template with data streams enabled. To check, use the index management feature in Kibana or the get index template API: ``` GET _index_template/*?filter_path=index_templates.name,index_templates.index_template.index_patterns,index_templates.index_template.data_stream ``` If no such template exists, you can create one or restore a cluster state that contains one. Without a matching index template, a data stream can't roll over or create backing indices. If your snapshot contains data from App Search or Workplace Search, you must restore the Enterprise Search encryption key before you restore the snapshot.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/restore-snapshot-api.html | Elasticsearch API documentation}
     */
-  async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRestoreResponse>
-  async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRestoreResponse, unknown>>
-  async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptions): Promise<T.SnapshotRestoreResponse>
-  async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedBody: string[] = ['feature_states', 'ignore_index_settings', 'ignore_unavailable', 'include_aliases', 'include_global_state', 'index_settings', 'indices', 'partial', 'rename_pattern', 'rename_replacement']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async restore (this: That, params: T.SnapshotRestoreRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRestoreResponse>
+  async restore (this: That, params: T.SnapshotRestoreRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRestoreResponse, unknown>>
+  async restore (this: That, params: T.SnapshotRestoreRequest, options?: TransportRequestOptions): Promise<T.SnapshotRestoreResponse>
+  async restore (this: That, params: T.SnapshotRestoreRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['snapshot.restore']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -433,9 +747,15 @@ export default class Snapshot {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -455,19 +775,32 @@ export default class Snapshot {
     * Get the snapshot status. Get a detailed description of the current state for each shard participating in the snapshot. Note that this API should be used only to obtain detailed shard-level information for ongoing snapshots. If this detail is not needed or you want to obtain information about one or more existing snapshots, use the get snapshot API. WARNING: Using the API to return the status of any snapshots other than currently running snapshots can be expensive. The API requires a read from the repository for each shard in each snapshot. For example, if you have 100 snapshots with 1,000 shards each, an API request that includes all snapshots will require 100,000 reads (100 snapshots x 1,000 shards). Depending on the latency of your storage, such requests can take an extremely long time to return results. These requests can also tax machine resources and, when using cloud storage, incur high processing costs.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-snapshot-status-api.html | Elasticsearch API documentation}
     */
-  async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotStatusResponse>
-  async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotStatusResponse, unknown>>
-  async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptions): Promise<T.SnapshotStatusResponse>
-  async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['repository', 'snapshot']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async status (this: That, params?: T.SnapshotStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotStatusResponse>
+  async status (this: That, params?: T.SnapshotStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotStatusResponse, unknown>>
+  async status (this: That, params?: T.SnapshotStatusRequest, options?: TransportRequestOptions): Promise<T.SnapshotStatusResponse>
+  async status (this: That, params?: T.SnapshotStatusRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['snapshot.status']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -499,18 +832,31 @@ export default class Snapshot {
     * Verify a snapshot repository. Check for common misconfigurations in a snapshot repository.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/verify-snapshot-repo-api.html | Elasticsearch API documentation}
     */
-  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotVerifyRepositoryResponse>
-  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotVerifyRepositoryResponse, unknown>>
-  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotVerifyRepositoryResponse>
-  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['name']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotVerifyRepositoryResponse>
+  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotVerifyRepositoryResponse, unknown>>
+  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotVerifyRepositoryResponse>
+  async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['snapshot.verify_repository']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }

@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,25 +21,52 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+}
+
+const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
+  delete_by_query_rethrottle: {
+    path: [
+      'task_id'
+    ],
+    body: [],
+    query: [
+      'requests_per_second'
+    ]
+  }
+}
 
 /**
   * Throttle a delete by query operation. Change the number of requests per second for a particular delete by query operation. Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/docs-delete-by-query.html#docs-delete-by-query-rethrottle | Elasticsearch API documentation}
   */
-export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest | TB.DeleteByQueryRethrottleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteByQueryRethrottleResponse>
-export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest | TB.DeleteByQueryRethrottleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteByQueryRethrottleResponse, unknown>>
-export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest | TB.DeleteByQueryRethrottleRequest, options?: TransportRequestOptions): Promise<T.DeleteByQueryRethrottleResponse>
-export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest | TB.DeleteByQueryRethrottleRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['task_id']
-  const querystring: Record<string, any> = {}
-  const body = undefined
+export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteByQueryRethrottleResponse>
+export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteByQueryRethrottleResponse, unknown>>
+export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest, options?: TransportRequestOptions): Promise<T.DeleteByQueryRethrottleResponse>
+export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest, options?: TransportRequestOptions): Promise<any> {
+  const {
+    path: acceptedPath
+  } = acceptedParams.delete_by_query_rethrottle
+
+  const userQuery = params?.querystring
+  const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+  let body: Record<string, any> | string | undefined
+  const userBody = params?.body
+  if (userBody != null) {
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = { ...userBody }
+    }
+  }
 
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else if (key !== 'body' && key !== 'querystring') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

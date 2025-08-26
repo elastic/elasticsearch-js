@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,31 +21,86 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
+
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Shutdown {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'shutdown.delete_node': {
+        path: [
+          'node_id'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'shutdown.get_node': {
+        path: [
+          'node_id'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'shutdown.put_node': {
+        path: [
+          'node_id'
+        ],
+        body: [
+          'type',
+          'reason',
+          'allocation_delay',
+          'target_node_name'
+        ],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      }
+    }
   }
 
   /**
     * Cancel node shutdown preparations. Remove a node from the shutdown list so it can resume normal operations. You must explicitly clear the shutdown request when a node rejoins the cluster or when a node has permanently left the cluster. Shutdown requests are never removed automatically by Elasticsearch. NOTE: This feature is designed for indirect use by Elastic Cloud, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported. If the operator privileges feature is enabled, you must be an operator to use this API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-shutdown.html | Elasticsearch API documentation}
     */
-  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest | TB.ShutdownDeleteNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownDeleteNodeResponse>
-  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest | TB.ShutdownDeleteNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownDeleteNodeResponse, unknown>>
-  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest | TB.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownDeleteNodeResponse>
-  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest | TB.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['node_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownDeleteNodeResponse>
+  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownDeleteNodeResponse, unknown>>
+  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownDeleteNodeResponse>
+  async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['shutdown.delete_node']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -80,19 +121,32 @@ export default class Shutdown {
     * Get the shutdown status. Get information about nodes that are ready to be shut down, have shut down preparations still in progress, or have stalled. The API returns status information for each part of the shut down process. NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported. If the operator privileges feature is enabled, you must be an operator to use this API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-shutdown.html | Elasticsearch API documentation}
     */
-  async getNode (this: That, params?: T.ShutdownGetNodeRequest | TB.ShutdownGetNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownGetNodeResponse>
-  async getNode (this: That, params?: T.ShutdownGetNodeRequest | TB.ShutdownGetNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownGetNodeResponse, unknown>>
-  async getNode (this: That, params?: T.ShutdownGetNodeRequest | TB.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownGetNodeResponse>
-  async getNode (this: That, params?: T.ShutdownGetNodeRequest | TB.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['node_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async getNode (this: That, params?: T.ShutdownGetNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownGetNodeResponse>
+  async getNode (this: That, params?: T.ShutdownGetNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownGetNodeResponse, unknown>>
+  async getNode (this: That, params?: T.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownGetNodeResponse>
+  async getNode (this: That, params?: T.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['shutdown.get_node']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -120,20 +174,27 @@ export default class Shutdown {
     * Prepare a node to be shut down. NOTE: This feature is designed for indirect use by Elastic Cloud, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported. If you specify a node that is offline, it will be prepared for shut down when it rejoins the cluster. If the operator privileges feature is enabled, you must be an operator to use this API. The API migrates ongoing tasks and index shards to other nodes as needed to prepare a node to be restarted or shut down and removed from the cluster. This ensures that Elasticsearch can be stopped safely with minimal disruption to the cluster. You must specify the type of shutdown: `restart`, `remove`, or `replace`. If a node is already being prepared for shutdown, you can use this API to change the shutdown type. IMPORTANT: This API does NOT terminate the Elasticsearch process. Monitor the node shutdown status to determine when it is safe to stop Elasticsearch.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-shutdown.html | Elasticsearch API documentation}
     */
-  async putNode (this: That, params: T.ShutdownPutNodeRequest | TB.ShutdownPutNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownPutNodeResponse>
-  async putNode (this: That, params: T.ShutdownPutNodeRequest | TB.ShutdownPutNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownPutNodeResponse, unknown>>
-  async putNode (this: That, params: T.ShutdownPutNodeRequest | TB.ShutdownPutNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownPutNodeResponse>
-  async putNode (this: That, params: T.ShutdownPutNodeRequest | TB.ShutdownPutNodeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['node_id']
-    const acceptedBody: string[] = ['type', 'reason', 'allocation_delay', 'target_node_name']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
+  async putNode (this: That, params: T.ShutdownPutNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownPutNodeResponse>
+  async putNode (this: That, params: T.ShutdownPutNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownPutNodeResponse, unknown>>
+  async putNode (this: That, params: T.ShutdownPutNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownPutNodeResponse>
+  async putNode (this: That, params: T.ShutdownPutNodeRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this.acceptedParams['shutdown.put_node']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
     }
 
     for (const key in params) {
@@ -143,9 +204,15 @@ export default class Shutdown {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 

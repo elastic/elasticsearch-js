@@ -1,20 +1,6 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable import/export */
@@ -35,32 +21,56 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import * as TB from '../typesWithBodyKey'
-interface That { transport: Transport }
+
+interface That {
+  transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+}
 
 export default class Ssl {
   transport: Transport
+  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
+    this.acceptedParams = {
+      'ssl.certificates': {
+        path: [],
+        body: [],
+        query: []
+      }
+    }
   }
 
   /**
     * Get SSL certificates. Get information about the X.509 certificates that are used to encrypt communications in the cluster. The API returns a list that includes certificates from all TLS contexts including: - Settings for transport and HTTP interfaces - TLS settings that are used within authentication realms - TLS settings for remote monitoring exporters The list includes certificates that are used for configuring trust, such as those configured in the `xpack.security.transport.ssl.truststore` and `xpack.security.transport.ssl.certificate_authorities` settings. It also includes certificates that are used for configuring server identity, such as `xpack.security.http.ssl.keystore` and `xpack.security.http.ssl.certificate settings`. The list does not include certificates that are sourced from the default SSL context of the Java Runtime Environment (JRE), even if those certificates are in use within Elasticsearch. NOTE: When a PKCS#11 token is configured as the truststore of the JRE, the API returns all the certificates that are included in the PKCS#11 token irrespective of whether these are used in the Elasticsearch TLS configuration. If Elasticsearch is configured to use a keystore or truststore, the API output includes all certificates in that store, even though some of the certificates might not be in active use within the cluster.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/security-api-ssl.html | Elasticsearch API documentation}
     */
-  async certificates (this: That, params?: T.SslCertificatesRequest | TB.SslCertificatesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SslCertificatesResponse>
-  async certificates (this: That, params?: T.SslCertificatesRequest | TB.SslCertificatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SslCertificatesResponse, unknown>>
-  async certificates (this: That, params?: T.SslCertificatesRequest | TB.SslCertificatesRequest, options?: TransportRequestOptions): Promise<T.SslCertificatesResponse>
-  async certificates (this: That, params?: T.SslCertificatesRequest | TB.SslCertificatesRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const querystring: Record<string, any> = {}
-    const body = undefined
+  async certificates (this: That, params?: T.SslCertificatesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SslCertificatesResponse>
+  async certificates (this: That, params?: T.SslCertificatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SslCertificatesResponse, unknown>>
+  async certificates (this: That, params?: T.SslCertificatesRequest, options?: TransportRequestOptions): Promise<T.SslCertificatesResponse>
+  async certificates (this: That, params?: T.SslCertificatesRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['ssl.certificates']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
 
     params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (key !== 'body' && key !== 'querystring') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
