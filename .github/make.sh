@@ -37,7 +37,7 @@ product="elastic/elasticsearch-js"
 output_folder=".buildkite/output"
 codegen_folder=".buildkite/output"
 OUTPUT_DIR="$repo/${output_folder}"
-NODE_JS_VERSION=22
+NODE_VERSION=22
 WORKFLOW=${WORKFLOW-staging}
 mkdir -p "$OUTPUT_DIR"
 
@@ -133,7 +133,7 @@ echo -e "\033[34;1mINFO: building $product container\033[0m"
 docker build \
   --file .buildkite/Dockerfile-make \
   --tag "$product" \
-  --build-arg NODE_JS_VERSION="$NODE_JS_VERSION" \
+  --build-arg NODE_VERSION="$NODE_VERSION" \
   --build-arg "BUILDER_UID=$(id -u)" \
   --build-arg "BUILDER_GID=$(id -g)" \
   .
