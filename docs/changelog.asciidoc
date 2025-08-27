@@ -1,5 +1,15 @@
 [[changelog-client]]
 == Release notes
+[discrete]
+=== 8.19.1
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Update apache-arrow 18.x-21.x
+
+Update apache-arrow from 18.x-19.x to 18.x-21.x to support apache-arrow@20 for Kibana compatibility
 
 [discrete]
 === 8.19.0
