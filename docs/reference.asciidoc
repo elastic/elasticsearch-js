@@ -2612,7 +2612,7 @@ client.cat.aliases({ ... })
 
 * *Request (object):*
 ** *`name` (Optional, string | string[])*: A list of aliases to retrieve. Supports wildcards (`*`).  To retrieve all aliases, omit this parameter or use `*` or `_all`.
-** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`h` (Optional, Enum("alias" | "index" | "filter" | "routing.index" | "routing.search" | "is_write_index") | Enum("alias" | "index" | "filter" | "routing.index" | "routing.search" | "is_write_index")[])*: A list of columns names to display. It supports simple wildcards.
 ** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2644,7 +2644,7 @@ client.cat.allocation({ ... })
 * *Request (object):*
 ** *`node_id` (Optional, string | string[])*: A list of node identifiers or names used to limit the returned information.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
-** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`h` (Optional, Enum("shards" | "shards.undesired" | "write_load.forecast" | "disk.indices.forecast" | "disk.indices" | "disk.used" | "disk.avail" | "disk.total" | "disk.percent" | "host" | "ip" | "node" | "node.role") | Enum("shards" | "shards.undesired" | "write_load.forecast" | "disk.indices.forecast" | "disk.indices" | "disk.used" | "disk.avail" | "disk.total" | "disk.percent" | "host" | "ip" | "node" | "node.role")[])*: A list of columns names to display. It supports simple wildcards.
 ** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2677,7 +2677,7 @@ client.cat.componentTemplates({ ... })
 ** *`name` (Optional, string)*: The name of the component template.
 It accepts wildcard expressions.
 If it is omitted, all component templates are returned.
-** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`h` (Optional, Enum("name" | "version" | "alias_count" | "mapping_count" | "settings_count" | "metadata_count" | "included_in") | Enum("name" | "version" | "alias_count" | "mapping_count" | "settings_count" | "metadata_count" | "included_in")[])*: A list of columns names to display. It supports simple wildcards.
 ** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2710,7 +2710,7 @@ client.cat.count({ ... })
 ** *`index` (Optional, string | string[])*: A list of data streams, indices, and aliases used to limit the request.
 It supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`h` (Optional, Enum("epoch" | "timestamp" | "count") | Enum("epoch" | "timestamp" | "count")[])*: A list of columns names to display. It supports simple wildcards.
 ** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2737,7 +2737,7 @@ client.cat.fielddata({ ... })
 ** *`fields` (Optional, string | string[])*: List of fields used to limit returned information.
 To retrieve all fields, omit this parameter.
 ** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
-** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
+** *`h` (Optional, Enum("id" | "host" | "ip" | "node" | "field" | "size") | Enum("id" | "host" | "ip" | "node" | "field" | "size")[])*: A list of columns names to display. It supports simple wildcards.
 ** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -16186,12 +16186,34 @@ client.transform.scheduleNowTransform({ transform_id })
 
 [discrete]
 ==== set_upgrade_mode
-Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
+Set upgrade_mode for transform indices.
+Sets a cluster wide upgrade_mode setting that prepares transform
+indices for an upgrade.
+When upgrading your cluster, in some circumstances you must restart your
+nodes and reindex your transform indices. In those circumstances,
+there must be no transforms running. You can close the transforms,
+do the upgrade, then open all the transforms again. Alternatively,
+you can use this API to temporarily halt tasks associated with the transforms
+and prevent new transforms from opening. You can also use this API
+during upgrades that do not require you to reindex your transform
+indices, though stopping transforms is not a requirement in that case.
+You can see the current value for the upgrade_mode setting by using the get
+transform info API.
+
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-set-upgrade-mode[Endpoint documentation]
 [source,ts]
 ----
-client.transform.setUpgradeMode()
+client.transform.setUpgradeMode({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`enabled` (Optional, boolean)*: When `true`, it enables `upgrade_mode` which temporarily halts all
+transform tasks and prohibits new transform tasks from
+starting.
+** *`timeout` (Optional, string | -1 | 0)*: The time to wait for the request to be completed.
 
 [discrete]
 ==== start_transform
