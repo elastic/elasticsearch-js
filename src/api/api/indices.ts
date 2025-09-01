@@ -1639,7 +1639,7 @@ export default class Indices {
 
   /**
     * Delete data stream options. Removes the data stream options from a data stream.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/index.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-data-stream-options | Elasticsearch API documentation}
     */
   async deleteDataStreamOptions (this: That, params: T.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataStreamOptionsResponse>
   async deleteDataStreamOptions (this: That, params: T.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteDataStreamOptionsResponse, unknown>>
@@ -2497,7 +2497,7 @@ export default class Indices {
 
   /**
     * Get data stream options. Get the data stream options configuration of one or more data streams.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/index.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-options | Elasticsearch API documentation}
     */
   async getDataStreamOptions (this: That, params: T.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamOptionsResponse>
   async getDataStreamOptions (this: That, params: T.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataStreamOptionsResponse, unknown>>
@@ -3259,7 +3259,7 @@ export default class Indices {
 
   /**
     * Update data stream options. Update the data stream options of the specified data streams.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/index.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-options | Elasticsearch API documentation}
     */
   async putDataStreamOptions (this: That, params: T.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataStreamOptionsResponse>
   async putDataStreamOptions (this: That, params: T.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutDataStreamOptionsResponse, unknown>>

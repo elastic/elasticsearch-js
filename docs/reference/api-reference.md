@@ -1343,7 +1343,7 @@ Additionally, if you opt to count version conflicts, the operation could attempt
 
 It's recommended to reindex on indices with a green status. Reindexing can fail when a node shuts down or crashes.
 * When requested with `wait_for_completion=true` (default), the request fails if the node shuts down.
-* When requested with `wait_for_completion=false`, a task id is returned, which can be used via the task management API to monitor, debug, or cancel the task. The task may disappear or fail if the node shuts down.
+* When requested with `wait_for_completion=false`, a task id is returned, for use with the task management APIs. The task may disappear or fail if the node shuts down.
 When retrying a failed reindex operation, it might be necessary to set `conflicts=proceed` or to first delete the partial destination index.
 Additionally, dry runs, checking disk space, and fetching index recovery information can help address the root cause.
 
@@ -4718,6 +4718,9 @@ If `true`, the response will include an extra section under the name `all_column
 ## client.esql.getQuery [_esql.get_query]
 Get a specific running ES|QL query information.
 Returns an object extended information about a running ES|QL query.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-query)
+
 ```ts
 client.esql.getQuery({ id })
 ```
@@ -4730,6 +4733,9 @@ client.esql.getQuery({ id })
 ## client.esql.listQueries [_esql.list_queries]
 Get running ES|QL queries information.
 Returns an object containing IDs and other information about the running ES|QL queries.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-list-queries)
+
 ```ts
 client.esql.listQueries()
 ```
@@ -5672,7 +5678,7 @@ client.indices.deleteDataStream({ name })
 Delete data stream options.
 Removes the data stream options from a data stream.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-data-stream-options)
 
 ```ts
 client.indices.deleteDataStreamOptions({ name })
@@ -6144,7 +6150,7 @@ Get data stream options.
 
 Get the data stream options configuration of one or more data streams.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-options)
 
 ```ts
 client.indices.getDataStreamOptions({ name })
@@ -6534,7 +6540,7 @@ If no response is received before the timeout expires, the request fails and ret
 Update data stream options.
 Update the data stream options of the specified data streams.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-options)
 
 ```ts
 client.indices.putDataStreamOptions({ name })
@@ -15232,14 +15238,33 @@ client.transform.scheduleNowTransform({ transform_id })
 - **`timeout` (Optional, string \| -1 \| 0)**: Controls the time to wait for the scheduling to take place
 
 ## client.transform.setUpgradeMode [_transform.set_upgrade_mode]
-Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
+Set upgrade_mode for transform indices.
+Sets a cluster wide upgrade_mode setting that prepares transform
+indices for an upgrade.
+When upgrading your cluster, in some circumstances you must restart your
+nodes and reindex your transform indices. In those circumstances,
+there must be no transforms running. You can close the transforms,
+do the upgrade, then open all the transforms again. Alternatively,
+you can use this API to temporarily halt tasks associated with the transforms
+and prevent new transforms from opening. You can also use this API
+during upgrades that do not require you to reindex your transform
+indices, though stopping transforms is not a requirement in that case.
+You can see the current value for the upgrade_mode setting by using the get
+transform info API.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/transform-set-upgrade-mode.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-set-upgrade-mode)
 
 ```ts
-client.transform.setUpgradeMode()
+client.transform.setUpgradeMode({ ... })
 ```
 
+### Arguments [_arguments_transform.set_upgrade_mode]
+
+#### Request (object) [_request_transform.set_upgrade_mode]
+- **`enabled` (Optional, boolean)**: When `true`, it enables `upgrade_mode` which temporarily halts all
+transform tasks and prohibits new transform tasks from
+starting.
+- **`timeout` (Optional, string \| -1 \| 0)**: The time to wait for the request to be completed.
 
 ## client.transform.startTransform [_transform.start_transform]
 Start a transform.
