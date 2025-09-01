@@ -310,6 +310,7 @@ export default class Esql {
 
   /**
     * Get a specific running ES|QL query information. Returns an object extended information about a running ES|QL query.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-query | Elasticsearch API documentation}
     */
   async getQuery (this: That, params: T.EsqlGetQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlGetQueryResponse>
   async getQuery (this: That, params: T.EsqlGetQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlGetQueryResponse, unknown>>
@@ -354,6 +355,7 @@ export default class Esql {
 
   /**
     * Get running ES|QL queries information. Returns an object containing IDs and other information about the running ES|QL queries.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-list-queries | Elasticsearch API documentation}
     */
   async listQueries (this: That, params?: T.EsqlListQueriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlListQueriesResponse>
   async listQueries (this: That, params?: T.EsqlListQueriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlListQueriesResponse, unknown>>

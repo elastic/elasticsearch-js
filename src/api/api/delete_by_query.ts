@@ -36,7 +36,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
     body: [
       'max_docs',
       'query',
-      'slice'
+      'slice',
+      'sort'
     ],
     query: [
       'allow_no_indices',

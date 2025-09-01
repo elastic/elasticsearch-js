@@ -47,7 +47,8 @@ export default class Simulate {
           'pipeline_substitutions'
         ],
         query: [
-          'pipeline'
+          'pipeline',
+          'merge_type'
         ]
       }
     }
