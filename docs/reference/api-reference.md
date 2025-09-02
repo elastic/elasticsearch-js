@@ -474,6 +474,7 @@ client.deleteByQuery({ index })
 - **`max_docs` (Optional, number)**: The maximum number of documents to delete.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The documents to delete specified with Query DSL.
 - **`slice` (Optional, { field, id, max })**: Slice the request manually using the provided slice ID and total number of slices.
+- **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: A sort object that specifies the order of deleted documents.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 - **`analyzer` (Optional, string)**: Analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
@@ -495,7 +496,6 @@ client.deleteByQuery({ index })
 - **`search_timeout` (Optional, string \| -1 \| 0)**: The explicit timeout for each search request. It defaults to no timeout.
 - **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: The type of the search operation. Available options include `query_then_fetch` and `dfs_query_then_fetch`.
 - **`slices` (Optional, number \| Enum("auto"))**: The number of slices this task should be divided into.
-- **`sort` (Optional, string[])**: A list of `<field>:<direction>` pairs.
 - **`stats` (Optional, string[])**: The specific `tag` of the request for logging and statistical purposes.
 - **`terminate_after` (Optional, number)**: The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. Use with caution. Elasticsearch applies this parameter to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period each deletion request waits for active shards.
@@ -1343,7 +1343,7 @@ Additionally, if you opt to count version conflicts, the operation could attempt
 
 It's recommended to reindex on indices with a green status. Reindexing can fail when a node shuts down or crashes.
 * When requested with `wait_for_completion=true` (default), the request fails if the node shuts down.
-* When requested with `wait_for_completion=false`, a task id is returned, which can be used via the task management API to monitor, debug, or cancel the task. The task may disappear or fail if the node shuts down.
+* When requested with `wait_for_completion=false`, a task id is returned, for use with the task management APIs. The task may disappear or fail if the node shuts down.
 When retrying a failed reindex operation, it might be necessary to set `conflicts=proceed` or to first delete the partial destination index.
 Additionally, dry runs, checking disk space, and fetching index recovery information can help address the root cause.
 
@@ -6935,7 +6935,7 @@ For example, a request targeting `foo*,bar*` returns an error if an index starts
 
 ## client.indices.rollover [_indices.rollover]
 Roll over to a new index.
-TIP: It is recommended to use the index lifecycle rollover action to automate rollovers.
+TIP: We recommend using the index lifecycle rollover action to automate rollovers. However, Serverless does not support Index Lifecycle Management (ILM), so don't use this approach in the Serverless context.
 
 The rollover API creates a new index for a data stream or index alias.
 The API behavior depends on the rollover target.
@@ -14841,14 +14841,33 @@ client.transform.scheduleNowTransform({ transform_id })
 - **`timeout` (Optional, string \| -1 \| 0)**: Controls the time to wait for the scheduling to take place
 
 ## client.transform.setUpgradeMode [_transform.set_upgrade_mode]
-Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
+Set upgrade_mode for transform indices.
+Sets a cluster wide upgrade_mode setting that prepares transform
+indices for an upgrade.
+When upgrading your cluster, in some circumstances you must restart your
+nodes and reindex your transform indices. In those circumstances,
+there must be no transforms running. You can close the transforms,
+do the upgrade, then open all the transforms again. Alternatively,
+you can use this API to temporarily halt tasks associated with the transforms
+and prevent new transforms from opening. You can also use this API
+during upgrades that do not require you to reindex your transform
+indices, though stopping transforms is not a requirement in that case.
+You can see the current value for the upgrade_mode setting by using the get
+transform info API.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/transform-set-upgrade-mode.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-set-upgrade-mode)
 
 ```ts
-client.transform.setUpgradeMode()
+client.transform.setUpgradeMode({ ... })
 ```
 
+### Arguments [_arguments_transform.set_upgrade_mode]
+
+#### Request (object) [_request_transform.set_upgrade_mode]
+- **`enabled` (Optional, boolean)**: When `true`, it enables `upgrade_mode` which temporarily halts all
+transform tasks and prohibits new transform tasks from
+starting.
+- **`timeout` (Optional, string \| -1 \| 0)**: The time to wait for the request to be completed.
 
 ## client.transform.startTransform [_transform.start_transform]
 Start a transform.

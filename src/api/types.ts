@@ -434,8 +434,6 @@ export interface DeleteByQueryRequest extends RequestBase {
   search_type?: SearchType
   /** The number of slices this task should be divided into. */
   slices?: Slices
-  /** A comma-separated list of `<field>:<direction>` pairs. */
-  sort?: string[]
   /** The specific `tag` of the request for logging and statistical purposes. */
   stats?: string[]
   /** The maximum number of documents to collect for each shard.
@@ -464,10 +462,12 @@ export interface DeleteByQueryRequest extends RequestBase {
   query?: QueryDslQueryContainer
   /** Slice the request manually using the provided slice ID and total number of slices. */
   slice?: SlicedScroll
+  /** A sort object that specifies the order of deleted documents. */
+  sort?: Sort
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, sort?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never, sort?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, sort?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never, sort?: never }
 }
 
 export interface DeleteByQueryResponse {
@@ -4557,10 +4557,17 @@ export type Service = string
 
 export interface ShardFailure {
   index?: IndexName
+  /** @alias index */
+  _index?: IndexName
   node?: string
+  /** @alias node */
+  _node?: string
   reason: ErrorCause
-  shard: integer
+  shard?: integer
+  /** @alias shard */
+  _shard?: integer
   status?: string
+  primary?: boolean
 }
 
 export interface ShardStatistics {
@@ -36831,6 +36838,21 @@ export interface TransformScheduleNowTransformRequest extends RequestBase {
 }
 
 export type TransformScheduleNowTransformResponse = AcknowledgedResponseBase
+
+export interface TransformSetUpgradeModeRequest extends RequestBase {
+  /** When `true`, it enables `upgrade_mode` which temporarily halts all
+    * transform tasks and prohibits new transform tasks from
+    * starting. */
+  enabled?: boolean
+  /** The time to wait for the request to be completed. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { enabled?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { enabled?: never, timeout?: never }
+}
+
+export type TransformSetUpgradeModeResponse = AcknowledgedResponseBase
 
 export interface TransformStartTransformRequest extends RequestBase {
   /** Identifier for the transform. */
