@@ -4571,10 +4571,17 @@ export type Service = string
 
 export interface ShardFailure {
   index?: IndexName
+  /** @alias index */
+  _index?: IndexName
   node?: string
+  /** @alias node */
+  _node?: string
   reason: ErrorCause
-  shard: integer
+  shard?: integer
+  /** @alias shard */
+  _shard?: integer
   status?: string
+  primary?: boolean
 }
 
 export interface ShardStatistics {
@@ -7944,21 +7951,23 @@ export interface MappingChunkingSettings {
     *
     * Learn more about different chunking strategies in the linked documentation. */
   strategy: string
-  /** This parameter is only applicable when using the `recursive` chunking strategy.
+  /** Only applicable to the `recursive` strategy and required when using it.
     *
     * Sets a predefined list of separators in the saved chunking settings based on the selected text type.
     * Values can be `markdown` or `plaintext`.
     *
     * Using this parameter is an alternative to manually specifying a custom `separators` list. */
-  separator_group: string
-  /** A list of strings used as possible split points when chunking text with the `recursive` strategy.
+  separator_group?: string
+  /** Only applicable to the `recursive` strategy and required when using it.
+    *
+    * A list of strings used as possible split points when chunking text.
     *
     * Each string can be a plain string or a regular expression (regex) pattern.
     * The system tries each separator in order to split the text, starting from the first item in the list.
     *
     * After splitting, it attempts to recombine smaller pieces into larger chunks that stay within
     * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
-  separators: string[]
+  separators?: string[]
   /** The maximum size of a chunk in words.
     * This value cannot be higher than `300` or lower than `20` (for `sentence` strategy) or `10` (for `word` strategy). */
   max_chunk_size: integer
@@ -23117,21 +23126,23 @@ export interface InferenceInferenceChunkingSettings {
     * It is applicable only for a `sentence` chunking strategy.
     * It can be either `1` or `0`. */
   sentence_overlap?: integer
-  /** This parameter is only applicable when using the `recursive` chunking strategy.
+  /** Only applicable to the `recursive` strategy and required when using it.
     *
     * Sets a predefined list of separators in the saved chunking settings based on the selected text type.
     * Values can be `markdown` or `plaintext`.
     *
     * Using this parameter is an alternative to manually specifying a custom `separators` list. */
-  separator_group: string
-  /** A list of strings used as possible split points when chunking text with the `recursive` strategy.
+  separator_group?: string
+  /** Only applicable to the `recursive` strategy and required when using it.
+    *
+    * A list of strings used as possible split points when chunking text.
     *
     * Each string can be a plain string or a regular expression (regex) pattern.
     * The system tries each separator in order to split the text, starting from the first item in the list.
     *
     * After splitting, it attempts to recombine smaller pieces into larger chunks that stay within
     * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
-  separators: string[]
+  separators?: string[]
   /** The chunking strategy: `sentence`, `word`, `none` or `recursive`.
     *
     *  * If `strategy` is set to `recursive`, you must also specify:
@@ -37686,6 +37697,21 @@ export interface TransformScheduleNowTransformRequest extends RequestBase {
 }
 
 export type TransformScheduleNowTransformResponse = AcknowledgedResponseBase
+
+export interface TransformSetUpgradeModeRequest extends RequestBase {
+  /** When `true`, it enables `upgrade_mode` which temporarily halts all
+    * transform tasks and prohibits new transform tasks from
+    * starting. */
+  enabled?: boolean
+  /** The time to wait for the request to be completed. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { enabled?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { enabled?: never, timeout?: never }
+}
+
+export type TransformSetUpgradeModeResponse = AcknowledgedResponseBase
 
 export interface TransformStartTransformRequest extends RequestBase {
   /** Identifier for the transform. */
