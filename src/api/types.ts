@@ -2564,7 +2564,7 @@ export type SearchHighlighterType = 'plain' | 'fvh' | 'unified' | string
 export interface SearchHit<TDocument = unknown> {
   _index: IndexName
   _id?: Id
-  _score: double | null
+  _score?: double | null
   _explanation?: ExplainExplanation
   fields?: Record<string, any>
   highlight?: Record<string, string[]>
@@ -2588,7 +2588,7 @@ export interface SearchHitsMetadata<T = unknown> {
   /** Total hit count information, present only if `track_total_hits` wasn't `false` in the search request. */
   total?: SearchTotalHits | long
   hits: SearchHit<T>[]
-  max_score: double | null
+  max_score?: double | null
 }
 
 export interface SearchInnerHits {
@@ -7973,7 +7973,8 @@ export interface MappingChunkingSettings {
     * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
   separators?: string[]
   /** The maximum size of a chunk in words.
-    * This value cannot be higher than `300` or lower than `20` (for `sentence` strategy) or `10` (for `word` strategy). */
+    * This value cannot be lower than `20` (for `sentence` strategy) or `10` (for `word` strategy).
+    * This value should not exceed the window size for the associated model. */
   max_chunk_size: integer
   /** The number of overlapping words for chunks.
     * It is applicable only to a `word` chunking strategy.
@@ -10373,7 +10374,11 @@ export type CatCatPendingTasksColumn = 'insertOrder' | 'o' | 'timeInQueue' | 't'
 
 export type CatCatPendingTasksColumns = CatCatPendingTasksColumn | CatCatPendingTasksColumn[]
 
-export type CatCatRecoveryColumn = 'index' | 'i' | 'idx' | 'shard' | 's' | 'sh' | 'time' | 't' | 'ti' | 'primaryOrReplica' | 'type' | 'stage' | 'st' | 'source_host' | 'shost' | 'source_node' | 'snode' | 'target_host' | 'thost' | 'target_node' | 'tnode' | 'repository' | 'tnode' | 'snapshot' | 'snap' | 'files' | 'f' | 'files_recovered' | 'fr' | 'files_percent' | 'fp' | 'files_total' | 'tf' | 'bytes' | 'b' | 'bytes_recovered' | 'br' | 'bytes_percent' | 'bp' | 'bytes_total' | 'tb' | 'translog_ops' | 'to' | 'translog_ops_recovered' | 'tor' | 'translog_ops_percent' | 'top' | 'start_time' | 'start' | 'start_time_millis' | 'start_millis' | 'stop_time' | 'stop' | 'stop_time_millis' | 'stop_millis' | string
+export type CatCatPluginsColumn = 'id' | 'name' | 'n' | 'component' | 'c' | 'version' | 'v' | 'description' | 'd' | string
+
+export type CatCatPluginsColumns = CatCatPluginsColumn | CatCatPluginsColumn[]
+
+export type CatCatRecoveryColumn = 'index' | 'i' | 'idx' | 'shard' | 's' | 'sh' | 'start_time' | 'start' | 'start_time_millis' | 'start_millis' | 'stop_time' | 'stop' | 'stop_time_millis' | 'stop_millis' | 'time' | 't' | 'ti' | 'type' | 'ty' | 'stage' | 'st' | 'source_host' | 'shost' | 'source_node' | 'snode' | 'target_host' | 'thost' | 'target_node' | 'tnode' | 'repository' | 'rep' | 'snapshot' | 'snap' | 'files' | 'f' | 'files_recovered' | 'fr' | 'files_percent' | 'fp' | 'files_total' | 'tf' | 'bytes' | 'b' | 'bytes_recovered' | 'br' | 'bytes_percent' | 'bp' | 'bytes_total' | 'tb' | 'translog_ops' | 'to' | 'translog_ops_recovered' | 'tor' | 'translog_ops_percent' | 'top' | string
 
 export type CatCatRecoveryColumns = CatCatRecoveryColumn | CatCatRecoveryColumn[]
 
@@ -10391,6 +10396,14 @@ export type CatCatShardColumns = CatCatShardColumn | CatCatShardColumn[]
 export type CatCatSnapshotsColumn = 'id' | 'snapshot' | 'repository' | 're' | 'repo' | 'status' | 's' | 'start_epoch' | 'ste' | 'startEpoch' | 'start_time' | 'sti' | 'startTime' | 'end_epoch' | 'ete' | 'endEpoch' | 'end_time' | 'eti' | 'endTime' | 'duration' | 'dur' | 'indices' | 'i' | 'successful_shards' | 'ss' | 'failed_shards' | 'fs' | 'total_shards' | 'ts' | 'reason' | 'r' | string
 
 export type CatCatSnapshotsColumns = CatCatSnapshotsColumn | CatCatSnapshotsColumn[]
+
+export type CatCatTasksColumn = 'id' | 'action' | 'ac' | 'task_id' | 'ti' | 'parent_task_id' | 'pti' | 'type' | 'ty' | 'start_time' | 'start' | 'timestamp' | 'ts' | 'hms' | 'hhmmss' | 'running_time_ns' | 'time' | 'running_time' | 'time' | 'node_id' | 'ni' | 'ip' | 'i' | 'port' | 'po' | 'node' | 'n' | 'version' | 'v' | 'x_opaque_id' | 'x' | string
+
+export type CatCatTasksColumns = CatCatTasksColumn | CatCatTasksColumn[]
+
+export type CatCatTemplatesColumn = 'name' | 'n' | 'index_patterns' | 't' | 'order' | 'o' | 'p' | 'version' | 'v' | 'composed_of' | 'c' | string
+
+export type CatCatTemplatesColumns = CatCatTemplatesColumn | CatCatTemplatesColumn[]
 
 export type CatCatThreadPoolColumn = 'active' | 'a' | 'completed' | 'c' | 'core' | 'cr' | 'ephemeral_id' | 'eid' | 'host' | 'h' | 'ip' | 'i' | 'keep_alive' | 'k' | 'largest' | 'l' | 'max' | 'mx' | 'name' | 'node_id' | 'id' | 'node_name' | 'pid' | 'p' | 'pool_size' | 'psz' | 'port' | 'po' | 'queue' | 'q' | 'queue_size' | 'qs' | 'rejected' | 'r' | 'size' | 'sz' | 'type' | 't' | string
 
@@ -13546,8 +13559,8 @@ export interface CatPluginsPluginsRecord {
 }
 
 export interface CatPluginsRequest extends CatCatRequestBase {
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatPluginsColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -14708,8 +14721,8 @@ export interface CatTasksRequest extends CatCatRequestBase {
   nodes?: string[]
   /** The parent task identifier, which is used to limit the response. */
   parent_task_id?: string
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatTasksColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -14816,8 +14829,8 @@ export interface CatTemplatesRequest extends CatCatRequestBase {
   /** The name of the template to return.
     * Accepts wildcard expressions. If omitted, all templates are returned. */
   name?: Name
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatTemplatesColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -21740,10 +21753,12 @@ export interface IndicesResolveIndexRequest extends RequestBase {
     * This behavior applies even if the request targets other open indices.
     * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** Filter indices by index mode - standard, lookup, time_series, etc. Comma-separated list of IndexMode. Empty means no filter. */
+  mode?: IndicesIndexMode | IndicesIndexMode[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never }
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never, mode?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never }
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never, mode?: never }
 }
 
 export interface IndicesResolveIndexResolveIndexAliasItem {
@@ -23220,6 +23235,9 @@ export interface InferenceGoogleVertexAITaskSettings {
   auto_truncate?: boolean
   /** For a `rerank` task, the number of the top N documents that should be returned. */
   top_n?: integer
+  /** For a `completion` or `chat_completion` task, allows configuration of the thinking features for the model.
+    * Refer to the Google documentation for the allowable configurations for each model type. */
+  thinking_config?: InferenceThinkingConfig
 }
 
 export type InferenceGoogleVertexAITaskType = 'rerank' | 'text_embedding' | 'completion' | 'chat_completion'
@@ -23262,7 +23280,8 @@ export type InferenceHuggingFaceTaskType = 'chat_completion' | 'completion' | 'r
 
 export interface InferenceInferenceChunkingSettings {
   /** The maximum size of a chunk in words.
-    * This value cannot be higher than `300` or lower than `20` (for `sentence` strategy) or `10` (for `word` strategy). */
+    * This value cannot be lower than `20` (for `sentence` strategy) or `10` (for `word` strategy).
+    * This value should not exceed the window size for the associated model. */
   max_chunk_size?: integer
   /** The number of overlapping words for chunks.
     * It is applicable only to a `word` chunking strategy.
@@ -23820,6 +23839,11 @@ export interface InferenceTextEmbeddingResult {
   embedding: InferenceDenseVector
 }
 
+export interface InferenceThinkingConfig {
+  /** Indicates the desired thinking budget in tokens. */
+  thinking_budget?: integer
+}
+
 export interface InferenceToolCall {
   /** The identifier of the tool call. */
   id: Id
@@ -24292,7 +24316,8 @@ export interface InferencePutElserRequest extends RequestBase {
   elser_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Note that for ELSER endpoints, the max_chunk_size may not exceed `300`. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `elser`. */
   service: InferenceElserServiceType
@@ -36281,37 +36306,44 @@ export interface SnapshotRepositoryAnalyzeRequest extends RequestBase {
   /** The name of the repository. */
   name: Name
   /** The total number of blobs to write to the repository during the test.
-    * For realistic experiments, you should set it to at least `2000`. */
+    * For realistic experiments, set this parameter to at least `2000`. */
   blob_count?: integer
-  /** The number of operations to run concurrently during the test. */
+  /** The number of operations to run concurrently during the test.
+    * For realistic experiments, leave this parameter unset. */
   concurrency?: integer
   /** Indicates whether to return detailed results, including timing information for every operation performed during the analysis.
     * If false, it returns only a summary of the analysis. */
   detailed?: boolean
   /** The number of nodes on which to perform an early read operation while writing each blob.
-    * Early read operations are only rarely performed. */
+    * Early read operations are only rarely performed.
+    * For realistic experiments, leave this parameter unset. */
   early_read_node_count?: integer
   /** The maximum size of a blob to be written during the test.
-    * For realistic experiments, you should set it to at least `2gb`. */
+    * For realistic experiments, set this parameter to at least `2gb`. */
   max_blob_size?: ByteSize
   /** An upper limit on the total size of all the blobs written during the test.
-    * For realistic experiments, you should set it to at least `1tb`. */
+    * For realistic experiments, set this parameter to at least `1tb`. */
   max_total_data_size?: ByteSize
-  /** The probability of performing a rare action such as an early read, an overwrite, or an aborted write on each blob. */
+  /** The probability of performing a rare action such as an early read, an overwrite, or an aborted write on each blob.
+    * For realistic experiments, leave this parameter unset. */
   rare_action_probability?: double
-  /** Indicates whether to rarely cancel writes before they complete. */
+  /** Indicates whether to rarely cancel writes before they complete.
+    * For realistic experiments, leave this parameter unset. */
   rarely_abort_writes?: boolean
-  /** The number of nodes on which to read a blob after writing. */
+  /** The number of nodes on which to read a blob after writing.
+    * For realistic experiments, leave this parameter unset. */
   read_node_count?: integer
   /** The minimum number of linearizable register operations to perform in total.
-    * For realistic experiments, you should set it to at least `100`. */
+    * For realistic experiments, set this parameter to at least `100`. */
   register_operation_count?: integer
   /** The seed for the pseudo-random number generator used to generate the list of operations performed during the test.
     * To repeat the same set of operations in multiple experiments, use the same seed in each experiment.
-    * Note that the operations are performed concurrently so might not always happen in the same order on each run. */
+    * Note that the operations are performed concurrently so might not always happen in the same order on each run.
+    * For realistic experiments, leave this parameter unset. */
   seed?: integer
   /** The period of time to wait for the test to complete.
-    * If no response is received before the timeout expires, the test is cancelled and returns an error. */
+    * If no response is received before the timeout expires, the test is cancelled and returns an error.
+    * For realistic experiments, set this parameter sufficiently long to allow the test to complete. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, blob_count?: never, concurrency?: never, detailed?: never, early_read_node_count?: never, max_blob_size?: never, max_total_data_size?: never, rare_action_probability?: never, rarely_abort_writes?: never, read_node_count?: never, register_operation_count?: never, seed?: never, timeout?: never }

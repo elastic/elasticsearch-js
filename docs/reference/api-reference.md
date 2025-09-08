@@ -2776,7 +2776,7 @@ client.cat.plugins({ ... })
 ### Arguments [_arguments_cat.plugins]
 
 #### Request (object) [_request_cat.plugins]
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("id" \| "name" \| "component" \| "version" \| "description") \| Enum("id" \| "name" \| "component" \| "version" \| "description")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2809,7 +2809,7 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 - **`active_only` (Optional, boolean)**: If `true`, the response only includes ongoing shard recoveries.
 - **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
-- **`h` (Optional, Enum("index" \| "shard" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis") \| Enum("index" \| "shard" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis")[])**: A list of columns names to display.
+- **`h` (Optional, Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent") \| Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent")[])**: A list of columns names to display.
 It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
@@ -2947,7 +2947,7 @@ client.cat.tasks({ ... })
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
 - **`nodes` (Optional, string[])**: Unique node identifiers, which are used to limit the response.
 - **`parent_task_id` (Optional, string)**: The parent task identifier, which is used to limit the response.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("id" \| "action" \| "task_id" \| "parent_task_id" \| "type" \| "start_time" \| "timestamp" \| "running_time_ns" \| "running_time" \| "node_id" \| "ip" \| "port" \| "node" \| "version" \| "x_opaque_id") \| Enum("id" \| "action" \| "task_id" \| "parent_task_id" \| "type" \| "start_time" \| "timestamp" \| "running_time_ns" \| "running_time" \| "node_id" \| "ip" \| "port" \| "node" \| "version" \| "x_opaque_id")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2974,7 +2974,7 @@ client.cat.templates({ ... })
 #### Request (object) [_request_cat.templates]
 - **`name` (Optional, string)**: The name of the template to return.
 Accepts wildcard expressions. If omitted, all templates are returned.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("name" \| "index_patterns" \| "order" \| "version" \| "composed_of") \| Enum("name" \| "index_patterns" \| "order" \| "version" \| "composed_of")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -7162,6 +7162,7 @@ Supports a list of values, such as `open,hidden`.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
 For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`mode` (Optional, Enum("standard" \| "time_series" \| "logsdb" \| "lookup") \| Enum("standard" \| "time_series" \| "logsdb" \| "lookup")[])**: Filter indices by index mode - standard, lookup, time_series, etc. List of IndexMode. Empty means no filter.
 
 ## client.indices.rollover [_indices.rollover]
 Roll over to a new index.
@@ -8066,6 +8067,7 @@ client.inference.putElser({ task_type, elser_inference_id, service, service_sett
 - **`service` (Enum("elser"))**: The type of service supported for the specified task type. In this case, `elser`.
 - **`service_settings` ({ adaptive_allocations, num_allocations, num_threads })**: Settings used to install the inference model. These settings are specific to the `elser` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Note that for ELSER endpoints, the max_chunk_size may not exceed `300`.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putGoogleaistudio [_inference.put_googleaistudio]
@@ -8108,7 +8110,7 @@ client.inference.putGooglevertexai({ task_type, googlevertexai_inference_id, ser
 - **`service` (Enum("googlevertexai"))**: The type of service supported for the specified task type. In this case, `googlevertexai`.
 - **`service_settings` ({ location, model_id, project_id, rate_limit, service_account_json })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
-- **`task_settings` (Optional, { auto_truncate, top_n })**: Settings to configure the inference task.
+- **`task_settings` (Optional, { auto_truncate, top_n, thinking_config })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
@@ -14062,26 +14064,33 @@ client.snapshot.repositoryAnalyze({ repository })
 #### Request (object) [_request_snapshot.repository_analyze]
 - **`repository` (string)**: The name of the repository.
 - **`blob_count` (Optional, number)**: The total number of blobs to write to the repository during the test.
-For realistic experiments, you should set it to at least `2000`.
+For realistic experiments, set this parameter to at least `2000`.
 - **`concurrency` (Optional, number)**: The number of operations to run concurrently during the test.
+For realistic experiments, leave this parameter unset.
 - **`detailed` (Optional, boolean)**: Indicates whether to return detailed results, including timing information for every operation performed during the analysis.
 If false, it returns only a summary of the analysis.
 - **`early_read_node_count` (Optional, number)**: The number of nodes on which to perform an early read operation while writing each blob.
 Early read operations are only rarely performed.
+For realistic experiments, leave this parameter unset.
 - **`max_blob_size` (Optional, number \| string)**: The maximum size of a blob to be written during the test.
-For realistic experiments, you should set it to at least `2gb`.
+For realistic experiments, set this parameter to at least `2gb`.
 - **`max_total_data_size` (Optional, number \| string)**: An upper limit on the total size of all the blobs written during the test.
-For realistic experiments, you should set it to at least `1tb`.
+For realistic experiments, set this parameter to at least `1tb`.
 - **`rare_action_probability` (Optional, number)**: The probability of performing a rare action such as an early read, an overwrite, or an aborted write on each blob.
+For realistic experiments, leave this parameter unset.
 - **`rarely_abort_writes` (Optional, boolean)**: Indicates whether to rarely cancel writes before they complete.
+For realistic experiments, leave this parameter unset.
 - **`read_node_count` (Optional, number)**: The number of nodes on which to read a blob after writing.
+For realistic experiments, leave this parameter unset.
 - **`register_operation_count` (Optional, number)**: The minimum number of linearizable register operations to perform in total.
-For realistic experiments, you should set it to at least `100`.
+For realistic experiments, set this parameter to at least `100`.
 - **`seed` (Optional, number)**: The seed for the pseudo-random number generator used to generate the list of operations performed during the test.
 To repeat the same set of operations in multiple experiments, use the same seed in each experiment.
 Note that the operations are performed concurrently so might not always happen in the same order on each run.
+For realistic experiments, leave this parameter unset.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period of time to wait for the test to complete.
 If no response is received before the timeout expires, the test is cancelled and returns an error.
+For realistic experiments, set this parameter sufficiently long to allow the test to complete.
 
 ## client.snapshot.repositoryVerifyIntegrity [_snapshot.repository_verify_integrity]
 Verify the repository integrity.
