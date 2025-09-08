@@ -715,7 +715,7 @@ export default class Connector {
   }
 
   /**
-    * Deletes a connector secret.
+    * Deletes a connector secret
     */
   async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -759,7 +759,7 @@ export default class Connector {
   }
 
   /**
-    * Retrieves a secret stored by Connectors.
+    * Retrieves a secret stored by Connectors
     */
   async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -803,7 +803,7 @@ export default class Connector {
   }
 
   /**
-    * Creates a secret for a Connector.
+    * Creates a secret for a Connector
     */
   async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -844,7 +844,7 @@ export default class Connector {
   }
 
   /**
-    * Creates or updates a secret for a Connector.
+    * Creates or updates a secret for a Connector
     */
   async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
