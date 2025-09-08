@@ -1025,10 +1025,7 @@ client.info()
 ```
 
 ## client.knnSearch [_knn_search]
-Performs a kNN search.
-
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html)
-
+Performs a kNN search
 ```ts
 client.knnSearch()
 ```
@@ -2475,7 +2472,7 @@ client.cat.health({ ... })
 #### Request (object) [_request_cat.health]
 - **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 - **`ts` (Optional, boolean)**: If true, returns `HH:MM:SS` and Unix epoch timestamps.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("epoch" \| "timestamp" \| "cluster" \| "status" \| "node.total" \| "node.data" \| "shards" \| "pri" \| "relo" \| "init" \| "unassign" \| "unassign.pri" \| "pending_tasks" \| "max_task_wait_time" \| "active_shards_percent") \| Enum("epoch" \| "timestamp" \| "cluster" \| "status" \| "node.total" \| "node.data" \| "shards" \| "pri" \| "relo" \| "init" \| "unassign" \| "unassign.pri" \| "pending_tasks" \| "max_task_wait_time" \| "active_shards_percent")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2528,7 +2525,7 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 - **`pri` (Optional, boolean)**: If true, the response only includes information from primary shards.
 - **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("health" \| "status" \| "index" \| "uuid" \| "pri" \| "rep" \| "docs.count" \| "docs.deleted" \| "creation.date" \| "creation.date.string" \| "store.size" \| "pri.store.size" \| "dataset.size" \| "completion.size" \| "pri.completion.size" \| "fielddata.memory_size" \| "pri.fielddata.memory_size" \| "fielddata.evictions" \| "pri.fielddata.evictions" \| "query_cache.memory_size" \| "pri.query_cache.memory_size" \| "query_cache.evictions" \| "pri.query_cache.evictions" \| "request_cache.memory_size" \| "pri.request_cache.memory_size" \| "request_cache.evictions" \| "pri.request_cache.evictions" \| "request_cache.hit_count" \| "pri.request_cache.hit_count" \| "request_cache.miss_count" \| "pri.request_cache.miss_count" \| "flush.total" \| "pri.flush.total" \| "flush.total_time" \| "pri.flush.total_time" \| "get.current" \| "pri.get.current" \| "get.time" \| "pri.get.time" \| "get.total" \| "pri.get.total" \| "get.exists_time" \| "pri.get.exists_time" \| "get.exists_total" \| "pri.get.exists_total" \| "get.missing_time" \| "pri.get.missing_time" \| "get.missing_total" \| "pri.get.missing_total" \| "indexing.delete_current" \| "pri.indexing.delete_current" \| "indexing.delete_time" \| "pri.indexing.delete_time" \| "indexing.delete_total" \| "pri.indexing.delete_total" \| "indexing.index_current" \| "pri.indexing.index_current" \| "indexing.index_time" \| "pri.indexing.index_time" \| "indexing.index_total" \| "pri.indexing.index_total" \| "indexing.index_failed" \| "pri.indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "pri.indexing.index_failed_due_to_version_conflict" \| "merges.current" \| "pri.merges.current" \| "merges.current_docs" \| "pri.merges.current_docs" \| "merges.current_size" \| "pri.merges.current_size" \| "merges.total" \| "pri.merges.total" \| "merges.total_docs" \| "pri.merges.total_docs" \| "merges.total_size" \| "pri.merges.total_size" \| "merges.total_time" \| "pri.merges.total_time" \| "refresh.total" \| "pri.refresh.total" \| "refresh.time" \| "pri.refresh.time" \| "refresh.external_total" \| "pri.refresh.external_total" \| "refresh.external_time" \| "pri.refresh.external_time" \| "refresh.listeners" \| "pri.refresh.listeners" \| "search.fetch_current" \| "pri.search.fetch_current" \| "search.fetch_time" \| "pri.search.fetch_time" \| "search.fetch_total" \| "pri.search.fetch_total" \| "search.open_contexts" \| "pri.search.open_contexts" \| "search.query_current" \| "pri.search.query_current" \| "search.query_time" \| "pri.search.query_time" \| "search.query_total" \| "pri.search.query_total" \| "search.scroll_current" \| "pri.search.scroll_current" \| "search.scroll_time" \| "pri.search.scroll_time" \| "search.scroll_total" \| "pri.search.scroll_total" \| "segments.count" \| "pri.segments.count" \| "segments.memory" \| "pri.segments.memory" \| "segments.index_writer_memory" \| "pri.segments.index_writer_memory" \| "segments.version_map_memory" \| "pri.segments.version_map_memory" \| "segments.fixed_bitset_memory" \| "pri.segments.fixed_bitset_memory" \| "warmer.current" \| "pri.warmer.current" \| "warmer.total" \| "pri.warmer.total" \| "warmer.total_time" \| "pri.warmer.total_time" \| "suggest.current" \| "pri.suggest.current" \| "suggest.time" \| "pri.suggest.time" \| "suggest.total" \| "pri.suggest.total" \| "memory.total" \| "pri.memory.total" \| "bulk.total_operations" \| "pri.bulk.total_operations" \| "bulk.total_time" \| "pri.bulk.total_time" \| "bulk.total_size_in_bytes" \| "pri.bulk.total_size_in_bytes" \| "bulk.avg_time" \| "pri.bulk.avg_time" \| "bulk.avg_size_in_bytes" \| "pri.bulk.avg_size_in_bytes" \| "dense_vector.value_count" \| "pri.dense_vector.value_count" \| "sparse_vector.value_count" \| "pri.sparse_vector.value_count") \| Enum("health" \| "status" \| "index" \| "uuid" \| "pri" \| "rep" \| "docs.count" \| "docs.deleted" \| "creation.date" \| "creation.date.string" \| "store.size" \| "pri.store.size" \| "dataset.size" \| "completion.size" \| "pri.completion.size" \| "fielddata.memory_size" \| "pri.fielddata.memory_size" \| "fielddata.evictions" \| "pri.fielddata.evictions" \| "query_cache.memory_size" \| "pri.query_cache.memory_size" \| "query_cache.evictions" \| "pri.query_cache.evictions" \| "request_cache.memory_size" \| "pri.request_cache.memory_size" \| "request_cache.evictions" \| "pri.request_cache.evictions" \| "request_cache.hit_count" \| "pri.request_cache.hit_count" \| "request_cache.miss_count" \| "pri.request_cache.miss_count" \| "flush.total" \| "pri.flush.total" \| "flush.total_time" \| "pri.flush.total_time" \| "get.current" \| "pri.get.current" \| "get.time" \| "pri.get.time" \| "get.total" \| "pri.get.total" \| "get.exists_time" \| "pri.get.exists_time" \| "get.exists_total" \| "pri.get.exists_total" \| "get.missing_time" \| "pri.get.missing_time" \| "get.missing_total" \| "pri.get.missing_total" \| "indexing.delete_current" \| "pri.indexing.delete_current" \| "indexing.delete_time" \| "pri.indexing.delete_time" \| "indexing.delete_total" \| "pri.indexing.delete_total" \| "indexing.index_current" \| "pri.indexing.index_current" \| "indexing.index_time" \| "pri.indexing.index_time" \| "indexing.index_total" \| "pri.indexing.index_total" \| "indexing.index_failed" \| "pri.indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "pri.indexing.index_failed_due_to_version_conflict" \| "merges.current" \| "pri.merges.current" \| "merges.current_docs" \| "pri.merges.current_docs" \| "merges.current_size" \| "pri.merges.current_size" \| "merges.total" \| "pri.merges.total" \| "merges.total_docs" \| "pri.merges.total_docs" \| "merges.total_size" \| "pri.merges.total_size" \| "merges.total_time" \| "pri.merges.total_time" \| "refresh.total" \| "pri.refresh.total" \| "refresh.time" \| "pri.refresh.time" \| "refresh.external_total" \| "pri.refresh.external_total" \| "refresh.external_time" \| "pri.refresh.external_time" \| "refresh.listeners" \| "pri.refresh.listeners" \| "search.fetch_current" \| "pri.search.fetch_current" \| "search.fetch_time" \| "pri.search.fetch_time" \| "search.fetch_total" \| "pri.search.fetch_total" \| "search.open_contexts" \| "pri.search.open_contexts" \| "search.query_current" \| "pri.search.query_current" \| "search.query_time" \| "pri.search.query_time" \| "search.query_total" \| "pri.search.query_total" \| "search.scroll_current" \| "pri.search.scroll_current" \| "search.scroll_time" \| "pri.search.scroll_time" \| "search.scroll_total" \| "pri.search.scroll_total" \| "segments.count" \| "pri.segments.count" \| "segments.memory" \| "pri.segments.memory" \| "segments.index_writer_memory" \| "pri.segments.index_writer_memory" \| "segments.version_map_memory" \| "pri.segments.version_map_memory" \| "segments.fixed_bitset_memory" \| "pri.segments.fixed_bitset_memory" \| "warmer.current" \| "pri.warmer.current" \| "warmer.total" \| "pri.warmer.total" \| "warmer.total_time" \| "pri.warmer.total_time" \| "suggest.current" \| "pri.suggest.current" \| "suggest.time" \| "pri.suggest.time" \| "suggest.total" \| "pri.suggest.total" \| "memory.total" \| "pri.memory.total" \| "bulk.total_operations" \| "pri.bulk.total_operations" \| "bulk.total_time" \| "pri.bulk.total_time" \| "bulk.total_size_in_bytes" \| "pri.bulk.total_size_in_bytes" \| "bulk.avg_time" \| "pri.bulk.avg_time" \| "bulk.avg_size_in_bytes" \| "pri.bulk.avg_size_in_bytes" \| "dense_vector.value_count" \| "pri.dense_vector.value_count" \| "sparse_vector.value_count" \| "pri.sparse_vector.value_count")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2549,7 +2546,7 @@ client.cat.master({ ... })
 ### Arguments [_arguments_cat.master]
 
 #### Request (object) [_request_cat.master]
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("id" \| "host" \| "ip" \| "node") \| Enum("id" \| "host" \| "ip" \| "node")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2700,7 +2697,7 @@ client.cat.nodeattrs({ ... })
 ### Arguments [_arguments_cat.nodeattrs]
 
 #### Request (object) [_request_cat.nodeattrs]
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("node" \| "id" \| "pid" \| "host" \| "ip" \| "port" \| "attr" \| "value") \| Enum("node" \| "id" \| "pid" \| "host" \| "ip" \| "port" \| "attr" \| "value")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2751,7 +2748,7 @@ client.cat.pendingTasks({ ... })
 ### Arguments [_arguments_cat.pending_tasks]
 
 #### Request (object) [_request_cat.pending_tasks]
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("insertOrder" \| "timeInQueue" \| "priority" \| "source") \| Enum("insertOrder" \| "timeInQueue" \| "priority" \| "source")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2777,7 +2774,7 @@ client.cat.plugins({ ... })
 ### Arguments [_arguments_cat.plugins]
 
 #### Request (object) [_request_cat.plugins]
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("id" \| "name" \| "component" \| "version" \| "description") \| Enum("id" \| "name" \| "component" \| "version" \| "description")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2810,7 +2807,7 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 - **`active_only` (Optional, boolean)**: If `true`, the response only includes ongoing shard recoveries.
 - **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
-- **`h` (Optional, Enum("index" \| "shard" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis") \| Enum("index" \| "shard" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis")[])**: A list of columns names to display.
+- **`h` (Optional, Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent") \| Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent")[])**: A list of columns names to display.
 It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
@@ -2948,7 +2945,7 @@ client.cat.tasks({ ... })
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
 - **`nodes` (Optional, string[])**: Unique node identifiers, which are used to limit the response.
 - **`parent_task_id` (Optional, string)**: The parent task identifier, which is used to limit the response.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("id" \| "action" \| "task_id" \| "parent_task_id" \| "type" \| "start_time" \| "timestamp" \| "running_time_ns" \| "running_time" \| "node_id" \| "ip" \| "port" \| "node" \| "version" \| "x_opaque_id") \| Enum("id" \| "action" \| "task_id" \| "parent_task_id" \| "type" \| "start_time" \| "timestamp" \| "running_time_ns" \| "running_time" \| "node_id" \| "ip" \| "port" \| "node" \| "version" \| "x_opaque_id")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2975,7 +2972,7 @@ client.cat.templates({ ... })
 #### Request (object) [_request_cat.templates]
 - **`name` (Optional, string)**: The name of the template to return.
 Accepts wildcard expressions. If omitted, all templates are returned.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("name" \| "index_patterns" \| "order" \| "version" \| "composed_of") \| Enum("name" \| "index_patterns" \| "order" \| "version" \| "composed_of")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -15031,7 +15028,7 @@ index will not be deleted
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.transform.getNodeStats [_transform.get_node_stats]
-Retrieves transform usage information for transform nodes.
+Retrieves transform usage information for transform nodes
 
 [Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform-node-stats.html)
 
