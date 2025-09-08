@@ -569,7 +569,7 @@ export default class Indices {
   }
 
   /**
-    * Deletes the data stream options of the selected data streams.
+    * Deletes the data stream options of the selected data streams
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index.html | Elasticsearch API documentation}
     */
   async deleteDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
@@ -1196,7 +1196,7 @@ export default class Indices {
   }
 
   /**
-    * Returns the data stream options of the selected data streams.
+    * Returns the data stream options of the selected data streams
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index.html | Elasticsearch API documentation}
     */
   async getDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
@@ -1766,7 +1766,7 @@ export default class Indices {
   }
 
   /**
-    * Updates the data stream options of the selected data streams.
+    * Updates the data stream options of the selected data streams
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index.html | Elasticsearch API documentation}
     */
   async putDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>

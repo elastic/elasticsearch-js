@@ -6190,7 +6190,7 @@ client.indices.deleteDataStream({ name })
 
 [discrete]
 ==== delete_data_stream_options
-Deletes the data stream options of the selected data streams.
+Deletes the data stream options of the selected data streams
 
 {ref}/index.html[Endpoint documentation]
 [source,ts]
@@ -6685,7 +6685,7 @@ Supports a list of values, such as `open,hidden`.
 
 [discrete]
 ==== get_data_stream_options
-Returns the data stream options of the selected data streams.
+Returns the data stream options of the selected data streams
 
 {ref}/index.html[Endpoint documentation]
 [source,ts]
@@ -7081,7 +7081,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== put_data_stream_options
-Updates the data stream options of the selected data streams.
+Updates the data stream options of the selected data streams
 
 {ref}/index.html[Endpoint documentation]
 [source,ts]
@@ -16111,7 +16111,7 @@ index will not be deleted
 
 [discrete]
 ==== get_node_stats
-Retrieves transform usage information for transform nodes.
+Retrieves transform usage information for transform nodes
 [source,ts]
 ----
 client.transform.getNodeStats()
