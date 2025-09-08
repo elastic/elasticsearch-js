@@ -1090,7 +1090,7 @@ export default class Inference {
   }
 
   /**
-    * Configure a custom inference endpoint
+    * Create a custom inference endpoint
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-custom | Elasticsearch API documentation}
     */
   async putCustom (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
