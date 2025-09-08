@@ -793,7 +793,8 @@ export default class Indices {
         query: [
           'expand_wildcards',
           'ignore_unavailable',
-          'allow_no_indices'
+          'allow_no_indices',
+          'mode'
         ]
       },
       'indices.rollover': {
