@@ -434,8 +434,6 @@ export interface DeleteByQueryRequest extends RequestBase {
   search_type?: SearchType
   /** The number of slices this task should be divided into. */
   slices?: Slices
-  /** A comma-separated list of `<field>:<direction>` pairs. */
-  sort?: string[]
   /** The specific `tag` of the request for logging and statistical purposes. */
   stats?: string[]
   /** The maximum number of documents to collect for each shard.
@@ -464,10 +462,12 @@ export interface DeleteByQueryRequest extends RequestBase {
   query?: QueryDslQueryContainer
   /** Slice the request manually using the provided slice ID and total number of slices. */
   slice?: SlicedScroll
+  /** A sort object that specifies the order of deleted documents. */
+  sort?: Sort
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, sort?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never, sort?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, sort?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never, sort?: never }
 }
 
 export interface DeleteByQueryResponse {
@@ -3404,7 +3404,7 @@ export interface TermvectorsRequest<TDocument = unknown> extends RequestBase {
   per_field_analyzer?: Record<Field, string>
   /** A list of fields to include in the statistics.
     * It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters. */
-  fields?: Fields
+  fields?: Field[]
   /** If `true`, the response includes:
     *
     * * The document count (how many documents contain this field).
@@ -4575,10 +4575,17 @@ export type Service = string
 
 export interface ShardFailure {
   index?: IndexName
+  /** @alias index */
+  _index?: IndexName
   node?: string
+  /** @alias node */
+  _node?: string
   reason: ErrorCause
-  shard: integer
+  shard?: integer
+  /** @alias shard */
+  _shard?: integer
   status?: string
+  primary?: boolean
 }
 
 export interface ShardStatistics {
@@ -5044,7 +5051,7 @@ export interface AggregationsAggregationRange {
 }
 
 export interface AggregationsArrayPercentilesItem {
-  key: string
+  key: double
   value: double | null
   value_as_string?: string
 }
@@ -5892,7 +5899,7 @@ export interface AggregationsIpRangeBucketKeys extends AggregationsMultiBucketBa
 export type AggregationsIpRangeBucket = AggregationsIpRangeBucketKeys
 & { [property: string]: AggregationsAggregate | string | long }
 
-export type AggregationsKeyedPercentiles = Record<string, string | long | null>
+export type AggregationsKeyedPercentiles = Record<string, string | double | null>
 
 export interface AggregationsLinearMovingAverageAggregation extends AggregationsMovingAverageAggregationBase {
   model: 'linear'
@@ -7948,23 +7955,26 @@ export interface MappingChunkingSettings {
     *
     * Learn more about different chunking strategies in the linked documentation. */
   strategy: string
-  /** This parameter is only applicable when using the `recursive` chunking strategy.
+  /** Only applicable to the `recursive` strategy and required when using it.
     *
     * Sets a predefined list of separators in the saved chunking settings based on the selected text type.
     * Values can be `markdown` or `plaintext`.
     *
     * Using this parameter is an alternative to manually specifying a custom `separators` list. */
-  separator_group: string
-  /** A list of strings used as possible split points when chunking text with the `recursive` strategy.
+  separator_group?: string
+  /** Only applicable to the `recursive` strategy and required when using it.
+    *
+    * A list of strings used as possible split points when chunking text.
     *
     * Each string can be a plain string or a regular expression (regex) pattern.
     * The system tries each separator in order to split the text, starting from the first item in the list.
     *
     * After splitting, it attempts to recombine smaller pieces into larger chunks that stay within
     * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
-  separators: string[]
+  separators?: string[]
   /** The maximum size of a chunk in words.
-    * This value cannot be higher than `300` or lower than `20` (for `sentence` strategy) or `10` (for `word` strategy). */
+    * This value cannot be lower than `20` (for `sentence` strategy) or `10` (for `word` strategy).
+    * This value should not exceed the window size for the associated model. */
   max_chunk_size: integer
   /** The number of overlapping words for chunks.
     * It is applicable only to a `word` chunking strategy.
@@ -10308,9 +10318,25 @@ export interface AutoscalingPutAutoscalingPolicyRequest extends RequestBase {
 
 export type AutoscalingPutAutoscalingPolicyResponse = AcknowledgedResponseBase
 
+export type CatCatAliasesColumn = 'alias' | 'a' | 'index' | 'i' | 'idx' | 'filter' | 'f' | 'fi' | 'routing.index' | 'ri' | 'routingIndex' | 'routing.search' | 'rs' | 'routingSearch' | 'is_write_index' | 'w' | 'isWriteIndex' | string
+
+export type CatCatAliasesColumns = CatCatAliasesColumn | CatCatAliasesColumn[]
+
+export type CatCatAllocationColumn = 'shards' | 's' | 'shards.undesired' | 'write_load.forecast' | 'wlf' | 'writeLoadForecast' | 'disk.indices.forecast' | 'dif' | 'diskIndicesForecast' | 'disk.indices' | 'di' | 'diskIndices' | 'disk.used' | 'du' | 'diskUsed' | 'disk.avail' | 'da' | 'diskAvail' | 'disk.total' | 'dt' | 'diskTotal' | 'disk.percent' | 'dp' | 'diskPercent' | 'host' | 'h' | 'ip' | 'node' | 'n' | 'node.role' | 'r' | 'role' | 'nodeRole' | string
+
+export type CatCatAllocationColumns = CatCatAllocationColumn | CatCatAllocationColumn[]
+
 export type CatCatAnomalyDetectorColumn = 'assignment_explanation' | 'ae' | 'buckets.count' | 'bc' | 'bucketsCount' | 'buckets.time.exp_avg' | 'btea' | 'bucketsTimeExpAvg' | 'buckets.time.exp_avg_hour' | 'bteah' | 'bucketsTimeExpAvgHour' | 'buckets.time.max' | 'btmax' | 'bucketsTimeMax' | 'buckets.time.min' | 'btmin' | 'bucketsTimeMin' | 'buckets.time.total' | 'btt' | 'bucketsTimeTotal' | 'data.buckets' | 'db' | 'dataBuckets' | 'data.earliest_record' | 'der' | 'dataEarliestRecord' | 'data.empty_buckets' | 'deb' | 'dataEmptyBuckets' | 'data.input_bytes' | 'dib' | 'dataInputBytes' | 'data.input_fields' | 'dif' | 'dataInputFields' | 'data.input_records' | 'dir' | 'dataInputRecords' | 'data.invalid_dates' | 'did' | 'dataInvalidDates' | 'data.last' | 'dl' | 'dataLast' | 'data.last_empty_bucket' | 'dleb' | 'dataLastEmptyBucket' | 'data.last_sparse_bucket' | 'dlsb' | 'dataLastSparseBucket' | 'data.latest_record' | 'dlr' | 'dataLatestRecord' | 'data.missing_fields' | 'dmf' | 'dataMissingFields' | 'data.out_of_order_timestamps' | 'doot' | 'dataOutOfOrderTimestamps' | 'data.processed_fields' | 'dpf' | 'dataProcessedFields' | 'data.processed_records' | 'dpr' | 'dataProcessedRecords' | 'data.sparse_buckets' | 'dsb' | 'dataSparseBuckets' | 'forecasts.memory.avg' | 'fmavg' | 'forecastsMemoryAvg' | 'forecasts.memory.max' | 'fmmax' | 'forecastsMemoryMax' | 'forecasts.memory.min' | 'fmmin' | 'forecastsMemoryMin' | 'forecasts.memory.total' | 'fmt' | 'forecastsMemoryTotal' | 'forecasts.records.avg' | 'fravg' | 'forecastsRecordsAvg' | 'forecasts.records.max' | 'frmax' | 'forecastsRecordsMax' | 'forecasts.records.min' | 'frmin' | 'forecastsRecordsMin' | 'forecasts.records.total' | 'frt' | 'forecastsRecordsTotal' | 'forecasts.time.avg' | 'ftavg' | 'forecastsTimeAvg' | 'forecasts.time.max' | 'ftmax' | 'forecastsTimeMax' | 'forecasts.time.min' | 'ftmin' | 'forecastsTimeMin' | 'forecasts.time.total' | 'ftt' | 'forecastsTimeTotal' | 'forecasts.total' | 'ft' | 'forecastsTotal' | 'id' | 'model.bucket_allocation_failures' | 'mbaf' | 'modelBucketAllocationFailures' | 'model.by_fields' | 'mbf' | 'modelByFields' | 'model.bytes' | 'mb' | 'modelBytes' | 'model.bytes_exceeded' | 'mbe' | 'modelBytesExceeded' | 'model.categorization_status' | 'mcs' | 'modelCategorizationStatus' | 'model.categorized_doc_count' | 'mcdc' | 'modelCategorizedDocCount' | 'model.dead_category_count' | 'mdcc' | 'modelDeadCategoryCount' | 'model.failed_category_count' | 'mdcc' | 'modelFailedCategoryCount' | 'model.frequent_category_count' | 'mfcc' | 'modelFrequentCategoryCount' | 'model.log_time' | 'mlt' | 'modelLogTime' | 'model.memory_limit' | 'mml' | 'modelMemoryLimit' | 'model.memory_status' | 'mms' | 'modelMemoryStatus' | 'model.over_fields' | 'mof' | 'modelOverFields' | 'model.partition_fields' | 'mpf' | 'modelPartitionFields' | 'model.rare_category_count' | 'mrcc' | 'modelRareCategoryCount' | 'model.timestamp' | 'mt' | 'modelTimestamp' | 'model.total_category_count' | 'mtcc' | 'modelTotalCategoryCount' | 'node.address' | 'na' | 'nodeAddress' | 'node.ephemeral_id' | 'ne' | 'nodeEphemeralId' | 'node.id' | 'ni' | 'nodeId' | 'node.name' | 'nn' | 'nodeName' | 'opened_time' | 'ot' | 'state' | 's'
 
-export type CatCatAnonalyDetectorColumns = CatCatAnomalyDetectorColumn | CatCatAnomalyDetectorColumn[]
+export type CatCatAnomalyDetectorColumns = CatCatAnomalyDetectorColumn | CatCatAnomalyDetectorColumn[]
+
+export type CatCatComponentColumn = 'name' | 'n' | 'version' | 'v' | 'alias_count' | 'a' | 'mapping_count' | 'm' | 'settings_count' | 's' | 'metadata_count' | 'me' | 'included_in' | 'i' | string
+
+export type CatCatComponentColumns = CatCatComponentColumn | CatCatComponentColumn[]
+
+export type CatCatCountColumn = 'epoch' | 't' | 'time' | 'timestamp' | 'ts' | 'hms' | 'hhmmss' | 'count' | 'dc' | 'docs.count' | 'docsCount' | string
+
+export type CatCatCountColumns = CatCatCountColumn | CatCatCountColumn[]
 
 export type CatCatDatafeedColumn = 'ae' | 'assignment_explanation' | 'bc' | 'buckets.count' | 'bucketsCount' | 'id' | 'na' | 'node.address' | 'nodeAddress' | 'ne' | 'node.ephemeral_id' | 'nodeEphemeralId' | 'ni' | 'node.id' | 'nodeId' | 'nn' | 'node.name' | 'nodeName' | 'sba' | 'search.bucket_avg' | 'searchBucketAvg' | 'sc' | 'search.count' | 'searchCount' | 'seah' | 'search.exp_avg_hour' | 'searchExpAvgHour' | 'st' | 'search.time' | 'searchTime' | 's' | 'state'
 
@@ -10320,11 +10346,39 @@ export type CatCatDfaColumn = 'assignment_explanation' | 'ae' | 'create_time' | 
 
 export type CatCatDfaColumns = CatCatDfaColumn | CatCatDfaColumn[]
 
+export type CatCatFieldDataColumn = 'id' | 'host' | 'h' | 'ip' | 'node' | 'n' | 'field' | 'f' | 'size' | 's' | string
+
+export type CatCatFieldDataColumns = CatCatFieldDataColumn | CatCatFieldDataColumn[]
+
+export type CatCatHealthColumn = 'epoch' | 't' | 'time' | 'timestamp' | 'ts' | 'hms' | 'hhmmss' | 'cluster' | 'cl' | 'status' | 'st' | 'node.total' | 'nt' | 'nodeTotal' | 'node.data' | 'nd' | 'nodeData' | 'shards' | 't' | 'sh' | 'shards.total' | 'shardsTotal' | 'pri' | 'p' | 'shards.primary' | 'shardsPrimary' | 'relo' | 'r' | 'shards.relocating' | 'shardsRelocating' | 'init' | 'i' | 'shards.initializing' | 'shardsInitializing' | 'unassign' | 'u' | 'shards.unassigned' | 'shardsUnassigned' | 'unassign.pri' | 'up' | 'shards.unassigned.primary' | 'shardsUnassignedPrimary' | 'pending_tasks' | 'pt' | 'pendingTasks' | 'max_task_wait_time' | 'mtwt' | 'maxTaskWaitTime' | 'active_shards_percent' | 'asp' | 'activeShardsPercent' | string
+
+export type CatCatHealthColumns = CatCatHealthColumn | CatCatHealthColumn[]
+
+export type CatCatIndicesColumn = 'health' | 'h' | 'status' | 's' | 'index' | 'i' | 'idx' | 'uuid' | 'id' | 'uuid' | 'pri' | 'p' | 'shards.primary' | 'shardsPrimary' | 'rep' | 'r' | 'shards.replica' | 'shardsReplica' | 'docs.count' | 'dc' | 'docsCount' | 'docs.deleted' | 'dd' | 'docsDeleted' | 'creation.date' | 'cd' | 'creation.date.string' | 'cds' | 'store.size' | 'ss' | 'storeSize' | 'pri.store.size' | 'dataset.size' | 'completion.size' | 'cs' | 'completionSize' | 'pri.completion.size' | 'fielddata.memory_size' | 'fm' | 'fielddataMemory' | 'pri.fielddata.memory_size' | 'fielddata.evictions' | 'fe' | 'fielddataEvictions' | 'pri.fielddata.evictions' | 'query_cache.memory_size' | 'qcm' | 'queryCacheMemory' | 'pri.query_cache.memory_size' | 'query_cache.evictions' | 'qce' | 'queryCacheEvictions' | 'pri.query_cache.evictions' | 'request_cache.memory_size' | 'rcm' | 'requestCacheMemory' | 'pri.request_cache.memory_size' | 'request_cache.evictions' | 'rce' | 'requestCacheEvictions' | 'pri.request_cache.evictions' | 'request_cache.hit_count' | 'rchc' | 'requestCacheHitCount' | 'pri.request_cache.hit_count' | 'request_cache.miss_count' | 'rcmc' | 'requestCacheMissCount' | 'pri.request_cache.miss_count' | 'flush.total' | 'ft' | 'flushTotal' | 'pri.flush.total' | 'flush.total_time' | 'ftt' | 'flushTotalTime' | 'pri.flush.total_time' | 'get.current' | 'gc' | 'getCurrent' | 'pri.get.current' | 'get.time' | 'gti' | 'getTime' | 'pri.get.time' | 'get.total' | 'gto' | 'getTotal' | 'pri.get.total' | 'get.exists_time' | 'geti' | 'getExistsTime' | 'pri.get.exists_time' | 'get.exists_total' | 'geto' | 'getExistsTotal' | 'pri.get.exists_total' | 'get.missing_time' | 'gmti' | 'getMissingTime' | 'pri.get.missing_time' | 'get.missing_total' | 'gmto' | 'getMissingTotal' | 'pri.get.missing_total' | 'indexing.delete_current' | 'idc' | 'indexingDeleteCurrent' | 'pri.indexing.delete_current' | 'indexing.delete_time' | 'idti' | 'indexingDeleteTime' | 'pri.indexing.delete_time' | 'indexing.delete_total' | 'idto' | 'indexingDeleteTotal' | 'pri.indexing.delete_total' | 'indexing.index_current' | 'iic' | 'indexingIndexCurrent' | 'pri.indexing.index_current' | 'indexing.index_time' | 'iiti' | 'indexingIndexTime' | 'pri.indexing.index_time' | 'indexing.index_total' | 'iito' | 'indexingIndexTotal' | 'pri.indexing.index_total' | 'indexing.index_failed' | 'iif' | 'indexingIndexFailed' | 'pri.indexing.index_failed' | 'indexing.index_failed_due_to_version_conflict' | 'iifvc' | 'indexingIndexFailedDueToVersionConflict' | 'pri.indexing.index_failed_due_to_version_conflict' | 'merges.current' | 'mc' | 'mergesCurrent' | 'pri.merges.current' | 'merges.current_docs' | 'mcd' | 'mergesCurrentDocs' | 'pri.merges.current_docs' | 'merges.current_size' | 'mcs' | 'mergesCurrentSize' | 'pri.merges.current_size' | 'merges.total' | 'mt' | 'mergesTotal' | 'pri.merges.total' | 'merges.total_docs' | 'mtd' | 'mergesTotalDocs' | 'pri.merges.total_docs' | 'merges.total_size' | 'mts' | 'mergesTotalSize' | 'pri.merges.total_size' | 'merges.total_time' | 'mtt' | 'mergesTotalTime' | 'pri.merges.total_time' | 'refresh.total' | 'rto' | 'refreshTotal' | 'pri.refresh.total' | 'refresh.time' | 'rti' | 'refreshTime' | 'pri.refresh.time' | 'refresh.external_total' | 'rto' | 'refreshTotal' | 'pri.refresh.external_total' | 'refresh.external_time' | 'rti' | 'refreshTime' | 'pri.refresh.external_time' | 'refresh.listeners' | 'rli' | 'refreshListeners' | 'pri.refresh.listeners' | 'search.fetch_current' | 'sfc' | 'searchFetchCurrent' | 'pri.search.fetch_current' | 'search.fetch_time' | 'sfti' | 'searchFetchTime' | 'pri.search.fetch_time' | 'search.fetch_total' | 'sfto' | 'searchFetchTotal' | 'pri.search.fetch_total' | 'search.open_contexts' | 'so' | 'searchOpenContexts' | 'pri.search.open_contexts' | 'search.query_current' | 'sqc' | 'searchQueryCurrent' | 'pri.search.query_current' | 'search.query_time' | 'sqti' | 'searchQueryTime' | 'pri.search.query_time' | 'search.query_total' | 'sqto' | 'searchQueryTotal' | 'pri.search.query_total' | 'search.scroll_current' | 'scc' | 'searchScrollCurrent' | 'pri.search.scroll_current' | 'search.scroll_time' | 'scti' | 'searchScrollTime' | 'pri.search.scroll_time' | 'search.scroll_total' | 'scto' | 'searchScrollTotal' | 'pri.search.scroll_total' | 'segments.count' | 'sc' | 'segmentsCount' | 'pri.segments.count' | 'segments.memory' | 'sm' | 'segmentsMemory' | 'pri.segments.memory' | 'segments.index_writer_memory' | 'siwm' | 'segmentsIndexWriterMemory' | 'pri.segments.index_writer_memory' | 'segments.version_map_memory' | 'svmm' | 'segmentsVersionMapMemory' | 'pri.segments.version_map_memory' | 'segments.fixed_bitset_memory' | 'sfbm' | 'fixedBitsetMemory' | 'pri.segments.fixed_bitset_memory' | 'warmer.current' | 'wc' | 'warmerCurrent' | 'pri.warmer.current' | 'warmer.total' | 'wto' | 'warmerTotal' | 'pri.warmer.total' | 'warmer.total_time' | 'wtt' | 'warmerTotalTime' | 'pri.warmer.total_time' | 'suggest.current' | 'suc' | 'suggestCurrent' | 'pri.suggest.current' | 'suggest.time' | 'suti' | 'suggestTime' | 'pri.suggest.time' | 'suggest.total' | 'suto' | 'suggestTotal' | 'pri.suggest.total' | 'memory.total' | 'tm' | 'memoryTotal' | 'pri.memory.total' | 'bulk.total_operations' | 'bto' | 'bulkTotalOperation' | 'pri.bulk.total_operations' | 'bulk.total_time' | 'btti' | 'bulkTotalTime' | 'pri.bulk.total_time' | 'bulk.total_size_in_bytes' | 'btsi' | 'bulkTotalSizeInBytes' | 'pri.bulk.total_size_in_bytes' | 'bulk.avg_time' | 'bati' | 'bulkAvgTime' | 'pri.bulk.avg_time' | 'bulk.avg_size_in_bytes' | 'basi' | 'bulkAvgSizeInBytes' | 'pri.bulk.avg_size_in_bytes' | 'dense_vector.value_count' | 'dvc' | 'denseVectorCount' | 'pri.dense_vector.value_count' | 'sparse_vector.value_count' | 'svc' | 'sparseVectorCount' | 'pri.sparse_vector.value_count' | string
+
+export type CatCatIndicesColumns = CatCatIndicesColumn | CatCatIndicesColumn[]
+
+export type CatCatMasterColumn = 'id' | 'host' | 'h' | 'ip' | 'node' | 'n' | string
+
+export type CatCatMasterColumns = CatCatMasterColumn | CatCatMasterColumn[]
+
 export type CatCatNodeColumn = 'build' | 'b' | 'completion.size' | 'cs' | 'completionSize' | 'cpu' | 'disk.avail' | 'd' | 'disk' | 'diskAvail' | 'disk.total' | 'dt' | 'diskTotal' | 'disk.used' | 'du' | 'diskUsed' | 'disk.used_percent' | 'dup' | 'diskUsedPercent' | 'fielddata.evictions' | 'fe' | 'fielddataEvictions' | 'fielddata.memory_size' | 'fm' | 'fielddataMemory' | 'file_desc.current' | 'fdc' | 'fileDescriptorCurrent' | 'file_desc.max' | 'fdm' | 'fileDescriptorMax' | 'file_desc.percent' | 'fdp' | 'fileDescriptorPercent' | 'flush.total' | 'ft' | 'flushTotal' | 'flush.total_time' | 'ftt' | 'flushTotalTime' | 'get.current' | 'gc' | 'getCurrent' | 'get.exists_time' | 'geti' | 'getExistsTime' | 'get.exists_total' | 'geto' | 'getExistsTotal' | 'get.missing_time' | 'gmti' | 'getMissingTime' | 'get.missing_total' | 'gmto' | 'getMissingTotal' | 'get.time' | 'gti' | 'getTime' | 'get.total' | 'gto' | 'getTotal' | 'heap.current' | 'hc' | 'heapCurrent' | 'heap.max' | 'hm' | 'heapMax' | 'heap.percent' | 'hp' | 'heapPercent' | 'http_address' | 'http' | 'id' | 'nodeId' | 'indexing.delete_current' | 'idc' | 'indexingDeleteCurrent' | 'indexing.delete_time' | 'idti' | 'indexingDeleteTime' | 'indexing.delete_total' | 'idto' | 'indexingDeleteTotal' | 'indexing.index_current' | 'iic' | 'indexingIndexCurrent' | 'indexing.index_failed' | 'iif' | 'indexingIndexFailed' | 'indexing.index_failed_due_to_version_conflict' | 'iifvc' | 'indexingIndexFailedDueToVersionConflict' | 'indexing.index_time' | 'iiti' | 'indexingIndexTime' | 'indexing.index_total' | 'iito' | 'indexingIndexTotal' | 'ip' | 'i' | 'jdk' | 'j' | 'load_1m' | 'l' | 'load_5m' | 'l' | 'load_15m' | 'l' | 'mappings.total_count' | 'mtc' | 'mappingsTotalCount' | 'mappings.total_estimated_overhead_in_bytes' | 'mteo' | 'mappingsTotalEstimatedOverheadInBytes' | 'master' | 'm' | 'merges.current' | 'mc' | 'mergesCurrent' | 'merges.current_docs' | 'mcd' | 'mergesCurrentDocs' | 'merges.current_size' | 'mcs' | 'mergesCurrentSize' | 'merges.total' | 'mt' | 'mergesTotal' | 'merges.total_docs' | 'mtd' | 'mergesTotalDocs' | 'merges.total_size' | 'mts' | 'mergesTotalSize' | 'merges.total_time' | 'mtt' | 'mergesTotalTime' | 'name' | 'n' | 'node.role' | 'r' | 'role' | 'nodeRole' | 'pid' | 'p' | 'port' | 'po' | 'query_cache.memory_size' | 'qcm' | 'queryCacheMemory' | 'query_cache.evictions' | 'qce' | 'queryCacheEvictions' | 'query_cache.hit_count' | 'qchc' | 'queryCacheHitCount' | 'query_cache.miss_count' | 'qcmc' | 'queryCacheMissCount' | 'ram.current' | 'rc' | 'ramCurrent' | 'ram.max' | 'rm' | 'ramMax' | 'ram.percent' | 'rp' | 'ramPercent' | 'refresh.total' | 'rto' | 'refreshTotal' | 'refresh.time' | 'rti' | 'refreshTime' | 'request_cache.memory_size' | 'rcm' | 'requestCacheMemory' | 'request_cache.evictions' | 'rce' | 'requestCacheEvictions' | 'request_cache.hit_count' | 'rchc' | 'requestCacheHitCount' | 'request_cache.miss_count' | 'rcmc' | 'requestCacheMissCount' | 'script.compilations' | 'scrcc' | 'scriptCompilations' | 'script.cache_evictions' | 'scrce' | 'scriptCacheEvictions' | 'search.fetch_current' | 'sfc' | 'searchFetchCurrent' | 'search.fetch_time' | 'sfti' | 'searchFetchTime' | 'search.fetch_total' | 'sfto' | 'searchFetchTotal' | 'search.open_contexts' | 'so' | 'searchOpenContexts' | 'search.query_current' | 'sqc' | 'searchQueryCurrent' | 'search.query_time' | 'sqti' | 'searchQueryTime' | 'search.query_total' | 'sqto' | 'searchQueryTotal' | 'search.scroll_current' | 'scc' | 'searchScrollCurrent' | 'search.scroll_time' | 'scti' | 'searchScrollTime' | 'search.scroll_total' | 'scto' | 'searchScrollTotal' | 'segments.count' | 'sc' | 'segmentsCount' | 'segments.fixed_bitset_memory' | 'sfbm' | 'fixedBitsetMemory' | 'segments.index_writer_memory' | 'siwm' | 'segmentsIndexWriterMemory' | 'segments.memory' | 'sm' | 'segmentsMemory' | 'segments.version_map_memory' | 'svmm' | 'segmentsVersionMapMemory' | 'shard_stats.total_count' | 'sstc' | 'shards' | 'shardStatsTotalCount' | 'suggest.current' | 'suc' | 'suggestCurrent' | 'suggest.time' | 'suti' | 'suggestTime' | 'suggest.total' | 'suto' | 'suggestTotal' | 'uptime' | 'u' | 'version' | 'v' | string
 
 export type CatCatNodeColumns = CatCatNodeColumn | CatCatNodeColumn[]
 
-export type CatCatRecoveryColumn = 'index' | 'i' | 'idx' | 'shard' | 's' | 'sh' | 'time' | 't' | 'ti' | 'primaryOrReplica' | 'type' | 'stage' | 'st' | 'source_host' | 'shost' | 'source_node' | 'snode' | 'target_host' | 'thost' | 'target_node' | 'tnode' | 'repository' | 'tnode' | 'snapshot' | 'snap' | 'files' | 'f' | 'files_recovered' | 'fr' | 'files_percent' | 'fp' | 'files_total' | 'tf' | 'bytes' | 'b' | 'bytes_recovered' | 'br' | 'bytes_percent' | 'bp' | 'bytes_total' | 'tb' | 'translog_ops' | 'to' | 'translog_ops_recovered' | 'tor' | 'translog_ops_percent' | 'top' | 'start_time' | 'start' | 'start_time_millis' | 'start_millis' | 'stop_time' | 'stop' | 'stop_time_millis' | 'stop_millis' | string
+export type CatCatNodeattrsColumn = 'node' | 'id' | 'id' | 'nodeId' | 'pid' | 'p' | 'host' | 'h' | 'ip' | 'i' | 'port' | 'po' | 'attr' | 'attr.name' | 'value' | 'attr.value' | string
+
+export type CatCatNodeattrsColumns = CatCatNodeattrsColumn | CatCatNodeattrsColumn[]
+
+export type CatCatPendingTasksColumn = 'insertOrder' | 'o' | 'timeInQueue' | 't' | 'priority' | 'p' | 'source' | 's' | string
+
+export type CatCatPendingTasksColumns = CatCatPendingTasksColumn | CatCatPendingTasksColumn[]
+
+export type CatCatPluginsColumn = 'id' | 'name' | 'n' | 'component' | 'c' | 'version' | 'v' | 'description' | 'd' | string
+
+export type CatCatPluginsColumns = CatCatPluginsColumn | CatCatPluginsColumn[]
+
+export type CatCatRecoveryColumn = 'index' | 'i' | 'idx' | 'shard' | 's' | 'sh' | 'start_time' | 'start' | 'start_time_millis' | 'start_millis' | 'stop_time' | 'stop' | 'stop_time_millis' | 'stop_millis' | 'time' | 't' | 'ti' | 'type' | 'ty' | 'stage' | 'st' | 'source_host' | 'shost' | 'source_node' | 'snode' | 'target_host' | 'thost' | 'target_node' | 'tnode' | 'repository' | 'rep' | 'snapshot' | 'snap' | 'files' | 'f' | 'files_recovered' | 'fr' | 'files_percent' | 'fp' | 'files_total' | 'tf' | 'bytes' | 'b' | 'bytes_recovered' | 'br' | 'bytes_percent' | 'bp' | 'bytes_total' | 'tb' | 'translog_ops' | 'to' | 'translog_ops_recovered' | 'tor' | 'translog_ops_percent' | 'top' | string
 
 export type CatCatRecoveryColumns = CatCatRecoveryColumn | CatCatRecoveryColumn[]
 
@@ -10342,6 +10396,14 @@ export type CatCatShardColumns = CatCatShardColumn | CatCatShardColumn[]
 export type CatCatSnapshotsColumn = 'id' | 'snapshot' | 'repository' | 're' | 'repo' | 'status' | 's' | 'start_epoch' | 'ste' | 'startEpoch' | 'start_time' | 'sti' | 'startTime' | 'end_epoch' | 'ete' | 'endEpoch' | 'end_time' | 'eti' | 'endTime' | 'duration' | 'dur' | 'indices' | 'i' | 'successful_shards' | 'ss' | 'failed_shards' | 'fs' | 'total_shards' | 'ts' | 'reason' | 'r' | string
 
 export type CatCatSnapshotsColumns = CatCatSnapshotsColumn | CatCatSnapshotsColumn[]
+
+export type CatCatTasksColumn = 'id' | 'action' | 'ac' | 'task_id' | 'ti' | 'parent_task_id' | 'pti' | 'type' | 'ty' | 'start_time' | 'start' | 'timestamp' | 'ts' | 'hms' | 'hhmmss' | 'running_time_ns' | 'time' | 'running_time' | 'time' | 'node_id' | 'ni' | 'ip' | 'i' | 'port' | 'po' | 'node' | 'n' | 'version' | 'v' | 'x_opaque_id' | 'x' | string
+
+export type CatCatTasksColumns = CatCatTasksColumn | CatCatTasksColumn[]
+
+export type CatCatTemplatesColumn = 'name' | 'n' | 'index_patterns' | 't' | 'order' | 'o' | 'p' | 'version' | 'v' | 'composed_of' | 'c' | string
+
+export type CatCatTemplatesColumns = CatCatTemplatesColumn | CatCatTemplatesColumn[]
 
 export type CatCatThreadPoolColumn = 'active' | 'a' | 'completed' | 'c' | 'core' | 'cr' | 'ephemeral_id' | 'eid' | 'host' | 'h' | 'ip' | 'i' | 'keep_alive' | 'k' | 'largest' | 'l' | 'max' | 'mx' | 'name' | 'node_id' | 'id' | 'node_name' | 'pid' | 'p' | 'pool_size' | 'psz' | 'port' | 'po' | 'queue' | 'q' | 'queue_size' | 'qs' | 'rejected' | 'r' | 'size' | 'sz' | 'type' | 't' | string
 
@@ -10406,8 +10468,8 @@ export interface CatAliasesAliasesRecord {
 export interface CatAliasesRequest extends CatCatRequestBase {
   /** A comma-separated list of aliases to retrieve. Supports wildcards (`*`).  To retrieve all aliases, omit this parameter or use `*` or `_all`. */
   name?: Names
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatAliasesColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -10540,8 +10602,8 @@ export interface CatAllocationRequest extends CatCatRequestBase {
   node_id?: NodeIds
   /** The unit used to display byte values. */
   bytes?: Bytes
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatAllocationColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -10576,8 +10638,8 @@ export interface CatComponentTemplatesRequest extends CatCatRequestBase {
     * It accepts wildcard expressions.
     * If it is omitted, all component templates are returned. */
   name?: string
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatComponentColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -10635,8 +10697,8 @@ export interface CatCountRequest extends CatCatRequestBase {
     * It supports wildcards (`*`).
     * To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatCountColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -10679,8 +10741,8 @@ export interface CatFielddataRequest extends CatCatRequestBase {
   fields?: Fields
   /** The unit used to display byte values. */
   bytes?: Bytes
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatFieldDataColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -10836,8 +10898,8 @@ export interface CatHealthRequest extends CatCatRequestBase {
   time?: TimeUnit
   /** If true, returns `HH:MM:SS` and Unix epoch timestamps. */
   ts?: boolean
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatHealthColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -11603,8 +11665,8 @@ export interface CatIndicesRequest extends CatCatRequestBase {
   time?: TimeUnit
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatIndicesColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -11635,8 +11697,8 @@ export interface CatMasterMasterRecord {
 }
 
 export interface CatMasterRequest extends CatCatRequestBase {
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatMasterColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -12464,9 +12526,9 @@ export interface CatMlJobsRequest extends CatCatRequestBase {
   /** The unit used to display byte values. */
   bytes?: Bytes
   /** Comma-separated list of column names to display. */
-  h?: CatCatAnonalyDetectorColumns
+  h?: CatCatAnomalyDetectorColumns
   /** Comma-separated list of column names or column aliases used to sort the response. */
-  s?: CatCatAnonalyDetectorColumns
+  s?: CatCatAnomalyDetectorColumns
   /** The unit used to display time values. */
   time?: TimeUnit
   /** All values in `body` will be added to the request body. */
@@ -12658,8 +12720,8 @@ export interface CatNodeattrsNodeAttributesRecord {
 }
 
 export interface CatNodeattrsRequest extends CatCatRequestBase {
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatNodeattrsColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -13443,8 +13505,8 @@ export interface CatPendingTasksPendingTasksRecord {
 }
 
 export interface CatPendingTasksRequest extends CatCatRequestBase {
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatPendingTasksColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -13497,8 +13559,8 @@ export interface CatPluginsPluginsRecord {
 }
 
 export interface CatPluginsRequest extends CatCatRequestBase {
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatPluginsColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -14659,8 +14721,8 @@ export interface CatTasksRequest extends CatCatRequestBase {
   nodes?: string[]
   /** The parent task identifier, which is used to limit the response. */
   parent_task_id?: string
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatTasksColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -14767,8 +14829,8 @@ export interface CatTemplatesRequest extends CatCatRequestBase {
   /** The name of the template to return.
     * Accepts wildcard expressions. If omitted, all templates are returned. */
   name?: Name
-  /** List of columns to appear in the response. Supports simple wildcards. */
-  h?: Names
+  /** A comma-separated list of columns names to display. It supports simple wildcards. */
+  h?: CatCatTemplatesColumns
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
@@ -15649,6 +15711,14 @@ export interface ClusterComponentTemplateNode {
   version?: VersionNumber
   _meta?: Metadata
   deprecated?: boolean
+  /** Date and time when the component template was created. Only returned if the `human` query parameter is `true`. */
+  created_date?: DateTime
+  /** Date and time when the component template was created, in milliseconds since the epoch. */
+  created_date_millis?: EpochTime<UnitMillis>
+  /** Date and time when the component template was last modified. Only returned if the `human` query parameter is `true`. */
+  modified_date?: DateTime
+  /** Date and time when the component template was last modified, in milliseconds since the epoch. */
+  modified_date_millis?: EpochTime<UnitMillis>
 }
 
 export interface ClusterComponentTemplateSummary {
@@ -15875,7 +15945,12 @@ export interface ClusterGetComponentTemplateResponse {
 export interface ClusterGetSettingsRequest extends RequestBase {
   /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
-  /** If `true`, returns default cluster settings from the local node. */
+  /** If `true`, also returns default values for all other cluster settings, reflecting the values
+    * in the `elasticsearch.yml` file of one of the nodes in the cluster. If the nodes in your
+    * cluster do not all have the same values in their `elasticsearch.yml` config files then the
+    * values returned by this API may vary from invocation to invocation and may not reflect the
+    * values that Elasticsearch uses in all situations. Use the `GET _nodes/settings` API to
+    * fetch the settings for each individual node in your cluster. */
   include_defaults?: boolean
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
@@ -19343,6 +19418,14 @@ export interface IndicesIndexTemplate {
   deprecated?: boolean
   /** A list of component template names that are allowed to be absent. */
   ignore_missing_component_templates?: Names
+  /** Date and time when the index template was created. Only returned if the `human` query parameter is `true`. */
+  created_date?: DateTime
+  /** Date and time when the index template was created, in milliseconds since the epoch. */
+  created_date_millis?: EpochTime<UnitMillis>
+  /** Date and time when the index template was last modified. Only returned if the `human` query parameter is `true`. */
+  modified_date?: DateTime
+  /** Date and time when the index template was last modified, in milliseconds since the epoch. */
+  modified_date_millis?: EpochTime<UnitMillis>
 }
 
 export interface IndicesIndexTemplateDataStreamConfiguration {
@@ -21670,10 +21753,12 @@ export interface IndicesResolveIndexRequest extends RequestBase {
     * This behavior applies even if the request targets other open indices.
     * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
+  /** Filter indices by index mode - standard, lookup, time_series, etc. Comma-separated list of IndexMode. Empty means no filter. */
+  mode?: IndicesIndexMode | IndicesIndexMode[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never }
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never, mode?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never }
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never, mode?: never }
 }
 
 export interface IndicesResolveIndexResolveIndexAliasItem {
@@ -21692,6 +21777,7 @@ export interface IndicesResolveIndexResolveIndexItem {
   aliases?: string[]
   attributes: string[]
   data_stream?: DataStreamName
+  mode?: IndicesIndexMode
 }
 
 export interface IndicesResolveIndexResponse {
@@ -22376,6 +22462,29 @@ export interface InferenceAdaptiveAllocations {
     * If not defined, the deployment scales to 0. */
   min_number_of_allocations?: integer
 }
+
+export interface InferenceAi21ServiceSettings {
+  /** The name of the model to use for the inference task.
+    * Refer to the AI21 models documentation for the list of supported models and versions.
+    * Service has been tested and confirmed to be working for `completion` and `chat_completion` tasks with the following models:
+    * * `jamba-mini`
+    * * `jamba-large` */
+  model_id: string
+  /** A valid API key for accessing AI21 API.
+    *
+    * IMPORTANT: You need to provide the API key only once, during the inference model creation.
+    * The get inference endpoint API does not retrieve your API key.
+    * After creating the inference model, you cannot change the associated API key.
+    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+  api_key?: string
+  /** This setting helps to minimize the number of rate limit errors returned from the AI21 API.
+    * By default, the `ai21` service sets the number of requests allowed per minute to 200. Please refer to AI21 documentation for more details. */
+  rate_limit?: InferenceRateLimitSetting
+}
+
+export type InferenceAi21ServiceType = 'ai21'
+
+export type InferenceAi21TaskType = 'completion' | 'chat_completion'
 
 export interface InferenceAlibabaCloudServiceSettings {
   /** A valid API key for the AlibabaCloud AI Search API. */
@@ -23126,6 +23235,9 @@ export interface InferenceGoogleVertexAITaskSettings {
   auto_truncate?: boolean
   /** For a `rerank` task, the number of the top N documents that should be returned. */
   top_n?: integer
+  /** For a `completion` or `chat_completion` task, allows configuration of the thinking features for the model.
+    * Refer to the Google documentation for the allowable configurations for each model type. */
+  thinking_config?: InferenceThinkingConfig
 }
 
 export type InferenceGoogleVertexAITaskType = 'rerank' | 'text_embedding' | 'completion' | 'chat_completion'
@@ -23168,7 +23280,8 @@ export type InferenceHuggingFaceTaskType = 'chat_completion' | 'completion' | 'r
 
 export interface InferenceInferenceChunkingSettings {
   /** The maximum size of a chunk in words.
-    * This value cannot be higher than `300` or lower than `20` (for `sentence` strategy) or `10` (for `word` strategy). */
+    * This value cannot be lower than `20` (for `sentence` strategy) or `10` (for `word` strategy).
+    * This value should not exceed the window size for the associated model. */
   max_chunk_size?: integer
   /** The number of overlapping words for chunks.
     * It is applicable only to a `word` chunking strategy.
@@ -23178,21 +23291,23 @@ export interface InferenceInferenceChunkingSettings {
     * It is applicable only for a `sentence` chunking strategy.
     * It can be either `1` or `0`. */
   sentence_overlap?: integer
-  /** This parameter is only applicable when using the `recursive` chunking strategy.
+  /** Only applicable to the `recursive` strategy and required when using it.
     *
     * Sets a predefined list of separators in the saved chunking settings based on the selected text type.
     * Values can be `markdown` or `plaintext`.
     *
     * Using this parameter is an alternative to manually specifying a custom `separators` list. */
-  separator_group: string
-  /** A list of strings used as possible split points when chunking text with the `recursive` strategy.
+  separator_group?: string
+  /** Only applicable to the `recursive` strategy and required when using it.
+    *
+    * A list of strings used as possible split points when chunking text.
     *
     * Each string can be a plain string or a regular expression (regex) pattern.
     * The system tries each separator in order to split the text, starting from the first item in the list.
     *
     * After splitting, it attempts to recombine smaller pieces into larger chunks that stay within
     * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
-  separators: string[]
+  separators?: string[]
   /** The chunking strategy: `sentence`, `word`, `none` or `recursive`.
     *
     *  * If `strategy` is set to `recursive`, you must also specify:
@@ -23220,6 +23335,13 @@ export interface InferenceInferenceEndpointInfo extends InferenceInferenceEndpoi
   inference_id: string
   /** The task type */
   task_type: InferenceTaskType
+}
+
+export interface InferenceInferenceEndpointInfoAi21 extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeAi21
 }
 
 export interface InferenceInferenceEndpointInfoAlibabaCloudAI extends InferenceInferenceEndpoint {
@@ -23327,6 +23449,13 @@ export interface InferenceInferenceEndpointInfoJinaAi extends InferenceInference
   task_type: InferenceTaskTypeJinaAi
 }
 
+export interface InferenceInferenceEndpointInfoLlama extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeLlama
+}
+
 export interface InferenceInferenceEndpointInfoMistral extends InferenceInferenceEndpoint {
   /** The inference Id */
   inference_id: string
@@ -23409,6 +23538,33 @@ export interface InferenceJinaAITaskSettings {
 export type InferenceJinaAITaskType = 'rerank' | 'text_embedding'
 
 export type InferenceJinaAITextEmbeddingTask = 'classification' | 'clustering' | 'ingest' | 'search'
+
+export interface InferenceLlamaServiceSettings {
+  /** The URL endpoint of the Llama stack endpoint.
+    * URL must contain:
+    * * For `text_embedding` task - `/v1/inference/embeddings`.
+    * * For `completion` and `chat_completion` tasks - `/v1/openai/v1/chat/completions`. */
+  url: string
+  /** The name of the model to use for the inference task.
+    * Refer to the Llama downloading models documentation for different ways of getting a list of available models and downloading them.
+    * Service has been tested and confirmed to be working with the following models:
+    * * For `text_embedding` task - `all-MiniLM-L6-v2`.
+    * * For `completion` and `chat_completion` tasks - `llama3.2:3b`. */
+  model_id: string
+  /** For a `text_embedding` task, the maximum number of tokens per input before chunking occurs. */
+  max_input_tokens?: integer
+  /** For a `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm. */
+  similarity?: InferenceLlamaSimilarityType
+  /** This setting helps to minimize the number of rate limit errors returned from the Llama API.
+    * By default, the `llama` service sets the number of requests allowed per minute to 3000. */
+  rate_limit?: InferenceRateLimitSetting
+}
+
+export type InferenceLlamaServiceType = 'llama'
+
+export type InferenceLlamaSimilarityType = 'cosine' | 'dot_product' | 'l2_norm'
+
+export type InferenceLlamaTaskType = 'text_embedding' | 'completion' | 'chat_completion'
 
 export interface InferenceMessage {
   /** The content of the message.
@@ -23540,6 +23696,7 @@ export interface InferenceRateLimitSetting {
     * * `googlevertexai` service: `30000`
     * * `hugging_face` service: `3000`
     * * `jinaai` service: `2000`
+    * * `llama` service: `3000`
     * * `mistral` service: `240`
     * * `openai` service and task type `text_embedding`: `3000`
     * * `openai` service and task type `completion`: `500`
@@ -23626,6 +23783,8 @@ export type InferenceTaskSettings = any
 
 export type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank' | 'completion' | 'chat_completion'
 
+export type InferenceTaskTypeAi21 = 'completion' | 'chat_completion'
+
 export type InferenceTaskTypeAlibabaCloudAI = 'text_embedding' | 'rerank' | 'completion' | 'sparse_embedding'
 
 export type InferenceTaskTypeAmazonBedrock = 'text_embedding' | 'completion'
@@ -23656,6 +23815,8 @@ export type InferenceTaskTypeHuggingFace = 'chat_completion' | 'completion' | 'r
 
 export type InferenceTaskTypeJinaAi = 'text_embedding' | 'rerank'
 
+export type InferenceTaskTypeLlama = 'text_embedding' | 'chat_completion' | 'completion'
+
 export type InferenceTaskTypeMistral = 'text_embedding' | 'chat_completion' | 'completion'
 
 export type InferenceTaskTypeOpenAI = 'text_embedding' | 'chat_completion' | 'completion'
@@ -23676,6 +23837,11 @@ export interface InferenceTextEmbeddingInferenceResult {
 
 export interface InferenceTextEmbeddingResult {
   embedding: InferenceDenseVector
+}
+
+export interface InferenceThinkingConfig {
+  /** Indicates the desired thinking budget in tokens. */
+  thinking_budget?: integer
 }
 
 export interface InferenceToolCall {
@@ -23881,6 +24047,25 @@ export interface InferencePutRequest extends RequestBase {
 }
 
 export type InferencePutResponse = InferenceInferenceEndpointInfo
+
+export interface InferencePutAi21Request extends RequestBase {
+  /** The type of the inference task that the model will perform. */
+  task_type: InferenceAi21TaskType
+  /** The unique identifier of the inference endpoint. */
+  ai21_inference_id: Id
+  /** Specifies the amount of time to wait for the inference endpoint to be created. */
+  timeout?: Duration
+  /** The type of service supported for the specified task type. In this case, `ai21`. */
+  service: InferenceAi21ServiceType
+  /** Settings used to install the inference model. These settings are specific to the `ai21` service. */
+  service_settings: InferenceAi21ServiceSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, ai21_inference_id?: never, timeout?: never, service?: never, service_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, ai21_inference_id?: never, timeout?: never, service?: never, service_settings?: never }
+}
+
+export type InferencePutAi21Response = InferenceInferenceEndpointInfoAi21
 
 export interface InferencePutAlibabacloudRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -24131,7 +24316,8 @@ export interface InferencePutElserRequest extends RequestBase {
   elser_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Note that for ELSER endpoints, the max_chunk_size may not exceed `300`. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `elser`. */
   service: InferenceElserServiceType
@@ -24237,6 +24423,27 @@ export interface InferencePutJinaaiRequest extends RequestBase {
 }
 
 export type InferencePutJinaaiResponse = InferenceInferenceEndpointInfoJinaAi
+
+export interface InferencePutLlamaRequest extends RequestBase {
+  /** The type of the inference task that the model will perform. */
+  task_type: InferenceLlamaTaskType
+  /** The unique identifier of the inference endpoint. */
+  llama_inference_id: Id
+  /** Specifies the amount of time to wait for the inference endpoint to be created. */
+  timeout?: Duration
+  /** The chunking configuration object. */
+  chunking_settings?: InferenceInferenceChunkingSettings
+  /** The type of service supported for the specified task type. In this case, `llama`. */
+  service: InferenceLlamaServiceType
+  /** Settings used to install the inference model. These settings are specific to the `llama` service. */
+  service_settings: InferenceLlamaServiceSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, llama_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, llama_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never }
+}
+
+export type InferencePutLlamaResponse = InferenceInferenceEndpointInfoLlama
 
 export interface InferencePutMistralRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -24986,6 +25193,14 @@ export interface IngestPipeline {
   deprecated?: boolean
   /** Arbitrary metadata about the ingest pipeline. This map is not automatically generated by Elasticsearch. */
   _meta?: Metadata
+  /** Date and time when the pipeline was created. Only returned if the `human` query parameter is `true`. */
+  created_date?: DateTime
+  /** Date and time when the pipeline was created, in milliseconds since the epoch. */
+  created_date_millis?: EpochTime<UnitMillis>
+  /** Date and time when the pipeline was last modified. Only returned if the `human` query parameter is `true`. */
+  modified_date?: DateTime
+  /** Date and time when the pipeline was last modified, in milliseconds since the epoch. */
+  modified_date_millis?: EpochTime<UnitMillis>
 }
 
 export interface IngestPipelineConfig {
@@ -34998,9 +35213,12 @@ export interface SimulateIngestIngestDocumentSimulationKeys {
     * executing a processor, or a mapping validation error when simulating indexing the resulting
     * doc. */
   error?: ErrorCause
+  effective_mapping?: MappingTypeMapping
 }
 export type SimulateIngestIngestDocumentSimulation = SimulateIngestIngestDocumentSimulationKeys
-& { [property: string]: string | Id | IndexName | Record<string, any> | SpecUtilsStringified<VersionNumber> | string[] | Record<string, string>[] | ErrorCause }
+& { [property: string]: string | Id | IndexName | Record<string, any> | SpecUtilsStringified<VersionNumber> | string[] | Record<string, string>[] | ErrorCause | MappingTypeMapping }
+
+export type SimulateIngestMergeType = 'index' | 'template'
 
 export interface SimulateIngestRequest extends RequestBase {
   /** The index to simulate ingesting into.
@@ -35010,6 +35228,11 @@ export interface SimulateIngestRequest extends RequestBase {
   /** The pipeline to use as the default pipeline.
     * This value can be used to override the default pipeline of the index. */
   pipeline?: PipelineName
+  /** The mapping merge type if mapping overrides are being provided in mapping_addition.
+    * The allowed values are one of index or template.
+    * The index option merges mappings the way they would be merged into an existing index.
+    * The template option merges mappings the way they would be merged into a template. */
+  merge_type?: SimulateIngestMergeType
   /** Sample documents to test in the pipeline. */
   docs: IngestDocument[]
   /** A map of component template names to substitute component template definition objects. */
@@ -35022,9 +35245,9 @@ export interface SimulateIngestRequest extends RequestBase {
     * If you specify both this and the request path parameter, the API only uses the request path parameter. */
   pipeline_substitutions?: Record<string, IngestPipeline>
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, pipeline?: never, docs?: never, component_template_substitutions?: never, index_template_substitutions?: never, mapping_addition?: never, pipeline_substitutions?: never }
+  body?: string | { [key: string]: any } & { index?: never, pipeline?: never, merge_type?: never, docs?: never, component_template_substitutions?: never, index_template_substitutions?: never, mapping_addition?: never, pipeline_substitutions?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, pipeline?: never, docs?: never, component_template_substitutions?: never, index_template_substitutions?: never, mapping_addition?: never, pipeline_substitutions?: never }
+  querystring?: { [key: string]: any } & { index?: never, pipeline?: never, merge_type?: never, docs?: never, component_template_substitutions?: never, index_template_substitutions?: never, mapping_addition?: never, pipeline_substitutions?: never }
 }
 
 export interface SimulateIngestResponse {
@@ -36083,37 +36306,44 @@ export interface SnapshotRepositoryAnalyzeRequest extends RequestBase {
   /** The name of the repository. */
   name: Name
   /** The total number of blobs to write to the repository during the test.
-    * For realistic experiments, you should set it to at least `2000`. */
+    * For realistic experiments, set this parameter to at least `2000`. */
   blob_count?: integer
-  /** The number of operations to run concurrently during the test. */
+  /** The number of operations to run concurrently during the test.
+    * For realistic experiments, leave this parameter unset. */
   concurrency?: integer
   /** Indicates whether to return detailed results, including timing information for every operation performed during the analysis.
     * If false, it returns only a summary of the analysis. */
   detailed?: boolean
   /** The number of nodes on which to perform an early read operation while writing each blob.
-    * Early read operations are only rarely performed. */
+    * Early read operations are only rarely performed.
+    * For realistic experiments, leave this parameter unset. */
   early_read_node_count?: integer
   /** The maximum size of a blob to be written during the test.
-    * For realistic experiments, you should set it to at least `2gb`. */
+    * For realistic experiments, set this parameter to at least `2gb`. */
   max_blob_size?: ByteSize
   /** An upper limit on the total size of all the blobs written during the test.
-    * For realistic experiments, you should set it to at least `1tb`. */
+    * For realistic experiments, set this parameter to at least `1tb`. */
   max_total_data_size?: ByteSize
-  /** The probability of performing a rare action such as an early read, an overwrite, or an aborted write on each blob. */
+  /** The probability of performing a rare action such as an early read, an overwrite, or an aborted write on each blob.
+    * For realistic experiments, leave this parameter unset. */
   rare_action_probability?: double
-  /** Indicates whether to rarely cancel writes before they complete. */
+  /** Indicates whether to rarely cancel writes before they complete.
+    * For realistic experiments, leave this parameter unset. */
   rarely_abort_writes?: boolean
-  /** The number of nodes on which to read a blob after writing. */
+  /** The number of nodes on which to read a blob after writing.
+    * For realistic experiments, leave this parameter unset. */
   read_node_count?: integer
   /** The minimum number of linearizable register operations to perform in total.
-    * For realistic experiments, you should set it to at least `100`. */
+    * For realistic experiments, set this parameter to at least `100`. */
   register_operation_count?: integer
   /** The seed for the pseudo-random number generator used to generate the list of operations performed during the test.
     * To repeat the same set of operations in multiple experiments, use the same seed in each experiment.
-    * Note that the operations are performed concurrently so might not always happen in the same order on each run. */
+    * Note that the operations are performed concurrently so might not always happen in the same order on each run.
+    * For realistic experiments, leave this parameter unset. */
   seed?: integer
   /** The period of time to wait for the test to complete.
-    * If no response is received before the timeout expires, the test is cancelled and returns an error. */
+    * If no response is received before the timeout expires, the test is cancelled and returns an error.
+    * For realistic experiments, set this parameter sufficiently long to allow the test to complete. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, blob_count?: never, concurrency?: never, detailed?: never, early_read_node_count?: never, max_blob_size?: never, max_total_data_size?: never, rare_action_probability?: never, rarely_abort_writes?: never, read_node_count?: never, register_operation_count?: never, seed?: never, timeout?: never }
@@ -37747,6 +37977,21 @@ export interface TransformScheduleNowTransformRequest extends RequestBase {
 }
 
 export type TransformScheduleNowTransformResponse = AcknowledgedResponseBase
+
+export interface TransformSetUpgradeModeRequest extends RequestBase {
+  /** When `true`, it enables `upgrade_mode` which temporarily halts all
+    * transform tasks and prohibits new transform tasks from
+    * starting. */
+  enabled?: boolean
+  /** The time to wait for the request to be completed. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { enabled?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { enabled?: never, timeout?: never }
+}
+
+export type TransformSetUpgradeModeResponse = AcknowledgedResponseBase
 
 export interface TransformStartTransformRequest extends RequestBase {
   /** Identifier for the transform. */

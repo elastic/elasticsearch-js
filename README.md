@@ -4,12 +4,23 @@
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://badge.buildkite.com/15e4246eb268ea78f6e10aa90bce38c1abb0a4489e79f5a0ac.svg)](https://buildkite.com/elastic/elasticsearch-javascript-client-integration-tests/builds?branch=main) [![Node CI](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml/badge.svg)](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml) [![codecov](https://codecov.io/gh/elastic/elasticsearch-js/branch/master/graph/badge.svg)](https://codecov.io/gh/elastic/elasticsearch-js) [![NPM downloads](https://img.shields.io/npm/dm/@elastic/elasticsearch.svg?style=flat)](https://www.npmjs.com/package/@elastic/elasticsearch)
 
-**[Download the latest version of Elasticsearch](https://www.elastic.co/downloads/elasticsearch)**
-or
-**[sign-up](https://cloud.elastic.co/registration?elektra=en-ess-sign-up-page)**
-**for a free trial of Elastic Cloud**.
-
 The official Node.js client for Elasticsearch.
+
+## Try Elasticsearch and Kibana locally
+
+If you want to try Elasticsearch and Kibana locally, you can run the following command:
+
+```bash
+curl -fsSL https://elastic.co/start-local | sh
+
+```
+
+This will run Elasticsearch at http://localhost:9200 and Kibana at http://localhost:5601.
+
+More information is available [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/run-elasticsearch-locally.html).
+
+Alternatively, you can **[download the latest version of Elasticsearch](https://www.elastic.co/downloads/elasticsearch)** manually, or
+**[sign-up](https://cloud.elastic.co/registration?elektra=en-ess-sign-up-page) for a free trial of Elastic Cloud**.
 
 ## Installation
 

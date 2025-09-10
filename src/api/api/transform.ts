@@ -134,6 +134,14 @@ export default class Transform {
           'timeout'
         ]
       },
+      'transform.set_upgrade_mode': {
+        path: [],
+        body: [],
+        query: [
+          'enabled',
+          'timeout'
+        ]
+      },
       'transform.start_transform': {
         path: [
           'transform_id'
@@ -233,7 +241,7 @@ export default class Transform {
   }
 
   /**
-    * Retrieves transform usage information for transform nodes.
+    * Retrieves transform usage information for transform nodes
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-transform-node-stats.html | Elasticsearch API documentation}
     */
   async getNodeStats (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
@@ -580,6 +588,49 @@ export default class Transform {
       pathParts: {
         transform_id: params.transform_id
       }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Set upgrade_mode for transform indices. Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade. When upgrading your cluster, in some circumstances you must restart your nodes and reindex your transform indices. In those circumstances, there must be no transforms running. You can close the transforms, do the upgrade, then open all the transforms again. Alternatively, you can use this API to temporarily halt tasks associated with the transforms and prevent new transforms from opening. You can also use this API during upgrades that do not require you to reindex your transform indices, though stopping transforms is not a requirement in that case. You can see the current value for the upgrade_mode setting by using the get transform info API.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-set-upgrade-mode | Elasticsearch API documentation}
+    */
+  async setUpgradeMode (this: That, params?: T.TransformSetUpgradeModeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformSetUpgradeModeResponse>
+  async setUpgradeMode (this: That, params?: T.TransformSetUpgradeModeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformSetUpgradeModeResponse, unknown>>
+  async setUpgradeMode (this: That, params?: T.TransformSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<T.TransformSetUpgradeModeResponse>
+  async setUpgradeMode (this: That, params?: T.TransformSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this.acceptedParams['transform.set_upgrade_mode']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = '/_transform/set_upgrade_mode'
+    const meta: TransportRequestMetadata = {
+      name: 'transform.set_upgrade_mode'
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

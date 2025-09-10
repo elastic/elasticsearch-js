@@ -20,6 +20,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.1.1
+
+### Fixes [elasticsearch-javascript-client-9.1.1-fixes]
+
+- **Propagate telemetry disabling option to transport:** an upcoming version of `@elastic/transport` will include the `x-elastic-client-meta` HTTP header that is used to capture some basic client telemetry. This change ensures the client's `enableMetaHeader` setting, which disables collecting this telemetry, is propagated to the transport.
+
 ## 9.1.0 [elasticsearch-javascript-client-9.1.0-release-notes]
 
 ### Features and enhancements [elasticsearch-javascript-client-9.1.0-features-enhancements]
@@ -29,6 +35,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 ### Fixes [elasticsearch-javascript-client-9.1.0-fixes]
 
 - **Deep merge nested options on client instantiation:** If custom values for `redaction` and `headers` options were set by the user during `Client` instantiation, nested default values would be dropped rather than deep-merged. This has been fixed.
+
+## 9.0.4
+
+### Fixes [elasticsearch-javascript-client-9.0.4-fixes]
+
+- **Propagate telemetry disabling option to transport:** an upcoming version of `@elastic/transport` will include the `x-elastic-client-meta` HTTP header that is used to capture some basic client telemetry. This change ensures the client's `enableMetaHeader` setting, which disables collecting this telemetry, is propagated to the transport.
 
 ## 9.0.3
 

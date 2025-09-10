@@ -177,7 +177,7 @@ export default class Fleet {
   }
 
   /**
-    * Deletes a secret stored by Fleet.
+    * Deletes a secret stored by Fleet
     */
   async deleteSecret (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async deleteSecret (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -221,7 +221,7 @@ export default class Fleet {
   }
 
   /**
-    * Retrieves a secret stored by Fleet.
+    * Retrieves a secret stored by Fleet
     */
   async getSecret (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async getSecret (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -364,7 +364,7 @@ export default class Fleet {
   }
 
   /**
-    * Creates a secret stored by Fleet.
+    * Creates a secret stored by Fleet
     */
   async postSecret (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async postSecret (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>

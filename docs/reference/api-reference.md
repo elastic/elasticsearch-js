@@ -76,6 +76,7 @@ Some of the officially supported clients provide helpers to assist with bulk req
 * JavaScript: Check out `client.helpers.*`
 * .NET: Check out `BulkAllObservable`
 * PHP: Check out bulk indexing.
+* Ruby: Check out `Elasticsearch::Helpers::BulkHelper`
 
 **Submitting bulk requests with cURL**
 
@@ -473,6 +474,7 @@ client.deleteByQuery({ index })
 - **`max_docs` (Optional, number)**: The maximum number of documents to delete.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The documents to delete specified with Query DSL.
 - **`slice` (Optional, { field, id, max })**: Slice the request manually using the provided slice ID and total number of slices.
+- **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: A sort object that specifies the order of deleted documents.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 - **`analyzer` (Optional, string)**: Analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
@@ -494,7 +496,6 @@ client.deleteByQuery({ index })
 - **`search_timeout` (Optional, string \| -1 \| 0)**: The explicit timeout for each search request. It defaults to no timeout.
 - **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: The type of the search operation. Available options include `query_then_fetch` and `dfs_query_then_fetch`.
 - **`slices` (Optional, number \| Enum("auto"))**: The number of slices this task should be divided into.
-- **`sort` (Optional, string[])**: A list of `<field>:<direction>` pairs.
 - **`stats` (Optional, string[])**: The specific `tag` of the request for logging and statistical purposes.
 - **`terminate_after` (Optional, number)**: The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. Use with caution. Elasticsearch applies this parameter to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period each deletion request waits for active shards.
@@ -1025,10 +1026,7 @@ client.info()
 ```
 
 ## client.knnSearch [_knn_search]
-Performs a kNN search.
-
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html)
-
+Performs a kNN search
 ```ts
 client.knnSearch()
 ```
@@ -1340,6 +1338,12 @@ To continue reindexing if there are conflicts, set the `conflicts` request body 
 In this case, the response includes a count of the version conflicts that were encountered.
 Note that the handling of other error types is unaffected by the `conflicts` property.
 Additionally, if you opt to count version conflicts, the operation could attempt to reindex more documents from the source than `max_docs` until it has successfully indexed `max_docs` documents into the target or it has gone through every document in the source query.
+
+It's recommended to reindex on indices with a green status. Reindexing can fail when a node shuts down or crashes.
+* When requested with `wait_for_completion=true` (default), the request fails if the node shuts down.
+* When requested with `wait_for_completion=false`, a task id is returned, for use with the task management APIs. The task may disappear or fail if the node shuts down.
+When retrying a failed reindex operation, it might be necessary to set `conflicts=proceed` or to first delete the partial destination index.
+Additionally, dry runs, checking disk space, and fetching index recovery information can help address the root cause.
 
 Refer to the linked documentation for examples of how to reindex documents.
 
@@ -1825,7 +1829,7 @@ client.termvectors({ index })
 - **`doc` (Optional, object)**: An artificial document (a document not present in the index) for which you want to retrieve term vectors.
 - **`filter` (Optional, { max_doc_freq, max_num_terms, max_term_freq, max_word_length, min_doc_freq, min_term_freq, min_word_length })**: Filter terms based on their tf-idf scores. This could be useful in order find out a good characteristic vector of a document. This feature works in a similar manner to the second phase of the More Like This Query.
 - **`per_field_analyzer` (Optional, Record<string, string>)**: Override the default per-field analyzer. This is useful in order to generate term vectors in any fashion, especially when using artificial documents. When providing an analyzer for a field that already stores term vectors, the term vectors will be regenerated.
-- **`fields` (Optional, string \| string[])**: A list of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
+- **`fields` (Optional, string[])**: A list of fields to include in the statistics. It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
 - **`field_statistics` (Optional, boolean)**: If `true`, the response includes: * The document count (how many documents contain this field). * The sum of document frequencies (the sum of document frequencies for all terms in this field). * The sum of total term frequencies (the sum of total term frequencies of each term in this field).
 - **`offsets` (Optional, boolean)**: If `true`, the response includes term offsets.
 - **`payloads` (Optional, boolean)**: If `true`, the response includes term payloads.
@@ -2325,7 +2329,7 @@ client.cat.aliases({ ... })
 
 #### Request (object) [_request_cat.aliases]
 - **`name` (Optional, string \| string[])**: A list of aliases to retrieve. Supports wildcards (`*`).  To retrieve all aliases, omit this parameter or use `*` or `_all`.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("alias" \| "index" \| "filter" \| "routing.index" \| "routing.search" \| "is_write_index") \| Enum("alias" \| "index" \| "filter" \| "routing.index" \| "routing.search" \| "is_write_index")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2354,7 +2358,7 @@ client.cat.allocation({ ... })
 #### Request (object) [_request_cat.allocation]
 - **`node_id` (Optional, string \| string[])**: A list of node identifiers or names used to limit the returned information.
 - **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("shards" \| "shards.undesired" \| "write_load.forecast" \| "disk.indices.forecast" \| "disk.indices" \| "disk.used" \| "disk.avail" \| "disk.total" \| "disk.percent" \| "host" \| "ip" \| "node" \| "node.role") \| Enum("shards" \| "shards.undesired" \| "write_load.forecast" \| "disk.indices.forecast" \| "disk.indices" \| "disk.used" \| "disk.avail" \| "disk.total" \| "disk.percent" \| "host" \| "ip" \| "node" \| "node.role")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2385,7 +2389,7 @@ client.cat.componentTemplates({ ... })
 - **`name` (Optional, string)**: The name of the component template.
 It accepts wildcard expressions.
 If it is omitted, all component templates are returned.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("name" \| "version" \| "alias_count" \| "mapping_count" \| "settings_count" \| "metadata_count" \| "included_in") \| Enum("name" \| "version" \| "alias_count" \| "mapping_count" \| "settings_count" \| "metadata_count" \| "included_in")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2416,7 +2420,7 @@ client.cat.count({ ... })
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases used to limit the request.
 It supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("epoch" \| "timestamp" \| "count") \| Enum("epoch" \| "timestamp" \| "count")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2441,7 +2445,7 @@ client.cat.fielddata({ ... })
 - **`fields` (Optional, string \| string[])**: List of fields used to limit returned information.
 To retrieve all fields, omit this parameter.
 - **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("id" \| "host" \| "ip" \| "node" \| "field" \| "size") \| Enum("id" \| "host" \| "ip" \| "node" \| "field" \| "size")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2470,7 +2474,7 @@ client.cat.health({ ... })
 #### Request (object) [_request_cat.health]
 - **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 - **`ts` (Optional, boolean)**: If true, returns `HH:MM:SS` and Unix epoch timestamps.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("epoch" \| "timestamp" \| "cluster" \| "status" \| "node.total" \| "node.data" \| "shards" \| "pri" \| "relo" \| "init" \| "unassign" \| "unassign.pri" \| "pending_tasks" \| "max_task_wait_time" \| "active_shards_percent") \| Enum("epoch" \| "timestamp" \| "cluster" \| "status" \| "node.total" \| "node.data" \| "shards" \| "pri" \| "relo" \| "init" \| "unassign" \| "unassign.pri" \| "pending_tasks" \| "max_task_wait_time" \| "active_shards_percent")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2523,7 +2527,7 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 - **`pri` (Optional, boolean)**: If true, the response only includes information from primary shards.
 - **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("health" \| "status" \| "index" \| "uuid" \| "pri" \| "rep" \| "docs.count" \| "docs.deleted" \| "creation.date" \| "creation.date.string" \| "store.size" \| "pri.store.size" \| "dataset.size" \| "completion.size" \| "pri.completion.size" \| "fielddata.memory_size" \| "pri.fielddata.memory_size" \| "fielddata.evictions" \| "pri.fielddata.evictions" \| "query_cache.memory_size" \| "pri.query_cache.memory_size" \| "query_cache.evictions" \| "pri.query_cache.evictions" \| "request_cache.memory_size" \| "pri.request_cache.memory_size" \| "request_cache.evictions" \| "pri.request_cache.evictions" \| "request_cache.hit_count" \| "pri.request_cache.hit_count" \| "request_cache.miss_count" \| "pri.request_cache.miss_count" \| "flush.total" \| "pri.flush.total" \| "flush.total_time" \| "pri.flush.total_time" \| "get.current" \| "pri.get.current" \| "get.time" \| "pri.get.time" \| "get.total" \| "pri.get.total" \| "get.exists_time" \| "pri.get.exists_time" \| "get.exists_total" \| "pri.get.exists_total" \| "get.missing_time" \| "pri.get.missing_time" \| "get.missing_total" \| "pri.get.missing_total" \| "indexing.delete_current" \| "pri.indexing.delete_current" \| "indexing.delete_time" \| "pri.indexing.delete_time" \| "indexing.delete_total" \| "pri.indexing.delete_total" \| "indexing.index_current" \| "pri.indexing.index_current" \| "indexing.index_time" \| "pri.indexing.index_time" \| "indexing.index_total" \| "pri.indexing.index_total" \| "indexing.index_failed" \| "pri.indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "pri.indexing.index_failed_due_to_version_conflict" \| "merges.current" \| "pri.merges.current" \| "merges.current_docs" \| "pri.merges.current_docs" \| "merges.current_size" \| "pri.merges.current_size" \| "merges.total" \| "pri.merges.total" \| "merges.total_docs" \| "pri.merges.total_docs" \| "merges.total_size" \| "pri.merges.total_size" \| "merges.total_time" \| "pri.merges.total_time" \| "refresh.total" \| "pri.refresh.total" \| "refresh.time" \| "pri.refresh.time" \| "refresh.external_total" \| "pri.refresh.external_total" \| "refresh.external_time" \| "pri.refresh.external_time" \| "refresh.listeners" \| "pri.refresh.listeners" \| "search.fetch_current" \| "pri.search.fetch_current" \| "search.fetch_time" \| "pri.search.fetch_time" \| "search.fetch_total" \| "pri.search.fetch_total" \| "search.open_contexts" \| "pri.search.open_contexts" \| "search.query_current" \| "pri.search.query_current" \| "search.query_time" \| "pri.search.query_time" \| "search.query_total" \| "pri.search.query_total" \| "search.scroll_current" \| "pri.search.scroll_current" \| "search.scroll_time" \| "pri.search.scroll_time" \| "search.scroll_total" \| "pri.search.scroll_total" \| "segments.count" \| "pri.segments.count" \| "segments.memory" \| "pri.segments.memory" \| "segments.index_writer_memory" \| "pri.segments.index_writer_memory" \| "segments.version_map_memory" \| "pri.segments.version_map_memory" \| "segments.fixed_bitset_memory" \| "pri.segments.fixed_bitset_memory" \| "warmer.current" \| "pri.warmer.current" \| "warmer.total" \| "pri.warmer.total" \| "warmer.total_time" \| "pri.warmer.total_time" \| "suggest.current" \| "pri.suggest.current" \| "suggest.time" \| "pri.suggest.time" \| "suggest.total" \| "pri.suggest.total" \| "memory.total" \| "pri.memory.total" \| "bulk.total_operations" \| "pri.bulk.total_operations" \| "bulk.total_time" \| "pri.bulk.total_time" \| "bulk.total_size_in_bytes" \| "pri.bulk.total_size_in_bytes" \| "bulk.avg_time" \| "pri.bulk.avg_time" \| "bulk.avg_size_in_bytes" \| "pri.bulk.avg_size_in_bytes" \| "dense_vector.value_count" \| "pri.dense_vector.value_count" \| "sparse_vector.value_count" \| "pri.sparse_vector.value_count") \| Enum("health" \| "status" \| "index" \| "uuid" \| "pri" \| "rep" \| "docs.count" \| "docs.deleted" \| "creation.date" \| "creation.date.string" \| "store.size" \| "pri.store.size" \| "dataset.size" \| "completion.size" \| "pri.completion.size" \| "fielddata.memory_size" \| "pri.fielddata.memory_size" \| "fielddata.evictions" \| "pri.fielddata.evictions" \| "query_cache.memory_size" \| "pri.query_cache.memory_size" \| "query_cache.evictions" \| "pri.query_cache.evictions" \| "request_cache.memory_size" \| "pri.request_cache.memory_size" \| "request_cache.evictions" \| "pri.request_cache.evictions" \| "request_cache.hit_count" \| "pri.request_cache.hit_count" \| "request_cache.miss_count" \| "pri.request_cache.miss_count" \| "flush.total" \| "pri.flush.total" \| "flush.total_time" \| "pri.flush.total_time" \| "get.current" \| "pri.get.current" \| "get.time" \| "pri.get.time" \| "get.total" \| "pri.get.total" \| "get.exists_time" \| "pri.get.exists_time" \| "get.exists_total" \| "pri.get.exists_total" \| "get.missing_time" \| "pri.get.missing_time" \| "get.missing_total" \| "pri.get.missing_total" \| "indexing.delete_current" \| "pri.indexing.delete_current" \| "indexing.delete_time" \| "pri.indexing.delete_time" \| "indexing.delete_total" \| "pri.indexing.delete_total" \| "indexing.index_current" \| "pri.indexing.index_current" \| "indexing.index_time" \| "pri.indexing.index_time" \| "indexing.index_total" \| "pri.indexing.index_total" \| "indexing.index_failed" \| "pri.indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "pri.indexing.index_failed_due_to_version_conflict" \| "merges.current" \| "pri.merges.current" \| "merges.current_docs" \| "pri.merges.current_docs" \| "merges.current_size" \| "pri.merges.current_size" \| "merges.total" \| "pri.merges.total" \| "merges.total_docs" \| "pri.merges.total_docs" \| "merges.total_size" \| "pri.merges.total_size" \| "merges.total_time" \| "pri.merges.total_time" \| "refresh.total" \| "pri.refresh.total" \| "refresh.time" \| "pri.refresh.time" \| "refresh.external_total" \| "pri.refresh.external_total" \| "refresh.external_time" \| "pri.refresh.external_time" \| "refresh.listeners" \| "pri.refresh.listeners" \| "search.fetch_current" \| "pri.search.fetch_current" \| "search.fetch_time" \| "pri.search.fetch_time" \| "search.fetch_total" \| "pri.search.fetch_total" \| "search.open_contexts" \| "pri.search.open_contexts" \| "search.query_current" \| "pri.search.query_current" \| "search.query_time" \| "pri.search.query_time" \| "search.query_total" \| "pri.search.query_total" \| "search.scroll_current" \| "pri.search.scroll_current" \| "search.scroll_time" \| "pri.search.scroll_time" \| "search.scroll_total" \| "pri.search.scroll_total" \| "segments.count" \| "pri.segments.count" \| "segments.memory" \| "pri.segments.memory" \| "segments.index_writer_memory" \| "pri.segments.index_writer_memory" \| "segments.version_map_memory" \| "pri.segments.version_map_memory" \| "segments.fixed_bitset_memory" \| "pri.segments.fixed_bitset_memory" \| "warmer.current" \| "pri.warmer.current" \| "warmer.total" \| "pri.warmer.total" \| "warmer.total_time" \| "pri.warmer.total_time" \| "suggest.current" \| "pri.suggest.current" \| "suggest.time" \| "pri.suggest.time" \| "suggest.total" \| "pri.suggest.total" \| "memory.total" \| "pri.memory.total" \| "bulk.total_operations" \| "pri.bulk.total_operations" \| "bulk.total_time" \| "pri.bulk.total_time" \| "bulk.total_size_in_bytes" \| "pri.bulk.total_size_in_bytes" \| "bulk.avg_time" \| "pri.bulk.avg_time" \| "bulk.avg_size_in_bytes" \| "pri.bulk.avg_size_in_bytes" \| "dense_vector.value_count" \| "pri.dense_vector.value_count" \| "sparse_vector.value_count" \| "pri.sparse_vector.value_count")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2544,7 +2548,7 @@ client.cat.master({ ... })
 ### Arguments [_arguments_cat.master]
 
 #### Request (object) [_request_cat.master]
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("id" \| "host" \| "ip" \| "node") \| Enum("id" \| "host" \| "ip" \| "node")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2695,7 +2699,7 @@ client.cat.nodeattrs({ ... })
 ### Arguments [_arguments_cat.nodeattrs]
 
 #### Request (object) [_request_cat.nodeattrs]
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("node" \| "id" \| "pid" \| "host" \| "ip" \| "port" \| "attr" \| "value") \| Enum("node" \| "id" \| "pid" \| "host" \| "ip" \| "port" \| "attr" \| "value")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2746,7 +2750,7 @@ client.cat.pendingTasks({ ... })
 ### Arguments [_arguments_cat.pending_tasks]
 
 #### Request (object) [_request_cat.pending_tasks]
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("insertOrder" \| "timeInQueue" \| "priority" \| "source") \| Enum("insertOrder" \| "timeInQueue" \| "priority" \| "source")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2772,7 +2776,7 @@ client.cat.plugins({ ... })
 ### Arguments [_arguments_cat.plugins]
 
 #### Request (object) [_request_cat.plugins]
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("id" \| "name" \| "component" \| "version" \| "description") \| Enum("id" \| "name" \| "component" \| "version" \| "description")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2805,7 +2809,7 @@ Supports wildcards (`*`). To target all data streams and indices, omit this para
 - **`active_only` (Optional, boolean)**: If `true`, the response only includes ongoing shard recoveries.
 - **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
-- **`h` (Optional, Enum("index" \| "shard" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis") \| Enum("index" \| "shard" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis")[])**: A list of columns names to display.
+- **`h` (Optional, Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent") \| Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent")[])**: A list of columns names to display.
 It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
@@ -2943,7 +2947,7 @@ client.cat.tasks({ ... })
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
 - **`nodes` (Optional, string[])**: Unique node identifiers, which are used to limit the response.
 - **`parent_task_id` (Optional, string)**: The parent task identifier, which is used to limit the response.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("id" \| "action" \| "task_id" \| "parent_task_id" \| "type" \| "start_time" \| "timestamp" \| "running_time_ns" \| "running_time" \| "node_id" \| "ip" \| "port" \| "node" \| "version" \| "x_opaque_id") \| Enum("id" \| "action" \| "task_id" \| "parent_task_id" \| "type" \| "start_time" \| "timestamp" \| "running_time_ns" \| "running_time" \| "node_id" \| "ip" \| "port" \| "node" \| "version" \| "x_opaque_id")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2970,7 +2974,7 @@ client.cat.templates({ ... })
 #### Request (object) [_request_cat.templates]
 - **`name` (Optional, string)**: The name of the template to return.
 Accepts wildcard expressions. If omitted, all templates are returned.
-- **`h` (Optional, string \| string[])**: List of columns to appear in the response. Supports simple wildcards.
+- **`h` (Optional, Enum("name" \| "index_patterns" \| "order" \| "version" \| "composed_of") \| Enum("name" \| "index_patterns" \| "order" \| "version" \| "composed_of")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -3487,7 +3491,12 @@ client.cluster.getSettings({ ... })
 
 #### Request (object) [_request_cluster.get_settings]
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
-- **`include_defaults` (Optional, boolean)**: If `true`, returns default cluster settings from the local node.
+- **`include_defaults` (Optional, boolean)**: If `true`, also returns default values for all other cluster settings, reflecting the values
+in the `elasticsearch.yml` file of one of the nodes in the cluster. If the nodes in your
+cluster do not all have the same values in their `elasticsearch.yml` config files then the
+values returned by this API may vary from invocation to invocation and may not reflect the
+values that Elasticsearch uses in all situations. Use the `GET _nodes/settings` API to
+fetch the settings for each individual node in your cluster.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
@@ -4709,6 +4718,9 @@ If `true`, the response will include an extra section under the name `all_column
 ## client.esql.getQuery [_esql.get_query]
 Get a specific running ES|QL query information.
 Returns an object extended information about a running ES|QL query.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-query)
+
 ```ts
 client.esql.getQuery({ id })
 ```
@@ -4721,6 +4733,9 @@ client.esql.getQuery({ id })
 ## client.esql.listQueries [_esql.list_queries]
 Get running ES|QL queries information.
 Returns an object containing IDs and other information about the running ES|QL queries.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-list-queries)
+
 ```ts
 client.esql.listQueries()
 ```
@@ -5663,7 +5678,7 @@ client.indices.deleteDataStream({ name })
 Delete data stream options.
 Removes the data stream options from a data stream.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-data-stream-options)
 
 ```ts
 client.indices.deleteDataStreamOptions({ name })
@@ -6154,7 +6169,7 @@ Get data stream options.
 
 Get the data stream options configuration of one or more data streams.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-options)
 
 ```ts
 client.indices.getDataStreamOptions({ name })
@@ -6571,7 +6586,7 @@ error.
 Update data stream options.
 Update the data stream options of the specified data streams.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-options)
 
 ```ts
 client.indices.putDataStreamOptions({ name })
@@ -6706,7 +6721,7 @@ You can use the update mapping API to:
 - Change a field's mapping using reindexing
 - Rename a field using a field alias
 
-Learn how to use the update mapping API with practical examples in the [Update mapping API examples](https://www.elastic.co/docs//manage-data/data-store/mapping/update-mappings-examples) guide.
+Learn how to use the update mapping API with practical examples in the [Update mapping API examples](https://www.elastic.co/docs/manage-data/data-store/mapping/update-mappings-examples) guide.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-mapping)
 
@@ -7147,10 +7162,11 @@ Supports a list of values, such as `open,hidden`.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
 For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`mode` (Optional, Enum("standard" \| "time_series" \| "logsdb" \| "lookup") \| Enum("standard" \| "time_series" \| "logsdb" \| "lookup")[])**: Filter indices by index mode - standard, lookup, time_series, etc. List of IndexMode. Empty means no filter.
 
 ## client.indices.rollover [_indices.rollover]
 Roll over to a new index.
-TIP: It is recommended to use the index lifecycle rollover action to automate rollovers.
+TIP: We recommend using the index lifecycle rollover action to automate rollovers. However, Serverless does not support Index Lifecycle Management (ILM), so don't use this approach in the Serverless context.
 
 The rollover API creates a new index for a data stream or index alias.
 The API behavior depends on the rollover target.
@@ -7667,6 +7683,7 @@ For built-in models and models uploaded through Eland, the inference APIs offer 
 However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
 
 The following integrations are available through the inference API. You can find the available task types next to the integration name:
+* AI21 (`chat_completion`, `completion`)
 * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`)
 * Amazon Bedrock (`completion`, `text_embedding`)
 * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`)
@@ -7674,17 +7691,18 @@ The following integrations are available through the inference API. You can find
 * Azure AI Studio (`completion`, 'rerank', `text_embedding`)
 * Azure OpenAI (`completion`, `text_embedding`)
 * Cohere (`completion`, `rerank`, `text_embedding`)
-* DeepSeek (`completion`, `chat_completion`)
+* DeepSeek (`chat_completion`, `completion`)
 * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland)
 * ELSER (`sparse_embedding`)
 * Google AI Studio (`completion`, `text_embedding`)
-* Google Vertex AI (`rerank`, `text_embedding`)
+* Google Vertex AI (`chat_completion`, `completion`, `rerank`, `text_embedding`)
 * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`)
+* JinaAI (`rerank`, `text_embedding`)
+* Llama (`chat_completion`, `completion`, `text_embedding`)
 * Mistral (`chat_completion`, `completion`, `text_embedding`)
 * OpenAI (`chat_completion`, `completion`, `text_embedding`)
-* VoyageAI (`text_embedding`, `rerank`)
+* VoyageAI (`rerank`, `text_embedding`)
 * Watsonx inference integration (`text_embedding`)
-* JinaAI (`text_embedding`, `rerank`)
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put)
 
@@ -7698,6 +7716,26 @@ client.inference.put({ inference_id })
 - **`inference_id` (string)**: The inference Id
 - **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The task type. Refer to the integration list in the API description for the available task types.
 - **`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })**
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
+
+## client.inference.putAi21 [_inference.put_ai21]
+Create a AI21 inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `ai21` service.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-ai21)
+
+```ts
+client.inference.putAi21({ task_type, ai21_inference_id, service, service_settings })
+```
+
+### Arguments [_arguments_inference.put_ai21]
+
+#### Request (object) [_request_inference.put_ai21]
+- **`task_type` (Enum("completion" \| "chat_completion"))**: The type of the inference task that the model will perform.
+- **`ai21_inference_id` (string)**: The unique identifier of the inference endpoint.
+- **`service` (Enum("ai21"))**: The type of service supported for the specified task type. In this case, `ai21`.
+- **`service_settings` ({ model_id, api_key, rate_limit })**: Settings used to install the inference model. These settings are specific to the `ai21` service.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putAlibabacloud [_inference.put_alibabacloud]
@@ -8029,6 +8067,7 @@ client.inference.putElser({ task_type, elser_inference_id, service, service_sett
 - **`service` (Enum("elser"))**: The type of service supported for the specified task type. In this case, `elser`.
 - **`service_settings` ({ adaptive_allocations, num_allocations, num_threads })**: Settings used to install the inference model. These settings are specific to the `elser` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Note that for ELSER endpoints, the max_chunk_size may not exceed `300`.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putGoogleaistudio [_inference.put_googleaistudio]
@@ -8071,7 +8110,7 @@ client.inference.putGooglevertexai({ task_type, googlevertexai_inference_id, ser
 - **`service` (Enum("googlevertexai"))**: The type of service supported for the specified task type. In this case, `googlevertexai`.
 - **`service_settings` ({ location, model_id, project_id, rate_limit, service_account_json })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
-- **`task_settings` (Optional, { auto_truncate, top_n })**: Settings to configure the inference task.
+- **`task_settings` (Optional, { auto_truncate, top_n, thinking_config })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
@@ -8157,6 +8196,27 @@ client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_se
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { return_documents, task, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
+
+## client.inference.putLlama [_inference.put_llama]
+Create a Llama inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `llama` service.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-llama)
+
+```ts
+client.inference.putLlama({ task_type, llama_inference_id, service, service_settings })
+```
+
+### Arguments [_arguments_inference.put_llama]
+
+#### Request (object) [_request_inference.put_llama]
+- **`task_type` (Enum("text_embedding" \| "completion" \| "chat_completion"))**: The type of the inference task that the model will perform.
+- **`llama_inference_id` (string)**: The unique identifier of the inference endpoint.
+- **`service` (Enum("llama"))**: The type of service supported for the specified task type. In this case, `llama`.
+- **`service_settings` ({ url, model_id, max_input_tokens, similarity, rate_limit })**: Settings used to install the inference model. These settings are specific to the `llama` service.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putMistral [_inference.put_mistral]
@@ -8583,7 +8643,7 @@ client.ingest.simulate({ docs })
 - **`docs` ({ _id, _index, _source }[])**: Sample documents to test in the pipeline.
 - **`id` (Optional, string)**: The pipeline to test.
 If you don't specify a `pipeline` in the request body, this parameter is required.
-- **`pipeline` (Optional, { description, on_failure, processors, version, deprecated, _meta })**: The pipeline to test.
+- **`pipeline` (Optional, { description, on_failure, processors, version, deprecated, _meta, created_date, created_date_millis, modified_date, modified_date_millis })**: The pipeline to test.
 If you don't specify the `pipeline` request path parameter, this parameter is required.
 If you specify both this and the request path parameter, the API only uses the request path parameter.
 - **`verbose` (Optional, boolean)**: If `true`, the response includes output data for each processor in the executed pipeline.
@@ -8769,7 +8829,7 @@ client.logstash.putPipeline({ id })
 
 #### Request (object) [_request_logstash.put_pipeline]
 - **`id` (string)**: An identifier for the pipeline.
-- **`pipeline` (Optional, { description, on_failure, processors, version, deprecated, _meta })**
+- **`pipeline` (Optional, { description, on_failure, processors, version, deprecated, _meta, created_date, created_date_millis, modified_date, modified_date_millis })**
 
 ## client.migration.deprecations [_migration.deprecations]
 Get deprecation information.
@@ -13441,14 +13501,18 @@ client.simulate.ingest({ docs })
 - **`index` (Optional, string)**: The index to simulate ingesting into.
 This value can be overridden by specifying an index on each document.
 If you specify this parameter in the request path, it is used for any documents that do not explicitly specify an index argument.
-- **`component_template_substitutions` (Optional, Record<string, { template, version, _meta, deprecated }>)**: A map of component template names to substitute component template definition objects.
-- **`index_template_substitutions` (Optional, Record<string, { index_patterns, composed_of, template, version, priority, _meta, allow_auto_create, data_stream, deprecated, ignore_missing_component_templates }>)**: A map of index template names to substitute index template definition objects.
+- **`component_template_substitutions` (Optional, Record<string, { template, version, _meta, deprecated, created_date, created_date_millis, modified_date, modified_date_millis }>)**: A map of component template names to substitute component template definition objects.
+- **`index_template_substitutions` (Optional, Record<string, { index_patterns, composed_of, template, version, priority, _meta, allow_auto_create, data_stream, deprecated, ignore_missing_component_templates, created_date, created_date_millis, modified_date, modified_date_millis }>)**: A map of index template names to substitute index template definition objects.
 - **`mapping_addition` (Optional, { all_field, date_detection, dynamic, dynamic_date_formats, dynamic_templates, _field_names, index_field, _meta, numeric_detection, properties, _routing, _size, _source, runtime, enabled, subobjects, _data_stream_timestamp })**
-- **`pipeline_substitutions` (Optional, Record<string, { description, on_failure, processors, version, deprecated, _meta }>)**: Pipelines to test.
+- **`pipeline_substitutions` (Optional, Record<string, { description, on_failure, processors, version, deprecated, _meta, created_date, created_date_millis, modified_date, modified_date_millis }>)**: Pipelines to test.
 If you don’t specify the `pipeline` request path parameter, this parameter is required.
 If you specify both this and the request path parameter, the API only uses the request path parameter.
 - **`pipeline` (Optional, string)**: The pipeline to use as the default pipeline.
 This value can be used to override the default pipeline of the index.
+- **`merge_type` (Optional, Enum("index" \| "template"))**: The mapping merge type if mapping overrides are being provided in mapping_addition.
+The allowed values are one of index or template.
+The index option merges mappings the way they would be merged into an existing index.
+The template option merges mappings the way they would be merged into a template.
 
 ## client.slm.deleteLifecycle [_slm.delete_lifecycle]
 Delete a policy.
@@ -14000,26 +14064,33 @@ client.snapshot.repositoryAnalyze({ repository })
 #### Request (object) [_request_snapshot.repository_analyze]
 - **`repository` (string)**: The name of the repository.
 - **`blob_count` (Optional, number)**: The total number of blobs to write to the repository during the test.
-For realistic experiments, you should set it to at least `2000`.
+For realistic experiments, set this parameter to at least `2000`.
 - **`concurrency` (Optional, number)**: The number of operations to run concurrently during the test.
+For realistic experiments, leave this parameter unset.
 - **`detailed` (Optional, boolean)**: Indicates whether to return detailed results, including timing information for every operation performed during the analysis.
 If false, it returns only a summary of the analysis.
 - **`early_read_node_count` (Optional, number)**: The number of nodes on which to perform an early read operation while writing each blob.
 Early read operations are only rarely performed.
+For realistic experiments, leave this parameter unset.
 - **`max_blob_size` (Optional, number \| string)**: The maximum size of a blob to be written during the test.
-For realistic experiments, you should set it to at least `2gb`.
+For realistic experiments, set this parameter to at least `2gb`.
 - **`max_total_data_size` (Optional, number \| string)**: An upper limit on the total size of all the blobs written during the test.
-For realistic experiments, you should set it to at least `1tb`.
+For realistic experiments, set this parameter to at least `1tb`.
 - **`rare_action_probability` (Optional, number)**: The probability of performing a rare action such as an early read, an overwrite, or an aborted write on each blob.
+For realistic experiments, leave this parameter unset.
 - **`rarely_abort_writes` (Optional, boolean)**: Indicates whether to rarely cancel writes before they complete.
+For realistic experiments, leave this parameter unset.
 - **`read_node_count` (Optional, number)**: The number of nodes on which to read a blob after writing.
+For realistic experiments, leave this parameter unset.
 - **`register_operation_count` (Optional, number)**: The minimum number of linearizable register operations to perform in total.
-For realistic experiments, you should set it to at least `100`.
+For realistic experiments, set this parameter to at least `100`.
 - **`seed` (Optional, number)**: The seed for the pseudo-random number generator used to generate the list of operations performed during the test.
 To repeat the same set of operations in multiple experiments, use the same seed in each experiment.
 Note that the operations are performed concurrently so might not always happen in the same order on each run.
+For realistic experiments, leave this parameter unset.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period of time to wait for the test to complete.
 If no response is received before the timeout expires, the test is cancelled and returns an error.
+For realistic experiments, set this parameter sufficiently long to allow the test to complete.
 
 ## client.snapshot.repositoryVerifyIntegrity [_snapshot.repository_verify_integrity]
 Verify the repository integrity.
@@ -15067,7 +15138,7 @@ index will not be deleted
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.transform.getNodeStats [_transform.get_node_stats]
-Retrieves transform usage information for transform nodes.
+Retrieves transform usage information for transform nodes
 
 [Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform-node-stats.html)
 
@@ -15272,6 +15343,35 @@ client.transform.scheduleNowTransform({ transform_id })
 #### Request (object) [_request_transform.schedule_now_transform]
 - **`transform_id` (string)**: Identifier for the transform.
 - **`timeout` (Optional, string \| -1 \| 0)**: Controls the time to wait for the scheduling to take place
+
+## client.transform.setUpgradeMode [_transform.set_upgrade_mode]
+Set upgrade_mode for transform indices.
+Sets a cluster wide upgrade_mode setting that prepares transform
+indices for an upgrade.
+When upgrading your cluster, in some circumstances you must restart your
+nodes and reindex your transform indices. In those circumstances,
+there must be no transforms running. You can close the transforms,
+do the upgrade, then open all the transforms again. Alternatively,
+you can use this API to temporarily halt tasks associated with the transforms
+and prevent new transforms from opening. You can also use this API
+during upgrades that do not require you to reindex your transform
+indices, though stopping transforms is not a requirement in that case.
+You can see the current value for the upgrade_mode setting by using the get
+transform info API.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-set-upgrade-mode)
+
+```ts
+client.transform.setUpgradeMode({ ... })
+```
+
+### Arguments [_arguments_transform.set_upgrade_mode]
+
+#### Request (object) [_request_transform.set_upgrade_mode]
+- **`enabled` (Optional, boolean)**: When `true`, it enables `upgrade_mode` which temporarily halts all
+transform tasks and prohibits new transform tasks from
+starting.
+- **`timeout` (Optional, string \| -1 \| 0)**: The time to wait for the request to be completed.
 
 ## client.transform.startTransform [_transform.start_transform]
 Start a transform.
