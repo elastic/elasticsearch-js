@@ -4257,6 +4257,8 @@ export interface NodeStatistics {
   failed: integer
 }
 
+export type NodeStatsLevel = 'node' | 'indices' | 'shards'
+
 export type Normalization = 'no' | 'h1' | 'h2' | 'h3' | 'z'
 
 export type OpType = 'index' | 'create'
@@ -22010,10 +22012,11 @@ export interface IndicesSimulateIndexTemplateRequest extends RequestBase {
   master_timeout?: Duration
   /** If true, returns all relevant default configurations for the index template. */
   include_defaults?: boolean
+  index_template?: IndicesIndexTemplate
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, include_defaults?: never }
+  body?: string | { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, include_defaults?: never, index_template?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, include_defaults?: never }
+  querystring?: { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, include_defaults?: never, index_template?: never }
 }
 
 export interface IndicesSimulateIndexTemplateResponse {
@@ -24604,12 +24607,23 @@ export interface InferenceTextEmbeddingRequest extends RequestBase {
   /** Inference input.
     * Either a string or an array of strings. */
   input: string | string[]
+  /** The input data type for the text embedding model. Possible values include:
+    * * `SEARCH`
+    * * `INGEST`
+    * * `CLASSIFICATION`
+    * * `CLUSTERING`
+    * Not all services support all values. Unsupported values will trigger a validation exception.
+    * Accepted values depend on the configured inference service, refer to the relevant service-specific documentation for more info.
+    *
+    * > info
+    * > The `input_type` parameter specified on the root level of the request body will take precedence over the `input_type` parameter specified in `task_settings`. */
+  input_type?: string
   /** Optional task settings */
   task_settings?: InferenceTaskSettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, task_settings?: never }
+  body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, input_type?: never, task_settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, task_settings?: never }
+  querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, input_type?: never, task_settings?: never }
 }
 
 export type InferenceTextEmbeddingResponse = InferenceTextEmbeddingInferenceResult
@@ -24632,8 +24646,10 @@ export interface IngestAppendProcessor extends IngestProcessorBase {
   /** The field to be appended to.
     * Supports template snippets. */
   field: Field
-  /** The value to be appended. Supports template snippets. */
-  value: any | any[]
+  /** The value to be appended. Supports template snippets. May specify only one of `value` or `copy_from`. */
+  value?: any | any[]
+  /** The origin field which will be appended to `field`, cannot set `value` simultaneously. */
+  copy_from?: Field
   /** If `false`, the processor does not append values already present in the field. */
   allow_duplicates?: boolean
 }
@@ -25917,7 +25933,9 @@ export interface LicenseGetRequest extends RequestBase {
   /** If `true`, this parameter returns enterprise for Enterprise license types. If `false`, this parameter returns platinum for both platinum and enterprise license types. This behavior is maintained for backwards compatibility.
     * This parameter is deprecated and will always be set to true in 8.x. */
   accept_enterprise?: boolean
-  /** Specifies whether to retrieve local information. The default value is `false`, which means the information is retrieved from the master node. */
+  /** Specifies whether to retrieve local information.
+    * From 9.2 onwards the default value is `true`, which means the information is retrieved from the responding node.
+    * In earlier versions the default is `false`, which means the information is retrieved from the elected master node. */
   local?: boolean
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { accept_enterprise?: never, local?: never }
@@ -26577,6 +26595,7 @@ export interface MlDatafeed {
   authorization?: MlDatafeedAuthorization
   chunking_config?: MlChunkingConfig
   datafeed_id: Id
+  /** The interval at which scheduled queries are made while the datafeed runs in real time. The default value is either the bucket span for short bucket spans, or, for longer bucket spans, a sensible fraction of the bucket span. For example: `150s`. When `frequency` is shorter than the bucket span, interim results for the last (partial) bucket are written then eventually overwritten by the full bucket results. If the datafeed uses aggregations, this value must be divisible by the interval of the date histogram aggregation. */
   frequency?: Duration
   indices: string[]
   indexes?: string[]
@@ -30510,6 +30529,7 @@ export interface MlUpdateDatafeedResponse {
   chunking_config: MlChunkingConfig
   delayed_data_check_config?: MlDelayedDataCheckConfig
   datafeed_id: Id
+  /** The interval at which scheduled queries are made while the datafeed runs in real time. The default value is either the bucket span for short bucket spans, or, for longer bucket spans, a sensible fraction of the bucket span. For example: `150s`. When `frequency` is shorter than the bucket span, interim results for the last (partial) bucket are written then eventually overwritten by the full bucket results. If the datafeed uses aggregations, this value must be divisible by the interval of the date histogram aggregation. */
   frequency?: Duration
   indices: string[]
   indices_options?: IndicesOptions
@@ -32029,7 +32049,7 @@ export interface NodesStatsRequest extends RequestBase {
   /** If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested). */
   include_segment_file_sizes?: boolean
   /** Indicates whether statistics are aggregated at the cluster, index, or shard level. */
-  level?: Level
+  level?: NodeStatsLevel
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** A comma-separated list of document types for the indexing index metric. */
@@ -32913,6 +32933,8 @@ export interface SecurityApiKey {
   _sort?: SortResults
 }
 
+export type SecurityApiKeyManagedBy = 'cloud' | 'elasticsearch'
+
 export type SecurityApiKeyType = 'rest' | 'cross_cluster'
 
 export interface SecurityApplicationGlobalUserPrivileges {
@@ -33240,6 +33262,8 @@ export type SecurityActivateUserProfileResponse = SecurityUserProfileWithMetadat
 export interface SecurityAuthenticateAuthenticateApiKey {
   id: Id
   name?: Name
+  managed_by: SecurityApiKeyManagedBy
+  internal: boolean
 }
 
 export interface SecurityAuthenticateRequest extends RequestBase {

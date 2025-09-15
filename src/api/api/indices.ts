@@ -858,7 +858,9 @@ export default class Indices {
         path: [
           'name'
         ],
-        body: [],
+        body: [
+          'index_template'
+        ],
         query: [
           'create',
           'cause',
@@ -1796,7 +1798,7 @@ export default class Indices {
   }
 
   /**
-    * Analyze the index disk usage. Analyze the disk usage of each field of an index or data stream. This API might not support indices created in previous Elasticsearch versions. The result of a small index can be inaccurate as some parts of an index might not be analyzed by the API. NOTE: The total size of fields of the analyzed shards of the index in the response is usually smaller than the index `store_size` value because some small metadata files are ignored and some parts of data files might not be scanned by the API. Since stored fields are stored together in a compressed format, the sizes of stored fields are also estimates and can be inaccurate. The stored size of the `_id` field is likely underestimated while the `_source` field is overestimated.
+    * Analyze the index disk usage. Analyze the disk usage of each field of an index or data stream. This API might not support indices created in previous Elasticsearch versions. The result of a small index can be inaccurate as some parts of an index might not be analyzed by the API. NOTE: The total size of fields of the analyzed shards of the index in the response is usually smaller than the index `store_size` value because some small metadata files are ignored and some parts of data files might not be scanned by the API. Since stored fields are stored together in a compressed format, the sizes of stored fields are also estimates and can be inaccurate. The stored size of the `_id` field is likely underestimated while the `_source` field is overestimated. For usage examples see the External documentation or refer to [Analyze the index disk usage example](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/index-disk-usage) for an example.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-disk-usage | Elasticsearch API documentation}
     */
   async diskUsage (this: That, params: T.IndicesDiskUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDiskUsageResponse>
@@ -4234,28 +4236,30 @@ export default class Indices {
   async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesSimulateIndexTemplateResponse>
   async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this.acceptedParams['indices.simulate_index_template']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
 
-    let body: Record<string, any> | string | undefined
-    const userBody = params?.body
-    if (userBody != null) {
-      if (typeof userBody === 'string') {
-        body = userBody
-      } else {
-        body = { ...userBody }
-      }
-    }
-
+    let body: any = params.body ?? undefined
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
