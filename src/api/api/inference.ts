@@ -424,6 +424,7 @@ export default class Inference {
         ],
         body: [
           'input',
+          'input_type',
           'task_settings'
         ],
         query: [

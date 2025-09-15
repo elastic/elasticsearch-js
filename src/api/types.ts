@@ -21909,10 +21909,11 @@ export interface IndicesSimulateIndexTemplateRequest extends RequestBase {
   master_timeout?: Duration
   /** If true, returns all relevant default configurations for the index template. */
   include_defaults?: boolean
+  index_template?: IndicesIndexTemplate
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, include_defaults?: never }
+  body?: string | { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, include_defaults?: never, index_template?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, include_defaults?: never }
+  querystring?: { [key: string]: any } & { name?: never, create?: never, cause?: never, master_timeout?: never, include_defaults?: never, index_template?: never }
 }
 
 export interface IndicesSimulateIndexTemplateResponse {
@@ -24379,12 +24380,23 @@ export interface InferenceTextEmbeddingRequest extends RequestBase {
   /** Inference input.
     * Either a string or an array of strings. */
   input: string | string[]
+  /** The input data type for the text embedding model. Possible values include:
+    * * `SEARCH`
+    * * `INGEST`
+    * * `CLASSIFICATION`
+    * * `CLUSTERING`
+    * Not all services support all values. Unsupported values will trigger a validation exception.
+    * Accepted values depend on the configured inference service, refer to the relevant service-specific documentation for more info.
+    *
+    * > info
+    * > The `input_type` parameter specified on the root level of the request body will take precedence over the `input_type` parameter specified in `task_settings`. */
+  input_type?: string
   /** Optional task settings */
   task_settings?: InferenceTaskSettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, task_settings?: never }
+  body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, input_type?: never, task_settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, task_settings?: never }
+  querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, input_type?: never, task_settings?: never }
 }
 
 export type InferenceTextEmbeddingResponse = InferenceTextEmbeddingInferenceResult
@@ -26344,6 +26356,7 @@ export interface MlDatafeed {
   authorization?: MlDatafeedAuthorization
   chunking_config?: MlChunkingConfig
   datafeed_id: Id
+  /** The interval at which scheduled queries are made while the datafeed runs in real time. The default value is either the bucket span for short bucket spans, or, for longer bucket spans, a sensible fraction of the bucket span. For example: `150s`. When `frequency` is shorter than the bucket span, interim results for the last (partial) bucket are written then eventually overwritten by the full bucket results. If the datafeed uses aggregations, this value must be divisible by the interval of the date histogram aggregation. */
   frequency?: Duration
   indices: string[]
   indexes?: string[]
@@ -30277,6 +30290,7 @@ export interface MlUpdateDatafeedResponse {
   chunking_config: MlChunkingConfig
   delayed_data_check_config?: MlDelayedDataCheckConfig
   datafeed_id: Id
+  /** The interval at which scheduled queries are made while the datafeed runs in real time. The default value is either the bucket span for short bucket spans, or, for longer bucket spans, a sensible fraction of the bucket span. For example: `150s`. When `frequency` is shorter than the bucket span, interim results for the last (partial) bucket are written then eventually overwritten by the full bucket results. If the datafeed uses aggregations, this value must be divisible by the interval of the date histogram aggregation. */
   frequency?: Duration
   indices: string[]
   indices_options?: IndicesOptions
