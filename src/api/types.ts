@@ -13037,6 +13037,7 @@ export interface IndicesSimulateIndexTemplateRequest extends RequestBase {
   cause?: string
   master_timeout?: Duration
   include_defaults?: boolean
+  index_template?: IndicesIndexTemplate
 }
 
 export interface IndicesSimulateIndexTemplateResponse {
@@ -14255,6 +14256,7 @@ export interface InferenceTextEmbeddingRequest extends RequestBase {
   inference_id: Id
   timeout?: Duration
   input: string | string[]
+  input_type?: string
   task_settings?: InferenceTaskSettings
 }
 
