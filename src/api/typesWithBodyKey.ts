@@ -13267,6 +13267,8 @@ export interface IndicesSimulateIndexTemplateRequest extends RequestBase {
   cause?: string
   master_timeout?: Duration
   include_defaults?: boolean
+  /** @deprecated The use of the 'body' key has been deprecated, use 'index_template' instead. */
+  body?: IndicesIndexTemplate
 }
 
 export interface IndicesSimulateIndexTemplateResponse {
@@ -14573,6 +14575,7 @@ export interface InferenceTextEmbeddingRequest extends RequestBase {
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     input: string | string[]
+    input_type?: string
     task_settings?: InferenceTaskSettings
   }
 }

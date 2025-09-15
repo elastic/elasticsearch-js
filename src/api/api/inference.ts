@@ -1302,7 +1302,7 @@ export default class Inference {
   async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest | TB.InferenceTextEmbeddingRequest, options?: TransportRequestOptions): Promise<T.InferenceTextEmbeddingResponse>
   async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest | TB.InferenceTextEmbeddingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['inference_id']
-    const acceptedBody: string[] = ['input', 'task_settings']
+    const acceptedBody: string[] = ['input', 'input_type', 'task_settings']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
