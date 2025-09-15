@@ -7313,6 +7313,7 @@ client.indices.simulateIndexTemplate({ name })
 
 #### Request (object) [_request_indices.simulate_index_template]
 - **`name` (string)**: Name of the index to simulate
+- **`index_template` (Optional, { index_patterns, composed_of, template, version, priority, _meta, allow_auto_create, data_stream, deprecated, ignore_missing_component_templates })**
 - **`create` (Optional, boolean)**: Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one
 - **`cause` (Optional, string)**: User defined reason for dry-run creating the new template for simulation purposes
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
@@ -8300,6 +8301,16 @@ client.inference.textEmbedding({ inference_id, input })
 - **`inference_id` (string)**: The inference Id
 - **`input` (string \| string[])**: Inference input.
 Either a string or an array of strings.
+- **`input_type` (Optional, string)**: The input data type for the text embedding model. Possible values include:
+* `SEARCH`
+* `INGEST`
+* `CLASSIFICATION`
+* `CLUSTERING`
+Not all services support all values. Unsupported values will trigger a validation exception.
+Accepted values depend on the configured inference service, refer to the relevant service-specific documentation for more info.
+
+> info
+> The `input_type` parameter specified on the root level of the request body will take precedence over the `input_type` parameter specified in `task_settings`.
 - **`task_settings` (Optional, User-defined value)**: Optional task settings
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
