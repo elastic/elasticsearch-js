@@ -2226,91 +2226,6 @@ A partial reduction is performed every time the coordinating node has received a
 - **`_source_includes` (Optional, string \| string[])**: A list of fields to extract and return from the _source field
 - **`q` (Optional, string)**: Query in the Lucene query string syntax
 
-## client.autoscaling.deleteAutoscalingPolicy [_autoscaling.delete_autoscaling_policy]
-Delete an autoscaling policy.
-
-NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-autoscaling-delete-autoscaling-policy)
-
-```ts
-client.autoscaling.deleteAutoscalingPolicy({ name })
-```
-
-### Arguments [_arguments_autoscaling.delete_autoscaling_policy]
-
-#### Request (object) [_request_autoscaling.delete_autoscaling_policy]
-- **`name` (string)**: the name of the autoscaling policy
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
-If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
-
-## client.autoscaling.getAutoscalingCapacity [_autoscaling.get_autoscaling_capacity]
-Get the autoscaling capacity.
-
-NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
-
-This API gets the current autoscaling capacity based on the configured autoscaling policy.
-It will return information to size the cluster appropriately to the current workload.
-
-The `required_capacity` is calculated as the maximum of the `required_capacity` result of all individual deciders that are enabled for the policy.
-
-The operator should verify that the `current_nodes` match the operator’s knowledge of the cluster to avoid making autoscaling decisions based on stale or incomplete information.
-
-The response contains decider-specific information you can use to diagnose how and why autoscaling determined a certain capacity was required.
-This information is provided for diagnosis only.
-Do not use this information to make autoscaling decisions.
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-autoscaling-get-autoscaling-capacity)
-
-```ts
-client.autoscaling.getAutoscalingCapacity({ ... })
-```
-
-### Arguments [_arguments_autoscaling.get_autoscaling_capacity]
-
-#### Request (object) [_request_autoscaling.get_autoscaling_capacity]
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
-If no response is received before the timeout expires, the request fails and returns an error.
-
-## client.autoscaling.getAutoscalingPolicy [_autoscaling.get_autoscaling_policy]
-Get an autoscaling policy.
-
-NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-autoscaling-get-autoscaling-capacity)
-
-```ts
-client.autoscaling.getAutoscalingPolicy({ name })
-```
-
-### Arguments [_arguments_autoscaling.get_autoscaling_policy]
-
-#### Request (object) [_request_autoscaling.get_autoscaling_policy]
-- **`name` (string)**: the name of the autoscaling policy
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
-If no response is received before the timeout expires, the request fails and returns an error.
-
-## client.autoscaling.putAutoscalingPolicy [_autoscaling.put_autoscaling_policy]
-Create or update an autoscaling policy.
-
-NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-autoscaling-put-autoscaling-policy)
-
-```ts
-client.autoscaling.putAutoscalingPolicy({ name })
-```
-
-### Arguments [_arguments_autoscaling.put_autoscaling_policy]
-
-#### Request (object) [_request_autoscaling.put_autoscaling_policy]
-- **`name` (string)**: the name of the autoscaling policy
-- **`policy` (Optional, { roles, deciders })**
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
-If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
-
 ## client.cat.aliases [_cat.aliases]
 Get aliases.
 
@@ -5741,6 +5656,8 @@ NOTE: The total size of fields of the analyzed shards of the index in the respon
 Since stored fields are stored together in a compressed format, the sizes of stored fields are also estimates and can be inaccurate.
 The stored size of the `_id` field is likely underestimated while the `_source` field is overestimated.
 
+For usage examples see the External documentation or refer to [Analyze the index disk usage example](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/index-disk-usage) for an example.
+
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-disk-usage)
 
 ```ts
@@ -7363,6 +7280,7 @@ client.indices.simulateIndexTemplate({ name })
 
 #### Request (object) [_request_indices.simulate_index_template]
 - **`name` (string)**: Name of the index to simulate
+- **`index_template` (Optional, { index_patterns, composed_of, template, version, priority, _meta, allow_auto_create, data_stream, deprecated, ignore_missing_component_templates, created_date, created_date_millis, modified_date, modified_date_millis })**
 - **`create` (Optional, boolean)**: Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one
 - **`cause` (Optional, string)**: User defined reason for dry-run creating the new template for simulation purposes
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
@@ -8393,6 +8311,16 @@ client.inference.textEmbedding({ inference_id, input })
 - **`inference_id` (string)**: The inference Id
 - **`input` (string \| string[])**: Inference input.
 Either a string or an array of strings.
+- **`input_type` (Optional, string)**: The input data type for the text embedding model. Possible values include:
+* `SEARCH`
+* `INGEST`
+* `CLASSIFICATION`
+* `CLUSTERING`
+Not all services support all values. Unsupported values will trigger a validation exception.
+Accepted values depend on the configured inference service, refer to the relevant service-specific documentation for more info.
+
+> info
+> The `input_type` parameter specified on the root level of the request body will take precedence over the `input_type` parameter specified in `task_settings`.
 - **`task_settings` (Optional, User-defined value)**: Optional task settings
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
@@ -8687,7 +8615,9 @@ client.license.get({ ... })
 #### Request (object) [_request_license.get]
 - **`accept_enterprise` (Optional, boolean)**: If `true`, this parameter returns enterprise for Enterprise license types. If `false`, this parameter returns platinum for both platinum and enterprise license types. This behavior is maintained for backwards compatibility.
 This parameter is deprecated and will always be set to true in 8.x.
-- **`local` (Optional, boolean)**: Specifies whether to retrieve local information. The default value is `false`, which means the information is retrieved from the master node.
+- **`local` (Optional, boolean)**: Specifies whether to retrieve local information.
+From 9.2 onwards the default value is `true`, which means the information is retrieved from the responding node.
+In earlier versions the default is `false`, which means the information is retrieved from the elected master node.
 
 ## client.license.getBasicStatus [_license.get_basic_status]
 Get the basic license status.
@@ -10965,7 +10895,7 @@ client.nodes.stats({ ... })
 - **`fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in the statistics.
 - **`groups` (Optional, boolean)**: List of search groups to include in the search statistics.
 - **`include_segment_file_sizes` (Optional, boolean)**: If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested).
-- **`level` (Optional, Enum("cluster" \| "indices" \| "shards"))**: Indicates whether statistics are aggregated at the cluster, index, or shard level.
+- **`level` (Optional, Enum("node" \| "indices" \| "shards"))**: Indicates whether statistics are aggregated at the cluster, index, or shard level.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 - **`types` (Optional, string[])**: A list of document types for the indexing index metric.
 - **`include_unloaded_segments` (Optional, boolean)**: If `true`, the response includes information from segments that are not loaded into memory.
@@ -13369,105 +13299,6 @@ The data object is not searchable, but can be retrieved with the get user profil
 visible to search.
 If 'wait_for', it waits for a refresh to make this operation visible to search.
 If 'false', nothing is done with refreshes.
-
-## client.shutdown.deleteNode [_shutdown.delete_node]
-Cancel node shutdown preparations.
-Remove a node from the shutdown list so it can resume normal operations.
-You must explicitly clear the shutdown request when a node rejoins the cluster or when a node has permanently left the cluster.
-Shutdown requests are never removed automatically by Elasticsearch.
-
-NOTE: This feature is designed for indirect use by Elastic Cloud, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes.
-Direct use is not supported.
-
-If the operator privileges feature is enabled, you must be an operator to use this API.
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-shutdown-delete-node)
-
-```ts
-client.shutdown.deleteNode({ node_id })
-```
-
-### Arguments [_arguments_shutdown.delete_node]
-
-#### Request (object) [_request_shutdown.delete_node]
-- **`node_id` (string)**: The node id of node to be removed from the shutdown state
-- **`master_timeout` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
-
-## client.shutdown.getNode [_shutdown.get_node]
-Get the shutdown status.
-
-Get information about nodes that are ready to be shut down, have shut down preparations still in progress, or have stalled.
-The API returns status information for each part of the shut down process.
-
-NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
-
-If the operator privileges feature is enabled, you must be an operator to use this API.
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-shutdown-get-node)
-
-```ts
-client.shutdown.getNode({ ... })
-```
-
-### Arguments [_arguments_shutdown.get_node]
-
-#### Request (object) [_request_shutdown.get_node]
-- **`node_id` (Optional, string \| string[])**: Which node for which to retrieve the shutdown status
-- **`master_timeout` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-
-## client.shutdown.putNode [_shutdown.put_node]
-Prepare a node to be shut down.
-
-NOTE: This feature is designed for indirect use by Elastic Cloud, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
-
-If you specify a node that is offline, it will be prepared for shut down when it rejoins the cluster.
-
-If the operator privileges feature is enabled, you must be an operator to use this API.
-
-The API migrates ongoing tasks and index shards to other nodes as needed to prepare a node to be restarted or shut down and removed from the cluster.
-This ensures that Elasticsearch can be stopped safely with minimal disruption to the cluster.
-
-You must specify the type of shutdown: `restart`, `remove`, or `replace`.
-If a node is already being prepared for shutdown, you can use this API to change the shutdown type.
-
-IMPORTANT: This API does NOT terminate the Elasticsearch process.
-Monitor the node shutdown status to determine when it is safe to stop Elasticsearch.
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-shutdown-put-node)
-
-```ts
-client.shutdown.putNode({ node_id, type, reason })
-```
-
-### Arguments [_arguments_shutdown.put_node]
-
-#### Request (object) [_request_shutdown.put_node]
-- **`node_id` (string)**: The node identifier.
-This parameter is not validated against the cluster's active nodes.
-This enables you to register a node for shut down while it is offline.
-No error is thrown if you specify an invalid node ID.
-- **`type` (Enum("restart" \| "remove" \| "replace"))**: Valid values are restart, remove, or replace.
-Use restart when you need to temporarily shut down a node to perform an upgrade, make configuration changes, or perform other maintenance.
-Because the node is expected to rejoin the cluster, data is not migrated off of the node.
-Use remove when you need to permanently remove a node from the cluster.
-The node is not marked ready for shutdown until data is migrated off of the node Use replace to do a 1:1 replacement of a node with another node.
-Certain allocation decisions will be ignored (such as disk watermarks) in the interest of true replacement of the source node with the target node.
-During a replace-type shutdown, rollover and index creation may result in unassigned shards, and shrink may fail until the replacement is complete.
-- **`reason` (string)**: A human-readable reason that the node is being shut down.
-This field provides information for other cluster operators; it does not affect the shut down process.
-- **`allocation_delay` (Optional, string)**: Only valid if type is restart.
-Controls how long Elasticsearch will wait for the node to restart and join the cluster before reassigning its shards to other nodes.
-This works the same as delaying allocation with the index.unassigned.node_left.delayed_timeout setting.
-If you specify both a restart allocation delay and an index-level allocation delay, the longer of the two is used.
-- **`target_node_name` (Optional, string)**: Only valid if type is replace.
-Specifies the name of the node that is replacing the node being shut down.
-Shards from the shut down node are only allowed to be allocated to the target node, and no other data will be allocated to the target node.
-During relocation of data certain allocation rules are ignored, such as disk watermarks or user attribute filtering rules.
-- **`master_timeout` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The period to wait for a connection to the master node.
-If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The period to wait for a response.
-If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.simulate.ingest [_simulate.ingest]
 Simulate data ingestion.
