@@ -2548,7 +2548,6 @@ client.cat.allocation({ ... })
 
 * *Request (object):*
 ** *`node_id` (Optional, string | string[])*: A list of node identifiers or names used to limit the returned information.
-** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`h` (Optional, Enum("shards" | "shards.undesired" | "write_load.forecast" | "disk.indices.forecast" | "disk.indices" | "disk.used" | "disk.avail" | "disk.total" | "disk.percent" | "host" | "ip" | "node" | "node.role") | Enum("shards" | "shards.undesired" | "write_load.forecast" | "disk.indices.forecast" | "disk.indices" | "disk.used" | "disk.avail" | "disk.total" | "disk.percent" | "host" | "ip" | "node" | "node.role")[])*: A list of columns names to display. It supports simple wildcards.
 ** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
@@ -2641,7 +2640,6 @@ client.cat.fielddata({ ... })
 * *Request (object):*
 ** *`fields` (Optional, string | string[])*: List of fields used to limit returned information.
 To retrieve all fields, omit this parameter.
-** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`h` (Optional, Enum("id" | "host" | "ip" | "node" | "field" | "size") | Enum("id" | "host" | "ip" | "node" | "field" | "size")[])*: A list of columns names to display. It supports simple wildcards.
 ** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
@@ -2671,7 +2669,6 @@ client.cat.health({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 ** *`ts` (Optional, boolean)*: If true, returns `HH:MM:SS` and Unix epoch timestamps.
 ** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
 ** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
@@ -2722,12 +2719,10 @@ client.cat.indices({ ... })
 * *Request (object):*
 ** *`index` (Optional, string | string[])*: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`.
-** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: The type of index that wildcard patterns can match.
 ** *`health` (Optional, Enum("green" | "yellow" | "red" | "unknown" | "unavailable"))*: The health status used to limit returned indices. By default, the response includes indices of any health status.
 ** *`include_unloaded_segments` (Optional, boolean)*: If true, the response includes information from segments that are not loaded into memory.
 ** *`pri` (Optional, boolean)*: If true, the response only includes information from primary shards.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 ** *`h` (Optional, string | string[])*: List of columns to appear in the response. Supports simple wildcards.
 ** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
@@ -2784,11 +2779,9 @@ client.cat.mlDataFrameAnalytics({ ... })
 * *Request (object):*
 ** *`id` (Optional, string)*: The ID of the data frame analytics to fetch
 ** *`allow_no_match` (Optional, boolean)*: Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified)
-** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit in which to display byte values
 ** *`h` (Optional, Enum("assignment_explanation" | "create_time" | "description" | "dest_index" | "failure_reason" | "id" | "model_memory_limit" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "progress" | "source_index" | "state" | "type" | "version") | Enum("assignment_explanation" | "create_time" | "description" | "dest_index" | "failure_reason" | "id" | "model_memory_limit" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "progress" | "source_index" | "state" | "type" | "version")[])*: List of column names to display.
 ** *`s` (Optional, Enum("assignment_explanation" | "create_time" | "description" | "dest_index" | "failure_reason" | "id" | "model_memory_limit" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "progress" | "source_index" | "state" | "type" | "version") | Enum("assignment_explanation" | "create_time" | "description" | "dest_index" | "failure_reason" | "id" | "model_memory_limit" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "progress" | "source_index" | "state" | "type" | "version")[])*: List of column names or column aliases used to sort the
 response.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
 [discrete]
 ==== ml_datafeeds
@@ -2825,7 +2818,6 @@ there are partial matches. If `false`, the API returns a 404 status code when th
 partial matches.
 ** *`h` (Optional, Enum("ae" | "bc" | "id" | "na" | "ne" | "ni" | "nn" | "sba" | "sc" | "seah" | "st" | "s") | Enum("ae" | "bc" | "id" | "na" | "ne" | "ni" | "nn" | "sba" | "sc" | "seah" | "st" | "s")[])*: List of column names to display.
 ** *`s` (Optional, Enum("ae" | "bc" | "id" | "na" | "ne" | "ni" | "nn" | "sba" | "sc" | "seah" | "st" | "s") | Enum("ae" | "bc" | "id" | "na" | "ne" | "ni" | "nn" | "sba" | "sc" | "seah" | "st" | "s")[])*: List of column names or column aliases used to sort the response.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 
 [discrete]
 ==== ml_jobs
@@ -2860,10 +2852,8 @@ client.cat.mlJobs({ ... })
 If `true`, the API returns an empty jobs array when there are no matches and the subset of results when there
 are partial matches. If `false`, the API returns a 404 status code when there are no matches or only partial
 matches.
-** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`h` (Optional, Enum("assignment_explanation" | "buckets.count" | "buckets.time.exp_avg" | "buckets.time.exp_avg_hour" | "buckets.time.max" | "buckets.time.min" | "buckets.time.total" | "data.buckets" | "data.earliest_record" | "data.empty_buckets" | "data.input_bytes" | "data.input_fields" | "data.input_records" | "data.invalid_dates" | "data.last" | "data.last_empty_bucket" | "data.last_sparse_bucket" | "data.latest_record" | "data.missing_fields" | "data.out_of_order_timestamps" | "data.processed_fields" | "data.processed_records" | "data.sparse_buckets" | "forecasts.memory.avg" | "forecasts.memory.max" | "forecasts.memory.min" | "forecasts.memory.total" | "forecasts.records.avg" | "forecasts.records.max" | "forecasts.records.min" | "forecasts.records.total" | "forecasts.time.avg" | "forecasts.time.max" | "forecasts.time.min" | "forecasts.time.total" | "forecasts.total" | "id" | "model.bucket_allocation_failures" | "model.by_fields" | "model.bytes" | "model.bytes_exceeded" | "model.categorization_status" | "model.categorized_doc_count" | "model.dead_category_count" | "model.failed_category_count" | "model.frequent_category_count" | "model.log_time" | "model.memory_limit" | "model.memory_status" | "model.over_fields" | "model.partition_fields" | "model.rare_category_count" | "model.timestamp" | "model.total_category_count" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "opened_time" | "state") | Enum("assignment_explanation" | "buckets.count" | "buckets.time.exp_avg" | "buckets.time.exp_avg_hour" | "buckets.time.max" | "buckets.time.min" | "buckets.time.total" | "data.buckets" | "data.earliest_record" | "data.empty_buckets" | "data.input_bytes" | "data.input_fields" | "data.input_records" | "data.invalid_dates" | "data.last" | "data.last_empty_bucket" | "data.last_sparse_bucket" | "data.latest_record" | "data.missing_fields" | "data.out_of_order_timestamps" | "data.processed_fields" | "data.processed_records" | "data.sparse_buckets" | "forecasts.memory.avg" | "forecasts.memory.max" | "forecasts.memory.min" | "forecasts.memory.total" | "forecasts.records.avg" | "forecasts.records.max" | "forecasts.records.min" | "forecasts.records.total" | "forecasts.time.avg" | "forecasts.time.max" | "forecasts.time.min" | "forecasts.time.total" | "forecasts.total" | "id" | "model.bucket_allocation_failures" | "model.by_fields" | "model.bytes" | "model.bytes_exceeded" | "model.categorization_status" | "model.categorized_doc_count" | "model.dead_category_count" | "model.failed_category_count" | "model.frequent_category_count" | "model.log_time" | "model.memory_limit" | "model.memory_status" | "model.over_fields" | "model.partition_fields" | "model.rare_category_count" | "model.timestamp" | "model.total_category_count" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "opened_time" | "state")[])*: List of column names to display.
 ** *`s` (Optional, Enum("assignment_explanation" | "buckets.count" | "buckets.time.exp_avg" | "buckets.time.exp_avg_hour" | "buckets.time.max" | "buckets.time.min" | "buckets.time.total" | "data.buckets" | "data.earliest_record" | "data.empty_buckets" | "data.input_bytes" | "data.input_fields" | "data.input_records" | "data.invalid_dates" | "data.last" | "data.last_empty_bucket" | "data.last_sparse_bucket" | "data.latest_record" | "data.missing_fields" | "data.out_of_order_timestamps" | "data.processed_fields" | "data.processed_records" | "data.sparse_buckets" | "forecasts.memory.avg" | "forecasts.memory.max" | "forecasts.memory.min" | "forecasts.memory.total" | "forecasts.records.avg" | "forecasts.records.max" | "forecasts.records.min" | "forecasts.records.total" | "forecasts.time.avg" | "forecasts.time.max" | "forecasts.time.min" | "forecasts.time.total" | "forecasts.total" | "id" | "model.bucket_allocation_failures" | "model.by_fields" | "model.bytes" | "model.bytes_exceeded" | "model.categorization_status" | "model.categorized_doc_count" | "model.dead_category_count" | "model.failed_category_count" | "model.frequent_category_count" | "model.log_time" | "model.memory_limit" | "model.memory_status" | "model.over_fields" | "model.partition_fields" | "model.rare_category_count" | "model.timestamp" | "model.total_category_count" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "opened_time" | "state") | Enum("assignment_explanation" | "buckets.count" | "buckets.time.exp_avg" | "buckets.time.exp_avg_hour" | "buckets.time.max" | "buckets.time.min" | "buckets.time.total" | "data.buckets" | "data.earliest_record" | "data.empty_buckets" | "data.input_bytes" | "data.input_fields" | "data.input_records" | "data.invalid_dates" | "data.last" | "data.last_empty_bucket" | "data.last_sparse_bucket" | "data.latest_record" | "data.missing_fields" | "data.out_of_order_timestamps" | "data.processed_fields" | "data.processed_records" | "data.sparse_buckets" | "forecasts.memory.avg" | "forecasts.memory.max" | "forecasts.memory.min" | "forecasts.memory.total" | "forecasts.records.avg" | "forecasts.records.max" | "forecasts.records.min" | "forecasts.records.total" | "forecasts.time.avg" | "forecasts.time.max" | "forecasts.time.min" | "forecasts.time.total" | "forecasts.total" | "id" | "model.bucket_allocation_failures" | "model.by_fields" | "model.bytes" | "model.bytes_exceeded" | "model.categorization_status" | "model.categorized_doc_count" | "model.dead_category_count" | "model.failed_category_count" | "model.frequent_category_count" | "model.log_time" | "model.memory_limit" | "model.memory_status" | "model.over_fields" | "model.partition_fields" | "model.rare_category_count" | "model.timestamp" | "model.total_category_count" | "node.address" | "node.ephemeral_id" | "node.id" | "node.name" | "opened_time" | "state")[])*: List of column names or column aliases used to sort the response.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 
 [discrete]
 ==== ml_trained_models
@@ -2889,12 +2879,10 @@ client.cat.mlTrainedModels({ ... })
 ** *`allow_no_match` (Optional, boolean)*: Specifies what to do when the request: contains wildcard expressions and there are no models that match; contains the `_all` string or no identifiers and there are no matches; contains wildcard expressions and there are only partial matches.
 If `true`, the API returns an empty array when there are no matches and the subset of results when there are partial matches.
 If `false`, the API returns a 404 status code when there are no matches or only partial matches.
-** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`h` (Optional, Enum("create_time" | "created_by" | "data_frame_analytics_id" | "description" | "heap_size" | "id" | "ingest.count" | "ingest.current" | "ingest.failed" | "ingest.pipelines" | "ingest.time" | "license" | "operations" | "version") | Enum("create_time" | "created_by" | "data_frame_analytics_id" | "description" | "heap_size" | "id" | "ingest.count" | "ingest.current" | "ingest.failed" | "ingest.pipelines" | "ingest.time" | "license" | "operations" | "version")[])*: A list of column names to display.
 ** *`s` (Optional, Enum("create_time" | "created_by" | "data_frame_analytics_id" | "description" | "heap_size" | "id" | "ingest.count" | "ingest.current" | "ingest.failed" | "ingest.pipelines" | "ingest.time" | "license" | "operations" | "version") | Enum("create_time" | "created_by" | "data_frame_analytics_id" | "description" | "heap_size" | "id" | "ingest.count" | "ingest.current" | "ingest.failed" | "ingest.pipelines" | "ingest.time" | "license" | "operations" | "version")[])*: A list of column names or aliases used to sort the response.
 ** *`from` (Optional, number)*: Skips the specified number of transforms.
 ** *`size` (Optional, number)*: The maximum number of transforms to display.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
 [discrete]
 ==== nodeattrs
@@ -2940,7 +2928,6 @@ client.cat.nodes({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`full_id` (Optional, boolean | string)*: If `true`, return the full node ID. If `false`, return the shortened node ID.
 ** *`include_unloaded_segments` (Optional, boolean)*: If true, the response includes information from segments that are not loaded into memory.
 ** *`h` (Optional, Enum("build" | "completion.size" | "cpu" | "disk.avail" | "disk.total" | "disk.used" | "disk.used_percent" | "fielddata.evictions" | "fielddata.memory_size" | "file_desc.current" | "file_desc.max" | "file_desc.percent" | "flush.total" | "flush.total_time" | "get.current" | "get.exists_time" | "get.exists_total" | "get.missing_time" | "get.missing_total" | "get.time" | "get.total" | "heap.current" | "heap.max" | "heap.percent" | "http_address" | "id" | "indexing.delete_current" | "indexing.delete_time" | "indexing.delete_total" | "indexing.index_current" | "indexing.index_failed" | "indexing.index_failed_due_to_version_conflict" | "indexing.index_time" | "indexing.index_total" | "ip" | "jdk" | "load_1m" | "load_5m" | "load_15m" | "mappings.total_count" | "mappings.total_estimated_overhead_in_bytes" | "master" | "merges.current" | "merges.current_docs" | "merges.current_size" | "merges.total" | "merges.total_docs" | "merges.total_size" | "merges.total_time" | "name" | "node.role" | "pid" | "port" | "query_cache.memory_size" | "query_cache.evictions" | "query_cache.hit_count" | "query_cache.miss_count" | "ram.current" | "ram.max" | "ram.percent" | "refresh.total" | "refresh.time" | "request_cache.memory_size" | "request_cache.evictions" | "request_cache.hit_count" | "request_cache.miss_count" | "script.compilations" | "script.cache_evictions" | "search.fetch_current" | "search.fetch_time" | "search.fetch_total" | "search.open_contexts" | "search.query_current" | "search.query_time" | "search.query_total" | "search.scroll_current" | "search.scroll_time" | "search.scroll_total" | "segments.count" | "segments.fixed_bitset_memory" | "segments.index_writer_memory" | "segments.memory" | "segments.version_map_memory" | "shard_stats.total_count" | "suggest.current" | "suggest.time" | "suggest.total" | "uptime" | "version") | Enum("build" | "completion.size" | "cpu" | "disk.avail" | "disk.total" | "disk.used" | "disk.used_percent" | "fielddata.evictions" | "fielddata.memory_size" | "file_desc.current" | "file_desc.max" | "file_desc.percent" | "flush.total" | "flush.total_time" | "get.current" | "get.exists_time" | "get.exists_total" | "get.missing_time" | "get.missing_total" | "get.time" | "get.total" | "heap.current" | "heap.max" | "heap.percent" | "http_address" | "id" | "indexing.delete_current" | "indexing.delete_time" | "indexing.delete_total" | "indexing.index_current" | "indexing.index_failed" | "indexing.index_failed_due_to_version_conflict" | "indexing.index_time" | "indexing.index_total" | "ip" | "jdk" | "load_1m" | "load_5m" | "load_15m" | "mappings.total_count" | "mappings.total_estimated_overhead_in_bytes" | "master" | "merges.current" | "merges.current_docs" | "merges.current_size" | "merges.total" | "merges.total_docs" | "merges.total_size" | "merges.total_time" | "name" | "node.role" | "pid" | "port" | "query_cache.memory_size" | "query_cache.evictions" | "query_cache.hit_count" | "query_cache.miss_count" | "ram.current" | "ram.max" | "ram.percent" | "refresh.total" | "refresh.time" | "request_cache.memory_size" | "request_cache.evictions" | "request_cache.hit_count" | "request_cache.miss_count" | "script.compilations" | "script.cache_evictions" | "search.fetch_current" | "search.fetch_time" | "search.fetch_total" | "search.open_contexts" | "search.query_current" | "search.query_time" | "search.query_total" | "search.scroll_current" | "search.scroll_time" | "search.scroll_total" | "segments.count" | "segments.fixed_bitset_memory" | "segments.index_writer_memory" | "segments.memory" | "segments.version_map_memory" | "shard_stats.total_count" | "suggest.current" | "suggest.time" | "suggest.total" | "uptime" | "version")[])*: A list of columns names to display.
@@ -2949,7 +2936,6 @@ It supports simple wildcards.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 ** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 
 [discrete]
 ==== pending_tasks
@@ -2977,7 +2963,6 @@ local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
 [discrete]
 ==== plugins
@@ -3029,14 +3014,12 @@ client.cat.recovery({ ... })
 ** *`index` (Optional, string | string[])*: A list of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`.
 ** *`active_only` (Optional, boolean)*: If `true`, the response only includes ongoing shard recoveries.
-** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`detailed` (Optional, boolean)*: If `true`, the response includes detailed information about shard recoveries.
 ** *`h` (Optional, Enum("index" | "shard" | "time" | "type" | "stage" | "source_host" | "source_node" | "target_host" | "target_node" | "repository" | "snapshot" | "files" | "files_recovered" | "files_percent" | "files_total" | "bytes" | "bytes_recovered" | "bytes_percent" | "bytes_total" | "translog_ops" | "translog_ops_recovered" | "translog_ops_percent" | "start_time" | "start_time_millis" | "stop_time" | "stop_time_millis") | Enum("index" | "shard" | "time" | "type" | "stage" | "source_host" | "source_node" | "target_host" | "target_node" | "repository" | "snapshot" | "files" | "files_recovered" | "files_percent" | "files_total" | "bytes" | "bytes_recovered" | "bytes_percent" | "bytes_total" | "translog_ops" | "translog_ops_recovered" | "translog_ops_percent" | "start_time" | "start_time_millis" | "stop_time" | "stop_time_millis")[])*: A list of columns names to display.
 It supports simple wildcards.
 ** *`s` (Optional, string | string[])*: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 
 [discrete]
 ==== repositories
@@ -3086,7 +3069,6 @@ client.cat.segments({ ... })
 ** *`index` (Optional, string | string[])*: A list of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`h` (Optional, Enum("index" | "shard" | "prirep" | "ip" | "segment" | "generation" | "docs.count" | "docs.deleted" | "size" | "size.memory" | "committed" | "searchable" | "version" | "compound" | "id") | Enum("index" | "shard" | "prirep" | "ip" | "segment" | "generation" | "docs.count" | "docs.deleted" | "size" | "size.memory" | "committed" | "searchable" | "version" | "compound" | "id")[])*: A list of columns names to display.
 It supports simple wildcards.
 ** *`s` (Optional, string | string[])*: A list of column names or aliases that determines the sort order.
@@ -3119,13 +3101,11 @@ client.cat.shards({ ... })
 ** *`index` (Optional, string | string[])*: A list of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-** *`bytes` (Optional, Enum("b" | "kb" | "mb" | "gb" | "tb" | "pb"))*: The unit used to display byte values.
 ** *`h` (Optional, Enum("completion.size" | "dataset.size" | "dense_vector.value_count" | "docs" | "fielddata.evictions" | "fielddata.memory_size" | "flush.total" | "flush.total_time" | "get.current" | "get.exists_time" | "get.exists_total" | "get.missing_time" | "get.missing_total" | "get.time" | "get.total" | "id" | "index" | "indexing.delete_current" | "indexing.delete_time" | "indexing.delete_total" | "indexing.index_current" | "indexing.index_failed_due_to_version_conflict" | "indexing.index_failed" | "indexing.index_time" | "indexing.index_total" | "ip" | "merges.current" | "merges.current_docs" | "merges.current_size" | "merges.total" | "merges.total_docs" | "merges.total_size" | "merges.total_time" | "node" | "prirep" | "query_cache.evictions" | "query_cache.memory_size" | "recoverysource.type" | "refresh.time" | "refresh.total" | "search.fetch_current" | "search.fetch_time" | "search.fetch_total" | "search.open_contexts" | "search.query_current" | "search.query_time" | "search.query_total" | "search.scroll_current" | "search.scroll_time" | "search.scroll_total" | "segments.count" | "segments.fixed_bitset_memory" | "segments.index_writer_memory" | "segments.memory" | "segments.version_map_memory" | "seq_no.global_checkpoint" | "seq_no.local_checkpoint" | "seq_no.max" | "shard" | "dsparse_vector.value_count" | "state" | "store" | "suggest.current" | "suggest.time" | "suggest.total" | "sync_id" | "unassigned.at" | "unassigned.details" | "unassigned.for" | "unassigned.reason") | Enum("completion.size" | "dataset.size" | "dense_vector.value_count" | "docs" | "fielddata.evictions" | "fielddata.memory_size" | "flush.total" | "flush.total_time" | "get.current" | "get.exists_time" | "get.exists_total" | "get.missing_time" | "get.missing_total" | "get.time" | "get.total" | "id" | "index" | "indexing.delete_current" | "indexing.delete_time" | "indexing.delete_total" | "indexing.index_current" | "indexing.index_failed_due_to_version_conflict" | "indexing.index_failed" | "indexing.index_time" | "indexing.index_total" | "ip" | "merges.current" | "merges.current_docs" | "merges.current_size" | "merges.total" | "merges.total_docs" | "merges.total_size" | "merges.total_time" | "node" | "prirep" | "query_cache.evictions" | "query_cache.memory_size" | "recoverysource.type" | "refresh.time" | "refresh.total" | "search.fetch_current" | "search.fetch_time" | "search.fetch_total" | "search.open_contexts" | "search.query_current" | "search.query_time" | "search.query_total" | "search.scroll_current" | "search.scroll_time" | "search.scroll_total" | "segments.count" | "segments.fixed_bitset_memory" | "segments.index_writer_memory" | "segments.memory" | "segments.version_map_memory" | "seq_no.global_checkpoint" | "seq_no.local_checkpoint" | "seq_no.max" | "shard" | "dsparse_vector.value_count" | "state" | "store" | "suggest.current" | "suggest.time" | "suggest.total" | "sync_id" | "unassigned.at" | "unassigned.details" | "unassigned.for" | "unassigned.reason")[])*: List of columns to appear in the response. Supports simple wildcards.
 ** *`s` (Optional, string | string[])*: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 ** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 
 [discrete]
 ==== snapshots
@@ -3156,7 +3136,6 @@ It supports simple wildcards.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 
 [discrete]
 ==== tasks
@@ -3183,7 +3162,6 @@ client.cat.tasks({ ... })
 ** *`s` (Optional, string | string[])*: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: Unit used to display time values.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 ** *`wait_for_completion` (Optional, boolean)*: If `true`, the request blocks until the task has completed.
@@ -3242,7 +3220,6 @@ Accepts wildcard expressions.
 ** *`s` (Optional, string | string[])*: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 ** *`local` (Optional, boolean)*: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
@@ -3277,7 +3254,6 @@ If `false`, the request returns a 404 status code when there are no matches or o
 ** *`from` (Optional, number)*: Skips the specified number of transforms.
 ** *`h` (Optional, Enum("changes_last_detection_time" | "checkpoint" | "checkpoint_duration_time_exp_avg" | "checkpoint_progress" | "create_time" | "delete_time" | "description" | "dest_index" | "documents_deleted" | "documents_indexed" | "docs_per_second" | "documents_processed" | "frequency" | "id" | "index_failure" | "index_time" | "index_total" | "indexed_documents_exp_avg" | "last_search_time" | "max_page_search_size" | "pages_processed" | "pipeline" | "processed_documents_exp_avg" | "processing_time" | "reason" | "search_failure" | "search_time" | "search_total" | "source_index" | "state" | "transform_type" | "trigger_count" | "version") | Enum("changes_last_detection_time" | "checkpoint" | "checkpoint_duration_time_exp_avg" | "checkpoint_progress" | "create_time" | "delete_time" | "description" | "dest_index" | "documents_deleted" | "documents_indexed" | "docs_per_second" | "documents_processed" | "frequency" | "id" | "index_failure" | "index_time" | "index_total" | "indexed_documents_exp_avg" | "last_search_time" | "max_page_search_size" | "pages_processed" | "pipeline" | "processed_documents_exp_avg" | "processing_time" | "reason" | "search_failure" | "search_time" | "search_total" | "source_index" | "state" | "transform_type" | "trigger_count" | "version")[])*: List of column names to display.
 ** *`s` (Optional, Enum("changes_last_detection_time" | "checkpoint" | "checkpoint_duration_time_exp_avg" | "checkpoint_progress" | "create_time" | "delete_time" | "description" | "dest_index" | "documents_deleted" | "documents_indexed" | "docs_per_second" | "documents_processed" | "frequency" | "id" | "index_failure" | "index_time" | "index_total" | "indexed_documents_exp_avg" | "last_search_time" | "max_page_search_size" | "pages_processed" | "pipeline" | "processed_documents_exp_avg" | "processing_time" | "reason" | "search_failure" | "search_time" | "search_total" | "source_index" | "state" | "transform_type" | "trigger_count" | "version") | Enum("changes_last_detection_time" | "checkpoint" | "checkpoint_duration_time_exp_avg" | "checkpoint_progress" | "create_time" | "delete_time" | "description" | "dest_index" | "documents_deleted" | "documents_indexed" | "docs_per_second" | "documents_processed" | "frequency" | "id" | "index_failure" | "index_time" | "index_total" | "indexed_documents_exp_avg" | "last_search_time" | "max_page_search_size" | "pages_processed" | "pipeline" | "processed_documents_exp_avg" | "processing_time" | "reason" | "search_failure" | "search_time" | "search_total" | "source_index" | "state" | "transform_type" | "trigger_count" | "version")[])*: List of column names or column aliases used to sort the response.
-** *`time` (Optional, Enum("nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"))*: The unit used to display time values.
 ** *`size` (Optional, number)*: The maximum number of transforms to obtain.
 
 [discrete]
