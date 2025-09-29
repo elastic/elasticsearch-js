@@ -1228,22 +1228,22 @@ export default class Indices {
   }
 
   /**
-    * Gets a data stream's settings
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams.html | Elasticsearch API documentation}
+    * Get data stream settings. Get setting information for one or more data streams.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-get-data-stream-settings.html | Elasticsearch API documentation}
     */
-  async getDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getDataStreamSettings (this: That, params: T.IndicesGetDataStreamSettingsRequest | TB.IndicesGetDataStreamSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamSettingsResponse>
+  async getDataStreamSettings (this: That, params: T.IndicesGetDataStreamSettingsRequest | TB.IndicesGetDataStreamSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataStreamSettingsResponse, unknown>>
+  async getDataStreamSettings (this: That, params: T.IndicesGetDataStreamSettingsRequest | TB.IndicesGetDataStreamSettingsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataStreamSettingsResponse>
+  async getDataStreamSettings (this: That, params: T.IndicesGetDataStreamSettingsRequest | TB.IndicesGetDataStreamSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1798,22 +1798,27 @@ export default class Indices {
   }
 
   /**
-    * Updates a data stream's settings
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams.html | Elasticsearch API documentation}
+    * Update data stream settings. This API can be used to override settings on specific data streams. These overrides will take precedence over what is specified in the template that the data stream matches. To prevent your data stream from getting into an invalid state, only certain settings are allowed. If possible, the setting change is applied to all backing indices. Otherwise, it will be applied when the data stream is next rolled over.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-put-data-stream-settings.html | Elasticsearch API documentation}
     */
-  async putDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putDataStreamSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async putDataStreamSettings (this: That, params: T.IndicesPutDataStreamSettingsRequest | TB.IndicesPutDataStreamSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataStreamSettingsResponse>
+  async putDataStreamSettings (this: That, params: T.IndicesPutDataStreamSettingsRequest | TB.IndicesPutDataStreamSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutDataStreamSettingsResponse, unknown>>
+  async putDataStreamSettings (this: That, params: T.IndicesPutDataStreamSettingsRequest | TB.IndicesPutDataStreamSettingsRequest, options?: TransportRequestOptions): Promise<T.IndicesPutDataStreamSettingsResponse>
+  async putDataStreamSettings (this: That, params: T.IndicesPutDataStreamSettingsRequest | TB.IndicesPutDataStreamSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
+    const acceptedBody: string[] = ['settings']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    let body: any = params.body ?? undefined
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -2046,7 +2051,7 @@ export default class Indices {
   }
 
   /**
-    * Refresh an index. A refresh makes recent operations performed on one or more indices available for search. For data streams, the API runs the refresh operation on the stream’s backing indices. By default, Elasticsearch periodically refreshes indices every second, but only on indices that have received one search request or more in the last 30 seconds. You can change this default interval with the `index.refresh_interval` setting. Refresh requests are synchronous and do not return a response until the refresh operation completes. Refreshes are resource-intensive. To ensure good cluster performance, it's recommended to wait for Elasticsearch's periodic refresh rather than performing an explicit refresh when possible. If your application workflow indexes documents and then runs a search to retrieve the indexed document, it's recommended to use the index API's `refresh=wait_for` query parameter option. This option ensures the indexing operation waits for a periodic refresh before running the search.
+    * Refresh an index. A refresh makes recent operations performed on one or more indices available for search. For data streams, the API runs the refresh operation on the stream’s backing indices. By default, Elasticsearch periodically refreshes indices every second, but only on indices that have received one search request or more in the last 30 seconds. You can change this default interval with the `index.refresh_interval` setting. In Elastic Cloud Serverless, the default refresh interval is 5 seconds across all indices. Refresh requests are synchronous and do not return a response until the refresh operation completes. Refreshes are resource-intensive. To ensure good cluster performance, it's recommended to wait for Elasticsearch's periodic refresh rather than performing an explicit refresh when possible. If your application workflow indexes documents and then runs a search to retrieve the indexed document, it's recommended to use the index API's `refresh=wait_for` query parameter option. This option ensures the indexing operation waits for a periodic refresh before running the search.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-refresh.html | Elasticsearch API documentation}
     */
   async refresh (this: That, params?: T.IndicesRefreshRequest | TB.IndicesRefreshRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRefreshResponse>

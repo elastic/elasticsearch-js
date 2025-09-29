@@ -3017,6 +3017,7 @@ export interface WriteResponseBase {
   _seq_no?: SequenceNumber
   _shards: ShardStatistics
   _version: VersionNumber
+  failure_store?: BulkFailureStoreStatus
   forced_refresh?: boolean
 }
 
@@ -3971,6 +3972,11 @@ export interface AggregationsNormalizeAggregation extends AggregationsPipelineAg
 
 export type AggregationsNormalizeMethod = 'rescale_0_1' | 'rescale_0_100' | 'percent_of_sum' | 'mean' | 'z-score' | 'softmax'
 
+export interface AggregationsPValueHeuristic {
+  background_is_superset?: boolean
+  normalize_above?: long
+}
+
 export interface AggregationsParentAggregateKeys extends AggregationsSingleBucketAggregateBase {
 }
 export type AggregationsParentAggregate = AggregationsParentAggregateKeys
@@ -4142,6 +4148,7 @@ export interface AggregationsSignificantTermsAggregation extends AggregationsBuc
   mutual_information?: AggregationsMutualInformationHeuristic
   percentage?: AggregationsPercentageScoreHeuristic
   script_heuristic?: AggregationsScriptedHeuristic
+  p_value?: AggregationsPValueHeuristic
   shard_min_doc_count?: long
   shard_size?: integer
   size?: integer
@@ -11421,6 +11428,7 @@ export interface IndicesDataStream {
   name: DataStreamName
   replicated?: boolean
   rollover_on_write: boolean
+  settings: IndicesIndexSettings
   status: HealthStatus
   system?: boolean
   template: Name
@@ -12403,6 +12411,21 @@ export interface IndicesGetDataStreamResponse {
   data_streams: IndicesDataStream[]
 }
 
+export interface IndicesGetDataStreamSettingsDataStreamSettings {
+  name: string
+  settings: IndicesIndexSettings
+  effective_settings: IndicesIndexSettings
+}
+
+export interface IndicesGetDataStreamSettingsRequest extends RequestBase {
+  name: Indices
+  master_timeout?: Duration
+}
+
+export interface IndicesGetDataStreamSettingsResponse {
+  data_streams: IndicesGetDataStreamSettingsDataStreamSettings[]
+}
+
 export interface IndicesGetFieldMappingRequest extends RequestBase {
   fields: Fields
   index?: Indices
@@ -12591,6 +12614,38 @@ export interface IndicesPutDataLifecycleRequest extends RequestBase {
 }
 
 export type IndicesPutDataLifecycleResponse = AcknowledgedResponseBase
+
+export interface IndicesPutDataStreamSettingsDataStreamSettingsError {
+  index: IndexName
+  error: string
+}
+
+export interface IndicesPutDataStreamSettingsIndexSettingResults {
+  applied_to_data_stream_only: string[]
+  applied_to_data_stream_and_backing_indices: string[]
+  errors?: IndicesPutDataStreamSettingsDataStreamSettingsError[]
+}
+
+export interface IndicesPutDataStreamSettingsRequest extends RequestBase {
+  name: Indices
+  dry_run?: boolean
+  master_timeout?: Duration
+  timeout?: Duration
+  settings?: IndicesIndexSettings
+}
+
+export interface IndicesPutDataStreamSettingsResponse {
+  data_streams: IndicesPutDataStreamSettingsUpdatedDataStreamSettings[]
+}
+
+export interface IndicesPutDataStreamSettingsUpdatedDataStreamSettings {
+  name: IndexName
+  applied_to_data_stream: boolean
+  error?: string
+  settings: IndicesIndexSettings
+  effective_settings: IndicesIndexSettings
+  index_settings_results: IndicesPutDataStreamSettingsIndexSettingResults
+}
 
 export interface IndicesPutIndexTemplateIndexTemplateMapping {
   aliases?: Record<IndexName, IndicesAlias>
@@ -15758,7 +15813,7 @@ export interface MlFillMaskInferenceOptions {
   num_top_classes?: integer
   tokenization?: MlTokenizationConfigContainer
   results_field?: string
-  vocabulary: MlVocabulary
+  vocabulary?: MlVocabulary
 }
 
 export interface MlFillMaskInferenceUpdateOptions {
@@ -16177,7 +16232,7 @@ export interface MlTextEmbeddingInferenceOptions {
   embedding_size?: integer
   tokenization?: MlTokenizationConfigContainer
   results_field?: string
-  vocabulary: MlVocabulary
+  vocabulary?: MlVocabulary
 }
 
 export interface MlTextEmbeddingInferenceUpdateOptions {
@@ -16188,7 +16243,7 @@ export interface MlTextEmbeddingInferenceUpdateOptions {
 export interface MlTextExpansionInferenceOptions {
   tokenization?: MlTokenizationConfigContainer
   results_field?: string
-  vocabulary: MlVocabulary
+  vocabulary?: MlVocabulary
 }
 
 export interface MlTextExpansionInferenceUpdateOptions {
