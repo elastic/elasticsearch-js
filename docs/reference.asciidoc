@@ -2496,6 +2496,101 @@ A partial reduction is performed every time the coordinating node has received a
 ** *`q` (Optional, string)*: Query in the Lucene query string syntax
 
 [discrete]
+=== autoscaling
+[discrete]
+==== delete_autoscaling_policy
+Delete an autoscaling policy.
+
+NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
+
+{ref}/autoscaling-delete-autoscaling-policy.html[Endpoint documentation]
+[source,ts]
+----
+client.autoscaling.deleteAutoscalingPolicy({ name })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`name` (string)*: the name of the autoscaling policy
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+
+[discrete]
+==== get_autoscaling_capacity
+Get the autoscaling capacity.
+
+NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
+
+This API gets the current autoscaling capacity based on the configured autoscaling policy.
+It will return information to size the cluster appropriately to the current workload.
+
+The `required_capacity` is calculated as the maximum of the `required_capacity` result of all individual deciders that are enabled for the policy.
+
+The operator should verify that the `current_nodes` match the operator’s knowledge of the cluster to avoid making autoscaling decisions based on stale or incomplete information.
+
+The response contains decider-specific information you can use to diagnose how and why autoscaling determined a certain capacity was required.
+This information is provided for diagnosis only.
+Do not use this information to make autoscaling decisions.
+
+{ref}/autoscaling-get-autoscaling-capacity.html[Endpoint documentation]
+[source,ts]
+----
+client.autoscaling.getAutoscalingCapacity({ ... })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+
+[discrete]
+==== get_autoscaling_policy
+Get an autoscaling policy.
+
+NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
+
+{ref}/autoscaling-get-autoscaling-capacity.html[Endpoint documentation]
+[source,ts]
+----
+client.autoscaling.getAutoscalingPolicy({ name })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`name` (string)*: the name of the autoscaling policy
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+
+[discrete]
+==== put_autoscaling_policy
+Create or update an autoscaling policy.
+
+NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
+
+{ref}/autoscaling-put-autoscaling-policy.html[Endpoint documentation]
+[source,ts]
+----
+client.autoscaling.putAutoscalingPolicy({ name })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`name` (string)*: the name of the autoscaling policy
+** *`policy` (Optional, { roles, deciders })*
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+
+[discrete]
 === cat
 [discrete]
 ==== aliases
@@ -6577,14 +6672,22 @@ client.indices.getDataStreamOptions()
 
 [discrete]
 ==== get_data_stream_settings
-Gets a data stream's settings
+Get data stream settings.
 
-{ref}/data-streams.html[Endpoint documentation]
+Get setting information for one or more data streams.
 [source,ts]
 ----
-client.indices.getDataStreamSettings()
+client.indices.getDataStreamSettings({ name })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`name` (string | string[])*: A list of data streams or data stream patterns. Supports wildcards (`*`).
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node. If no response is
+received before the timeout expires, the request fails and returns an
+error.
 
 [discrete]
 ==== get_field_mapping
@@ -6973,14 +7076,31 @@ client.indices.putDataStreamOptions()
 
 [discrete]
 ==== put_data_stream_settings
-Updates a data stream's settings
+Update data stream settings.
 
-{ref}/data-streams.html[Endpoint documentation]
+This API can be used to override settings on specific data streams. These overrides will take precedence over what
+is specified in the template that the data stream matches. To prevent your data stream from getting into an invalid state,
+only certain settings are allowed. If possible, the setting change is applied to all
+backing indices. Otherwise, it will be applied when the data stream is next rolled over.
 [source,ts]
 ----
-client.indices.putDataStreamSettings()
+client.indices.putDataStreamSettings({ name })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`name` (string | string[])*: A list of data streams or data stream patterns.
+** *`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })*
+** *`dry_run` (Optional, boolean)*: If `true`, the request does not actually change the settings on any data streams or indices. Instead, it
+simulates changing the settings and reports back to the user what would have happened had these settings
+actually been applied.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node. If no response is
+received before the timeout expires, the request fails and returns an
+error.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response. If no response is received before the
+ timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== put_index_template
@@ -7330,6 +7450,8 @@ For data streams, the API runs the refresh operation on the stream’s backing i
 
 By default, Elasticsearch periodically refreshes indices every second, but only on indices that have received one search request or more in the last 30 seconds.
 You can change this default interval with the `index.refresh_interval` setting.
+
+In Elastic Cloud Serverless, the default refresh interval is 5 seconds across all indices.
 
 Refresh requests are synchronous and do not return a response until the refresh operation completes.
 
@@ -14220,6 +14342,113 @@ The data object is not searchable, but can be retrieved with the get user profil
 visible to search.
 If 'wait_for', it waits for a refresh to make this operation visible to search.
 If 'false', nothing is done with refreshes.
+
+[discrete]
+=== shutdown
+[discrete]
+==== delete_node
+Cancel node shutdown preparations.
+Remove a node from the shutdown list so it can resume normal operations.
+You must explicitly clear the shutdown request when a node rejoins the cluster or when a node has permanently left the cluster.
+Shutdown requests are never removed automatically by Elasticsearch.
+
+NOTE: This feature is designed for indirect use by Elastic Cloud, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes.
+Direct use is not supported.
+
+If the operator privileges feature is enabled, you must be an operator to use this API.
+
+{ref}/delete-shutdown.html[Endpoint documentation]
+[source,ts]
+----
+client.shutdown.deleteNode({ node_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`node_id` (string)*: The node id of node to be removed from the shutdown state
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+
+[discrete]
+==== get_node
+Get the shutdown status.
+
+Get information about nodes that are ready to be shut down, have shut down preparations still in progress, or have stalled.
+The API returns status information for each part of the shut down process.
+
+NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
+
+If the operator privileges feature is enabled, you must be an operator to use this API.
+
+{ref}/get-shutdown.html[Endpoint documentation]
+[source,ts]
+----
+client.shutdown.getNode({ ... })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`node_id` (Optional, string | string[])*: Which node for which to retrieve the shutdown status
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+
+[discrete]
+==== put_node
+Prepare a node to be shut down.
+
+NOTE: This feature is designed for indirect use by Elastic Cloud, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
+
+If you specify a node that is offline, it will be prepared for shut down when it rejoins the cluster.
+
+If the operator privileges feature is enabled, you must be an operator to use this API.
+
+The API migrates ongoing tasks and index shards to other nodes as needed to prepare a node to be restarted or shut down and removed from the cluster.
+This ensures that Elasticsearch can be stopped safely with minimal disruption to the cluster.
+
+You must specify the type of shutdown: `restart`, `remove`, or `replace`.
+If a node is already being prepared for shutdown, you can use this API to change the shutdown type.
+
+IMPORTANT: This API does NOT terminate the Elasticsearch process.
+Monitor the node shutdown status to determine when it is safe to stop Elasticsearch.
+
+{ref}/put-shutdown.html[Endpoint documentation]
+[source,ts]
+----
+client.shutdown.putNode({ node_id, type, reason })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`node_id` (string)*: The node identifier.
+This parameter is not validated against the cluster's active nodes.
+This enables you to register a node for shut down while it is offline.
+No error is thrown if you specify an invalid node ID.
+** *`type` (Enum("restart" | "remove" | "replace"))*: Valid values are restart, remove, or replace.
+Use restart when you need to temporarily shut down a node to perform an upgrade, make configuration changes, or perform other maintenance.
+Because the node is expected to rejoin the cluster, data is not migrated off of the node.
+Use remove when you need to permanently remove a node from the cluster.
+The node is not marked ready for shutdown until data is migrated off of the node Use replace to do a 1:1 replacement of a node with another node.
+Certain allocation decisions will be ignored (such as disk watermarks) in the interest of true replacement of the source node with the target node.
+During a replace-type shutdown, rollover and index creation may result in unassigned shards, and shrink may fail until the replacement is complete.
+** *`reason` (string)*: A human-readable reason that the node is being shut down.
+This field provides information for other cluster operators; it does not affect the shut down process.
+** *`allocation_delay` (Optional, string)*: Only valid if type is restart.
+Controls how long Elasticsearch will wait for the node to restart and join the cluster before reassigning its shards to other nodes.
+This works the same as delaying allocation with the index.unassigned.node_left.delayed_timeout setting.
+If you specify both a restart allocation delay and an index-level allocation delay, the longer of the two is used.
+** *`target_node_name` (Optional, string)*: Only valid if type is replace.
+Specifies the name of the node that is replacing the node being shut down.
+Shards from the shut down node are only allowed to be allocated to the target node, and no other data will be allocated to the target node.
+During relocation of data certain allocation rules are ignored, such as disk watermarks or user attribute filtering rules.
+** *`master_timeout` (Optional, string | -1 | 0)*: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 === simulate
