@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Shutdown {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'shutdown.delete_node': {
         path: [
           'node_id'
@@ -82,7 +83,7 @@ export default class Shutdown {
   async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['shutdown.delete_node']
+    } = this[kAcceptedParams]['shutdown.delete_node']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -112,7 +113,12 @@ export default class Shutdown {
       name: 'shutdown.delete_node',
       pathParts: {
         node_id: params.node_id
-      }
+      },
+      acceptedParams: [
+        'node_id',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -127,7 +133,7 @@ export default class Shutdown {
   async getNode (this: That, params?: T.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['shutdown.get_node']
+    } = this[kAcceptedParams]['shutdown.get_node']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -165,7 +171,11 @@ export default class Shutdown {
       name: 'shutdown.get_node',
       pathParts: {
         node_id: params.node_id
-      }
+      },
+      acceptedParams: [
+        'node_id',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -182,7 +192,7 @@ export default class Shutdown {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['shutdown.put_node']
+    } = this[kAcceptedParams]['shutdown.put_node']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -222,7 +232,16 @@ export default class Shutdown {
       name: 'shutdown.put_node',
       pathParts: {
         node_id: params.node_id
-      }
+      },
+      acceptedParams: [
+        'node_id',
+        'type',
+        'reason',
+        'allocation_delay',
+        'target_node_name',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

@@ -125,7 +125,43 @@ export default async function DeleteByQueryApi (this: That, params: T.DeleteByQu
     name: 'delete_by_query',
     pathParts: {
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'index',
+      'max_docs',
+      'query',
+      'slice',
+      'sort',
+      'allow_no_indices',
+      'analyzer',
+      'analyze_wildcard',
+      'conflicts',
+      'default_operator',
+      'df',
+      'expand_wildcards',
+      'from',
+      'ignore_unavailable',
+      'lenient',
+      'max_docs',
+      'preference',
+      'refresh',
+      'request_cache',
+      'requests_per_second',
+      'routing',
+      'q',
+      'scroll',
+      'scroll_size',
+      'search_timeout',
+      'search_type',
+      'slices',
+      'sort',
+      'stats',
+      'terminate_after',
+      'timeout',
+      'version',
+      'wait_for_active_shards',
+      'wait_for_completion'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

@@ -102,7 +102,24 @@ export default async function ReindexApi (this: That, params: T.ReindexRequest, 
   const method = 'POST'
   const path = '/_reindex'
   const meta: TransportRequestMetadata = {
-    name: 'reindex'
+    name: 'reindex',
+    acceptedParams: [
+      'conflicts',
+      'dest',
+      'max_docs',
+      'script',
+      'size',
+      'source',
+      'refresh',
+      'requests_per_second',
+      'scroll',
+      'slices',
+      'max_docs',
+      'timeout',
+      'wait_for_active_shards',
+      'wait_for_completion',
+      'require_alias'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

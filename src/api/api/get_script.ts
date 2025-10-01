@@ -78,7 +78,11 @@ export default async function GetScriptApi (this: That, params: T.GetScriptReque
     name: 'get_script',
     pathParts: {
       id: params.id
-    }
+    },
+    acceptedParams: [
+      'id',
+      'master_timeout'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

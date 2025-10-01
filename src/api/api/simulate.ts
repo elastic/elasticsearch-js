@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Simulate {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'simulate.ingest': {
         path: [
           'index'
@@ -65,7 +66,7 @@ export default class Simulate {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['simulate.ingest']
+    } = this[kAcceptedParams]['simulate.ingest']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -112,7 +113,16 @@ export default class Simulate {
       name: 'simulate.ingest',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'docs',
+        'component_template_substitutions',
+        'index_template_substitutions',
+        'mapping_addition',
+        'pipeline_substitutions',
+        'pipeline'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

@@ -78,7 +78,11 @@ export default async function ReindexRethrottleApi (this: That, params: T.Reinde
     name: 'reindex_rethrottle',
     pathParts: {
       task_id: params.task_id
-    }
+    },
+    acceptedParams: [
+      'task_id',
+      'requests_per_second'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

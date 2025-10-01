@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class SearchableSnapshots {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'searchable_snapshots.cache_stats': {
         path: [
           'node_id'
@@ -94,7 +95,7 @@ export default class SearchableSnapshots {
   async cacheStats (this: That, params?: T.SearchableSnapshotsCacheStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['searchable_snapshots.cache_stats']
+    } = this[kAcceptedParams]['searchable_snapshots.cache_stats']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -132,7 +133,11 @@ export default class SearchableSnapshots {
       name: 'searchable_snapshots.cache_stats',
       pathParts: {
         node_id: params.node_id
-      }
+      },
+      acceptedParams: [
+        'node_id',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -147,7 +152,7 @@ export default class SearchableSnapshots {
   async clearCache (this: That, params?: T.SearchableSnapshotsClearCacheRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['searchable_snapshots.clear_cache']
+    } = this[kAcceptedParams]['searchable_snapshots.clear_cache']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -185,7 +190,13 @@ export default class SearchableSnapshots {
       name: 'searchable_snapshots.clear_cache',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'expand_wildcards',
+        'allow_no_indices',
+        'ignore_unavailable'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -202,7 +213,7 @@ export default class SearchableSnapshots {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['searchable_snapshots.mount']
+    } = this[kAcceptedParams]['searchable_snapshots.mount']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -243,7 +254,18 @@ export default class SearchableSnapshots {
       pathParts: {
         repository: params.repository,
         snapshot: params.snapshot
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'snapshot',
+        'index',
+        'renamed_index',
+        'index_settings',
+        'ignore_index_settings',
+        'master_timeout',
+        'wait_for_completion',
+        'storage'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -258,7 +280,7 @@ export default class SearchableSnapshots {
   async stats (this: That, params?: T.SearchableSnapshotsStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['searchable_snapshots.stats']
+    } = this[kAcceptedParams]['searchable_snapshots.stats']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -296,7 +318,11 @@ export default class SearchableSnapshots {
       name: 'searchable_snapshots.stats',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'level'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

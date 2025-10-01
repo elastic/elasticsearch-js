@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Slm {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'slm.delete_lifecycle': {
         path: [
           'policy_id'
@@ -134,7 +135,7 @@ export default class Slm {
   async deleteLifecycle (this: That, params: T.SlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['slm.delete_lifecycle']
+    } = this[kAcceptedParams]['slm.delete_lifecycle']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -164,7 +165,12 @@ export default class Slm {
       name: 'slm.delete_lifecycle',
       pathParts: {
         policy_id: params.policy_id
-      }
+      },
+      acceptedParams: [
+        'policy_id',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -179,7 +185,7 @@ export default class Slm {
   async executeLifecycle (this: That, params: T.SlmExecuteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['slm.execute_lifecycle']
+    } = this[kAcceptedParams]['slm.execute_lifecycle']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -209,7 +215,12 @@ export default class Slm {
       name: 'slm.execute_lifecycle',
       pathParts: {
         policy_id: params.policy_id
-      }
+      },
+      acceptedParams: [
+        'policy_id',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -224,7 +235,7 @@ export default class Slm {
   async executeRetention (this: That, params?: T.SlmExecuteRetentionRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['slm.execute_retention']
+    } = this[kAcceptedParams]['slm.execute_retention']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -252,7 +263,11 @@ export default class Slm {
     const method = 'POST'
     const path = '/_slm/_execute_retention'
     const meta: TransportRequestMetadata = {
-      name: 'slm.execute_retention'
+      name: 'slm.execute_retention',
+      acceptedParams: [
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -267,7 +282,7 @@ export default class Slm {
   async getLifecycle (this: That, params?: T.SlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['slm.get_lifecycle']
+    } = this[kAcceptedParams]['slm.get_lifecycle']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -305,7 +320,12 @@ export default class Slm {
       name: 'slm.get_lifecycle',
       pathParts: {
         policy_id: params.policy_id
-      }
+      },
+      acceptedParams: [
+        'policy_id',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -320,7 +340,7 @@ export default class Slm {
   async getStats (this: That, params?: T.SlmGetStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['slm.get_stats']
+    } = this[kAcceptedParams]['slm.get_stats']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -348,7 +368,11 @@ export default class Slm {
     const method = 'GET'
     const path = '/_slm/stats'
     const meta: TransportRequestMetadata = {
-      name: 'slm.get_stats'
+      name: 'slm.get_stats',
+      acceptedParams: [
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -363,7 +387,7 @@ export default class Slm {
   async getStatus (this: That, params?: T.SlmGetStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['slm.get_status']
+    } = this[kAcceptedParams]['slm.get_status']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -391,7 +415,11 @@ export default class Slm {
     const method = 'GET'
     const path = '/_slm/status'
     const meta: TransportRequestMetadata = {
-      name: 'slm.get_status'
+      name: 'slm.get_status',
+      acceptedParams: [
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -408,7 +436,7 @@ export default class Slm {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['slm.put_lifecycle']
+    } = this[kAcceptedParams]['slm.put_lifecycle']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -448,7 +476,17 @@ export default class Slm {
       name: 'slm.put_lifecycle',
       pathParts: {
         policy_id: params.policy_id
-      }
+      },
+      acceptedParams: [
+        'policy_id',
+        'config',
+        'name',
+        'repository',
+        'retention',
+        'schedule',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -463,7 +501,7 @@ export default class Slm {
   async start (this: That, params?: T.SlmStartRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['slm.start']
+    } = this[kAcceptedParams]['slm.start']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -491,7 +529,11 @@ export default class Slm {
     const method = 'POST'
     const path = '/_slm/start'
     const meta: TransportRequestMetadata = {
-      name: 'slm.start'
+      name: 'slm.start',
+      acceptedParams: [
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -506,7 +548,7 @@ export default class Slm {
   async stop (this: That, params?: T.SlmStopRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['slm.stop']
+    } = this[kAcceptedParams]['slm.stop']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -534,7 +576,11 @@ export default class Slm {
     const method = 'POST'
     const path = '/_slm/stop'
     const meta: TransportRequestMetadata = {
-      name: 'slm.stop'
+      name: 'slm.stop',
+      acceptedParams: [
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

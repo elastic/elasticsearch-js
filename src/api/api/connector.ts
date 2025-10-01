@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Connector {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'connector.check_in': {
         path: [
           'connector_id'
@@ -369,7 +370,7 @@ export default class Connector {
   async checkIn (this: That, params: T.ConnectorCheckInRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.check_in']
+    } = this[kAcceptedParams]['connector.check_in']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -399,7 +400,10 @@ export default class Connector {
       name: 'connector.check_in',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -414,7 +418,7 @@ export default class Connector {
   async delete (this: That, params: T.ConnectorDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.delete']
+    } = this[kAcceptedParams]['connector.delete']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -444,7 +448,12 @@ export default class Connector {
       name: 'connector.delete',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'delete_sync_jobs',
+        'hard'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -459,7 +468,7 @@ export default class Connector {
   async get (this: That, params: T.ConnectorGetRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.get']
+    } = this[kAcceptedParams]['connector.get']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -489,7 +498,11 @@ export default class Connector {
       name: 'connector.get',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'include_deleted'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -506,7 +519,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.last_sync']
+    } = this[kAcceptedParams]['connector.last_sync']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -546,7 +559,22 @@ export default class Connector {
       name: 'connector.last_sync',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'last_access_control_sync_error',
+        'last_access_control_sync_scheduled_at',
+        'last_access_control_sync_status',
+        'last_deleted_document_count',
+        'last_incremental_sync_scheduled_at',
+        'last_indexed_document_count',
+        'last_seen',
+        'last_sync_error',
+        'last_sync_scheduled_at',
+        'last_sync_status',
+        'last_synced',
+        'sync_cursor'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -561,7 +589,7 @@ export default class Connector {
   async list (this: That, params?: T.ConnectorListRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.list']
+    } = this[kAcceptedParams]['connector.list']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -589,7 +617,16 @@ export default class Connector {
     const method = 'GET'
     const path = '/_connector'
     const meta: TransportRequestMetadata = {
-      name: 'connector.list'
+      name: 'connector.list',
+      acceptedParams: [
+        'from',
+        'size',
+        'index_name',
+        'connector_name',
+        'service_type',
+        'include_deleted',
+        'query'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -606,7 +643,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.post']
+    } = this[kAcceptedParams]['connector.post']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -644,7 +681,15 @@ export default class Connector {
     const method = 'POST'
     const path = '/_connector'
     const meta: TransportRequestMetadata = {
-      name: 'connector.post'
+      name: 'connector.post',
+      acceptedParams: [
+        'description',
+        'index_name',
+        'is_native',
+        'language',
+        'name',
+        'service_type'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -661,7 +706,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.put']
+    } = this[kAcceptedParams]['connector.put']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -709,7 +754,16 @@ export default class Connector {
       name: 'connector.put',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'description',
+        'index_name',
+        'is_native',
+        'language',
+        'name',
+        'service_type'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -723,7 +777,7 @@ export default class Connector {
   async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.secret_delete']
+    } = this[kAcceptedParams]['connector.secret_delete']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -753,7 +807,10 @@ export default class Connector {
       name: 'connector.secret_delete',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -767,7 +824,7 @@ export default class Connector {
   async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.secret_get']
+    } = this[kAcceptedParams]['connector.secret_get']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -797,7 +854,10 @@ export default class Connector {
       name: 'connector.secret_get',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -811,7 +871,7 @@ export default class Connector {
   async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.secret_post']
+    } = this[kAcceptedParams]['connector.secret_post']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -838,7 +898,9 @@ export default class Connector {
     const method = 'POST'
     const path = '/_connector/_secret'
     const meta: TransportRequestMetadata = {
-      name: 'connector.secret_post'
+      name: 'connector.secret_post',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -852,7 +914,7 @@ export default class Connector {
   async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.secret_put']
+    } = this[kAcceptedParams]['connector.secret_put']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -882,7 +944,10 @@ export default class Connector {
       name: 'connector.secret_put',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -897,7 +962,7 @@ export default class Connector {
   async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.sync_job_cancel']
+    } = this[kAcceptedParams]['connector.sync_job_cancel']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -927,7 +992,10 @@ export default class Connector {
       name: 'connector.sync_job_cancel',
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
-      }
+      },
+      acceptedParams: [
+        'connector_sync_job_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -942,7 +1010,7 @@ export default class Connector {
   async syncJobCheckIn (this: That, params: T.ConnectorSyncJobCheckInRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.sync_job_check_in']
+    } = this[kAcceptedParams]['connector.sync_job_check_in']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -972,7 +1040,10 @@ export default class Connector {
       name: 'connector.sync_job_check_in',
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
-      }
+      },
+      acceptedParams: [
+        'connector_sync_job_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -989,7 +1060,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.sync_job_claim']
+    } = this[kAcceptedParams]['connector.sync_job_claim']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1029,7 +1100,12 @@ export default class Connector {
       name: 'connector.sync_job_claim',
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
-      }
+      },
+      acceptedParams: [
+        'connector_sync_job_id',
+        'sync_cursor',
+        'worker_hostname'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1044,7 +1120,7 @@ export default class Connector {
   async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.sync_job_delete']
+    } = this[kAcceptedParams]['connector.sync_job_delete']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1074,7 +1150,10 @@ export default class Connector {
       name: 'connector.sync_job_delete',
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
-      }
+      },
+      acceptedParams: [
+        'connector_sync_job_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1091,7 +1170,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.sync_job_error']
+    } = this[kAcceptedParams]['connector.sync_job_error']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1131,7 +1210,11 @@ export default class Connector {
       name: 'connector.sync_job_error',
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
-      }
+      },
+      acceptedParams: [
+        'connector_sync_job_id',
+        'error'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1146,7 +1229,7 @@ export default class Connector {
   async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.sync_job_get']
+    } = this[kAcceptedParams]['connector.sync_job_get']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1176,7 +1259,10 @@ export default class Connector {
       name: 'connector.sync_job_get',
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
-      }
+      },
+      acceptedParams: [
+        'connector_sync_job_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1191,7 +1277,7 @@ export default class Connector {
   async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.sync_job_list']
+    } = this[kAcceptedParams]['connector.sync_job_list']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1219,7 +1305,14 @@ export default class Connector {
     const method = 'GET'
     const path = '/_connector/_sync_job'
     const meta: TransportRequestMetadata = {
-      name: 'connector.sync_job_list'
+      name: 'connector.sync_job_list',
+      acceptedParams: [
+        'from',
+        'size',
+        'status',
+        'connector_id',
+        'job_type'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1236,7 +1329,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.sync_job_post']
+    } = this[kAcceptedParams]['connector.sync_job_post']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1273,7 +1366,12 @@ export default class Connector {
     const method = 'POST'
     const path = '/_connector/_sync_job'
     const meta: TransportRequestMetadata = {
-      name: 'connector.sync_job_post'
+      name: 'connector.sync_job_post',
+      acceptedParams: [
+        'id',
+        'job_type',
+        'trigger_method'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1290,7 +1388,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.sync_job_update_stats']
+    } = this[kAcceptedParams]['connector.sync_job_update_stats']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1330,7 +1428,16 @@ export default class Connector {
       name: 'connector.sync_job_update_stats',
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
-      }
+      },
+      acceptedParams: [
+        'connector_sync_job_id',
+        'deleted_document_count',
+        'indexed_document_count',
+        'indexed_document_volume',
+        'last_seen',
+        'metadata',
+        'total_document_count'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1345,7 +1452,7 @@ export default class Connector {
   async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['connector.update_active_filtering']
+    } = this[kAcceptedParams]['connector.update_active_filtering']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1375,7 +1482,10 @@ export default class Connector {
       name: 'connector.update_active_filtering',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1392,7 +1502,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.update_api_key_id']
+    } = this[kAcceptedParams]['connector.update_api_key_id']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1432,7 +1542,12 @@ export default class Connector {
       name: 'connector.update_api_key_id',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'api_key_id',
+        'api_key_secret_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1449,7 +1564,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.update_configuration']
+    } = this[kAcceptedParams]['connector.update_configuration']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1489,7 +1604,12 @@ export default class Connector {
       name: 'connector.update_configuration',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'configuration',
+        'values'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1506,7 +1626,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.update_error']
+    } = this[kAcceptedParams]['connector.update_error']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1546,7 +1666,11 @@ export default class Connector {
       name: 'connector.update_error',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'error'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1563,7 +1687,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.update_features']
+    } = this[kAcceptedParams]['connector.update_features']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1603,7 +1727,11 @@ export default class Connector {
       name: 'connector.update_features',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'features'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1620,7 +1748,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.update_filtering']
+    } = this[kAcceptedParams]['connector.update_filtering']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1660,7 +1788,13 @@ export default class Connector {
       name: 'connector.update_filtering',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'filtering',
+        'rules',
+        'advanced_snippet'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1677,7 +1811,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.update_filtering_validation']
+    } = this[kAcceptedParams]['connector.update_filtering_validation']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1717,7 +1851,11 @@ export default class Connector {
       name: 'connector.update_filtering_validation',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'validation'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1734,7 +1872,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.update_index_name']
+    } = this[kAcceptedParams]['connector.update_index_name']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1774,7 +1912,11 @@ export default class Connector {
       name: 'connector.update_index_name',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'index_name'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1791,7 +1933,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.update_name']
+    } = this[kAcceptedParams]['connector.update_name']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1831,7 +1973,12 @@ export default class Connector {
       name: 'connector.update_name',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'name',
+        'description'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1848,7 +1995,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.update_native']
+    } = this[kAcceptedParams]['connector.update_native']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1888,7 +2035,11 @@ export default class Connector {
       name: 'connector.update_native',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'is_native'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1905,7 +2056,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.update_pipeline']
+    } = this[kAcceptedParams]['connector.update_pipeline']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1945,7 +2096,11 @@ export default class Connector {
       name: 'connector.update_pipeline',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'pipeline'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1962,7 +2117,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.update_scheduling']
+    } = this[kAcceptedParams]['connector.update_scheduling']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2002,7 +2157,11 @@ export default class Connector {
       name: 'connector.update_scheduling',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'scheduling'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2019,7 +2178,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.update_service_type']
+    } = this[kAcceptedParams]['connector.update_service_type']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2059,7 +2218,11 @@ export default class Connector {
       name: 'connector.update_service_type',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'service_type'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2076,7 +2239,7 @@ export default class Connector {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['connector.update_status']
+    } = this[kAcceptedParams]['connector.update_status']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2116,7 +2279,11 @@ export default class Connector {
       name: 'connector.update_status',
       pathParts: {
         connector_id: params.connector_id
-      }
+      },
+      acceptedParams: [
+        'connector_id',
+        'status'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

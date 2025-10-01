@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Eql {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'eql.delete': {
         path: [
           'id'
@@ -107,7 +108,7 @@ export default class Eql {
   async delete (this: That, params: T.EqlDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['eql.delete']
+    } = this[kAcceptedParams]['eql.delete']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -137,7 +138,10 @@ export default class Eql {
       name: 'eql.delete',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -152,7 +156,7 @@ export default class Eql {
   async get<TEvent = unknown> (this: That, params: T.EqlGetRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['eql.get']
+    } = this[kAcceptedParams]['eql.get']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -182,7 +186,12 @@ export default class Eql {
       name: 'eql.get',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'keep_alive',
+        'wait_for_completion_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -197,7 +206,7 @@ export default class Eql {
   async getStatus (this: That, params: T.EqlGetStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['eql.get_status']
+    } = this[kAcceptedParams]['eql.get_status']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -227,7 +236,10 @@ export default class Eql {
       name: 'eql.get_status',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -244,7 +256,7 @@ export default class Eql {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['eql.search']
+    } = this[kAcceptedParams]['eql.search']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -284,7 +296,36 @@ export default class Eql {
       name: 'eql.search',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'query',
+        'case_sensitive',
+        'event_category_field',
+        'tiebreaker_field',
+        'timestamp_field',
+        'fetch_size',
+        'filter',
+        'keep_alive',
+        'keep_on_completion',
+        'wait_for_completion_timeout',
+        'allow_partial_search_results',
+        'allow_partial_sequence_results',
+        'size',
+        'fields',
+        'result_position',
+        'runtime_mappings',
+        'max_samples_per_key',
+        'allow_no_indices',
+        'allow_partial_search_results',
+        'allow_partial_sequence_results',
+        'expand_wildcards',
+        'ccs_minimize_roundtrips',
+        'ignore_unavailable',
+        'keep_alive',
+        'keep_on_completion',
+        'wait_for_completion_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

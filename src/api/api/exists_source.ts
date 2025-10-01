@@ -88,7 +88,20 @@ export default async function ExistsSourceApi (this: That, params: T.ExistsSourc
     pathParts: {
       id: params.id,
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'id',
+      'index',
+      'preference',
+      'realtime',
+      'refresh',
+      'routing',
+      '_source',
+      '_source_excludes',
+      '_source_includes',
+      'version',
+      'version_type'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

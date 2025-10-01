@@ -87,7 +87,19 @@ export default async function DeleteApi (this: That, params: T.DeleteRequest, op
     pathParts: {
       id: params.id,
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'id',
+      'index',
+      'if_primary_term',
+      'if_seq_no',
+      'refresh',
+      'routing',
+      'timeout',
+      'version',
+      'version_type',
+      'wait_for_active_shards'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

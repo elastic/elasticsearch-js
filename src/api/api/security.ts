@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Security {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'security.activate_user_profile': {
         path: [],
         body: [
@@ -675,7 +676,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.activate_user_profile']
+    } = this[kAcceptedParams]['security.activate_user_profile']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -712,7 +713,13 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/profile/_activate'
     const meta: TransportRequestMetadata = {
-      name: 'security.activate_user_profile'
+      name: 'security.activate_user_profile',
+      acceptedParams: [
+        'access_token',
+        'grant_type',
+        'password',
+        'username'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -727,7 +734,7 @@ export default class Security {
   async authenticate (this: That, params?: T.SecurityAuthenticateRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.authenticate']
+    } = this[kAcceptedParams]['security.authenticate']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -755,7 +762,9 @@ export default class Security {
     const method = 'GET'
     const path = '/_security/_authenticate'
     const meta: TransportRequestMetadata = {
-      name: 'security.authenticate'
+      name: 'security.authenticate',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -772,7 +781,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.bulk_delete_role']
+    } = this[kAcceptedParams]['security.bulk_delete_role']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -809,7 +818,11 @@ export default class Security {
     const method = 'DELETE'
     const path = '/_security/role'
     const meta: TransportRequestMetadata = {
-      name: 'security.bulk_delete_role'
+      name: 'security.bulk_delete_role',
+      acceptedParams: [
+        'names',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -826,7 +839,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.bulk_put_role']
+    } = this[kAcceptedParams]['security.bulk_put_role']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -863,7 +876,11 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/role'
     const meta: TransportRequestMetadata = {
-      name: 'security.bulk_put_role'
+      name: 'security.bulk_put_role',
+      acceptedParams: [
+        'roles',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -880,7 +897,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.bulk_update_api_keys']
+    } = this[kAcceptedParams]['security.bulk_update_api_keys']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -917,7 +934,13 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/api_key/_bulk_update'
     const meta: TransportRequestMetadata = {
-      name: 'security.bulk_update_api_keys'
+      name: 'security.bulk_update_api_keys',
+      acceptedParams: [
+        'expiration',
+        'ids',
+        'metadata',
+        'role_descriptors'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -934,7 +957,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.change_password']
+    } = this[kAcceptedParams]['security.change_password']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -982,7 +1005,13 @@ export default class Security {
       name: 'security.change_password',
       pathParts: {
         username: params.username
-      }
+      },
+      acceptedParams: [
+        'username',
+        'password',
+        'password_hash',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -997,7 +1026,7 @@ export default class Security {
   async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.clear_api_key_cache']
+    } = this[kAcceptedParams]['security.clear_api_key_cache']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1027,7 +1056,10 @@ export default class Security {
       name: 'security.clear_api_key_cache',
       pathParts: {
         ids: params.ids
-      }
+      },
+      acceptedParams: [
+        'ids'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1042,7 +1074,7 @@ export default class Security {
   async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.clear_cached_privileges']
+    } = this[kAcceptedParams]['security.clear_cached_privileges']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1072,7 +1104,10 @@ export default class Security {
       name: 'security.clear_cached_privileges',
       pathParts: {
         application: params.application
-      }
+      },
+      acceptedParams: [
+        'application'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1087,7 +1122,7 @@ export default class Security {
   async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.clear_cached_realms']
+    } = this[kAcceptedParams]['security.clear_cached_realms']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1117,7 +1152,11 @@ export default class Security {
       name: 'security.clear_cached_realms',
       pathParts: {
         realms: params.realms
-      }
+      },
+      acceptedParams: [
+        'realms',
+        'usernames'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1132,7 +1171,7 @@ export default class Security {
   async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.clear_cached_roles']
+    } = this[kAcceptedParams]['security.clear_cached_roles']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1162,7 +1201,10 @@ export default class Security {
       name: 'security.clear_cached_roles',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1177,7 +1219,7 @@ export default class Security {
   async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.clear_cached_service_tokens']
+    } = this[kAcceptedParams]['security.clear_cached_service_tokens']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1209,7 +1251,12 @@ export default class Security {
         namespace: params.namespace,
         service: params.service,
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'namespace',
+        'service',
+        'name'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1226,7 +1273,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.create_api_key']
+    } = this[kAcceptedParams]['security.create_api_key']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1264,7 +1311,14 @@ export default class Security {
     const method = 'PUT'
     const path = '/_security/api_key'
     const meta: TransportRequestMetadata = {
-      name: 'security.create_api_key'
+      name: 'security.create_api_key',
+      acceptedParams: [
+        'expiration',
+        'name',
+        'role_descriptors',
+        'metadata',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1281,7 +1335,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.create_cross_cluster_api_key']
+    } = this[kAcceptedParams]['security.create_cross_cluster_api_key']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1318,7 +1372,13 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/cross_cluster/api_key'
     const meta: TransportRequestMetadata = {
-      name: 'security.create_cross_cluster_api_key'
+      name: 'security.create_cross_cluster_api_key',
+      acceptedParams: [
+        'access',
+        'expiration',
+        'metadata',
+        'name'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1333,7 +1393,7 @@ export default class Security {
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.create_service_token']
+    } = this[kAcceptedParams]['security.create_service_token']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1372,7 +1432,13 @@ export default class Security {
         namespace: params.namespace,
         service: params.service,
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'namespace',
+        'service',
+        'name',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1389,7 +1455,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.delegate_pki']
+    } = this[kAcceptedParams]['security.delegate_pki']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1426,7 +1492,10 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/delegate_pki'
     const meta: TransportRequestMetadata = {
-      name: 'security.delegate_pki'
+      name: 'security.delegate_pki',
+      acceptedParams: [
+        'x509_certificate_chain'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1441,7 +1510,7 @@ export default class Security {
   async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.delete_privileges']
+    } = this[kAcceptedParams]['security.delete_privileges']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1472,7 +1541,12 @@ export default class Security {
       pathParts: {
         application: params.application,
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'application',
+        'name',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1487,7 +1561,7 @@ export default class Security {
   async deleteRole (this: That, params: T.SecurityDeleteRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.delete_role']
+    } = this[kAcceptedParams]['security.delete_role']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1517,7 +1591,11 @@ export default class Security {
       name: 'security.delete_role',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1532,7 +1610,7 @@ export default class Security {
   async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.delete_role_mapping']
+    } = this[kAcceptedParams]['security.delete_role_mapping']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1562,7 +1640,11 @@ export default class Security {
       name: 'security.delete_role_mapping',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1577,7 +1659,7 @@ export default class Security {
   async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.delete_service_token']
+    } = this[kAcceptedParams]['security.delete_service_token']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1609,7 +1691,13 @@ export default class Security {
         namespace: params.namespace,
         service: params.service,
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'namespace',
+        'service',
+        'name',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1624,7 +1712,7 @@ export default class Security {
   async deleteUser (this: That, params: T.SecurityDeleteUserRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.delete_user']
+    } = this[kAcceptedParams]['security.delete_user']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1654,7 +1742,11 @@ export default class Security {
       name: 'security.delete_user',
       pathParts: {
         username: params.username
-      }
+      },
+      acceptedParams: [
+        'username',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1669,7 +1761,7 @@ export default class Security {
   async disableUser (this: That, params: T.SecurityDisableUserRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.disable_user']
+    } = this[kAcceptedParams]['security.disable_user']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1699,7 +1791,11 @@ export default class Security {
       name: 'security.disable_user',
       pathParts: {
         username: params.username
-      }
+      },
+      acceptedParams: [
+        'username',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1714,7 +1810,7 @@ export default class Security {
   async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.disable_user_profile']
+    } = this[kAcceptedParams]['security.disable_user_profile']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1744,7 +1840,11 @@ export default class Security {
       name: 'security.disable_user_profile',
       pathParts: {
         uid: params.uid
-      }
+      },
+      acceptedParams: [
+        'uid',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1759,7 +1859,7 @@ export default class Security {
   async enableUser (this: That, params: T.SecurityEnableUserRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.enable_user']
+    } = this[kAcceptedParams]['security.enable_user']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1789,7 +1889,11 @@ export default class Security {
       name: 'security.enable_user',
       pathParts: {
         username: params.username
-      }
+      },
+      acceptedParams: [
+        'username',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1804,7 +1908,7 @@ export default class Security {
   async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.enable_user_profile']
+    } = this[kAcceptedParams]['security.enable_user_profile']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1834,7 +1938,11 @@ export default class Security {
       name: 'security.enable_user_profile',
       pathParts: {
         uid: params.uid
-      }
+      },
+      acceptedParams: [
+        'uid',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1849,7 +1957,7 @@ export default class Security {
   async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.enroll_kibana']
+    } = this[kAcceptedParams]['security.enroll_kibana']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1877,7 +1985,9 @@ export default class Security {
     const method = 'GET'
     const path = '/_security/enroll/kibana'
     const meta: TransportRequestMetadata = {
-      name: 'security.enroll_kibana'
+      name: 'security.enroll_kibana',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1892,7 +2002,7 @@ export default class Security {
   async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.enroll_node']
+    } = this[kAcceptedParams]['security.enroll_node']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1920,7 +2030,9 @@ export default class Security {
     const method = 'GET'
     const path = '/_security/enroll/node'
     const meta: TransportRequestMetadata = {
-      name: 'security.enroll_node'
+      name: 'security.enroll_node',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1935,7 +2047,7 @@ export default class Security {
   async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.get_api_key']
+    } = this[kAcceptedParams]['security.get_api_key']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1963,7 +2075,17 @@ export default class Security {
     const method = 'GET'
     const path = '/_security/api_key'
     const meta: TransportRequestMetadata = {
-      name: 'security.get_api_key'
+      name: 'security.get_api_key',
+      acceptedParams: [
+        'id',
+        'name',
+        'owner',
+        'realm_name',
+        'username',
+        'with_limited_by',
+        'active_only',
+        'with_profile_uid'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1978,7 +2100,7 @@ export default class Security {
   async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.get_builtin_privileges']
+    } = this[kAcceptedParams]['security.get_builtin_privileges']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2006,7 +2128,9 @@ export default class Security {
     const method = 'GET'
     const path = '/_security/privilege/_builtin'
     const meta: TransportRequestMetadata = {
-      name: 'security.get_builtin_privileges'
+      name: 'security.get_builtin_privileges',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2021,7 +2145,7 @@ export default class Security {
   async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.get_privileges']
+    } = this[kAcceptedParams]['security.get_privileges']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2063,7 +2187,11 @@ export default class Security {
       pathParts: {
         application: params.application,
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'application',
+        'name'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2078,7 +2206,7 @@ export default class Security {
   async getRole (this: That, params?: T.SecurityGetRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.get_role']
+    } = this[kAcceptedParams]['security.get_role']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2116,7 +2244,10 @@ export default class Security {
       name: 'security.get_role',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2131,7 +2262,7 @@ export default class Security {
   async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.get_role_mapping']
+    } = this[kAcceptedParams]['security.get_role_mapping']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2169,7 +2300,10 @@ export default class Security {
       name: 'security.get_role_mapping',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2184,7 +2318,7 @@ export default class Security {
   async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.get_service_accounts']
+    } = this[kAcceptedParams]['security.get_service_accounts']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2226,7 +2360,11 @@ export default class Security {
       pathParts: {
         namespace: params.namespace,
         service: params.service
-      }
+      },
+      acceptedParams: [
+        'namespace',
+        'service'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2241,7 +2379,7 @@ export default class Security {
   async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.get_service_credentials']
+    } = this[kAcceptedParams]['security.get_service_credentials']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2272,7 +2410,11 @@ export default class Security {
       pathParts: {
         namespace: params.namespace,
         service: params.service
-      }
+      },
+      acceptedParams: [
+        'namespace',
+        'service'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2287,7 +2429,7 @@ export default class Security {
   async getSettings (this: That, params?: T.SecurityGetSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.get_settings']
+    } = this[kAcceptedParams]['security.get_settings']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2315,7 +2457,10 @@ export default class Security {
     const method = 'GET'
     const path = '/_security/settings'
     const meta: TransportRequestMetadata = {
-      name: 'security.get_settings'
+      name: 'security.get_settings',
+      acceptedParams: [
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2332,7 +2477,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.get_token']
+    } = this[kAcceptedParams]['security.get_token']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2370,7 +2515,15 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/oauth2/token'
     const meta: TransportRequestMetadata = {
-      name: 'security.get_token'
+      name: 'security.get_token',
+      acceptedParams: [
+        'grant_type',
+        'scope',
+        'password',
+        'kerberos_ticket',
+        'refresh_token',
+        'username'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2385,7 +2538,7 @@ export default class Security {
   async getUser (this: That, params?: T.SecurityGetUserRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.get_user']
+    } = this[kAcceptedParams]['security.get_user']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2423,7 +2576,11 @@ export default class Security {
       name: 'security.get_user',
       pathParts: {
         username: params.username
-      }
+      },
+      acceptedParams: [
+        'username',
+        'with_profile_uid'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2438,7 +2595,7 @@ export default class Security {
   async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.get_user_privileges']
+    } = this[kAcceptedParams]['security.get_user_privileges']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2466,7 +2623,9 @@ export default class Security {
     const method = 'GET'
     const path = '/_security/user/_privileges'
     const meta: TransportRequestMetadata = {
-      name: 'security.get_user_privileges'
+      name: 'security.get_user_privileges',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2481,7 +2640,7 @@ export default class Security {
   async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.get_user_profile']
+    } = this[kAcceptedParams]['security.get_user_profile']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2511,7 +2670,11 @@ export default class Security {
       name: 'security.get_user_profile',
       pathParts: {
         uid: params.uid
-      }
+      },
+      acceptedParams: [
+        'uid',
+        'data'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2528,7 +2691,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.grant_api_key']
+    } = this[kAcceptedParams]['security.grant_api_key']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2565,7 +2728,16 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/api_key/grant'
     const meta: TransportRequestMetadata = {
-      name: 'security.grant_api_key'
+      name: 'security.grant_api_key',
+      acceptedParams: [
+        'api_key',
+        'grant_type',
+        'access_token',
+        'username',
+        'password',
+        'run_as',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2582,7 +2754,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.has_privileges']
+    } = this[kAcceptedParams]['security.has_privileges']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2630,7 +2802,13 @@ export default class Security {
       name: 'security.has_privileges',
       pathParts: {
         user: params.user
-      }
+      },
+      acceptedParams: [
+        'user',
+        'application',
+        'cluster',
+        'index'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2647,7 +2825,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.has_privileges_user_profile']
+    } = this[kAcceptedParams]['security.has_privileges_user_profile']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2684,7 +2862,11 @@ export default class Security {
     const method = body != null ? 'POST' : 'GET'
     const path = '/_security/profile/_has_privileges'
     const meta: TransportRequestMetadata = {
-      name: 'security.has_privileges_user_profile'
+      name: 'security.has_privileges_user_profile',
+      acceptedParams: [
+        'uids',
+        'privileges'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2701,7 +2883,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.invalidate_api_key']
+    } = this[kAcceptedParams]['security.invalidate_api_key']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2739,7 +2921,15 @@ export default class Security {
     const method = 'DELETE'
     const path = '/_security/api_key'
     const meta: TransportRequestMetadata = {
-      name: 'security.invalidate_api_key'
+      name: 'security.invalidate_api_key',
+      acceptedParams: [
+        'id',
+        'ids',
+        'name',
+        'owner',
+        'realm_name',
+        'username'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2756,7 +2946,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.invalidate_token']
+    } = this[kAcceptedParams]['security.invalidate_token']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2794,7 +2984,13 @@ export default class Security {
     const method = 'DELETE'
     const path = '/_security/oauth2/token'
     const meta: TransportRequestMetadata = {
-      name: 'security.invalidate_token'
+      name: 'security.invalidate_token',
+      acceptedParams: [
+        'token',
+        'refresh_token',
+        'realm_name',
+        'username'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2811,7 +3007,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.oidc_authenticate']
+    } = this[kAcceptedParams]['security.oidc_authenticate']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2848,7 +3044,13 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/oidc/authenticate'
     const meta: TransportRequestMetadata = {
-      name: 'security.oidc_authenticate'
+      name: 'security.oidc_authenticate',
+      acceptedParams: [
+        'nonce',
+        'realm',
+        'redirect_uri',
+        'state'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2865,7 +3067,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.oidc_logout']
+    } = this[kAcceptedParams]['security.oidc_logout']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2902,7 +3104,11 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/oidc/logout'
     const meta: TransportRequestMetadata = {
-      name: 'security.oidc_logout'
+      name: 'security.oidc_logout',
+      acceptedParams: [
+        'token',
+        'refresh_token'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2919,7 +3125,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.oidc_prepare_authentication']
+    } = this[kAcceptedParams]['security.oidc_prepare_authentication']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2957,7 +3163,14 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/oidc/prepare'
     const meta: TransportRequestMetadata = {
-      name: 'security.oidc_prepare_authentication'
+      name: 'security.oidc_prepare_authentication',
+      acceptedParams: [
+        'iss',
+        'login_hint',
+        'nonce',
+        'realm',
+        'state'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2974,7 +3187,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.put_privileges']
+    } = this[kAcceptedParams]['security.put_privileges']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3001,7 +3214,11 @@ export default class Security {
     const method = 'PUT'
     const path = '/_security/privilege'
     const meta: TransportRequestMetadata = {
-      name: 'security.put_privileges'
+      name: 'security.put_privileges',
+      acceptedParams: [
+        'privileges',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3018,7 +3235,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.put_role']
+    } = this[kAcceptedParams]['security.put_role']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3058,7 +3275,21 @@ export default class Security {
       name: 'security.put_role',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'applications',
+        'cluster',
+        'global',
+        'indices',
+        'remote_indices',
+        'remote_cluster',
+        'metadata',
+        'run_as',
+        'description',
+        'transient_metadata',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3075,7 +3306,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.put_role_mapping']
+    } = this[kAcceptedParams]['security.put_role_mapping']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3115,7 +3346,17 @@ export default class Security {
       name: 'security.put_role_mapping',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'enabled',
+        'metadata',
+        'roles',
+        'role_templates',
+        'rules',
+        'run_as',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3132,7 +3373,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.put_user']
+    } = this[kAcceptedParams]['security.put_user']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3172,7 +3413,19 @@ export default class Security {
       name: 'security.put_user',
       pathParts: {
         username: params.username
-      }
+      },
+      acceptedParams: [
+        'username',
+        'username',
+        'email',
+        'full_name',
+        'metadata',
+        'password',
+        'password_hash',
+        'roles',
+        'enabled',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3189,7 +3442,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.query_api_keys']
+    } = this[kAcceptedParams]['security.query_api_keys']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3227,7 +3480,19 @@ export default class Security {
     const method = body != null ? 'POST' : 'GET'
     const path = '/_security/_query/api_key'
     const meta: TransportRequestMetadata = {
-      name: 'security.query_api_keys'
+      name: 'security.query_api_keys',
+      acceptedParams: [
+        'aggregations',
+        'aggs',
+        'query',
+        'from',
+        'sort',
+        'size',
+        'search_after',
+        'with_limited_by',
+        'with_profile_uid',
+        'typed_keys'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3244,7 +3509,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.query_role']
+    } = this[kAcceptedParams]['security.query_role']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3282,7 +3547,14 @@ export default class Security {
     const method = body != null ? 'POST' : 'GET'
     const path = '/_security/_query/role'
     const meta: TransportRequestMetadata = {
-      name: 'security.query_role'
+      name: 'security.query_role',
+      acceptedParams: [
+        'query',
+        'from',
+        'sort',
+        'size',
+        'search_after'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3299,7 +3571,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.query_user']
+    } = this[kAcceptedParams]['security.query_user']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3337,7 +3609,15 @@ export default class Security {
     const method = body != null ? 'POST' : 'GET'
     const path = '/_security/_query/user'
     const meta: TransportRequestMetadata = {
-      name: 'security.query_user'
+      name: 'security.query_user',
+      acceptedParams: [
+        'query',
+        'from',
+        'sort',
+        'size',
+        'search_after',
+        'with_profile_uid'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3354,7 +3634,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.saml_authenticate']
+    } = this[kAcceptedParams]['security.saml_authenticate']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3391,7 +3671,12 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/saml/authenticate'
     const meta: TransportRequestMetadata = {
-      name: 'security.saml_authenticate'
+      name: 'security.saml_authenticate',
+      acceptedParams: [
+        'content',
+        'ids',
+        'realm'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3408,7 +3693,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.saml_complete_logout']
+    } = this[kAcceptedParams]['security.saml_complete_logout']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3445,7 +3730,13 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/saml/complete_logout'
     const meta: TransportRequestMetadata = {
-      name: 'security.saml_complete_logout'
+      name: 'security.saml_complete_logout',
+      acceptedParams: [
+        'realm',
+        'ids',
+        'query_string',
+        'content'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3462,7 +3753,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.saml_invalidate']
+    } = this[kAcceptedParams]['security.saml_invalidate']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3499,7 +3790,12 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/saml/invalidate'
     const meta: TransportRequestMetadata = {
-      name: 'security.saml_invalidate'
+      name: 'security.saml_invalidate',
+      acceptedParams: [
+        'acs',
+        'query_string',
+        'realm'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3516,7 +3812,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.saml_logout']
+    } = this[kAcceptedParams]['security.saml_logout']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3553,7 +3849,11 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/saml/logout'
     const meta: TransportRequestMetadata = {
-      name: 'security.saml_logout'
+      name: 'security.saml_logout',
+      acceptedParams: [
+        'token',
+        'refresh_token'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3570,7 +3870,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.saml_prepare_authentication']
+    } = this[kAcceptedParams]['security.saml_prepare_authentication']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3608,7 +3908,12 @@ export default class Security {
     const method = 'POST'
     const path = '/_security/saml/prepare'
     const meta: TransportRequestMetadata = {
-      name: 'security.saml_prepare_authentication'
+      name: 'security.saml_prepare_authentication',
+      acceptedParams: [
+        'acs',
+        'realm',
+        'relay_state'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3623,7 +3928,7 @@ export default class Security {
   async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['security.saml_service_provider_metadata']
+    } = this[kAcceptedParams]['security.saml_service_provider_metadata']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3653,7 +3958,10 @@ export default class Security {
       name: 'security.saml_service_provider_metadata',
       pathParts: {
         realm_name: params.realm_name
-      }
+      },
+      acceptedParams: [
+        'realm_name'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3670,7 +3978,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.suggest_user_profiles']
+    } = this[kAcceptedParams]['security.suggest_user_profiles']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3708,7 +4016,14 @@ export default class Security {
     const method = body != null ? 'POST' : 'GET'
     const path = '/_security/profile/_suggest'
     const meta: TransportRequestMetadata = {
-      name: 'security.suggest_user_profiles'
+      name: 'security.suggest_user_profiles',
+      acceptedParams: [
+        'name',
+        'size',
+        'data',
+        'hint',
+        'data'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3725,7 +4040,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.update_api_key']
+    } = this[kAcceptedParams]['security.update_api_key']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3765,7 +4080,13 @@ export default class Security {
       name: 'security.update_api_key',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'role_descriptors',
+        'metadata',
+        'expiration'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3782,7 +4103,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.update_cross_cluster_api_key']
+    } = this[kAcceptedParams]['security.update_cross_cluster_api_key']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3822,7 +4143,13 @@ export default class Security {
       name: 'security.update_cross_cluster_api_key',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'access',
+        'expiration',
+        'metadata'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3839,7 +4166,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.update_settings']
+    } = this[kAcceptedParams]['security.update_settings']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3877,7 +4204,14 @@ export default class Security {
     const method = 'PUT'
     const path = '/_security/settings'
     const meta: TransportRequestMetadata = {
-      name: 'security.update_settings'
+      name: 'security.update_settings',
+      acceptedParams: [
+        'security',
+        'security-profile',
+        'security-tokens',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3894,7 +4228,7 @@ export default class Security {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['security.update_user_profile_data']
+    } = this[kAcceptedParams]['security.update_user_profile_data']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3934,7 +4268,15 @@ export default class Security {
       name: 'security.update_user_profile_data',
       pathParts: {
         uid: params.uid
-      }
+      },
+      acceptedParams: [
+        'uid',
+        'labels',
+        'data',
+        'if_seq_no',
+        'if_primary_term',
+        'refresh'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

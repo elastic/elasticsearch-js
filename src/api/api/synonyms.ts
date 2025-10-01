@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Synonyms {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'synonyms.delete_synonym': {
         path: [
           'id'
@@ -108,7 +109,7 @@ export default class Synonyms {
   async deleteSynonym (this: That, params: T.SynonymsDeleteSynonymRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['synonyms.delete_synonym']
+    } = this[kAcceptedParams]['synonyms.delete_synonym']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -138,7 +139,10 @@ export default class Synonyms {
       name: 'synonyms.delete_synonym',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -153,7 +157,7 @@ export default class Synonyms {
   async deleteSynonymRule (this: That, params: T.SynonymsDeleteSynonymRuleRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['synonyms.delete_synonym_rule']
+    } = this[kAcceptedParams]['synonyms.delete_synonym_rule']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -184,7 +188,11 @@ export default class Synonyms {
       pathParts: {
         set_id: params.set_id,
         rule_id: params.rule_id
-      }
+      },
+      acceptedParams: [
+        'set_id',
+        'rule_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -199,7 +207,7 @@ export default class Synonyms {
   async getSynonym (this: That, params: T.SynonymsGetSynonymRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['synonyms.get_synonym']
+    } = this[kAcceptedParams]['synonyms.get_synonym']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -229,7 +237,12 @@ export default class Synonyms {
       name: 'synonyms.get_synonym',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'from',
+        'size'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -244,7 +257,7 @@ export default class Synonyms {
   async getSynonymRule (this: That, params: T.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['synonyms.get_synonym_rule']
+    } = this[kAcceptedParams]['synonyms.get_synonym_rule']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -275,7 +288,11 @@ export default class Synonyms {
       pathParts: {
         set_id: params.set_id,
         rule_id: params.rule_id
-      }
+      },
+      acceptedParams: [
+        'set_id',
+        'rule_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -290,7 +307,7 @@ export default class Synonyms {
   async getSynonymsSets (this: That, params?: T.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['synonyms.get_synonyms_sets']
+    } = this[kAcceptedParams]['synonyms.get_synonyms_sets']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -318,7 +335,11 @@ export default class Synonyms {
     const method = 'GET'
     const path = '/_synonyms'
     const meta: TransportRequestMetadata = {
-      name: 'synonyms.get_synonyms_sets'
+      name: 'synonyms.get_synonyms_sets',
+      acceptedParams: [
+        'from',
+        'size'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -335,7 +356,7 @@ export default class Synonyms {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['synonyms.put_synonym']
+    } = this[kAcceptedParams]['synonyms.put_synonym']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -375,7 +396,11 @@ export default class Synonyms {
       name: 'synonyms.put_synonym',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'synonyms_set'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -392,7 +417,7 @@ export default class Synonyms {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['synonyms.put_synonym_rule']
+    } = this[kAcceptedParams]['synonyms.put_synonym_rule']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -433,7 +458,12 @@ export default class Synonyms {
       pathParts: {
         set_id: params.set_id,
         rule_id: params.rule_id
-      }
+      },
+      acceptedParams: [
+        'set_id',
+        'rule_id',
+        'synonyms'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
