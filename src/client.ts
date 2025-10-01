@@ -41,6 +41,8 @@ import transportPackageJson from '@elastic/transport/package.json'
 
 const kChild = Symbol('elasticsearchjs-child')
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
+export const kAcceptedParams = Symbol('elasticsearchjs-accepted-params')
+
 let clientVersion: string = packageJson.version
 /* istanbul ignore next */
 if (clientVersion.includes('-')) {
