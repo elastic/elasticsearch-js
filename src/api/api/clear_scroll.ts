@@ -91,7 +91,11 @@ export default async function ClearScrollApi (this: That, params?: T.ClearScroll
     name: 'clear_scroll',
     pathParts: {
       scroll_id: params.scroll_id
-    }
+    },
+    acceptedParams: [
+      'scroll_id',
+      'scroll_id'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

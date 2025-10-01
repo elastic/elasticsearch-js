@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Nodes {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'nodes.clear_repositories_metering_archive': {
         path: [
           'node_id',
@@ -129,7 +130,7 @@ export default class Nodes {
   async clearRepositoriesMeteringArchive (this: That, params: T.NodesClearRepositoriesMeteringArchiveRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['nodes.clear_repositories_metering_archive']
+    } = this[kAcceptedParams]['nodes.clear_repositories_metering_archive']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -160,7 +161,11 @@ export default class Nodes {
       pathParts: {
         node_id: params.node_id,
         max_archive_version: params.max_archive_version
-      }
+      },
+      acceptedParams: [
+        'node_id',
+        'max_archive_version'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -175,7 +180,7 @@ export default class Nodes {
   async getRepositoriesMeteringInfo (this: That, params: T.NodesGetRepositoriesMeteringInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['nodes.get_repositories_metering_info']
+    } = this[kAcceptedParams]['nodes.get_repositories_metering_info']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -205,7 +210,10 @@ export default class Nodes {
       name: 'nodes.get_repositories_metering_info',
       pathParts: {
         node_id: params.node_id
-      }
+      },
+      acceptedParams: [
+        'node_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -220,7 +228,7 @@ export default class Nodes {
   async hotThreads (this: That, params?: T.NodesHotThreadsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['nodes.hot_threads']
+    } = this[kAcceptedParams]['nodes.hot_threads']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -258,7 +266,17 @@ export default class Nodes {
       name: 'nodes.hot_threads',
       pathParts: {
         node_id: params.node_id
-      }
+      },
+      acceptedParams: [
+        'node_id',
+        'ignore_idle_threads',
+        'interval',
+        'snapshots',
+        'threads',
+        'timeout',
+        'type',
+        'sort'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -273,7 +291,7 @@ export default class Nodes {
   async info (this: That, params?: T.NodesInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['nodes.info']
+    } = this[kAcceptedParams]['nodes.info']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -318,7 +336,13 @@ export default class Nodes {
       pathParts: {
         node_id: params.node_id,
         metric: params.metric
-      }
+      },
+      acceptedParams: [
+        'node_id',
+        'metric',
+        'flat_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -335,7 +359,7 @@ export default class Nodes {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['nodes.reload_secure_settings']
+    } = this[kAcceptedParams]['nodes.reload_secure_settings']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -383,7 +407,12 @@ export default class Nodes {
       name: 'nodes.reload_secure_settings',
       pathParts: {
         node_id: params.node_id
-      }
+      },
+      acceptedParams: [
+        'node_id',
+        'secure_settings_password',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -398,7 +427,7 @@ export default class Nodes {
   async stats (this: That, params?: T.NodesStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['nodes.stats']
+    } = this[kAcceptedParams]['nodes.stats']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -450,7 +479,21 @@ export default class Nodes {
         node_id: params.node_id,
         metric: params.metric,
         index_metric: params.index_metric
-      }
+      },
+      acceptedParams: [
+        'node_id',
+        'metric',
+        'index_metric',
+        'completion_fields',
+        'fielddata_fields',
+        'fields',
+        'groups',
+        'include_segment_file_sizes',
+        'level',
+        'timeout',
+        'types',
+        'include_unloaded_segments'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -465,7 +508,7 @@ export default class Nodes {
   async usage (this: That, params?: T.NodesUsageRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['nodes.usage']
+    } = this[kAcceptedParams]['nodes.usage']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -510,7 +553,12 @@ export default class Nodes {
       pathParts: {
         node_id: params.node_id,
         metric: params.metric
-      }
+      },
+      acceptedParams: [
+        'node_id',
+        'metric',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

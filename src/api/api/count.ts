@@ -115,7 +115,25 @@ export default async function CountApi (this: That, params?: T.CountRequest, opt
     name: 'count',
     pathParts: {
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'index',
+      'query',
+      'allow_no_indices',
+      'analyzer',
+      'analyze_wildcard',
+      'default_operator',
+      'df',
+      'expand_wildcards',
+      'ignore_throttled',
+      'ignore_unavailable',
+      'lenient',
+      'min_score',
+      'preference',
+      'routing',
+      'terminate_after',
+      'q'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

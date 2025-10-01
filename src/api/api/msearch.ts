@@ -104,7 +104,25 @@ export default async function MsearchApi<TDocument = unknown, TAggregations = Re
     name: 'msearch',
     pathParts: {
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'index',
+      'searches',
+      'allow_no_indices',
+      'ccs_minimize_roundtrips',
+      'expand_wildcards',
+      'ignore_throttled',
+      'ignore_unavailable',
+      'include_named_queries_score',
+      'index',
+      'max_concurrent_searches',
+      'max_concurrent_shard_requests',
+      'pre_filter_shard_size',
+      'rest_total_hits_as_int',
+      'routing',
+      'search_type',
+      'typed_keys'
+    ]
   }
   return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
 }

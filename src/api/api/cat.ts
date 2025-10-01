@@ -21,18 +21,19 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 export default class Cat {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'cat.aliases': {
         path: [
           'name'
@@ -51,7 +52,6 @@ export default class Cat {
         ],
         body: [],
         query: [
-          'bytes',
           'h',
           's',
           'local',
@@ -86,7 +86,6 @@ export default class Cat {
         ],
         body: [],
         query: [
-          'bytes',
           'fields',
           'h',
           's'
@@ -96,7 +95,6 @@ export default class Cat {
         path: [],
         body: [],
         query: [
-          'time',
           'ts',
           'h',
           's'
@@ -113,12 +111,10 @@ export default class Cat {
         ],
         body: [],
         query: [
-          'bytes',
           'expand_wildcards',
           'health',
           'include_unloaded_segments',
           'pri',
-          'time',
           'master_timeout',
           'h',
           's'
@@ -141,10 +137,8 @@ export default class Cat {
         body: [],
         query: [
           'allow_no_match',
-          'bytes',
           'h',
-          's',
-          'time'
+          's'
         ]
       },
       'cat.ml_datafeeds': {
@@ -155,8 +149,7 @@ export default class Cat {
         query: [
           'allow_no_match',
           'h',
-          's',
-          'time'
+          's'
         ]
       },
       'cat.ml_jobs': {
@@ -166,10 +159,8 @@ export default class Cat {
         body: [],
         query: [
           'allow_no_match',
-          'bytes',
           'h',
-          's',
-          'time'
+          's'
         ]
       },
       'cat.ml_trained_models': {
@@ -179,12 +170,10 @@ export default class Cat {
         body: [],
         query: [
           'allow_no_match',
-          'bytes',
           'h',
           's',
           'from',
-          'size',
-          'time'
+          'size'
         ]
       },
       'cat.nodeattrs': {
@@ -201,13 +190,11 @@ export default class Cat {
         path: [],
         body: [],
         query: [
-          'bytes',
           'full_id',
           'include_unloaded_segments',
           'h',
           's',
-          'master_timeout',
-          'time'
+          'master_timeout'
         ]
       },
       'cat.pending_tasks': {
@@ -217,8 +204,7 @@ export default class Cat {
           'h',
           's',
           'local',
-          'master_timeout',
-          'time'
+          'master_timeout'
         ]
       },
       'cat.plugins': {
@@ -239,12 +225,10 @@ export default class Cat {
         body: [],
         query: [
           'active_only',
-          'bytes',
           'detailed',
           'index',
           'h',
-          's',
-          'time'
+          's'
         ]
       },
       'cat.repositories': {
@@ -263,7 +247,6 @@ export default class Cat {
         ],
         body: [],
         query: [
-          'bytes',
           'h',
           's',
           'local',
@@ -276,11 +259,9 @@ export default class Cat {
         ],
         body: [],
         query: [
-          'bytes',
           'h',
           's',
-          'master_timeout',
-          'time'
+          'master_timeout'
         ]
       },
       'cat.snapshots': {
@@ -292,8 +273,7 @@ export default class Cat {
           'ignore_unavailable',
           'h',
           's',
-          'master_timeout',
-          'time'
+          'master_timeout'
         ]
       },
       'cat.tasks': {
@@ -306,7 +286,6 @@ export default class Cat {
           'parent_task_id',
           'h',
           's',
-          'time',
           'timeout',
           'wait_for_completion'
         ]
@@ -331,7 +310,6 @@ export default class Cat {
         query: [
           'h',
           's',
-          'time',
           'local',
           'master_timeout'
         ]
@@ -346,7 +324,6 @@ export default class Cat {
           'from',
           'h',
           's',
-          'time',
           'size'
         ]
       }
@@ -363,7 +340,7 @@ export default class Cat {
   async aliases (this: That, params?: T.CatAliasesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.aliases']
+    } = this[kAcceptedParams]['cat.aliases']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -401,7 +378,14 @@ export default class Cat {
       name: 'cat.aliases',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'h',
+        's',
+        'expand_wildcards',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -416,7 +400,7 @@ export default class Cat {
   async allocation (this: That, params?: T.CatAllocationRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.allocation']
+    } = this[kAcceptedParams]['cat.allocation']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -454,7 +438,14 @@ export default class Cat {
       name: 'cat.allocation',
       pathParts: {
         node_id: params.node_id
-      }
+      },
+      acceptedParams: [
+        'node_id',
+        'h',
+        's',
+        'local',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -469,7 +460,7 @@ export default class Cat {
   async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.component_templates']
+    } = this[kAcceptedParams]['cat.component_templates']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -507,7 +498,14 @@ export default class Cat {
       name: 'cat.component_templates',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'h',
+        's',
+        'local',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -522,7 +520,7 @@ export default class Cat {
   async count (this: That, params?: T.CatCountRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.count']
+    } = this[kAcceptedParams]['cat.count']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -560,7 +558,12 @@ export default class Cat {
       name: 'cat.count',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'h',
+        's'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -575,7 +578,7 @@ export default class Cat {
   async fielddata (this: That, params?: T.CatFielddataRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.fielddata']
+    } = this[kAcceptedParams]['cat.fielddata']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -613,7 +616,13 @@ export default class Cat {
       name: 'cat.fielddata',
       pathParts: {
         fields: params.fields
-      }
+      },
+      acceptedParams: [
+        'fields',
+        'fields',
+        'h',
+        's'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -628,7 +637,7 @@ export default class Cat {
   async health (this: That, params?: T.CatHealthRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.health']
+    } = this[kAcceptedParams]['cat.health']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -656,7 +665,12 @@ export default class Cat {
     const method = 'GET'
     const path = '/_cat/health'
     const meta: TransportRequestMetadata = {
-      name: 'cat.health'
+      name: 'cat.health',
+      acceptedParams: [
+        'ts',
+        'h',
+        's'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -671,7 +685,7 @@ export default class Cat {
   async help (this: That, params?: T.CatHelpRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.help']
+    } = this[kAcceptedParams]['cat.help']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -699,7 +713,9 @@ export default class Cat {
     const method = 'GET'
     const path = '/_cat'
     const meta: TransportRequestMetadata = {
-      name: 'cat.help'
+      name: 'cat.help',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -714,7 +730,7 @@ export default class Cat {
   async indices (this: That, params?: T.CatIndicesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.indices']
+    } = this[kAcceptedParams]['cat.indices']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -752,7 +768,17 @@ export default class Cat {
       name: 'cat.indices',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'expand_wildcards',
+        'health',
+        'include_unloaded_segments',
+        'pri',
+        'master_timeout',
+        'h',
+        's'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -767,7 +793,7 @@ export default class Cat {
   async master (this: That, params?: T.CatMasterRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.master']
+    } = this[kAcceptedParams]['cat.master']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -795,7 +821,13 @@ export default class Cat {
     const method = 'GET'
     const path = '/_cat/master'
     const meta: TransportRequestMetadata = {
-      name: 'cat.master'
+      name: 'cat.master',
+      acceptedParams: [
+        'h',
+        's',
+        'local',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -810,7 +842,7 @@ export default class Cat {
   async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.ml_data_frame_analytics']
+    } = this[kAcceptedParams]['cat.ml_data_frame_analytics']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -848,7 +880,13 @@ export default class Cat {
       name: 'cat.ml_data_frame_analytics',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'allow_no_match',
+        'h',
+        's'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -863,7 +901,7 @@ export default class Cat {
   async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.ml_datafeeds']
+    } = this[kAcceptedParams]['cat.ml_datafeeds']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -901,7 +939,13 @@ export default class Cat {
       name: 'cat.ml_datafeeds',
       pathParts: {
         datafeed_id: params.datafeed_id
-      }
+      },
+      acceptedParams: [
+        'datafeed_id',
+        'allow_no_match',
+        'h',
+        's'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -916,7 +960,7 @@ export default class Cat {
   async mlJobs (this: That, params?: T.CatMlJobsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.ml_jobs']
+    } = this[kAcceptedParams]['cat.ml_jobs']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -954,7 +998,13 @@ export default class Cat {
       name: 'cat.ml_jobs',
       pathParts: {
         job_id: params.job_id
-      }
+      },
+      acceptedParams: [
+        'job_id',
+        'allow_no_match',
+        'h',
+        's'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -969,7 +1019,7 @@ export default class Cat {
   async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.ml_trained_models']
+    } = this[kAcceptedParams]['cat.ml_trained_models']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1007,7 +1057,15 @@ export default class Cat {
       name: 'cat.ml_trained_models',
       pathParts: {
         model_id: params.model_id
-      }
+      },
+      acceptedParams: [
+        'model_id',
+        'allow_no_match',
+        'h',
+        's',
+        'from',
+        'size'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1022,7 +1080,7 @@ export default class Cat {
   async nodeattrs (this: That, params?: T.CatNodeattrsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.nodeattrs']
+    } = this[kAcceptedParams]['cat.nodeattrs']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1050,7 +1108,13 @@ export default class Cat {
     const method = 'GET'
     const path = '/_cat/nodeattrs'
     const meta: TransportRequestMetadata = {
-      name: 'cat.nodeattrs'
+      name: 'cat.nodeattrs',
+      acceptedParams: [
+        'h',
+        's',
+        'local',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1065,7 +1129,7 @@ export default class Cat {
   async nodes (this: That, params?: T.CatNodesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.nodes']
+    } = this[kAcceptedParams]['cat.nodes']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1093,7 +1157,14 @@ export default class Cat {
     const method = 'GET'
     const path = '/_cat/nodes'
     const meta: TransportRequestMetadata = {
-      name: 'cat.nodes'
+      name: 'cat.nodes',
+      acceptedParams: [
+        'full_id',
+        'include_unloaded_segments',
+        'h',
+        's',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1108,7 +1179,7 @@ export default class Cat {
   async pendingTasks (this: That, params?: T.CatPendingTasksRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.pending_tasks']
+    } = this[kAcceptedParams]['cat.pending_tasks']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1136,7 +1207,13 @@ export default class Cat {
     const method = 'GET'
     const path = '/_cat/pending_tasks'
     const meta: TransportRequestMetadata = {
-      name: 'cat.pending_tasks'
+      name: 'cat.pending_tasks',
+      acceptedParams: [
+        'h',
+        's',
+        'local',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1151,7 +1228,7 @@ export default class Cat {
   async plugins (this: That, params?: T.CatPluginsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.plugins']
+    } = this[kAcceptedParams]['cat.plugins']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1179,7 +1256,14 @@ export default class Cat {
     const method = 'GET'
     const path = '/_cat/plugins'
     const meta: TransportRequestMetadata = {
-      name: 'cat.plugins'
+      name: 'cat.plugins',
+      acceptedParams: [
+        'h',
+        's',
+        'include_bootstrap',
+        'local',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1194,7 +1278,7 @@ export default class Cat {
   async recovery (this: That, params?: T.CatRecoveryRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.recovery']
+    } = this[kAcceptedParams]['cat.recovery']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1232,7 +1316,15 @@ export default class Cat {
       name: 'cat.recovery',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'active_only',
+        'detailed',
+        'index',
+        'h',
+        's'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1247,7 +1339,7 @@ export default class Cat {
   async repositories (this: That, params?: T.CatRepositoriesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.repositories']
+    } = this[kAcceptedParams]['cat.repositories']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1275,7 +1367,13 @@ export default class Cat {
     const method = 'GET'
     const path = '/_cat/repositories'
     const meta: TransportRequestMetadata = {
-      name: 'cat.repositories'
+      name: 'cat.repositories',
+      acceptedParams: [
+        'h',
+        's',
+        'local',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1290,7 +1388,7 @@ export default class Cat {
   async segments (this: That, params?: T.CatSegmentsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.segments']
+    } = this[kAcceptedParams]['cat.segments']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1328,7 +1426,14 @@ export default class Cat {
       name: 'cat.segments',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'h',
+        's',
+        'local',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1343,7 +1448,7 @@ export default class Cat {
   async shards (this: That, params?: T.CatShardsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.shards']
+    } = this[kAcceptedParams]['cat.shards']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1381,7 +1486,13 @@ export default class Cat {
       name: 'cat.shards',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'h',
+        's',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1396,7 +1507,7 @@ export default class Cat {
   async snapshots (this: That, params?: T.CatSnapshotsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.snapshots']
+    } = this[kAcceptedParams]['cat.snapshots']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1434,7 +1545,14 @@ export default class Cat {
       name: 'cat.snapshots',
       pathParts: {
         repository: params.repository
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'ignore_unavailable',
+        'h',
+        's',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1449,7 +1567,7 @@ export default class Cat {
   async tasks (this: That, params?: T.CatTasksRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.tasks']
+    } = this[kAcceptedParams]['cat.tasks']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1477,7 +1595,17 @@ export default class Cat {
     const method = 'GET'
     const path = '/_cat/tasks'
     const meta: TransportRequestMetadata = {
-      name: 'cat.tasks'
+      name: 'cat.tasks',
+      acceptedParams: [
+        'actions',
+        'detailed',
+        'nodes',
+        'parent_task_id',
+        'h',
+        's',
+        'timeout',
+        'wait_for_completion'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1492,7 +1620,7 @@ export default class Cat {
   async templates (this: That, params?: T.CatTemplatesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.templates']
+    } = this[kAcceptedParams]['cat.templates']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1530,7 +1658,14 @@ export default class Cat {
       name: 'cat.templates',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'h',
+        's',
+        'local',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1545,7 +1680,7 @@ export default class Cat {
   async threadPool (this: That, params?: T.CatThreadPoolRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.thread_pool']
+    } = this[kAcceptedParams]['cat.thread_pool']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1583,7 +1718,14 @@ export default class Cat {
       name: 'cat.thread_pool',
       pathParts: {
         thread_pool_patterns: params.thread_pool_patterns
-      }
+      },
+      acceptedParams: [
+        'thread_pool_patterns',
+        'h',
+        's',
+        'local',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1598,7 +1740,7 @@ export default class Cat {
   async transforms (this: That, params?: T.CatTransformsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cat.transforms']
+    } = this[kAcceptedParams]['cat.transforms']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1636,7 +1778,15 @@ export default class Cat {
       name: 'cat.transforms',
       pathParts: {
         transform_id: params.transform_id
-      }
+      },
+      acceptedParams: [
+        'transform_id',
+        'allow_no_match',
+        'from',
+        'h',
+        's',
+        'size'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
