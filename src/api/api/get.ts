@@ -91,7 +91,23 @@ export default async function GetApi<TDocument = unknown> (this: That, params: T
     pathParts: {
       id: params.id,
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'id',
+      'index',
+      'force_synthetic_source',
+      'preference',
+      'realtime',
+      'refresh',
+      'routing',
+      '_source',
+      '_source_excludes',
+      '_source_exclude_vectors',
+      '_source_includes',
+      'stored_fields',
+      'version',
+      'version_type'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

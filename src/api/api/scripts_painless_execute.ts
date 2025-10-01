@@ -90,7 +90,12 @@ export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this
   const method = body != null ? 'POST' : 'GET'
   const path = '/_scripts/painless/_execute'
   const meta: TransportRequestMetadata = {
-    name: 'scripts_painless_execute'
+    name: 'scripts_painless_execute',
+    acceptedParams: [
+      'context',
+      'context_setup',
+      'script'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

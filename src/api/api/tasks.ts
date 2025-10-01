@@ -21,18 +21,19 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 export default class Tasks {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'tasks.cancel': {
         path: [
           'task_id'
@@ -81,7 +82,7 @@ export default class Tasks {
   async cancel (this: That, params?: T.TasksCancelRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['tasks.cancel']
+    } = this[kAcceptedParams]['tasks.cancel']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -119,7 +120,14 @@ export default class Tasks {
       name: 'tasks.cancel',
       pathParts: {
         task_id: params.task_id
-      }
+      },
+      acceptedParams: [
+        'task_id',
+        'actions',
+        'nodes',
+        'parent_task_id',
+        'wait_for_completion'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -134,7 +142,7 @@ export default class Tasks {
   async get (this: That, params: T.TasksGetRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['tasks.get']
+    } = this[kAcceptedParams]['tasks.get']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -164,7 +172,12 @@ export default class Tasks {
       name: 'tasks.get',
       pathParts: {
         task_id: params.task_id
-      }
+      },
+      acceptedParams: [
+        'task_id',
+        'timeout',
+        'wait_for_completion'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -179,7 +192,7 @@ export default class Tasks {
   async list (this: That, params?: T.TasksListRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['tasks.list']
+    } = this[kAcceptedParams]['tasks.list']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -207,7 +220,16 @@ export default class Tasks {
     const method = 'GET'
     const path = '/_tasks'
     const meta: TransportRequestMetadata = {
-      name: 'tasks.list'
+      name: 'tasks.list',
+      acceptedParams: [
+        'actions',
+        'detailed',
+        'group_by',
+        'nodes',
+        'parent_task_id',
+        'timeout',
+        'wait_for_completion'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Autoscaling {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'autoscaling.delete_autoscaling_policy': {
         path: [
           'name'
@@ -86,7 +87,7 @@ export default class Autoscaling {
   async deleteAutoscalingPolicy (this: That, params: T.AutoscalingDeleteAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['autoscaling.delete_autoscaling_policy']
+    } = this[kAcceptedParams]['autoscaling.delete_autoscaling_policy']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -116,7 +117,12 @@ export default class Autoscaling {
       name: 'autoscaling.delete_autoscaling_policy',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -131,7 +137,7 @@ export default class Autoscaling {
   async getAutoscalingCapacity (this: That, params?: T.AutoscalingGetAutoscalingCapacityRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['autoscaling.get_autoscaling_capacity']
+    } = this[kAcceptedParams]['autoscaling.get_autoscaling_capacity']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -159,7 +165,10 @@ export default class Autoscaling {
     const method = 'GET'
     const path = '/_autoscaling/capacity'
     const meta: TransportRequestMetadata = {
-      name: 'autoscaling.get_autoscaling_capacity'
+      name: 'autoscaling.get_autoscaling_capacity',
+      acceptedParams: [
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -174,7 +183,7 @@ export default class Autoscaling {
   async getAutoscalingPolicy (this: That, params: T.AutoscalingGetAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['autoscaling.get_autoscaling_policy']
+    } = this[kAcceptedParams]['autoscaling.get_autoscaling_policy']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -204,7 +213,11 @@ export default class Autoscaling {
       name: 'autoscaling.get_autoscaling_policy',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -221,7 +234,7 @@ export default class Autoscaling {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['autoscaling.put_autoscaling_policy']
+    } = this[kAcceptedParams]['autoscaling.put_autoscaling_policy']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -251,7 +264,13 @@ export default class Autoscaling {
       name: 'autoscaling.put_autoscaling_policy',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'policy',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

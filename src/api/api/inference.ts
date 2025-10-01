@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Inference {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'inference.chat_completion_unified': {
         path: [
           'inference_id'
@@ -483,7 +484,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.chat_completion_unified']
+    } = this[kAcceptedParams]['inference.chat_completion_unified']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -513,7 +514,12 @@ export default class Inference {
       name: 'inference.chat_completion_unified',
       pathParts: {
         inference_id: params.inference_id
-      }
+      },
+      acceptedParams: [
+        'inference_id',
+        'chat_completion_request',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -530,7 +536,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.completion']
+    } = this[kAcceptedParams]['inference.completion']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -570,7 +576,13 @@ export default class Inference {
       name: 'inference.completion',
       pathParts: {
         inference_id: params.inference_id
-      }
+      },
+      acceptedParams: [
+        'inference_id',
+        'input',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -585,7 +597,7 @@ export default class Inference {
   async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['inference.delete']
+    } = this[kAcceptedParams]['inference.delete']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -623,7 +635,13 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         inference_id: params.inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'inference_id',
+        'dry_run',
+        'force'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -638,7 +656,7 @@ export default class Inference {
   async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['inference.get']
+    } = this[kAcceptedParams]['inference.get']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -680,7 +698,11 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         inference_id: params.inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'inference_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -697,7 +719,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.inference']
+    } = this[kAcceptedParams]['inference.inference']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -745,7 +767,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         inference_id: params.inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'inference_id',
+        'query',
+        'input',
+        'input_type',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -762,7 +793,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put']
+    } = this[kAcceptedParams]['inference.put']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -800,7 +831,13 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         inference_id: params.inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'inference_id',
+        'inference_config',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -817,7 +854,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_ai21']
+    } = this[kAcceptedParams]['inference.put_ai21']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -858,7 +895,14 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         ai21_inference_id: params.ai21_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'ai21_inference_id',
+        'service',
+        'service_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -875,7 +919,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_alibabacloud']
+    } = this[kAcceptedParams]['inference.put_alibabacloud']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -916,7 +960,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         alibabacloud_inference_id: params.alibabacloud_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'alibabacloud_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -933,7 +986,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_amazonbedrock']
+    } = this[kAcceptedParams]['inference.put_amazonbedrock']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -974,7 +1027,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         amazonbedrock_inference_id: params.amazonbedrock_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'amazonbedrock_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -991,7 +1053,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_amazonsagemaker']
+    } = this[kAcceptedParams]['inference.put_amazonsagemaker']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1032,7 +1094,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         amazonsagemaker_inference_id: params.amazonsagemaker_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'amazonsagemaker_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1049,7 +1120,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_anthropic']
+    } = this[kAcceptedParams]['inference.put_anthropic']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1090,7 +1161,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         anthropic_inference_id: params.anthropic_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'anthropic_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1107,7 +1187,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_azureaistudio']
+    } = this[kAcceptedParams]['inference.put_azureaistudio']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1148,7 +1228,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         azureaistudio_inference_id: params.azureaistudio_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'azureaistudio_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1165,7 +1254,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_azureopenai']
+    } = this[kAcceptedParams]['inference.put_azureopenai']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1206,7 +1295,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         azureopenai_inference_id: params.azureopenai_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'azureopenai_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1223,7 +1321,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_cohere']
+    } = this[kAcceptedParams]['inference.put_cohere']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1264,7 +1362,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         cohere_inference_id: params.cohere_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'cohere_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1281,7 +1388,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_custom']
+    } = this[kAcceptedParams]['inference.put_custom']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1322,7 +1429,15 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         custom_inference_id: params.custom_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'custom_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1339,7 +1454,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_deepseek']
+    } = this[kAcceptedParams]['inference.put_deepseek']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1380,7 +1495,15 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         deepseek_inference_id: params.deepseek_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'deepseek_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1397,7 +1520,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_elasticsearch']
+    } = this[kAcceptedParams]['inference.put_elasticsearch']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1438,7 +1561,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         elasticsearch_inference_id: params.elasticsearch_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'elasticsearch_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1455,7 +1587,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_elser']
+    } = this[kAcceptedParams]['inference.put_elser']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1496,7 +1628,15 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         elser_inference_id: params.elser_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'elser_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1513,7 +1653,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_googleaistudio']
+    } = this[kAcceptedParams]['inference.put_googleaistudio']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1554,7 +1694,15 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         googleaistudio_inference_id: params.googleaistudio_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'googleaistudio_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1571,7 +1719,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_googlevertexai']
+    } = this[kAcceptedParams]['inference.put_googlevertexai']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1612,7 +1760,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         googlevertexai_inference_id: params.googlevertexai_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'googlevertexai_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1629,7 +1786,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_hugging_face']
+    } = this[kAcceptedParams]['inference.put_hugging_face']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1670,7 +1827,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         huggingface_inference_id: params.huggingface_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'huggingface_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1687,7 +1853,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_jinaai']
+    } = this[kAcceptedParams]['inference.put_jinaai']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1728,7 +1894,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         jinaai_inference_id: params.jinaai_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'jinaai_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1745,7 +1920,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_llama']
+    } = this[kAcceptedParams]['inference.put_llama']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1786,7 +1961,15 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         llama_inference_id: params.llama_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'llama_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1803,7 +1986,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_mistral']
+    } = this[kAcceptedParams]['inference.put_mistral']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1844,7 +2027,15 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         mistral_inference_id: params.mistral_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'mistral_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1861,7 +2052,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_openai']
+    } = this[kAcceptedParams]['inference.put_openai']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1902,7 +2093,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         openai_inference_id: params.openai_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'openai_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1919,7 +2119,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_voyageai']
+    } = this[kAcceptedParams]['inference.put_voyageai']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1960,7 +2160,16 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         voyageai_inference_id: params.voyageai_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'voyageai_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1977,7 +2186,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.put_watsonx']
+    } = this[kAcceptedParams]['inference.put_watsonx']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2018,7 +2227,14 @@ export default class Inference {
       pathParts: {
         task_type: params.task_type,
         watsonx_inference_id: params.watsonx_inference_id
-      }
+      },
+      acceptedParams: [
+        'task_type',
+        'watsonx_inference_id',
+        'service',
+        'service_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2035,7 +2251,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.rerank']
+    } = this[kAcceptedParams]['inference.rerank']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2075,7 +2291,14 @@ export default class Inference {
       name: 'inference.rerank',
       pathParts: {
         inference_id: params.inference_id
-      }
+      },
+      acceptedParams: [
+        'inference_id',
+        'query',
+        'input',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2092,7 +2315,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.sparse_embedding']
+    } = this[kAcceptedParams]['inference.sparse_embedding']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2132,7 +2355,13 @@ export default class Inference {
       name: 'inference.sparse_embedding',
       pathParts: {
         inference_id: params.inference_id
-      }
+      },
+      acceptedParams: [
+        'inference_id',
+        'input',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2149,7 +2378,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.stream_completion']
+    } = this[kAcceptedParams]['inference.stream_completion']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2189,7 +2418,13 @@ export default class Inference {
       name: 'inference.stream_completion',
       pathParts: {
         inference_id: params.inference_id
-      }
+      },
+      acceptedParams: [
+        'inference_id',
+        'input',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2206,7 +2441,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.text_embedding']
+    } = this[kAcceptedParams]['inference.text_embedding']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2246,7 +2481,14 @@ export default class Inference {
       name: 'inference.text_embedding',
       pathParts: {
         inference_id: params.inference_id
-      }
+      },
+      acceptedParams: [
+        'inference_id',
+        'input',
+        'input_type',
+        'task_settings',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2263,7 +2505,7 @@ export default class Inference {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['inference.update']
+    } = this[kAcceptedParams]['inference.update']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -2301,7 +2543,12 @@ export default class Inference {
       pathParts: {
         inference_id: params.inference_id,
         task_type: params.task_type
-      }
+      },
+      acceptedParams: [
+        'inference_id',
+        'task_type',
+        'inference_config'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Ccr {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'ccr.delete_auto_follow_pattern': {
         path: [
           'name'
@@ -212,7 +213,7 @@ export default class Ccr {
   async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ccr.delete_auto_follow_pattern']
+    } = this[kAcceptedParams]['ccr.delete_auto_follow_pattern']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -242,7 +243,11 @@ export default class Ccr {
       name: 'ccr.delete_auto_follow_pattern',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -259,7 +264,7 @@ export default class Ccr {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['ccr.follow']
+    } = this[kAcceptedParams]['ccr.follow']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -299,7 +304,26 @@ export default class Ccr {
       name: 'ccr.follow',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'data_stream_name',
+        'leader_index',
+        'max_outstanding_read_requests',
+        'max_outstanding_write_requests',
+        'max_read_request_operation_count',
+        'max_read_request_size',
+        'max_retry_delay',
+        'max_write_buffer_count',
+        'max_write_buffer_size',
+        'max_write_request_operation_count',
+        'max_write_request_size',
+        'read_poll_timeout',
+        'remote_cluster',
+        'settings',
+        'master_timeout',
+        'wait_for_active_shards'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -314,7 +338,7 @@ export default class Ccr {
   async followInfo (this: That, params: T.CcrFollowInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ccr.follow_info']
+    } = this[kAcceptedParams]['ccr.follow_info']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -344,7 +368,11 @@ export default class Ccr {
       name: 'ccr.follow_info',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -359,7 +387,7 @@ export default class Ccr {
   async followStats (this: That, params: T.CcrFollowStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ccr.follow_stats']
+    } = this[kAcceptedParams]['ccr.follow_stats']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -389,7 +417,11 @@ export default class Ccr {
       name: 'ccr.follow_stats',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -406,7 +438,7 @@ export default class Ccr {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['ccr.forget_follower']
+    } = this[kAcceptedParams]['ccr.forget_follower']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -446,7 +478,15 @@ export default class Ccr {
       name: 'ccr.forget_follower',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'follower_cluster',
+        'follower_index',
+        'follower_index_uuid',
+        'leader_remote_cluster',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -461,7 +501,7 @@ export default class Ccr {
   async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ccr.get_auto_follow_pattern']
+    } = this[kAcceptedParams]['ccr.get_auto_follow_pattern']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -499,7 +539,11 @@ export default class Ccr {
       name: 'ccr.get_auto_follow_pattern',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -514,7 +558,7 @@ export default class Ccr {
   async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ccr.pause_auto_follow_pattern']
+    } = this[kAcceptedParams]['ccr.pause_auto_follow_pattern']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -544,7 +588,11 @@ export default class Ccr {
       name: 'ccr.pause_auto_follow_pattern',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -559,7 +607,7 @@ export default class Ccr {
   async pauseFollow (this: That, params: T.CcrPauseFollowRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ccr.pause_follow']
+    } = this[kAcceptedParams]['ccr.pause_follow']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -589,7 +637,11 @@ export default class Ccr {
       name: 'ccr.pause_follow',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -606,7 +658,7 @@ export default class Ccr {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['ccr.put_auto_follow_pattern']
+    } = this[kAcceptedParams]['ccr.put_auto_follow_pattern']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -646,7 +698,26 @@ export default class Ccr {
       name: 'ccr.put_auto_follow_pattern',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'remote_cluster',
+        'follow_index_pattern',
+        'leader_index_patterns',
+        'leader_index_exclusion_patterns',
+        'max_outstanding_read_requests',
+        'settings',
+        'max_outstanding_write_requests',
+        'read_poll_timeout',
+        'max_read_request_operation_count',
+        'max_read_request_size',
+        'max_retry_delay',
+        'max_write_buffer_count',
+        'max_write_buffer_size',
+        'max_write_request_operation_count',
+        'max_write_request_size',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -661,7 +732,7 @@ export default class Ccr {
   async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ccr.resume_auto_follow_pattern']
+    } = this[kAcceptedParams]['ccr.resume_auto_follow_pattern']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -691,7 +762,11 @@ export default class Ccr {
       name: 'ccr.resume_auto_follow_pattern',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -708,7 +783,7 @@ export default class Ccr {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['ccr.resume_follow']
+    } = this[kAcceptedParams]['ccr.resume_follow']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -748,7 +823,21 @@ export default class Ccr {
       name: 'ccr.resume_follow',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'max_outstanding_read_requests',
+        'max_outstanding_write_requests',
+        'max_read_request_operation_count',
+        'max_read_request_size',
+        'max_retry_delay',
+        'max_write_buffer_count',
+        'max_write_buffer_size',
+        'max_write_request_operation_count',
+        'max_write_request_size',
+        'read_poll_timeout',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -763,7 +852,7 @@ export default class Ccr {
   async stats (this: That, params?: T.CcrStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ccr.stats']
+    } = this[kAcceptedParams]['ccr.stats']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -791,7 +880,11 @@ export default class Ccr {
     const method = 'GET'
     const path = '/_ccr/stats'
     const meta: TransportRequestMetadata = {
-      name: 'ccr.stats'
+      name: 'ccr.stats',
+      acceptedParams: [
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -806,7 +899,7 @@ export default class Ccr {
   async unfollow (this: That, params: T.CcrUnfollowRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ccr.unfollow']
+    } = this[kAcceptedParams]['ccr.unfollow']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -836,7 +929,11 @@ export default class Ccr {
       name: 'ccr.unfollow',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

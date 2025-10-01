@@ -49,6 +49,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'ignore_unavailable',
       'preference',
       'profile',
+      'project_routing',
       'routing',
       'scroll',
       'search_type',
@@ -118,7 +119,29 @@ export default async function SearchTemplateApi<TDocument = unknown> (this: That
     name: 'search_template',
     pathParts: {
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'index',
+      'explain',
+      'id',
+      'params',
+      'profile',
+      'source',
+      'allow_no_indices',
+      'ccs_minimize_roundtrips',
+      'expand_wildcards',
+      'explain',
+      'ignore_throttled',
+      'ignore_unavailable',
+      'preference',
+      'profile',
+      'project_routing',
+      'routing',
+      'scroll',
+      'search_type',
+      'rest_total_hits_as_int',
+      'typed_keys'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

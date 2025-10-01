@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Rollup {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'rollup.delete_job': {
         path: [
           'id'
@@ -124,7 +125,7 @@ export default class Rollup {
   async deleteJob (this: That, params: T.RollupDeleteJobRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['rollup.delete_job']
+    } = this[kAcceptedParams]['rollup.delete_job']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -154,7 +155,10 @@ export default class Rollup {
       name: 'rollup.delete_job',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -169,7 +173,7 @@ export default class Rollup {
   async getJobs (this: That, params?: T.RollupGetJobsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['rollup.get_jobs']
+    } = this[kAcceptedParams]['rollup.get_jobs']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -207,7 +211,10 @@ export default class Rollup {
       name: 'rollup.get_jobs',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -222,7 +229,7 @@ export default class Rollup {
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['rollup.get_rollup_caps']
+    } = this[kAcceptedParams]['rollup.get_rollup_caps']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -260,7 +267,10 @@ export default class Rollup {
       name: 'rollup.get_rollup_caps',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -275,7 +285,7 @@ export default class Rollup {
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['rollup.get_rollup_index_caps']
+    } = this[kAcceptedParams]['rollup.get_rollup_index_caps']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -305,7 +315,10 @@ export default class Rollup {
       name: 'rollup.get_rollup_index_caps',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -322,7 +335,7 @@ export default class Rollup {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['rollup.put_job']
+    } = this[kAcceptedParams]['rollup.put_job']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -362,7 +375,18 @@ export default class Rollup {
       name: 'rollup.put_job',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'cron',
+        'groups',
+        'index_pattern',
+        'metrics',
+        'page_size',
+        'rollup_index',
+        'timeout',
+        'headers'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -379,7 +403,7 @@ export default class Rollup {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['rollup.rollup_search']
+    } = this[kAcceptedParams]['rollup.rollup_search']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -419,7 +443,16 @@ export default class Rollup {
       name: 'rollup.rollup_search',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'aggregations',
+        'aggs',
+        'query',
+        'size',
+        'rest_total_hits_as_int',
+        'typed_keys'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -434,7 +467,7 @@ export default class Rollup {
   async startJob (this: That, params: T.RollupStartJobRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['rollup.start_job']
+    } = this[kAcceptedParams]['rollup.start_job']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -464,7 +497,10 @@ export default class Rollup {
       name: 'rollup.start_job',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -479,7 +515,7 @@ export default class Rollup {
   async stopJob (this: That, params: T.RollupStopJobRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['rollup.stop_job']
+    } = this[kAcceptedParams]['rollup.stop_job']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -509,7 +545,12 @@ export default class Rollup {
       name: 'rollup.stop_job',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'timeout',
+        'wait_for_completion'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

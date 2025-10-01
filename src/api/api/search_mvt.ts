@@ -59,6 +59,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'grid_agg',
       'grid_precision',
       'grid_type',
+      'project_routing',
       'size',
       'track_total_hits',
       'with_labels'
@@ -122,7 +123,37 @@ export default async function SearchMvtApi (this: That, params: T.SearchMvtReque
       zoom: params.zoom,
       x: params.x,
       y: params.y
-    }
+    },
+    acceptedParams: [
+      'index',
+      'field',
+      'zoom',
+      'x',
+      'y',
+      'aggs',
+      'buffer',
+      'exact_bounds',
+      'extent',
+      'fields',
+      'grid_agg',
+      'grid_precision',
+      'grid_type',
+      'query',
+      'runtime_mappings',
+      'size',
+      'sort',
+      'track_total_hits',
+      'with_labels',
+      'exact_bounds',
+      'extent',
+      'grid_agg',
+      'grid_precision',
+      'grid_type',
+      'project_routing',
+      'size',
+      'track_total_hits',
+      'with_labels'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

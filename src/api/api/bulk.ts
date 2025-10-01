@@ -102,7 +102,23 @@ export default async function BulkApi<TDocument = unknown, TPartialDocument = un
     name: 'bulk',
     pathParts: {
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'index',
+      'operations',
+      'include_source_on_error',
+      'list_executed_pipelines',
+      'pipeline',
+      'refresh',
+      'routing',
+      '_source',
+      '_source_excludes',
+      '_source_includes',
+      'timeout',
+      'wait_for_active_shards',
+      'require_alias',
+      'require_data_stream'
+    ]
   }
   return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
 }

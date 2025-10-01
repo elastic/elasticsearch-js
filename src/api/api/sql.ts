@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Sql {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'sql.clear_cursor': {
         path: [],
         body: [
@@ -90,7 +91,8 @@ export default class Sql {
           'wait_for_completion_timeout'
         ],
         query: [
-          'format'
+          'format',
+          'project_routing'
         ]
       },
       'sql.translate': {
@@ -118,7 +120,7 @@ export default class Sql {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['sql.clear_cursor']
+    } = this[kAcceptedParams]['sql.clear_cursor']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -155,7 +157,10 @@ export default class Sql {
     const method = 'POST'
     const path = '/_sql/close'
     const meta: TransportRequestMetadata = {
-      name: 'sql.clear_cursor'
+      name: 'sql.clear_cursor',
+      acceptedParams: [
+        'cursor'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -170,7 +175,7 @@ export default class Sql {
   async deleteAsync (this: That, params: T.SqlDeleteAsyncRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['sql.delete_async']
+    } = this[kAcceptedParams]['sql.delete_async']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -200,7 +205,10 @@ export default class Sql {
       name: 'sql.delete_async',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -215,7 +223,7 @@ export default class Sql {
   async getAsync (this: That, params: T.SqlGetAsyncRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['sql.get_async']
+    } = this[kAcceptedParams]['sql.get_async']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -245,7 +253,14 @@ export default class Sql {
       name: 'sql.get_async',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'delimiter',
+        'format',
+        'keep_alive',
+        'wait_for_completion_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -260,7 +275,7 @@ export default class Sql {
   async getAsyncStatus (this: That, params: T.SqlGetAsyncStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['sql.get_async_status']
+    } = this[kAcceptedParams]['sql.get_async_status']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -290,7 +305,10 @@ export default class Sql {
       name: 'sql.get_async_status',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -307,7 +325,7 @@ export default class Sql {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['sql.query']
+    } = this[kAcceptedParams]['sql.query']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -345,7 +363,28 @@ export default class Sql {
     const method = body != null ? 'POST' : 'GET'
     const path = '/_sql'
     const meta: TransportRequestMetadata = {
-      name: 'sql.query'
+      name: 'sql.query',
+      acceptedParams: [
+        'allow_partial_search_results',
+        'catalog',
+        'columnar',
+        'cursor',
+        'fetch_size',
+        'field_multi_value_leniency',
+        'filter',
+        'index_using_frozen',
+        'keep_alive',
+        'keep_on_completion',
+        'page_timeout',
+        'params',
+        'query',
+        'request_timeout',
+        'runtime_mappings',
+        'time_zone',
+        'wait_for_completion_timeout',
+        'format',
+        'project_routing'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -362,7 +401,7 @@ export default class Sql {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['sql.translate']
+    } = this[kAcceptedParams]['sql.translate']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -399,7 +438,13 @@ export default class Sql {
     const method = body != null ? 'POST' : 'GET'
     const path = '/_sql/translate'
     const meta: TransportRequestMetadata = {
-      name: 'sql.translate'
+      name: 'sql.translate',
+      acceptedParams: [
+        'fetch_size',
+        'filter',
+        'query',
+        'time_zone'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Esql {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'esql.async_query': {
         path: [],
         body: [
@@ -46,6 +47,7 @@ export default class Esql {
           'query',
           'tables',
           'include_ccs_metadata',
+          'include_execution_metadata',
           'wait_for_completion_timeout',
           'keep_alive',
           'keep_on_completion'
@@ -107,7 +109,8 @@ export default class Esql {
           'profile',
           'query',
           'tables',
-          'include_ccs_metadata'
+          'include_ccs_metadata',
+          'include_execution_metadata'
         ],
         query: [
           'format',
@@ -131,7 +134,7 @@ export default class Esql {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['esql.async_query']
+    } = this[kAcceptedParams]['esql.async_query']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -168,7 +171,25 @@ export default class Esql {
     const method = 'POST'
     const path = '/_query/async'
     const meta: TransportRequestMetadata = {
-      name: 'esql.async_query'
+      name: 'esql.async_query',
+      acceptedParams: [
+        'columnar',
+        'filter',
+        'locale',
+        'params',
+        'profile',
+        'query',
+        'tables',
+        'include_ccs_metadata',
+        'include_execution_metadata',
+        'wait_for_completion_timeout',
+        'keep_alive',
+        'keep_on_completion',
+        'allow_partial_results',
+        'delimiter',
+        'drop_null_columns',
+        'format'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -183,7 +204,7 @@ export default class Esql {
   async asyncQueryDelete (this: That, params: T.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['esql.async_query_delete']
+    } = this[kAcceptedParams]['esql.async_query_delete']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -213,7 +234,10 @@ export default class Esql {
       name: 'esql.async_query_delete',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -228,7 +252,7 @@ export default class Esql {
   async asyncQueryGet (this: That, params: T.EsqlAsyncQueryGetRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['esql.async_query_get']
+    } = this[kAcceptedParams]['esql.async_query_get']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -258,7 +282,14 @@ export default class Esql {
       name: 'esql.async_query_get',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'drop_null_columns',
+        'format',
+        'keep_alive',
+        'wait_for_completion_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -273,7 +304,7 @@ export default class Esql {
   async asyncQueryStop (this: That, params: T.EsqlAsyncQueryStopRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['esql.async_query_stop']
+    } = this[kAcceptedParams]['esql.async_query_stop']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -303,7 +334,11 @@ export default class Esql {
       name: 'esql.async_query_stop',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'drop_null_columns'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -318,7 +353,7 @@ export default class Esql {
   async getQuery (this: That, params: T.EsqlGetQueryRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['esql.get_query']
+    } = this[kAcceptedParams]['esql.get_query']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -348,7 +383,10 @@ export default class Esql {
       name: 'esql.get_query',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -363,7 +401,7 @@ export default class Esql {
   async listQueries (this: That, params?: T.EsqlListQueriesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['esql.list_queries']
+    } = this[kAcceptedParams]['esql.list_queries']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -391,7 +429,9 @@ export default class Esql {
     const method = 'GET'
     const path = '/_query/queries'
     const meta: TransportRequestMetadata = {
-      name: 'esql.list_queries'
+      name: 'esql.list_queries',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -408,7 +448,7 @@ export default class Esql {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['esql.query']
+    } = this[kAcceptedParams]['esql.query']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -445,7 +485,22 @@ export default class Esql {
     const method = 'POST'
     const path = '/_query'
     const meta: TransportRequestMetadata = {
-      name: 'esql.query'
+      name: 'esql.query',
+      acceptedParams: [
+        'columnar',
+        'filter',
+        'locale',
+        'params',
+        'profile',
+        'query',
+        'tables',
+        'include_ccs_metadata',
+        'include_execution_metadata',
+        'format',
+        'delimiter',
+        'drop_null_columns',
+        'allow_partial_results'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
