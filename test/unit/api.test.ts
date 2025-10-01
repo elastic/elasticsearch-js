@@ -236,7 +236,6 @@ test('Api request metadata', t => {
           'set_id',
           'rule_id',
           'synonyms',
-          'refresh',
         ])
         return super.request(params, options)
       }
