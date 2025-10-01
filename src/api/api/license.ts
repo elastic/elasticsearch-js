@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class License {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'license.delete': {
         path: [],
         body: [],
@@ -104,7 +105,7 @@ export default class License {
   async delete (this: That, params?: T.LicenseDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['license.delete']
+    } = this[kAcceptedParams]['license.delete']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -132,7 +133,11 @@ export default class License {
     const method = 'DELETE'
     const path = '/_license'
     const meta: TransportRequestMetadata = {
-      name: 'license.delete'
+      name: 'license.delete',
+      acceptedParams: [
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -147,7 +152,7 @@ export default class License {
   async get (this: That, params?: T.LicenseGetRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['license.get']
+    } = this[kAcceptedParams]['license.get']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -175,7 +180,11 @@ export default class License {
     const method = 'GET'
     const path = '/_license'
     const meta: TransportRequestMetadata = {
-      name: 'license.get'
+      name: 'license.get',
+      acceptedParams: [
+        'accept_enterprise',
+        'local'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -190,7 +199,7 @@ export default class License {
   async getBasicStatus (this: That, params?: T.LicenseGetBasicStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['license.get_basic_status']
+    } = this[kAcceptedParams]['license.get_basic_status']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -218,7 +227,9 @@ export default class License {
     const method = 'GET'
     const path = '/_license/basic_status'
     const meta: TransportRequestMetadata = {
-      name: 'license.get_basic_status'
+      name: 'license.get_basic_status',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -233,7 +244,7 @@ export default class License {
   async getTrialStatus (this: That, params?: T.LicenseGetTrialStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['license.get_trial_status']
+    } = this[kAcceptedParams]['license.get_trial_status']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -261,7 +272,9 @@ export default class License {
     const method = 'GET'
     const path = '/_license/trial_status'
     const meta: TransportRequestMetadata = {
-      name: 'license.get_trial_status'
+      name: 'license.get_trial_status',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -278,7 +291,7 @@ export default class License {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['license.post']
+    } = this[kAcceptedParams]['license.post']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -316,7 +329,14 @@ export default class License {
     const method = 'PUT'
     const path = '/_license'
     const meta: TransportRequestMetadata = {
-      name: 'license.post'
+      name: 'license.post',
+      acceptedParams: [
+        'license',
+        'licenses',
+        'acknowledge',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -331,7 +351,7 @@ export default class License {
   async postStartBasic (this: That, params?: T.LicensePostStartBasicRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['license.post_start_basic']
+    } = this[kAcceptedParams]['license.post_start_basic']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -359,7 +379,12 @@ export default class License {
     const method = 'POST'
     const path = '/_license/start_basic'
     const meta: TransportRequestMetadata = {
-      name: 'license.post_start_basic'
+      name: 'license.post_start_basic',
+      acceptedParams: [
+        'acknowledge',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -374,7 +399,7 @@ export default class License {
   async postStartTrial (this: That, params?: T.LicensePostStartTrialRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['license.post_start_trial']
+    } = this[kAcceptedParams]['license.post_start_trial']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -402,7 +427,12 @@ export default class License {
     const method = 'POST'
     const path = '/_license/start_trial'
     const meta: TransportRequestMetadata = {
-      name: 'license.post_start_trial'
+      name: 'license.post_start_trial',
+      acceptedParams: [
+        'acknowledge',
+        'type',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

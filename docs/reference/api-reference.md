@@ -217,6 +217,7 @@ client.count({ ... })
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
 - **`min_score` (Optional, number)**: The minimum `_score` value that documents must have to be included in the result.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. By default, it is random.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
 - **`terminate_after` (Optional, number)**: The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. IMPORTANT: Use with caution. Elasticsearch applies this parameter to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers.
 - **`q` (Optional, string)**: The query in Lucene query string syntax. This parameter cannot be used with a request body.
@@ -673,6 +674,7 @@ client.fieldCaps({ ... })
 - **`filters` (Optional, string)**: A list of filters to apply to the response.
 - **`types` (Optional, string[])**: A list of field types to include. Any fields that do not match one of these types will be excluded from the results. It defaults to empty, meaning that all field types are returned.
 - **`include_empty_fields` (Optional, boolean)**: If false, empty fields are not included in the response.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the field-caps query using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 
 ## client.get [_get]
 Get a document by its ID.
@@ -1101,7 +1103,7 @@ client.msearch({ ... })
 #### Request (object) [_request_msearch]
 
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and index aliases to search.
-- **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
+- **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, project_routing, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
 - **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
@@ -1111,6 +1113,7 @@ client.msearch({ ... })
 - **`max_concurrent_searches` (Optional, number)**: Maximum number of concurrent searches the multi search API can execute. Defaults to `max(1, (# of data nodes * min(search thread pool size, 10)))`.
 - **`max_concurrent_shard_requests` (Optional, number)**: Maximum number of concurrent shard requests that each sub-search request executes per node.
 - **`pre_filter_shard_size` (Optional, number)**: Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for a search using project metadata tags in a subset Lucene syntax. Allowed Lucene queries: the _alias tag and a single value (possible wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`rest_total_hits_as_int` (Optional, boolean)**: If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object.
 - **`routing` (Optional, string)**: Custom routing value used to route search operations to a specific shard.
 - **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: Indicates whether global term and document frequencies should be used when scoring returned documents.
@@ -1143,9 +1146,10 @@ client.msearchTemplate({ ... })
 #### Request (object) [_request_msearch_template]
 
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*`.
-- **`search_templates` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
+- **`search_templates` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, project_routing, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If `true`, network round-trips are minimized for cross-cluster search requests.
 - **`max_concurrent_searches` (Optional, number)**: The maximum number of concurrent searches the API can run.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: The type of the search operation.
 - **`rest_total_hits_as_int` (Optional, boolean)**: If `true`, the response returns `hits.total` as an integer. If `false`, it returns `hits.total` as an object.
 - **`typed_keys` (Optional, boolean)**: If `true`, the response prefixes aggregation and suggester names with their respective types.
@@ -1241,6 +1245,7 @@ client.openPointInTime({ index, keep_alive })
 - **`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Filter indices if the provided query rewrites to `match_none` on every shard.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. By default, it is random.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the PIT request using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`routing` (Optional, string)**: A custom value that is used to route operations to a specific shard.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
 - **`allow_partial_search_results` (Optional, boolean)**: Indicates whether the point in time tolerates unavailable shards or shard failures when initially creating the PIT. If `false`, creating a point in time request when a shard is missing or unavailable will throw an exception. If `true`, the point in time will contain all the shards that are available at the time of the request.
@@ -1516,7 +1521,7 @@ client.search({ ... })
 - **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Use the `post_filter` parameter to filter search results. The search hits are filtered after the aggregations are calculated. A post filter has no impact on the aggregation results.
 - **`profile` (Optional, boolean)**: Set to `true` to return detailed timing information about the execution of individual components in a search request. NOTE: This is a debugging tool and adds significant overhead to search execution.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The search definition using the Query DSL.
-- **`rescore` (Optional, { window_size, query, learning_to_rank } \| { window_size, query, learning_to_rank }[])**: Can be used to improve precision by reordering just the top (for example 100 - 500) documents returned by the `query` and `post_filter` phases.
+- **`rescore` (Optional, { window_size, query, learning_to_rank, script } \| { window_size, query, learning_to_rank, script }[])**: Can be used to improve precision by reordering just the top (for example 100 - 500) documents returned by the `query` and `post_filter` phases.
 - **`retriever` (Optional, { standard, knn, rrf, text_similarity_reranker, rule, rescorer, linear, pinned })**: A retriever is a specification to describe top documents returned from a search. A retriever replaces other elements of the search API that also return top documents such as `query` and `knn`.
 - **`script_fields` (Optional, Record<string, { script, ignore_failure }>)**: Retrieve a script evaluation (based on different fields) for each hit.
 - **`search_after` (Optional, number \| number \| string \| boolean \| null[])**: Used to retrieve the next page of hits using a set of sort values from the previous page.
@@ -1551,6 +1556,7 @@ client.search({ ... })
 - **`max_concurrent_shard_requests` (Optional, number)**: The number of concurrent shard requests per node that the search runs concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests.
 - **`preference` (Optional, string)**: The nodes and shards used for the search. By default, Elasticsearch selects from eligible nodes and shards using adaptive replica selection, accounting for allocation awareness. Valid values are: * `_only_local` to run the search only on shards on the local node. * `_local` to, if possible, run the search on shards on the local node, or if not, select shards using the default method. * `_only_nodes:<node-id>,<node-id>` to run the search on only the specified nodes IDs. If suitable shards exist on more than one selected node, use shards on those nodes using the default method. If none of the specified nodes are available, select shards from any available node using the default method. * `_prefer_nodes:<node-id>,<node-id>` to if possible, run the search on the specified nodes IDs. If not, select shards using the default method. * `_shards:<shard>,<shard>` to run the search only on the specified shards. You can combine this value with other `preference` values. However, the `_shards` value must come first. For example: `_shards:2,3|_local`. * `<custom-string>` (any string that does not start with `_`) to route searches with the same `<custom-string>` to the same shards in the same order.
 - **`pre_filter_shard_size` (Optional, number)**: A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method (if date filters are mandatory to match but the shard bounds and the query are disjoint). When unspecified, the pre-filter phase is executed if any of these conditions is met: * The request targets more than 128 shards. * The request targets one or more read-only index. * The primary sort of the query targets an indexed field.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`request_cache` (Optional, boolean)**: If `true`, the caching of search results is enabled for requests where `size` is `0`. It defaults to index level settings.
 - **`routing` (Optional, string)**: A custom value that is used to route operations to a specific shard.
 - **`scroll` (Optional, string \| -1 \| 0)**: The period to retain the search context for scrolling. By default, this value cannot exceed `1d` (24 hours). You can change this limit by using the `search.max_keep_alive` cluster-level setting.
@@ -1686,6 +1692,7 @@ client.searchMvt({ index, field, zoom, x, y })
 - **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: Sort the features in the hits layer. By default, the API calculates a bounding box for each feature. It sorts features based on this box's diagonal length, from longest to shortest.
 - **`track_total_hits` (Optional, boolean \| number)**: The number of hits matching the query to count accurately. If `true`, the exact number of hits is returned at the cost of some performance. If `false`, the response does not include the total number of hits matching the query.
 - **`with_labels` (Optional, boolean)**: If `true`, the hits and aggs layers will contain additional point features representing suggested label positions for the original features. * `Point` and `MultiPoint` features will have one of the points selected. * `Polygon` and `MultiPolygon` features will have a single point generated, either the centroid, if it is within the polygon, or another point within the polygon selected from the sorted triangle-tree. * `LineString` features will likewise provide a roughly central point selected from the triangle-tree. * The aggregation results will provide one central point for each aggregation bucket. All attributes from the original features will also be copied to the new label features. In addition, the new features will be distinguishable using the tag `_mvt_label_position`.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 
 ## client.searchShards [_search_shards]
 Get the search shards.
@@ -1738,6 +1745,7 @@ client.searchTemplate({ ... })
 - **`ignore_throttled` (Optional, boolean)**: If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
 - **`scroll` (Optional, string \| -1 \| 0)**: Specifies how long a consistent view of the index should be maintained for scrolled search.
 - **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: The type of the search operation.
@@ -2159,7 +2167,7 @@ not included in search results and results collected by aggregations.
 - **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**
 - **`profile` (Optional, boolean)**
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search definition using the Query DSL.
-- **`rescore` (Optional, { window_size, query, learning_to_rank } \| { window_size, query, learning_to_rank }[])**
+- **`rescore` (Optional, { window_size, query, learning_to_rank, script } \| { window_size, query, learning_to_rank, script }[])**
 - **`script_fields` (Optional, Record<string, { script, ignore_failure }>)**: Retrieve a script evaluation (based on different fields) for each hit.
 - **`search_after` (Optional, number \| number \| string \| boolean \| null[])**
 - **`size` (Optional, number)**: The number of hits to return. By default, you cannot page through more
@@ -2213,6 +2221,14 @@ A partial reduction is performed every time the coordinating node has received a
 - **`lenient` (Optional, boolean)**: Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
 - **`max_concurrent_shard_requests` (Optional, number)**: The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
 - **`preference` (Optional, string)**: Specify the node or shard the operation should be performed on (default: random)
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project
+metadata tags in a subset of Lucene query syntax.
+Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+Examples:
+ _alias:my-project
+ _alias:_origin
+ _alias:*pr*
+Supported in serverless only.
 - **`request_cache` (Optional, boolean)**: Specify if request cache should be used for this request or not, defaults to true
 - **`routing` (Optional, string)**: A list of specific routing values
 - **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: Search operation type
@@ -2272,7 +2288,6 @@ client.cat.allocation({ ... })
 
 #### Request (object) [_request_cat.allocation]
 - **`node_id` (Optional, string \| string[])**: A list of node identifiers or names used to limit the returned information.
-- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`h` (Optional, Enum("shards" \| "shards.undesired" \| "write_load.forecast" \| "disk.indices.forecast" \| "disk.indices" \| "disk.used" \| "disk.avail" \| "disk.total" \| "disk.percent" \| "host" \| "ip" \| "node" \| "node.role") \| Enum("shards" \| "shards.undesired" \| "write_load.forecast" \| "disk.indices.forecast" \| "disk.indices" \| "disk.used" \| "disk.avail" \| "disk.total" \| "disk.percent" \| "host" \| "ip" \| "node" \| "node.role")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
@@ -2336,6 +2351,14 @@ client.cat.count({ ... })
 It supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`h` (Optional, Enum("epoch" \| "timestamp" \| "count") \| Enum("epoch" \| "timestamp" \| "count")[])**: A list of columns names to display. It supports simple wildcards.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project
+metadata tags in a subset of Lucene query syntax.
+Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+Examples:
+ _alias:my-project
+ _alias:_origin
+ _alias:*pr*
+Supported in serverless only.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -2359,7 +2382,6 @@ client.cat.fielddata({ ... })
 #### Request (object) [_request_cat.fielddata]
 - **`fields` (Optional, string \| string[])**: List of fields used to limit returned information.
 To retrieve all fields, omit this parameter.
-- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`h` (Optional, Enum("id" \| "host" \| "ip" \| "node" \| "field" \| "size") \| Enum("id" \| "host" \| "ip" \| "node" \| "field" \| "size")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
@@ -2387,7 +2409,6 @@ client.cat.health({ ... })
 ### Arguments [_arguments_cat.health]
 
 #### Request (object) [_request_cat.health]
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 - **`ts` (Optional, boolean)**: If true, returns `HH:MM:SS` and Unix epoch timestamps.
 - **`h` (Optional, Enum("epoch" \| "timestamp" \| "cluster" \| "status" \| "node.total" \| "node.data" \| "shards" \| "pri" \| "relo" \| "init" \| "unassign" \| "unassign.pri" \| "pending_tasks" \| "max_task_wait_time" \| "active_shards_percent") \| Enum("epoch" \| "timestamp" \| "cluster" \| "status" \| "node.total" \| "node.data" \| "shards" \| "pri" \| "relo" \| "init" \| "unassign" \| "unassign.pri" \| "pending_tasks" \| "max_task_wait_time" \| "active_shards_percent")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
@@ -2435,12 +2456,10 @@ client.cat.indices({ ... })
 #### Request (object) [_request_cat.indices]
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match.
 - **`health` (Optional, Enum("green" \| "yellow" \| "red" \| "unknown" \| "unavailable"))**: The health status used to limit returned indices. By default, the response includes indices of any health status.
 - **`include_unloaded_segments` (Optional, boolean)**: If true, the response includes information from segments that are not loaded into memory.
 - **`pri` (Optional, boolean)**: If true, the response only includes information from primary shards.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 - **`h` (Optional, Enum("health" \| "status" \| "index" \| "uuid" \| "pri" \| "rep" \| "docs.count" \| "docs.deleted" \| "creation.date" \| "creation.date.string" \| "store.size" \| "pri.store.size" \| "dataset.size" \| "completion.size" \| "pri.completion.size" \| "fielddata.memory_size" \| "pri.fielddata.memory_size" \| "fielddata.evictions" \| "pri.fielddata.evictions" \| "query_cache.memory_size" \| "pri.query_cache.memory_size" \| "query_cache.evictions" \| "pri.query_cache.evictions" \| "request_cache.memory_size" \| "pri.request_cache.memory_size" \| "request_cache.evictions" \| "pri.request_cache.evictions" \| "request_cache.hit_count" \| "pri.request_cache.hit_count" \| "request_cache.miss_count" \| "pri.request_cache.miss_count" \| "flush.total" \| "pri.flush.total" \| "flush.total_time" \| "pri.flush.total_time" \| "get.current" \| "pri.get.current" \| "get.time" \| "pri.get.time" \| "get.total" \| "pri.get.total" \| "get.exists_time" \| "pri.get.exists_time" \| "get.exists_total" \| "pri.get.exists_total" \| "get.missing_time" \| "pri.get.missing_time" \| "get.missing_total" \| "pri.get.missing_total" \| "indexing.delete_current" \| "pri.indexing.delete_current" \| "indexing.delete_time" \| "pri.indexing.delete_time" \| "indexing.delete_total" \| "pri.indexing.delete_total" \| "indexing.index_current" \| "pri.indexing.index_current" \| "indexing.index_time" \| "pri.indexing.index_time" \| "indexing.index_total" \| "pri.indexing.index_total" \| "indexing.index_failed" \| "pri.indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "pri.indexing.index_failed_due_to_version_conflict" \| "merges.current" \| "pri.merges.current" \| "merges.current_docs" \| "pri.merges.current_docs" \| "merges.current_size" \| "pri.merges.current_size" \| "merges.total" \| "pri.merges.total" \| "merges.total_docs" \| "pri.merges.total_docs" \| "merges.total_size" \| "pri.merges.total_size" \| "merges.total_time" \| "pri.merges.total_time" \| "refresh.total" \| "pri.refresh.total" \| "refresh.time" \| "pri.refresh.time" \| "refresh.external_total" \| "pri.refresh.external_total" \| "refresh.external_time" \| "pri.refresh.external_time" \| "refresh.listeners" \| "pri.refresh.listeners" \| "search.fetch_current" \| "pri.search.fetch_current" \| "search.fetch_time" \| "pri.search.fetch_time" \| "search.fetch_total" \| "pri.search.fetch_total" \| "search.open_contexts" \| "pri.search.open_contexts" \| "search.query_current" \| "pri.search.query_current" \| "search.query_time" \| "pri.search.query_time" \| "search.query_total" \| "pri.search.query_total" \| "search.scroll_current" \| "pri.search.scroll_current" \| "search.scroll_time" \| "pri.search.scroll_time" \| "search.scroll_total" \| "pri.search.scroll_total" \| "segments.count" \| "pri.segments.count" \| "segments.memory" \| "pri.segments.memory" \| "segments.index_writer_memory" \| "pri.segments.index_writer_memory" \| "segments.version_map_memory" \| "pri.segments.version_map_memory" \| "segments.fixed_bitset_memory" \| "pri.segments.fixed_bitset_memory" \| "warmer.current" \| "pri.warmer.current" \| "warmer.total" \| "pri.warmer.total" \| "warmer.total_time" \| "pri.warmer.total_time" \| "suggest.current" \| "pri.suggest.current" \| "suggest.time" \| "pri.suggest.time" \| "suggest.total" \| "pri.suggest.total" \| "memory.total" \| "pri.memory.total" \| "bulk.total_operations" \| "pri.bulk.total_operations" \| "bulk.total_time" \| "pri.bulk.total_time" \| "bulk.total_size_in_bytes" \| "pri.bulk.total_size_in_bytes" \| "bulk.avg_time" \| "pri.bulk.avg_time" \| "bulk.avg_size_in_bytes" \| "pri.bulk.avg_size_in_bytes" \| "dense_vector.value_count" \| "pri.dense_vector.value_count" \| "sparse_vector.value_count" \| "pri.sparse_vector.value_count") \| Enum("health" \| "status" \| "index" \| "uuid" \| "pri" \| "rep" \| "docs.count" \| "docs.deleted" \| "creation.date" \| "creation.date.string" \| "store.size" \| "pri.store.size" \| "dataset.size" \| "completion.size" \| "pri.completion.size" \| "fielddata.memory_size" \| "pri.fielddata.memory_size" \| "fielddata.evictions" \| "pri.fielddata.evictions" \| "query_cache.memory_size" \| "pri.query_cache.memory_size" \| "query_cache.evictions" \| "pri.query_cache.evictions" \| "request_cache.memory_size" \| "pri.request_cache.memory_size" \| "request_cache.evictions" \| "pri.request_cache.evictions" \| "request_cache.hit_count" \| "pri.request_cache.hit_count" \| "request_cache.miss_count" \| "pri.request_cache.miss_count" \| "flush.total" \| "pri.flush.total" \| "flush.total_time" \| "pri.flush.total_time" \| "get.current" \| "pri.get.current" \| "get.time" \| "pri.get.time" \| "get.total" \| "pri.get.total" \| "get.exists_time" \| "pri.get.exists_time" \| "get.exists_total" \| "pri.get.exists_total" \| "get.missing_time" \| "pri.get.missing_time" \| "get.missing_total" \| "pri.get.missing_total" \| "indexing.delete_current" \| "pri.indexing.delete_current" \| "indexing.delete_time" \| "pri.indexing.delete_time" \| "indexing.delete_total" \| "pri.indexing.delete_total" \| "indexing.index_current" \| "pri.indexing.index_current" \| "indexing.index_time" \| "pri.indexing.index_time" \| "indexing.index_total" \| "pri.indexing.index_total" \| "indexing.index_failed" \| "pri.indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "pri.indexing.index_failed_due_to_version_conflict" \| "merges.current" \| "pri.merges.current" \| "merges.current_docs" \| "pri.merges.current_docs" \| "merges.current_size" \| "pri.merges.current_size" \| "merges.total" \| "pri.merges.total" \| "merges.total_docs" \| "pri.merges.total_docs" \| "merges.total_size" \| "pri.merges.total_size" \| "merges.total_time" \| "pri.merges.total_time" \| "refresh.total" \| "pri.refresh.total" \| "refresh.time" \| "pri.refresh.time" \| "refresh.external_total" \| "pri.refresh.external_total" \| "refresh.external_time" \| "pri.refresh.external_time" \| "refresh.listeners" \| "pri.refresh.listeners" \| "search.fetch_current" \| "pri.search.fetch_current" \| "search.fetch_time" \| "pri.search.fetch_time" \| "search.fetch_total" \| "pri.search.fetch_total" \| "search.open_contexts" \| "pri.search.open_contexts" \| "search.query_current" \| "pri.search.query_current" \| "search.query_time" \| "pri.search.query_time" \| "search.query_total" \| "pri.search.query_total" \| "search.scroll_current" \| "pri.search.scroll_current" \| "search.scroll_time" \| "pri.search.scroll_time" \| "search.scroll_total" \| "pri.search.scroll_total" \| "segments.count" \| "pri.segments.count" \| "segments.memory" \| "pri.segments.memory" \| "segments.index_writer_memory" \| "pri.segments.index_writer_memory" \| "segments.version_map_memory" \| "pri.segments.version_map_memory" \| "segments.fixed_bitset_memory" \| "pri.segments.fixed_bitset_memory" \| "warmer.current" \| "pri.warmer.current" \| "warmer.total" \| "pri.warmer.total" \| "warmer.total_time" \| "pri.warmer.total_time" \| "suggest.current" \| "pri.suggest.current" \| "suggest.time" \| "pri.suggest.time" \| "suggest.total" \| "pri.suggest.total" \| "memory.total" \| "pri.memory.total" \| "bulk.total_operations" \| "pri.bulk.total_operations" \| "bulk.total_time" \| "pri.bulk.total_time" \| "bulk.total_size_in_bytes" \| "pri.bulk.total_size_in_bytes" \| "bulk.avg_time" \| "pri.bulk.avg_time" \| "bulk.avg_size_in_bytes" \| "pri.bulk.avg_size_in_bytes" \| "dense_vector.value_count" \| "pri.dense_vector.value_count" \| "sparse_vector.value_count" \| "pri.sparse_vector.value_count")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
@@ -2493,11 +2512,9 @@ client.cat.mlDataFrameAnalytics({ ... })
 #### Request (object) [_request_cat.ml_data_frame_analytics]
 - **`id` (Optional, string)**: The ID of the data frame analytics to fetch
 - **`allow_no_match` (Optional, boolean)**: Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified)
-- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit in which to display byte values
 - **`h` (Optional, Enum("assignment_explanation" \| "create_time" \| "description" \| "dest_index" \| "failure_reason" \| "id" \| "model_memory_limit" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "progress" \| "source_index" \| "state" \| "type" \| "version") \| Enum("assignment_explanation" \| "create_time" \| "description" \| "dest_index" \| "failure_reason" \| "id" \| "model_memory_limit" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "progress" \| "source_index" \| "state" \| "type" \| "version")[])**: List of column names to display.
 - **`s` (Optional, Enum("assignment_explanation" \| "create_time" \| "description" \| "dest_index" \| "failure_reason" \| "id" \| "model_memory_limit" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "progress" \| "source_index" \| "state" \| "type" \| "version") \| Enum("assignment_explanation" \| "create_time" \| "description" \| "dest_index" \| "failure_reason" \| "id" \| "model_memory_limit" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "progress" \| "source_index" \| "state" \| "type" \| "version")[])**: List of column names or column aliases used to sort the
 response.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
 
 ## client.cat.mlDatafeeds [_cat.ml_datafeeds]
 Get datafeeds.
@@ -2532,7 +2549,6 @@ there are partial matches. If `false`, the API returns a 404 status code when th
 partial matches.
 - **`h` (Optional, Enum("ae" \| "bc" \| "id" \| "na" \| "ne" \| "ni" \| "nn" \| "sba" \| "sc" \| "seah" \| "st" \| "s") \| Enum("ae" \| "bc" \| "id" \| "na" \| "ne" \| "ni" \| "nn" \| "sba" \| "sc" \| "seah" \| "st" \| "s")[])**: List of column names to display.
 - **`s` (Optional, Enum("ae" \| "bc" \| "id" \| "na" \| "ne" \| "ni" \| "nn" \| "sba" \| "sc" \| "seah" \| "st" \| "s") \| Enum("ae" \| "bc" \| "id" \| "na" \| "ne" \| "ni" \| "nn" \| "sba" \| "sc" \| "seah" \| "st" \| "s")[])**: List of column names or column aliases used to sort the response.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 
 ## client.cat.mlJobs [_cat.ml_jobs]
 Get anomaly detection jobs.
@@ -2565,10 +2581,8 @@ client.cat.mlJobs({ ... })
 If `true`, the API returns an empty jobs array when there are no matches and the subset of results when there
 are partial matches. If `false`, the API returns a 404 status code when there are no matches or only partial
 matches.
-- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`h` (Optional, Enum("assignment_explanation" \| "buckets.count" \| "buckets.time.exp_avg" \| "buckets.time.exp_avg_hour" \| "buckets.time.max" \| "buckets.time.min" \| "buckets.time.total" \| "data.buckets" \| "data.earliest_record" \| "data.empty_buckets" \| "data.input_bytes" \| "data.input_fields" \| "data.input_records" \| "data.invalid_dates" \| "data.last" \| "data.last_empty_bucket" \| "data.last_sparse_bucket" \| "data.latest_record" \| "data.missing_fields" \| "data.out_of_order_timestamps" \| "data.processed_fields" \| "data.processed_records" \| "data.sparse_buckets" \| "forecasts.memory.avg" \| "forecasts.memory.max" \| "forecasts.memory.min" \| "forecasts.memory.total" \| "forecasts.records.avg" \| "forecasts.records.max" \| "forecasts.records.min" \| "forecasts.records.total" \| "forecasts.time.avg" \| "forecasts.time.max" \| "forecasts.time.min" \| "forecasts.time.total" \| "forecasts.total" \| "id" \| "model.bucket_allocation_failures" \| "model.by_fields" \| "model.bytes" \| "model.bytes_exceeded" \| "model.categorization_status" \| "model.categorized_doc_count" \| "model.dead_category_count" \| "model.failed_category_count" \| "model.frequent_category_count" \| "model.log_time" \| "model.memory_limit" \| "model.memory_status" \| "model.over_fields" \| "model.partition_fields" \| "model.rare_category_count" \| "model.timestamp" \| "model.total_category_count" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "opened_time" \| "state") \| Enum("assignment_explanation" \| "buckets.count" \| "buckets.time.exp_avg" \| "buckets.time.exp_avg_hour" \| "buckets.time.max" \| "buckets.time.min" \| "buckets.time.total" \| "data.buckets" \| "data.earliest_record" \| "data.empty_buckets" \| "data.input_bytes" \| "data.input_fields" \| "data.input_records" \| "data.invalid_dates" \| "data.last" \| "data.last_empty_bucket" \| "data.last_sparse_bucket" \| "data.latest_record" \| "data.missing_fields" \| "data.out_of_order_timestamps" \| "data.processed_fields" \| "data.processed_records" \| "data.sparse_buckets" \| "forecasts.memory.avg" \| "forecasts.memory.max" \| "forecasts.memory.min" \| "forecasts.memory.total" \| "forecasts.records.avg" \| "forecasts.records.max" \| "forecasts.records.min" \| "forecasts.records.total" \| "forecasts.time.avg" \| "forecasts.time.max" \| "forecasts.time.min" \| "forecasts.time.total" \| "forecasts.total" \| "id" \| "model.bucket_allocation_failures" \| "model.by_fields" \| "model.bytes" \| "model.bytes_exceeded" \| "model.categorization_status" \| "model.categorized_doc_count" \| "model.dead_category_count" \| "model.failed_category_count" \| "model.frequent_category_count" \| "model.log_time" \| "model.memory_limit" \| "model.memory_status" \| "model.over_fields" \| "model.partition_fields" \| "model.rare_category_count" \| "model.timestamp" \| "model.total_category_count" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "opened_time" \| "state")[])**: List of column names to display.
 - **`s` (Optional, Enum("assignment_explanation" \| "buckets.count" \| "buckets.time.exp_avg" \| "buckets.time.exp_avg_hour" \| "buckets.time.max" \| "buckets.time.min" \| "buckets.time.total" \| "data.buckets" \| "data.earliest_record" \| "data.empty_buckets" \| "data.input_bytes" \| "data.input_fields" \| "data.input_records" \| "data.invalid_dates" \| "data.last" \| "data.last_empty_bucket" \| "data.last_sparse_bucket" \| "data.latest_record" \| "data.missing_fields" \| "data.out_of_order_timestamps" \| "data.processed_fields" \| "data.processed_records" \| "data.sparse_buckets" \| "forecasts.memory.avg" \| "forecasts.memory.max" \| "forecasts.memory.min" \| "forecasts.memory.total" \| "forecasts.records.avg" \| "forecasts.records.max" \| "forecasts.records.min" \| "forecasts.records.total" \| "forecasts.time.avg" \| "forecasts.time.max" \| "forecasts.time.min" \| "forecasts.time.total" \| "forecasts.total" \| "id" \| "model.bucket_allocation_failures" \| "model.by_fields" \| "model.bytes" \| "model.bytes_exceeded" \| "model.categorization_status" \| "model.categorized_doc_count" \| "model.dead_category_count" \| "model.failed_category_count" \| "model.frequent_category_count" \| "model.log_time" \| "model.memory_limit" \| "model.memory_status" \| "model.over_fields" \| "model.partition_fields" \| "model.rare_category_count" \| "model.timestamp" \| "model.total_category_count" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "opened_time" \| "state") \| Enum("assignment_explanation" \| "buckets.count" \| "buckets.time.exp_avg" \| "buckets.time.exp_avg_hour" \| "buckets.time.max" \| "buckets.time.min" \| "buckets.time.total" \| "data.buckets" \| "data.earliest_record" \| "data.empty_buckets" \| "data.input_bytes" \| "data.input_fields" \| "data.input_records" \| "data.invalid_dates" \| "data.last" \| "data.last_empty_bucket" \| "data.last_sparse_bucket" \| "data.latest_record" \| "data.missing_fields" \| "data.out_of_order_timestamps" \| "data.processed_fields" \| "data.processed_records" \| "data.sparse_buckets" \| "forecasts.memory.avg" \| "forecasts.memory.max" \| "forecasts.memory.min" \| "forecasts.memory.total" \| "forecasts.records.avg" \| "forecasts.records.max" \| "forecasts.records.min" \| "forecasts.records.total" \| "forecasts.time.avg" \| "forecasts.time.max" \| "forecasts.time.min" \| "forecasts.time.total" \| "forecasts.total" \| "id" \| "model.bucket_allocation_failures" \| "model.by_fields" \| "model.bytes" \| "model.bytes_exceeded" \| "model.categorization_status" \| "model.categorized_doc_count" \| "model.dead_category_count" \| "model.failed_category_count" \| "model.frequent_category_count" \| "model.log_time" \| "model.memory_limit" \| "model.memory_status" \| "model.over_fields" \| "model.partition_fields" \| "model.rare_category_count" \| "model.timestamp" \| "model.total_category_count" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "opened_time" \| "state")[])**: List of column names or column aliases used to sort the response.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 
 ## client.cat.mlTrainedModels [_cat.ml_trained_models]
 Get trained models.
@@ -2592,12 +2606,10 @@ client.cat.mlTrainedModels({ ... })
 - **`allow_no_match` (Optional, boolean)**: Specifies what to do when the request: contains wildcard expressions and there are no models that match; contains the `_all` string or no identifiers and there are no matches; contains wildcard expressions and there are only partial matches.
 If `true`, the API returns an empty array when there are no matches and the subset of results when there are partial matches.
 If `false`, the API returns a 404 status code when there are no matches or only partial matches.
-- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`h` (Optional, Enum("create_time" \| "created_by" \| "data_frame_analytics_id" \| "description" \| "heap_size" \| "id" \| "ingest.count" \| "ingest.current" \| "ingest.failed" \| "ingest.pipelines" \| "ingest.time" \| "license" \| "operations" \| "version") \| Enum("create_time" \| "created_by" \| "data_frame_analytics_id" \| "description" \| "heap_size" \| "id" \| "ingest.count" \| "ingest.current" \| "ingest.failed" \| "ingest.pipelines" \| "ingest.time" \| "license" \| "operations" \| "version")[])**: A list of column names to display.
 - **`s` (Optional, Enum("create_time" \| "created_by" \| "data_frame_analytics_id" \| "description" \| "heap_size" \| "id" \| "ingest.count" \| "ingest.current" \| "ingest.failed" \| "ingest.pipelines" \| "ingest.time" \| "license" \| "operations" \| "version") \| Enum("create_time" \| "created_by" \| "data_frame_analytics_id" \| "description" \| "heap_size" \| "id" \| "ingest.count" \| "ingest.current" \| "ingest.failed" \| "ingest.pipelines" \| "ingest.time" \| "license" \| "operations" \| "version")[])**: A list of column names or aliases used to sort the response.
 - **`from` (Optional, number)**: Skips the specified number of transforms.
 - **`size` (Optional, number)**: The maximum number of transforms to display.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
 
 ## client.cat.nodeattrs [_cat.nodeattrs]
 Get node attribute information.
@@ -2639,8 +2651,7 @@ client.cat.nodes({ ... })
 ### Arguments [_arguments_cat.nodes]
 
 #### Request (object) [_request_cat.nodes]
-- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
-- **`full_id` (Optional, boolean \| string)**: If `true`, return the full node ID. If `false`, return the shortened node ID.
+- **`full_id` (Optional, boolean)**: If `true`, return the full node ID. If `false`, return the shortened node ID.
 - **`include_unloaded_segments` (Optional, boolean)**: If true, the response includes information from segments that are not loaded into memory.
 - **`h` (Optional, Enum("build" \| "completion.size" \| "cpu" \| "disk.avail" \| "disk.total" \| "disk.used" \| "disk.used_percent" \| "fielddata.evictions" \| "fielddata.memory_size" \| "file_desc.current" \| "file_desc.max" \| "file_desc.percent" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "heap.current" \| "heap.max" \| "heap.percent" \| "http_address" \| "id" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "jdk" \| "load_1m" \| "load_5m" \| "load_15m" \| "mappings.total_count" \| "mappings.total_estimated_overhead_in_bytes" \| "master" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "name" \| "node.role" \| "pid" \| "port" \| "query_cache.memory_size" \| "query_cache.evictions" \| "query_cache.hit_count" \| "query_cache.miss_count" \| "ram.current" \| "ram.max" \| "ram.percent" \| "refresh.total" \| "refresh.time" \| "request_cache.memory_size" \| "request_cache.evictions" \| "request_cache.hit_count" \| "request_cache.miss_count" \| "script.compilations" \| "script.cache_evictions" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "shard_stats.total_count" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "uptime" \| "version") \| Enum("build" \| "completion.size" \| "cpu" \| "disk.avail" \| "disk.total" \| "disk.used" \| "disk.used_percent" \| "fielddata.evictions" \| "fielddata.memory_size" \| "file_desc.current" \| "file_desc.max" \| "file_desc.percent" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "heap.current" \| "heap.max" \| "heap.percent" \| "http_address" \| "id" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "jdk" \| "load_1m" \| "load_5m" \| "load_15m" \| "mappings.total_count" \| "mappings.total_estimated_overhead_in_bytes" \| "master" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "name" \| "node.role" \| "pid" \| "port" \| "query_cache.memory_size" \| "query_cache.evictions" \| "query_cache.hit_count" \| "query_cache.miss_count" \| "ram.current" \| "ram.max" \| "ram.percent" \| "refresh.total" \| "refresh.time" \| "request_cache.memory_size" \| "request_cache.evictions" \| "request_cache.hit_count" \| "request_cache.miss_count" \| "script.compilations" \| "script.cache_evictions" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "shard_stats.total_count" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "uptime" \| "version")[])**: A list of columns names to display.
 It supports simple wildcards.
@@ -2648,7 +2659,6 @@ It supports simple wildcards.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 
 ## client.cat.pendingTasks [_cat.pending_tasks]
 Get pending task information.
@@ -2674,7 +2684,6 @@ local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
 
 ## client.cat.plugins [_cat.plugins]
 Get plugin information.
@@ -2722,14 +2731,12 @@ client.cat.recovery({ ... })
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`active_only` (Optional, boolean)**: If `true`, the response only includes ongoing shard recoveries.
-- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
 - **`h` (Optional, Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent") \| Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent")[])**: A list of columns names to display.
 It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 
 ## client.cat.repositories [_cat.repositories]
 Get snapshot repository information.
@@ -2775,7 +2782,6 @@ client.cat.segments({ ... })
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`h` (Optional, Enum("index" \| "shard" \| "prirep" \| "ip" \| "segment" \| "generation" \| "docs.count" \| "docs.deleted" \| "size" \| "size.memory" \| "committed" \| "searchable" \| "version" \| "compound" \| "id") \| Enum("index" \| "shard" \| "prirep" \| "ip" \| "segment" \| "generation" \| "docs.count" \| "docs.deleted" \| "size" \| "size.memory" \| "committed" \| "searchable" \| "version" \| "compound" \| "id")[])**: A list of columns names to display.
 It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
@@ -2806,13 +2812,11 @@ client.cat.shards({ ... })
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`bytes` (Optional, Enum("b" \| "kb" \| "mb" \| "gb" \| "tb" \| "pb"))**: The unit used to display byte values.
 - **`h` (Optional, Enum("completion.size" \| "dataset.size" \| "dense_vector.value_count" \| "docs" \| "fielddata.evictions" \| "fielddata.memory_size" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "id" \| "index" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_failed" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "node" \| "prirep" \| "query_cache.evictions" \| "query_cache.memory_size" \| "recoverysource.type" \| "refresh.time" \| "refresh.total" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "seq_no.global_checkpoint" \| "seq_no.local_checkpoint" \| "seq_no.max" \| "shard" \| "dsparse_vector.value_count" \| "state" \| "store" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "sync_id" \| "unassigned.at" \| "unassigned.details" \| "unassigned.for" \| "unassigned.reason") \| Enum("completion.size" \| "dataset.size" \| "dense_vector.value_count" \| "docs" \| "fielddata.evictions" \| "fielddata.memory_size" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "id" \| "index" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_failed" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "node" \| "prirep" \| "query_cache.evictions" \| "query_cache.memory_size" \| "recoverysource.type" \| "refresh.time" \| "refresh.total" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "seq_no.global_checkpoint" \| "seq_no.local_checkpoint" \| "seq_no.max" \| "shard" \| "dsparse_vector.value_count" \| "state" \| "store" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "sync_id" \| "unassigned.at" \| "unassigned.details" \| "unassigned.for" \| "unassigned.reason")[])**: List of columns to appear in the response. Supports simple wildcards.
 - **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 
 ## client.cat.snapshots [_cat.snapshots]
 Get snapshot information.
@@ -2841,7 +2845,6 @@ It supports simple wildcards.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
 
 ## client.cat.tasks [_cat.tasks]
 Get task information.
@@ -2866,7 +2869,6 @@ client.cat.tasks({ ... })
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: Unit used to display time values.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`wait_for_completion` (Optional, boolean)**: If `true`, the request blocks until the task has completed.
@@ -2921,7 +2923,6 @@ Accepts wildcard expressions.
 - **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 - **`local` (Optional, boolean)**: If `true`, the request computes the list of selected nodes from the
 local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
@@ -2954,7 +2955,6 @@ If `false`, the request returns a 404 status code when there are no matches or o
 - **`from` (Optional, number)**: Skips the specified number of transforms.
 - **`h` (Optional, Enum("changes_last_detection_time" \| "checkpoint" \| "checkpoint_duration_time_exp_avg" \| "checkpoint_progress" \| "create_time" \| "delete_time" \| "description" \| "dest_index" \| "documents_deleted" \| "documents_indexed" \| "docs_per_second" \| "documents_processed" \| "frequency" \| "id" \| "index_failure" \| "index_time" \| "index_total" \| "indexed_documents_exp_avg" \| "last_search_time" \| "max_page_search_size" \| "pages_processed" \| "pipeline" \| "processed_documents_exp_avg" \| "processing_time" \| "reason" \| "search_failure" \| "search_time" \| "search_total" \| "source_index" \| "state" \| "transform_type" \| "trigger_count" \| "version") \| Enum("changes_last_detection_time" \| "checkpoint" \| "checkpoint_duration_time_exp_avg" \| "checkpoint_progress" \| "create_time" \| "delete_time" \| "description" \| "dest_index" \| "documents_deleted" \| "documents_indexed" \| "docs_per_second" \| "documents_processed" \| "frequency" \| "id" \| "index_failure" \| "index_time" \| "index_total" \| "indexed_documents_exp_avg" \| "last_search_time" \| "max_page_search_size" \| "pages_processed" \| "pipeline" \| "processed_documents_exp_avg" \| "processing_time" \| "reason" \| "search_failure" \| "search_time" \| "search_total" \| "source_index" \| "state" \| "transform_type" \| "trigger_count" \| "version")[])**: List of column names to display.
 - **`s` (Optional, Enum("changes_last_detection_time" \| "checkpoint" \| "checkpoint_duration_time_exp_avg" \| "checkpoint_progress" \| "create_time" \| "delete_time" \| "description" \| "dest_index" \| "documents_deleted" \| "documents_indexed" \| "docs_per_second" \| "documents_processed" \| "frequency" \| "id" \| "index_failure" \| "index_time" \| "index_total" \| "indexed_documents_exp_avg" \| "last_search_time" \| "max_page_search_size" \| "pages_processed" \| "pipeline" \| "processed_documents_exp_avg" \| "processing_time" \| "reason" \| "search_failure" \| "search_time" \| "search_total" \| "source_index" \| "state" \| "transform_type" \| "trigger_count" \| "version") \| Enum("changes_last_detection_time" \| "checkpoint" \| "checkpoint_duration_time_exp_avg" \| "checkpoint_progress" \| "create_time" \| "delete_time" \| "description" \| "dest_index" \| "documents_deleted" \| "documents_indexed" \| "docs_per_second" \| "documents_processed" \| "frequency" \| "id" \| "index_failure" \| "index_time" \| "index_total" \| "indexed_documents_exp_avg" \| "last_search_time" \| "max_page_search_size" \| "pages_processed" \| "pipeline" \| "processed_documents_exp_avg" \| "processing_time" \| "reason" \| "search_failure" \| "search_time" \| "search_total" \| "source_index" \| "state" \| "transform_type" \| "trigger_count" \| "version")[])**: List of column names or column aliases used to sort the response.
-- **`time` (Optional, Enum("nanos" \| "micros" \| "ms" \| "s" \| "m" \| "h" \| "d"))**: The unit used to display time values.
 - **`size` (Optional, number)**: The maximum number of transforms to obtain.
 
 ## client.ccr.deleteAutoFollowPattern [_ccr.delete_auto_follow_pattern]
@@ -4504,6 +4504,14 @@ parameter to get a smaller or larger set of samples. To retrieve more than one s
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
 - **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project
+metadata tags in a subset of Lucene query syntax.
+Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+Examples:
+ _alias:my-project
+ _alias:_origin
+ _alias:*pr*
+Supported in serverless only.
 
 ## client.esql.asyncQuery [_esql.async_query]
 Run an async ES|QL query.
@@ -4531,7 +4539,7 @@ and its format can change at any time but it can give some insight into the perf
 of each part of the query.
 - **`tables` (Optional, Record<string, Record<string, { integer, keyword, long, double }>>)**: Tables to use with the LOOKUP operation. The top level key is the table
 name and the next level key is the column name.
-- **`include_ccs_metadata` (Optional, boolean)**: When set to `true` and performing a cross-cluster query, the response will include an extra `_clusters`
+- **`include_ccs_metadata` (Optional, boolean)**: When set to `true` and performing a cross-cluster/cross-project query, the response will include an extra `_clusters`
 object with information about the clusters that participated in the search along with info such as shards
 count.
 - **`wait_for_completion_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the request to finish.
@@ -4673,14 +4681,14 @@ client.esql.query({ query })
 - **`columnar` (Optional, boolean)**: By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results.
 - **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
 - **`locale` (Optional, string)**
-- **`params` (Optional, number \| number \| string \| boolean \| null[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
+- **`params` (Optional, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[][])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
 - **`profile` (Optional, boolean)**: If provided and `true` the response will include an extra `profile` object
 with information on how the query was executed. This information is for human debugging
 and its format can change at any time but it can give some insight into the performance
 of each part of the query.
 - **`tables` (Optional, Record<string, Record<string, { integer, keyword, long, double }>>)**: Tables to use with the LOOKUP operation. The top level key is the table
 name and the next level key is the column name.
-- **`include_ccs_metadata` (Optional, boolean)**: When set to `true` and performing a cross-cluster query, the response will include an extra `_clusters`
+- **`include_ccs_metadata` (Optional, boolean)**: When set to `true` and performing a cross-cluster/cross-project query, the response will include an extra `_clusters`
 object with information about the clusters that participated in the search along with info such as shards
 count.
 - **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile" \| "arrow"))**: A short version of the Accept header, e.g. json, yaml.
@@ -4788,7 +4796,7 @@ client.fleet.msearch({ ... })
 
 #### Request (object) [_request_fleet.msearch]
 - **`index` (Optional, string \| string)**: A single target to search. If the target is an index alias, it must resolve to a single index.
-- **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
+- **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, project_routing, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
 - **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
@@ -4842,7 +4850,7 @@ not included in search results and results collected by aggregations.
 - **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**
 - **`profile` (Optional, boolean)**
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search definition using the Query DSL.
-- **`rescore` (Optional, { window_size, query, learning_to_rank } \| { window_size, query, learning_to_rank }[])**
+- **`rescore` (Optional, { window_size, query, learning_to_rank, script } \| { window_size, query, learning_to_rank, script }[])**
 - **`script_fields` (Optional, Record<string, { script, ignore_failure }>)**: Retrieve a script evaluation (based on different fields) for each hit.
 - **`search_after` (Optional, number \| number \| string \| boolean \| null[])**
 - **`size` (Optional, number)**: The number of hits to return. By default, you cannot page through more
@@ -6661,7 +6669,7 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 - **`numeric_detection` (Optional, boolean)**: Automatically map strings into numeric data types for all fields.
-- **`properties` (Optional, Record<string, { type } \| { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } \| { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } \| { relations, eager_global_ordinals, type } \| { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } \| { type, fields, meta, copy_to } \| { type } \| { positive_score_impact, type } \| { positive_score_impact, type } \| { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { type } \| { type, null_value } \| { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } \| { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } \| { type, default_metric, ignore_malformed, metrics, time_series_metric } \| { type, dims, element_type, index, index_options, similarity } \| { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, time_series_dimensions, type } \| { enabled, include_in_parent, include_in_root, type } \| { enabled, subobjects, type } \| { type, enabled, priority, time_series_dimension } \| { type, element_type, dims } \| { type, meta, inference_id, search_inference_id, index_options, chunking_settings } \| { store, type, index_options } \| { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } \| { value, type } \| { type, index } \| { path, type } \| { ignore_malformed, type } \| { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } \| { type } \| { analyzer, boost, index, null_value, enable_position_increments, type } \| { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type, time_series_metric } \| { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } \| { ignore_malformed, ignore_z_value, null_value, type } \| { coerce, ignore_malformed, ignore_z_value, orientation, type } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value, scaling_factor } \| { type, null_value } \| { type, null_value } \| { format, type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
+- **`properties` (Optional, Record<string, { type } \| { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } \| { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } \| { relations, eager_global_ordinals, type } \| { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } \| { type, fields, meta, copy_to } \| { type } \| { positive_score_impact, type } \| { positive_score_impact, type } \| { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { type } \| { type, null_value } \| { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } \| { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } \| { type, default_metric, ignore_malformed, metrics, time_series_metric } \| { type, dims, element_type, index, index_options, similarity } \| { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, time_series_dimensions, type } \| { enabled, include_in_parent, include_in_root, type } \| { enabled, subobjects, type } \| { type, enabled, priority, time_series_dimension } \| { type, element_type, dims } \| { type, meta, inference_id, search_inference_id, index_options, chunking_settings, fields } \| { store, type, index_options } \| { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } \| { value, type } \| { type, index } \| { path, type } \| { ignore_malformed, type } \| { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } \| { type } \| { analyzer, boost, index, null_value, enable_position_increments, type } \| { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type, time_series_metric } \| { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } \| { ignore_malformed, ignore_z_value, null_value, type } \| { coerce, ignore_malformed, ignore_z_value, orientation, type } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value, scaling_factor } \| { type, null_value } \| { type, null_value } \| { format, type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
@@ -6877,6 +6885,8 @@ For data streams, the API runs the refresh operation on the stream’s backing i
 By default, Elasticsearch periodically refreshes indices every second, but only on indices that have received one search request or more in the last 30 seconds.
 You can change this default interval with the `index.refresh_interval` setting.
 
+In Elastic Cloud Serverless, the default refresh interval is 5 seconds across all indices.
+
 Refresh requests are synchronous and do not return a response until the refresh operation completes.
 
 Refreshes are resource-intensive.
@@ -7080,6 +7090,14 @@ Supports a list of values, such as `open,hidden`.
 This behavior applies even if the request targets other open indices.
 For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 - **`mode` (Optional, Enum("standard" \| "time_series" \| "logsdb" \| "lookup") \| Enum("standard" \| "time_series" \| "logsdb" \| "lookup")[])**: Filter indices by index mode - standard, lookup, time_series, etc. List of IndexMode. Empty means no filter.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target using project
+metadata tags in a subset of Lucene query syntax.
+Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+Examples:
+ _alias:my-project
+ _alias:_origin
+ _alias:*pr*
+Supported in serverless only.
 
 ## client.indices.rollover [_indices.rollover]
 Roll over to a new index.
@@ -8026,7 +8044,7 @@ client.inference.putGooglevertexai({ task_type, googlevertexai_inference_id, ser
 - **`task_type` (Enum("rerank" \| "text_embedding" \| "completion" \| "chat_completion"))**: The type of the inference task that the model will perform.
 - **`googlevertexai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("googlevertexai"))**: The type of service supported for the specified task type. In this case, `googlevertexai`.
-- **`service_settings` ({ location, model_id, project_id, rate_limit, service_account_json })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
+- **`service_settings` ({ location, model_id, project_id, rate_limit, service_account_json, dimensions })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { auto_truncate, top_n, thinking_config })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
@@ -8549,6 +8567,7 @@ client.ingest.putPipeline({ id })
 - **`version` (Optional, number)**: Version number used by external systems to track ingest pipelines. This parameter is intended for external systems only. Elasticsearch does not use or validate pipeline version numbers.
 - **`deprecated` (Optional, boolean)**: Marks this ingest pipeline as deprecated.
 When a deprecated ingest pipeline is referenced as the default or final pipeline when creating or updating a non-deprecated index template, Elasticsearch will emit a deprecation warning.
+- **`field_access_pattern` (Optional, Enum("classic" \| "flexible"))**: Controls how processors in this pipeline should read and write data on a document's source.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 - **`if_version` (Optional, number)**: Required version for optimistic concurrency control for pipeline updates
@@ -8571,7 +8590,7 @@ client.ingest.simulate({ docs })
 - **`docs` ({ _id, _index, _source }[])**: Sample documents to test in the pipeline.
 - **`id` (Optional, string)**: The pipeline to test.
 If you don't specify a `pipeline` in the request body, this parameter is required.
-- **`pipeline` (Optional, { description, on_failure, processors, version, deprecated, _meta, created_date, created_date_millis, modified_date, modified_date_millis })**: The pipeline to test.
+- **`pipeline` (Optional, { description, on_failure, processors, version, deprecated, _meta, created_date, created_date_millis, modified_date, modified_date_millis, field_access_pattern })**: The pipeline to test.
 If you don't specify the `pipeline` request path parameter, this parameter is required.
 If you specify both this and the request path parameter, the API only uses the request path parameter.
 - **`verbose` (Optional, boolean)**: If `true`, the response includes output data for each processor in the executed pipeline.
@@ -8759,7 +8778,8 @@ client.logstash.putPipeline({ id })
 
 #### Request (object) [_request_logstash.put_pipeline]
 - **`id` (string)**: An identifier for the pipeline.
-- **`pipeline` (Optional, { description, on_failure, processors, version, deprecated, _meta, created_date, created_date_millis, modified_date, modified_date_millis })**
+Pipeline IDs must begin with a letter or underscore and contain only letters, underscores, dashes, hyphens and numbers.
+- **`pipeline` (Optional, { description, on_failure, processors, version, deprecated, _meta, created_date, created_date_millis, modified_date, modified_date_millis, field_access_pattern })**
 
 ## client.migration.deprecations [_migration.deprecations]
 Get deprecation information.
@@ -9679,7 +9699,7 @@ using `_all` or by specifying `*` as the `<job_id>`.
 - **`bucket_span` (Optional, string \| -1 \| 0)**: Refer to the description for the `bucket_span` query parameter.
 - **`end` (Optional, string \| Unit)**: Refer to the description for the `end` query parameter.
 - **`exclude_interim` (Optional, boolean)**: Refer to the description for the `exclude_interim` query parameter.
-- **`overall_score` (Optional, number \| string)**: Refer to the description for the `overall_score` query parameter.
+- **`overall_score` (Optional, number)**: Refer to the description for the `overall_score` query parameter.
 - **`start` (Optional, string \| Unit)**: Refer to the description for the `start` query parameter.
 - **`top_n` (Optional, number)**: Refer to the description for the `top_n` query parameter.
 
@@ -10917,6 +10937,13 @@ client.nodes.usage({ ... })
 A list of the following options: `_all`, `rest_actions`.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
+
+## client.project.tags [_project.tags]
+Return tags defined for the project
+```ts
+client.project.tags()
+```
+
 
 ## client.queryRules.deleteRule [_query_rules.delete_rule]
 Delete a query rule.
@@ -12319,6 +12346,16 @@ client.security.getSettings({ ... })
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
+## client.security.getStats [_security.get_stats]
+Get security statistics for all nodes
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-stats)
+
+```ts
+client.security.getStats()
+```
+
+
 ## client.security.getToken [_security.get_token]
 Get a token.
 
@@ -13335,7 +13372,7 @@ If you specify this parameter in the request path, it is used for any documents 
 - **`component_template_substitutions` (Optional, Record<string, { template, version, _meta, deprecated, created_date, created_date_millis, modified_date, modified_date_millis }>)**: A map of component template names to substitute component template definition objects.
 - **`index_template_substitutions` (Optional, Record<string, { index_patterns, composed_of, template, version, priority, _meta, allow_auto_create, data_stream, deprecated, ignore_missing_component_templates, created_date, created_date_millis, modified_date, modified_date_millis }>)**: A map of index template names to substitute index template definition objects.
 - **`mapping_addition` (Optional, { all_field, date_detection, dynamic, dynamic_date_formats, dynamic_templates, _field_names, index_field, _meta, numeric_detection, properties, _routing, _size, _source, runtime, enabled, subobjects, _data_stream_timestamp })**
-- **`pipeline_substitutions` (Optional, Record<string, { description, on_failure, processors, version, deprecated, _meta, created_date, created_date_millis, modified_date, modified_date_millis }>)**: Pipelines to test.
+- **`pipeline_substitutions` (Optional, Record<string, { description, on_failure, processors, version, deprecated, _meta, created_date, created_date_millis, modified_date, modified_date_millis, field_access_pattern }>)**: Pipelines to test.
 If you don’t specify the `pipeline` request path parameter, this parameter is required.
 If you specify both this and the request path parameter, the API only uses the request path parameter.
 - **`pipeline` (Optional, string)**: The pipeline to use as the default pipeline.
@@ -14264,6 +14301,14 @@ To save a synchronous search, you must specify this parameter and the `keep_on_c
 - **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile"))**: The format for the response.
 You can also specify a format using the `Accept` HTTP header.
 If you specify both this parameter and the `Accept` HTTP header, this parameter takes precedence.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project
+metadata tags in a subset of Lucene query syntax.
+Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+Examples:
+ _alias:my-project
+ _alias:_origin
+ _alias:*pr*
+Supported in serverless only.
 
 ## client.sql.translate [_sql.translate]
 Translate SQL into Elasticsearch queries.

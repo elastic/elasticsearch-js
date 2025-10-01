@@ -21,18 +21,19 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 export default class Profiling {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'profiling.flamegraph': {
         path: [],
         body: [],
@@ -58,7 +59,7 @@ export default class Profiling {
 
   /**
     * Extracts a UI-optimized structure to render flamegraphs from Universal Profiling
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/9.2/universal-profiling.html | Elasticsearch API documentation}
     */
   async flamegraph (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async flamegraph (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -66,7 +67,7 @@ export default class Profiling {
   async flamegraph (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['profiling.flamegraph']
+    } = this[kAcceptedParams]['profiling.flamegraph']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -93,14 +94,16 @@ export default class Profiling {
     const method = 'POST'
     const path = '/_profiling/flamegraph'
     const meta: TransportRequestMetadata = {
-      name: 'profiling.flamegraph'
+      name: 'profiling.flamegraph',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Extracts raw stacktrace information from Universal Profiling
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/9.2/universal-profiling.html | Elasticsearch API documentation}
     */
   async stacktraces (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async stacktraces (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -108,7 +111,7 @@ export default class Profiling {
   async stacktraces (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['profiling.stacktraces']
+    } = this[kAcceptedParams]['profiling.stacktraces']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -135,14 +138,16 @@ export default class Profiling {
     const method = 'POST'
     const path = '/_profiling/stacktraces'
     const meta: TransportRequestMetadata = {
-      name: 'profiling.stacktraces'
+      name: 'profiling.stacktraces',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Returns basic information about the status of Universal Profiling
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/9.2/universal-profiling.html | Elasticsearch API documentation}
     */
   async status (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async status (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -150,7 +155,7 @@ export default class Profiling {
   async status (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['profiling.status']
+    } = this[kAcceptedParams]['profiling.status']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -177,14 +182,16 @@ export default class Profiling {
     const method = 'GET'
     const path = '/_profiling/status'
     const meta: TransportRequestMetadata = {
-      name: 'profiling.status'
+      name: 'profiling.status',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Extracts a list of topN functions from Universal Profiling
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/9.2/universal-profiling.html | Elasticsearch API documentation}
     */
   async topnFunctions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async topnFunctions (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -192,7 +199,7 @@ export default class Profiling {
   async topnFunctions (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['profiling.topn_functions']
+    } = this[kAcceptedParams]['profiling.topn_functions']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -219,7 +226,9 @@ export default class Profiling {
     const method = 'POST'
     const path = '/_profiling/topn/functions'
     const meta: TransportRequestMetadata = {
-      name: 'profiling.topn_functions'
+      name: 'profiling.topn_functions',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

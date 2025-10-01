@@ -95,7 +95,22 @@ export default async function CreateApi<TDocument = unknown> (this: That, params
     pathParts: {
       id: params.id,
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'id',
+      'index',
+      'document',
+      'include_source_on_error',
+      'pipeline',
+      'refresh',
+      'require_alias',
+      'require_data_stream',
+      'routing',
+      'timeout',
+      'version',
+      'version_type',
+      'wait_for_active_shards'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

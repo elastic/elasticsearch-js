@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class TextStructure {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'text_structure.find_field_structure': {
         path: [],
         body: [],
@@ -120,7 +121,7 @@ export default class TextStructure {
   async findFieldStructure (this: That, params: T.TextStructureFindFieldStructureRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['text_structure.find_field_structure']
+    } = this[kAcceptedParams]['text_structure.find_field_structure']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -147,7 +148,23 @@ export default class TextStructure {
     const method = 'GET'
     const path = '/_text_structure/find_field_structure'
     const meta: TransportRequestMetadata = {
-      name: 'text_structure.find_field_structure'
+      name: 'text_structure.find_field_structure',
+      acceptedParams: [
+        'column_names',
+        'delimiter',
+        'documents_to_sample',
+        'ecs_compatibility',
+        'explain',
+        'field',
+        'format',
+        'grok_pattern',
+        'index',
+        'quote',
+        'should_trim_fields',
+        'timeout',
+        'timestamp_field',
+        'timestamp_format'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -164,7 +181,7 @@ export default class TextStructure {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['text_structure.find_message_structure']
+    } = this[kAcceptedParams]['text_structure.find_message_structure']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -201,7 +218,21 @@ export default class TextStructure {
     const method = body != null ? 'POST' : 'GET'
     const path = '/_text_structure/find_message_structure'
     const meta: TransportRequestMetadata = {
-      name: 'text_structure.find_message_structure'
+      name: 'text_structure.find_message_structure',
+      acceptedParams: [
+        'messages',
+        'column_names',
+        'delimiter',
+        'ecs_compatibility',
+        'explain',
+        'format',
+        'grok_pattern',
+        'quote',
+        'should_trim_fields',
+        'timeout',
+        'timestamp_field',
+        'timestamp_format'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -218,7 +249,7 @@ export default class TextStructure {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['text_structure.find_structure']
+    } = this[kAcceptedParams]['text_structure.find_structure']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -245,7 +276,25 @@ export default class TextStructure {
     const method = 'POST'
     const path = '/_text_structure/find_structure'
     const meta: TransportRequestMetadata = {
-      name: 'text_structure.find_structure'
+      name: 'text_structure.find_structure',
+      acceptedParams: [
+        'text_files',
+        'charset',
+        'column_names',
+        'delimiter',
+        'ecs_compatibility',
+        'explain',
+        'format',
+        'grok_pattern',
+        'has_header_row',
+        'line_merge_size_limit',
+        'lines_to_sample',
+        'quote',
+        'should_trim_fields',
+        'timeout',
+        'timestamp_field',
+        'timestamp_format'
+      ]
     }
     return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
   }
@@ -262,7 +311,7 @@ export default class TextStructure {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['text_structure.test_grok_pattern']
+    } = this[kAcceptedParams]['text_structure.test_grok_pattern']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -299,7 +348,12 @@ export default class TextStructure {
     const method = body != null ? 'POST' : 'GET'
     const path = '/_text_structure/test_grok_pattern'
     const meta: TransportRequestMetadata = {
-      name: 'text_structure.test_grok_pattern'
+      name: 'text_structure.test_grok_pattern',
+      acceptedParams: [
+        'grok_pattern',
+        'text',
+        'ecs_compatibility'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

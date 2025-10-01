@@ -39,6 +39,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
     query: [
       'ccs_minimize_roundtrips',
       'max_concurrent_searches',
+      'project_routing',
       'search_type',
       'rest_total_hits_as_int',
       'typed_keys'
@@ -95,7 +96,17 @@ export default async function MsearchTemplateApi<TDocument = unknown, TAggregati
     name: 'msearch_template',
     pathParts: {
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'index',
+      'search_templates',
+      'ccs_minimize_roundtrips',
+      'max_concurrent_searches',
+      'project_routing',
+      'search_type',
+      'rest_total_hits_as_int',
+      'typed_keys'
+    ]
   }
   return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
 }
