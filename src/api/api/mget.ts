@@ -111,7 +111,21 @@ export default async function MgetApi<TDocument = unknown> (this: That, params?:
     name: 'mget',
     pathParts: {
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'index',
+      'docs',
+      'ids',
+      'force_synthetic_source',
+      'preference',
+      'realtime',
+      'refresh',
+      'routing',
+      '_source',
+      '_source_excludes',
+      '_source_includes',
+      'stored_fields'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

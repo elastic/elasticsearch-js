@@ -21,47 +21,56 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 export default class Streams {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'streams.logs_disable': {
         path: [],
         body: [],
-        query: []
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
       },
       'streams.logs_enable': {
         path: [],
         body: [],
-        query: []
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
       },
       'streams.status': {
         path: [],
         body: [],
-        query: []
+        query: [
+          'master_timeout'
+        ]
       }
     }
   }
 
   /**
-    * Disable the Logs Streams feature for this cluster
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/streams-logs-disable.html | Elasticsearch API documentation}
+    * Disable logs stream. Turn off the logs stream feature for this cluster.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
-  async logsDisable (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async logsDisable (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async logsDisable (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async logsDisable (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async logsDisable (this: That, params?: T.StreamsLogsDisableRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.StreamsLogsDisableResponse>
+  async logsDisable (this: That, params?: T.StreamsLogsDisableRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.StreamsLogsDisableResponse, unknown>>
+  async logsDisable (this: That, params?: T.StreamsLogsDisableRequest, options?: TransportRequestOptions): Promise<T.StreamsLogsDisableResponse>
+  async logsDisable (this: That, params?: T.StreamsLogsDisableRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['streams.logs_disable']
+    } = this[kAcceptedParams]['streams.logs_disable']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -81,6 +90,7 @@ export default class Streams {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -88,22 +98,26 @@ export default class Streams {
     const method = 'POST'
     const path = '/_streams/logs/_disable'
     const meta: TransportRequestMetadata = {
-      name: 'streams.logs_disable'
+      name: 'streams.logs_disable',
+      acceptedParams: [
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Enable the Logs Streams feature for this cluster
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/streams-logs-enable.html | Elasticsearch API documentation}
+    * Enable logs stream. Turn on the logs stream feature for this cluster. NOTE: To protect existing data, this feature can be turned on only if the cluster does not have existing indices or data streams that match the pattern `logs|logs.*`. If those indices or data streams exist, a `409 - Conflict` response and error is returned.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
-  async logsEnable (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async logsEnable (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async logsEnable (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async logsEnable (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async logsEnable (this: That, params?: T.StreamsLogsEnableRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.StreamsLogsEnableResponse>
+  async logsEnable (this: That, params?: T.StreamsLogsEnableRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.StreamsLogsEnableResponse, unknown>>
+  async logsEnable (this: That, params?: T.StreamsLogsEnableRequest, options?: TransportRequestOptions): Promise<T.StreamsLogsEnableResponse>
+  async logsEnable (this: That, params?: T.StreamsLogsEnableRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['streams.logs_enable']
+    } = this[kAcceptedParams]['streams.logs_enable']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -123,6 +137,7 @@ export default class Streams {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -130,22 +145,26 @@ export default class Streams {
     const method = 'POST'
     const path = '/_streams/logs/_enable'
     const meta: TransportRequestMetadata = {
-      name: 'streams.logs_enable'
+      name: 'streams.logs_enable',
+      acceptedParams: [
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Return the current status of the streams feature for each streams type
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.1/streams-status.html | Elasticsearch API documentation}
+    * Get the status of streams. Get the current status for all types of streams.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
-  async status (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async status (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async status (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async status (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async status (this: That, params?: T.StreamsStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.StreamsStatusResponse>
+  async status (this: That, params?: T.StreamsStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.StreamsStatusResponse, unknown>>
+  async status (this: That, params?: T.StreamsStatusRequest, options?: TransportRequestOptions): Promise<T.StreamsStatusResponse>
+  async status (this: That, params?: T.StreamsStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['streams.status']
+    } = this[kAcceptedParams]['streams.status']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -165,6 +184,7 @@ export default class Streams {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -172,7 +192,10 @@ export default class Streams {
     const method = 'GET'
     const path = '/_streams/status'
     const meta: TransportRequestMetadata = {
-      name: 'streams.status'
+      name: 'streams.status',
+      acceptedParams: [
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

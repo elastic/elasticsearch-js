@@ -4802,6 +4802,8 @@ export interface WriteResponseBase {
   _shards: ShardStatistics
   /** The document version, which is incremented each time the document is updated. */
   _version: VersionNumber
+  /** The role of the failure store in this document response */
+  failure_store?: BulkFailureStoreStatus
   forced_refresh?: boolean
 }
 
@@ -6105,6 +6107,14 @@ export interface AggregationsNormalizeAggregation extends AggregationsPipelineAg
 
 export type AggregationsNormalizeMethod = 'rescale_0_1' | 'rescale_0_100' | 'percent_of_sum' | 'mean' | 'z-score' | 'softmax'
 
+export interface AggregationsPValueHeuristic {
+  background_is_superset?: boolean
+  /** Should the results be normalized when above the given value.
+    * Allows for consistent significance results at various scales.
+    * Note: `0` is a special value which means no normalization */
+  normalize_above?: long
+}
+
 export interface AggregationsParentAggregateKeys extends AggregationsSingleBucketAggregateBase {
 }
 export type AggregationsParentAggregate = AggregationsParentAggregateKeys
@@ -6342,6 +6352,14 @@ export interface AggregationsSignificantTermsAggregation extends AggregationsBuc
   percentage?: AggregationsPercentageScoreHeuristic
   /** Customized score, implemented via a script. */
   script_heuristic?: AggregationsScriptedHeuristic
+  /** Significant terms heuristic that calculates the p-value between the term existing in foreground and background sets.
+    *
+    * The p-value is the probability of obtaining test results at least as extreme as
+    * the results actually observed, under the assumption that the null hypothesis is
+    * correct. The p-value is calculated assuming that the foreground set and the
+    * background set are independent https://en.wikipedia.org/wiki/Bernoulli_trial, with the null
+    * hypothesis that the probabilities are the same. */
+  p_value?: AggregationsPValueHeuristic
   /** Regulates the certainty a shard has if the term should actually be added to the candidate list or not with respect to the `min_doc_count`.
     * Terms will only be considered if their local shard frequency within the set is higher than the `shard_min_doc_count`. */
   shard_min_doc_count?: long
@@ -8499,6 +8517,9 @@ export interface MappingSemanticTextProperty {
     * chunking settings sent in the inference endpoint associated with inference_id. If chunking settings are updated,
     * they will not be applied to existing documents until they are reindexed. */
   chunking_settings?: MappingChunkingSettings
+  /** Multi-fields allow the same string value to be indexed in multiple ways for different purposes, such as one
+    * field for search and a multi-field for sorting and aggregations, or the same string value analyzed by different analyzers. */
+  fields?: Record<PropertyName, MappingProperty>
 }
 
 export interface MappingShapeProperty extends MappingDocValuesPropertyBase {
@@ -10588,8 +10609,6 @@ export interface CatAllocationAllocationRecord {
 export interface CatAllocationRequest extends CatCatRequestBase {
   /** A comma-separated list of node identifiers or names used to limit the returned information. */
   node_id?: NodeIds
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** A comma-separated list of columns names to display. It supports simple wildcards. */
   h?: CatCatAllocationColumns
   /** List of columns that determine how the table should be sorted.
@@ -10604,9 +10623,9 @@ export interface CatAllocationRequest extends CatCatRequestBase {
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { node_id?: never, bytes?: never, h?: never, s?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { node_id?: never, h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { node_id?: never, bytes?: never, h?: never, s?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { node_id?: never, h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatAllocationResponse = CatAllocationAllocationRecord[]
@@ -10727,8 +10746,6 @@ export interface CatFielddataRequest extends CatCatRequestBase {
   /** Comma-separated list of fields used to limit returned information.
     * To retrieve all fields, omit this parameter. */
   fields?: Fields
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** A comma-separated list of columns names to display. It supports simple wildcards. */
   h?: CatCatFieldDataColumns
   /** List of columns that determine how the table should be sorted.
@@ -10736,9 +10753,9 @@ export interface CatFielddataRequest extends CatCatRequestBase {
     * or `:desc` as a suffix to the column name. */
   s?: Names
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { fields?: never, bytes?: never, h?: never, s?: never }
+  body?: string | { [key: string]: any } & { fields?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { fields?: never, bytes?: never, h?: never, s?: never }
+  querystring?: { [key: string]: any } & { fields?: never, h?: never, s?: never }
 }
 
 export type CatFielddataResponse = CatFielddataFielddataRecord[]
@@ -10882,8 +10899,6 @@ export interface CatHealthHealthRecord {
 }
 
 export interface CatHealthRequest extends CatCatRequestBase {
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** If true, returns `HH:MM:SS` and Unix epoch timestamps. */
   ts?: boolean
   /** A comma-separated list of columns names to display. It supports simple wildcards. */
@@ -10893,9 +10908,9 @@ export interface CatHealthRequest extends CatCatRequestBase {
     * or `:desc` as a suffix to the column name. */
   s?: Names
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { time?: never, ts?: never, h?: never, s?: never }
+  body?: string | { [key: string]: any } & { ts?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { time?: never, ts?: never, h?: never, s?: never }
+  querystring?: { [key: string]: any } & { ts?: never, h?: never, s?: never }
 }
 
 export type CatHealthResponse = CatHealthHealthRecord[]
@@ -11639,8 +11654,6 @@ export interface CatIndicesRequest extends CatCatRequestBase {
   /** Comma-separated list of data streams, indices, and aliases used to limit the request.
     * Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** The type of index that wildcard patterns can match. */
   expand_wildcards?: ExpandWildcards
   /** The health status used to limit returned indices. By default, the response includes indices of any health status. */
@@ -11649,8 +11662,6 @@ export interface CatIndicesRequest extends CatCatRequestBase {
   include_unloaded_segments?: boolean
   /** If true, the response only includes information from primary shards. */
   pri?: boolean
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** A comma-separated list of columns names to display. It supports simple wildcards. */
@@ -11660,9 +11671,9 @@ export interface CatIndicesRequest extends CatCatRequestBase {
     * or `:desc` as a suffix to the column name. */
   s?: Names
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, bytes?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, time?: never, master_timeout?: never, h?: never, s?: never }
+  body?: string | { [key: string]: any } & { index?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, master_timeout?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, bytes?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, time?: never, master_timeout?: never, h?: never, s?: never }
+  querystring?: { [key: string]: any } & { index?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, master_timeout?: never, h?: never, s?: never }
 }
 
 export type CatIndicesResponse = CatIndicesIndicesRecord[]
@@ -11821,19 +11832,15 @@ export interface CatMlDataFrameAnalyticsRequest extends CatCatRequestBase {
   id?: Id
   /** Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified) */
   allow_no_match?: boolean
-  /** The unit in which to display byte values */
-  bytes?: Bytes
   /** Comma-separated list of column names to display. */
   h?: CatCatDfaColumns
   /** Comma-separated list of column names or column aliases used to sort the
     * response. */
   s?: CatCatDfaColumns
-  /** Unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, time?: never }
+  body?: string | { [key: string]: any } & { id?: never, allow_no_match?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, time?: never }
+  querystring?: { [key: string]: any } & { id?: never, allow_no_match?: never, h?: never, s?: never }
 }
 
 export type CatMlDataFrameAnalyticsResponse = CatMlDataFrameAnalyticsDataFrameAnalyticsRecord[]
@@ -11954,12 +11961,10 @@ export interface CatMlDatafeedsRequest extends CatCatRequestBase {
   h?: CatCatDatafeedColumns
   /** Comma-separated list of column names or column aliases used to sort the response. */
   s?: CatCatDatafeedColumns
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, h?: never, s?: never, time?: never }
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, h?: never, s?: never, time?: never }
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, h?: never, s?: never }
 }
 
 export type CatMlDatafeedsResponse = CatMlDatafeedsDatafeedsRecord[]
@@ -12511,18 +12516,14 @@ export interface CatMlJobsRequest extends CatCatRequestBase {
     * are partial matches. If `false`, the API returns a 404 status code when there are no matches or only partial
     * matches. */
   allow_no_match?: boolean
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** Comma-separated list of column names to display. */
   h?: CatCatAnomalyDetectorColumns
   /** Comma-separated list of column names or column aliases used to sort the response. */
   s?: CatCatAnomalyDetectorColumns
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { job_id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, time?: never }
+  body?: string | { [key: string]: any } & { job_id?: never, allow_no_match?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { job_id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, time?: never }
+  querystring?: { [key: string]: any } & { job_id?: never, allow_no_match?: never, h?: never, s?: never }
 }
 
 export type CatMlJobsResponse = CatMlJobsJobsRecord[]
@@ -12534,8 +12535,6 @@ export interface CatMlTrainedModelsRequest extends CatCatRequestBase {
     * If `true`, the API returns an empty array when there are no matches and the subset of results when there are partial matches.
     * If `false`, the API returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** A comma-separated list of column names to display. */
   h?: CatCatTrainedModelsColumns
   /** A comma-separated list of column names or aliases used to sort the response. */
@@ -12544,12 +12543,10 @@ export interface CatMlTrainedModelsRequest extends CatCatRequestBase {
   from?: integer
   /** The maximum number of transforms to display. */
   size?: integer
-  /** Unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { model_id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, from?: never, size?: never, time?: never }
+  body?: string | { [key: string]: any } & { model_id?: never, allow_no_match?: never, h?: never, s?: never, from?: never, size?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { model_id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, from?: never, size?: never, time?: never }
+  querystring?: { [key: string]: any } & { model_id?: never, allow_no_match?: never, h?: never, s?: never, from?: never, size?: never }
 }
 
 export type CatMlTrainedModelsResponse = CatMlTrainedModelsTrainedModelsRecord[]
@@ -13444,8 +13441,6 @@ export interface CatNodesNodesRecord {
 }
 
 export interface CatNodesRequest extends CatCatRequestBase {
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** If `true`, return the full node ID. If `false`, return the shortened node ID. */
   full_id?: boolean | string
   /** If true, the response includes information from segments that are not loaded into memory. */
@@ -13459,12 +13454,10 @@ export interface CatNodesRequest extends CatCatRequestBase {
   s?: Names
   /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { bytes?: never, full_id?: never, include_unloaded_segments?: never, h?: never, s?: never, master_timeout?: never, time?: never }
+  body?: string | { [key: string]: any } & { full_id?: never, include_unloaded_segments?: never, h?: never, s?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { bytes?: never, full_id?: never, include_unloaded_segments?: never, h?: never, s?: never, master_timeout?: never, time?: never }
+  querystring?: { [key: string]: any } & { full_id?: never, include_unloaded_segments?: never, h?: never, s?: never, master_timeout?: never }
 }
 
 export type CatNodesResponse = CatNodesNodesRecord[]
@@ -13506,12 +13499,10 @@ export interface CatPendingTasksRequest extends CatCatRequestBase {
   local?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** Unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never, time?: never }
+  body?: string | { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never, time?: never }
+  querystring?: { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatPendingTasksResponse = CatPendingTasksPendingTasksRecord[]
@@ -13718,8 +13709,6 @@ export interface CatRecoveryRequest extends CatCatRequestBase {
   index?: Indices
   /** If `true`, the response only includes ongoing shard recoveries. */
   active_only?: boolean
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** If `true`, the response includes detailed information about shard recoveries. */
   detailed?: boolean
   /** A comma-separated list of columns names to display.
@@ -13729,12 +13718,10 @@ export interface CatRecoveryRequest extends CatCatRequestBase {
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
   s?: Names
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, active_only?: never, bytes?: never, detailed?: never, h?: never, s?: never, time?: never }
+  body?: string | { [key: string]: any } & { index?: never, active_only?: never, detailed?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, active_only?: never, bytes?: never, detailed?: never, h?: never, s?: never, time?: never }
+  querystring?: { [key: string]: any } & { index?: never, active_only?: never, detailed?: never, h?: never, s?: never }
 }
 
 export type CatRecoveryResponse = CatRecoveryRecoveryRecord[]
@@ -13779,8 +13766,6 @@ export interface CatSegmentsRequest extends CatCatRequestBase {
     * Supports wildcards (`*`).
     * To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** A comma-separated list of columns names to display.
     * It supports simple wildcards. */
   h?: CatCatSegmentsColumns
@@ -13796,9 +13781,9 @@ export interface CatSegmentsRequest extends CatCatRequestBase {
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, bytes?: never, h?: never, s?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { index?: never, h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, bytes?: never, h?: never, s?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { index?: never, h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatSegmentsResponse = CatSegmentsSegmentsRecord[]
@@ -13946,8 +13931,6 @@ export interface CatShardsRequest extends CatCatRequestBase {
     * Supports wildcards (`*`).
     * To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** List of columns to appear in the response. Supports simple wildcards. */
   h?: CatCatShardColumns
   /** A comma-separated list of column names or aliases that determines the sort order.
@@ -13956,12 +13939,10 @@ export interface CatShardsRequest extends CatCatRequestBase {
   s?: Names
   /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, bytes?: never, h?: never, s?: never, master_timeout?: never, time?: never }
+  body?: string | { [key: string]: any } & { index?: never, h?: never, s?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, bytes?: never, h?: never, s?: never, master_timeout?: never, time?: never }
+  querystring?: { [key: string]: any } & { index?: never, h?: never, s?: never, master_timeout?: never }
 }
 
 export type CatShardsResponse = CatShardsShardsRecord[]
@@ -14595,12 +14576,10 @@ export interface CatSnapshotsRequest extends CatCatRequestBase {
   s?: Names
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** Unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { repository?: never, ignore_unavailable?: never, h?: never, s?: never, master_timeout?: never, time?: never }
+  body?: string | { [key: string]: any } & { repository?: never, ignore_unavailable?: never, h?: never, s?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { repository?: never, ignore_unavailable?: never, h?: never, s?: never, master_timeout?: never, time?: never }
+  querystring?: { [key: string]: any } & { repository?: never, ignore_unavailable?: never, h?: never, s?: never, master_timeout?: never }
 }
 
 export type CatSnapshotsResponse = CatSnapshotsSnapshotsRecord[]
@@ -14715,17 +14694,15 @@ export interface CatTasksRequest extends CatCatRequestBase {
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
   s?: Names
-  /** Unit used to display time values. */
-  time?: TimeUnit
   /** Period to wait for a response.
     * If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** If `true`, the request blocks until the task has completed. */
   wait_for_completion?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, h?: never, s?: never, time?: never, timeout?: never, wait_for_completion?: never }
+  body?: string | { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, h?: never, s?: never, timeout?: never, wait_for_completion?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, h?: never, s?: never, time?: never, timeout?: never, wait_for_completion?: never }
+  querystring?: { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, h?: never, s?: never, timeout?: never, wait_for_completion?: never }
 }
 
 export type CatTasksResponse = CatTasksTasksRecord[]
@@ -14879,8 +14856,6 @@ export interface CatThreadPoolRequest extends CatCatRequestBase {
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
   s?: Names
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** If `true`, the request computes the list of selected nodes from the
     * local cluster state. If `false` the list of selected nodes are computed
     * from the cluster state of the master node. In both cases the coordinating
@@ -14889,9 +14864,9 @@ export interface CatThreadPoolRequest extends CatCatRequestBase {
   /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { thread_pool_patterns?: never, h?: never, s?: never, time?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { thread_pool_patterns?: never, h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { thread_pool_patterns?: never, h?: never, s?: never, time?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { thread_pool_patterns?: never, h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatThreadPoolResponse = CatThreadPoolThreadPoolRecord[]
@@ -15015,14 +14990,12 @@ export interface CatTransformsRequest extends CatCatRequestBase {
   h?: CatCatTransformColumns
   /** Comma-separated list of column names or column aliases used to sort the response. */
   s?: CatCatTransformColumns
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** The maximum number of transforms to obtain. */
   size?: integer
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, h?: never, s?: never, time?: never, size?: never }
+  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, h?: never, s?: never, size?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, h?: never, s?: never, time?: never, size?: never }
+  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, h?: never, s?: never, size?: never }
 }
 
 export type CatTransformsResponse = CatTransformsTransformsRecord[]
@@ -25860,7 +25833,8 @@ export interface LogstashGetPipelineRequest extends RequestBase {
 export type LogstashGetPipelineResponse = Record<Id, LogstashPipeline>
 
 export interface LogstashPutPipelineRequest extends RequestBase {
-  /** An identifier for the pipeline. */
+  /** An identifier for the pipeline.
+    * Pipeline IDs must begin with a letter or underscore and contain only letters, underscores, dashes, hyphens and numbers. */
   id: Id
   pipeline?: LogstashPipeline
   /** All values in `body` will be added to the request body. */
@@ -26980,7 +26954,7 @@ export interface MlFillMaskInferenceOptions {
   tokenization?: MlTokenizationConfigContainer
   /** The field that is added to incoming documents to contain the inference prediction. Defaults to predicted_value. */
   results_field?: string
-  vocabulary: MlVocabulary
+  vocabulary?: MlVocabulary
 }
 
 export interface MlFillMaskInferenceUpdateOptions {
@@ -27725,7 +27699,7 @@ export interface MlTextEmbeddingInferenceOptions {
   tokenization?: MlTokenizationConfigContainer
   /** The field that is added to incoming documents to contain the inference prediction. Defaults to predicted_value. */
   results_field?: string
-  vocabulary: MlVocabulary
+  vocabulary?: MlVocabulary
 }
 
 export interface MlTextEmbeddingInferenceUpdateOptions {
@@ -27739,7 +27713,7 @@ export interface MlTextExpansionInferenceOptions {
   tokenization?: MlTokenizationConfigContainer
   /** The field that is added to incoming documents to contain the inference prediction. Defaults to predicted_value. */
   results_field?: string
-  vocabulary: MlVocabulary
+  vocabulary?: MlVocabulary
 }
 
 export interface MlTextExpansionInferenceUpdateOptions {
@@ -34881,9 +34855,9 @@ export interface ShutdownDeleteNodeRequest extends RequestBase {
   /** The node id of node to be removed from the shutdown state */
   node_id: NodeId
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
-  master_timeout?: TimeUnit
+  master_timeout?: Duration
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
-  timeout?: TimeUnit
+  timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { node_id?: never, master_timeout?: never, timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -34915,7 +34889,7 @@ export interface ShutdownGetNodeRequest extends RequestBase {
   /** Which node for which to retrieve the shutdown status */
   node_id?: NodeIds
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
-  master_timeout?: TimeUnit
+  master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { node_id?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -34942,10 +34916,10 @@ export interface ShutdownPutNodeRequest extends RequestBase {
   node_id: NodeId
   /** The period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
-  master_timeout?: TimeUnit
+  master_timeout?: Duration
   /** The period to wait for a response.
     * If no response is received before the timeout expires, the request fails and returns an error. */
-  timeout?: TimeUnit
+  timeout?: Duration
   /** Valid values are restart, remove, or replace.
     * Use restart when you need to temporarily shut down a node to perform an upgrade, make configuration changes, or perform other maintenance.
     * Because the node is expected to rejoin the cluster, data is not migrated off of the node.
@@ -36585,6 +36559,7 @@ export interface SqlTranslateResponse {
   fields?: (QueryDslFieldAndFormat | Field)[]
   query?: QueryDslQueryContainer
   sort?: Sort
+  track_total_hits?: SearchTrackHits
 }
 
 export interface SslCertificatesCertificateInformation {
@@ -36616,6 +36591,54 @@ export interface SslCertificatesRequest extends RequestBase {
 }
 
 export type SslCertificatesResponse = SslCertificatesCertificateInformation[]
+
+export interface StreamsLogsDisableRequest extends RequestBase {
+  /** The period to wait for a connection to the master node.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  master_timeout?: Duration
+  /** The period to wait for a response.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
+}
+
+export type StreamsLogsDisableResponse = AcknowledgedResponseBase
+
+export interface StreamsLogsEnableRequest extends RequestBase {
+  /** The period to wait for a connection to the master node.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  master_timeout?: Duration
+  /** The period to wait for a response.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
+}
+
+export type StreamsLogsEnableResponse = AcknowledgedResponseBase
+
+export interface StreamsStatusLogsStatus {
+  /** If true, the logs stream feature is enabled. */
+  enabled: boolean
+}
+
+export interface StreamsStatusRequest extends RequestBase {
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
+  master_timeout?: TimeUnit
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
+}
+
+export interface StreamsStatusResponse {
+  logs: StreamsStatusLogsStatus
+}
 
 export interface SynonymsSynonymRule {
   /** The identifier for the synonym rule.
@@ -39288,4 +39311,15 @@ export interface SpecUtilsCommonCatQueryParameters {
   help?: boolean
   /** When set to `true` will enable verbose output. */
   v?: boolean
+  /** Sets the units for columns that contain a byte-size value.
+    * Note that byte-size value units work in terms of powers of 1024. For instance `1kb` means 1024 bytes, not 1000 bytes.
+    * If omitted, byte-size values are rendered with a suffix such as `kb`, `mb`, or `gb`, chosen such that the numeric value of the column is as small as possible whilst still being at least `1.0`.
+    * If given, byte-size values are rendered as an integer with no suffix, representing the value of the column in the chosen unit.
+    * Values that are not an exact multiple of the chosen unit are rounded down. */
+  bytes?: Bytes
+  /** Sets the units for columns that contain a time duration.
+    * If omitted, time duration values are rendered with a suffix such as `ms`, `s`, `m` or `h`, chosen such that the numeric value of the column is as small as possible whilst still being at least `1.0`.
+    * If given, time duration values are rendered as an integer with no suffix.
+    * Values that are not an exact multiple of the chosen unit are rounded down. */
+  time?: TimeUnit
 }

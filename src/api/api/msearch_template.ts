@@ -95,7 +95,16 @@ export default async function MsearchTemplateApi<TDocument = unknown, TAggregati
     name: 'msearch_template',
     pathParts: {
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'index',
+      'search_templates',
+      'ccs_minimize_roundtrips',
+      'max_concurrent_searches',
+      'search_type',
+      'rest_total_hits_as_int',
+      'typed_keys'
+    ]
   }
   return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
 }
