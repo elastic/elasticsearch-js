@@ -79,7 +79,12 @@ export default async function DeleteScriptApi (this: That, params: T.DeleteScrip
     name: 'delete_script',
     pathParts: {
       id: params.id
-    }
+    },
+    acceptedParams: [
+      'id',
+      'master_timeout',
+      'timeout'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

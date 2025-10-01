@@ -4779,6 +4779,8 @@ export interface WriteResponseBase {
   _shards: ShardStatistics
   /** The document version, which is incremented each time the document is updated. */
   _version: VersionNumber
+  /** The role of the failure store in this document response */
+  failure_store?: BulkFailureStoreStatus
   forced_refresh?: boolean
 }
 
@@ -6076,6 +6078,14 @@ export interface AggregationsNormalizeAggregation extends AggregationsPipelineAg
 
 export type AggregationsNormalizeMethod = 'rescale_0_1' | 'rescale_0_100' | 'percent_of_sum' | 'mean' | 'z-score' | 'softmax'
 
+export interface AggregationsPValueHeuristic {
+  background_is_superset?: boolean
+  /** Should the results be normalized when above the given value.
+    * Allows for consistent significance results at various scales.
+    * Note: `0` is a special value which means no normalization */
+  normalize_above?: long
+}
+
 export interface AggregationsParentAggregateKeys extends AggregationsSingleBucketAggregateBase {
 }
 export type AggregationsParentAggregate = AggregationsParentAggregateKeys
@@ -6313,6 +6323,14 @@ export interface AggregationsSignificantTermsAggregation extends AggregationsBuc
   percentage?: AggregationsPercentageScoreHeuristic
   /** Customized score, implemented via a script. */
   script_heuristic?: AggregationsScriptedHeuristic
+  /** Significant terms heuristic that calculates the p-value between the term existing in foreground and background sets.
+    *
+    * The p-value is the probability of obtaining test results at least as extreme as
+    * the results actually observed, under the assumption that the null hypothesis is
+    * correct. The p-value is calculated assuming that the foreground set and the
+    * background set are independent https://en.wikipedia.org/wiki/Bernoulli_trial, with the null
+    * hypothesis that the probabilities are the same. */
+  p_value?: AggregationsPValueHeuristic
   /** Regulates the certainty a shard has if the term should actually be added to the candidate list or not with respect to the `min_doc_count`.
     * Terms will only be considered if their local shard frequency within the set is higher than the `shard_min_doc_count`. */
   shard_min_doc_count?: long
@@ -25010,7 +25028,8 @@ export interface LogstashGetPipelineRequest extends RequestBase {
 export type LogstashGetPipelineResponse = Record<Id, LogstashPipeline>
 
 export interface LogstashPutPipelineRequest extends RequestBase {
-  /** An identifier for the pipeline. */
+  /** An identifier for the pipeline.
+    * Pipeline IDs must begin with a letter or underscore and contain only letters, underscores, dashes, hyphens and numbers. */
   id: Id
   pipeline?: LogstashPipeline
   /** All values in `body` will be added to the request body. */

@@ -114,7 +114,24 @@ export default async function MtermvectorsApi (this: That, params?: T.Mtermvecto
     name: 'mtermvectors',
     pathParts: {
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'index',
+      'docs',
+      'ids',
+      'ids',
+      'fields',
+      'field_statistics',
+      'offsets',
+      'payloads',
+      'positions',
+      'preference',
+      'realtime',
+      'routing',
+      'term_statistics',
+      'version',
+      'version_type'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

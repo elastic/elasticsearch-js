@@ -21,18 +21,19 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 export default class Features {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'features.get_features': {
         path: [],
         body: [],
@@ -60,7 +61,7 @@ export default class Features {
   async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['features.get_features']
+    } = this[kAcceptedParams]['features.get_features']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -88,7 +89,10 @@ export default class Features {
     const method = 'GET'
     const path = '/_features'
     const meta: TransportRequestMetadata = {
-      name: 'features.get_features'
+      name: 'features.get_features',
+      acceptedParams: [
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -103,7 +107,7 @@ export default class Features {
   async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['features.reset_features']
+    } = this[kAcceptedParams]['features.reset_features']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -131,7 +135,10 @@ export default class Features {
     const method = 'POST'
     const path = '/_features/_reset'
     const meta: TransportRequestMetadata = {
-      name: 'features.reset_features'
+      name: 'features.reset_features',
+      acceptedParams: [
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

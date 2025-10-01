@@ -107,7 +107,24 @@ export default async function ExplainApi<TDocument = unknown> (this: That, param
     pathParts: {
       id: params.id,
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'id',
+      'index',
+      'query',
+      'analyzer',
+      'analyze_wildcard',
+      'default_operator',
+      'df',
+      'lenient',
+      'preference',
+      'routing',
+      '_source',
+      '_source_excludes',
+      '_source_includes',
+      'stored_fields',
+      'q'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

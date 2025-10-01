@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class AsyncSearch {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'async_search.delete': {
         path: [
           'id'
@@ -160,7 +161,7 @@ export default class AsyncSearch {
   async delete (this: That, params: T.AsyncSearchDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['async_search.delete']
+    } = this[kAcceptedParams]['async_search.delete']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -190,7 +191,10 @@ export default class AsyncSearch {
       name: 'async_search.delete',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -205,7 +209,7 @@ export default class AsyncSearch {
   async get<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.AsyncSearchGetRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['async_search.get']
+    } = this[kAcceptedParams]['async_search.get']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -235,7 +239,13 @@ export default class AsyncSearch {
       name: 'async_search.get',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'keep_alive',
+        'typed_keys',
+        'wait_for_completion_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -250,7 +260,7 @@ export default class AsyncSearch {
   async status (this: That, params: T.AsyncSearchStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['async_search.status']
+    } = this[kAcceptedParams]['async_search.status']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -280,7 +290,11 @@ export default class AsyncSearch {
       name: 'async_search.status',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'keep_alive'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -297,7 +311,7 @@ export default class AsyncSearch {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['async_search.submit']
+    } = this[kAcceptedParams]['async_search.submit']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -349,7 +363,86 @@ export default class AsyncSearch {
       name: 'async_search.submit',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'aggregations',
+        'aggs',
+        'collapse',
+        'explain',
+        'ext',
+        'from',
+        'highlight',
+        'track_total_hits',
+        'indices_boost',
+        'docvalue_fields',
+        'knn',
+        'min_score',
+        'post_filter',
+        'profile',
+        'query',
+        'rescore',
+        'script_fields',
+        'search_after',
+        'size',
+        'slice',
+        'sort',
+        '_source',
+        'fields',
+        'suggest',
+        'terminate_after',
+        'timeout',
+        'track_scores',
+        'version',
+        'seq_no_primary_term',
+        'stored_fields',
+        'pit',
+        'runtime_mappings',
+        'stats',
+        'wait_for_completion_timeout',
+        'keep_alive',
+        'keep_on_completion',
+        'allow_no_indices',
+        'allow_partial_search_results',
+        'analyzer',
+        'analyze_wildcard',
+        'batched_reduce_size',
+        'ccs_minimize_roundtrips',
+        'default_operator',
+        'df',
+        'docvalue_fields',
+        'expand_wildcards',
+        'explain',
+        'ignore_throttled',
+        'ignore_unavailable',
+        'lenient',
+        'max_concurrent_shard_requests',
+        'preference',
+        'request_cache',
+        'routing',
+        'search_type',
+        'stats',
+        'stored_fields',
+        'suggest_field',
+        'suggest_mode',
+        'suggest_size',
+        'suggest_text',
+        'terminate_after',
+        'timeout',
+        'track_total_hits',
+        'track_scores',
+        'typed_keys',
+        'rest_total_hits_as_int',
+        'version',
+        '_source',
+        '_source_excludes',
+        '_source_includes',
+        'seq_no_primary_term',
+        'q',
+        'size',
+        'from',
+        'sort'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

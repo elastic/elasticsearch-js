@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class QueryRules {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'query_rules.delete_rule': {
         path: [
           'ruleset_id',
@@ -117,7 +118,7 @@ export default class QueryRules {
   async deleteRule (this: That, params: T.QueryRulesDeleteRuleRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['query_rules.delete_rule']
+    } = this[kAcceptedParams]['query_rules.delete_rule']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -148,7 +149,11 @@ export default class QueryRules {
       pathParts: {
         ruleset_id: params.ruleset_id,
         rule_id: params.rule_id
-      }
+      },
+      acceptedParams: [
+        'ruleset_id',
+        'rule_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -163,7 +168,7 @@ export default class QueryRules {
   async deleteRuleset (this: That, params: T.QueryRulesDeleteRulesetRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['query_rules.delete_ruleset']
+    } = this[kAcceptedParams]['query_rules.delete_ruleset']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -193,7 +198,10 @@ export default class QueryRules {
       name: 'query_rules.delete_ruleset',
       pathParts: {
         ruleset_id: params.ruleset_id
-      }
+      },
+      acceptedParams: [
+        'ruleset_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -208,7 +216,7 @@ export default class QueryRules {
   async getRule (this: That, params: T.QueryRulesGetRuleRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['query_rules.get_rule']
+    } = this[kAcceptedParams]['query_rules.get_rule']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -239,7 +247,11 @@ export default class QueryRules {
       pathParts: {
         ruleset_id: params.ruleset_id,
         rule_id: params.rule_id
-      }
+      },
+      acceptedParams: [
+        'ruleset_id',
+        'rule_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -254,7 +266,7 @@ export default class QueryRules {
   async getRuleset (this: That, params: T.QueryRulesGetRulesetRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['query_rules.get_ruleset']
+    } = this[kAcceptedParams]['query_rules.get_ruleset']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -284,7 +296,10 @@ export default class QueryRules {
       name: 'query_rules.get_ruleset',
       pathParts: {
         ruleset_id: params.ruleset_id
-      }
+      },
+      acceptedParams: [
+        'ruleset_id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -299,7 +314,7 @@ export default class QueryRules {
   async listRulesets (this: That, params?: T.QueryRulesListRulesetsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['query_rules.list_rulesets']
+    } = this[kAcceptedParams]['query_rules.list_rulesets']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -327,7 +342,11 @@ export default class QueryRules {
     const method = 'GET'
     const path = '/_query_rules'
     const meta: TransportRequestMetadata = {
-      name: 'query_rules.list_rulesets'
+      name: 'query_rules.list_rulesets',
+      acceptedParams: [
+        'from',
+        'size'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -344,7 +363,7 @@ export default class QueryRules {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['query_rules.put_rule']
+    } = this[kAcceptedParams]['query_rules.put_rule']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -385,7 +404,15 @@ export default class QueryRules {
       pathParts: {
         ruleset_id: params.ruleset_id,
         rule_id: params.rule_id
-      }
+      },
+      acceptedParams: [
+        'ruleset_id',
+        'rule_id',
+        'type',
+        'criteria',
+        'actions',
+        'priority'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -402,7 +429,7 @@ export default class QueryRules {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['query_rules.put_ruleset']
+    } = this[kAcceptedParams]['query_rules.put_ruleset']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -442,7 +469,11 @@ export default class QueryRules {
       name: 'query_rules.put_ruleset',
       pathParts: {
         ruleset_id: params.ruleset_id
-      }
+      },
+      acceptedParams: [
+        'ruleset_id',
+        'rules'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -459,7 +490,7 @@ export default class QueryRules {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['query_rules.test']
+    } = this[kAcceptedParams]['query_rules.test']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -499,7 +530,11 @@ export default class QueryRules {
       name: 'query_rules.test',
       pathParts: {
         ruleset_id: params.ruleset_id
-      }
+      },
+      acceptedParams: [
+        'ruleset_id',
+        'match_criteria'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

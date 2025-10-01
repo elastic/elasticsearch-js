@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Monitoring {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'monitoring.bulk': {
         path: [
           'type'
@@ -63,7 +64,7 @@ export default class Monitoring {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['monitoring.bulk']
+    } = this[kAcceptedParams]['monitoring.bulk']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -93,7 +94,14 @@ export default class Monitoring {
       name: 'monitoring.bulk',
       pathParts: {
         type: params.type
-      }
+      },
+      acceptedParams: [
+        'type',
+        'operations',
+        'system_id',
+        'system_api_version',
+        'interval'
+      ]
     }
     return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
   }

@@ -72,7 +72,9 @@ export default async function PingApi (this: That, params?: T.PingRequest, optio
   const method = 'HEAD'
   const path = '/'
   const meta: TransportRequestMetadata = {
-    name: 'ping'
+    name: 'ping',
+    acceptedParams: [
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

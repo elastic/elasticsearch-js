@@ -8420,6 +8420,7 @@ client.logstash.putPipeline({ id })
 
 #### Request (object) [_request_logstash.put_pipeline]
 - **`id` (string)**: An identifier for the pipeline.
+Pipeline IDs must begin with a letter or underscore and contain only letters, underscores, dashes, hyphens and numbers.
 - **`pipeline` (Optional, { description, on_failure, processors, version, deprecated, _meta })**
 
 ## client.migration.deprecations [_migration.deprecations]
