@@ -21,18 +21,19 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 export default class DanglingIndices {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'dangling_indices.delete_dangling_index': {
         path: [
           'index_uuid'
@@ -73,7 +74,7 @@ export default class DanglingIndices {
   async deleteDanglingIndex (this: That, params: T.DanglingIndicesDeleteDanglingIndexRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['dangling_indices.delete_dangling_index']
+    } = this[kAcceptedParams]['dangling_indices.delete_dangling_index']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -103,7 +104,13 @@ export default class DanglingIndices {
       name: 'dangling_indices.delete_dangling_index',
       pathParts: {
         index_uuid: params.index_uuid
-      }
+      },
+      acceptedParams: [
+        'index_uuid',
+        'accept_data_loss',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -118,7 +125,7 @@ export default class DanglingIndices {
   async importDanglingIndex (this: That, params: T.DanglingIndicesImportDanglingIndexRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['dangling_indices.import_dangling_index']
+    } = this[kAcceptedParams]['dangling_indices.import_dangling_index']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -148,7 +155,13 @@ export default class DanglingIndices {
       name: 'dangling_indices.import_dangling_index',
       pathParts: {
         index_uuid: params.index_uuid
-      }
+      },
+      acceptedParams: [
+        'index_uuid',
+        'accept_data_loss',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -163,7 +176,7 @@ export default class DanglingIndices {
   async listDanglingIndices (this: That, params?: T.DanglingIndicesListDanglingIndicesRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['dangling_indices.list_dangling_indices']
+    } = this[kAcceptedParams]['dangling_indices.list_dangling_indices']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -191,7 +204,9 @@ export default class DanglingIndices {
     const method = 'GET'
     const path = '/_dangling'
     const meta: TransportRequestMetadata = {
-      name: 'dangling_indices.list_dangling_indices'
+      name: 'dangling_indices.list_dangling_indices',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

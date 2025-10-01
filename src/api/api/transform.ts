@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Transform {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'transform.delete_transform': {
         path: [
           'transform_id'
@@ -205,7 +206,7 @@ export default class Transform {
   async deleteTransform (this: That, params: T.TransformDeleteTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['transform.delete_transform']
+    } = this[kAcceptedParams]['transform.delete_transform']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -235,14 +236,20 @@ export default class Transform {
       name: 'transform.delete_transform',
       pathParts: {
         transform_id: params.transform_id
-      }
+      },
+      acceptedParams: [
+        'transform_id',
+        'force',
+        'delete_dest_index',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Retrieves transform usage information for transform nodes
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-transform-node-stats.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/9.2/get-transform-node-stats.html | Elasticsearch API documentation}
     */
   async getNodeStats (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async getNodeStats (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -250,7 +257,7 @@ export default class Transform {
   async getNodeStats (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['transform.get_node_stats']
+    } = this[kAcceptedParams]['transform.get_node_stats']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -277,7 +284,9 @@ export default class Transform {
     const method = 'GET'
     const path = '/_transform/_node_stats'
     const meta: TransportRequestMetadata = {
-      name: 'transform.get_node_stats'
+      name: 'transform.get_node_stats',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -292,7 +301,7 @@ export default class Transform {
   async getTransform (this: That, params?: T.TransformGetTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['transform.get_transform']
+    } = this[kAcceptedParams]['transform.get_transform']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -330,7 +339,14 @@ export default class Transform {
       name: 'transform.get_transform',
       pathParts: {
         transform_id: params.transform_id
-      }
+      },
+      acceptedParams: [
+        'transform_id',
+        'allow_no_match',
+        'from',
+        'size',
+        'exclude_generated'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -345,7 +361,7 @@ export default class Transform {
   async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['transform.get_transform_stats']
+    } = this[kAcceptedParams]['transform.get_transform_stats']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -375,7 +391,14 @@ export default class Transform {
       name: 'transform.get_transform_stats',
       pathParts: {
         transform_id: params.transform_id
-      }
+      },
+      acceptedParams: [
+        'transform_id',
+        'allow_no_match',
+        'from',
+        'size',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -392,7 +415,7 @@ export default class Transform {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['transform.preview_transform']
+    } = this[kAcceptedParams]['transform.preview_transform']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -440,7 +463,20 @@ export default class Transform {
       name: 'transform.preview_transform',
       pathParts: {
         transform_id: params.transform_id
-      }
+      },
+      acceptedParams: [
+        'transform_id',
+        'dest',
+        'description',
+        'frequency',
+        'pivot',
+        'source',
+        'settings',
+        'sync',
+        'retention_policy',
+        'latest',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -457,7 +493,7 @@ export default class Transform {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['transform.put_transform']
+    } = this[kAcceptedParams]['transform.put_transform']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -497,7 +533,22 @@ export default class Transform {
       name: 'transform.put_transform',
       pathParts: {
         transform_id: params.transform_id
-      }
+      },
+      acceptedParams: [
+        'transform_id',
+        'dest',
+        'description',
+        'frequency',
+        'latest',
+        '_meta',
+        'pivot',
+        'retention_policy',
+        'settings',
+        'source',
+        'sync',
+        'defer_validation',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -512,7 +563,7 @@ export default class Transform {
   async resetTransform (this: That, params: T.TransformResetTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['transform.reset_transform']
+    } = this[kAcceptedParams]['transform.reset_transform']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -542,7 +593,12 @@ export default class Transform {
       name: 'transform.reset_transform',
       pathParts: {
         transform_id: params.transform_id
-      }
+      },
+      acceptedParams: [
+        'transform_id',
+        'force',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -557,7 +613,7 @@ export default class Transform {
   async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['transform.schedule_now_transform']
+    } = this[kAcceptedParams]['transform.schedule_now_transform']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -587,7 +643,11 @@ export default class Transform {
       name: 'transform.schedule_now_transform',
       pathParts: {
         transform_id: params.transform_id
-      }
+      },
+      acceptedParams: [
+        'transform_id',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -602,7 +662,7 @@ export default class Transform {
   async setUpgradeMode (this: That, params?: T.TransformSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['transform.set_upgrade_mode']
+    } = this[kAcceptedParams]['transform.set_upgrade_mode']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -630,7 +690,11 @@ export default class Transform {
     const method = 'POST'
     const path = '/_transform/set_upgrade_mode'
     const meta: TransportRequestMetadata = {
-      name: 'transform.set_upgrade_mode'
+      name: 'transform.set_upgrade_mode',
+      acceptedParams: [
+        'enabled',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -645,7 +709,7 @@ export default class Transform {
   async startTransform (this: That, params: T.TransformStartTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['transform.start_transform']
+    } = this[kAcceptedParams]['transform.start_transform']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -675,7 +739,12 @@ export default class Transform {
       name: 'transform.start_transform',
       pathParts: {
         transform_id: params.transform_id
-      }
+      },
+      acceptedParams: [
+        'transform_id',
+        'timeout',
+        'from'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -690,7 +759,7 @@ export default class Transform {
   async stopTransform (this: That, params: T.TransformStopTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['transform.stop_transform']
+    } = this[kAcceptedParams]['transform.stop_transform']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -720,7 +789,15 @@ export default class Transform {
       name: 'transform.stop_transform',
       pathParts: {
         transform_id: params.transform_id
-      }
+      },
+      acceptedParams: [
+        'transform_id',
+        'allow_no_match',
+        'force',
+        'timeout',
+        'wait_for_checkpoint',
+        'wait_for_completion'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -737,7 +814,7 @@ export default class Transform {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['transform.update_transform']
+    } = this[kAcceptedParams]['transform.update_transform']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -777,7 +854,20 @@ export default class Transform {
       name: 'transform.update_transform',
       pathParts: {
         transform_id: params.transform_id
-      }
+      },
+      acceptedParams: [
+        'transform_id',
+        'dest',
+        'description',
+        'frequency',
+        '_meta',
+        'source',
+        'settings',
+        'sync',
+        'retention_policy',
+        'defer_validation',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -792,7 +882,7 @@ export default class Transform {
   async upgradeTransforms (this: That, params?: T.TransformUpgradeTransformsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['transform.upgrade_transforms']
+    } = this[kAcceptedParams]['transform.upgrade_transforms']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -820,7 +910,11 @@ export default class Transform {
     const method = 'POST'
     const path = '/_transform/_upgrade'
     const meta: TransportRequestMetadata = {
-      name: 'transform.upgrade_transforms'
+      name: 'transform.upgrade_transforms',
+      acceptedParams: [
+        'dry_run',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

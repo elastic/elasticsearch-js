@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Cluster {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'cluster.allocation_explain': {
         path: [],
         body: [
@@ -237,7 +238,7 @@ export default class Cluster {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['cluster.allocation_explain']
+    } = this[kAcceptedParams]['cluster.allocation_explain']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -275,7 +276,20 @@ export default class Cluster {
     const method = body != null ? 'POST' : 'GET'
     const path = '/_cluster/allocation/explain'
     const meta: TransportRequestMetadata = {
-      name: 'cluster.allocation_explain'
+      name: 'cluster.allocation_explain',
+      acceptedParams: [
+        'index',
+        'shard',
+        'primary',
+        'current_node',
+        'index',
+        'shard',
+        'primary',
+        'current_node',
+        'include_disk_info',
+        'include_yes_decisions',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -290,7 +304,7 @@ export default class Cluster {
   async deleteComponentTemplate (this: That, params: T.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cluster.delete_component_template']
+    } = this[kAcceptedParams]['cluster.delete_component_template']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -320,7 +334,12 @@ export default class Cluster {
       name: 'cluster.delete_component_template',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -335,7 +354,7 @@ export default class Cluster {
   async deleteVotingConfigExclusions (this: That, params?: T.ClusterDeleteVotingConfigExclusionsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cluster.delete_voting_config_exclusions']
+    } = this[kAcceptedParams]['cluster.delete_voting_config_exclusions']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -363,7 +382,11 @@ export default class Cluster {
     const method = 'DELETE'
     const path = '/_cluster/voting_config_exclusions'
     const meta: TransportRequestMetadata = {
-      name: 'cluster.delete_voting_config_exclusions'
+      name: 'cluster.delete_voting_config_exclusions',
+      acceptedParams: [
+        'master_timeout',
+        'wait_for_removal'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -378,7 +401,7 @@ export default class Cluster {
   async existsComponentTemplate (this: That, params: T.ClusterExistsComponentTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cluster.exists_component_template']
+    } = this[kAcceptedParams]['cluster.exists_component_template']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -408,7 +431,12 @@ export default class Cluster {
       name: 'cluster.exists_component_template',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'master_timeout',
+        'local'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -423,7 +451,7 @@ export default class Cluster {
   async getComponentTemplate (this: That, params?: T.ClusterGetComponentTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cluster.get_component_template']
+    } = this[kAcceptedParams]['cluster.get_component_template']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -461,7 +489,15 @@ export default class Cluster {
       name: 'cluster.get_component_template',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'flat_settings',
+        'settings_filter',
+        'include_defaults',
+        'local',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -476,7 +512,7 @@ export default class Cluster {
   async getSettings (this: That, params?: T.ClusterGetSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cluster.get_settings']
+    } = this[kAcceptedParams]['cluster.get_settings']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -504,7 +540,13 @@ export default class Cluster {
     const method = 'GET'
     const path = '/_cluster/settings'
     const meta: TransportRequestMetadata = {
-      name: 'cluster.get_settings'
+      name: 'cluster.get_settings',
+      acceptedParams: [
+        'flat_settings',
+        'include_defaults',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -519,7 +561,7 @@ export default class Cluster {
   async health (this: That, params?: T.ClusterHealthRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cluster.health']
+    } = this[kAcceptedParams]['cluster.health']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -557,7 +599,21 @@ export default class Cluster {
       name: 'cluster.health',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index',
+        'expand_wildcards',
+        'level',
+        'local',
+        'master_timeout',
+        'timeout',
+        'wait_for_active_shards',
+        'wait_for_events',
+        'wait_for_nodes',
+        'wait_for_no_initializing_shards',
+        'wait_for_no_relocating_shards',
+        'wait_for_status'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -572,7 +628,7 @@ export default class Cluster {
   async info (this: That, params: T.ClusterInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cluster.info']
+    } = this[kAcceptedParams]['cluster.info']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -602,7 +658,10 @@ export default class Cluster {
       name: 'cluster.info',
       pathParts: {
         target: params.target
-      }
+      },
+      acceptedParams: [
+        'target'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -617,7 +676,7 @@ export default class Cluster {
   async pendingTasks (this: That, params?: T.ClusterPendingTasksRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cluster.pending_tasks']
+    } = this[kAcceptedParams]['cluster.pending_tasks']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -645,7 +704,11 @@ export default class Cluster {
     const method = 'GET'
     const path = '/_cluster/pending_tasks'
     const meta: TransportRequestMetadata = {
-      name: 'cluster.pending_tasks'
+      name: 'cluster.pending_tasks',
+      acceptedParams: [
+        'local',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -660,7 +723,7 @@ export default class Cluster {
   async postVotingConfigExclusions (this: That, params?: T.ClusterPostVotingConfigExclusionsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cluster.post_voting_config_exclusions']
+    } = this[kAcceptedParams]['cluster.post_voting_config_exclusions']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -688,7 +751,13 @@ export default class Cluster {
     const method = 'POST'
     const path = '/_cluster/voting_config_exclusions'
     const meta: TransportRequestMetadata = {
-      name: 'cluster.post_voting_config_exclusions'
+      name: 'cluster.post_voting_config_exclusions',
+      acceptedParams: [
+        'node_names',
+        'node_ids',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -705,7 +774,7 @@ export default class Cluster {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['cluster.put_component_template']
+    } = this[kAcceptedParams]['cluster.put_component_template']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -745,7 +814,17 @@ export default class Cluster {
       name: 'cluster.put_component_template',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'template',
+        'version',
+        '_meta',
+        'deprecated',
+        'create',
+        'cause',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -762,7 +841,7 @@ export default class Cluster {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['cluster.put_settings']
+    } = this[kAcceptedParams]['cluster.put_settings']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -800,7 +879,14 @@ export default class Cluster {
     const method = 'PUT'
     const path = '/_cluster/settings'
     const meta: TransportRequestMetadata = {
-      name: 'cluster.put_settings'
+      name: 'cluster.put_settings',
+      acceptedParams: [
+        'persistent',
+        'transient',
+        'flat_settings',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -815,7 +901,7 @@ export default class Cluster {
   async remoteInfo (this: That, params?: T.ClusterRemoteInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cluster.remote_info']
+    } = this[kAcceptedParams]['cluster.remote_info']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -843,7 +929,9 @@ export default class Cluster {
     const method = 'GET'
     const path = '/_remote/info'
     const meta: TransportRequestMetadata = {
-      name: 'cluster.remote_info'
+      name: 'cluster.remote_info',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -860,7 +948,7 @@ export default class Cluster {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['cluster.reroute']
+    } = this[kAcceptedParams]['cluster.reroute']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -898,7 +986,16 @@ export default class Cluster {
     const method = 'POST'
     const path = '/_cluster/reroute'
     const meta: TransportRequestMetadata = {
-      name: 'cluster.reroute'
+      name: 'cluster.reroute',
+      acceptedParams: [
+        'commands',
+        'dry_run',
+        'explain',
+        'metric',
+        'retry_failed',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -913,7 +1010,7 @@ export default class Cluster {
   async state (this: That, params?: T.ClusterStateRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cluster.state']
+    } = this[kAcceptedParams]['cluster.state']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -955,7 +1052,19 @@ export default class Cluster {
       pathParts: {
         metric: params.metric,
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'metric',
+        'index',
+        'allow_no_indices',
+        'expand_wildcards',
+        'flat_settings',
+        'ignore_unavailable',
+        'local',
+        'master_timeout',
+        'wait_for_metadata_version',
+        'wait_for_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -970,7 +1079,7 @@ export default class Cluster {
   async stats (this: That, params?: T.ClusterStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['cluster.stats']
+    } = this[kAcceptedParams]['cluster.stats']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -1008,7 +1117,12 @@ export default class Cluster {
       name: 'cluster.stats',
       pathParts: {
         node_id: params.node_id
-      }
+      },
+      acceptedParams: [
+        'node_id',
+        'include_remotes',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

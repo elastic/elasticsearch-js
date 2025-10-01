@@ -21,18 +21,19 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 export default class Xpack {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'xpack.info': {
         path: [],
         body: [],
@@ -62,7 +63,7 @@ export default class Xpack {
   async info (this: That, params?: T.XpackInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['xpack.info']
+    } = this[kAcceptedParams]['xpack.info']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -90,7 +91,12 @@ export default class Xpack {
     const method = 'GET'
     const path = '/_xpack'
     const meta: TransportRequestMetadata = {
-      name: 'xpack.info'
+      name: 'xpack.info',
+      acceptedParams: [
+        'categories',
+        'accept_enterprise',
+        'human'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -105,7 +111,7 @@ export default class Xpack {
   async usage (this: That, params?: T.XpackUsageRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['xpack.usage']
+    } = this[kAcceptedParams]['xpack.usage']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -133,7 +139,10 @@ export default class Xpack {
     const method = 'GET'
     const path = '/_xpack/usage'
     const meta: TransportRequestMetadata = {
-      name: 'xpack.usage'
+      name: 'xpack.usage',
+      acceptedParams: [
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

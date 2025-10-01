@@ -75,7 +75,10 @@ export default async function KnnSearchApi (this: That, params?: T.TODO, options
     name: 'knn_search',
     pathParts: {
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'index'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

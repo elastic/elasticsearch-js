@@ -124,7 +124,34 @@ export default async function TermvectorsApi<TDocument = unknown> (this: That, p
     pathParts: {
       index: params.index,
       id: params.id
-    }
+    },
+    acceptedParams: [
+      'index',
+      'id',
+      'doc',
+      'filter',
+      'per_field_analyzer',
+      'fields',
+      'field_statistics',
+      'offsets',
+      'payloads',
+      'positions',
+      'term_statistics',
+      'routing',
+      'version',
+      'version_type',
+      'fields',
+      'field_statistics',
+      'offsets',
+      'payloads',
+      'positions',
+      'preference',
+      'realtime',
+      'routing',
+      'term_statistics',
+      'version',
+      'version_type'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }
