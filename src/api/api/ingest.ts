@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Ingest {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'ingest.delete_geoip_database': {
         path: [
           'id'
@@ -134,7 +135,8 @@ export default class Ingest {
           'on_failure',
           'processors',
           'version',
-          'deprecated'
+          'deprecated',
+          'field_access_pattern'
         ],
         query: [
           'master_timeout',
@@ -167,7 +169,7 @@ export default class Ingest {
   async deleteGeoipDatabase (this: That, params: T.IngestDeleteGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ingest.delete_geoip_database']
+    } = this[kAcceptedParams]['ingest.delete_geoip_database']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -197,7 +199,12 @@ export default class Ingest {
       name: 'ingest.delete_geoip_database',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -212,7 +219,7 @@ export default class Ingest {
   async deleteIpLocationDatabase (this: That, params: T.IngestDeleteIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ingest.delete_ip_location_database']
+    } = this[kAcceptedParams]['ingest.delete_ip_location_database']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -242,7 +249,12 @@ export default class Ingest {
       name: 'ingest.delete_ip_location_database',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -257,7 +269,7 @@ export default class Ingest {
   async deletePipeline (this: That, params: T.IngestDeletePipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ingest.delete_pipeline']
+    } = this[kAcceptedParams]['ingest.delete_pipeline']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -287,7 +299,12 @@ export default class Ingest {
       name: 'ingest.delete_pipeline',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -302,7 +319,7 @@ export default class Ingest {
   async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ingest.geo_ip_stats']
+    } = this[kAcceptedParams]['ingest.geo_ip_stats']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -330,7 +347,9 @@ export default class Ingest {
     const method = 'GET'
     const path = '/_ingest/geoip/stats'
     const meta: TransportRequestMetadata = {
-      name: 'ingest.geo_ip_stats'
+      name: 'ingest.geo_ip_stats',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -345,7 +364,7 @@ export default class Ingest {
   async getGeoipDatabase (this: That, params?: T.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ingest.get_geoip_database']
+    } = this[kAcceptedParams]['ingest.get_geoip_database']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -383,7 +402,10 @@ export default class Ingest {
       name: 'ingest.get_geoip_database',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -398,7 +420,7 @@ export default class Ingest {
   async getIpLocationDatabase (this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ingest.get_ip_location_database']
+    } = this[kAcceptedParams]['ingest.get_ip_location_database']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -436,7 +458,10 @@ export default class Ingest {
       name: 'ingest.get_ip_location_database',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -451,7 +476,7 @@ export default class Ingest {
   async getPipeline (this: That, params?: T.IngestGetPipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ingest.get_pipeline']
+    } = this[kAcceptedParams]['ingest.get_pipeline']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -489,7 +514,12 @@ export default class Ingest {
       name: 'ingest.get_pipeline',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'master_timeout',
+        'summary'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -504,7 +534,7 @@ export default class Ingest {
   async processorGrok (this: That, params?: T.IngestProcessorGrokRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['ingest.processor_grok']
+    } = this[kAcceptedParams]['ingest.processor_grok']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -532,7 +562,9 @@ export default class Ingest {
     const method = 'GET'
     const path = '/_ingest/processor/grok'
     const meta: TransportRequestMetadata = {
-      name: 'ingest.processor_grok'
+      name: 'ingest.processor_grok',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -549,7 +581,7 @@ export default class Ingest {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['ingest.put_geoip_database']
+    } = this[kAcceptedParams]['ingest.put_geoip_database']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -589,7 +621,14 @@ export default class Ingest {
       name: 'ingest.put_geoip_database',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'name',
+        'maxmind',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -606,7 +645,7 @@ export default class Ingest {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['ingest.put_ip_location_database']
+    } = this[kAcceptedParams]['ingest.put_ip_location_database']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -636,7 +675,13 @@ export default class Ingest {
       name: 'ingest.put_ip_location_database',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'configuration',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -653,7 +698,7 @@ export default class Ingest {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['ingest.put_pipeline']
+    } = this[kAcceptedParams]['ingest.put_pipeline']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -693,7 +738,20 @@ export default class Ingest {
       name: 'ingest.put_pipeline',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        '_meta',
+        'description',
+        'on_failure',
+        'processors',
+        'version',
+        'deprecated',
+        'field_access_pattern',
+        'master_timeout',
+        'timeout',
+        'if_version'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -710,7 +768,7 @@ export default class Ingest {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['ingest.simulate']
+    } = this[kAcceptedParams]['ingest.simulate']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -757,7 +815,13 @@ export default class Ingest {
       name: 'ingest.simulate',
       pathParts: {
         id: params.id
-      }
+      },
+      acceptedParams: [
+        'id',
+        'docs',
+        'pipeline',
+        'verbose'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Enrich {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'enrich.delete_policy': {
         path: [
           'name'
@@ -96,7 +97,7 @@ export default class Enrich {
   async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['enrich.delete_policy']
+    } = this[kAcceptedParams]['enrich.delete_policy']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -126,7 +127,11 @@ export default class Enrich {
       name: 'enrich.delete_policy',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -141,7 +146,7 @@ export default class Enrich {
   async executePolicy (this: That, params: T.EnrichExecutePolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['enrich.execute_policy']
+    } = this[kAcceptedParams]['enrich.execute_policy']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -171,7 +176,12 @@ export default class Enrich {
       name: 'enrich.execute_policy',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'master_timeout',
+        'wait_for_completion'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -186,7 +196,7 @@ export default class Enrich {
   async getPolicy (this: That, params?: T.EnrichGetPolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['enrich.get_policy']
+    } = this[kAcceptedParams]['enrich.get_policy']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -224,7 +234,11 @@ export default class Enrich {
       name: 'enrich.get_policy',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -241,7 +255,7 @@ export default class Enrich {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['enrich.put_policy']
+    } = this[kAcceptedParams]['enrich.put_policy']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -281,7 +295,14 @@ export default class Enrich {
       name: 'enrich.put_policy',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'geo_match',
+        'match',
+        'range',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -296,7 +317,7 @@ export default class Enrich {
   async stats (this: That, params?: T.EnrichStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['enrich.stats']
+    } = this[kAcceptedParams]['enrich.stats']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -324,7 +345,10 @@ export default class Enrich {
     const method = 'GET'
     const path = '/_enrich/_stats'
     const meta: TransportRequestMetadata = {
-      name: 'enrich.stats'
+      name: 'enrich.stats',
+      acceptedParams: [
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

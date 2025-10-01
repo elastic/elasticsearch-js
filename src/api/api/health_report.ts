@@ -88,7 +88,13 @@ export default async function HealthReportApi (this: That, params?: T.HealthRepo
     name: 'health_report',
     pathParts: {
       feature: params.feature
-    }
+    },
+    acceptedParams: [
+      'feature',
+      'timeout',
+      'verbose',
+      'size'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

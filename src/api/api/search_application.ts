@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class SearchApplication {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'search_application.delete': {
         path: [
           'name'
@@ -135,7 +136,7 @@ export default class SearchApplication {
   async delete (this: That, params: T.SearchApplicationDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['search_application.delete']
+    } = this[kAcceptedParams]['search_application.delete']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -165,7 +166,10 @@ export default class SearchApplication {
       name: 'search_application.delete',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -180,7 +184,7 @@ export default class SearchApplication {
   async deleteBehavioralAnalytics (this: That, params: T.SearchApplicationDeleteBehavioralAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['search_application.delete_behavioral_analytics']
+    } = this[kAcceptedParams]['search_application.delete_behavioral_analytics']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -210,7 +214,10 @@ export default class SearchApplication {
       name: 'search_application.delete_behavioral_analytics',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -225,7 +232,7 @@ export default class SearchApplication {
   async get (this: That, params: T.SearchApplicationGetRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['search_application.get']
+    } = this[kAcceptedParams]['search_application.get']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -255,7 +262,10 @@ export default class SearchApplication {
       name: 'search_application.get',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -270,7 +280,7 @@ export default class SearchApplication {
   async getBehavioralAnalytics (this: That, params?: T.SearchApplicationGetBehavioralAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['search_application.get_behavioral_analytics']
+    } = this[kAcceptedParams]['search_application.get_behavioral_analytics']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -308,7 +318,10 @@ export default class SearchApplication {
       name: 'search_application.get_behavioral_analytics',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -323,7 +336,7 @@ export default class SearchApplication {
   async list (this: That, params?: T.SearchApplicationListRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['search_application.list']
+    } = this[kAcceptedParams]['search_application.list']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -351,7 +364,12 @@ export default class SearchApplication {
     const method = 'GET'
     const path = '/_application/search_application'
     const meta: TransportRequestMetadata = {
-      name: 'search_application.list'
+      name: 'search_application.list',
+      acceptedParams: [
+        'q',
+        'from',
+        'size'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -368,7 +386,7 @@ export default class SearchApplication {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['search_application.post_behavioral_analytics_event']
+    } = this[kAcceptedParams]['search_application.post_behavioral_analytics_event']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -399,7 +417,13 @@ export default class SearchApplication {
       pathParts: {
         collection_name: params.collection_name,
         event_type: params.event_type
-      }
+      },
+      acceptedParams: [
+        'collection_name',
+        'event_type',
+        'payload',
+        'debug'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -416,7 +440,7 @@ export default class SearchApplication {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['search_application.put']
+    } = this[kAcceptedParams]['search_application.put']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -446,7 +470,12 @@ export default class SearchApplication {
       name: 'search_application.put',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'search_application',
+        'create'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -461,7 +490,7 @@ export default class SearchApplication {
   async putBehavioralAnalytics (this: That, params: T.SearchApplicationPutBehavioralAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['search_application.put_behavioral_analytics']
+    } = this[kAcceptedParams]['search_application.put_behavioral_analytics']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -491,7 +520,10 @@ export default class SearchApplication {
       name: 'search_application.put_behavioral_analytics',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -508,7 +540,7 @@ export default class SearchApplication {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['search_application.render_query']
+    } = this[kAcceptedParams]['search_application.render_query']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -548,7 +580,11 @@ export default class SearchApplication {
       name: 'search_application.render_query',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'params'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -565,7 +601,7 @@ export default class SearchApplication {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['search_application.search']
+    } = this[kAcceptedParams]['search_application.search']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -605,7 +641,12 @@ export default class SearchApplication {
       name: 'search_application.search',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'name',
+        'params',
+        'typed_keys'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

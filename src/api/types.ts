@@ -256,6 +256,15 @@ export interface CountRequest extends RequestBase {
   /** The node or shard the operation should be performed on.
     * By default, it is random. */
   preference?: string
+  /** Specifies a subset of projects to target for the search using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** A custom value used to route operations to a specific shard. */
   routing?: Routing
   /** The maximum number of documents to collect for each shard.
@@ -273,9 +282,9 @@ export interface CountRequest extends RequestBase {
     * with the `q` query string parameter. */
   query?: QueryDslQueryContainer
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, terminate_after?: never, q?: never, query?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, project_routing?: never, routing?: never, terminate_after?: never, q?: never, query?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, terminate_after?: never, q?: never, query?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, project_routing?: never, routing?: never, terminate_after?: never, q?: never, query?: never }
 }
 
 export interface CountResponse {
@@ -748,6 +757,15 @@ export interface FieldCapsRequest extends RequestBase {
   types?: string[]
   /** If false, empty fields are not included in the response. */
   include_empty_fields?: boolean
+  /** Specifies a subset of projects to target for the field-caps query using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** A list of fields to retrieve capabilities for. Wildcard (`*`) expressions are supported. */
   fields?: Fields
   /** Filter indices if the provided query rewrites to `match_none` on every shard.
@@ -760,9 +778,9 @@ export interface FieldCapsRequest extends RequestBase {
     * These fields exist only as part of the query and take precedence over fields defined with the same name in the index mappings. */
   runtime_mappings?: MappingRuntimeFields
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_unmapped?: never, filters?: never, types?: never, include_empty_fields?: never, fields?: never, index_filter?: never, runtime_mappings?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_unmapped?: never, filters?: never, types?: never, include_empty_fields?: never, project_routing?: never, fields?: never, index_filter?: never, runtime_mappings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_unmapped?: never, filters?: never, types?: never, include_empty_fields?: never, fields?: never, index_filter?: never, runtime_mappings?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, include_unmapped?: never, filters?: never, types?: never, include_empty_fields?: never, project_routing?: never, fields?: never, index_filter?: never, runtime_mappings?: never }
 }
 
 export interface FieldCapsResponse {
@@ -1305,6 +1323,7 @@ export interface MsearchMultisearchHeader {
   ignore_unavailable?: boolean
   index?: Indices
   preference?: string
+  project_routing?: ProjectRouting
   request_cache?: boolean
   routing?: Routing
   search_type?: SearchType
@@ -1340,6 +1359,14 @@ export interface MsearchRequest extends RequestBase {
   max_concurrent_shard_requests?: integer
   /** Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint. */
   pre_filter_shard_size?: long
+  /** Specifies a subset of projects to target for a search using project metadata
+    * tags in a subset Lucene syntax. Allowed Lucene queries: the _alias tag
+    * and a single value (possible wildcarded). Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object. */
   rest_total_hits_as_int?: boolean
   /** Custom routing value used to route search operations to a specific shard. */
@@ -1350,9 +1377,9 @@ export interface MsearchRequest extends RequestBase {
   typed_keys?: boolean
   searches?: MsearchRequestItem[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, rest_total_hits_as_int?: never, routing?: never, search_type?: never, typed_keys?: never, searches?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, project_routing?: never, rest_total_hits_as_int?: never, routing?: never, search_type?: never, typed_keys?: never, searches?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, rest_total_hits_as_int?: never, routing?: never, search_type?: never, typed_keys?: never, searches?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, project_routing?: never, rest_total_hits_as_int?: never, routing?: never, search_type?: never, typed_keys?: never, searches?: never }
 }
 
 export type MsearchRequestItem = MsearchMultisearchHeader | SearchSearchRequestBody
@@ -1370,6 +1397,15 @@ export interface MsearchTemplateRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   /** The maximum number of concurrent searches the API can run. */
   max_concurrent_searches?: long
+  /** Specifies a subset of projects to target for the search using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** The type of the search operation. */
   search_type?: SearchType
   /** If `true`, the response returns `hits.total` as an integer.
@@ -1379,9 +1415,9 @@ export interface MsearchTemplateRequest extends RequestBase {
   typed_keys?: boolean
   search_templates?: MsearchTemplateRequestItem[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, ccs_minimize_roundtrips?: never, max_concurrent_searches?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, search_templates?: never }
+  body?: string | { [key: string]: any } & { index?: never, ccs_minimize_roundtrips?: never, max_concurrent_searches?: never, project_routing?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, search_templates?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, ccs_minimize_roundtrips?: never, max_concurrent_searches?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, search_templates?: never }
+  querystring?: { [key: string]: any } & { index?: never, ccs_minimize_roundtrips?: never, max_concurrent_searches?: never, project_routing?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, search_templates?: never }
 }
 
 export type MsearchTemplateRequestItem = MsearchMultisearchHeader | MsearchTemplateTemplateConfig
@@ -1497,6 +1533,15 @@ export interface OpenPointInTimeRequest extends RequestBase {
   /** The node or shard the operation should be performed on.
     * By default, it is random. */
   preference?: string
+  /** Specifies a subset of projects to target for the PIT request using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** A custom value that is used to route operations to a specific shard. */
   routing?: Routing
   /** The type of index that wildcard patterns can match.
@@ -1512,9 +1557,9 @@ export interface OpenPointInTimeRequest extends RequestBase {
   /** Filter indices if the provided query rewrites to `match_none` on every shard. */
   index_filter?: QueryDslQueryContainer
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, keep_alive?: never, ignore_unavailable?: never, preference?: never, routing?: never, expand_wildcards?: never, allow_partial_search_results?: never, max_concurrent_shard_requests?: never, index_filter?: never }
+  body?: string | { [key: string]: any } & { index?: never, keep_alive?: never, ignore_unavailable?: never, preference?: never, project_routing?: never, routing?: never, expand_wildcards?: never, allow_partial_search_results?: never, max_concurrent_shard_requests?: never, index_filter?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, keep_alive?: never, ignore_unavailable?: never, preference?: never, routing?: never, expand_wildcards?: never, allow_partial_search_results?: never, max_concurrent_shard_requests?: never, index_filter?: never }
+  querystring?: { [key: string]: any } & { index?: never, keep_alive?: never, ignore_unavailable?: never, preference?: never, project_routing?: never, routing?: never, expand_wildcards?: never, allow_partial_search_results?: never, max_concurrent_shard_requests?: never, index_filter?: never }
 }
 
 export interface OpenPointInTimeResponse {
@@ -2038,6 +2083,15 @@ export interface SearchRequest extends RequestBase {
     * * The request targets one or more read-only index.
     * * The primary sort of the query targets an indexed field. */
   pre_filter_shard_size?: long
+  /** Specifies a subset of projects to target for the search using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** If `true`, the caching of search results is enabled for requests where `size` is `0`.
     * It defaults to index level settings. */
   request_cache?: boolean
@@ -2195,9 +2249,9 @@ export interface SearchRequest extends RequestBase {
     * You can retrieve these stats using the indices stats API. */
   stats?: string[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, project_routing?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, project_routing?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
 }
 
 export type SearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
@@ -2804,6 +2858,7 @@ export interface SearchRescore {
   window_size?: integer
   query?: SearchRescoreQuery
   learning_to_rank?: SearchLearningToRank
+  script?: SearchScriptRescore
 }
 
 export interface SearchRescoreQuery {
@@ -2819,6 +2874,10 @@ export interface SearchRescoreQuery {
 }
 
 export type SearchScoreMode = 'avg' | 'max' | 'min' | 'multiply' | 'total'
+
+export interface SearchScriptRescore {
+  script: Script | ScriptSource
+}
 
 export interface SearchSearchProfile {
   collector: SearchCollector[]
@@ -3097,6 +3156,15 @@ export interface SearchMvtRequest extends RequestBase {
   x: SearchMvtCoordinate
   /** Y coordinate for the vector tile to search */
   y: SearchMvtCoordinate
+  /** Specifies a subset of projects to target for the search using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** Sub-aggregations for the geotile_grid.
     *
     * It supports the following aggregation types:
@@ -3171,9 +3239,9 @@ export interface SearchMvtRequest extends RequestBase {
     * In addition, the new features will be distinguishable using the tag `_mvt_label_position`. */
   with_labels?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, field?: never, zoom?: never, x?: never, y?: never, aggs?: never, buffer?: never, exact_bounds?: never, extent?: never, fields?: never, grid_agg?: never, grid_precision?: never, grid_type?: never, query?: never, runtime_mappings?: never, size?: never, sort?: never, track_total_hits?: never, with_labels?: never }
+  body?: string | { [key: string]: any } & { index?: never, field?: never, zoom?: never, x?: never, y?: never, project_routing?: never, aggs?: never, buffer?: never, exact_bounds?: never, extent?: never, fields?: never, grid_agg?: never, grid_precision?: never, grid_type?: never, query?: never, runtime_mappings?: never, size?: never, sort?: never, track_total_hits?: never, with_labels?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, field?: never, zoom?: never, x?: never, y?: never, aggs?: never, buffer?: never, exact_bounds?: never, extent?: never, fields?: never, grid_agg?: never, grid_precision?: never, grid_type?: never, query?: never, runtime_mappings?: never, size?: never, sort?: never, track_total_hits?: never, with_labels?: never }
+  querystring?: { [key: string]: any } & { index?: never, field?: never, zoom?: never, x?: never, y?: never, project_routing?: never, aggs?: never, buffer?: never, exact_bounds?: never, extent?: never, fields?: never, grid_agg?: never, grid_precision?: never, grid_type?: never, query?: never, runtime_mappings?: never, size?: never, sort?: never, track_total_hits?: never, with_labels?: never }
 }
 
 export type SearchMvtResponse = MapboxVectorTiles
@@ -3266,6 +3334,15 @@ export interface SearchTemplateRequest extends RequestBase {
   /** The node or shard the operation should be performed on.
     * It is random by default. */
   preference?: string
+  /** Specifies a subset of projects to target for the search using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** A custom value used to route operations to a specific shard. */
   routing?: Routing
   /** Specifies how long a consistent view of the index
@@ -3295,9 +3372,9 @@ export interface SearchTemplateRequest extends RequestBase {
     * parameter is required. */
   source?: ScriptSource
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, preference?: never, routing?: never, scroll?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, explain?: never, id?: never, params?: never, profile?: never, source?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, preference?: never, project_routing?: never, routing?: never, scroll?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, explain?: never, id?: never, params?: never, profile?: never, source?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, preference?: never, routing?: never, scroll?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, explain?: never, id?: never, params?: never, profile?: never, source?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, preference?: never, project_routing?: never, routing?: never, scroll?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, explain?: never, id?: never, params?: never, profile?: never, source?: never }
 }
 
 export interface SearchTemplateResponse<TDocument = unknown> {
@@ -3747,6 +3824,13 @@ export type ByteSize = long | string
 export type Bytes = 'b' | 'kb' | 'mb' | 'gb' | 'tb' | 'pb'
 
 export type CategoryId = string
+
+export interface ChunkRescorer {
+  /** The number of chunks per document to evaluate for reranking. */
+  size?: integer
+  /** Chunking settings to apply */
+  chunking_settings?: MappingChunkRescorerChunkingSettings
+}
 
 export type ClusterAlias = string
 
@@ -4289,6 +4373,8 @@ export interface PluginStats {
   licensed: boolean
 }
 
+export type ProjectRouting = string
+
 export type PropertyName = string
 
 export interface QueryCacheStats {
@@ -4706,10 +4792,13 @@ export interface TextSimilarityReranker extends RetrieverBase {
   rank_window_size?: integer
   /** Unique identifier of the inference endpoint created using the inference API. */
   inference_id?: string
-  /** The text snippet used as the basis for similarity comparison */
+  /** The text snippet used as the basis for similarity comparison. */
   inference_text: string
-  /** The document field to be used for text similarity comparisons. This field should contain the text that will be evaluated against the inference_text */
+  /** The document field to be used for text similarity comparisons. This field should contain the text that will be evaluated against the inference_text. */
   field: string
+  /** Whether to rescore on only the best matching chunks.
+    * @beta */
+  chunk_rescorer?: ChunkRescorer
 }
 
 export type ThreadType = 'cpu' | 'wait' | 'block' | 'gpu' | 'mem'
@@ -4808,6 +4897,8 @@ export interface WriteResponseBase {
   _shards: ShardStatistics
   /** The document version, which is incremented each time the document is updated. */
   _version: VersionNumber
+  /** The role of the failure store in this document response */
+  failure_store?: BulkFailureStoreStatus
   forced_refresh?: boolean
 }
 
@@ -5288,7 +5379,7 @@ export interface AggregationsCompositeAggregation extends AggregationsBucketAggr
   size?: integer
   /** The value sources used to build composite buckets.
     * Keys are returned in the order of the `sources` definition. */
-  sources?: Record<string, AggregationsCompositeAggregationSource>[]
+  sources?: Partial<Record<string, AggregationsCompositeAggregationSource>>[]
 }
 
 export interface AggregationsCompositeAggregationBase {
@@ -6111,6 +6202,14 @@ export interface AggregationsNormalizeAggregation extends AggregationsPipelineAg
 
 export type AggregationsNormalizeMethod = 'rescale_0_1' | 'rescale_0_100' | 'percent_of_sum' | 'mean' | 'z-score' | 'softmax'
 
+export interface AggregationsPValueHeuristic {
+  background_is_superset?: boolean
+  /** Should the results be normalized when above the given value.
+    * Allows for consistent significance results at various scales.
+    * Note: `0` is a special value which means no normalization */
+  normalize_above?: long
+}
+
 export interface AggregationsParentAggregateKeys extends AggregationsSingleBucketAggregateBase {
 }
 export type AggregationsParentAggregate = AggregationsParentAggregateKeys
@@ -6348,6 +6447,14 @@ export interface AggregationsSignificantTermsAggregation extends AggregationsBuc
   percentage?: AggregationsPercentageScoreHeuristic
   /** Customized score, implemented via a script. */
   script_heuristic?: AggregationsScriptedHeuristic
+  /** Significant terms heuristic that calculates the p-value between the term existing in foreground and background sets.
+    *
+    * The p-value is the probability of obtaining test results at least as extreme as
+    * the results actually observed, under the assumption that the null hypothesis is
+    * correct. The p-value is calculated assuming that the foreground set and the
+    * background set are independent https://en.wikipedia.org/wiki/Bernoulli_trial, with the null
+    * hypothesis that the probabilities are the same. */
+  p_value?: AggregationsPValueHeuristic
   /** Regulates the certainty a shard has if the term should actually be added to the candidate list or not with respect to the `min_doc_count`.
     * Terms will only be considered if their local shard frequency within the set is higher than the `shard_min_doc_count`. */
   shard_min_doc_count?: long
@@ -7947,6 +8054,47 @@ export interface MappingByteNumberProperty extends MappingNumberPropertyBase {
   null_value?: byte
 }
 
+export interface MappingChunkRescorerChunkingSettings {
+  /** The chunking strategy: `sentence`, `word`, `none` or `recursive`.
+    *
+    *  * If `strategy` is set to `recursive`, you must also specify:
+    *
+    * - `max_chunk_size`
+    * - either `separators` or`separator_group`
+    *
+    * Learn more about different chunking strategies in the linked documentation. */
+  strategy?: string
+  /** Only applicable to the `recursive` strategy and required when using it.
+    *
+    * Sets a predefined list of separators in the saved chunking settings based on the selected text type.
+    * Values can be `markdown` or `plaintext`.
+    *
+    * Using this parameter is an alternative to manually specifying a custom `separators` list. */
+  separator_group?: string
+  /** Only applicable to the `recursive` strategy and required when using it.
+    *
+    * A list of strings used as possible split points when chunking text.
+    *
+    * Each string can be a plain string or a regular expression (regex) pattern.
+    * The system tries each separator in order to split the text, starting from the first item in the list.
+    *
+    * After splitting, it attempts to recombine smaller pieces into larger chunks that stay within
+    * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
+  separators?: string[]
+  /** The maximum size of a chunk in words.
+    * This value cannot be lower than `20` (for `sentence` strategy) or `10` (for `word` strategy).
+    * This value should not exceed the window size for the associated model. */
+  max_chunk_size: integer
+  /** The number of overlapping words for chunks.
+    * It is applicable only to a `word` chunking strategy.
+    * This value cannot be higher than half the `max_chunk_size` value. */
+  overlap?: integer
+  /** The number of overlapping sentences for chunks.
+    * It is applicable only for a `sentence` chunking strategy.
+    * It can be either `1` or `0`. */
+  sentence_overlap?: integer
+}
+
 export interface MappingChunkingSettings {
   /** The chunking strategy: `sentence`, `word`, `none` or `recursive`.
     *
@@ -8513,6 +8661,9 @@ export interface MappingSemanticTextProperty {
     * chunking settings sent in the inference endpoint associated with inference_id. If chunking settings are updated,
     * they will not be applied to existing documents until they are reindexed. */
   chunking_settings?: MappingChunkingSettings
+  /** Multi-fields allow the same string value to be indexed in multiple ways for different purposes, such as one
+    * field for search and a multi-field for sorting and aggregations, or the same string value analyzed by different analyzers. */
+  fields?: Record<PropertyName, MappingProperty>
 }
 
 export interface MappingShapeProperty extends MappingDocValuesPropertyBase {
@@ -10115,6 +10266,15 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   max_concurrent_shard_requests?: integer
   /** Specify the node or shard the operation should be performed on (default: random) */
   preference?: string
+  /** Specifies a subset of projects to target for the search using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** Specify if request cache should be used for this request or not, defaults to true */
   request_cache?: boolean
   /** A comma-separated list of specific routing values */
@@ -10219,9 +10379,9 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
     * the indices stats API. */
   stats?: string[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, request_cache?: never, routing?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
+  body?: string | { [key: string]: any } & { index?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, project_routing?: never, request_cache?: never, routing?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, request_cache?: never, routing?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
+  querystring?: { [key: string]: any } & { index?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, project_routing?: never, request_cache?: never, routing?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
 }
 
 export type AsyncSearchSubmitResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, TAggregations>
@@ -10602,8 +10762,6 @@ export interface CatAllocationAllocationRecord {
 export interface CatAllocationRequest extends CatCatRequestBase {
   /** A comma-separated list of node identifiers or names used to limit the returned information. */
   node_id?: NodeIds
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** A comma-separated list of columns names to display. It supports simple wildcards. */
   h?: CatCatAllocationColumns
   /** List of columns that determine how the table should be sorted.
@@ -10618,9 +10776,9 @@ export interface CatAllocationRequest extends CatCatRequestBase {
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { node_id?: never, bytes?: never, h?: never, s?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { node_id?: never, h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { node_id?: never, bytes?: never, h?: never, s?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { node_id?: never, h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatAllocationResponse = CatAllocationAllocationRecord[]
@@ -10701,14 +10859,23 @@ export interface CatCountRequest extends CatCatRequestBase {
   index?: Indices
   /** A comma-separated list of columns names to display. It supports simple wildcards. */
   h?: CatCatCountColumns
+  /** Specifies a subset of projects to target for the search using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** List of columns that determine how the table should be sorted.
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
   s?: Names
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, h?: never, s?: never }
+  body?: string | { [key: string]: any } & { index?: never, h?: never, project_routing?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, h?: never, s?: never }
+  querystring?: { [key: string]: any } & { index?: never, h?: never, project_routing?: never, s?: never }
 }
 
 export type CatCountResponse = CatCountCountRecord[]
@@ -10741,8 +10908,6 @@ export interface CatFielddataRequest extends CatCatRequestBase {
   /** Comma-separated list of fields used to limit returned information.
     * To retrieve all fields, omit this parameter. */
   fields?: Fields
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** A comma-separated list of columns names to display. It supports simple wildcards. */
   h?: CatCatFieldDataColumns
   /** List of columns that determine how the table should be sorted.
@@ -10750,9 +10915,9 @@ export interface CatFielddataRequest extends CatCatRequestBase {
     * or `:desc` as a suffix to the column name. */
   s?: Names
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { fields?: never, bytes?: never, h?: never, s?: never }
+  body?: string | { [key: string]: any } & { fields?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { fields?: never, bytes?: never, h?: never, s?: never }
+  querystring?: { [key: string]: any } & { fields?: never, h?: never, s?: never }
 }
 
 export type CatFielddataResponse = CatFielddataFielddataRecord[]
@@ -10896,8 +11061,6 @@ export interface CatHealthHealthRecord {
 }
 
 export interface CatHealthRequest extends CatCatRequestBase {
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** If true, returns `HH:MM:SS` and Unix epoch timestamps. */
   ts?: boolean
   /** A comma-separated list of columns names to display. It supports simple wildcards. */
@@ -10907,9 +11070,9 @@ export interface CatHealthRequest extends CatCatRequestBase {
     * or `:desc` as a suffix to the column name. */
   s?: Names
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { time?: never, ts?: never, h?: never, s?: never }
+  body?: string | { [key: string]: any } & { ts?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { time?: never, ts?: never, h?: never, s?: never }
+  querystring?: { [key: string]: any } & { ts?: never, h?: never, s?: never }
 }
 
 export type CatHealthResponse = CatHealthHealthRecord[]
@@ -11653,8 +11816,6 @@ export interface CatIndicesRequest extends CatCatRequestBase {
   /** Comma-separated list of data streams, indices, and aliases used to limit the request.
     * Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** The type of index that wildcard patterns can match. */
   expand_wildcards?: ExpandWildcards
   /** The health status used to limit returned indices. By default, the response includes indices of any health status. */
@@ -11663,8 +11824,6 @@ export interface CatIndicesRequest extends CatCatRequestBase {
   include_unloaded_segments?: boolean
   /** If true, the response only includes information from primary shards. */
   pri?: boolean
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** A comma-separated list of columns names to display. It supports simple wildcards. */
@@ -11674,9 +11833,9 @@ export interface CatIndicesRequest extends CatCatRequestBase {
     * or `:desc` as a suffix to the column name. */
   s?: Names
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, bytes?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, time?: never, master_timeout?: never, h?: never, s?: never }
+  body?: string | { [key: string]: any } & { index?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, master_timeout?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, bytes?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, time?: never, master_timeout?: never, h?: never, s?: never }
+  querystring?: { [key: string]: any } & { index?: never, expand_wildcards?: never, health?: never, include_unloaded_segments?: never, pri?: never, master_timeout?: never, h?: never, s?: never }
 }
 
 export type CatIndicesResponse = CatIndicesIndicesRecord[]
@@ -11835,19 +11994,15 @@ export interface CatMlDataFrameAnalyticsRequest extends CatCatRequestBase {
   id?: Id
   /** Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified) */
   allow_no_match?: boolean
-  /** The unit in which to display byte values */
-  bytes?: Bytes
   /** Comma-separated list of column names to display. */
   h?: CatCatDfaColumns
   /** Comma-separated list of column names or column aliases used to sort the
     * response. */
   s?: CatCatDfaColumns
-  /** Unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, time?: never }
+  body?: string | { [key: string]: any } & { id?: never, allow_no_match?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, time?: never }
+  querystring?: { [key: string]: any } & { id?: never, allow_no_match?: never, h?: never, s?: never }
 }
 
 export type CatMlDataFrameAnalyticsResponse = CatMlDataFrameAnalyticsDataFrameAnalyticsRecord[]
@@ -11968,12 +12123,10 @@ export interface CatMlDatafeedsRequest extends CatCatRequestBase {
   h?: CatCatDatafeedColumns
   /** Comma-separated list of column names or column aliases used to sort the response. */
   s?: CatCatDatafeedColumns
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, h?: never, s?: never, time?: never }
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, h?: never, s?: never, time?: never }
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, h?: never, s?: never }
 }
 
 export type CatMlDatafeedsResponse = CatMlDatafeedsDatafeedsRecord[]
@@ -12525,18 +12678,14 @@ export interface CatMlJobsRequest extends CatCatRequestBase {
     * are partial matches. If `false`, the API returns a 404 status code when there are no matches or only partial
     * matches. */
   allow_no_match?: boolean
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** Comma-separated list of column names to display. */
   h?: CatCatAnomalyDetectorColumns
   /** Comma-separated list of column names or column aliases used to sort the response. */
   s?: CatCatAnomalyDetectorColumns
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { job_id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, time?: never }
+  body?: string | { [key: string]: any } & { job_id?: never, allow_no_match?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { job_id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, time?: never }
+  querystring?: { [key: string]: any } & { job_id?: never, allow_no_match?: never, h?: never, s?: never }
 }
 
 export type CatMlJobsResponse = CatMlJobsJobsRecord[]
@@ -12548,8 +12697,6 @@ export interface CatMlTrainedModelsRequest extends CatCatRequestBase {
     * If `true`, the API returns an empty array when there are no matches and the subset of results when there are partial matches.
     * If `false`, the API returns a 404 status code when there are no matches or only partial matches. */
   allow_no_match?: boolean
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** A comma-separated list of column names to display. */
   h?: CatCatTrainedModelsColumns
   /** A comma-separated list of column names or aliases used to sort the response. */
@@ -12558,12 +12705,10 @@ export interface CatMlTrainedModelsRequest extends CatCatRequestBase {
   from?: integer
   /** The maximum number of transforms to display. */
   size?: integer
-  /** Unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { model_id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, from?: never, size?: never, time?: never }
+  body?: string | { [key: string]: any } & { model_id?: never, allow_no_match?: never, h?: never, s?: never, from?: never, size?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { model_id?: never, allow_no_match?: never, bytes?: never, h?: never, s?: never, from?: never, size?: never, time?: never }
+  querystring?: { [key: string]: any } & { model_id?: never, allow_no_match?: never, h?: never, s?: never, from?: never, size?: never }
 }
 
 export type CatMlTrainedModelsResponse = CatMlTrainedModelsTrainedModelsRecord[]
@@ -13458,10 +13603,8 @@ export interface CatNodesNodesRecord {
 }
 
 export interface CatNodesRequest extends CatCatRequestBase {
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** If `true`, return the full node ID. If `false`, return the shortened node ID. */
-  full_id?: boolean | string
+  full_id?: boolean
   /** If true, the response includes information from segments that are not loaded into memory. */
   include_unloaded_segments?: boolean
   /** A comma-separated list of columns names to display.
@@ -13473,12 +13616,10 @@ export interface CatNodesRequest extends CatCatRequestBase {
   s?: Names
   /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { bytes?: never, full_id?: never, include_unloaded_segments?: never, h?: never, s?: never, master_timeout?: never, time?: never }
+  body?: string | { [key: string]: any } & { full_id?: never, include_unloaded_segments?: never, h?: never, s?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { bytes?: never, full_id?: never, include_unloaded_segments?: never, h?: never, s?: never, master_timeout?: never, time?: never }
+  querystring?: { [key: string]: any } & { full_id?: never, include_unloaded_segments?: never, h?: never, s?: never, master_timeout?: never }
 }
 
 export type CatNodesResponse = CatNodesNodesRecord[]
@@ -13520,12 +13661,10 @@ export interface CatPendingTasksRequest extends CatCatRequestBase {
   local?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** Unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never, time?: never }
+  body?: string | { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never, time?: never }
+  querystring?: { [key: string]: any } & { h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatPendingTasksResponse = CatPendingTasksPendingTasksRecord[]
@@ -13732,8 +13871,6 @@ export interface CatRecoveryRequest extends CatCatRequestBase {
   index?: Indices
   /** If `true`, the response only includes ongoing shard recoveries. */
   active_only?: boolean
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** If `true`, the response includes detailed information about shard recoveries. */
   detailed?: boolean
   /** A comma-separated list of columns names to display.
@@ -13743,12 +13880,10 @@ export interface CatRecoveryRequest extends CatCatRequestBase {
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
   s?: Names
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, active_only?: never, bytes?: never, detailed?: never, h?: never, s?: never, time?: never }
+  body?: string | { [key: string]: any } & { index?: never, active_only?: never, detailed?: never, h?: never, s?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, active_only?: never, bytes?: never, detailed?: never, h?: never, s?: never, time?: never }
+  querystring?: { [key: string]: any } & { index?: never, active_only?: never, detailed?: never, h?: never, s?: never }
 }
 
 export type CatRecoveryResponse = CatRecoveryRecoveryRecord[]
@@ -13793,8 +13928,6 @@ export interface CatSegmentsRequest extends CatCatRequestBase {
     * Supports wildcards (`*`).
     * To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** A comma-separated list of columns names to display.
     * It supports simple wildcards. */
   h?: CatCatSegmentsColumns
@@ -13810,9 +13943,9 @@ export interface CatSegmentsRequest extends CatCatRequestBase {
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, bytes?: never, h?: never, s?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { index?: never, h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, bytes?: never, h?: never, s?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { index?: never, h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatSegmentsResponse = CatSegmentsSegmentsRecord[]
@@ -13960,8 +14093,6 @@ export interface CatShardsRequest extends CatCatRequestBase {
     * Supports wildcards (`*`).
     * To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** The unit used to display byte values. */
-  bytes?: Bytes
   /** List of columns to appear in the response. Supports simple wildcards. */
   h?: CatCatShardColumns
   /** A comma-separated list of column names or aliases that determines the sort order.
@@ -13970,12 +14101,10 @@ export interface CatShardsRequest extends CatCatRequestBase {
   s?: Names
   /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, bytes?: never, h?: never, s?: never, master_timeout?: never, time?: never }
+  body?: string | { [key: string]: any } & { index?: never, h?: never, s?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, bytes?: never, h?: never, s?: never, master_timeout?: never, time?: never }
+  querystring?: { [key: string]: any } & { index?: never, h?: never, s?: never, master_timeout?: never }
 }
 
 export type CatShardsResponse = CatShardsShardsRecord[]
@@ -14609,12 +14738,10 @@ export interface CatSnapshotsRequest extends CatCatRequestBase {
   s?: Names
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** Unit used to display time values. */
-  time?: TimeUnit
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { repository?: never, ignore_unavailable?: never, h?: never, s?: never, master_timeout?: never, time?: never }
+  body?: string | { [key: string]: any } & { repository?: never, ignore_unavailable?: never, h?: never, s?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { repository?: never, ignore_unavailable?: never, h?: never, s?: never, master_timeout?: never, time?: never }
+  querystring?: { [key: string]: any } & { repository?: never, ignore_unavailable?: never, h?: never, s?: never, master_timeout?: never }
 }
 
 export type CatSnapshotsResponse = CatSnapshotsSnapshotsRecord[]
@@ -14729,17 +14856,15 @@ export interface CatTasksRequest extends CatCatRequestBase {
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
   s?: Names
-  /** Unit used to display time values. */
-  time?: TimeUnit
   /** Period to wait for a response.
     * If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** If `true`, the request blocks until the task has completed. */
   wait_for_completion?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, h?: never, s?: never, time?: never, timeout?: never, wait_for_completion?: never }
+  body?: string | { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, h?: never, s?: never, timeout?: never, wait_for_completion?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, h?: never, s?: never, time?: never, timeout?: never, wait_for_completion?: never }
+  querystring?: { [key: string]: any } & { actions?: never, detailed?: never, nodes?: never, parent_task_id?: never, h?: never, s?: never, timeout?: never, wait_for_completion?: never }
 }
 
 export type CatTasksResponse = CatTasksTasksRecord[]
@@ -14893,8 +15018,6 @@ export interface CatThreadPoolRequest extends CatCatRequestBase {
     * Sorting defaults to ascending and can be changed by setting `:asc`
     * or `:desc` as a suffix to the column name. */
   s?: Names
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** If `true`, the request computes the list of selected nodes from the
     * local cluster state. If `false` the list of selected nodes are computed
     * from the cluster state of the master node. In both cases the coordinating
@@ -14903,9 +15026,9 @@ export interface CatThreadPoolRequest extends CatCatRequestBase {
   /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { thread_pool_patterns?: never, h?: never, s?: never, time?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { thread_pool_patterns?: never, h?: never, s?: never, local?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { thread_pool_patterns?: never, h?: never, s?: never, time?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { thread_pool_patterns?: never, h?: never, s?: never, local?: never, master_timeout?: never }
 }
 
 export type CatThreadPoolResponse = CatThreadPoolThreadPoolRecord[]
@@ -15029,14 +15152,12 @@ export interface CatTransformsRequest extends CatCatRequestBase {
   h?: CatCatTransformColumns
   /** Comma-separated list of column names or column aliases used to sort the response. */
   s?: CatCatTransformColumns
-  /** The unit used to display time values. */
-  time?: TimeUnit
   /** The maximum number of transforms to obtain. */
   size?: integer
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, h?: never, s?: never, time?: never, size?: never }
+  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, h?: never, s?: never, size?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, h?: never, s?: never, time?: never, size?: never }
+  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, h?: never, s?: never, size?: never }
 }
 
 export type CatTransformsResponse = CatTransformsTransformsRecord[]
@@ -17984,6 +18105,15 @@ export interface EqlSearchRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   /** If true, missing or closed indices are not included in the response. */
   ignore_unavailable?: boolean
+  /** Specifies a subset of projects to target for the search using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** EQL query you wish to run. */
   query: string
   case_sensitive?: boolean
@@ -18019,9 +18149,9 @@ export interface EqlSearchRequest extends RequestBase {
     * `max_samples_per_key` parameter. Pipes are not supported for sample queries. */
   max_samples_per_key?: integer
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ccs_minimize_roundtrips?: never, ignore_unavailable?: never, query?: never, case_sensitive?: never, event_category_field?: never, tiebreaker_field?: never, timestamp_field?: never, fetch_size?: never, filter?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, allow_partial_search_results?: never, allow_partial_sequence_results?: never, size?: never, fields?: never, result_position?: never, runtime_mappings?: never, max_samples_per_key?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ccs_minimize_roundtrips?: never, ignore_unavailable?: never, project_routing?: never, query?: never, case_sensitive?: never, event_category_field?: never, tiebreaker_field?: never, timestamp_field?: never, fetch_size?: never, filter?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, allow_partial_search_results?: never, allow_partial_sequence_results?: never, size?: never, fields?: never, result_position?: never, runtime_mappings?: never, max_samples_per_key?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ccs_minimize_roundtrips?: never, ignore_unavailable?: never, query?: never, case_sensitive?: never, event_category_field?: never, tiebreaker_field?: never, timestamp_field?: never, fetch_size?: never, filter?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, allow_partial_search_results?: never, allow_partial_sequence_results?: never, size?: never, fields?: never, result_position?: never, runtime_mappings?: never, max_samples_per_key?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ccs_minimize_roundtrips?: never, ignore_unavailable?: never, project_routing?: never, query?: never, case_sensitive?: never, event_category_field?: never, tiebreaker_field?: never, timestamp_field?: never, fetch_size?: never, filter?: never, keep_alive?: never, keep_on_completion?: never, wait_for_completion_timeout?: never, allow_partial_search_results?: never, allow_partial_sequence_results?: never, size?: never, fields?: never, result_position?: never, runtime_mappings?: never, max_samples_per_key?: never }
 }
 
 export type EqlSearchResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEvent>
@@ -18038,6 +18168,8 @@ export interface EsqlAsyncEsqlResult extends EsqlEsqlResult {
     * Also available in the `X-Elasticsearch-Async-Is-Running` HTTP header. */
   is_running: boolean
 }
+
+export type EsqlESQLParam = FieldValue | FieldValue[]
 
 export interface EsqlEsqlClusterDetails {
   status: EsqlEsqlClusterStatus
@@ -18145,10 +18277,15 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   /** Tables to use with the LOOKUP operation. The top level key is the table
     * name and the next level key is the column name. */
   tables?: Record<string, Record<string, EsqlTableValuesContainer>>
-  /** When set to `true` and performing a cross-cluster query, the response will include an extra `_clusters`
+  /** When set to `true` and performing a cross-cluster/cross-project query, the response will include an extra `_clusters`
     * object with information about the clusters that participated in the search along with info such as shards
     * count. */
   include_ccs_metadata?: boolean
+  /** When set to `true` and performing a cross-cluster/cross-project query, the response will include an extra `_clusters`
+    * object with information about the clusters that participated in the search along with info such as shards
+    * count.
+    * @alias include_ccs_metadata */
+  include_execution_metadata?: boolean
   /** The period to wait for the request to finish.
     * By default, the request waits for 1 second for the query results.
     * If the query completes during this period, results are returned
@@ -18163,9 +18300,9 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
     * If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter. */
   keep_on_completion?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
+  body?: string | { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
+  querystring?: { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
 }
 
 export type EsqlAsyncQueryResponse = EsqlAsyncEsqlResult
@@ -18284,7 +18421,7 @@ export interface EsqlQueryRequest extends RequestBase {
   filter?: QueryDslQueryContainer
   locale?: string
   /** To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters. */
-  params?: FieldValue[]
+  params?: EsqlESQLParam[]
   /** If provided and `true` the response will include an extra `profile` object
     * with information on how the query was executed. This information is for human debugging
     * and its format can change at any time but it can give some insight into the performance
@@ -18295,14 +18432,19 @@ export interface EsqlQueryRequest extends RequestBase {
   /** Tables to use with the LOOKUP operation. The top level key is the table
     * name and the next level key is the column name. */
   tables?: Record<string, Record<string, EsqlTableValuesContainer>>
-  /** When set to `true` and performing a cross-cluster query, the response will include an extra `_clusters`
+  /** When set to `true` and performing a cross-cluster/cross-project query, the response will include an extra `_clusters`
     * object with information about the clusters that participated in the search along with info such as shards
     * count. */
   include_ccs_metadata?: boolean
+  /** When set to `true` and performing a cross-cluster/cross-project query, the response will include an extra `_clusters`
+    * object with information about the clusters that participated in the search along with info such as shards
+    * count.
+    * @alias include_ccs_metadata */
+  include_execution_metadata?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never }
+  body?: string | { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never }
+  querystring?: { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never }
 }
 
 export type EsqlQueryResponse = EsqlEsqlResult
@@ -18775,6 +18917,8 @@ export interface IlmExplainLifecycleLifecycleExplainManaged {
   action_time?: DateTime
   action_time_millis?: EpochTime<UnitMillis>
   age?: Duration
+  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  age_in_millis?: DurationValue<UnitMillis>
   failed_step?: Name
   failed_step_retry_count?: integer
   index: IndexName
@@ -21757,10 +21901,19 @@ export interface IndicesResolveIndexRequest extends RequestBase {
   allow_no_indices?: boolean
   /** Filter indices by index mode - standard, lookup, time_series, etc. Comma-separated list of IndexMode. Empty means no filter. */
   mode?: IndicesIndexMode | IndicesIndexMode[]
+  /** Specifies a subset of projects to target using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never, mode?: never }
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never, mode?: never, project_routing?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never, mode?: never }
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, ignore_unavailable?: never, allow_no_indices?: never, mode?: never, project_routing?: never }
 }
 
 export interface IndicesResolveIndexResolveIndexAliasItem {
@@ -23229,6 +23382,10 @@ export interface InferenceGoogleVertexAIServiceSettings {
   rate_limit?: InferenceRateLimitSetting
   /** A valid service account in JSON format for the Google Vertex AI API. */
   service_account_json: string
+  /** For a `text_embedding` task, the number of dimensions the resulting output embeddings should have.
+    * By default, the model's standard output dimension is used.
+    * Refer to the Google documentation for more information. */
+  dimensions?: integer
 }
 
 export type InferenceGoogleVertexAIServiceType = 'googlevertexai'
@@ -24904,6 +25061,8 @@ export interface IngestFailProcessor extends IngestProcessorBase {
   message: string
 }
 
+export type IngestFieldAccessPattern = 'classic' | 'flexible'
+
 export type IngestFingerprintDigest = 'MD5' | 'SHA-1' | 'SHA-256' | 'SHA-512' | 'MurmurHash3'
 
 export interface IngestFingerprintProcessor extends IngestProcessorBase {
@@ -25217,6 +25376,8 @@ export interface IngestPipeline {
   modified_date?: DateTime
   /** Date and time when the pipeline was last modified, in milliseconds since the epoch. */
   modified_date_millis?: EpochTime<UnitMillis>
+  /** Controls how processors in this pipeline should read and write data on a document's source. */
+  field_access_pattern?: IngestFieldAccessPattern
 }
 
 export interface IngestPipelineConfig {
@@ -25854,10 +26015,12 @@ export interface IngestPutPipelineRequest extends RequestBase {
   /** Marks this ingest pipeline as deprecated.
     * When a deprecated ingest pipeline is referenced as the default or final pipeline when creating or updating a non-deprecated index template, Elasticsearch will emit a deprecation warning. */
   deprecated?: boolean
+  /** Controls how processors in this pipeline should read and write data on a document's source. */
+  field_access_pattern?: IngestFieldAccessPattern
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never, if_version?: never, _meta?: never, description?: never, on_failure?: never, processors?: never, version?: never, deprecated?: never }
+  body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never, if_version?: never, _meta?: never, description?: never, on_failure?: never, processors?: never, version?: never, deprecated?: never, field_access_pattern?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never, if_version?: never, _meta?: never, description?: never, on_failure?: never, processors?: never, version?: never, deprecated?: never }
+  querystring?: { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never, if_version?: never, _meta?: never, description?: never, on_failure?: never, processors?: never, version?: never, deprecated?: never, field_access_pattern?: never }
 }
 
 export type IngestPutPipelineResponse = AcknowledgedResponseBase
@@ -26099,7 +26262,8 @@ export interface LogstashGetPipelineRequest extends RequestBase {
 export type LogstashGetPipelineResponse = Record<Id, LogstashPipeline>
 
 export interface LogstashPutPipelineRequest extends RequestBase {
-  /** An identifier for the pipeline. */
+  /** An identifier for the pipeline.
+    * Pipeline IDs must begin with a letter or underscore and contain only letters, underscores, dashes, hyphens and numbers. */
   id: Id
   pipeline?: LogstashPipeline
   /** All values in `body` will be added to the request body. */
@@ -27219,7 +27383,7 @@ export interface MlFillMaskInferenceOptions {
   tokenization?: MlTokenizationConfigContainer
   /** The field that is added to incoming documents to contain the inference prediction. Defaults to predicted_value. */
   results_field?: string
-  vocabulary: MlVocabulary
+  vocabulary?: MlVocabulary
 }
 
 export interface MlFillMaskInferenceUpdateOptions {
@@ -27964,7 +28128,7 @@ export interface MlTextEmbeddingInferenceOptions {
   tokenization?: MlTokenizationConfigContainer
   /** The field that is added to incoming documents to contain the inference prediction. Defaults to predicted_value. */
   results_field?: string
-  vocabulary: MlVocabulary
+  vocabulary?: MlVocabulary
 }
 
 export interface MlTextEmbeddingInferenceUpdateOptions {
@@ -27978,7 +28142,7 @@ export interface MlTextExpansionInferenceOptions {
   tokenization?: MlTokenizationConfigContainer
   /** The field that is added to incoming documents to contain the inference prediction. Defaults to predicted_value. */
   results_field?: string
-  vocabulary: MlVocabulary
+  vocabulary?: MlVocabulary
 }
 
 export interface MlTextExpansionInferenceUpdateOptions {
@@ -29362,7 +29526,7 @@ export interface MlGetOverallBucketsRequest extends RequestBase {
   /** Refer to the description for the `exclude_interim` query parameter. */
   exclude_interim?: boolean
   /** Refer to the description for the `overall_score` query parameter. */
-  overall_score?: double | string
+  overall_score?: double
   /** Refer to the description for the `start` query parameter. */
   start?: DateTime
   /** Refer to the description for the `top_n` query parameter. */
@@ -32098,6 +32262,29 @@ export interface NodesUsageResponseBase extends NodesNodesResponseBase {
   nodes: Record<string, NodesUsageNodeUsage>
 }
 
+export interface ProjectTagsProjectTags {
+  origin: Partial<Record<string, ProjectTagsTags>>
+  linked_projects?: Record<string, ProjectTagsTags>
+}
+
+export interface ProjectTagsRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
+}
+
+export type ProjectTagsResponse = ProjectTagsProjectTags
+
+export interface ProjectTagsTagsKeys {
+  _id: string
+  _alias: string
+  _type: string
+  _organisation: string
+}
+export type ProjectTagsTags = ProjectTagsTagsKeys
+& { [property: string]: string }
+
 export interface QueryRulesQueryRule {
   /** A unique identifier for the rule. */
   rule_id: Id
@@ -33263,7 +33450,7 @@ export interface SecurityAuthenticateAuthenticateApiKey {
   id: Id
   name?: Name
   managed_by: SecurityApiKeyManagedBy
-  internal: boolean
+  internal?: boolean
 }
 
 export interface SecurityAuthenticateRequest extends RequestBase {
@@ -35124,9 +35311,9 @@ export interface ShutdownDeleteNodeRequest extends RequestBase {
   /** The node id of node to be removed from the shutdown state */
   node_id: NodeId
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
-  master_timeout?: TimeUnit
+  master_timeout?: Duration
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
-  timeout?: TimeUnit
+  timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { node_id?: never, master_timeout?: never, timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -35158,7 +35345,7 @@ export interface ShutdownGetNodeRequest extends RequestBase {
   /** Which node for which to retrieve the shutdown status */
   node_id?: NodeIds
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
-  master_timeout?: TimeUnit
+  master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { node_id?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -35185,10 +35372,10 @@ export interface ShutdownPutNodeRequest extends RequestBase {
   node_id: NodeId
   /** The period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
-  master_timeout?: TimeUnit
+  master_timeout?: Duration
   /** The period to wait for a response.
     * If no response is received before the timeout expires, the request fails and returns an error. */
-  timeout?: TimeUnit
+  timeout?: Duration
   /** Valid values are restart, remove, or replace.
     * Use restart when you need to temporarily shut down a node to perform an upgrade, make configuration changes, or perform other maintenance.
     * Because the node is expected to rejoin the cluster, data is not migrated off of the node.
@@ -36740,6 +36927,15 @@ export interface SqlQueryRequest extends RequestBase {
     * You can also specify a format using the `Accept` HTTP header.
     * If you specify both this parameter and the `Accept` HTTP header, this parameter takes precedence. */
   format?: SqlQuerySqlFormat
+  /** Specifies a subset of projects to target for the search using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** If `true`, the response has partial results when there are shard request timeouts or shard failures.
     * If `false`, the API returns an error with no partial results. */
   allow_partial_search_results?: boolean
@@ -36789,9 +36985,9 @@ export interface SqlQueryRequest extends RequestBase {
     * To save a synchronous search, you must specify this parameter and the `keep_on_completion` parameter. */
   wait_for_completion_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { format?: never, allow_partial_search_results?: never, catalog?: never, columnar?: never, cursor?: never, fetch_size?: never, field_multi_value_leniency?: never, filter?: never, index_using_frozen?: never, keep_alive?: never, keep_on_completion?: never, page_timeout?: never, params?: never, query?: never, request_timeout?: never, runtime_mappings?: never, time_zone?: never, wait_for_completion_timeout?: never }
+  body?: string | { [key: string]: any } & { format?: never, project_routing?: never, allow_partial_search_results?: never, catalog?: never, columnar?: never, cursor?: never, fetch_size?: never, field_multi_value_leniency?: never, filter?: never, index_using_frozen?: never, keep_alive?: never, keep_on_completion?: never, page_timeout?: never, params?: never, query?: never, request_timeout?: never, runtime_mappings?: never, time_zone?: never, wait_for_completion_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { format?: never, allow_partial_search_results?: never, catalog?: never, columnar?: never, cursor?: never, fetch_size?: never, field_multi_value_leniency?: never, filter?: never, index_using_frozen?: never, keep_alive?: never, keep_on_completion?: never, page_timeout?: never, params?: never, query?: never, request_timeout?: never, runtime_mappings?: never, time_zone?: never, wait_for_completion_timeout?: never }
+  querystring?: { [key: string]: any } & { format?: never, project_routing?: never, allow_partial_search_results?: never, catalog?: never, columnar?: never, cursor?: never, fetch_size?: never, field_multi_value_leniency?: never, filter?: never, index_using_frozen?: never, keep_alive?: never, keep_on_completion?: never, page_timeout?: never, params?: never, query?: never, request_timeout?: never, runtime_mappings?: never, time_zone?: never, wait_for_completion_timeout?: never }
 }
 
 export interface SqlQueryResponse {
@@ -36843,6 +37039,7 @@ export interface SqlTranslateResponse {
   fields?: (QueryDslFieldAndFormat | Field)[]
   query?: QueryDslQueryContainer
   sort?: Sort
+  track_total_hits?: SearchTrackHits
 }
 
 export interface SslCertificatesCertificateInformation {
@@ -36874,6 +37071,54 @@ export interface SslCertificatesRequest extends RequestBase {
 }
 
 export type SslCertificatesResponse = SslCertificatesCertificateInformation[]
+
+export interface StreamsLogsDisableRequest extends RequestBase {
+  /** The period to wait for a connection to the master node.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  master_timeout?: Duration
+  /** The period to wait for a response.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
+}
+
+export type StreamsLogsDisableResponse = AcknowledgedResponseBase
+
+export interface StreamsLogsEnableRequest extends RequestBase {
+  /** The period to wait for a connection to the master node.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  master_timeout?: Duration
+  /** The period to wait for a response.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
+}
+
+export type StreamsLogsEnableResponse = AcknowledgedResponseBase
+
+export interface StreamsStatusLogsStatus {
+  /** If true, the logs stream feature is enabled. */
+  enabled: boolean
+}
+
+export interface StreamsStatusRequest extends RequestBase {
+  /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
+  master_timeout?: TimeUnit
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
+}
+
+export interface StreamsStatusResponse {
+  logs: StreamsStatusLogsStatus
+}
 
 export interface SynonymsSynonymRule {
   /** The identifier for the synonym rule.
@@ -39546,4 +39791,15 @@ export interface SpecUtilsCommonCatQueryParameters {
   help?: boolean
   /** When set to `true` will enable verbose output. */
   v?: boolean
+  /** Sets the units for columns that contain a byte-size value.
+    * Note that byte-size value units work in terms of powers of 1024. For instance `1kb` means 1024 bytes, not 1000 bytes.
+    * If omitted, byte-size values are rendered with a suffix such as `kb`, `mb`, or `gb`, chosen such that the numeric value of the column is as small as possible whilst still being at least `1.0`.
+    * If given, byte-size values are rendered as an integer with no suffix, representing the value of the column in the chosen unit.
+    * Values that are not an exact multiple of the chosen unit are rounded down. */
+  bytes?: Bytes
+  /** Sets the units for columns that contain a time duration.
+    * If omitted, time duration values are rendered with a suffix such as `ms`, `s`, `m` or `h`, chosen such that the numeric value of the column is as small as possible whilst still being at least `1.0`.
+    * If given, time duration values are rendered as an integer with no suffix.
+    * Values that are not an exact multiple of the chosen unit are rounded down. */
+  time?: TimeUnit
 }

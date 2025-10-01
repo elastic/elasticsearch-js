@@ -89,7 +89,21 @@ export default async function ExistsApi (this: That, params: T.ExistsRequest, op
     pathParts: {
       id: params.id,
       index: params.index
-    }
+    },
+    acceptedParams: [
+      'id',
+      'index',
+      'preference',
+      'realtime',
+      'refresh',
+      'routing',
+      '_source',
+      '_source_excludes',
+      '_source_includes',
+      'stored_fields',
+      'version',
+      'version_type'
+    ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

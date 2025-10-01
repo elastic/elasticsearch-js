@@ -21,20 +21,21 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 export default class Snapshot {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'snapshot.cleanup_repository': {
         path: [
           'name'
@@ -236,7 +237,7 @@ export default class Snapshot {
   async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['snapshot.cleanup_repository']
+    } = this[kAcceptedParams]['snapshot.cleanup_repository']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -266,7 +267,12 @@ export default class Snapshot {
       name: 'snapshot.cleanup_repository',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -283,7 +289,7 @@ export default class Snapshot {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['snapshot.clone']
+    } = this[kAcceptedParams]['snapshot.clone']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -325,7 +331,14 @@ export default class Snapshot {
         repository: params.repository,
         snapshot: params.snapshot,
         target_snapshot: params.target_snapshot
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'snapshot',
+        'target_snapshot',
+        'indices',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -342,7 +355,7 @@ export default class Snapshot {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['snapshot.create']
+    } = this[kAcceptedParams]['snapshot.create']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -383,7 +396,20 @@ export default class Snapshot {
       pathParts: {
         repository: params.repository,
         snapshot: params.snapshot
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'snapshot',
+        'expand_wildcards',
+        'feature_states',
+        'ignore_unavailable',
+        'include_global_state',
+        'indices',
+        'metadata',
+        'partial',
+        'master_timeout',
+        'wait_for_completion'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -400,7 +426,7 @@ export default class Snapshot {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['snapshot.create_repository']
+    } = this[kAcceptedParams]['snapshot.create_repository']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -430,7 +456,14 @@ export default class Snapshot {
       name: 'snapshot.create_repository',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'repository',
+        'master_timeout',
+        'timeout',
+        'verify'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -445,7 +478,7 @@ export default class Snapshot {
   async delete (this: That, params: T.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['snapshot.delete']
+    } = this[kAcceptedParams]['snapshot.delete']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -476,7 +509,13 @@ export default class Snapshot {
       pathParts: {
         repository: params.repository,
         snapshot: params.snapshot
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'snapshot',
+        'master_timeout',
+        'wait_for_completion'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -491,7 +530,7 @@ export default class Snapshot {
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['snapshot.delete_repository']
+    } = this[kAcceptedParams]['snapshot.delete_repository']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -521,7 +560,12 @@ export default class Snapshot {
       name: 'snapshot.delete_repository',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -536,7 +580,7 @@ export default class Snapshot {
   async get (this: That, params: T.SnapshotGetRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['snapshot.get']
+    } = this[kAcceptedParams]['snapshot.get']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -567,7 +611,25 @@ export default class Snapshot {
       pathParts: {
         repository: params.repository,
         snapshot: params.snapshot
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'snapshot',
+        'after',
+        'from_sort_value',
+        'ignore_unavailable',
+        'index_details',
+        'index_names',
+        'include_repository',
+        'master_timeout',
+        'order',
+        'offset',
+        'size',
+        'slm_policy_filter',
+        'sort',
+        'state',
+        'verbose'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -582,7 +644,7 @@ export default class Snapshot {
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['snapshot.get_repository']
+    } = this[kAcceptedParams]['snapshot.get_repository']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -620,7 +682,12 @@ export default class Snapshot {
       name: 'snapshot.get_repository',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'local',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -635,7 +702,7 @@ export default class Snapshot {
   async repositoryAnalyze (this: That, params: T.SnapshotRepositoryAnalyzeRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['snapshot.repository_analyze']
+    } = this[kAcceptedParams]['snapshot.repository_analyze']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -665,7 +732,22 @@ export default class Snapshot {
       name: 'snapshot.repository_analyze',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'blob_count',
+        'concurrency',
+        'detailed',
+        'early_read_node_count',
+        'max_blob_size',
+        'max_total_data_size',
+        'rare_action_probability',
+        'rarely_abort_writes',
+        'read_node_count',
+        'register_operation_count',
+        'seed',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -680,7 +762,7 @@ export default class Snapshot {
   async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['snapshot.repository_verify_integrity']
+    } = this[kAcceptedParams]['snapshot.repository_verify_integrity']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -710,7 +792,18 @@ export default class Snapshot {
       name: 'snapshot.repository_verify_integrity',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'blob_thread_pool_concurrency',
+        'index_snapshot_verification_concurrency',
+        'index_verification_concurrency',
+        'max_bytes_per_sec',
+        'max_failed_shard_snapshots',
+        'meta_thread_pool_concurrency',
+        'snapshot_verification_concurrency',
+        'verify_blob_contents'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -727,7 +820,7 @@ export default class Snapshot {
       path: acceptedPath,
       body: acceptedBody,
       query: acceptedQuery
-    } = this.acceptedParams['snapshot.restore']
+    } = this[kAcceptedParams]['snapshot.restore']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -768,7 +861,23 @@ export default class Snapshot {
       pathParts: {
         repository: params.repository,
         snapshot: params.snapshot
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'snapshot',
+        'feature_states',
+        'ignore_index_settings',
+        'ignore_unavailable',
+        'include_aliases',
+        'include_global_state',
+        'index_settings',
+        'indices',
+        'partial',
+        'rename_pattern',
+        'rename_replacement',
+        'master_timeout',
+        'wait_for_completion'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -783,7 +892,7 @@ export default class Snapshot {
   async status (this: That, params?: T.SnapshotStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['snapshot.status']
+    } = this[kAcceptedParams]['snapshot.status']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -825,7 +934,13 @@ export default class Snapshot {
       pathParts: {
         repository: params.repository,
         snapshot: params.snapshot
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'snapshot',
+        'ignore_unavailable',
+        'master_timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -840,7 +955,7 @@ export default class Snapshot {
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['snapshot.verify_repository']
+    } = this[kAcceptedParams]['snapshot.verify_repository']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -870,7 +985,12 @@ export default class Snapshot {
       name: 'snapshot.verify_repository',
       pathParts: {
         name: params.name
-      }
+      },
+      acceptedParams: [
+        'repository',
+        'master_timeout',
+        'timeout'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

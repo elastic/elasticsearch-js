@@ -21,18 +21,19 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
+import { kAcceptedParams } from '../../client'
 
 interface That {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
 export default class Migration {
   transport: Transport
-  acceptedParams: Record<string, { path: string[], body: string[], query: string[] }>
+  [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
-    this.acceptedParams = {
+    this[kAcceptedParams] = {
       'migration.deprecations': {
         path: [
           'index'
@@ -63,7 +64,7 @@ export default class Migration {
   async deprecations (this: That, params?: T.MigrationDeprecationsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['migration.deprecations']
+    } = this[kAcceptedParams]['migration.deprecations']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -101,7 +102,10 @@ export default class Migration {
       name: 'migration.deprecations',
       pathParts: {
         index: params.index
-      }
+      },
+      acceptedParams: [
+        'index'
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -116,7 +120,7 @@ export default class Migration {
   async getFeatureUpgradeStatus (this: That, params?: T.MigrationGetFeatureUpgradeStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['migration.get_feature_upgrade_status']
+    } = this[kAcceptedParams]['migration.get_feature_upgrade_status']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -144,7 +148,9 @@ export default class Migration {
     const method = 'GET'
     const path = '/_migration/system_features'
     const meta: TransportRequestMetadata = {
-      name: 'migration.get_feature_upgrade_status'
+      name: 'migration.get_feature_upgrade_status',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -159,7 +165,7 @@ export default class Migration {
   async postFeatureUpgrade (this: That, params?: T.MigrationPostFeatureUpgradeRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
-    } = this.acceptedParams['migration.post_feature_upgrade']
+    } = this[kAcceptedParams]['migration.post_feature_upgrade']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -187,7 +193,9 @@ export default class Migration {
     const method = 'POST'
     const path = '/_migration/system_features'
     const meta: TransportRequestMetadata = {
-      name: 'migration.post_feature_upgrade'
+      name: 'migration.post_feature_upgrade',
+      acceptedParams: [
+      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
