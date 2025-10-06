@@ -2916,7 +2916,7 @@ export interface TaskFailure {
 export type TaskId = string | integer
 
 export interface TextEmbedding {
-  model_id: string
+  model_id?: string
   model_text: string
 }
 
