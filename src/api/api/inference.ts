@@ -223,6 +223,21 @@ export default class Inference {
           'timeout'
         ]
       },
+      'inference.put_contextualai': {
+        path: [
+          'task_type',
+          'contextualai_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
       'inference.put_custom': {
         path: [
           'task_type',
@@ -1366,6 +1381,73 @@ export default class Inference {
       acceptedParams: [
         'task_type',
         'cohere_inference_id',
+        'chunking_settings',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create an Contextual AI inference endpoint. Create an inference endpoint to perform an inference task with the `contexualai` service. To review the available `rerank` models, refer to <https://docs.contextual.ai/api-reference/rerank/rerank#body-model>.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-contextualai | Elasticsearch API documentation}
+    */
+  async putContextualai (this: That, params: T.InferencePutContextualaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutContextualaiResponse>
+  async putContextualai (this: That, params: T.InferencePutContextualaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutContextualaiResponse, unknown>>
+  async putContextualai (this: That, params: T.InferencePutContextualaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutContextualaiResponse>
+  async putContextualai (this: That, params: T.InferencePutContextualaiRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['inference.put_contextualai']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.contextualai_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_contextualai',
+      pathParts: {
+        task_type: params.task_type,
+        contextualai_inference_id: params.contextualai_inference_id
+      },
+      acceptedParams: [
+        'task_type',
+        'contextualai_inference_id',
         'chunking_settings',
         'service',
         'service_settings',

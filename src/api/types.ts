@@ -4781,7 +4781,9 @@ export interface TaskFailure {
 export type TaskId = string
 
 export interface TextEmbedding {
-  model_id: string
+  /** Model ID is required for all dense_vector fields but
+    * may be inferred for semantic_text fields */
+  model_id?: string
   model_text: string
 }
 
@@ -8641,6 +8643,7 @@ export interface MappingSearchAsYouTypeProperty extends MappingCorePropertyBase 
 
 export interface MappingSemanticTextIndexOptions {
   dense_vector?: MappingDenseVectorIndexOptions
+  sparse_vector?: MappingSparseVectorIndexOptions
 }
 
 export interface MappingSemanticTextProperty {
@@ -18864,6 +18867,7 @@ export interface IlmPolicy {
 }
 
 export interface IlmRolloverAction {
+  /** The `max_size` condition has been deprecated in 9.3.0 and `max_primary_shard_size` should be used instead */
   max_size?: ByteSize
   max_primary_shard_size?: ByteSize
   max_age?: Duration
@@ -21999,6 +22003,7 @@ export interface IndicesRolloverRolloverConditions {
   max_age_millis?: DurationValue<UnitMillis>
   min_docs?: long
   max_docs?: long
+  /** The `max_size` condition has been deprecated in 9.3.0 and `max_primary_shard_size` should be used instead */
   max_size?: ByteSize
   max_size_bytes?: long
   min_size?: ByteSize
@@ -23043,6 +23048,38 @@ export interface InferenceContentObject {
   type: string
 }
 
+export interface InferenceContextualAIServiceSettings {
+  /** A valid API key for your Contexutual AI account.
+    *
+    * IMPORTANT: You need to provide the API key only once, during the inference model creation.
+    * The get inference endpoint API does not retrieve your API key.
+    * After creating the inference model, you cannot change the associated API key.
+    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+  api_key: string
+  /** The name of the model to use for the inference task.
+    * Refer to the Contextual AI documentation for the list of available rerank models. */
+  model_id: string
+  /** This setting helps to minimize the number of rate limit errors returned from Contextual AI.
+    * The `contextualai` service sets a default number of requests allowed per minute depending on the task type.
+    * For `rerank`, it is set to `1000`. */
+  rate_limit?: InferenceRateLimitSetting
+}
+
+export type InferenceContextualAIServiceType = 'contextualai'
+
+export interface InferenceContextualAITaskSettings {
+  /** Instructions for the reranking model. Refer to <https://docs.contextual.ai/api-reference/rerank/rerank#body-instruction>
+    * Only for the `rerank` task type. */
+  instruction?: string
+  /** Whether to return the source documents in the response.
+    * Only for the `rerank` task type. */
+  return_documents?: boolean
+  /** The number of most relevant documents to return.
+    * If not specified, the reranking results of all documents will be returned.
+    * Only for the `rerank` task type. */
+  top_k?: integer
+}
+
 export interface InferenceCustomRequestParams {
   /** The body structure of the request. It requires passing in the string-escaped result of the JSON format HTTP request body.
     * For example:
@@ -23553,6 +23590,13 @@ export interface InferenceInferenceEndpointInfoCohere extends InferenceInference
   task_type: InferenceTaskTypeCohere
 }
 
+export interface InferenceInferenceEndpointInfoContextualAi extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeContextualAI
+}
+
 export interface InferenceInferenceEndpointInfoCustom extends InferenceInferenceEndpoint {
   /** The inference Id */
   inference_id: string
@@ -23851,6 +23895,7 @@ export interface InferenceRateLimitSetting {
     * * `azureopenai` service and task type `text_embedding`: `1440`
     * * `azureopenai` service and task type `completion`: `120`
     * * `cohere` service: `10000`
+    * * `contextualai` service: `1000`
     * * `elastic` service and task type `chat_completion`: `240`
     * * `googleaistudio` service: `360`
     * * `googlevertexai` service: `30000`
@@ -23958,6 +24003,8 @@ export type InferenceTaskTypeAzureAIStudio = 'text_embedding' | 'completion' | '
 export type InferenceTaskTypeAzureOpenAI = 'text_embedding' | 'completion'
 
 export type InferenceTaskTypeCohere = 'text_embedding' | 'rerank' | 'completion'
+
+export type InferenceTaskTypeContextualAI = 'rerank'
 
 export type InferenceTaskTypeCustom = 'text_embedding' | 'sparse_embedding' | 'rerank' | 'completion'
 
@@ -24398,6 +24445,30 @@ export interface InferencePutCohereRequest extends RequestBase {
 }
 
 export type InferencePutCohereResponse = InferenceInferenceEndpointInfoCohere
+
+export interface InferencePutContextualaiRequest extends RequestBase {
+  /** The type of the inference task that the model will perform. */
+  task_type: InferenceTaskTypeContextualAI
+  /** The unique identifier of the inference endpoint. */
+  contextualai_inference_id: Id
+  /** Specifies the amount of time to wait for the inference endpoint to be created. */
+  timeout?: Duration
+  /** The chunking configuration object. */
+  chunking_settings?: InferenceInferenceChunkingSettings
+  /** The type of service supported for the specified task type. In this case, `contextualai`. */
+  service: InferenceContextualAIServiceType
+  /** Settings used to install the inference model. These settings are specific to the `contextualai` service. */
+  service_settings: InferenceContextualAIServiceSettings
+  /** Settings to configure the inference task.
+    * These settings are specific to the task type you specified. */
+  task_settings?: InferenceContextualAITaskSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, contextualai_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, contextualai_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+}
+
+export type InferencePutContextualaiResponse = InferenceInferenceEndpointInfoContextualAi
 
 export interface InferencePutCustomRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -33187,6 +33258,11 @@ export interface SecurityManageUserPrivileges {
   applications: string[]
 }
 
+export interface SecurityNodeSecurityStats {
+  /** Role statistics. */
+  roles: SecurityRolesStats
+}
+
 export interface SecurityRealmInfo {
   name: Name
   type: string
@@ -33350,6 +33426,11 @@ export interface SecurityRoleTemplateScript {
   /** Specifies the language the script is written in. */
   lang?: ScriptLanguage
   options?: Record<string, string>
+}
+
+export interface SecurityRolesStats {
+  /** Document-level security (DLS) statistics. */
+  dls: XpackUsageSecurityRolesDls
 }
 
 export interface SecuritySearchAccess {
@@ -34192,6 +34273,18 @@ export interface SecurityGetSettingsResponse {
   'security-profile': SecuritySecuritySettings
   /** Settings for the index used to store tokens. */
   'security-tokens': SecuritySecuritySettings
+}
+
+export interface SecurityGetStatsRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
+}
+
+export interface SecurityGetStatsResponse {
+  /** A map of node IDs to security statistics for that node. */
+  nodes: Record<string, SecurityNodeSecurityStats>
 }
 
 export type SecurityGetTokenAccessTokenGrantType = 'password' | 'client_credentials' | '_kerberos' | 'refresh_token'
@@ -39685,9 +39778,22 @@ export interface XpackUsageSecurityRolesDls {
 }
 
 export interface XpackUsageSecurityRolesDlsBitSetCache {
+  /** Number of entries in the cache. */
   count: integer
+  /** Human-readable amount of memory taken up by the cache. */
   memory?: ByteSize
+  /** Memory taken up by the cache in bytes. */
   memory_in_bytes: ulong
+  /** Total number of cache hits. */
+  hits: long
+  /** Total number of cache misses. */
+  misses: long
+  /** Total number of cache evictions. */
+  evictions: long
+  /** Total combined time spent in cache for hits in milliseconds. */
+  hits_time_in_millis: DurationValue<UnitMillis>
+  /** Total combined time spent in cache for misses in milliseconds. */
+  misses_time_in_millis: DurationValue<UnitMillis>
 }
 
 export interface XpackUsageSecurityRolesFile {
