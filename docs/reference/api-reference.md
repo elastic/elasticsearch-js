@@ -7849,6 +7849,31 @@ These settings are specific to the `cohere` service.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
+## client.inference.putContextualai [_inference.put_contextualai]
+Create an Contextual AI inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `contexualai` service.
+
+To review the available `rerank` models, refer to <https://docs.contextual.ai/api-reference/rerank/rerank#body-model>.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-contextualai)
+
+```ts
+client.inference.putContextualai({ task_type, contextualai_inference_id, service, service_settings })
+```
+
+### Arguments [_arguments_inference.put_contextualai]
+
+#### Request (object) [_request_inference.put_contextualai]
+- **`task_type` (Enum("rerank"))**: The type of the inference task that the model will perform.
+- **`contextualai_inference_id` (string)**: The unique identifier of the inference endpoint.
+- **`service` (Enum("contextualai"))**: The type of service supported for the specified task type. In this case, `contextualai`.
+- **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `contextualai` service.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+- **`task_settings` (Optional, { instruction, return_documents, top_k })**: Settings to configure the inference task.
+These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
+
 ## client.inference.putCustom [_inference.put_custom]
 Create a custom inference endpoint.
 
@@ -12347,7 +12372,9 @@ client.security.getSettings({ ... })
 If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.security.getStats [_security.get_stats]
-Get security statistics for all nodes
+Get security stats.
+
+Gather security usage statistics from all node(s) within the cluster.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-stats)
 

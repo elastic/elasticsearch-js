@@ -2471,13 +2471,13 @@ export default class Security {
   }
 
   /**
-    * Get security statistics for all nodes
+    * Get security stats. Gather security usage statistics from all node(s) within the cluster.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-stats | Elasticsearch API documentation}
     */
-  async getStats (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getStats (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getStats (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getStats (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getStats (this: That, params?: T.SecurityGetStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetStatsResponse>
+  async getStats (this: That, params?: T.SecurityGetStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetStatsResponse, unknown>>
+  async getStats (this: That, params?: T.SecurityGetStatsRequest, options?: TransportRequestOptions): Promise<T.SecurityGetStatsResponse>
+  async getStats (this: That, params?: T.SecurityGetStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this[kAcceptedParams]['security.get_stats']
@@ -2500,6 +2500,7 @@ export default class Security {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
