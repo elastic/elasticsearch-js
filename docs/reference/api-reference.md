@@ -15043,7 +15043,7 @@ index will not be deleted
 ## client.transform.getNodeStats [_transform.get_node_stats]
 Retrieves transform usage information for transform nodes
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform-node-stats.html)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-get-transform-stats)
 
 ```ts
 client.transform.getNodeStats()
