@@ -2920,7 +2920,7 @@ export interface TaskFailure {
 export type TaskId = string | integer
 
 export interface TextEmbedding {
-  model_id: string
+  model_id?: string
   model_text: string
 }
 
@@ -5951,6 +5951,7 @@ export interface MappingSemanticTextProperty {
   search_inference_id?: Id
   index_options?: MappingSemanticTextIndexOptions
   chunking_settings?: MappingChunkingSettings
+  fields?: Record<PropertyName, MappingProperty>
 }
 
 export interface MappingShapeProperty extends MappingDocValuesPropertyBase {
@@ -21212,6 +21213,7 @@ export interface SqlTranslateResponse {
   fields?: (QueryDslFieldAndFormat | Field)[]
   query?: QueryDslQueryContainer
   sort?: Sort
+  track_total_hits?: SearchTrackHits
 }
 
 export interface SslCertificatesCertificateInformation {
