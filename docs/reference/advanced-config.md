@@ -19,7 +19,7 @@ For information about the `Transport` class, refer to [Transport](/reference/tra
 
 ## `ConnectionPool` [_connectionpool]
 
-This class is responsible for keeping in memory all the {{es}} Connection that you are using. There is a single Connection for every node. The connection pool handles the resurrection strategies and the updates of the pool.
+This class is responsible for keeping in memory all the {{es}} connections that you are using. There is a single `Connection` for every node. The connection pool handles the resurrection strategies and the updates of the pool.
 
 ```js
 const { Client, ConnectionPool } = require('@elastic/elasticsearch')
@@ -41,7 +41,7 @@ const client = new Client({
 
 ## `Connection` [_connection]
 
-This class represents a single node, it holds every information we have on the node, such as roles, id, URL, custom headers and so on. The actual HTTP request is performed here, this means that if you want to swap the default HTTP client (Node.js core), you should override the `request` method of this class.
+This class represents a single node, it holds every information we have on the node, such as roles, id, URL, custom headers and so on. The actual HTTP request is performed here, this means that if you want to swap the default HTTP client ([Undici `Pool`](https://undici.nodejs.org/#/docs/api/Pool.md)), you should override the `request` method of this class.
 
 ```js
 const { Client, BaseConnection } = require('@elastic/elasticsearch')
@@ -59,6 +59,10 @@ const client = new Client({
 })
 ```
 
+`@elastic/transport` provides two `Connection` implementations:
+
+- `UndiciConnection`: manages HTTP connections using [Undici](https://undici.nodejs.org/), Node.js's high-performance HTTP client implementation; this is the default value of `Connection` and is recommended unless you have a use case that is not yet supported by Undici or `UndiciConnection`
+- `HttpConnection`: manages HTTP connections using [the `http` package](https://nodejs.org/api/http.html) from Node.js's standard library
 
 ## `Serializer` [_serializer]
 
@@ -175,5 +179,5 @@ try {
 
 ## Migrate to v8 [_migrate_to_v8]
 
-The Node.js client can be configured to emit an HTTP header `Accept: application/vnd.elasticsearch+json; compatible-with=7` which signals to Elasticsearch that the client is requesting `7.x` version of request and response bodies. This allows for upgrading from 7.x to 8.x version of Elasticsearch without upgrading everything at once. Elasticsearch should be upgraded first after the compatibility header is configured and clients should be upgraded second. To enable to setting, configure the environment variable `ELASTIC_CLIENT_APIVERSIONING` to `true`.
+The Node.js client can be configured to emit an HTTP header `Accept: application/vnd.elasticsearch+json; compatible-with=7` which signals to {{es}} that the client is requesting `7.x` version of request and response bodies. This allows for upgrading from 7.x to 8.x version of {{es}} without upgrading everything at once. {{es}} should be upgraded first after the compatibility header is configured and clients should be upgraded second. To enable to setting, configure the environment variable `ELASTIC_CLIENT_APIVERSIONING` to `true`.
 

@@ -164,7 +164,7 @@ export interface ClientOptions {
     * @defaultValue true */
   enableMetaHeader?: boolean
   /** @property cloud Custom configuration for connecting to Elastic Cloud, in lieu of a `node` or `nodes` configuration
-    * @remarks Read https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-connecting.html#client-usage for more details
+    * @remarks Read https://www.elastic.co/docs/reference/elasticsearch/clients/javascript/connecting#client-usage for more details
     * @defaultValue null */
   cloud?: {
     id: string
@@ -182,7 +182,7 @@ export interface ClientOptions {
     * @defaultValue null */
   maxCompressedResponseSize?: number
   /** @property redaction Options for how to redact potentially sensitive data from metadata attached to `Error` objects
-    * @remarks Read https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/advanced-config.html#redaction for more details
+    * @remarks Read https://www.elastic.co/docs/reference/elasticsearch/clients/javascript/advanced-config#redaction for more details
     * @defaultValue Configuration that will replace known sources of sensitive data */
   redaction?: RedactionOptions
   /** @property serverMode Setting to "serverless" will change some default behavior, like enabling compression and disabling features that assume the possibility of multiple Elasticsearch nodes.
@@ -443,7 +443,7 @@ export default class Client extends API {
 
   /**
    * Creates a child client instance that shared its connection pool with the parent client
-   * @see {@link https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/child.html}
+   * @see {@link https://www.elastic.co/docs/reference/elasticsearch/clients/javascript/child}
    */
   child (opts: ClientOptions): Client {
     // Merge the new options with the initial ones

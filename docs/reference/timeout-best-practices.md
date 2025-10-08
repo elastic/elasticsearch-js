@@ -9,5 +9,5 @@ Starting in 9.0.0, this client is configured to not time out any HTTP request by
 
 Prior to 9.0, this client was configured by default to operate like many HTTP client libraries do, by using a relatively short (30 second) timeout on all requests sent to {{es}}, raising a `TimeoutError` when that time period elapsed without receiving a response.
 
-If you need to set timeouts on Elasticsearch requests, setting the `requestTimeout` value to a millisecond value will cause this client to operate as it did prior to 9.0.
+If you need to set timeouts on {{es}} requests, setting the `requestTimeout` value to a millisecond value will cause this client to operate as it did prior to 9.0.
 

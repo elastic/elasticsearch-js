@@ -77,6 +77,10 @@ When you start {{es}} for the first time you’ll see a distinct block like the 
 
 Depending on the circumstances there are two options for verifying the HTTPS connection, either verifying with the CA certificate itself or via the HTTP CA certificate fingerprint.
 
+::::{warning}
+If you have set [the `agent` option](/reference/basic-config.md#agent-config) on your client instance to a function and are using `UndiciConnection`&mdash;the default `Connection` value starting in 8.0&mdash;all `caFingerprint` and `tls` options will be ignored. It is your responsibility to ensure that your custom agent will properly verify HTTPS connections.
+::::
+
 ### TLS configuration [auth-tls]
 
 The generated root CA certificate can be found in the `certs` directory in your {{es}} config location (`$ES_CONF_PATH/certs/http_ca.crt`). If you’re running {{es}} in Docker there is [additional documentation for retrieving the CA certificate](docs-content://deploy-manage/deploy/self-managed/install-elasticsearch-with-docker.md).
@@ -332,7 +336,7 @@ The supported request specific options are:
 | Option | Description |
 | --- | ----------- |
 | `ignore` | `number[]` -  HTTP status codes which should not be considered errors for this request.<br>*Default:* `null` |
-| `requestTimeout` | `number` or `string` - Max request timeout for the request in milliseconds. This overrides the client default, which is to not time out at all. See [Elasticsearch best practices for HTML clients](elasticsearch://reference/elasticsearch/configuration-reference/networking-settings.md#_http_client_configuration) for more info.<br>_Default:_ No timeout |
+| `requestTimeout` | `number` or `string` - Max request timeout for the request in milliseconds. This overrides the client default, which is to not time out at all. See [{{es}} best practices for HTML clients](elasticsearch://reference/elasticsearch/configuration-reference/networking-settings.md#_http_client_configuration) for more info.<br>_Default:_ No timeout |connecting
 | `retryOnTimeout` | `boolean` - Retry requests that have timed out.*Default:* `false` |
 | `maxRetries` | `number` - Max number of retries for the request, it overrides the client default.<br>*Default:* `3` |
 | `compression` | `string` or  `boolean` - Enables body compression for the request.<br>*Options:* `false`, `'gzip'`<br>*Default:* `false` |
@@ -477,9 +481,9 @@ You can find the errors exported by the client in the table below.
 
 ## Keep-alive connections [keep-alive]
 
-By default, the client uses persistent, keep-alive connections to reduce the overhead of creating a new HTTP connection for each Elasticsearch request. If you are using the default `UndiciConnection` connection class, it maintains a pool of 256 connections with a keep-alive of 10 minutes. If you are using the legacy `HttpConnection` connection class, it maintains a pool of 256 connections with a keep-alive of 1 minute.
+By default, the client uses persistent, keep-alive connections to reduce the overhead of creating a new HTTP connection for each {{es}} request. If you are using the default `UndiciConnection` connection class, it maintains a pool of 256 connections with a keep-alive of 10 minutes. If you are using the legacy `HttpConnection` connection class, it maintains a pool of 256 connections with a keep-alive of 1 minute.
 
-If you need to disable keep-alive connections, you can override the HTTP agent with your preferred [HTTP agent options](https://nodejs.org/api/http.md#http_new_agent_options):
+If you need to disable keep-alive connections, you can override the HTTP agent with your preferred [HTTP agent options](/reference/basic-config.md#agent-config):
 
 ```js
 const client = new Client({
@@ -500,6 +504,48 @@ const client = new Client({
 })
 ```
 
+## Managing open connection limits [limit-open-connections]
+
+Starting in client 9.0, when using `@elastic/transport` 9.2.0 or later, you can provide a custom `agent` function to share a singleton [Undici `Agent`](https://undici.nodejs.org/#/docs/api/Agent.md) instance that can enforce client-wide connection limits.
+
+```typescript
+import { Agent } from 'undici'
+import { HttpConnection } from '@elastic/transport'
+
+// `maxOrigins * connections` (50 in this case) is the total connection limit
+const maxSocketAgent = new Agent({
+  keepAliveTimeout: 1000,
+  maxOrigins: 5,
+  connections: 10
+})
+
+const client = new Client({
+  node: '...',
+  auth: { ... },
+  agent: () => maxSocketAgent
+})
+```
+
+If using the legacy `HttpConnection`, you can use an [`Agent`](https://nodejs.org/api/https.html#class-httpsagent) singleton that enforces `maxTotalSockets`:
+
+```typescript
+import { Agent } from 'node:http'
+import { HttpConnection } from '@elastic/transport'
+
+const maxSocketAgent = new Agent({
+  keepAlive: true,
+  keepAliveMsecs: 1000,
+  maxTotalSockets: 50
+})
+
+const client = new Client({
+  node: '...',
+  auth: { ... },
+  Connection: HttpConnection,
+  agent: () => maxSocketAgent
+})
+```
+
 ## Closing a client’s connections [close-connections]
 
 If you would like to close all open connections being managed by an instance of the client, use the `close()` function:
@@ -513,4 +559,4 @@ client.close();
 
 ## Automatic product check [product-check]
 
-Since v7.14.0, the client performs a required product check before the first call. This pre-flight product check allows the client to establish the version of Elasticsearch that it is communicating with. The product check requires one additional HTTP request to be sent to the server as part of the request pipeline before the main API call is sent. In most cases, this will succeed during the very first API call that the client sends. Once the product check completes, no further product check HTTP requests are sent for subsequent API calls.
+Since v7.14.0, the client performs a required product check before the first call. This pre-flight product check allows the client to establish the version of {{es}} that it is communicating with. The product check requires one additional HTTP request to be sent to the server as part of the request pipeline before the main API call is sent. In most cases, this will succeed during the very first API call that the client sends. Once the product check completes, no further product check HTTP requests are sent for subsequent API calls.
