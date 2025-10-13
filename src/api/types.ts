@@ -3733,6 +3733,11 @@ export type ByteSize = long | string
 
 export type Bytes = 'b' | 'kb' | 'mb' | 'gb' | 'tb' | 'pb'
 
+export interface CartesianPoint {
+  x: double
+  y: double
+}
+
 export type CategoryId = string
 
 export type ClusterAlias = string
@@ -4802,6 +4807,11 @@ export type uint = number
 
 export type ulong = number
 
+export interface AggregationsAbstractChangePoint {
+  p_value: double
+  change_point: integer
+}
+
 export interface AggregationsAdjacencyMatrixAggregate extends AggregationsMultiBucketAggregateBase<AggregationsAdjacencyMatrixBucket> {
 }
 
@@ -4819,7 +4829,7 @@ export interface AggregationsAdjacencyMatrixBucketKeys extends AggregationsMulti
 export type AggregationsAdjacencyMatrixBucket = AggregationsAdjacencyMatrixBucketKeys
 & { [property: string]: AggregationsAggregate | string | long }
 
-export type AggregationsAggregate = AggregationsCardinalityAggregate | AggregationsHdrPercentilesAggregate | AggregationsHdrPercentileRanksAggregate | AggregationsTDigestPercentilesAggregate | AggregationsTDigestPercentileRanksAggregate | AggregationsPercentilesBucketAggregate | AggregationsMedianAbsoluteDeviationAggregate | AggregationsMinAggregate | AggregationsMaxAggregate | AggregationsSumAggregate | AggregationsAvgAggregate | AggregationsWeightedAvgAggregate | AggregationsValueCountAggregate | AggregationsSimpleValueAggregate | AggregationsDerivativeAggregate | AggregationsBucketMetricValueAggregate | AggregationsStatsAggregate | AggregationsStatsBucketAggregate | AggregationsExtendedStatsAggregate | AggregationsExtendedStatsBucketAggregate | AggregationsGeoBoundsAggregate | AggregationsGeoCentroidAggregate | AggregationsHistogramAggregate | AggregationsDateHistogramAggregate | AggregationsAutoDateHistogramAggregate | AggregationsVariableWidthHistogramAggregate | AggregationsStringTermsAggregate | AggregationsLongTermsAggregate | AggregationsDoubleTermsAggregate | AggregationsUnmappedTermsAggregate | AggregationsLongRareTermsAggregate | AggregationsStringRareTermsAggregate | AggregationsUnmappedRareTermsAggregate | AggregationsMultiTermsAggregate | AggregationsMissingAggregate | AggregationsNestedAggregate | AggregationsReverseNestedAggregate | AggregationsGlobalAggregate | AggregationsFilterAggregate | AggregationsChildrenAggregate | AggregationsParentAggregate | AggregationsSamplerAggregate | AggregationsUnmappedSamplerAggregate | AggregationsGeoHashGridAggregate | AggregationsGeoTileGridAggregate | AggregationsGeoHexGridAggregate | AggregationsRangeAggregate | AggregationsDateRangeAggregate | AggregationsGeoDistanceAggregate | AggregationsIpRangeAggregate | AggregationsIpPrefixAggregate | AggregationsFiltersAggregate | AggregationsAdjacencyMatrixAggregate | AggregationsSignificantLongTermsAggregate | AggregationsSignificantStringTermsAggregate | AggregationsUnmappedSignificantTermsAggregate | AggregationsCompositeAggregate | AggregationsFrequentItemSetsAggregate | AggregationsTimeSeriesAggregate | AggregationsScriptedMetricAggregate | AggregationsTopHitsAggregate | AggregationsInferenceAggregate | AggregationsStringStatsAggregate | AggregationsBoxPlotAggregate | AggregationsTopMetricsAggregate | AggregationsTTestAggregate | AggregationsRateAggregate | AggregationsCumulativeCardinalityAggregate | AggregationsMatrixStatsAggregate | AggregationsGeoLineAggregate
+export type AggregationsAggregate = AggregationsCardinalityAggregate | AggregationsHdrPercentilesAggregate | AggregationsHdrPercentileRanksAggregate | AggregationsTDigestPercentilesAggregate | AggregationsTDigestPercentileRanksAggregate | AggregationsPercentilesBucketAggregate | AggregationsMedianAbsoluteDeviationAggregate | AggregationsMinAggregate | AggregationsMaxAggregate | AggregationsSumAggregate | AggregationsAvgAggregate | AggregationsWeightedAvgAggregate | AggregationsValueCountAggregate | AggregationsSimpleValueAggregate | AggregationsDerivativeAggregate | AggregationsBucketMetricValueAggregate | AggregationsChangePointAggregate | AggregationsStatsAggregate | AggregationsStatsBucketAggregate | AggregationsExtendedStatsAggregate | AggregationsExtendedStatsBucketAggregate | AggregationsCartesianBoundsAggregate | AggregationsCartesianCentroidAggregate | AggregationsGeoBoundsAggregate | AggregationsGeoCentroidAggregate | AggregationsHistogramAggregate | AggregationsDateHistogramAggregate | AggregationsAutoDateHistogramAggregate | AggregationsVariableWidthHistogramAggregate | AggregationsStringTermsAggregate | AggregationsLongTermsAggregate | AggregationsDoubleTermsAggregate | AggregationsUnmappedTermsAggregate | AggregationsLongRareTermsAggregate | AggregationsStringRareTermsAggregate | AggregationsUnmappedRareTermsAggregate | AggregationsMultiTermsAggregate | AggregationsMissingAggregate | AggregationsNestedAggregate | AggregationsReverseNestedAggregate | AggregationsGlobalAggregate | AggregationsFilterAggregate | AggregationsChildrenAggregate | AggregationsParentAggregate | AggregationsSamplerAggregate | AggregationsUnmappedSamplerAggregate | AggregationsGeoHashGridAggregate | AggregationsGeoTileGridAggregate | AggregationsGeoHexGridAggregate | AggregationsRangeAggregate | AggregationsDateRangeAggregate | AggregationsGeoDistanceAggregate | AggregationsIpRangeAggregate | AggregationsIpPrefixAggregate | AggregationsFiltersAggregate | AggregationsAdjacencyMatrixAggregate | AggregationsSignificantLongTermsAggregate | AggregationsSignificantStringTermsAggregate | AggregationsUnmappedSignificantTermsAggregate | AggregationsCompositeAggregate | AggregationsFrequentItemSetsAggregate | AggregationsTimeSeriesAggregate | AggregationsScriptedMetricAggregate | AggregationsTopHitsAggregate | AggregationsInferenceAggregate | AggregationsStringStatsAggregate | AggregationsBoxPlotAggregate | AggregationsTopMetricsAggregate | AggregationsTTestAggregate | AggregationsRateAggregate | AggregationsCumulativeCardinalityAggregate | AggregationsMatrixStatsAggregate | AggregationsGeoLineAggregate
 
 export interface AggregationsAggregateBase {
   meta?: Metadata
@@ -4866,9 +4876,19 @@ export interface AggregationsAggregationContainer {
   bucket_correlation?: AggregationsBucketCorrelationAggregation
   /** A single-value metrics aggregation that calculates an approximate count of distinct values. */
   cardinality?: AggregationsCardinalityAggregation
+  /** A metric aggregation that computes the spatial bounding box containing all values for a Point or Shape field. */
+  cartesian_bounds?: AggregationsCartesianBoundsAggregation
+  /** A metric aggregation that computes the weighted centroid from all coordinate values for point and shape fields. */
+  cartesian_centroid?: AggregationsCartesianCentroidAggregation
   /** A multi-bucket aggregation that groups semi-structured text into buckets.
     * @experimental */
   categorize_text?: AggregationsCategorizeTextAggregation
+  /** A sibling pipeline that detects, spikes, dips, and change points in a metric.
+    * Given a distribution of values provided by the sibling multi-bucket aggregation,
+    * this aggregation indicates the bucket of any spike or dip and/or the bucket at which
+    * the largest change in the distribution of values, if they are statistically significant.
+    * There must be at least 22 bucketed values. Fewer than 1,000 is preferred. */
+  change_point?: AggregationsChangePointAggregation
   /** A single bucket aggregation that selects child documents that have the specified type, as defined in a `join` field. */
   children?: AggregationsChildrenAggregation
   /** A multi-bucket aggregation that creates composite buckets from different sources.
@@ -4894,6 +4914,9 @@ export interface AggregationsAggregationContainer {
   extended_stats_bucket?: AggregationsExtendedStatsBucketAggregation
   /** A bucket aggregation which finds frequent item sets, a form of association rules mining that identifies items that often occur together. */
   frequent_item_sets?: AggregationsFrequentItemSetsAggregation
+  /** A bucket aggregation which finds frequent item sets, a form of association rules mining that identifies items that often occur together.
+    * @alias frequent_item_sets */
+  frequent_items?: AggregationsFrequentItemSetsAggregation
   /** A single bucket aggregation that narrows the set of documents to those that match a query. */
   filter?: QueryDslQueryContainer
   /** A multi-bucket aggregation where each bucket contains the documents that match a query. */
@@ -5192,6 +5215,21 @@ export interface AggregationsCardinalityAggregation extends AggregationsMetricAg
 
 export type AggregationsCardinalityExecutionMode = 'global_ordinals' | 'segment_ordinals' | 'direct' | 'save_memory_heuristic' | 'save_time_heuristic'
 
+export interface AggregationsCartesianBoundsAggregate extends AggregationsAggregateBase {
+  bounds?: TopLeftBottomRightGeoBounds
+}
+
+export interface AggregationsCartesianBoundsAggregation extends AggregationsMetricAggregationBase {
+}
+
+export interface AggregationsCartesianCentroidAggregate extends AggregationsAggregateBase {
+  count: long
+  location?: CartesianPoint
+}
+
+export interface AggregationsCartesianCentroidAggregation extends AggregationsMetricAggregationBase {
+}
+
 export interface AggregationsCategorizeTextAggregation {
   /** The semi-structured text field to categorize. */
   field: Field
@@ -5229,6 +5267,31 @@ export interface AggregationsCategorizeTextAggregation {
 }
 
 export type AggregationsCategorizeTextAnalyzer = string | AggregationsCustomCategorizeTextAnalyzer
+
+export interface AggregationsChangePointAggregate extends AggregationsAggregateBase {
+  type: AggregationsChangeType
+  bucket?: AggregationsChangePointBucket
+}
+
+export interface AggregationsChangePointAggregation extends AggregationsPipelineAggregationBase {
+}
+
+export interface AggregationsChangePointBucketKeys extends AggregationsMultiBucketBase {
+  key: FieldValue
+}
+export type AggregationsChangePointBucket = AggregationsChangePointBucketKeys
+& { [property: string]: AggregationsAggregate | FieldValue | long }
+
+export interface AggregationsChangeType {
+  dip?: AggregationsDip
+  distribution_change?: AggregationsDistributionChange
+  indeterminable?: AggregationsIndeterminable
+  non_stationary?: AggregationsNonStationary
+  spike?: AggregationsSpike
+  stationary?: AggregationsStationary
+  step_change?: AggregationsStepChange
+  trend_change?: AggregationsTrendChange
+}
 
 export interface AggregationsChiSquareHeuristic {
   /** Set to `false` if you defined a custom background filter that represents a different set of documents that you want to compare to. */
@@ -5409,6 +5472,12 @@ export interface AggregationsDerivativeAggregate extends AggregationsSingleMetri
 }
 
 export interface AggregationsDerivativeAggregation extends AggregationsPipelineAggregationBase {
+}
+
+export interface AggregationsDip extends AggregationsAbstractChangePoint {
+}
+
+export interface AggregationsDistributionChange extends AggregationsAbstractChangePoint {
 }
 
 export interface AggregationsDiversifiedSamplerAggregation extends AggregationsBucketAggregationBase {
@@ -5778,6 +5847,10 @@ export interface AggregationsHoltWintersMovingAverageAggregation extends Aggrega
 
 export type AggregationsHoltWintersType = 'add' | 'mult'
 
+export interface AggregationsIndeterminable {
+  reason: string
+}
+
 export interface AggregationsInferenceAggregateKeys extends AggregationsAggregateBase {
   value?: FieldValue
   feature_importance?: AggregationsInferenceFeatureImportance[]
@@ -6071,6 +6144,12 @@ export type AggregationsNestedAggregate = AggregationsNestedAggregateKeys
 export interface AggregationsNestedAggregation extends AggregationsBucketAggregationBase {
   /** The path to the field of type `nested`. */
   path?: Field
+}
+
+export interface AggregationsNonStationary {
+  p_value: double
+  r_value: double
+  trend: string
 }
 
 export interface AggregationsNormalizeAggregation extends AggregationsPipelineAggregationBase {
@@ -6406,6 +6485,9 @@ export interface AggregationsSingleMetricAggregateBase extends AggregationsAggre
   value_as_string?: string
 }
 
+export interface AggregationsSpike extends AggregationsAbstractChangePoint {
+}
+
 export interface AggregationsStandardDeviationBounds {
   upper: double | null
   lower: double | null
@@ -6422,6 +6504,9 @@ export interface AggregationsStandardDeviationBoundsAsString {
   lower_population: string
   upper_sampling: string
   lower_sampling: string
+}
+
+export interface AggregationsStationary {
 }
 
 export interface AggregationsStatsAggregate extends AggregationsAggregateBase {
@@ -6443,6 +6528,9 @@ export interface AggregationsStatsBucketAggregate extends AggregationsStatsAggre
 }
 
 export interface AggregationsStatsBucketAggregation extends AggregationsPipelineAggregationBase {
+}
+
+export interface AggregationsStepChange extends AggregationsAbstractChangePoint {
 }
 
 export interface AggregationsStringRareTermsAggregate extends AggregationsMultiBucketAggregateBase<AggregationsStringRareTermsBucket> {
@@ -6659,6 +6747,12 @@ export interface AggregationsTopMetricsAggregation extends AggregationsMetricAgg
 export interface AggregationsTopMetricsValue {
   /** A field to return as a metric. */
   field: Field
+}
+
+export interface AggregationsTrendChange {
+  p_value: double
+  r_value: double
+  change_point: integer
 }
 
 export interface AggregationsUnmappedRareTermsAggregate extends AggregationsMultiBucketAggregateBase<void> {
@@ -36554,6 +36648,12 @@ export interface TransformSettings {
     * exceptions occur, the page size is dynamically adjusted to a lower value. The minimum value is `10` and the
     * maximum is `65,536`. */
   max_page_search_size?: integer
+  /** Specifies whether the transform checkpoint will use the Point In Time API while searching over the source index.
+    * In general, Point In Time is an optimization that will reduce pressure on the source index by reducing the amount
+    * of refreshes and merges, but it can be expensive if a large number of Point In Times are opened and closed for a
+    * given index. The benefits and impact depend on the data being searched, the ingest rate into the source index, and
+    * the amount of other consumers searching the same source index. */
+  use_point_in_time?: boolean
   /** If `true`, the transform runs in unattended mode. In unattended mode, the transform retries indefinitely in case
     * of an error which means the transform never fails. Setting the number of retries other than infinite fails in
     * validation. */
