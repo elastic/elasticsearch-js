@@ -15856,7 +15856,7 @@ indexing. The minimum value is 1s and the maximum is 1h.
 These objects define the group by fields and the aggregation to reduce
 the data.
 ** *`source` (Optional, { index, query, remote, size, slice, sort, _source, runtime_mappings })*: The source of the data for the transform.
-** *`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, unattended })*: Defines optional transform settings.
+** *`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })*: Defines optional transform settings.
 ** *`sync` (Optional, { time })*: Defines the properties transforms require to run continuously.
 ** *`retention_policy` (Optional, { time })*: Defines a retention policy for the transform. Data that meets the defined
 criteria is deleted from the destination index.
@@ -15914,7 +15914,7 @@ The minimum value is `1s` and the maximum is `1h`.
 and the aggregation to reduce the data.
 ** *`retention_policy` (Optional, { time })*: Defines a retention policy for the transform. Data that meets the defined criteria is deleted from the
 destination index.
-** *`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, unattended })*: Defines optional transform settings.
+** *`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })*: Defines optional transform settings.
 ** *`sync` (Optional, { time })*: Defines the properties transforms require to run continuously.
 ** *`defer_validation` (Optional, boolean)*: When the transform is created, a series of validations occur to ensure its success. For example, there is a
 check for the existence of the source indices and a check that the destination index is not part of the source
@@ -16097,7 +16097,7 @@ the event of transient failures while the transform is searching or
 indexing. The minimum value is 1s and the maximum is 1h.
 ** *`_meta` (Optional, Record<string, User-defined value>)*: Defines optional transform metadata.
 ** *`source` (Optional, { index, query, remote, size, slice, sort, _source, runtime_mappings })*: The source of the data for the transform.
-** *`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, unattended })*: Defines optional transform settings.
+** *`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })*: Defines optional transform settings.
 ** *`sync` (Optional, { time })*: Defines the properties transforms require to run continuously.
 ** *`retention_policy` (Optional, { time } | null)*: Defines a retention policy for the transform. Data that meets the defined
 criteria is deleted from the destination index.
