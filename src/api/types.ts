@@ -21323,6 +21323,7 @@ export interface TransformSettings {
   deduce_mappings?: boolean
   docs_per_second?: float
   max_page_search_size?: integer
+  use_point_in_time?: boolean
   unattended?: boolean
 }
 
