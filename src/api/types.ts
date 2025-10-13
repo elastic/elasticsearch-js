@@ -1752,10 +1752,13 @@ export interface ReindexRemoteSource {
   /** The URL for the remote instance of Elasticsearch that you want to index from.
     * This information is required when you're indexing from remote. */
   host: Host
-  /** The username to use for authentication with the remote host. */
+  /** The username to use for authentication with the remote host (required when using basic auth). */
   username?: Username
-  /** The password to use for authentication with the remote host. */
+  /** The password to use for authentication with the remote host (required when using basic auth). */
   password?: Password
+  /** The API key to use for authentication with the remote host (as an alternative to basic auth when the remote cluster is in Elastic Cloud).
+    * (It is not permitted to set this and also to set an `Authorization` header via `headers`.) */
+  api_key?: string
   /** The remote socket read timeout. */
   socket_timeout?: Duration
 }
@@ -1873,7 +1876,7 @@ export interface ReindexSource {
   sort?: Sort
   /** If `true`, reindex all source fields.
     * Set it to a list to reindex select fields. */
-  _source?: Fields
+  _source?: SearchSourceConfig
   runtime_mappings?: MappingRuntimeFields
 }
 
@@ -3823,6 +3826,11 @@ export type ByteSize = long | string
 
 export type Bytes = 'b' | 'kb' | 'mb' | 'gb' | 'tb' | 'pb'
 
+export interface CartesianPoint {
+  x: double
+  y: double
+}
+
 export type CategoryId = string
 
 export interface ChunkRescorer {
@@ -4920,6 +4928,11 @@ export type uint = number
 
 export type ulong = number
 
+export interface AggregationsAbstractChangePoint {
+  p_value: double
+  change_point: integer
+}
+
 export interface AggregationsAdjacencyMatrixAggregate extends AggregationsMultiBucketAggregateBase<AggregationsAdjacencyMatrixBucket> {
 }
 
@@ -4937,7 +4950,7 @@ export interface AggregationsAdjacencyMatrixBucketKeys extends AggregationsMulti
 export type AggregationsAdjacencyMatrixBucket = AggregationsAdjacencyMatrixBucketKeys
 & { [property: string]: AggregationsAggregate | string | long }
 
-export type AggregationsAggregate = AggregationsCardinalityAggregate | AggregationsHdrPercentilesAggregate | AggregationsHdrPercentileRanksAggregate | AggregationsTDigestPercentilesAggregate | AggregationsTDigestPercentileRanksAggregate | AggregationsPercentilesBucketAggregate | AggregationsMedianAbsoluteDeviationAggregate | AggregationsMinAggregate | AggregationsMaxAggregate | AggregationsSumAggregate | AggregationsAvgAggregate | AggregationsWeightedAvgAggregate | AggregationsValueCountAggregate | AggregationsSimpleValueAggregate | AggregationsDerivativeAggregate | AggregationsBucketMetricValueAggregate | AggregationsStatsAggregate | AggregationsStatsBucketAggregate | AggregationsExtendedStatsAggregate | AggregationsExtendedStatsBucketAggregate | AggregationsGeoBoundsAggregate | AggregationsGeoCentroidAggregate | AggregationsHistogramAggregate | AggregationsDateHistogramAggregate | AggregationsAutoDateHistogramAggregate | AggregationsVariableWidthHistogramAggregate | AggregationsStringTermsAggregate | AggregationsLongTermsAggregate | AggregationsDoubleTermsAggregate | AggregationsUnmappedTermsAggregate | AggregationsLongRareTermsAggregate | AggregationsStringRareTermsAggregate | AggregationsUnmappedRareTermsAggregate | AggregationsMultiTermsAggregate | AggregationsMissingAggregate | AggregationsNestedAggregate | AggregationsReverseNestedAggregate | AggregationsGlobalAggregate | AggregationsFilterAggregate | AggregationsChildrenAggregate | AggregationsParentAggregate | AggregationsSamplerAggregate | AggregationsUnmappedSamplerAggregate | AggregationsGeoHashGridAggregate | AggregationsGeoTileGridAggregate | AggregationsGeoHexGridAggregate | AggregationsRangeAggregate | AggregationsDateRangeAggregate | AggregationsGeoDistanceAggregate | AggregationsIpRangeAggregate | AggregationsIpPrefixAggregate | AggregationsFiltersAggregate | AggregationsAdjacencyMatrixAggregate | AggregationsSignificantLongTermsAggregate | AggregationsSignificantStringTermsAggregate | AggregationsUnmappedSignificantTermsAggregate | AggregationsCompositeAggregate | AggregationsFrequentItemSetsAggregate | AggregationsTimeSeriesAggregate | AggregationsScriptedMetricAggregate | AggregationsTopHitsAggregate | AggregationsInferenceAggregate | AggregationsStringStatsAggregate | AggregationsBoxPlotAggregate | AggregationsTopMetricsAggregate | AggregationsTTestAggregate | AggregationsRateAggregate | AggregationsCumulativeCardinalityAggregate | AggregationsMatrixStatsAggregate | AggregationsGeoLineAggregate
+export type AggregationsAggregate = AggregationsCardinalityAggregate | AggregationsHdrPercentilesAggregate | AggregationsHdrPercentileRanksAggregate | AggregationsTDigestPercentilesAggregate | AggregationsTDigestPercentileRanksAggregate | AggregationsPercentilesBucketAggregate | AggregationsMedianAbsoluteDeviationAggregate | AggregationsMinAggregate | AggregationsMaxAggregate | AggregationsSumAggregate | AggregationsAvgAggregate | AggregationsWeightedAvgAggregate | AggregationsValueCountAggregate | AggregationsSimpleValueAggregate | AggregationsDerivativeAggregate | AggregationsBucketMetricValueAggregate | AggregationsChangePointAggregate | AggregationsStatsAggregate | AggregationsStatsBucketAggregate | AggregationsExtendedStatsAggregate | AggregationsExtendedStatsBucketAggregate | AggregationsCartesianBoundsAggregate | AggregationsCartesianCentroidAggregate | AggregationsGeoBoundsAggregate | AggregationsGeoCentroidAggregate | AggregationsHistogramAggregate | AggregationsDateHistogramAggregate | AggregationsAutoDateHistogramAggregate | AggregationsVariableWidthHistogramAggregate | AggregationsStringTermsAggregate | AggregationsLongTermsAggregate | AggregationsDoubleTermsAggregate | AggregationsUnmappedTermsAggregate | AggregationsLongRareTermsAggregate | AggregationsStringRareTermsAggregate | AggregationsUnmappedRareTermsAggregate | AggregationsMultiTermsAggregate | AggregationsMissingAggregate | AggregationsNestedAggregate | AggregationsReverseNestedAggregate | AggregationsGlobalAggregate | AggregationsFilterAggregate | AggregationsChildrenAggregate | AggregationsParentAggregate | AggregationsSamplerAggregate | AggregationsUnmappedSamplerAggregate | AggregationsGeoHashGridAggregate | AggregationsGeoTileGridAggregate | AggregationsGeoHexGridAggregate | AggregationsRangeAggregate | AggregationsDateRangeAggregate | AggregationsGeoDistanceAggregate | AggregationsIpRangeAggregate | AggregationsIpPrefixAggregate | AggregationsFiltersAggregate | AggregationsAdjacencyMatrixAggregate | AggregationsSignificantLongTermsAggregate | AggregationsSignificantStringTermsAggregate | AggregationsUnmappedSignificantTermsAggregate | AggregationsCompositeAggregate | AggregationsFrequentItemSetsAggregate | AggregationsTimeSeriesAggregate | AggregationsScriptedMetricAggregate | AggregationsTopHitsAggregate | AggregationsInferenceAggregate | AggregationsStringStatsAggregate | AggregationsBoxPlotAggregate | AggregationsTopMetricsAggregate | AggregationsTTestAggregate | AggregationsRateAggregate | AggregationsCumulativeCardinalityAggregate | AggregationsMatrixStatsAggregate | AggregationsGeoLineAggregate
 
 export interface AggregationsAggregateBase {
   meta?: Metadata
@@ -4984,9 +4997,19 @@ export interface AggregationsAggregationContainer {
   bucket_correlation?: AggregationsBucketCorrelationAggregation
   /** A single-value metrics aggregation that calculates an approximate count of distinct values. */
   cardinality?: AggregationsCardinalityAggregation
+  /** A metric aggregation that computes the spatial bounding box containing all values for a Point or Shape field. */
+  cartesian_bounds?: AggregationsCartesianBoundsAggregation
+  /** A metric aggregation that computes the weighted centroid from all coordinate values for point and shape fields. */
+  cartesian_centroid?: AggregationsCartesianCentroidAggregation
   /** A multi-bucket aggregation that groups semi-structured text into buckets.
     * @experimental */
   categorize_text?: AggregationsCategorizeTextAggregation
+  /** A sibling pipeline that detects, spikes, dips, and change points in a metric.
+    * Given a distribution of values provided by the sibling multi-bucket aggregation,
+    * this aggregation indicates the bucket of any spike or dip and/or the bucket at which
+    * the largest change in the distribution of values, if they are statistically significant.
+    * There must be at least 22 bucketed values. Fewer than 1,000 is preferred. */
+  change_point?: AggregationsChangePointAggregation
   /** A single bucket aggregation that selects child documents that have the specified type, as defined in a `join` field. */
   children?: AggregationsChildrenAggregation
   /** A multi-bucket aggregation that creates composite buckets from different sources.
@@ -5012,6 +5035,9 @@ export interface AggregationsAggregationContainer {
   extended_stats_bucket?: AggregationsExtendedStatsBucketAggregation
   /** A bucket aggregation which finds frequent item sets, a form of association rules mining that identifies items that often occur together. */
   frequent_item_sets?: AggregationsFrequentItemSetsAggregation
+  /** A bucket aggregation which finds frequent item sets, a form of association rules mining that identifies items that often occur together.
+    * @alias frequent_item_sets */
+  frequent_items?: AggregationsFrequentItemSetsAggregation
   /** A single bucket aggregation that narrows the set of documents to those that match a query. */
   filter?: QueryDslQueryContainer
   /** A multi-bucket aggregation where each bucket contains the documents that match a query. */
@@ -5313,6 +5339,21 @@ export interface AggregationsCardinalityAggregation extends AggregationsMetricAg
 
 export type AggregationsCardinalityExecutionMode = 'global_ordinals' | 'segment_ordinals' | 'direct' | 'save_memory_heuristic' | 'save_time_heuristic'
 
+export interface AggregationsCartesianBoundsAggregate extends AggregationsAggregateBase {
+  bounds?: TopLeftBottomRightGeoBounds
+}
+
+export interface AggregationsCartesianBoundsAggregation extends AggregationsMetricAggregationBase {
+}
+
+export interface AggregationsCartesianCentroidAggregate extends AggregationsAggregateBase {
+  count: long
+  location?: CartesianPoint
+}
+
+export interface AggregationsCartesianCentroidAggregation extends AggregationsMetricAggregationBase {
+}
+
 export interface AggregationsCategorizeTextAggregation {
   /** The semi-structured text field to categorize. */
   field: Field
@@ -5350,6 +5391,31 @@ export interface AggregationsCategorizeTextAggregation {
 }
 
 export type AggregationsCategorizeTextAnalyzer = string | AggregationsCustomCategorizeTextAnalyzer
+
+export interface AggregationsChangePointAggregate extends AggregationsAggregateBase {
+  type: AggregationsChangeType
+  bucket?: AggregationsChangePointBucket
+}
+
+export interface AggregationsChangePointAggregation extends AggregationsPipelineAggregationBase {
+}
+
+export interface AggregationsChangePointBucketKeys extends AggregationsMultiBucketBase {
+  key: FieldValue
+}
+export type AggregationsChangePointBucket = AggregationsChangePointBucketKeys
+& { [property: string]: AggregationsAggregate | FieldValue | long }
+
+export interface AggregationsChangeType {
+  dip?: AggregationsDip
+  distribution_change?: AggregationsDistributionChange
+  indeterminable?: AggregationsIndeterminable
+  non_stationary?: AggregationsNonStationary
+  spike?: AggregationsSpike
+  stationary?: AggregationsStationary
+  step_change?: AggregationsStepChange
+  trend_change?: AggregationsTrendChange
+}
 
 export interface AggregationsChiSquareHeuristic {
   /** Set to `false` if you defined a custom background filter that represents a different set of documents that you want to compare to. */
@@ -5530,6 +5596,12 @@ export interface AggregationsDerivativeAggregate extends AggregationsSingleMetri
 }
 
 export interface AggregationsDerivativeAggregation extends AggregationsPipelineAggregationBase {
+}
+
+export interface AggregationsDip extends AggregationsAbstractChangePoint {
+}
+
+export interface AggregationsDistributionChange extends AggregationsAbstractChangePoint {
 }
 
 export interface AggregationsDiversifiedSamplerAggregation extends AggregationsBucketAggregationBase {
@@ -5899,6 +5971,10 @@ export interface AggregationsHoltWintersMovingAverageAggregation extends Aggrega
 
 export type AggregationsHoltWintersType = 'add' | 'mult'
 
+export interface AggregationsIndeterminable {
+  reason: string
+}
+
 export interface AggregationsInferenceAggregateKeys extends AggregationsAggregateBase {
   value?: FieldValue
   feature_importance?: AggregationsInferenceFeatureImportance[]
@@ -6195,6 +6271,12 @@ export type AggregationsNestedAggregate = AggregationsNestedAggregateKeys
 export interface AggregationsNestedAggregation extends AggregationsBucketAggregationBase {
   /** The path to the field of type `nested`. */
   path?: Field
+}
+
+export interface AggregationsNonStationary {
+  p_value: double
+  r_value: double
+  trend: string
 }
 
 export interface AggregationsNormalizeAggregation extends AggregationsPipelineAggregationBase {
@@ -6530,6 +6612,9 @@ export interface AggregationsSingleMetricAggregateBase extends AggregationsAggre
   value_as_string?: string
 }
 
+export interface AggregationsSpike extends AggregationsAbstractChangePoint {
+}
+
 export interface AggregationsStandardDeviationBounds {
   upper: double | null
   lower: double | null
@@ -6546,6 +6631,9 @@ export interface AggregationsStandardDeviationBoundsAsString {
   lower_population: string
   upper_sampling: string
   lower_sampling: string
+}
+
+export interface AggregationsStationary {
 }
 
 export interface AggregationsStatsAggregate extends AggregationsAggregateBase {
@@ -6567,6 +6655,9 @@ export interface AggregationsStatsBucketAggregate extends AggregationsStatsAggre
 }
 
 export interface AggregationsStatsBucketAggregation extends AggregationsPipelineAggregationBase {
+}
+
+export interface AggregationsStepChange extends AggregationsAbstractChangePoint {
 }
 
 export interface AggregationsStringRareTermsAggregate extends AggregationsMultiBucketAggregateBase<AggregationsStringRareTermsBucket> {
@@ -6788,6 +6879,12 @@ export interface AggregationsTopMetricsAggregation extends AggregationsMetricAgg
 export interface AggregationsTopMetricsValue {
   /** A field to return as a metric. */
   field: Field
+}
+
+export interface AggregationsTrendChange {
+  p_value: double
+  r_value: double
+  change_point: integer
 }
 
 export interface AggregationsUnmappedRareTermsAggregate extends AggregationsMultiBucketAggregateBase<void> {
@@ -8227,8 +8324,12 @@ export interface MappingDenseVectorIndexOptions {
   m?: integer
   /** The type of kNN algorithm to use. */
   type: MappingDenseVectorIndexOptionsType
-  /** The rescore vector options. This is only applicable to `bbq_hnsw`, `int4_hnsw`, `int8_hnsw`, `bbq_flat`, `int4_flat`, and `int8_flat` index types. */
+  /** The rescore vector options. This is only applicable to `bbq_disk`, `bbq_hnsw`, `int4_hnsw`, `int8_hnsw`, `bbq_flat`, `int4_flat`, and `int8_flat` index types. */
   rescore_vector?: MappingDenseVectorIndexOptionsRescoreVector
+  /** `true` if vector rescoring should be done on-disk
+    *
+    * Only applicable to `bbq_hnsw` */
+  on_disk_rescore?: boolean
 }
 
 export interface MappingDenseVectorIndexOptionsRescoreVector {
@@ -8239,7 +8340,7 @@ export interface MappingDenseVectorIndexOptionsRescoreVector {
   oversample: float
 }
 
-export type MappingDenseVectorIndexOptionsType = 'bbq_flat' | 'bbq_hnsw' | 'flat' | 'hnsw' | 'int4_flat' | 'int4_hnsw' | 'int8_flat' | 'int8_hnsw'
+export type MappingDenseVectorIndexOptionsType = 'bbq_flat' | 'bbq_hnsw' | 'bbq_disk' | 'flat' | 'hnsw' | 'int4_flat' | 'int4_hnsw' | 'int8_flat' | 'int8_hnsw'
 
 export interface MappingDenseVectorProperty extends MappingPropertyBase {
   type: 'dense_vector'
@@ -8663,7 +8764,7 @@ export interface MappingSemanticTextProperty {
   /** Settings for chunking text into smaller passages. If specified, these will override the
     * chunking settings sent in the inference endpoint associated with inference_id. If chunking settings are updated,
     * they will not be applied to existing documents until they are reindexed. */
-  chunking_settings?: MappingChunkingSettings
+  chunking_settings?: MappingChunkingSettings | null
   /** Multi-fields allow the same string value to be indexed in multiple ways for different purposes, such as one
     * field for search and a multi-field for sorting and aggregations, or the same string value analyzed by different analyzers. */
   fields?: Record<PropertyName, MappingProperty>
@@ -11995,7 +12096,8 @@ export interface CatMlDataFrameAnalyticsDataFrameAnalyticsRecord {
 export interface CatMlDataFrameAnalyticsRequest extends CatCatRequestBase {
   /** The ID of the data frame analytics to fetch */
   id?: Id
-  /** Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified) */
+  /** Whether to ignore if a wildcard expression matches no configs.
+    * (This includes `_all` string or when no configs have been specified.) */
   allow_no_match?: boolean
   /** Comma-separated list of column names to display. */
   h?: CatCatDfaColumns
@@ -16866,6 +16968,18 @@ export interface ClusterStatsDenseVectorStats {
   off_heap?: ClusterStatsDenseVectorOffHeapStats
 }
 
+export interface ClusterStatsExtendedRetrieversSearchUsage {
+  text_similarity_reranker?: ClusterStatsExtendedTextSimilarityRetrieverUsage
+}
+
+export interface ClusterStatsExtendedSearchUsage {
+  retrievers?: ClusterStatsExtendedRetrieversSearchUsage
+}
+
+export interface ClusterStatsExtendedTextSimilarityRetrieverUsage {
+  chunk_rescorer?: long
+}
+
 export interface ClusterStatsFieldTypes {
   /** The name for the field type in selected nodes. */
   name: Name
@@ -17061,6 +17175,7 @@ export interface ClusterStatsSearchUsageStats {
   rescorers: Record<Name, long>
   sections: Record<Name, long>
   retrievers: Record<Name, long>
+  extended: ClusterStatsExtendedSearchUsage
 }
 
 export type ClusterStatsShardState = 'INIT' | 'SUCCESS' | 'FAILED' | 'ABORTED' | 'MISSING' | 'WAITING' | 'QUEUED' | 'PAUSED_FOR_NODE_REMOVAL'
@@ -17362,7 +17477,7 @@ export interface ConnectorCheckInResponse {
 export interface ConnectorDeleteRequest extends RequestBase {
   /** The unique identifier of the connector to be deleted */
   connector_id: Id
-  /** A flag indicating if associated sync jobs should be also removed. Defaults to false. */
+  /** A flag indicating if associated sync jobs should be also removed. */
   delete_sync_jobs?: boolean
   /** A flag indicating if the connector should be hard deleted. */
   hard?: boolean
@@ -17413,7 +17528,7 @@ export interface ConnectorLastSyncResponse {
 }
 
 export interface ConnectorListRequest extends RequestBase {
-  /** Starting offset (default: 0) */
+  /** Starting offset */
   from?: integer
   /** Specifies a max number of results to get */
   size?: integer
@@ -17555,7 +17670,7 @@ export interface ConnectorSyncJobGetRequest extends RequestBase {
 export type ConnectorSyncJobGetResponse = ConnectorConnectorSyncJob
 
 export interface ConnectorSyncJobListRequest extends RequestBase {
-  /** Starting offset (default: 0) */
+  /** Starting offset */
   from?: integer
   /** Specifies a max number of results to get */
   size?: integer
@@ -22359,7 +22474,7 @@ export interface IndicesStatsRequest extends RequestBase {
   include_segment_file_sizes?: boolean
   /** If true, the response includes information from segments that are not loaded into memory. */
   include_unloaded_segments?: boolean
-  /** Indicates whether statistics are aggregated at the cluster, index, or shard level. */
+  /** Indicates whether statistics are aggregated at the cluster, indices, or shards level. */
   level?: Level
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { metric?: never, index?: never, completion_fields?: never, expand_wildcards?: never, fielddata_fields?: never, fields?: never, forbid_closed_indices?: never, groups?: never, include_segment_file_sizes?: never, include_unloaded_segments?: never, level?: never }
@@ -32283,7 +32398,7 @@ export interface NodesStatsRequest extends RequestBase {
   groups?: boolean
   /** If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested). */
   include_segment_file_sizes?: boolean
-  /** Indicates whether statistics are aggregated at the cluster, index, or shard level. */
+  /** Indicates whether statistics are aggregated at the node, indices, or shards level. */
   level?: NodeStatsLevel
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
@@ -33185,6 +33300,11 @@ export interface SecurityApiKey {
     * At least one of them must be specified.
     * When specified, the new access assignment fully replaces the previously assigned access. */
   access?: SecurityAccess
+  /** The certificate identity associated with a cross-cluster API key.
+    * Restricts the API key to connections authenticated by a specific TLS certificate.
+    * Only applicable to cross-cluster API keys.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  certificate_identity?: string
   /** The profile uid for the API key owner principal, if requested and if it exists */
   profile_uid?: string
   /** Sorting values when using the `sort` parameter with the `security.query_api_keys` API. */
@@ -33805,10 +33925,14 @@ export interface SecurityCreateCrossClusterApiKeyRequest extends RequestBase {
   metadata?: Metadata
   /** Specifies the name for this API key. */
   name: Name
+  /** The certificate identity to associate with this API key.
+    * This field is used to restrict the API key to connections authenticated by a specific TLS certificate.
+    * The value should match the certificate's distinguished name (DN) pattern. */
+  certificate_identity?: string
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { access?: never, expiration?: never, metadata?: never, name?: never }
+  body?: string | { [key: string]: any } & { access?: never, expiration?: never, metadata?: never, name?: never, certificate_identity?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { access?: never, expiration?: never, metadata?: never, name?: never }
+  querystring?: { [key: string]: any } & { access?: never, expiration?: never, metadata?: never, name?: never, certificate_identity?: never }
 }
 
 export interface SecurityCreateCrossClusterApiKeyResponse {
@@ -35334,10 +35458,17 @@ export interface SecurityUpdateCrossClusterApiKeyRequest extends RequestBase {
     * Within the metadata object, keys beginning with `_` are reserved for system usage.
     * When specified, this information fully replaces metadata previously associated with the API key. */
   metadata?: Metadata
+  /** The certificate identity to associate with this API key.
+    * This field is used to restrict the API key to connections authenticated by a specific TLS certificate.
+    * The value should match the certificate's distinguished name (DN) pattern.
+    * When specified, this fully replaces any previously assigned certificate identity.
+    * To clear an existing certificate identity, explicitly set this field to `null`.
+    * When omitted, the existing certificate identity remains unchanged. */
+  certificate_identity?: string
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, access?: never, expiration?: never, metadata?: never }
+  body?: string | { [key: string]: any } & { id?: never, access?: never, expiration?: never, metadata?: never, certificate_identity?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, access?: never, expiration?: never, metadata?: never }
+  querystring?: { [key: string]: any } & { id?: never, access?: never, expiration?: never, metadata?: never, certificate_identity?: never }
 }
 
 export interface SecurityUpdateCrossClusterApiKeyResponse {
@@ -38000,6 +38131,12 @@ export interface TransformSettings {
     * exceptions occur, the page size is dynamically adjusted to a lower value. The minimum value is `10` and the
     * maximum is `65,536`. */
   max_page_search_size?: integer
+  /** Specifies whether the transform checkpoint will use the Point In Time API while searching over the source index.
+    * In general, Point In Time is an optimization that will reduce pressure on the source index by reducing the amount
+    * of refreshes and merges, but it can be expensive if a large number of Point In Times are opened and closed for a
+    * given index. The benefits and impact depend on the data being searched, the ingest rate into the source index, and
+    * the amount of other consumers searching the same source index. */
+  use_point_in_time?: boolean
   /** If `true`, the transform runs in unattended mode. In unattended mode, the transform retries indefinitely in case
     * of an error which means the transform never fails. Setting the number of retries other than infinite fails in
     * validation. */
