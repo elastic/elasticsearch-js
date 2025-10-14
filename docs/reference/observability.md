@@ -5,41 +5,21 @@ mapped_pages:
 
 # Observability [observability]
 
-To observe and measure {{es}} client usage, several client features are provided.
+Several client features help you observe and measure {{es}} client usage. As of version 8.15.0, the JS client provides native support for OpenTelemetry, which allows you to send client usage data to any endpoint that supports OpenTelemetry without having to make any changes to your JavaScript codebase. 
 
-First, as of 8.15.0, the client provides native support for OpenTelemetry, which allows you to send client usage data to any endpoint that supports OpenTelemetry without having to make any changes to your JavaScript codebase.
-
-Also, rather than providing a default logger, the client offers an event emitter interface to hook into internal events, such as `request` and `response`, allowing you to log the events you care about, or otherwise react to client usage however you might need.
-
-Correlating events can be hard, especially if your applications have a large codebase with many events happening at the same time. To help you with this, the client provides a correlation ID system, and other features.
-
-All of these observability features are documented below.
+Rather than providing a default logger, the client offers an event emitter interface to hook into internal events, such as `request` and `response`, allowing you to log the events you care about, or otherwise react to client usage however you might need. Because correlating events can be hard, the client provides a correlation ID system, and other features.
 
 ## OpenTelemetry [_opentelemetry]
 
 The client supports OpenTelemetry’s [zero-code instrumentation](https://opentelemetry.io/docs/zero-code/js/) to enable tracking each client request as an [OpenTelemetry span](https://opentelemetry.io/docs/concepts/signals/traces/#spans). These spans follow all of the [semantic OpenTelemetry conventions for {{es}}](https://opentelemetry.io/docs/specs/semconv/database/elasticsearch/) except for `db.query.text`.
 
-To start sending {{es}} trace data to your OpenTelemetry endpoint, follow [OpenTelemetry’s zero-code instrumentation guide](https://opentelemetry.io/docs/zero-code/js/), or the following steps:
+To start sending {{es}} trace data to your OpenTelemetry endpoint, instrument the client using the [Elastic Distribution of OpenTelemetry (EDOT) JavaScript](elastic-otel-node://reference/edot-node/index.md), or follow [OpenTelemetry’s zero-code instrumentation guide](https://opentelemetry.io/docs/zero-code/js/).
 
-1. Install `@opentelemetry/api` and `@opentelemetry/auto-instrumentations-node` as Node.js dependencies
-2. Export the following environment variables with the appropriate values:
+### Turn off OpenTelemetry collection [disable-otel]
 
-    * `OTEL_EXPORTER_OTLP_ENDPOINT`
-    * `OTEL_EXPORTER_OTLP_HEADERS`
-    * `OTEL_RESOURCE_ATTRIBUTES`
-    * `OTEL_SERVICE_NAME`
+As of `@elastic/transport` version 9.1.0&mdash;or 8.10.0 when using `@elastic/elasticsearch` 8.x&mdash;you can turn off OpenTelemetry tracing in several ways.
 
-3. `require` the Node.js auto-instrumentation library at startup:
-
-```
-node --require '@opentelemetry/auto-instrumentations-node/register' index.js
-```
-
-### Disabling OpenTelemetry collection [disable-otel]
-
-As of `@elastic/transport` version 9.1.0&mdash;or 8.10.0 when using `@elastic/elasticsearch` 8.x&mdash;OpenTelemetry tracing can be disabled in multiple ways.
-
-To entirely disable OpenTelemetry collection, you can provide a custom `Transport` at client instantiation time that sets `openTelemetry.enabled` to `false`:
+To entirely turn off OpenTelemetry collection, you can provide a custom `Transport` at client instantiation time that sets `openTelemetry.enabled` to `false`:
 
 ```typescript
 import { Transport } from '@elastic/transport'
@@ -60,9 +40,9 @@ const client = new Client({
 
 Alternatively, you can also export an environment variable `OTEL_ELASTICSEARCH_ENABLED=false` to achieve the same effect.
 
-If you would not like OpenTelemetry to be disabled entirely, but would like the client to suppress tracing, you can use the option `openTelemetry.suppressInternalInstrumentation = true` instead.
+If you would not like OpenTelemetry to be turned off entirely, but would like the client to suppress tracing, use the option `openTelemetry.suppressInternalInstrumentation = true` instead.
 
-If you would like to keep either option enabled by default, but want to disable them for a single API call, you can pass `Transport` options as a second argument to any API function call:
+If you would like to keep either option enabled by default, but want to turn them off for a single API call, pass `Transport` options as a second argument to any API function call:
 
 ```typescript
 const response = await client.search({ ... }, {
