@@ -6,6 +6,7 @@ exclude:
 cross_links:
   - docs-content
   - elasticsearch
+  - elastic-otel-node
 toc:
   - toc: reference
   - toc: release-notes
