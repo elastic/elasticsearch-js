@@ -5,9 +5,9 @@ mapped_pages:
 
 # Observability [observability]
 
-Several client features help you observe and measure {{es}} client usage. As of version 8.15.0, the JS client provides native support for OpenTelemetry, which allows you to send client usage data to any endpoint that supports OpenTelemetry without having to make any changes to your JavaScript codebase. 
+Several client features help you observe and measure {{es}} client usage. As of version 8.15.0, the JavaScript client provides native support for OpenTelemetry. You can send client usage data to OpenTelemetry endpoints without making changes to your JavaScript codebase. 
 
-Rather than providing a default logger, the client offers an event emitter interface to hook into internal events, such as `request` and `response`, allowing you to log the events you care about, or otherwise react to client usage however you might need. Because correlating events can be hard, the client provides a correlation ID system, and other features.
+Rather than providing a default logger, the client offers an event emitter interface to hook into internal events like `request` and `response`. This allows you to log significant events or otherwise react to client usage. Because correlating events can be complex, the client provides a correlation ID system and other features.
 
 ## OpenTelemetry [_opentelemetry]
 
@@ -38,9 +38,9 @@ const client = new Client({
 })
 ```
 
-Alternatively, you can also export an environment variable `OTEL_ELASTICSEARCH_ENABLED=false` to achieve the same effect.
+Alternatively, you can export the environment variable `OTEL_ELASTICSEARCH_ENABLED=false`.
 
-If you would not like OpenTelemetry to be turned off entirely, but would like the client to suppress tracing, use the option `openTelemetry.suppressInternalInstrumentation = true` instead.
+To suppress tracing without turning off all OpenTelemetry collection, use the option `openTelemetry.suppressInternalInstrumentation = true` instead.
 
 If you would like to keep either option enabled by default, but want to turn them off for a single API call, pass `Transport` options as a second argument to any API function call:
 
