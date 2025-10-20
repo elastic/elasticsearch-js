@@ -47,7 +47,7 @@ export default async function ReindexApi (this: That, params: T.ReindexRequest |
 export default async function ReindexApi (this: That, params: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptions): Promise<T.ReindexResponse>
 export default async function ReindexApi (this: That, params: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
-  const acceptedBody: string[] = ['conflicts', 'dest', 'max_docs', 'script', 'size', 'source']
+  const acceptedBody: string[] = ['conflicts', 'dest', 'max_docs', 'script', 'source']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   const userBody: any = params?.body
