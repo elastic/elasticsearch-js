@@ -26,8 +26,6 @@ jobs:
     name: Test
     runs-on: ${{ matrix.os }}
     needs: paths-filter
-    # only run if code relevant to unit tests was changed
-    if: needs.paths-filter.outputs.src-only == 'true'
 
     strategy:
       fail-fast: false
@@ -50,14 +48,17 @@ jobs:
           npm install
 
       - name: Lint
+        if: needs.paths-filter.outputs.src-only == 'true'
         run: |
           npm run lint
 
       - name: Unit test
+        if: needs.paths-filter.outputs.src-only == 'true'
         run: |
           npm run test:unit
 
       - name: ECMAScript module test
+        if: needs.paths-filter.outputs.src-only == 'true'
         run: |
           npm run test:esm
 
@@ -90,8 +91,6 @@ jobs:
     name: Test Bun
     runs-on: ${{ matrix.os }}
     needs: paths-filter
-    # only run if code relevant to unit tests was changed
-    if: needs.paths-filter.outputs.src-only == 'true'
 
     strategy:
       fail-fast: false
@@ -111,26 +110,16 @@ jobs:
           bun install
 
       - name: Lint
+        if: needs.paths-filter.outputs.src-only == 'true'
         run: |
           bun run lint
 
       - name: Unit test
+        if: needs.paths-filter.outputs.src-only == 'true'
         run: |
           bun run test:unit-bun
 
       - name: ECMAScript module test
+        if: needs.paths-filter.outputs.src-only == 'true'
         run: |
           bun run test:esm
-
-  test-summary:
-    name: Test (summary)
-    runs-on: ubuntu-latest
-    needs: [paths-filter, test, test-bun]
-    if: always()
-    steps:
-      - run: exit 1
-        if: |
-          needs.test.result == 'failure' || 
-          needs.test-bun.result == 'failure' ||
-          needs.test.result == 'cancelled' ||
-          needs.test-bun.result == 'cancelled'
