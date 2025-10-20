@@ -493,6 +493,20 @@ export default class Indices {
         body: [],
         query: []
       },
+      'indices.get_sample': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: []
+      },
+      'indices.get_sample_stats': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: []
+      },
       'indices.get_settings': {
         path: [
           'index',
@@ -685,6 +699,13 @@ export default class Indices {
           'timeout',
           'write_index_only'
         ]
+      },
+      'indices.put_sample_configuration': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: []
       },
       'indices.put_settings': {
         path: [
@@ -3125,6 +3146,102 @@ export default class Indices {
   }
 
   /**
+    * Get random sample of ingested data
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-sample | Elasticsearch API documentation}
+    */
+  async getSample (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getSample (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getSample (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getSample (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['indices.get_sample']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/${encodeURIComponent(params.index.toString())}/_sample`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_sample',
+      pathParts: {
+        index: params.index
+      },
+      acceptedParams: [
+        'index'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Get stats about a random sample of ingested data
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-sample | Elasticsearch API documentation}
+    */
+  async getSampleStats (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getSampleStats (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getSampleStats (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getSampleStats (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['indices.get_sample_stats']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/${encodeURIComponent(params.index.toString())}/_sample/stats`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_sample_stats',
+      pathParts: {
+        index: params.index
+      },
+      acceptedParams: [
+        'index'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Get index settings. Get setting information for one or more indices. For data streams, it returns setting information for the stream's backing indices.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-settings | Elasticsearch API documentation}
     */
@@ -3970,6 +4087,54 @@ export default class Indices {
         'master_timeout',
         'timeout',
         'write_index_only'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Configure sampling for an index or data stream
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-sample-configuration | Elasticsearch API documentation}
+    */
+  async putSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['indices.put_sample_configuration']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/${encodeURIComponent(params.index.toString())}/_sample/config`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_sample_configuration',
+      pathParts: {
+        index: params.index
+      },
+      acceptedParams: [
+        'index'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
