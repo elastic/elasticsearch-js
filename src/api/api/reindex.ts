@@ -36,7 +36,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'dest',
       'max_docs',
       'script',
-      'size',
       'source'
     ],
     query: [
@@ -108,7 +107,6 @@ export default async function ReindexApi (this: That, params: T.ReindexRequest, 
       'dest',
       'max_docs',
       'script',
-      'size',
       'source',
       'refresh',
       'requests_per_second',

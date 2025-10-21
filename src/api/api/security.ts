@@ -148,7 +148,8 @@ export default class Security {
           'access',
           'expiration',
           'metadata',
-          'name'
+          'name',
+          'certificate_identity'
         ],
         query: []
       },
@@ -636,7 +637,8 @@ export default class Security {
         body: [
           'access',
           'expiration',
-          'metadata'
+          'metadata',
+          'certificate_identity'
         ],
         query: []
       },
@@ -1382,7 +1384,8 @@ export default class Security {
         'access',
         'expiration',
         'metadata',
-        'name'
+        'name',
+        'certificate_identity'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -4198,7 +4201,8 @@ export default class Security {
         'id',
         'access',
         'expiration',
-        'metadata'
+        'metadata',
+        'certificate_identity'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
