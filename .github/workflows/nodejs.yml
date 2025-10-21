@@ -26,6 +26,8 @@ jobs:
     name: Test
     runs-on: ${{ matrix.os }}
     needs: paths-filter
+    env:
+      CODE_CHANGED: ${{ needs.paths-filter.outputs.src-only }}
 
     strategy:
       fail-fast: false
@@ -48,19 +50,16 @@ jobs:
           npm install
 
       - name: Lint
-        if: needs.paths-filter.outputs.src-only == 'true'
         run: |
-          npm run lint
+          [ "$CODE_CHANGED" = "true" ] && npm run lint || exit 0
 
       - name: Unit test
-        if: needs.paths-filter.outputs.src-only == 'true'
         run: |
-          npm run test:unit
+          [ "$CODE_CHANGED" = "true" ] && npm run test:unit || exit 0
 
       - name: ECMAScript module test
-        if: needs.paths-filter.outputs.src-only == 'true'
         run: |
-          npm run test:esm
+          [ "$CODE_CHANGED" = "true" ] && npm run test:esm || exit 0
 
   license:
     name: License check
@@ -91,6 +90,8 @@ jobs:
     name: Test Bun
     runs-on: ${{ matrix.os }}
     needs: paths-filter
+    env:
+      CODE_CHANGED: ${{ needs.paths-filter.outputs.src-only }}
 
     strategy:
       fail-fast: false
@@ -110,16 +111,13 @@ jobs:
           bun install
 
       - name: Lint
-        if: needs.paths-filter.outputs.src-only == 'true'
         run: |
-          bun run lint
+          [ "$CODE_CHANGED" = "true" ] && bun run lint || exit 0
 
       - name: Unit test
-        if: needs.paths-filter.outputs.src-only == 'true'
         run: |
-          bun run test:unit-bun
+          [ "$CODE_CHANGED" = "true" ] && bun run test:unit-bun || exit 0
 
       - name: ECMAScript module test
-        if: needs.paths-filter.outputs.src-only == 'true'
         run: |
-          bun run test:esm
+          [ "$CODE_CHANGED" = "true" ] && bun run test:esm || exit 0
