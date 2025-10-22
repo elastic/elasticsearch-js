@@ -20,7 +20,15 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
-## 9.1.1
+## 9.2.0 [elasticsearch-javascript-client-9.2.0-release-notes]
+
+### Features and enhancements [elasticsearch-javascript-client-9.2.0-features-enhancements]
+
+- **Compatibility with Elasticsearch 9.2:** All changes and additions to Elasticsearch APIs for its 9.2 release are reflected in this release.
+
+- **Accepted parameter names added to transport request metadata:** All requests sent through `@elastic/transport` already included some metadata about the request (API name, path parameters). An `acceptedParams` array has been added that includes the names of all parameters that an API supports. This helps support more flexible pre-flight request modifications made by custom transports.
+
+## 9.1.1 [elasticsearch-javascript-client-9.1.1-release-notes]
 
 ### Fixes [elasticsearch-javascript-client-9.1.1-fixes]
 
