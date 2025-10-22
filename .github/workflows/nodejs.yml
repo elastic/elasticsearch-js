@@ -50,14 +50,17 @@ jobs:
           npm install
 
       - name: Lint
+        shell: bash
         run: |
           [ "$CODE_CHANGED" = "true" ] && npm run lint || exit 0
 
       - name: Unit test
+        shell: bash
         run: |
           [ "$CODE_CHANGED" = "true" ] && npm run test:unit || exit 0
 
       - name: ECMAScript module test
+        shell: bash
         run: |
           [ "$CODE_CHANGED" = "true" ] && npm run test:esm || exit 0
 
@@ -111,13 +114,16 @@ jobs:
           bun install
 
       - name: Lint
+        shell: bash
         run: |
           [ "$CODE_CHANGED" = "true" ] && bun run lint || exit 0
 
       - name: Unit test
+        shell: bash
         run: |
           [ "$CODE_CHANGED" = "true" ] && bun run test:unit-bun || exit 0
 
       - name: ECMAScript module test
+        shell: bash
         run: |
           [ "$CODE_CHANGED" = "true" ] && bun run test:esm || exit 0
