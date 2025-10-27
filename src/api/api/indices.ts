@@ -231,6 +231,13 @@ export default class Indices {
           'timeout'
         ]
       },
+      'indices.delete_sample_configuration': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: []
+      },
       'indices.delete_template': {
         path: [
           'name'
@@ -494,6 +501,13 @@ export default class Indices {
         query: []
       },
       'indices.get_sample': {
+        path: [
+          'index'
+        ],
+        body: [],
+        query: []
+      },
+      'indices.get_sample_configuration': {
         path: [
           'index'
         ],
@@ -1889,6 +1903,54 @@ export default class Indices {
   }
 
   /**
+    * Delete sampling configuration for an index or data stream
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-sample-configuration | Elasticsearch API documentation}
+    */
+  async deleteSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async deleteSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async deleteSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async deleteSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['indices.delete_sample_configuration']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = `/${encodeURIComponent(params.index.toString())}/_sample/config`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete_sample_configuration',
+      pathParts: {
+        index: params.index
+      },
+      acceptedParams: [
+        'index'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Delete a legacy index template. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-template | Elasticsearch API documentation}
     */
@@ -3146,16 +3208,64 @@ export default class Indices {
   }
 
   /**
-    * Get random sample of ingested data
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-sample | Elasticsearch API documentation}
+    * Request for a random sample of raw documents ingested into the given index or data stream.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/ingest-random-sampling | Elasticsearch API documentation}
     */
-  async getSample (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getSample (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getSample (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getSample (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getSample (this: That, params: T.IndicesGetSampleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSampleResponse>
+  async getSample (this: That, params: T.IndicesGetSampleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetSampleResponse, unknown>>
+  async getSample (this: That, params: T.IndicesGetSampleRequest, options?: TransportRequestOptions): Promise<T.IndicesGetSampleResponse>
+  async getSample (this: That, params: T.IndicesGetSampleRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this[kAcceptedParams]['indices.get_sample']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/${encodeURIComponent(params.index.toString())}/_sample`
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_sample',
+      pathParts: {
+        index: params.index
+      },
+      acceptedParams: [
+        'index'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Get sampling configuration for an index or data stream
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-sample-configuration | Elasticsearch API documentation}
+    */
+  async getSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['indices.get_sample_configuration']
 
     const userQuery = params?.querystring
     const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -3180,9 +3290,9 @@ export default class Indices {
     }
 
     const method = 'GET'
-    const path = `/${encodeURIComponent(params.index.toString())}/_sample`
+    const path = `/${encodeURIComponent(params.index.toString())}/_sample/config`
     const meta: TransportRequestMetadata = {
-      name: 'indices.get_sample',
+      name: 'indices.get_sample_configuration',
       pathParts: {
         index: params.index
       },
@@ -3194,13 +3304,13 @@ export default class Indices {
   }
 
   /**
-    * Get stats about a random sample of ingested data
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-sample | Elasticsearch API documentation}
+    * Request stats for a random sample of raw documents ingested into the given index or data stream.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/ingest-random-sampling | Elasticsearch API documentation}
     */
-  async getSampleStats (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getSampleStats (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getSampleStats (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getSampleStats (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getSampleStats (this: That, params: T.IndicesGetSampleStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSampleStatsResponse>
+  async getSampleStats (this: That, params: T.IndicesGetSampleStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetSampleStatsResponse, unknown>>
+  async getSampleStats (this: That, params: T.IndicesGetSampleStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetSampleStatsResponse>
+  async getSampleStats (this: That, params: T.IndicesGetSampleStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this[kAcceptedParams]['indices.get_sample_stats']
@@ -3218,11 +3328,11 @@ export default class Indices {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
