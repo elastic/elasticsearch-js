@@ -7878,7 +7878,7 @@ client.inference.putCustom({ task_type, custom_inference_id, service, service_se
 - **`task_type` (Enum("text_embedding" \| "sparse_embedding" \| "rerank" \| "completion"))**: The type of the inference task that the model will perform.
 - **`custom_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("custom"))**: The type of service supported for the specified task type. In this case, `custom`.
-- **`service_settings` ({ headers, input_type, query_parameters, request, response, secret_parameters, url })**: Settings used to install the inference model.
+- **`service_settings` ({ batch_size, headers, input_type, query_parameters, request, response, secret_parameters, url })**: Settings used to install the inference model.
 These settings are specific to the `custom` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { parameters })**: Settings to configure the inference task.
