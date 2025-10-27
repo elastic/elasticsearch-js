@@ -24,9 +24,13 @@ steps:
   - wait: ~
     continue_on_failure: true
   - label: ":junit: Test results"
+    agents:
+      # requires at least "bash", "curl" and "git"
+      image: "docker.elastic.co/ci-agent-images/buildkite-junit-annotate:1.0"
     plugins:
       - junit-annotate#v2.7.0:
           artifacts: "junit-output/junit-*.xml"
           job-uuid-file-pattern: "junit-(.*).xml"
           fail-build-on-error: true
           failure-format: file
+          run-in-docker: false
