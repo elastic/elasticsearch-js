@@ -1514,7 +1514,7 @@ client.search({ ... })
 - **`track_total_hits` (Optional, boolean \| number)**: Number of hits matching the query to count accurately. If `true`, the exact number of hits is returned at the cost of some performance. If `false`, the response does not include the total number of hits matching the query.
 - **`indices_boost` (Optional, Record<string, number>[])**: Boost the `_score` of documents from specified indices. The boost value is the factor by which scores are multiplied. A boost value greater than `1.0` increases the score. A boost value between `0` and `1.0` decreases the score.
 - **`docvalue_fields` (Optional, { field, format, include_unmapped }[])**: An array of wildcard (`*`) field patterns. The request returns doc values for field names matching these patterns in the `hits.fields` property of the response.
-- **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector } \| { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector }[])**: The approximate kNN search to run.
+- **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, visit_percentage, boost, filter, similarity, inner_hits, rescore_vector } \| { field, query_vector, query_vector_builder, k, num_candidates, visit_percentage, boost, filter, similarity, inner_hits, rescore_vector }[])**: The approximate kNN search to run.
 - **`rank` (Optional, { rrf })**: The Reciprocal Rank Fusion (RRF) to use.
 - **`min_score` (Optional, number)**: The minimum `_score` for matching documents. Documents with a lower `_score` are not included in search results and results collected by aggregations.
 - **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Use the `post_filter` parameter to filter search results. The search hits are filtered after the aggregations are calculated. A post filter has no impact on the aggregation results.
@@ -2160,7 +2160,7 @@ Defaults to 10,000 hits.
 - **`indices_boost` (Optional, Record<string, number>[])**: Boosts the _score of documents from specified indices.
 - **`docvalue_fields` (Optional, { field, format, include_unmapped }[])**: Array of wildcard (*) patterns. The request returns doc values for field
 names matching these patterns in the hits.fields property of the response.
-- **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector } \| { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector }[])**: Defines the approximate kNN search to run.
+- **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, visit_percentage, boost, filter, similarity, inner_hits, rescore_vector } \| { field, query_vector, query_vector_builder, k, num_candidates, visit_percentage, boost, filter, similarity, inner_hits, rescore_vector }[])**: Defines the approximate kNN search to run.
 - **`min_score` (Optional, number)**: Minimum _score for matching documents. Documents with a lower _score are
 not included in search results and results collected by aggregations.
 - **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**
@@ -5634,6 +5634,16 @@ client.indices.deleteIndexTemplate({ name })
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
+## client.indices.deleteSampleConfiguration [_indices.delete_sample_configuration]
+Delete sampling configuration for an index or data stream
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-sample-configuration)
+
+```ts
+client.indices.deleteSampleConfiguration()
+```
+
+
 ## client.indices.deleteTemplate [_indices.delete_template]
 Delete a legacy index template.
 IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
@@ -6219,23 +6229,13 @@ client.indices.getMigrateReindexStatus({ index })
 #### Request (object) [_request_indices.get_migrate_reindex_status]
 - **`index` (string \| string[])**: The index or data stream name.
 
-## client.indices.getSample [_indices.get_sample]
-Get random sample of ingested data
+## client.indices.getSampleConfiguration [_indices.get_sample_configuration]
+Get sampling configuration for an index or data stream
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-sample)
-
-```ts
-client.indices.getSample()
-```
-
-
-## client.indices.getSampleStats [_indices.get_sample_stats]
-Get stats about a random sample of ingested data
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-sample)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-sample-configuration)
 
 ```ts
-client.indices.getSampleStats()
+client.indices.getSampleConfiguration()
 ```
 
 
@@ -7966,7 +7966,7 @@ client.inference.putCustom({ task_type, custom_inference_id, service, service_se
 - **`task_type` (Enum("text_embedding" \| "sparse_embedding" \| "rerank" \| "completion"))**: The type of the inference task that the model will perform.
 - **`custom_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("custom"))**: The type of service supported for the specified task type. In this case, `custom`.
-- **`service_settings` ({ headers, input_type, query_parameters, request, response, secret_parameters, url })**: Settings used to install the inference model.
+- **`service_settings` ({ batch_size, headers, input_type, query_parameters, request, response, secret_parameters, url })**: Settings used to install the inference model.
 These settings are specific to the `custom` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { parameters })**: Settings to configure the inference task.
@@ -8025,8 +8025,10 @@ client.inference.putElasticsearch({ task_type, elasticsearch_inference_id, servi
 - **`elasticsearch_inference_id` (string)**: The unique identifier of the inference endpoint.
 The must not match the `model_id`.
 - **`service` (Enum("elasticsearch"))**: The type of service supported for the specified task type. In this case, `elasticsearch`.
-- **`service_settings` ({ adaptive_allocations, deployment_id, model_id, num_allocations, num_threads })**: Settings used to install the inference model. These settings are specific to the `elasticsearch` service.
+- **`service_settings` ({ adaptive_allocations, deployment_id, model_id, num_allocations, num_threads, long_document_strategy, max_chunks_per_doc })**: Settings used to install the inference model. These settings are specific to the `elasticsearch` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `sparse_embedding` and `text_embedding` task types.
+Not applicable to the `rerank`, `completion`, or `chat_completion` task types.
 - **`task_settings` (Optional, { return_documents })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8105,9 +8107,9 @@ client.inference.putGooglevertexai({ task_type, googlevertexai_inference_id, ser
 - **`task_type` (Enum("rerank" \| "text_embedding" \| "completion" \| "chat_completion"))**: The type of the inference task that the model will perform.
 - **`googlevertexai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("googlevertexai"))**: The type of service supported for the specified task type. In this case, `googlevertexai`.
-- **`service_settings` ({ location, model_id, project_id, rate_limit, service_account_json, dimensions })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
+- **`service_settings` ({ provider, url, streaming_url, location, model_id, project_id, rate_limit, service_account_json, dimensions })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
-- **`task_settings` (Optional, { auto_truncate, top_n, thinking_config })**: Settings to configure the inference task.
+- **`task_settings` (Optional, { auto_truncate, top_n, thinking_config, max_tokens })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
@@ -8257,7 +8259,7 @@ NOTE: The `chat_completion` task type only supports streaming and only through t
 - **`service` (Enum("openai"))**: The type of service supported for the specified task type. In this case, `openai`.
 - **`service_settings` ({ api_key, dimensions, model_id, organization_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `openai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
-- **`task_settings` (Optional, { user })**: Settings to configure the inference task.
+- **`task_settings` (Optional, { user, headers })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 

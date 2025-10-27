@@ -4190,6 +4190,8 @@ export interface KnnQuery extends QueryDslQueryBase {
   query_vector_builder?: QueryVectorBuilder
   /** The number of nearest neighbor candidates to consider per shard */
   num_candidates?: integer
+  /** The percentage of vectors to explore per shard while doing knn search with bbq_disk */
+  visit_percentage?: float
   /** The final number of nearest neighbors to return as top hits */
   k?: integer
   /** Filters for the kNN search query */
@@ -4211,6 +4213,8 @@ export interface KnnRetriever extends RetrieverBase {
   k: integer
   /** Number of nearest neighbor candidates to consider per shard. */
   num_candidates: integer
+  /** The percentage of vectors to explore per shard while doing knn search with bbq_disk */
+  visit_percentage?: float
   /** The minimum similarity required for a document to be considered a match. */
   similarity?: float
   /** Apply oversampling and rescoring to quantized vectors */
@@ -4228,6 +4232,8 @@ export interface KnnSearch {
   k?: integer
   /** The number of nearest neighbor candidates to consider per shard */
   num_candidates?: integer
+  /** The percentage of vectors to explore per shard while doing knn search with bbq_disk */
+  visit_percentage?: float
   /** Boost value to apply to kNN scores */
   boost?: float
   /** Filters for the kNN search query */
@@ -7517,7 +7523,7 @@ export interface AnalysisKeywordTokenizer extends AnalysisTokenizerBase {
 
 export interface AnalysisKuromojiAnalyzer {
   type: 'kuromoji'
-  mode: AnalysisKuromojiTokenizationMode
+  mode?: AnalysisKuromojiTokenizationMode
   user_dictionary?: string
 }
 
@@ -11236,12 +11242,24 @@ export interface CatIndicesIndicesRecord {
   /** number of replica shards
     * @alias rep */
   shardsReplica?: string
-  /** available docs */
+  /** The number of documents in the index, including hidden nested documents.
+    * For indices with `semantic_text` fields or other nested field types,
+    * this count includes the internal nested documents.
+    * To get the logical document count (excluding nested documents), use
+    * the `_count` API or `_cat/count` API instead. */
   'docs.count'?: string | null
-  /** available docs
+  /** The number of documents in the index, including hidden nested documents.
+    * For indices with `semantic_text` fields or other nested field types,
+    * this count includes the internal nested documents.
+    * To get the logical document count (excluding nested documents), use
+    * the `_count` API or `_cat/count` API instead.
     * @alias 'docs.count' */
   dc?: string | null
-  /** available docs
+  /** The number of documents in the index, including hidden nested documents.
+    * For indices with `semantic_text` fields or other nested field types,
+    * this count includes the internal nested documents.
+    * To get the logical document count (excluding nested documents), use
+    * the `_count` API or `_cat/count` API instead.
     * @alias 'docs.count' */
   docsCount?: string | null
   /** deleted docs */
@@ -21151,6 +21169,52 @@ export interface IndicesGetMigrateReindexStatusStatusInProgress {
   reindexed_doc_count: long
 }
 
+export interface IndicesGetSampleRequest extends RequestBase {
+  /** Single index or data stream name. Wildcards are not supported. */
+  index: IndexName
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never }
+}
+
+export interface IndicesGetSampleResponse {
+  sample: IndicesGetSampleRawDocument[]
+}
+
+export interface IndicesGetSampleRawDocument {
+  /** Name of the index for this raw document. */
+  index: string
+  /** The original raw source. */
+  source: Record<PropertyName, MappingProperty>
+}
+
+export interface IndicesGetSampleStatsRequest extends RequestBase {
+  /** Single index or data stream name. Wildcards are not supported. */
+  index: IndexName
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never }
+}
+
+export interface IndicesGetSampleStatsResponse {
+  potential_samples: long
+  samples_rejected_for_max_samples_exceeded: long
+  samples_rejected_for_condition: long
+  samples_rejected_for_rate: long
+  samples_rejected_for_exception: long
+  samples_rejected_for_size: long
+  samples_accepted: long
+  time_sampling?: Duration
+  time_sampling_millis: DurationValue<UnitMillis>
+  time_evaluating_condition?: Duration
+  time_evaluating_condition_millis: DurationValue<UnitMillis>
+  time_compiling_condition?: Duration
+  time_compiling_condition_millis: DurationValue<UnitMillis>
+  last_exception?: string
+}
+
 export interface IndicesGetSettingsRequest extends RequestBase {
   /** Comma-separated list of data streams, indices, and aliases used to limit
     * the request. Supports wildcards (`*`). To target all data streams and
@@ -23245,6 +23309,22 @@ export interface InferenceCustomResponseParams {
     *   }
     * }
     *
+    * # Elasticsearch supports the following embedding types:
+    * * float
+    * * byte
+    * * bit (or binary)
+    *
+    * To specify the embedding type for the response, the `embedding_type`
+    * field should be added in the `json_parser` object. Here's an example:
+    * "response":{
+    *   "json_parser":{
+    *     "text_embeddings":"$.data[*].embedding[*]",
+    *     "embedding_type":"bit"
+    *   }
+    * }
+    *
+    * If `embedding_type` is not specified, it defaults to `float`.
+    *
     * # sparse_embedding
     * # For a response like this:
     *
@@ -23349,7 +23429,11 @@ export interface InferenceCustomResponseParams {
 }
 
 export interface InferenceCustomServiceSettings {
-  /** Specifies the HTTPS header parameters – such as `Authentication` or `Contet-Type` – that are required to access the custom service.
+  /** Specifies the batch size used for the semantic_text field. If the field is not provided, the default is 10.
+    * The batch size is the maximum number of inputs in a single request to the upstream service.
+    * The chunk within the batch are controlled by the selected chunking strategy for the semantic_text field. */
+  batch_size?: integer
+  /** Specifies the HTTP header parameters – such as `Authentication` or `Content-Type` – that are required to access the custom service.
     * For example:
     * ```
     * "headers":{
@@ -23472,6 +23556,20 @@ export interface InferenceElasticsearchServiceSettings {
     * The value must be a power of 2.
     * The maximum value is 32. */
   num_threads: integer
+  /** Available only for the `rerank` task type using the Elastic reranker model.
+    * Controls the strategy used for processing long documents during inference.
+    *
+    * Possible values:
+    * - `truncate` (default): Processes only the beginning of each document.
+    * - `chunk`: Splits long documents into smaller parts (chunks) before inference.
+    *
+    * When `long_document_strategy` is set to `chunk`, Elasticsearch splits each document into smaller parts but still returns a single score per document.
+    * That score reflects the highest relevance score among all chunks. */
+  long_document_strategy?: string
+  /** Only for the `rerank` task type.
+    * Limits the number of chunks per document that are sent for inference when chunking is enabled.
+    * If not set, all chunks generated for the document are processed. */
+  max_chunks_per_doc?: integer
 }
 
 export type InferenceElasticsearchServiceType = 'elasticsearch'
@@ -23524,15 +23622,41 @@ export interface InferenceGoogleAiStudioServiceSettings {
 
 export type InferenceGoogleAiStudioTaskType = 'completion' | 'text_embedding'
 
+export type InferenceGoogleModelGardenProvider = 'google' | 'anthropic'
+
 export interface InferenceGoogleVertexAIServiceSettings {
-  /** The name of the location to use for the inference task.
+  /** The name of the Google Model Garden Provider for `completion` and `chat_completion` tasks.
+    * In order for a Google Model Garden endpoint to be used `provider` must be defined and be other than `google`.
+    * Modes:
+    * - Google Model Garden (third-party models): set `provider` to a supported non-`google` value and provide `url` and/or `streaming_url`.
+    * - Google Vertex AI: omit `provider` or set it to `google`. In this mode, do not set `url` or `streaming_url` and Elastic will construct the endpoint url from `location`, `model_id`, and `project_id` parameters. */
+  provider?: InferenceGoogleModelGardenProvider
+  /** The URL for non-streaming `completion` requests to a Google Model Garden provider endpoint.
+    * If both `url` and `streaming_url` are provided, each is used for its respective mode.
+    * If `streaming_url` is not provided, `url` is also used for streaming `completion` and `chat_completion`.
+    * If `provider` is not provided or set to `google` (Google Vertex AI), do not set `url` (or `streaming_url`).
+    * At least one of `url` or `streaming_url` must be provided for Google Model Garden endpoint usage. */
+  url?: string
+  /** The URL for streaming `completion` and `chat_completion` requests to a Google Model Garden provider endpoint.
+    * If both `streaming_url` and `url` are provided, each is used for its respective mode.
+    * If `url` is not provided, `streaming_url` is also used for non-streaming `completion` requests.
+    * If `provider` is not provided or set to `google` (Google Vertex AI), do not set `streaming_url` (or `url`).
+    * At least one of `streaming_url` or `url` must be provided for Google Model Garden endpoint usage. */
+  streaming_url?: string
+  /** The name of the location to use for the inference task for the Google Vertex AI inference task.
+    * For Google Vertex AI, when `provider` is omitted or `google` `location` is mandatory.
+    * For Google Model Garden's `completion` and `chat_completion` tasks, when `provider` is a supported non-`google` value - `location` is ignored.
     * Refer to the Google documentation for the list of supported locations. */
-  location: string
+  location?: string
   /** The name of the model to use for the inference task.
-    * Refer to the Google documentation for the list of supported models. */
-  model_id: string
-  /** The name of the project to use for the inference task. */
-  project_id: string
+    * For Google Vertex AI `model_id` is mandatory.
+    * For Google Model Garden's `completion` and `chat_completion` tasks, when `provider` is a supported non-`google` value - `model_id` will be used for some providers that require it, otherwise - ignored.
+    * Refer to the Google documentation for the list of supported models for Google Vertex AI. */
+  model_id?: string
+  /** The name of the project to use for the Google Vertex AI inference task.
+    * For Google Vertex AI `project_id` is mandatory.
+    * For Google Model Garden's `completion` and `chat_completion` tasks, when `provider` is a supported non-`google` value - `project_id` is ignored. */
+  project_id?: string
   /** This setting helps to minimize the number of rate limit errors returned from Google Vertex AI.
     * By default, the `googlevertexai` service sets the number of requests allowed per minute to 30.000. */
   rate_limit?: InferenceRateLimitSetting
@@ -23554,6 +23678,11 @@ export interface InferenceGoogleVertexAITaskSettings {
   /** For a `completion` or `chat_completion` task, allows configuration of the thinking features for the model.
     * Refer to the Google documentation for the allowable configurations for each model type. */
   thinking_config?: InferenceThinkingConfig
+  /** For `completion` and `chat_completion` tasks, specifies the `max_tokens` value for requests sent to the Google Model Garden `anthropic` provider.
+    * If `provider` is not set to `anthropic`, this field is ignored.
+    * If `max_tokens` is specified - it must be a positive integer. If not specified, the default value of 1024 is used.
+    * Anthropic models require `max_tokens` to be set for each request. Please refer to the Anthropic documentation for more information. */
+  max_tokens?: integer
 }
 
 export type InferenceGoogleVertexAITaskType = 'rerank' | 'text_embedding' | 'completion' | 'chat_completion'
@@ -23636,7 +23765,9 @@ export interface InferenceInferenceChunkingSettings {
 }
 
 export interface InferenceInferenceEndpoint {
-  /** Chunking configuration object */
+  /** The chunking configuration object.
+    * Applies only to the `sparse_embedding` and `text_embedding` task types.
+    * Not applicable to the `rerank`, `completion`, or `chat_completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The service type */
   service: string
@@ -23994,6 +24125,15 @@ export interface InferenceOpenAITaskSettings {
   /** For a `completion` or `text_embedding` task, specify the user issuing the request.
     * This information can be used for abuse detection. */
   user?: string
+  /** Specifies custom HTTP header parameters.
+    * For example:
+    * ```
+    * "headers":{
+    *   "Custom-Header": "Some-Value",
+    *   "Another-Custom-Header": "Another-Value"
+    * }
+    * ``` */
+  headers?: any
 }
 
 export type InferenceOpenAITaskType = 'chat_completion' | 'completion' | 'text_embedding'
@@ -24135,7 +24275,7 @@ export type InferenceTaskTypeElasticsearch = 'sparse_embedding' | 'text_embeddin
 
 export type InferenceTaskTypeGoogleAIStudio = 'text_embedding' | 'completion'
 
-export type InferenceTaskTypeGoogleVertexAI = 'text_embedding' | 'rerank'
+export type InferenceTaskTypeGoogleVertexAI = 'chat_completion' | 'completion' | 'text_embedding' | 'rerank'
 
 export type InferenceTaskTypeHuggingFace = 'chat_completion' | 'completion' | 'rerank' | 'text_embedding'
 
@@ -24642,7 +24782,9 @@ export interface InferencePutElasticsearchRequest extends RequestBase {
   elasticsearch_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `sparse_embedding` and `text_embedding` task types.
+    * Not applicable to the `rerank`, `completion`, or `chat_completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `elasticsearch`. */
   service: InferenceElasticsearchServiceType
