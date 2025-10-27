@@ -5034,7 +5034,7 @@ export interface AnalysisKeywordTokenizer extends AnalysisTokenizerBase {
 
 export interface AnalysisKuromojiAnalyzer {
   type: 'kuromoji'
-  mode: AnalysisKuromojiTokenizationMode
+  mode?: AnalysisKuromojiTokenizationMode
   user_dictionary?: string
 }
 
@@ -13645,6 +13645,7 @@ export interface InferenceCustomResponseParams {
 }
 
 export interface InferenceCustomServiceSettings {
+  batch_size?: integer
   headers?: any
   input_type?: any
   query_parameters?: any
