@@ -2852,6 +2852,16 @@ local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument
+determines whether wildcard expressions match hidden data streams. Supports a list of values,
+such as open,hidden.
+- **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all value targets only
+missing or closed indices. This behavior applies even if the request targets other open indices. For example,
+a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
+- **`ignore_throttled` (Optional, boolean)**: If true, concrete, expanded or aliased indices are ignored when frozen.
+- **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
+- **`allow_closed` (Optional, boolean)**: If true, allow closed indices to be returned in the response otherwise if false, keep the legacy behaviour
+of throwing an exception if index pattern matches closed indices
 
 ## client.cat.shards [_cat.shards]
 Get shard information.
@@ -6499,7 +6509,7 @@ To target all data streams use `*` or `_all`.
 - **`data_retention` (Optional, string \| -1 \| 0)**: If defined, every document added to this data stream will be stored at least for this time frame.
 Any time after this duration the document could be deleted.
 When empty, every document in this data stream will be stored indefinitely.
-- **`downsampling` (Optional, { rounds })**: The downsampling configuration to execute for the managed backing index after rollover.
+- **`downsampling` (Optional, { after, config }[])**: The downsampling configuration to execute for the managed backing index after rollover.
 - **`enabled` (Optional, boolean)**: If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
 that's disabled (enabled: `false`) will have no effect on the data stream.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match.
@@ -12868,7 +12878,8 @@ It must not be negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter.
 - **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: The sort definition.
-You can sort on `username`, `roles`, or `enabled`.
+You can sort on `name`, `description`, `metadata`, `applications.application`, `applications.privileges`,
+and `applications.resources`.
 In addition, sort can also be applied to the `_doc` field to sort by index order.
 - **`size` (Optional, number)**: The number of hits to return.
 It must not be negative.
