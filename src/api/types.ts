@@ -6232,7 +6232,7 @@ export interface AggregationsPercentilesAggregation extends AggregationsFormatMe
     * Set to `false` to disable this behavior. */
   keyed?: boolean
   /** The percentiles to calculate. */
-  percents?: double[]
+  percents?: double | double[]
   /** Uses the alternative High Dynamic Range Histogram algorithm to calculate percentiles. */
   hdr?: AggregationsHdrMethod
   /** Sets parameters for the default TDigest algorithm used to calculate percentiles. */
@@ -13877,10 +13877,25 @@ export interface CatSegmentsRequest extends CatCatRequestBase {
   local?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Type of index that wildcard expressions can match. If the request can target data streams, this argument
+    * determines whether wildcard expressions match hidden data streams. Supports comma-separated values,
+    * such as open,hidden. */
+  expand_wildcards?: ExpandWildcards
+  /** If false, the request returns an error if any wildcard expression, index alias, or _all value targets only
+    * missing or closed indices. This behavior applies even if the request targets other open indices. For example,
+    * a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar. */
+  allow_no_indices?: boolean
+  /** If true, concrete, expanded or aliased indices are ignored when frozen. */
+  ignore_throttled?: boolean
+  /** If true, missing or closed indices are not included in the response. */
+  ignore_unavailable?: boolean
+  /** If true, allow closed indices to be returned in the response otherwise if false, keep the legacy behaviour
+    * of throwing an exception if index pattern matches closed indices */
+  allow_closed?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, h?: never, s?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { index?: never, h?: never, s?: never, local?: never, master_timeout?: never, expand_wildcards?: never, allow_no_indices?: never, ignore_throttled?: never, ignore_unavailable?: never, allow_closed?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, h?: never, s?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { index?: never, h?: never, s?: never, local?: never, master_timeout?: never, expand_wildcards?: never, allow_no_indices?: never, ignore_throttled?: never, ignore_unavailable?: never, allow_closed?: never }
 }
 
 export type CatSegmentsResponse = CatSegmentsSegmentsRecord[]
@@ -15827,7 +15842,7 @@ export interface ClusterAllocationExplainDiskUsage {
 }
 
 export interface ClusterAllocationExplainNodeAllocationExplanation {
-  deciders: ClusterAllocationExplainAllocationDecision[]
+  deciders?: ClusterAllocationExplainAllocationDecision[]
   node_attributes: Record<string, string>
   node_decision: ClusterAllocationExplainDecision
   node_id: Id
@@ -15835,7 +15850,7 @@ export interface ClusterAllocationExplainNodeAllocationExplanation {
   roles: NodeRoles
   store?: ClusterAllocationExplainAllocationStore
   transport_address: TransportAddress
-  weight_ranking: integer
+  weight_ranking?: integer
 }
 
 export interface ClusterAllocationExplainNodeDiskUsage {
@@ -21130,7 +21145,7 @@ export interface IndicesPutDataLifecycleRequest extends RequestBase {
     * When empty, every document in this data stream will be stored indefinitely. */
   data_retention?: Duration
   /** The downsampling configuration to execute for the managed backing index after rollover. */
-  downsampling?: IndicesDataStreamLifecycleDownsampling
+  downsampling?: IndicesDownsamplingRound[]
   /** If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
     * that's disabled (enabled: `false`) will have no effect on the data stream. */
   enabled?: boolean
@@ -34534,7 +34549,8 @@ export interface SecurityQueryRoleRequest extends RequestBase {
     * To page through more hits, use the `search_after` parameter. */
   from?: integer
   /** The sort definition.
-    * You can sort on `username`, `roles`, or `enabled`.
+    * You can sort on `name`, `description`, `metadata`, `applications.application`, `applications.privileges`,
+    * and `applications.resources`.
     * In addition, sort can also be applied to the `_doc` field to sort by index order. */
   sort?: Sort
   /** The number of hits to return.
