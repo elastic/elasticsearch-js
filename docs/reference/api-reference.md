@@ -2297,6 +2297,16 @@ from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
+## client.cat.circuitBreaker [_cat.circuit_breaker]
+Get circuit breakers statistics
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.cat.circuitBreaker()
+```
+
+
 ## client.cat.componentTemplates [_cat.component_templates]
 Get component templates.
 
@@ -2792,6 +2802,16 @@ local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument
+determines whether wildcard expressions match hidden data streams. Supports a list of values,
+such as open,hidden.
+- **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all value targets only
+missing or closed indices. This behavior applies even if the request targets other open indices. For example,
+a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
+- **`ignore_throttled` (Optional, boolean)**: If true, concrete, expanded or aliased indices are ignored when frozen.
+- **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
+- **`allow_closed` (Optional, boolean)**: If true, allow closed indices to be returned in the response otherwise if false, keep the legacy behaviour
+of throwing an exception if index pattern matches closed indices
 
 ## client.cat.shards [_cat.shards]
 Get shard information.
@@ -5701,13 +5721,18 @@ To use the API, this parameter must be set to `true`.
 
 ## client.indices.downsample [_indices.downsample]
 Downsample an index.
-Aggregate a time series (TSDS) index and store pre-computed statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`) for each metric field grouped by a configured time interval.
+Downsamples a time series (TSDS) index and reduces its size by keeping the last value or by pre-aggregating metrics:
+
+- When running in `aggregate` mode, it pre-calculates and stores statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`)
+for each metric field grouped by a configured time interval and their dimensions.
+- When running in `last_value` mode, it keeps the last value for each metric in the configured interval and their dimensions.
+
 For example, a TSDS index that contains metrics sampled every 10 seconds can be downsampled to an hourly index.
 All documents within an hour interval are summarized and stored as a single document in the downsample index.
 
 NOTE: Only indices in a time series data stream are supported.
 Neither field nor document level security can be defined on the source index.
-The source index must be read only (`index.blocks.write: true`).
+The source index must be read-only (`index.blocks.write: true`).
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-downsample)
 
@@ -5720,7 +5745,7 @@ client.indices.downsample({ index, target_index })
 #### Request (object) [_request_indices.downsample]
 - **`index` (string)**: Name of the time series index to downsample.
 - **`target_index` (string)**: Name of the index to create.
-- **`config` (Optional, { fixed_interval })**
+- **`config` (Optional, { fixed_interval, sampling_method })**
 
 ## client.indices.exists [_indices.exists]
 Check indices.
@@ -6024,6 +6049,16 @@ Supports a list of values, such as `open,hidden`.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
+
+## client.indices.getAllSampleConfiguration [_indices.get_all_sample_configuration]
+Get sampling configurations for all indices and data streams
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-all-sample-configuration)
+
+```ts
+client.indices.getAllSampleConfiguration()
+```
+
 
 ## client.indices.getDataLifecycle [_indices.get_data_lifecycle]
 Get data stream lifecycles.
@@ -6489,7 +6524,7 @@ To target all data streams use `*` or `_all`.
 - **`data_retention` (Optional, string \| -1 \| 0)**: If defined, every document added to this data stream will be stored at least for this time frame.
 Any time after this duration the document could be deleted.
 When empty, every document in this data stream will be stored indefinitely.
-- **`downsampling` (Optional, { rounds })**: The downsampling configuration to execute for the managed backing index after rollover.
+- **`downsampling` (Optional, { after, fixed_interval }[])**: The downsampling configuration to execute for the managed backing index after rollover.
 - **`enabled` (Optional, boolean)**: If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
 that's disabled (enabled: `false`) will have no effect on the data stream.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match.
@@ -7568,7 +7603,7 @@ client.inference.completion({ inference_id, input })
 - **`inference_id` (string)**: The inference Id
 - **`input` (string \| string[])**: Inference input.
 Either a string or an array of strings.
-- **`task_settings` (Optional, User-defined value)**: Optional task settings
+- **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request. These settings are specific to the <task_type> you specified and override the task settings specified when initializing the service.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.delete [_inference.delete]
@@ -7585,7 +7620,7 @@ client.inference.delete({ inference_id })
 #### Request (object) [_request_inference.delete]
 - **`inference_id` (string)**: The inference identifier.
 - **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The task type
-- **`dry_run` (Optional, boolean)**: When true, the endpoint is not deleted and a list of ingest processors which reference this endpoint is returned.
+- **`dry_run` (Optional, boolean)**: When true, checks the semantic_text fields and inference processors that reference the endpoint and returns them in a list, but does not delete the endpoint.
 - **`force` (Optional, boolean)**: When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields.
 
 ## client.inference.get [_inference.get]
@@ -7801,7 +7836,7 @@ client.inference.putAnthropic({ task_type, anthropic_inference_id, service, serv
 The only valid task type for the model to perform is `completion`.
 - **`anthropic_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("anthropic"))**: The type of service supported for the specified task type. In this case, `anthropic`.
-- **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `watsonxai` service.
+- **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `anthropic` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { max_tokens, temperature, top_k, top_p })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
@@ -7824,7 +7859,7 @@ client.inference.putAzureaistudio({ task_type, azureaistudio_inference_id, servi
 - **`task_type` (Enum("completion" \| "rerank" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`azureaistudio_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("azureaistudio"))**: The type of service supported for the specified task type. In this case, `azureaistudio`.
-- **`service_settings` ({ api_key, endpoint_type, target, provider, rate_limit })**: Settings used to install the inference model. These settings are specific to the `openai` service.
+- **`service_settings` ({ api_key, endpoint_type, target, provider, rate_limit })**: Settings used to install the inference model. These settings are specific to the `azureaistudio` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { do_sample, max_new_tokens, temperature, top_p, user, return_documents, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
@@ -8346,7 +8381,7 @@ client.inference.sparseEmbedding({ inference_id, input })
 - **`inference_id` (string)**: The inference Id
 - **`input` (string \| string[])**: Inference input.
 Either a string or an array of strings.
-- **`task_settings` (Optional, User-defined value)**: Optional task settings
+- **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request. These settings are specific to the <task_type> you specified and override the task settings specified when initializing the service.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.streamCompletion [_inference.stream_completion]
@@ -8372,7 +8407,7 @@ client.inference.streamCompletion({ inference_id, input })
 It can be a single string or an array.
 
 NOTE: Inference endpoints for the completion task type currently only support a single string as input.
-- **`task_settings` (Optional, User-defined value)**: Optional task settings
+- **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request. These settings are specific to the <task_type> you specified and override the task settings specified when initializing the service.
 - **`timeout` (Optional, string \| -1 \| 0)**: The amount of time to wait for the inference request to complete.
 
 ## client.inference.textEmbedding [_inference.text_embedding]
@@ -8400,7 +8435,7 @@ Accepted values depend on the configured inference service, refer to the relevan
 
 > info
 > The `input_type` parameter specified on the root level of the request body will take precedence over the `input_type` parameter specified in `task_settings`.
-- **`task_settings` (Optional, User-defined value)**: Optional task settings
+- **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request. These settings are specific to the <task_type> you specified and override the task settings specified when initializing the service.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.update [_inference.update]
@@ -12996,7 +13031,8 @@ It must not be negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter.
 - **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: The sort definition.
-You can sort on `username`, `roles`, or `enabled`.
+You can sort on `name`, `description`, `metadata`, `applications.application`, `applications.privileges`,
+and `applications.resources`.
 In addition, sort can also be applied to the `_doc` field to sort by index order.
 - **`size` (Optional, number)**: The number of hits to return.
 It must not be negative.

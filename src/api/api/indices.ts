@@ -399,6 +399,11 @@ export default class Indices {
           'master_timeout'
         ]
       },
+      'indices.get_all_sample_configuration': {
+        path: [],
+        body: [],
+        query: []
+      },
       'indices.get_data_lifecycle': {
         path: [
           'name'
@@ -2054,7 +2059,7 @@ export default class Indices {
   }
 
   /**
-    * Downsample an index. Aggregate a time series (TSDS) index and store pre-computed statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`) for each metric field grouped by a configured time interval. For example, a TSDS index that contains metrics sampled every 10 seconds can be downsampled to an hourly index. All documents within an hour interval are summarized and stored as a single document in the downsample index. NOTE: Only indices in a time series data stream are supported. Neither field nor document level security can be defined on the source index. The source index must be read only (`index.blocks.write: true`).
+    * Downsample an index. Downsamples a time series (TSDS) index and reduces its size by keeping the last value or by pre-aggregating metrics: - When running in `aggregate` mode, it pre-calculates and stores statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`) for each metric field grouped by a configured time interval and their dimensions. - When running in `last_value` mode, it keeps the last value for each metric in the configured interval and their dimensions. For example, a TSDS index that contains metrics sampled every 10 seconds can be downsampled to an hourly index. All documents within an hour interval are summarized and stored as a single document in the downsample index. NOTE: Only indices in a time series data stream are supported. Neither field nor document level security can be defined on the source index. The source index must be read-only (`index.blocks.write: true`).
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-downsample | Elasticsearch API documentation}
     */
   async downsample (this: That, params: T.IndicesDownsampleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDownsampleResponse>
@@ -2668,6 +2673,50 @@ export default class Indices {
         'expand_wildcards',
         'ignore_unavailable',
         'master_timeout'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Get sampling configurations for all indices and data streams
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-all-sample-configuration | Elasticsearch API documentation}
+    */
+  async getAllSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getAllSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getAllSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getAllSampleConfiguration (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['indices.get_all_sample_configuration']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = '/_sample/config'
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_all_sample_configuration',
+      acceptedParams: [
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

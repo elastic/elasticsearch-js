@@ -4417,8 +4417,8 @@ export interface QueryVectorBuilder {
 }
 
 export interface RRFRetriever extends RetrieverBase {
-  /** A list of child retrievers to specify which sets of returned top documents will have the RRF formula applied to them. */
-  retrievers: RetrieverContainer[]
+  /** A list of child retrievers to specify which sets of returned top documents will have the RRF formula applied to them. Each retriever can optionally include a weight parameter. */
+  retrievers: RRFRetrieverEntry[]
   /** This value determines how much influence documents in individual result sets per query have over the final ranked result set. */
   rank_constant?: integer
   /** This value determines the size of the individual result sets per query. */
@@ -4426,6 +4426,15 @@ export interface RRFRetriever extends RetrieverBase {
   query?: string
   fields?: string[]
 }
+
+export interface RRFRetrieverComponent {
+  /** The nested retriever configuration. */
+  retriever: RetrieverContainer
+  /** Weight multiplier for this retriever's contribution to the RRF score. Higher values increase influence. Defaults to 1.0 if not specified. Must be non-negative. */
+  weight?: float
+}
+
+export type RRFRetrieverEntry = RetrieverContainer | RRFRetrieverComponent
 
 export interface RankBase {
 }
@@ -5827,7 +5836,7 @@ export interface AggregationsGeoLineAggregation {
   point: AggregationsGeoLinePoint
   /** The name of the numeric field to use as the sort key for ordering the points.
     * When the `geo_line` aggregation is nested inside a `time_series` aggregation, this field defaults to `@timestamp`, and any other value will result in error. */
-  sort: AggregationsGeoLineSort
+  sort?: AggregationsGeoLineSort
   /** When `true`, returns an additional array of the sort values in the feature properties. */
   include_sort?: boolean
   /** The order in which the line is sorted (ascending or descending). */
@@ -6335,7 +6344,7 @@ export interface AggregationsPercentilesAggregation extends AggregationsFormatMe
     * Set to `false` to disable this behavior. */
   keyed?: boolean
   /** The percentiles to calculate. */
-  percents?: double[]
+  percents?: double | double[]
   /** Uses the alternative High Dynamic Range Histogram algorithm to calculate percentiles. */
   hdr?: AggregationsHdrMethod
   /** Sets parameters for the default TDigest algorithm used to calculate percentiles. */
@@ -14069,10 +14078,25 @@ export interface CatSegmentsRequest extends CatCatRequestBase {
   local?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
+  /** Type of index that wildcard expressions can match. If the request can target data streams, this argument
+    * determines whether wildcard expressions match hidden data streams. Supports comma-separated values,
+    * such as open,hidden. */
+  expand_wildcards?: ExpandWildcards
+  /** If false, the request returns an error if any wildcard expression, index alias, or _all value targets only
+    * missing or closed indices. This behavior applies even if the request targets other open indices. For example,
+    * a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar. */
+  allow_no_indices?: boolean
+  /** If true, concrete, expanded or aliased indices are ignored when frozen. */
+  ignore_throttled?: boolean
+  /** If true, missing or closed indices are not included in the response. */
+  ignore_unavailable?: boolean
+  /** If true, allow closed indices to be returned in the response otherwise if false, keep the legacy behaviour
+    * of throwing an exception if index pattern matches closed indices */
+  allow_closed?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, h?: never, s?: never, local?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { index?: never, h?: never, s?: never, local?: never, master_timeout?: never, expand_wildcards?: never, allow_no_indices?: never, ignore_throttled?: never, ignore_unavailable?: never, allow_closed?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, h?: never, s?: never, local?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { index?: never, h?: never, s?: never, local?: never, master_timeout?: never, expand_wildcards?: never, allow_no_indices?: never, ignore_throttled?: never, ignore_unavailable?: never, allow_closed?: never }
 }
 
 export type CatSegmentsResponse = CatSegmentsSegmentsRecord[]
@@ -16027,7 +16051,7 @@ export interface ClusterAllocationExplainDiskUsage {
 }
 
 export interface ClusterAllocationExplainNodeAllocationExplanation {
-  deciders: ClusterAllocationExplainAllocationDecision[]
+  deciders?: ClusterAllocationExplainAllocationDecision[]
   node_attributes: Record<string, string>
   node_decision: ClusterAllocationExplainDecision
   node_id: Id
@@ -16035,7 +16059,7 @@ export interface ClusterAllocationExplainNodeAllocationExplanation {
   roles: NodeRoles
   store?: ClusterAllocationExplainAllocationStore
   transport_address: TransportAddress
-  weight_ranking: integer
+  weight_ranking?: integer
 }
 
 export interface ClusterAllocationExplainNodeDiskUsage {
@@ -19457,13 +19481,15 @@ export interface IndicesDataStreamVisibility {
 export interface IndicesDownsampleConfig {
   /** The interval at which to aggregate the original time series index. */
   fixed_interval: DurationLarge
+  /** The sampling method used to reduce the documents; it can be either `aggregate` or `last_value`. Defaults to `aggregate`. */
+  sampling_method?: IndicesSamplingMethod
 }
 
 export interface IndicesDownsamplingRound {
   /** The duration since rollover when this downsampling round should execute */
   after: Duration
-  /** The downsample configuration to execute. */
-  config: IndicesDownsampleConfig
+  /** The downsample interval. */
+  fixed_interval: DurationLarge
 }
 
 export interface IndicesFailureStore {
@@ -19853,6 +19879,8 @@ export interface IndicesQueries {
 export interface IndicesRetentionLease {
   period: Duration
 }
+
+export type IndicesSamplingMethod = 'aggregate' | 'last_value'
 
 export interface IndicesSearchIdle {
   after?: Duration
@@ -21451,7 +21479,7 @@ export interface IndicesPutDataLifecycleRequest extends RequestBase {
     * When empty, every document in this data stream will be stored indefinitely. */
   data_retention?: Duration
   /** The downsampling configuration to execute for the managed backing index after rollover. */
-  downsampling?: IndicesDataStreamLifecycleDownsampling
+  downsampling?: IndicesDownsamplingRound[]
   /** If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
     * that's disabled (enabled: `false`) will have no effect on the data stream. */
   enabled?: boolean
@@ -24174,7 +24202,7 @@ export interface InferenceRequestChatCompletion {
     * Requests should generally only add new messages from the user (role `user`).
     * The other message roles (`assistant`, `system`, or `tool`) should generally only be copied from the response to a previous completion request, such that the messages array is built up throughout a conversation. */
   messages: InferenceMessage[]
-  /** The ID of the model to use. */
+  /** The ID of the model to use. By default, the model ID is set to the value included when creating the inference endpoint. */
   model?: string
   /** The upper bound limit for the number of tokens that can be generated for a completion request. */
   max_completion_tokens?: long
@@ -24418,7 +24446,7 @@ export interface InferenceCompletionRequest extends RequestBase {
   /** Inference input.
     * Either a string or an array of strings. */
   input: string | string[]
-  /** Optional task settings */
+  /** Task settings for the individual inference request. These settings are specific to the <task_type> you specified and override the task settings specified when initializing the service. */
   task_settings?: InferenceTaskSettings
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, task_settings?: never }
@@ -24433,7 +24461,7 @@ export interface InferenceDeleteRequest extends RequestBase {
   task_type?: InferenceTaskType
   /** The inference identifier. */
   inference_id: Id
-  /** When true, the endpoint is not deleted and a list of ingest processors which reference this endpoint is returned. */
+  /** When true, checks the semantic_text fields and inference processors that reference the endpoint and returns them in a list, but does not delete the endpoint. */
   dry_run?: boolean
   /** When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields. */
   force?: boolean
@@ -24618,7 +24646,7 @@ export interface InferencePutAnthropicRequest extends RequestBase {
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `anthropic`. */
   service: InferenceAnthropicServiceType
-  /** Settings used to install the inference model. These settings are specific to the `watsonxai` service. */
+  /** Settings used to install the inference model. These settings are specific to the `anthropic` service. */
   service_settings: InferenceAnthropicServiceSettings
   /** Settings to configure the inference task.
     * These settings are specific to the task type you specified. */
@@ -24642,7 +24670,7 @@ export interface InferencePutAzureaistudioRequest extends RequestBase {
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `azureaistudio`. */
   service: InferenceAzureAiStudioServiceType
-  /** Settings used to install the inference model. These settings are specific to the `openai` service. */
+  /** Settings used to install the inference model. These settings are specific to the `azureaistudio` service. */
   service_settings: InferenceAzureAiStudioServiceSettings
   /** Settings to configure the inference task.
     * These settings are specific to the task type you specified. */
@@ -25058,7 +25086,7 @@ export interface InferenceSparseEmbeddingRequest extends RequestBase {
   /** Inference input.
     * Either a string or an array of strings. */
   input: string | string[]
-  /** Optional task settings */
+  /** Task settings for the individual inference request. These settings are specific to the <task_type> you specified and override the task settings specified when initializing the service. */
   task_settings?: InferenceTaskSettings
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, task_settings?: never }
@@ -25078,7 +25106,7 @@ export interface InferenceStreamCompletionRequest extends RequestBase {
     *
     * NOTE: Inference endpoints for the completion task type currently only support a single string as input. */
   input: string | string[]
-  /** Optional task settings */
+  /** Task settings for the individual inference request. These settings are specific to the <task_type> you specified and override the task settings specified when initializing the service. */
   task_settings?: InferenceTaskSettings
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, task_settings?: never }
@@ -25107,7 +25135,7 @@ export interface InferenceTextEmbeddingRequest extends RequestBase {
     * > info
     * > The `input_type` parameter specified on the root level of the request body will take precedence over the `input_type` parameter specified in `task_settings`. */
   input_type?: string
-  /** Optional task settings */
+  /** Task settings for the individual inference request. These settings are specific to the <task_type> you specified and override the task settings specified when initializing the service. */
   task_settings?: InferenceTaskSettings
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, input?: never, input_type?: never, task_settings?: never }
@@ -35252,7 +35280,8 @@ export interface SecurityQueryRoleRequest extends RequestBase {
     * To page through more hits, use the `search_after` parameter. */
   from?: integer
   /** The sort definition.
-    * You can sort on `username`, `roles`, or `enabled`.
+    * You can sort on `name`, `description`, `metadata`, `applications.application`, `applications.privileges`,
+    * and `applications.resources`.
     * In addition, sort can also be applied to the `_doc` field to sort by index order. */
   sort?: Sort
   /** The number of hits to return.
