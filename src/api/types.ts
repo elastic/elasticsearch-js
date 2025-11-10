@@ -750,7 +750,7 @@ export interface FieldCapsRequest extends RequestBase {
   /** If true, unmapped fields are included in the response. */
   include_unmapped?: boolean
   /** A comma-separated list of filters to apply to the response. */
-  filters?: string
+  filters?: string | string[]
   /** A comma-separated list of field types to include.
     * Any fields that do not match one of these types will be excluded from the results.
     * It defaults to empty, meaning that all field types are returned. */
@@ -3400,7 +3400,7 @@ export interface TermsEnumRequest extends RequestBase {
   /** A comma-separated list of data streams, indices, and index aliases to search.
     * Wildcard (`*`) expressions are supported.
     * To search all data streams or indices, omit this parameter or use `*`  or `_all`. */
-  index: IndexName
+  index: Indices
   /** The string to match at the start of indexed terms. If not provided, all terms in the field are considered. */
   field: Field
   /** The number of matching terms to return. */
@@ -3866,6 +3866,10 @@ export interface ClusterStatistics {
   details?: Record<ClusterAlias, ClusterDetails>
 }
 
+export type CommonStatsFlag = '_all' | 'store' | 'indexing' | 'get' | 'search' | 'merge' | 'flush' | 'refresh' | 'query_cache' | 'fielddata' | 'docs' | 'warmer' | 'completion' | 'segments' | 'translog' | 'request_cache' | 'recovery' | 'bulk' | 'shard_stats' | 'mappings' | 'dense_vector' | 'sparse_vector'
+
+export type CommonStatsFlags = CommonStatsFlag | CommonStatsFlag[]
+
 export interface CompletionStats {
   /** Total amount, in bytes, of memory used for completion across all shards assigned to selected nodes. */
   size_in_bytes: long
@@ -4051,7 +4055,7 @@ export interface GeoHashLocation {
   geohash: GeoHash
 }
 
-export type GeoHashPrecision = number | string
+export type GeoHashPrecision = integer | string
 
 export type GeoHexCell = string
 
@@ -4070,7 +4074,7 @@ export type GeoShapeRelation = 'intersects' | 'disjoint' | 'within' | 'contains'
 
 export type GeoTile = string
 
-export type GeoTilePrecision = number
+export type GeoTilePrecision = integer
 
 export interface GetStats {
   current: long
@@ -4288,8 +4292,6 @@ export interface MergesStats {
 }
 
 export type Metadata = Record<string, any>
-
-export type Metrics = string | string[]
 
 export type MinimumShouldMatch = integer | string
 
@@ -16577,7 +16579,7 @@ export interface ClusterRerouteRequest extends RequestBase {
   /** If true, then the response contains an explanation of why the commands can or cannot run. */
   explain?: boolean
   /** Limits the information returned to the specified metrics. */
-  metric?: Metrics
+  metric?: string | string[]
   /** If true, then retries allocation of shards that are blocked due to too many subsequent allocation failures. */
   retry_failed?: boolean
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
@@ -16622,9 +16624,13 @@ export interface ClusterRerouteResponse {
   state?: any
 }
 
+export type ClusterStateClusterStateMetric = '_all' | 'version' | 'master_node' | 'blocks' | 'nodes' | 'metadata' | 'routing_table' | 'routing_nodes' | 'customs'
+
+export type ClusterStateClusterStateMetrics = ClusterStateClusterStateMetric | ClusterStateClusterStateMetric[]
+
 export interface ClusterStateRequest extends RequestBase {
   /** Limit the information returned to the specified metrics */
-  metric?: Metrics
+  metric?: ClusterStateClusterStateMetrics
   /** A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices */
   index?: Indices
   /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
@@ -19880,6 +19886,27 @@ export interface IndicesRetentionLease {
   period: Duration
 }
 
+export interface IndicesSamplingConfiguration {
+  /** The fraction of documents to sample between 0 and 1. */
+  rate: double
+  /** The maximum number of documents to sample. */
+  max_samples: integer
+  /** The maximum total size of sampled documents. */
+  max_size?: ByteSize
+  /** The maximum total size of sampled documents in bytes. */
+  max_size_in_bytes: long
+  /** The duration for which the sampled documents should be retained. */
+  time_to_live?: Duration
+  /** The duration for which the sampled documents should be retained, in milliseconds. */
+  time_to_live_in_millis: long
+  /** An optional condition script that sampled documents must satisfy. */
+  if?: string
+  /** The time when the sampling configuration was created. */
+  creation_time?: DateTime
+  /** The time when the sampling configuration was created, in milliseconds since epoch. */
+  creation_time_in_millis: long
+}
+
 export type IndicesSamplingMethod = 'aggregate' | 'last_value'
 
 export interface IndicesSearchIdle {
@@ -20052,7 +20079,7 @@ export interface IndicesAddBlockRequest extends RequestBase {
     * By default, you must explicitly name the indices you are adding blocks to.
     * To allow the adding of blocks to indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`.
     * You can update this setting in the `elasticsearch.yml` file or by using the cluster update settings API. */
-  index: IndexName
+  index: Indices
   /** The block type to add to the index. */
   block: IndicesIndicesBlockOptions
   /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
@@ -20396,7 +20423,7 @@ export interface IndicesDataStreamsStatsRequest extends RequestBase {
   /** Comma-separated list of data streams used to limit the request.
     * Wildcard expressions (`*`) are supported.
     * To target all data streams in a cluster, omit this parameter or use `*`. */
-  name?: IndexName
+  name?: Indices
   /** Type of data stream that wildcard patterns can match.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
@@ -20539,6 +20566,24 @@ export interface IndicesDeleteIndexTemplateRequest extends RequestBase {
 }
 
 export type IndicesDeleteIndexTemplateResponse = AcknowledgedResponseBase
+
+export interface IndicesDeleteSampleConfigurationRequest extends RequestBase {
+  /** The name of the index. */
+  index: IndexName
+  /** Period to wait for a connection to the master node. If no response is
+    * received before the timeout expires, the request fails and returns an
+    * error. */
+  master_timeout?: Duration
+  /** Period to wait for a response.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, master_timeout?: never, timeout?: never }
+}
+
+export type IndicesDeleteSampleConfigurationResponse = AcknowledgedResponseBase
 
 export interface IndicesDeleteTemplateRequest extends RequestBase {
   /** The name of the legacy index template to delete.
@@ -20913,10 +20958,30 @@ export interface IndicesGetAliasIndexAliases {
 
 export interface IndicesGetAliasNotFoundAliasesKeys {
   error: string
-  status: number
+  status: integer
 }
 export type IndicesGetAliasNotFoundAliases = IndicesGetAliasNotFoundAliasesKeys
-& { [property: string]: IndicesGetAliasIndexAliases | string | number }
+& { [property: string]: IndicesGetAliasIndexAliases | string | integer }
+
+export interface IndicesGetAllSampleConfigurationRequest extends RequestBase {
+  /** Period to wait for a connection to the master node. If no response is
+    * received before the timeout expires, the request fails and returns an
+    * error. */
+  master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
+}
+
+export interface IndicesGetAllSampleConfigurationResponse {
+  configurations: IndicesGetAllSampleConfigurationIndexSamplingConfiguration[]
+}
+
+export interface IndicesGetAllSampleConfigurationIndexSamplingConfiguration {
+  index: IndexName
+  configuration: IndicesSamplingConfiguration
+}
 
 export interface IndicesGetDataLifecycleDataStreamWithLifecycle {
   name: DataStreamName
@@ -21112,7 +21177,7 @@ export interface IndicesGetIndexTemplateIndexTemplateItem {
 }
 
 export interface IndicesGetIndexTemplateRequest extends RequestBase {
-  /** Comma-separated list of index template names used to limit the request. Wildcard (*) expressions are supported. */
+  /** Name of index template to retrieve. Wildcard (*) expressions are supported. */
   name?: Name
   /** If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node. */
   local?: boolean
@@ -21215,6 +21280,24 @@ export interface IndicesGetSampleRawDocument {
   index: string
   /** The original raw source. */
   source: Record<PropertyName, MappingProperty>
+}
+
+export interface IndicesGetSampleConfigurationRequest extends RequestBase {
+  /** The name of the index. */
+  index: IndexName
+  /** Period to wait for a connection to the master node. If no response is
+    * received before the timeout expires, the request fails and returns an
+    * error. */
+  master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, master_timeout?: never }
+}
+
+export interface IndicesGetSampleConfigurationResponse {
+  index: IndexName
+  configuration: IndicesSamplingConfiguration | null
 }
 
 export interface IndicesGetSampleStatsRequest extends RequestBase {
@@ -21742,6 +21825,36 @@ export interface IndicesPutMappingRequest extends RequestBase {
 
 export type IndicesPutMappingResponse = IndicesResponseBase
 
+export interface IndicesPutSampleConfigurationRequest extends RequestBase {
+  /** The name of the index or data stream. */
+  index: IndexName
+  /** Period to wait for a connection to the master node. If no response is
+    * received before the timeout expires, the request fails and returns an
+    * error. */
+  master_timeout?: Duration
+  /** Period to wait for a response.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  /** The fraction of documents to sample. Must be greater than 0 and less than or equal to 1.
+    * Can be specified as a number or a string. */
+  rate: SpecUtilsStringified<double>
+  /** The maximum number of documents to sample. Must be greater than 0 and less than or equal to 10,000. */
+  max_samples?: integer
+  /** The maximum total size of sampled documents. Must be greater than 0 and less than or equal to 5GB. */
+  max_size?: ByteSize
+  /** The duration for which the sampled documents should be retained.
+    * Must be greater than 0 and less than or equal to 30 days. */
+  time_to_live?: Duration
+  /** An optional condition script that sampled documents must satisfy. */
+  if?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, master_timeout?: never, timeout?: never, rate?: never, max_samples?: never, max_size?: never, time_to_live?: never, if?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, master_timeout?: never, timeout?: never, rate?: never, max_samples?: never, max_size?: never, time_to_live?: never, if?: never }
+}
+
+export type IndicesPutSampleConfigurationResponse = AcknowledgedResponseBase
+
 export interface IndicesPutSettingsRequest extends RequestBase {
   /** Comma-separated list of data streams, indices, and aliases used to limit
     * the request. Supports wildcards (`*`). To target all data streams and
@@ -22009,7 +22122,7 @@ export interface IndicesRemoveBlockRequest extends RequestBase {
     * By default, you must explicitly name the indices you are removing blocks from.
     * To allow the removal of blocks from indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`.
     * You can update this setting in the `elasticsearch.yml` file or by using the cluster update settings API. */
-  index: IndexName
+  index: Indices
   /** The block type to remove from the index. */
   block: IndicesIndicesBlockOptions
   /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
@@ -22549,7 +22662,7 @@ export interface IndicesStatsMappingStats {
 
 export interface IndicesStatsRequest extends RequestBase {
   /** Limit the information returned the specific metrics. */
-  metric?: Metrics
+  metric?: CommonStatsFlags
   /** A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices */
   index?: Indices
   /** Comma-separated list or wildcard expressions of fields to include in fielddata and suggest statistics. */
@@ -22908,7 +23021,7 @@ export interface InferenceAlibabaCloudTaskSettings {
   return_token?: boolean
 }
 
-export type InferenceAlibabaCloudTaskType = 'completion' | 'rerank' | 'space_embedding' | 'text_embedding'
+export type InferenceAlibabaCloudTaskType = 'completion' | 'rerank' | 'sparse_embedding' | 'text_embedding'
 
 export interface InferenceAmazonBedrockServiceSettings {
   /** A valid AWS access key that has permissions to use Amazon Bedrock and access to models for inference requests. */
@@ -24568,7 +24681,9 @@ export interface InferencePutAlibabacloudRequest extends RequestBase {
   alibabacloud_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `sparse_embedding` or `text_embedding` task types.
+    * Not applicable to the `rerank` or `completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `alibabacloud-ai-search`. */
   service: InferenceAlibabaCloudServiceType
@@ -24592,7 +24707,9 @@ export interface InferencePutAmazonbedrockRequest extends RequestBase {
   amazonbedrock_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `completion` task type. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `amazonbedrock`. */
   service: InferenceAmazonBedrockServiceType
@@ -24616,7 +24733,9 @@ export interface InferencePutAmazonsagemakerRequest extends RequestBase {
   amazonsagemaker_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `sparse_embedding` or `text_embedding` task types.
+    * Not applicable to the `rerank`, `completion`, or `chat_completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `amazon_sagemaker`. */
   service: InferenceAmazonSageMakerServiceType
@@ -24642,8 +24761,6 @@ export interface InferencePutAnthropicRequest extends RequestBase {
   anthropic_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
-  chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `anthropic`. */
   service: InferenceAnthropicServiceType
   /** Settings used to install the inference model. These settings are specific to the `anthropic` service. */
@@ -24652,9 +24769,9 @@ export interface InferencePutAnthropicRequest extends RequestBase {
     * These settings are specific to the task type you specified. */
   task_settings?: InferenceAnthropicTaskSettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { task_type?: never, anthropic_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+  body?: string | { [key: string]: any } & { task_type?: never, anthropic_inference_id?: never, timeout?: never, service?: never, service_settings?: never, task_settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { task_type?: never, anthropic_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+  querystring?: { [key: string]: any } & { task_type?: never, anthropic_inference_id?: never, timeout?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
 export type InferencePutAnthropicResponse = InferenceInferenceEndpointInfoAnthropic
@@ -24666,7 +24783,9 @@ export interface InferencePutAzureaistudioRequest extends RequestBase {
   azureaistudio_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `rerank` or `completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `azureaistudio`. */
   service: InferenceAzureAiStudioServiceType
@@ -24691,7 +24810,9 @@ export interface InferencePutAzureopenaiRequest extends RequestBase {
   azureopenai_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `completion` task type. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `azureopenai`. */
   service: InferenceAzureOpenAIServiceType
@@ -24715,7 +24836,9 @@ export interface InferencePutCohereRequest extends RequestBase {
   cohere_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `rerank` or `completion` task type. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `cohere`. */
   service: InferenceCohereServiceType
@@ -24740,8 +24863,6 @@ export interface InferencePutContextualaiRequest extends RequestBase {
   contextualai_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
-  chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `contextualai`. */
   service: InferenceContextualAIServiceType
   /** Settings used to install the inference model. These settings are specific to the `contextualai` service. */
@@ -24750,9 +24871,9 @@ export interface InferencePutContextualaiRequest extends RequestBase {
     * These settings are specific to the task type you specified. */
   task_settings?: InferenceContextualAITaskSettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { task_type?: never, contextualai_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+  body?: string | { [key: string]: any } & { task_type?: never, contextualai_inference_id?: never, timeout?: never, service?: never, service_settings?: never, task_settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { task_type?: never, contextualai_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+  querystring?: { [key: string]: any } & { task_type?: never, contextualai_inference_id?: never, timeout?: never, service?: never, service_settings?: never, task_settings?: never }
 }
 
 export type InferencePutContextualaiResponse = InferenceInferenceEndpointInfoContextualAi
@@ -24762,7 +24883,9 @@ export interface InferencePutCustomRequest extends RequestBase {
   task_type: InferenceCustomTaskType
   /** The unique identifier of the inference endpoint. */
   custom_inference_id: Id
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `sparse_embedding` or `text_embedding` task types.
+    * Not applicable to the `rerank` or `completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `custom`. */
   service: InferenceCustomServiceType
@@ -24787,17 +24910,15 @@ export interface InferencePutDeepseekRequest extends RequestBase {
   deepseek_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
-  chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `deepseek`. */
   service: InferenceDeepSeekServiceType
   /** Settings used to install the inference model.
     * These settings are specific to the `deepseek` service. */
   service_settings: InferenceDeepSeekServiceSettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { task_type?: never, deepseek_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never }
+  body?: string | { [key: string]: any } & { task_type?: never, deepseek_inference_id?: never, timeout?: never, service?: never, service_settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { task_type?: never, deepseek_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never }
+  querystring?: { [key: string]: any } & { task_type?: never, deepseek_inference_id?: never, timeout?: never, service?: never, service_settings?: never }
 }
 
 export type InferencePutDeepseekResponse = InferenceInferenceEndpointInfoDeepSeek
@@ -24812,7 +24933,7 @@ export interface InferencePutElasticsearchRequest extends RequestBase {
   timeout?: Duration
   /** The chunking configuration object.
     * Applies only to the `sparse_embedding` and `text_embedding` task types.
-    * Not applicable to the `rerank`, `completion`, or `chat_completion` task types. */
+    * Not applicable to the `rerank` task type. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `elasticsearch`. */
   service: InferenceElasticsearchServiceType
@@ -24858,7 +24979,9 @@ export interface InferencePutGoogleaistudioRequest extends RequestBase {
   googleaistudio_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `completion` task type. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `googleaistudio`. */
   service: InferenceGoogleAiServiceType
@@ -24879,7 +25002,9 @@ export interface InferencePutGooglevertexaiRequest extends RequestBase {
   googlevertexai_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `rerank`, `completion`, or `chat_completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `googlevertexai`. */
   service: InferenceGoogleVertexAIServiceType
@@ -24903,7 +25028,9 @@ export interface InferencePutHuggingFaceRequest extends RequestBase {
   huggingface_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `rerank`, `completion`, or `chat_completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `hugging_face`. */
   service: InferenceHuggingFaceServiceType
@@ -24927,7 +25054,9 @@ export interface InferencePutJinaaiRequest extends RequestBase {
   jinaai_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `rerank` task type. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `jinaai`. */
   service: InferenceJinaAIServiceType
@@ -24951,7 +25080,9 @@ export interface InferencePutLlamaRequest extends RequestBase {
   llama_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `completion` or `chat_completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `llama`. */
   service: InferenceLlamaServiceType
@@ -24972,7 +25103,9 @@ export interface InferencePutMistralRequest extends RequestBase {
   mistral_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `completion` or `chat_completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `mistral`. */
   service: InferenceMistralServiceType
@@ -24994,7 +25127,9 @@ export interface InferencePutOpenaiRequest extends RequestBase {
   openai_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `completion` or `chat_completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `openai`. */
   service: InferenceOpenAIServiceType
@@ -25018,7 +25153,9 @@ export interface InferencePutVoyageaiRequest extends RequestBase {
   voyageai_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  /** The chunking configuration object. */
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `rerank` task type. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `voyageai`. */
   service: InferenceVoyageAIServiceType
@@ -25042,14 +25179,18 @@ export interface InferencePutWatsonxRequest extends RequestBase {
   watsonx_inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `completion` or `chat_completion` task types. */
+  chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `watsonxai`. */
   service: InferenceWatsonxServiceType
   /** Settings used to install the inference model. These settings are specific to the `watsonxai` service. */
   service_settings: InferenceWatsonxServiceSettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { task_type?: never, watsonx_inference_id?: never, timeout?: never, service?: never, service_settings?: never }
+  body?: string | { [key: string]: any } & { task_type?: never, watsonx_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { task_type?: never, watsonx_inference_id?: never, timeout?: never, service?: never, service_settings?: never }
+  querystring?: { [key: string]: any } & { task_type?: never, watsonx_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never }
 }
 
 export type InferencePutWatsonxResponse = InferenceInferenceEndpointInfoWatsonx
@@ -29247,7 +29388,9 @@ export interface MlEvaluateDataFrameRequest extends RequestBase {
   querystring?: { [key: string]: any } & { evaluation?: never, index?: never, query?: never }
 }
 
-export interface MlEvaluateDataFrameResponse {
+export type MlEvaluateDataFrameResponse = MlEvaluateDataFrameResponseBody
+
+export interface MlEvaluateDataFrameResponseBody {
   /** Evaluation results for a classification analysis.
     * It outputs a prediction that identifies to which of the classes each document belongs. */
   classification?: MlEvaluateDataFrameDataframeClassificationSummary
@@ -32507,6 +32650,10 @@ export interface NodesInfoNodeThreadPoolInfo {
   type: string
 }
 
+export type NodesInfoNodesInfoMetric = '_all' | '_none' | 'settings' | 'os' | 'process' | 'jvm' | 'thread_pool' | 'transport' | 'http' | 'remote_cluster_server' | 'plugins' | 'ingest' | 'aggregations' | 'indices'
+
+export type NodesInfoNodesInfoMetrics = NodesInfoNodesInfoMetric | NodesInfoNodesInfoMetric[]
+
 export interface NodesInfoRemoveClusterServer {
   bound_address: TransportAddress[]
   publish_address: TransportAddress
@@ -32516,7 +32663,7 @@ export interface NodesInfoRequest extends RequestBase {
   /** Comma-separated list of node IDs or names used to limit returned information. */
   node_id?: NodeIds
   /** Limits the information returned to the specific metrics. Supports a comma-separated list, such as http,ingest. */
-  metric?: Metrics
+  metric?: NodesInfoNodesInfoMetrics
   /** If true, returns settings in flat format. */
   flat_settings?: boolean
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
@@ -32555,13 +32702,17 @@ export interface NodesReloadSecureSettingsResponseBase extends NodesNodesRespons
   nodes: Record<string, NodesNodeReloadResult>
 }
 
+export type NodesStatsNodeStatsMetric = '_all' | '_none' | 'indices' | 'os' | 'process' | 'jvm' | 'thread_pool' | 'fs' | 'transport' | 'http' | 'breaker' | 'script' | 'discovery' | 'ingest' | 'adaptive_selection' | 'script_cache' | 'indexing_pressure' | 'repositories' | 'allocations'
+
+export type NodesStatsNodeStatsMetrics = NodesStatsNodeStatsMetric | NodesStatsNodeStatsMetric[]
+
 export interface NodesStatsRequest extends RequestBase {
   /** Comma-separated list of node IDs or names used to limit returned information. */
   node_id?: NodeIds
   /** Limit the information returned to the specified metrics */
-  metric?: Metrics
+  metric?: NodesStatsNodeStatsMetrics
   /** Limit the information returned for indices metric to the specific index metrics. It can be used only if indices (or all) metric is specified. */
-  index_metric?: Metrics
+  index_metric?: CommonStatsFlags
   /** Comma-separated list or wildcard expressions of fields to include in fielddata and suggest statistics. */
   completion_fields?: Fields
   /** Comma-separated list or wildcard expressions of fields to include in fielddata statistics. */
@@ -32600,12 +32751,16 @@ export interface NodesUsageNodeUsage {
   aggregations: Record<string, any>
 }
 
+export type NodesUsageNodesUsageMetric = '_all' | 'rest_actions' | 'aggregations'
+
+export type NodesUsageNodesUsageMetrics = NodesUsageNodesUsageMetric | NodesUsageNodesUsageMetric[]
+
 export interface NodesUsageRequest extends RequestBase {
   /** A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes */
   node_id?: NodeIds
   /** Limits the information returned to the specific metrics.
-    * A comma-separated list of the following options: `_all`, `rest_actions`. */
-  metric?: Metrics
+    * A comma-separated list of the following options: `_all`, `rest_actions`, `aggregations`. */
+  metric?: NodesUsageNodesUsageMetrics
   /** Period to wait for a response.
     * If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
@@ -33970,7 +34125,7 @@ export interface SecurityClearCachedPrivilegesRequest extends RequestBase {
   /** A comma-separated list of applications.
     * To clear all applications, use an asterism (`*`).
     * It does not support other wildcard patterns. */
-  application: Name
+  application: Names
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { application?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -36684,7 +36839,7 @@ export interface SnapshotDeleteRequest extends RequestBase {
   repository: Name
   /** A comma-separated list of snapshot names to delete.
     * It also accepts wildcards (`*`). */
-  snapshot: Name
+  snapshot: Names
   /** The period to wait for the master node.
     * If the master node is not available before the timeout expires, the request fails and returns an error.
     * To indicate that the request should never timeout, set it to `-1`. */
@@ -37819,7 +37974,7 @@ export interface TextStructureFindFieldStructureRequest extends RequestBase {
   /** If `format` is set to `delimited`, you can specify the column names in a comma-separated list.
     * If this parameter is not specified, the structure finder uses the column names from the header row of the text.
     * If the text does not have a header row, columns are named "column1", "column2", "column3", for example. */
-  column_names?: string
+  column_names?: string | string[]
   /** If you have set `format` to `delimited`, you can specify the character used to delimit the values in each row.
     * Only a single character is supported; the delimiter cannot have multiple characters.
     * By default, the API considers the following possibilities: comma, tab, semi-colon, and pipe (`|`).
@@ -37937,7 +38092,7 @@ export interface TextStructureFindMessageStructureRequest extends RequestBase {
   /** If the format is `delimited`, you can specify the column names in a comma-separated list.
     * If this parameter is not specified, the structure finder uses the column names from the header row of the text.
     * If the text does not have a header role, columns are named "column1", "column2", "column3", for example. */
-  column_names?: string
+  column_names?: string | string[]
   /** If you the format is `delimited`, you can specify the character used to delimit the values in each row.
     * Only a single character is supported; the delimiter cannot have multiple characters.
     * By default, the API considers the following possibilities: comma, tab, semi-colon, and pipe (`|`).

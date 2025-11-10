@@ -169,7 +169,6 @@ export default class Inference {
           'anthropic_inference_id'
         ],
         body: [
-          'chunking_settings',
           'service',
           'service_settings',
           'task_settings'
@@ -229,7 +228,6 @@ export default class Inference {
           'contextualai_inference_id'
         ],
         body: [
-          'chunking_settings',
           'service',
           'service_settings',
           'task_settings'
@@ -257,7 +255,6 @@ export default class Inference {
           'deepseek_inference_id'
         ],
         body: [
-          'chunking_settings',
           'service',
           'service_settings'
         ],
@@ -417,6 +414,7 @@ export default class Inference {
           'watsonx_inference_id'
         ],
         body: [
+          'chunking_settings',
           'service',
           'service_settings'
         ],
@@ -605,7 +603,7 @@ export default class Inference {
   }
 
   /**
-    * Delete an inference endpoint
+    * Delete an inference endpoint This API requires the manage_inference cluster privilege (the built-in `inference_admin` role grants this privilege).
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteResponse>
@@ -664,7 +662,7 @@ export default class Inference {
   }
 
   /**
-    * Get an inference endpoint
+    * Get an inference endpoint This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-get | Elasticsearch API documentation}
     */
   async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetResponse>
@@ -1182,7 +1180,6 @@ export default class Inference {
       acceptedParams: [
         'task_type',
         'anthropic_inference_id',
-        'chunking_settings',
         'service',
         'service_settings',
         'task_settings',
@@ -1450,7 +1447,6 @@ export default class Inference {
       acceptedParams: [
         'task_type',
         'contextualai_inference_id',
-        'chunking_settings',
         'service',
         'service_settings',
         'task_settings',
@@ -1583,7 +1579,6 @@ export default class Inference {
       acceptedParams: [
         'task_type',
         'deepseek_inference_id',
-        'chunking_settings',
         'service',
         'service_settings',
         'timeout'
@@ -2315,6 +2310,7 @@ export default class Inference {
       acceptedParams: [
         'task_type',
         'watsonx_inference_id',
+        'chunking_settings',
         'service',
         'service_settings',
         'timeout'

@@ -671,7 +671,7 @@ client.fieldCaps({ ... })
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
 - **`ignore_unavailable` (Optional, boolean)**: If `true`, missing or closed indices are not included in the response.
 - **`include_unmapped` (Optional, boolean)**: If true, unmapped fields are included in the response.
-- **`filters` (Optional, string)**: A list of filters to apply to the response.
+- **`filters` (Optional, string \| string[])**: A list of filters to apply to the response.
 - **`types` (Optional, string[])**: A list of field types to include. Any fields that do not match one of these types will be excluded from the results. It defaults to empty, meaning that all field types are returned.
 - **`include_empty_fields` (Optional, boolean)**: If false, empty fields are not included in the response.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the field-caps query using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
@@ -1769,7 +1769,7 @@ client.termsEnum({ index, field })
 
 #### Request (object) [_request_terms_enum]
 
-- **`index` (string)**: A list of data streams, indices, and index aliases to search. Wildcard (`*`) expressions are supported. To search all data streams or indices, omit this parameter or use `*` or `_all`.
+- **`index` (string \| string[])**: A list of data streams, indices, and index aliases to search. Wildcard (`*`) expressions are supported. To search all data streams or indices, omit this parameter or use `*` or `_all`.
 - **`field` (string)**: The string to match at the start of indexed terms. If not provided, all terms in the field are considered.
 - **`size` (Optional, number)**: The number of matching terms to return.
 - **`timeout` (Optional, string \| -1 \| 0)**: The maximum length of time to spend collecting results. If the timeout is exceeded the `complete` flag set to `false` in the response and the results may be partial or empty.
@@ -3718,7 +3718,7 @@ client.cluster.state({ ... })
 ### Arguments [_arguments_cluster.state]
 
 #### Request (object) [_request_cluster.state]
-- **`metric` (Optional, string \| string[])**: Limit the information returned to the specified metrics
+- **`metric` (Optional, Enum("_all" \| "version" \| "master_node" \| "blocks" \| "nodes" \| "metadata" \| "routing_table" \| "routing_nodes" \| "customs") \| Enum("_all" \| "version" \| "master_node" \| "blocks" \| "nodes" \| "metadata" \| "routing_table" \| "routing_nodes" \| "customs")[])**: Limit the information returned to the specified metrics
 - **`index` (Optional, string \| string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
 - **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -5199,7 +5199,7 @@ client.indices.addBlock({ index, block })
 ### Arguments [_arguments_indices.add_block]
 
 #### Request (object) [_request_indices.add_block]
-- **`index` (string)**: A list or wildcard expression of index names used to limit the request.
+- **`index` (string \| string[])**: A list or wildcard expression of index names used to limit the request.
 By default, you must explicitly name the indices you are adding blocks to.
 To allow the adding of blocks to indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`.
 You can update this setting in the `elasticsearch.yml` file or by using the cluster update settings API.
@@ -5521,7 +5521,7 @@ client.indices.dataStreamsStats({ ... })
 ### Arguments [_arguments_indices.data_streams_stats]
 
 #### Request (object) [_request_indices.data_streams_stats]
-- **`name` (Optional, string)**: List of data streams used to limit the request.
+- **`name` (Optional, string \| string[])**: List of data streams used to limit the request.
 Wildcard expressions (`*`) are supported.
 To target all data streams in a cluster, omit this parameter or use `*`.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match.
@@ -5653,16 +5653,6 @@ client.indices.deleteIndexTemplate({ name })
 - **`name` (string \| string[])**: List of index template names used to limit the request. Wildcard (*) expressions are supported.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
-
-## client.indices.deleteSampleConfiguration [_indices.delete_sample_configuration]
-Delete sampling configuration for an index or data stream
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-sample-configuration)
-
-```ts
-client.indices.deleteSampleConfiguration()
-```
-
 
 ## client.indices.deleteTemplate [_indices.delete_template]
 Delete a legacy index template.
@@ -6050,16 +6040,6 @@ Supports a list of values, such as `open,hidden`.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
-## client.indices.getAllSampleConfiguration [_indices.get_all_sample_configuration]
-Get sampling configurations for all indices and data streams
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-all-sample-configuration)
-
-```ts
-client.indices.getAllSampleConfiguration()
-```
-
-
 ## client.indices.getDataLifecycle [_indices.get_data_lifecycle]
 Get data stream lifecycles.
 
@@ -6216,7 +6196,7 @@ client.indices.getIndexTemplate({ ... })
 ### Arguments [_arguments_indices.get_index_template]
 
 #### Request (object) [_request_indices.get_index_template]
-- **`name` (Optional, string)**: List of index template names used to limit the request. Wildcard (*) expressions are supported.
+- **`name` (Optional, string)**: Name of index template to retrieve. Wildcard (*) expressions are supported.
 - **`local` (Optional, boolean)**: If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
 - **`flat_settings` (Optional, boolean)**: If true, returns settings in flat format.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
@@ -6263,16 +6243,6 @@ client.indices.getMigrateReindexStatus({ index })
 
 #### Request (object) [_request_indices.get_migrate_reindex_status]
 - **`index` (string \| string[])**: The index or data stream name.
-
-## client.indices.getSampleConfiguration [_indices.get_sample_configuration]
-Get sampling configuration for an index or data stream
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-sample-configuration)
-
-```ts
-client.indices.getSampleConfiguration()
-```
-
 
 ## client.indices.getSettings [_indices.get_settings]
 Get index settings.
@@ -6744,16 +6714,6 @@ If no response is received before the timeout expires, the request fails and ret
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`write_index_only` (Optional, boolean)**: If `true`, the mappings are applied only to the current write index for the target.
 
-## client.indices.putSampleConfiguration [_indices.put_sample_configuration]
-Configure sampling for an index or data stream
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-sample-configuration)
-
-```ts
-client.indices.putSampleConfiguration()
-```
-
-
 ## client.indices.putSettings [_indices.put_settings]
 Update index settings.
 Changes dynamic index settings in real time.
@@ -7025,7 +6985,7 @@ client.indices.removeBlock({ index, block })
 ### Arguments [_arguments_indices.remove_block]
 
 #### Request (object) [_request_indices.remove_block]
-- **`index` (string)**: A list or wildcard expression of index names used to limit the request.
+- **`index` (string \| string[])**: A list or wildcard expression of index names used to limit the request.
 By default, you must explicitly name the indices you are removing blocks from.
 To allow the removal of blocks from indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`.
 You can update this setting in the `elasticsearch.yml` file or by using the cluster update settings API.
@@ -7490,7 +7450,7 @@ client.indices.stats({ ... })
 ### Arguments [_arguments_indices.stats]
 
 #### Request (object) [_request_indices.stats]
-- **`metric` (Optional, string \| string[])**: Limit the information returned the specific metrics.
+- **`metric` (Optional, Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector") \| Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector")[])**: Limit the information returned the specific metrics.
 - **`index` (Optional, string \| string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
 - **`completion_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata and suggest statistics.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument
@@ -7608,6 +7568,7 @@ Either a string or an array of strings.
 
 ## client.inference.delete [_inference.delete]
 Delete an inference endpoint
+This API requires the manage_inference cluster privilege (the built-in `inference_admin` role grants this privilege).
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete)
 
@@ -7625,6 +7586,7 @@ client.inference.delete({ inference_id })
 
 ## client.inference.get [_inference.get]
 Get an inference endpoint
+This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-get)
 
@@ -7759,11 +7721,13 @@ client.inference.putAlibabacloud({ task_type, alibabacloud_inference_id, service
 ### Arguments [_arguments_inference.put_alibabacloud]
 
 #### Request (object) [_request_inference.put_alibabacloud]
-- **`task_type` (Enum("completion" \| "rerank" \| "space_embedding" \| "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("completion" \| "rerank" \| "sparse_embedding" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`alibabacloud_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("alibabacloud-ai-search"))**: The type of service supported for the specified task type. In this case, `alibabacloud-ai-search`.
 - **`service_settings` ({ api_key, host, rate_limit, service_id, workspace })**: Settings used to install the inference model. These settings are specific to the `alibabacloud-ai-search` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `sparse_embedding` or `text_embedding` task types.
+Not applicable to the `rerank` or `completion` task types.
 - **`task_settings` (Optional, { input_type, return_token })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7790,6 +7754,8 @@ client.inference.putAmazonbedrock({ task_type, amazonbedrock_inference_id, servi
 - **`service` (Enum("amazonbedrock"))**: The type of service supported for the specified task type. In this case, `amazonbedrock`.
 - **`service_settings` ({ access_key, model, provider, region, rate_limit, secret_key })**: Settings used to install the inference model. These settings are specific to the `amazonbedrock` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` task type.
 - **`task_settings` (Optional, { max_new_tokens, temperature, top_k, top_p })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7814,6 +7780,8 @@ client.inference.putAmazonsagemaker({ task_type, amazonsagemaker_inference_id, s
 - **`service_settings` ({ access_key, endpoint_name, api, region, secret_key, target_model, target_container_hostname, inference_component_name, batch_size, dimensions })**: Settings used to install the inference model.
 These settings are specific to the `amazon_sagemaker` service and `service_settings.api` you specified.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `sparse_embedding` or `text_embedding` task types.
+Not applicable to the `rerank`, `completion`, or `chat_completion` task types.
 - **`task_settings` (Optional, { custom_attributes, enable_explanations, inference_id, session_id, target_variant })**: Settings to configure the inference task.
 These settings are specific to the task type and `service_settings.api` you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7837,7 +7805,6 @@ The only valid task type for the model to perform is `completion`.
 - **`anthropic_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("anthropic"))**: The type of service supported for the specified task type. In this case, `anthropic`.
 - **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `anthropic` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { max_tokens, temperature, top_k, top_p })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7861,6 +7828,8 @@ client.inference.putAzureaistudio({ task_type, azureaistudio_inference_id, servi
 - **`service` (Enum("azureaistudio"))**: The type of service supported for the specified task type. In this case, `azureaistudio`.
 - **`service_settings` ({ api_key, endpoint_type, target, provider, rate_limit })**: Settings used to install the inference model. These settings are specific to the `azureaistudio` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank` or `completion` task types.
 - **`task_settings` (Optional, { do_sample, max_new_tokens, temperature, top_p, user, return_documents, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7892,6 +7861,8 @@ NOTE: The `chat_completion` task type only supports streaming and only through t
 - **`service` (Enum("azureopenai"))**: The type of service supported for the specified task type. In this case, `azureopenai`.
 - **`service_settings` ({ api_key, api_version, deployment_id, entra_id, rate_limit, resource_name })**: Settings used to install the inference model. These settings are specific to the `azureopenai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` task type.
 - **`task_settings` (Optional, { user })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7916,6 +7887,8 @@ client.inference.putCohere({ task_type, cohere_inference_id, service, service_se
 - **`service_settings` ({ api_key, embedding_type, model_id, rate_limit, similarity })**: Settings used to install the inference model.
 These settings are specific to the `cohere` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank` or `completion` task type.
 - **`task_settings` (Optional, { input_type, return_documents, top_n, truncate })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7940,7 +7913,6 @@ client.inference.putContextualai({ task_type, contextualai_inference_id, service
 - **`contextualai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("contextualai"))**: The type of service supported for the specified task type. In this case, `contextualai`.
 - **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `contextualai` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { instruction, return_documents, top_k })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8004,6 +7976,8 @@ client.inference.putCustom({ task_type, custom_inference_id, service, service_se
 - **`service_settings` ({ batch_size, headers, input_type, query_parameters, request, response, secret_parameters, url })**: Settings used to install the inference model.
 These settings are specific to the `custom` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `sparse_embedding` or `text_embedding` task types.
+Not applicable to the `rerank` or `completion` task types.
 - **`task_settings` (Optional, { parameters })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 
@@ -8026,7 +8000,6 @@ client.inference.putDeepseek({ task_type, deepseek_inference_id, service, servic
 - **`service` (Enum("deepseek"))**: The type of service supported for the specified task type. In this case, `deepseek`.
 - **`service_settings` ({ api_key, model_id, url })**: Settings used to install the inference model.
 These settings are specific to the `deepseek` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putElasticsearch [_inference.put_elasticsearch]
@@ -8063,7 +8036,7 @@ The must not match the `model_id`.
 - **`service_settings` ({ adaptive_allocations, deployment_id, model_id, num_allocations, num_threads, long_document_strategy, max_chunks_per_doc })**: Settings used to install the inference model. These settings are specific to the `elasticsearch` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `sparse_embedding` and `text_embedding` task types.
-Not applicable to the `rerank`, `completion`, or `chat_completion` task types.
+Not applicable to the `rerank` task type.
 - **`task_settings` (Optional, { return_documents })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8123,6 +8096,8 @@ client.inference.putGoogleaistudio({ task_type, googleaistudio_inference_id, ser
 - **`service` (Enum("googleaistudio"))**: The type of service supported for the specified task type. In this case, `googleaistudio`.
 - **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `googleaistudio` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` task type.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putGooglevertexai [_inference.put_googlevertexai]
@@ -8144,6 +8119,8 @@ client.inference.putGooglevertexai({ task_type, googlevertexai_inference_id, ser
 - **`service` (Enum("googlevertexai"))**: The type of service supported for the specified task type. In this case, `googlevertexai`.
 - **`service_settings` ({ provider, url, streaming_url, location, model_id, project_id, rate_limit, service_account_json, dimensions })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank`, `completion`, or `chat_completion` task types.
 - **`task_settings` (Optional, { auto_truncate, top_n, thinking_config, max_tokens })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8202,6 +8179,8 @@ client.inference.putHuggingFace({ task_type, huggingface_inference_id, service, 
 - **`service` (Enum("hugging_face"))**: The type of service supported for the specified task type. In this case, `hugging_face`.
 - **`service_settings` ({ api_key, rate_limit, url, model_id })**: Settings used to install the inference model. These settings are specific to the `hugging_face` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank`, `completion`, or `chat_completion` task types.
 - **`task_settings` (Optional, { return_documents, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8228,6 +8207,8 @@ client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_se
 - **`service` (Enum("jinaai"))**: The type of service supported for the specified task type. In this case, `jinaai`.
 - **`service_settings` ({ api_key, model_id, rate_limit, similarity })**: Settings used to install the inference model. These settings are specific to the `jinaai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank` task type.
 - **`task_settings` (Optional, { return_documents, task, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8251,6 +8232,8 @@ client.inference.putLlama({ task_type, llama_inference_id, service, service_sett
 - **`service` (Enum("llama"))**: The type of service supported for the specified task type. In this case, `llama`.
 - **`service_settings` ({ url, model_id, max_input_tokens, similarity, rate_limit })**: Settings used to install the inference model. These settings are specific to the `llama` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` or `chat_completion` task types.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putMistral [_inference.put_mistral]
@@ -8272,6 +8255,8 @@ client.inference.putMistral({ task_type, mistral_inference_id, service, service_
 - **`service` (Enum("mistral"))**: The type of service supported for the specified task type. In this case, `mistral`.
 - **`service_settings` ({ api_key, max_input_tokens, model, rate_limit })**: Settings used to install the inference model. These settings are specific to the `mistral` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` or `chat_completion` task types.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putOpenai [_inference.put_openai]
@@ -8294,6 +8279,8 @@ NOTE: The `chat_completion` task type only supports streaming and only through t
 - **`service` (Enum("openai"))**: The type of service supported for the specified task type. In this case, `openai`.
 - **`service_settings` ({ api_key, dimensions, model_id, organization_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `openai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` or `chat_completion` task types.
 - **`task_settings` (Optional, { user, headers })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8319,6 +8306,8 @@ client.inference.putVoyageai({ task_type, voyageai_inference_id, service, servic
 - **`service` (Enum("voyageai"))**: The type of service supported for the specified task type. In this case, `voyageai`.
 - **`service_settings` ({ dimensions, model_id, rate_limit, embedding_type })**: Settings used to install the inference model. These settings are specific to the `voyageai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank` task type.
 - **`task_settings` (Optional, { input_type, return_documents, top_k, truncation })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8343,6 +8332,9 @@ client.inference.putWatsonx({ task_type, watsonx_inference_id, service, service_
 - **`watsonx_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("watsonxai"))**: The type of service supported for the specified task type. In this case, `watsonxai`.
 - **`service_settings` ({ api_key, api_version, model_id, project_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `watsonxai` service.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` or `chat_completion` task types.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.rerank [_inference.rerank]
@@ -10960,7 +10952,7 @@ client.nodes.info({ ... })
 
 #### Request (object) [_request_nodes.info]
 - **`node_id` (Optional, string \| string[])**: List of node IDs or names used to limit returned information.
-- **`metric` (Optional, string \| string[])**: Limits the information returned to the specific metrics. Supports a list, such as http,ingest.
+- **`metric` (Optional, Enum("_all" \| "_none" \| "settings" \| "os" \| "process" \| "jvm" \| "thread_pool" \| "transport" \| "http" \| "remote_cluster_server" \| "plugins" \| "ingest" \| "aggregations" \| "indices") \| Enum("_all" \| "_none" \| "settings" \| "os" \| "process" \| "jvm" \| "thread_pool" \| "transport" \| "http" \| "remote_cluster_server" \| "plugins" \| "ingest" \| "aggregations" \| "indices")[])**: Limits the information returned to the specific metrics. Supports a list, such as http,ingest.
 - **`flat_settings` (Optional, boolean)**: If true, returns settings in flat format.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -11004,8 +10996,8 @@ client.nodes.stats({ ... })
 
 #### Request (object) [_request_nodes.stats]
 - **`node_id` (Optional, string \| string[])**: List of node IDs or names used to limit returned information.
-- **`metric` (Optional, string \| string[])**: Limit the information returned to the specified metrics
-- **`index_metric` (Optional, string \| string[])**: Limit the information returned for indices metric to the specific index metrics. It can be used only if indices (or all) metric is specified.
+- **`metric` (Optional, Enum("_all" \| "_none" \| "indices" \| "os" \| "process" \| "jvm" \| "thread_pool" \| "fs" \| "transport" \| "http" \| "breaker" \| "script" \| "discovery" \| "ingest" \| "adaptive_selection" \| "script_cache" \| "indexing_pressure" \| "repositories" \| "allocations") \| Enum("_all" \| "_none" \| "indices" \| "os" \| "process" \| "jvm" \| "thread_pool" \| "fs" \| "transport" \| "http" \| "breaker" \| "script" \| "discovery" \| "ingest" \| "adaptive_selection" \| "script_cache" \| "indexing_pressure" \| "repositories" \| "allocations")[])**: Limit the information returned to the specified metrics
+- **`index_metric` (Optional, Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector") \| Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector")[])**: Limit the information returned for indices metric to the specific index metrics. It can be used only if indices (or all) metric is specified.
 - **`completion_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata and suggest statistics.
 - **`fielddata_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata statistics.
 - **`fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in the statistics.
@@ -11029,8 +11021,8 @@ client.nodes.usage({ ... })
 
 #### Request (object) [_request_nodes.usage]
 - **`node_id` (Optional, string \| string[])**: A list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-- **`metric` (Optional, string \| string[])**: Limits the information returned to the specific metrics.
-A list of the following options: `_all`, `rest_actions`.
+- **`metric` (Optional, Enum("_all" \| "rest_actions" \| "aggregations") \| Enum("_all" \| "rest_actions" \| "aggregations")[])**: Limits the information returned to the specific metrics.
+A list of the following options: `_all`, `rest_actions`, `aggregations`.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -11835,7 +11827,7 @@ client.security.clearCachedPrivileges({ application })
 ### Arguments [_arguments_security.clear_cached_privileges]
 
 #### Request (object) [_request_security.clear_cached_privileges]
-- **`application` (string)**: A list of applications.
+- **`application` (string \| string[])**: A list of applications.
 To clear all applications, use an asterism (`*`).
 It does not support other wildcard patterns.
 
@@ -13809,7 +13801,7 @@ client.snapshot.delete({ repository, snapshot })
 
 #### Request (object) [_request_snapshot.delete]
 - **`repository` (string)**: The name of the repository to delete a snapshot from.
-- **`snapshot` (string)**: A list of snapshot names to delete.
+- **`snapshot` (string \| string[])**: A list of snapshot names to delete.
 It also accepts wildcards (`*`).
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
@@ -14768,7 +14760,7 @@ client.textStructure.findFieldStructure({ field, index })
 #### Request (object) [_request_text_structure.find_field_structure]
 - **`field` (string)**: The field that should be analyzed.
 - **`index` (string)**: The name of the index that contains the analyzed field.
-- **`column_names` (Optional, string)**: If `format` is set to `delimited`, you can specify the column names in a list.
+- **`column_names` (Optional, string \| string[])**: If `format` is set to `delimited`, you can specify the column names in a list.
 If this parameter is not specified, the structure finder uses the column names from the header row of the text.
 If the text does not have a header row, columns are named "column1", "column2", "column3", for example.
 - **`delimiter` (Optional, string)**: If you have set `format` to `delimited`, you can specify the character used to delimit the values in each row.
@@ -14877,7 +14869,7 @@ client.textStructure.findMessageStructure({ messages })
 
 #### Request (object) [_request_text_structure.find_message_structure]
 - **`messages` (string[])**: The list of messages you want to analyze.
-- **`column_names` (Optional, string)**: If the format is `delimited`, you can specify the column names in a list.
+- **`column_names` (Optional, string \| string[])**: If the format is `delimited`, you can specify the column names in a list.
 If this parameter is not specified, the structure finder uses the column names from the header row of the text.
 If the text does not have a header role, columns are named "column1", "column2", "column3", for example.
 - **`delimiter` (Optional, string)**: If you the format is `delimited`, you can specify the character used to delimit the values in each row.
