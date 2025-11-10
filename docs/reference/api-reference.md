@@ -3774,7 +3774,7 @@ client.cluster.state({ ... })
 - **`flat_settings` (Optional, boolean)**: Return settings in flat format (default: false)
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
 - **`local` (Optional, boolean)**: Return local information, do not retrieve the state from master node (default: false)
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Timeout for waiting for new cluster state in case it is blocked
 - **`wait_for_metadata_version` (Optional, number)**: Wait for the metadata version to be equal or greater than the specified metadata version
 - **`wait_for_timeout` (Optional, string \| -1 \| 0)**: The maximum time to wait for wait_for_metadata_version before timing out
 
@@ -6211,7 +6211,7 @@ client.indices.getIndexTemplate({ ... })
 ### Arguments [_arguments_indices.get_index_template]
 
 #### Request (object) [_request_indices.get_index_template]
-- **`name` (Optional, string)**: List of index template names used to limit the request. Wildcard (*) expressions are supported.
+- **`name` (Optional, string)**: Name of index template to retrieve. Wildcard (*) expressions are supported.
 - **`local` (Optional, boolean)**: If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
 - **`flat_settings` (Optional, boolean)**: If true, returns settings in flat format.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.

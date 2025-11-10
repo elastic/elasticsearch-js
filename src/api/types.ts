@@ -3961,7 +3961,7 @@ export interface GeoHashLocation {
   geohash: GeoHash
 }
 
-export type GeoHashPrecision = number | string
+export type GeoHashPrecision = integer | string
 
 export type GeoHexCell = string
 
@@ -3980,7 +3980,7 @@ export type GeoShapeRelation = 'intersects' | 'disjoint' | 'within' | 'contains'
 
 export type GeoTile = string
 
-export type GeoTilePrecision = number
+export type GeoTilePrecision = integer
 
 export interface GetStats {
   current: long
@@ -16428,7 +16428,7 @@ export interface ClusterStateRequest extends RequestBase {
   ignore_unavailable?: boolean
   /** Return local information, do not retrieve the state from master node (default: false) */
   local?: boolean
-  /** Specify timeout for connection to master */
+  /** Timeout for waiting for new cluster state in case it is blocked */
   master_timeout?: Duration
   /** Wait for the metadata version to be equal or greater than the specified metadata version */
   wait_for_metadata_version?: VersionNumber
@@ -20652,10 +20652,10 @@ export interface IndicesGetAliasIndexAliases {
 
 export interface IndicesGetAliasNotFoundAliasesKeys {
   error: string
-  status: number
+  status: integer
 }
 export type IndicesGetAliasNotFoundAliases = IndicesGetAliasNotFoundAliasesKeys
-& { [property: string]: IndicesGetAliasIndexAliases | string | number }
+& { [property: string]: IndicesGetAliasIndexAliases | string | integer }
 
 export interface IndicesGetDataLifecycleDataStreamWithLifecycle {
   name: DataStreamName
@@ -20824,7 +20824,7 @@ export interface IndicesGetIndexTemplateIndexTemplateItem {
 }
 
 export interface IndicesGetIndexTemplateRequest extends RequestBase {
-  /** Comma-separated list of index template names used to limit the request. Wildcard (*) expressions are supported. */
+  /** Name of index template to retrieve. Wildcard (*) expressions are supported. */
   name?: Name
   /** If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node. */
   local?: boolean
