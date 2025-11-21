@@ -58,6 +58,13 @@ export default class Cat {
           'master_timeout'
         ]
       },
+      'cat.circuit_breaker': {
+        path: [
+          'circuit_breaker_patterns'
+        ],
+        body: [],
+        query: []
+      },
       'cat.component_templates': {
         path: [
           'name'
@@ -251,7 +258,12 @@ export default class Cat {
           'h',
           's',
           'local',
-          'master_timeout'
+          'master_timeout',
+          'expand_wildcards',
+          'allow_no_indices',
+          'ignore_throttled',
+          'ignore_unavailable',
+          'allow_closed'
         ]
       },
       'cat.shards': {
@@ -446,6 +458,61 @@ export default class Cat {
         's',
         'local',
         'master_timeout'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Get circuit breakers statistics
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async circuitBreaker (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async circuitBreaker (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async circuitBreaker (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async circuitBreaker (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['cat.circuit_breaker']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        querystring[key] = params[key]
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.circuit_breaker_patterns != null) {
+      method = 'GET'
+      path = `/_cat/circuit_breaker/${encodeURIComponent(params.circuit_breaker_patterns.toString())}`
+    } else {
+      method = 'GET'
+      path = '/_cat/circuit_breaker'
+    }
+    const meta: TransportRequestMetadata = {
+      name: 'cat.circuit_breaker',
+      pathParts: {
+        circuit_breaker_patterns: params.circuit_breaker_patterns
+      },
+      acceptedParams: [
+        'circuit_breaker_patterns'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -1434,7 +1501,12 @@ export default class Cat {
         'h',
         's',
         'local',
-        'master_timeout'
+        'master_timeout',
+        'expand_wildcards',
+        'allow_no_indices',
+        'ignore_throttled',
+        'ignore_unavailable',
+        'allow_closed'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

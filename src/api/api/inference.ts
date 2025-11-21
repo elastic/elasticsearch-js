@@ -169,7 +169,6 @@ export default class Inference {
           'anthropic_inference_id'
         ],
         body: [
-          'chunking_settings',
           'service',
           'service_settings',
           'task_settings'
@@ -229,7 +228,6 @@ export default class Inference {
           'contextualai_inference_id'
         ],
         body: [
-          'chunking_settings',
           'service',
           'service_settings',
           'task_settings'
@@ -257,7 +255,6 @@ export default class Inference {
           'deepseek_inference_id'
         ],
         body: [
-          'chunking_settings',
           'service',
           'service_settings'
         ],
@@ -417,6 +414,7 @@ export default class Inference {
           'watsonx_inference_id'
         ],
         body: [
+          'chunking_settings',
           'service',
           'service_settings'
         ],
@@ -431,6 +429,8 @@ export default class Inference {
         body: [
           'query',
           'input',
+          'return_documents',
+          'top_n',
           'task_settings'
         ],
         query: [
@@ -488,7 +488,7 @@ export default class Inference {
   }
 
   /**
-    * Perform chat completion inference The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. It only works with the `chat_completion` task type for `openai` and `elastic` inference services. NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming. The Chat completion inference API and the Stream inference API differ in their response structure and capabilities. The Chat completion inference API provides more comprehensive customization options through more fields and function calling support. If you use the `openai`, `hugging_face` or the `elastic` service, use the Chat completion inference API.
+    * Perform chat completion inference on the service The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. It only works with the `chat_completion` task type for `openai` and `elastic` inference services. NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming. The Chat completion inference API and the Stream inference API differ in their response structure and capabilities. The Chat completion inference API provides more comprehensive customization options through more fields and function calling support. If you use the `openai`, `hugging_face` or the `elastic` service, use the Chat completion inference API.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-unified-inference | Elasticsearch API documentation}
     */
   async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceChatCompletionUnifiedResponse>
@@ -540,7 +540,7 @@ export default class Inference {
   }
 
   /**
-    * Perform completion inference on the service
+    * Perform completion inference on the service Get responses for completion tasks. This API works only with the completion task type. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
     */
   async completion (this: That, params: T.InferenceCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceCompletionResponse>
@@ -603,7 +603,7 @@ export default class Inference {
   }
 
   /**
-    * Delete an inference endpoint
+    * Delete an inference endpoint This API requires the manage_inference cluster privilege (the built-in `inference_admin` role grants this privilege).
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteResponse>
@@ -662,7 +662,7 @@ export default class Inference {
   }
 
   /**
-    * Get an inference endpoint
+    * Get an inference endpoint This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-get | Elasticsearch API documentation}
     */
   async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetResponse>
@@ -1180,7 +1180,6 @@ export default class Inference {
       acceptedParams: [
         'task_type',
         'anthropic_inference_id',
-        'chunking_settings',
         'service',
         'service_settings',
         'task_settings',
@@ -1448,7 +1447,6 @@ export default class Inference {
       acceptedParams: [
         'task_type',
         'contextualai_inference_id',
-        'chunking_settings',
         'service',
         'service_settings',
         'task_settings',
@@ -1581,7 +1579,6 @@ export default class Inference {
       acceptedParams: [
         'task_type',
         'deepseek_inference_id',
-        'chunking_settings',
         'service',
         'service_settings',
         'timeout'
@@ -2313,6 +2310,7 @@ export default class Inference {
       acceptedParams: [
         'task_type',
         'watsonx_inference_id',
+        'chunking_settings',
         'service',
         'service_settings',
         'timeout'
@@ -2378,6 +2376,8 @@ export default class Inference {
         'inference_id',
         'query',
         'input',
+        'return_documents',
+        'top_n',
         'task_settings',
         'timeout'
       ]
@@ -2449,7 +2449,7 @@ export default class Inference {
   }
 
   /**
-    * Perform streaming inference. Get real-time responses for completion tasks by delivering answers incrementally, reducing response times during computation. This API works only with the completion task type. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege). You must use a client that supports streaming.
+    * Perform streaming completion inference on the service Get real-time responses for completion tasks by delivering answers incrementally, reducing response times during computation. This API works only with the completion task type. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege). You must use a client that supports streaming.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-stream-inference | Elasticsearch API documentation}
     */
   async streamCompletion (this: That, params: T.InferenceStreamCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceStreamCompletionResponse>

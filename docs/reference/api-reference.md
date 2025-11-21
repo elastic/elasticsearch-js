@@ -209,7 +209,7 @@ client.count({ ... })
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
-- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
+- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `and` or `or`. This parameter can be used only when the `q` query string parameter is specified.
 - **`df` (Optional, string)**: The field to use as a default when no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
 - **`ignore_throttled` (Optional, boolean)**: If `true`, concrete, expanded, or aliased indices are ignored when frozen.
@@ -316,7 +316,7 @@ client.create({ id, index })
 - **`routing` (Optional, string)**: A custom value that is used to route operations to a specific shard.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards. Elasticsearch waits for at least the specified timeout period before failing. The actual wait time could be longer, particularly when multiple waits occur. This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs. Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation. By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error. The actual wait time could be longer, particularly when multiple waits occur.
 - **`version` (Optional, number)**: The explicit version number for concurrency control. It must be a non-negative long number.
-- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
 - **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active.
 
 ## client.delete [_delete]
@@ -377,7 +377,7 @@ client.delete({ id, index })
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for active shards. This parameter is useful for situations where the primary shard assigned to perform the delete operation might not be available when the delete operation runs. Some reasons for this might be that the primary shard is currently recovering from a store or undergoing relocation. By default, the delete operation will wait on the primary shard to become available for up to 1 minute before failing and responding with an error.
 - **`version` (Optional, number)**: An explicit version number for concurrency control. It must match the current version of the document for the request to succeed.
-- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
 - **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The minimum number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active.
 
 ## client.deleteByQuery [_delete_by_query]
@@ -480,7 +480,7 @@ client.deleteByQuery({ index })
 - **`analyzer` (Optional, string)**: Analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
 - **`conflicts` (Optional, Enum("abort" \| "proceed"))**: What to do if delete by query hits version conflicts: `abort` or `proceed`.
-- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
+- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `and` or `or`. This parameter can be used only when the `q` query string parameter is specified.
 - **`df` (Optional, string)**: The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
 - **`from` (Optional, number)**: Skips the specified number of documents.
@@ -580,7 +580,7 @@ client.exists({ id, index })
 - **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
 - **`stored_fields` (Optional, string \| string[])**: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`.
 - **`version` (Optional, number)**: Explicit version number for concurrency control. The specified version must match the current version of the document for the request to succeed.
-- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
 
 ## client.existsSource [_exists_source]
 Check for a document source.
@@ -613,7 +613,7 @@ client.existsSource({ id, index })
 - **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude in the response.
 - **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response.
 - **`version` (Optional, number)**: The version number for concurrency control. It must match the current version of the document for the request to succeed.
-- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
 
 ## client.explain [_explain]
 Explain a document match result.
@@ -634,7 +634,7 @@ client.explain({ id, index })
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search definition using the Query DSL.
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
-- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
+- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `and` or `or`. This parameter can be used only when the `q` query string parameter is specified.
 - **`df` (Optional, string)**: The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
@@ -671,7 +671,7 @@ client.fieldCaps({ ... })
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
 - **`ignore_unavailable` (Optional, boolean)**: If `true`, missing or closed indices are not included in the response.
 - **`include_unmapped` (Optional, boolean)**: If true, unmapped fields are included in the response.
-- **`filters` (Optional, string)**: A list of filters to apply to the response.
+- **`filters` (Optional, string \| string[])**: A list of filters to apply to the response.
 - **`types` (Optional, string[])**: A list of field types to include. Any fields that do not match one of these types will be excluded from the results. It defaults to empty, meaning that all field types are returned.
 - **`include_empty_fields` (Optional, boolean)**: If false, empty fields are not included in the response.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the field-caps query using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
@@ -758,7 +758,7 @@ client.get({ id, index })
 - **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
 - **`stored_fields` (Optional, string \| string[])**: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`. Only leaf fields can be retrieved with the `stored_fields` option. Object fields can't be returned; if specified, the request fails.
 - **`version` (Optional, number)**: The version number for concurrency control. It must match the current version of the document for the request to succeed.
-- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
 
 ## client.getScript [_get_script]
 Get a script or search template.
@@ -833,7 +833,7 @@ client.getSource({ id, index })
 - **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude in the response.
 - **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response.
 - **`version` (Optional, number)**: The version number for concurrency control. It must match the current version of the document for the request to succeed.
-- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
 
 ## client.healthReport [_health_report]
 Get the cluster health.
@@ -1011,7 +1011,7 @@ client.index({ index })
 - **`routing` (Optional, string)**: A custom value that is used to route operations to a specific shard.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards. This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs. Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation. By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error. The actual wait time could be longer, particularly when multiple waits occur.
 - **`version` (Optional, number)**: An explicit version number for concurrency control. It must be a non-negative long number.
-- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
 - **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value of `1` means it waits for each primary shard to be active.
 - **`require_alias` (Optional, boolean)**: If `true`, the destination must be an index alias.
 - **`require_data_stream` (Optional, boolean)**: If `true`, the request's actions must target a data stream (existing or to be created).
@@ -1190,7 +1190,7 @@ client.mtermvectors({ ... })
 - **`routing` (Optional, string)**: A custom value used to route operations to a specific shard.
 - **`term_statistics` (Optional, boolean)**: If true, the response includes term frequency and document frequency.
 - **`version` (Optional, number)**: If `true`, returns the document version as part of a hit.
-- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
 
 ## client.openPointInTime [_open_point_in_time]
 Open a point in time.
@@ -1366,7 +1366,6 @@ client.reindex({ dest, source })
 - **`conflicts` (Optional, Enum("abort" \| "proceed"))**: Indicates whether to continue reindexing even when there are conflicts.
 - **`max_docs` (Optional, number)**: The maximum number of documents to reindex. By default, all documents are reindexed. If it is a value less then or equal to `scroll_size`, a scroll will not be used to retrieve the results for the operation. If `conflicts` is set to `proceed`, the reindex operation could attempt to reindex more documents from the source than `max_docs` until it has successfully indexed `max_docs` documents into the target or it has gone through every document in the source query.
 - **`script` (Optional, { source, id, params, lang, options })**: The script to run to update the document source or metadata when reindexing.
-- **`size` (Optional, number)**
 - **`refresh` (Optional, boolean)**: If `true`, the request refreshes affected shards to make this operation visible to search.
 - **`requests_per_second` (Optional, float)**: The throttle for this request in sub-requests per second. By default, there is no throttle.
 - **`scroll` (Optional, string \| -1 \| 0)**: The period of time that a consistent view of the index should be maintained for scrolled search.
@@ -1506,7 +1505,7 @@ client.search({ ... })
 #### Request (object) [_request_search]
 
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**: Defines the aggregations that are run as part of the search request.
+- **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, cartesian_bounds, cartesian_centroid, categorize_text, change_point, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**: Defines the aggregations that are run as part of the search request.
 - **`collapse` (Optional, { field, inner_hits, max_concurrent_group_searches, collapse })**: Collapses search results the values of the specified field.
 - **`explain` (Optional, boolean)**: If `true`, the request returns detailed information about score computation as part of a hit.
 - **`ext` (Optional, Record<string, User-defined value>)**: Configuration of search extensions defined by Elasticsearch plugins.
@@ -1515,7 +1514,7 @@ client.search({ ... })
 - **`track_total_hits` (Optional, boolean \| number)**: Number of hits matching the query to count accurately. If `true`, the exact number of hits is returned at the cost of some performance. If `false`, the response does not include the total number of hits matching the query.
 - **`indices_boost` (Optional, Record<string, number>[])**: Boost the `_score` of documents from specified indices. The boost value is the factor by which scores are multiplied. A boost value greater than `1.0` increases the score. A boost value between `0` and `1.0` decreases the score.
 - **`docvalue_fields` (Optional, { field, format, include_unmapped }[])**: An array of wildcard (`*`) field patterns. The request returns doc values for field names matching these patterns in the `hits.fields` property of the response.
-- **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector } \| { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector }[])**: The approximate kNN search to run.
+- **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, visit_percentage, boost, filter, similarity, inner_hits, rescore_vector } \| { field, query_vector, query_vector_builder, k, num_candidates, visit_percentage, boost, filter, similarity, inner_hits, rescore_vector }[])**: The approximate kNN search to run.
 - **`rank` (Optional, { rrf })**: The Reciprocal Rank Fusion (RRF) to use.
 - **`min_score` (Optional, number)**: The minimum `_score` for matching documents. Documents with a lower `_score` are not included in search results and results collected by aggregations.
 - **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Use the `post_filter` parameter to filter search results. The search hits are filtered after the aggregations are calculated. A post filter has no impact on the aggregation results.
@@ -1546,7 +1545,7 @@ client.search({ ... })
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
 - **`batched_reduce_size` (Optional, number)**: The number of shard results that should be reduced at once on the coordinating node. If the potential number of shards in the request can be large, this value should be used as a protection mechanism to reduce the memory overhead per search request.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If `true`, network round-trips between the coordinating node and the remote clusters are minimized when running cross-cluster search (CCS) requests.
-- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for the query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
+- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for the query string query: `and` or `or`. This parameter can be used only when the `q` query string parameter is specified.
 - **`df` (Optional, string)**: The field to use as a default when no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values such as `open,hidden`.
 - **`ignore_throttled` (Optional, boolean)**: If `true`, concrete, expanded or aliased indices will be ignored when frozen.
@@ -1678,7 +1677,7 @@ client.searchMvt({ index, field, zoom, x, y })
 - **`zoom` (number)**: Zoom level for the vector tile to search
 - **`x` (number)**: X coordinate for the vector tile to search
 - **`y` (number)**: Y coordinate for the vector tile to search
-- **`aggs` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**: Sub-aggregations for the geotile_grid. It supports the following aggregation types: - `avg` - `boxplot` - `cardinality` - `extended stats` - `max` - `median absolute deviation` - `min` - `percentile` - `percentile-rank` - `stats` - `sum` - `value count` The aggregation names can't start with `_mvt_`. The `_mvt_` prefix is reserved for internal aggregations.
+- **`aggs` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, cartesian_bounds, cartesian_centroid, categorize_text, change_point, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**: Sub-aggregations for the geotile_grid. It supports the following aggregation types: - `avg` - `boxplot` - `cardinality` - `extended stats` - `max` - `median absolute deviation` - `min` - `percentile` - `percentile-rank` - `stats` - `sum` - `value count` The aggregation names can't start with `_mvt_`. The `_mvt_` prefix is reserved for internal aggregations.
 - **`buffer` (Optional, number)**: The size, in pixels, of a clipping buffer outside the tile. This allows renderers to avoid outline artifacts from geometries that extend past the extent of the tile.
 - **`exact_bounds` (Optional, boolean)**: If `false`, the meta layer's feature is the bounding box of the tile. If `true`, the meta layer's feature is a bounding box resulting from a `geo_bounds` aggregation. The aggregation runs on <field> values that intersect the `<zoom>/<x>/<y>` tile with `wrap_longitude` set to `false`. The resulting bounding box may be larger than the vector tile.
 - **`extent` (Optional, number)**: The size, in pixels, of a side of the tile. Vector tiles are square with equal sides.
@@ -1770,7 +1769,7 @@ client.termsEnum({ index, field })
 
 #### Request (object) [_request_terms_enum]
 
-- **`index` (string)**: A list of data streams, indices, and index aliases to search. Wildcard (`*`) expressions are supported. To search all data streams or indices, omit this parameter or use `*` or `_all`.
+- **`index` (string \| string[])**: A list of data streams, indices, and index aliases to search. Wildcard (`*`) expressions are supported. To search all data streams or indices, omit this parameter or use `*` or `_all`.
 - **`field` (string)**: The string to match at the start of indexed terms. If not provided, all terms in the field are considered.
 - **`size` (Optional, number)**: The number of matching terms to return.
 - **`timeout` (Optional, string \| -1 \| 0)**: The maximum length of time to spend collecting results. If the timeout is exceeded the `complete` flag set to `false` in the response and the results may be partial or empty.
@@ -1845,7 +1844,7 @@ client.termvectors({ index })
 - **`term_statistics` (Optional, boolean)**: If `true`, the response includes: * The total term frequency (how often a term occurs in all documents). * The document frequency (the number of documents containing the current term). By default these values are not returned since term statistics can have a serious performance impact.
 - **`routing` (Optional, string)**: A custom value that is used to route operations to a specific shard.
 - **`version` (Optional, number)**: If `true`, returns the document version as part of a hit.
-- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte" \| "force"))**: The version type.
+- **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
 - **`realtime` (Optional, boolean)**: If true, the request is real-time as opposed to near-real-time.
 
@@ -2015,7 +2014,7 @@ client.updateByQuery({ index })
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
-- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `AND` or `OR`. This parameter can be used only when the `q` query string parameter is specified.
+- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `and` or `or`. This parameter can be used only when the `q` query string parameter is specified.
 - **`df` (Optional, string)**: The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
 - **`from` (Optional, number)**: Skips the specified number of documents.
@@ -2146,7 +2145,7 @@ client.asyncSearch.submit({ ... })
 
 #### Request (object) [_request_async_search.submit]
 - **`index` (Optional, string \| string[])**: A list of index names to search; use `_all` or empty string to perform the operation on all indices
-- **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**
+- **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, cartesian_bounds, cartesian_centroid, categorize_text, change_point, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**
 - **`collapse` (Optional, { field, inner_hits, max_concurrent_group_searches, collapse })**
 - **`explain` (Optional, boolean)**: If true, returns detailed information about score computation as part of a hit.
 - **`ext` (Optional, Record<string, User-defined value>)**: Configuration of search extensions defined by Elasticsearch plugins.
@@ -2161,7 +2160,7 @@ Defaults to 10,000 hits.
 - **`indices_boost` (Optional, Record<string, number>[])**: Boosts the _score of documents from specified indices.
 - **`docvalue_fields` (Optional, { field, format, include_unmapped }[])**: Array of wildcard (*) patterns. The request returns doc values for field
 names matching these patterns in the hits.fields property of the response.
-- **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector } \| { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity, inner_hits, rescore_vector }[])**: Defines the approximate kNN search to run.
+- **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, visit_percentage, boost, filter, similarity, inner_hits, rescore_vector } \| { field, query_vector, query_vector_builder, k, num_candidates, visit_percentage, boost, filter, similarity, inner_hits, rescore_vector }[])**: Defines the approximate kNN search to run.
 - **`min_score` (Optional, number)**: Minimum _score for matching documents. Documents with a lower _score are
 not included in search results and results collected by aggregations.
 - **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**
@@ -2297,6 +2296,16 @@ local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+
+## client.cat.circuitBreaker [_cat.circuit_breaker]
+Get circuit breakers statistics
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.cat.circuitBreaker()
+```
+
 
 ## client.cat.componentTemplates [_cat.component_templates]
 Get component templates.
@@ -2511,7 +2520,8 @@ client.cat.mlDataFrameAnalytics({ ... })
 
 #### Request (object) [_request_cat.ml_data_frame_analytics]
 - **`id` (Optional, string)**: The ID of the data frame analytics to fetch
-- **`allow_no_match` (Optional, boolean)**: Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified)
+- **`allow_no_match` (Optional, boolean)**: Whether to ignore if a wildcard expression matches no configs.
+(This includes `_all` string or when no configs have been specified.)
 - **`h` (Optional, Enum("assignment_explanation" \| "create_time" \| "description" \| "dest_index" \| "failure_reason" \| "id" \| "model_memory_limit" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "progress" \| "source_index" \| "state" \| "type" \| "version") \| Enum("assignment_explanation" \| "create_time" \| "description" \| "dest_index" \| "failure_reason" \| "id" \| "model_memory_limit" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "progress" \| "source_index" \| "state" \| "type" \| "version")[])**: List of column names to display.
 - **`s` (Optional, Enum("assignment_explanation" \| "create_time" \| "description" \| "dest_index" \| "failure_reason" \| "id" \| "model_memory_limit" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "progress" \| "source_index" \| "state" \| "type" \| "version") \| Enum("assignment_explanation" \| "create_time" \| "description" \| "dest_index" \| "failure_reason" \| "id" \| "model_memory_limit" \| "node.address" \| "node.ephemeral_id" \| "node.id" \| "node.name" \| "progress" \| "source_index" \| "state" \| "type" \| "version")[])**: List of column names or column aliases used to sort the
 response.
@@ -2653,7 +2663,7 @@ client.cat.nodes({ ... })
 #### Request (object) [_request_cat.nodes]
 - **`full_id` (Optional, boolean)**: If `true`, return the full node ID. If `false`, return the shortened node ID.
 - **`include_unloaded_segments` (Optional, boolean)**: If true, the response includes information from segments that are not loaded into memory.
-- **`h` (Optional, Enum("build" \| "completion.size" \| "cpu" \| "disk.avail" \| "disk.total" \| "disk.used" \| "disk.used_percent" \| "fielddata.evictions" \| "fielddata.memory_size" \| "file_desc.current" \| "file_desc.max" \| "file_desc.percent" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "heap.current" \| "heap.max" \| "heap.percent" \| "http_address" \| "id" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "jdk" \| "load_1m" \| "load_5m" \| "load_15m" \| "mappings.total_count" \| "mappings.total_estimated_overhead_in_bytes" \| "master" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "name" \| "node.role" \| "pid" \| "port" \| "query_cache.memory_size" \| "query_cache.evictions" \| "query_cache.hit_count" \| "query_cache.miss_count" \| "ram.current" \| "ram.max" \| "ram.percent" \| "refresh.total" \| "refresh.time" \| "request_cache.memory_size" \| "request_cache.evictions" \| "request_cache.hit_count" \| "request_cache.miss_count" \| "script.compilations" \| "script.cache_evictions" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "shard_stats.total_count" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "uptime" \| "version") \| Enum("build" \| "completion.size" \| "cpu" \| "disk.avail" \| "disk.total" \| "disk.used" \| "disk.used_percent" \| "fielddata.evictions" \| "fielddata.memory_size" \| "file_desc.current" \| "file_desc.max" \| "file_desc.percent" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "heap.current" \| "heap.max" \| "heap.percent" \| "http_address" \| "id" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "jdk" \| "load_1m" \| "load_5m" \| "load_15m" \| "mappings.total_count" \| "mappings.total_estimated_overhead_in_bytes" \| "master" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "name" \| "node.role" \| "pid" \| "port" \| "query_cache.memory_size" \| "query_cache.evictions" \| "query_cache.hit_count" \| "query_cache.miss_count" \| "ram.current" \| "ram.max" \| "ram.percent" \| "refresh.total" \| "refresh.time" \| "request_cache.memory_size" \| "request_cache.evictions" \| "request_cache.hit_count" \| "request_cache.miss_count" \| "script.compilations" \| "script.cache_evictions" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "shard_stats.total_count" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "uptime" \| "version")[])**: A list of columns names to display.
+- **`h` (Optional, Enum("build" \| "completion.size" \| "cpu" \| "disk.avail" \| "disk.total" \| "disk.used" \| "disk.used_percent" \| "fielddata.evictions" \| "fielddata.memory_size" \| "file_desc.current" \| "file_desc.max" \| "file_desc.percent" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "heap.current" \| "heap.max" \| "heap.percent" \| "http_address" \| "id" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "jdk" \| "load_1m" \| "load_5m" \| "load_15m" \| "available_processors" \| "mappings.total_count" \| "mappings.total_estimated_overhead_in_bytes" \| "master" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "name" \| "node.role" \| "pid" \| "port" \| "query_cache.memory_size" \| "query_cache.evictions" \| "query_cache.hit_count" \| "query_cache.miss_count" \| "ram.current" \| "ram.max" \| "ram.percent" \| "refresh.total" \| "refresh.time" \| "request_cache.memory_size" \| "request_cache.evictions" \| "request_cache.hit_count" \| "request_cache.miss_count" \| "script.compilations" \| "script.cache_evictions" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "shard_stats.total_count" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "uptime" \| "version") \| Enum("build" \| "completion.size" \| "cpu" \| "disk.avail" \| "disk.total" \| "disk.used" \| "disk.used_percent" \| "fielddata.evictions" \| "fielddata.memory_size" \| "file_desc.current" \| "file_desc.max" \| "file_desc.percent" \| "flush.total" \| "flush.total_time" \| "get.current" \| "get.exists_time" \| "get.exists_total" \| "get.missing_time" \| "get.missing_total" \| "get.time" \| "get.total" \| "heap.current" \| "heap.max" \| "heap.percent" \| "http_address" \| "id" \| "indexing.delete_current" \| "indexing.delete_time" \| "indexing.delete_total" \| "indexing.index_current" \| "indexing.index_failed" \| "indexing.index_failed_due_to_version_conflict" \| "indexing.index_time" \| "indexing.index_total" \| "ip" \| "jdk" \| "load_1m" \| "load_5m" \| "load_15m" \| "available_processors" \| "mappings.total_count" \| "mappings.total_estimated_overhead_in_bytes" \| "master" \| "merges.current" \| "merges.current_docs" \| "merges.current_size" \| "merges.total" \| "merges.total_docs" \| "merges.total_size" \| "merges.total_time" \| "name" \| "node.role" \| "pid" \| "port" \| "query_cache.memory_size" \| "query_cache.evictions" \| "query_cache.hit_count" \| "query_cache.miss_count" \| "ram.current" \| "ram.max" \| "ram.percent" \| "refresh.total" \| "refresh.time" \| "request_cache.memory_size" \| "request_cache.evictions" \| "request_cache.hit_count" \| "request_cache.miss_count" \| "script.compilations" \| "script.cache_evictions" \| "search.fetch_current" \| "search.fetch_time" \| "search.fetch_total" \| "search.open_contexts" \| "search.query_current" \| "search.query_time" \| "search.query_total" \| "search.scroll_current" \| "search.scroll_time" \| "search.scroll_total" \| "segments.count" \| "segments.fixed_bitset_memory" \| "segments.index_writer_memory" \| "segments.memory" \| "segments.version_map_memory" \| "shard_stats.total_count" \| "suggest.current" \| "suggest.time" \| "suggest.total" \| "uptime" \| "version")[])**: A list of columns names to display.
 It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
@@ -2792,6 +2802,16 @@ local cluster state. If `false` the list of selected nodes are computed
 from the cluster state of the master node. In both cases the coordinating
 node will send requests for further information to each selected node.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument
+determines whether wildcard expressions match hidden data streams. Supports a list of values,
+such as open,hidden.
+- **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all value targets only
+missing or closed indices. This behavior applies even if the request targets other open indices. For example,
+a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
+- **`ignore_throttled` (Optional, boolean)**: If true, concrete, expanded or aliased indices are ignored when frozen.
+- **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
+- **`allow_closed` (Optional, boolean)**: If true, allow closed indices to be returned in the response otherwise if false, keep the legacy behaviour
+of throwing an exception if index pattern matches closed indices
 
 ## client.cat.shards [_cat.shards]
 Get shard information.
@@ -3698,7 +3718,7 @@ client.cluster.state({ ... })
 ### Arguments [_arguments_cluster.state]
 
 #### Request (object) [_request_cluster.state]
-- **`metric` (Optional, string \| string[])**: Limit the information returned to the specified metrics
+- **`metric` (Optional, Enum("_all" \| "version" \| "master_node" \| "blocks" \| "nodes" \| "metadata" \| "routing_table" \| "routing_nodes" \| "customs") \| Enum("_all" \| "version" \| "master_node" \| "blocks" \| "nodes" \| "metadata" \| "routing_table" \| "routing_nodes" \| "customs")[])**: Limit the information returned to the specified metrics
 - **`index` (Optional, string \| string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
 - **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -3762,7 +3782,7 @@ client.connector.delete({ connector_id })
 
 #### Request (object) [_request_connector.delete]
 - **`connector_id` (string)**: The unique identifier of the connector to be deleted
-- **`delete_sync_jobs` (Optional, boolean)**: A flag indicating if associated sync jobs should be also removed. Defaults to false.
+- **`delete_sync_jobs` (Optional, boolean)**: A flag indicating if associated sync jobs should be also removed.
 - **`hard` (Optional, boolean)**: A flag indicating if the connector should be hard deleted.
 
 ## client.connector.get [_connector.get]
@@ -3796,7 +3816,7 @@ client.connector.list({ ... })
 ### Arguments [_arguments_connector.list]
 
 #### Request (object) [_request_connector.list]
-- **`from` (Optional, number)**: Starting offset (default: 0)
+- **`from` (Optional, number)**: Starting offset
 - **`size` (Optional, number)**: Specifies a max number of results to get
 - **`index_name` (Optional, string \| string[])**: A list of connector index names to fetch connector documents for
 - **`connector_name` (Optional, string \| string[])**: A list of connector names to fetch connector documents for
@@ -3971,7 +3991,7 @@ client.connector.syncJobList({ ... })
 ### Arguments [_arguments_connector.sync_job_list]
 
 #### Request (object) [_request_connector.sync_job_list]
-- **`from` (Optional, number)**: Starting offset (default: 0)
+- **`from` (Optional, number)**: Starting offset
 - **`size` (Optional, number)**: Specifies a max number of results to get
 - **`status` (Optional, Enum("canceling" \| "canceled" \| "completed" \| "error" \| "in_progress" \| "pending" \| "suspended"))**: A sync job status to fetch connector sync jobs for
 - **`connector_id` (Optional, string)**: A connector id to fetch connector sync jobs for
@@ -4830,7 +4850,7 @@ client.fleet.search({ index })
 
 #### Request (object) [_request_fleet.search]
 - **`index` (string \| string)**: A single target to search. If the target is an index alias, it must resolve to a single index.
-- **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**
+- **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, cartesian_bounds, cartesian_centroid, categorize_text, change_point, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**
 - **`collapse` (Optional, { field, inner_hits, max_concurrent_group_searches, collapse })**
 - **`explain` (Optional, boolean)**: If true, returns detailed information about score computation as part of a hit.
 - **`ext` (Optional, Record<string, User-defined value>)**: Configuration of search extensions defined by Elasticsearch plugins.
@@ -5179,7 +5199,7 @@ client.indices.addBlock({ index, block })
 ### Arguments [_arguments_indices.add_block]
 
 #### Request (object) [_request_indices.add_block]
-- **`index` (string)**: A list or wildcard expression of index names used to limit the request.
+- **`index` (string \| string[])**: A list or wildcard expression of index names used to limit the request.
 By default, you must explicitly name the indices you are adding blocks to.
 To allow the adding of blocks to indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`.
 You can update this setting in the `elasticsearch.yml` file or by using the cluster update settings API.
@@ -5501,7 +5521,7 @@ client.indices.dataStreamsStats({ ... })
 ### Arguments [_arguments_indices.data_streams_stats]
 
 #### Request (object) [_request_indices.data_streams_stats]
-- **`name` (Optional, string)**: List of data streams used to limit the request.
+- **`name` (Optional, string \| string[])**: List of data streams used to limit the request.
 Wildcard expressions (`*`) are supported.
 To target all data streams in a cluster, omit this parameter or use `*`.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match.
@@ -5691,13 +5711,18 @@ To use the API, this parameter must be set to `true`.
 
 ## client.indices.downsample [_indices.downsample]
 Downsample an index.
-Aggregate a time series (TSDS) index and store pre-computed statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`) for each metric field grouped by a configured time interval.
+Downsamples a time series (TSDS) index and reduces its size by keeping the last value or by pre-aggregating metrics:
+
+- When running in `aggregate` mode, it pre-calculates and stores statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`)
+for each metric field grouped by a configured time interval and their dimensions.
+- When running in `last_value` mode, it keeps the last value for each metric in the configured interval and their dimensions.
+
 For example, a TSDS index that contains metrics sampled every 10 seconds can be downsampled to an hourly index.
 All documents within an hour interval are summarized and stored as a single document in the downsample index.
 
 NOTE: Only indices in a time series data stream are supported.
 Neither field nor document level security can be defined on the source index.
-The source index must be read only (`index.blocks.write: true`).
+The source index must be read-only (`index.blocks.write: true`).
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-downsample)
 
@@ -5710,7 +5735,7 @@ client.indices.downsample({ index, target_index })
 #### Request (object) [_request_indices.downsample]
 - **`index` (string)**: Name of the time series index to downsample.
 - **`target_index` (string)**: Name of the index to create.
-- **`config` (Optional, { fixed_interval })**
+- **`config` (Optional, { fixed_interval, sampling_method })**
 
 ## client.indices.exists [_indices.exists]
 Check indices.
@@ -6171,7 +6196,7 @@ client.indices.getIndexTemplate({ ... })
 ### Arguments [_arguments_indices.get_index_template]
 
 #### Request (object) [_request_indices.get_index_template]
-- **`name` (Optional, string)**: List of index template names used to limit the request. Wildcard (*) expressions are supported.
+- **`name` (Optional, string)**: Name of index template to retrieve. Wildcard (*) expressions are supported.
 - **`local` (Optional, boolean)**: If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
 - **`flat_settings` (Optional, boolean)**: If true, returns settings in flat format.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
@@ -6469,7 +6494,7 @@ To target all data streams use `*` or `_all`.
 - **`data_retention` (Optional, string \| -1 \| 0)**: If defined, every document added to this data stream will be stored at least for this time frame.
 Any time after this duration the document could be deleted.
 When empty, every document in this data stream will be stored indefinitely.
-- **`downsampling` (Optional, { rounds })**: The downsampling configuration to execute for the managed backing index after rollover.
+- **`downsampling` (Optional, { after, fixed_interval }[])**: The downsampling configuration to execute for the managed backing index after rollover.
 - **`enabled` (Optional, boolean)**: If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
 that's disabled (enabled: `false`) will have no effect on the data stream.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match.
@@ -6960,7 +6985,7 @@ client.indices.removeBlock({ index, block })
 ### Arguments [_arguments_indices.remove_block]
 
 #### Request (object) [_request_indices.remove_block]
-- **`index` (string)**: A list or wildcard expression of index names used to limit the request.
+- **`index` (string \| string[])**: A list or wildcard expression of index names used to limit the request.
 By default, you must explicitly name the indices you are removing blocks from.
 To allow the removal of blocks from indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`.
 You can update this setting in the `elasticsearch.yml` file or by using the cluster update settings API.
@@ -7425,7 +7450,7 @@ client.indices.stats({ ... })
 ### Arguments [_arguments_indices.stats]
 
 #### Request (object) [_request_indices.stats]
-- **`metric` (Optional, string \| string[])**: Limit the information returned the specific metrics.
+- **`metric` (Optional, Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector") \| Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector")[])**: Limit the information returned the specific metrics.
 - **`index` (Optional, string \| string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
 - **`completion_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata and suggest statistics.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument
@@ -7437,7 +7462,7 @@ such as `open,hidden`.
 - **`groups` (Optional, string \| string[])**: List of search groups to include in the search statistics.
 - **`include_segment_file_sizes` (Optional, boolean)**: If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested).
 - **`include_unloaded_segments` (Optional, boolean)**: If true, the response includes information from segments that are not loaded into memory.
-- **`level` (Optional, Enum("cluster" \| "indices" \| "shards"))**: Indicates whether statistics are aggregated at the cluster, index, or shard level.
+- **`level` (Optional, Enum("cluster" \| "indices" \| "shards"))**: Indicates whether statistics are aggregated at the cluster, indices, or shards level.
 
 ## client.indices.updateAliases [_indices.update_aliases]
 Create or update an alias.
@@ -7481,7 +7506,7 @@ This behavior applies even if the request targets other open indices.
 - **`analyzer` (Optional, string)**: Analyzer to use for the query string.
 This parameter can only be used when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed.
-- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `AND` or `OR`.
+- **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `and` or `or`.
 - **`df` (Optional, string)**: Field to use as default where no field prefix is given in the query string.
 This parameter can only be used when the `q` query string parameter is specified.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
@@ -7494,7 +7519,7 @@ Supports a list of values, such as `open,hidden`.
 - **`q` (Optional, string)**: Query in the Lucene query string syntax.
 
 ## client.inference.chatCompletionUnified [_inference.chat_completion_unified]
-Perform chat completion inference
+Perform chat completion inference on the service
 
 The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation.
 It only works with the `chat_completion` task type for `openai` and `elastic` inference services.
@@ -7519,6 +7544,12 @@ client.inference.chatCompletionUnified({ inference_id })
 
 ## client.inference.completion [_inference.completion]
 Perform completion inference on the service
+Get responses for completion tasks.
+This API works only with the completion task type.
+
+IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
+
+This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
 
@@ -7532,11 +7563,12 @@ client.inference.completion({ inference_id, input })
 - **`inference_id` (string)**: The inference Id
 - **`input` (string \| string[])**: Inference input.
 Either a string or an array of strings.
-- **`task_settings` (Optional, User-defined value)**: Optional task settings
+- **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request. These settings are specific to the <task_type> you specified and override the task settings specified when initializing the service.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.delete [_inference.delete]
 Delete an inference endpoint
+This API requires the manage_inference cluster privilege (the built-in `inference_admin` role grants this privilege).
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete)
 
@@ -7549,11 +7581,12 @@ client.inference.delete({ inference_id })
 #### Request (object) [_request_inference.delete]
 - **`inference_id` (string)**: The inference identifier.
 - **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The task type
-- **`dry_run` (Optional, boolean)**: When true, the endpoint is not deleted and a list of ingest processors which reference this endpoint is returned.
+- **`dry_run` (Optional, boolean)**: When true, checks the semantic_text fields and inference processors that reference the endpoint and returns them in a list, but does not delete the endpoint.
 - **`force` (Optional, boolean)**: When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields.
 
 ## client.inference.get [_inference.get]
 Get an inference endpoint
+This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-get)
 
@@ -7688,11 +7721,13 @@ client.inference.putAlibabacloud({ task_type, alibabacloud_inference_id, service
 ### Arguments [_arguments_inference.put_alibabacloud]
 
 #### Request (object) [_request_inference.put_alibabacloud]
-- **`task_type` (Enum("completion" \| "rerank" \| "space_embedding" \| "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("completion" \| "rerank" \| "sparse_embedding" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`alibabacloud_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("alibabacloud-ai-search"))**: The type of service supported for the specified task type. In this case, `alibabacloud-ai-search`.
 - **`service_settings` ({ api_key, host, rate_limit, service_id, workspace })**: Settings used to install the inference model. These settings are specific to the `alibabacloud-ai-search` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `sparse_embedding` or `text_embedding` task types.
+Not applicable to the `rerank` or `completion` task types.
 - **`task_settings` (Optional, { input_type, return_token })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7719,6 +7754,8 @@ client.inference.putAmazonbedrock({ task_type, amazonbedrock_inference_id, servi
 - **`service` (Enum("amazonbedrock"))**: The type of service supported for the specified task type. In this case, `amazonbedrock`.
 - **`service_settings` ({ access_key, model, provider, region, rate_limit, secret_key })**: Settings used to install the inference model. These settings are specific to the `amazonbedrock` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` task type.
 - **`task_settings` (Optional, { max_new_tokens, temperature, top_k, top_p })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7743,6 +7780,8 @@ client.inference.putAmazonsagemaker({ task_type, amazonsagemaker_inference_id, s
 - **`service_settings` ({ access_key, endpoint_name, api, region, secret_key, target_model, target_container_hostname, inference_component_name, batch_size, dimensions })**: Settings used to install the inference model.
 These settings are specific to the `amazon_sagemaker` service and `service_settings.api` you specified.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `sparse_embedding` or `text_embedding` task types.
+Not applicable to the `rerank`, `completion`, or `chat_completion` task types.
 - **`task_settings` (Optional, { custom_attributes, enable_explanations, inference_id, session_id, target_variant })**: Settings to configure the inference task.
 These settings are specific to the task type and `service_settings.api` you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7765,8 +7804,7 @@ client.inference.putAnthropic({ task_type, anthropic_inference_id, service, serv
 The only valid task type for the model to perform is `completion`.
 - **`anthropic_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("anthropic"))**: The type of service supported for the specified task type. In this case, `anthropic`.
-- **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `watsonxai` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+- **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `anthropic` service.
 - **`task_settings` (Optional, { max_tokens, temperature, top_k, top_p })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7788,8 +7826,10 @@ client.inference.putAzureaistudio({ task_type, azureaistudio_inference_id, servi
 - **`task_type` (Enum("completion" \| "rerank" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`azureaistudio_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("azureaistudio"))**: The type of service supported for the specified task type. In this case, `azureaistudio`.
-- **`service_settings` ({ api_key, endpoint_type, target, provider, rate_limit })**: Settings used to install the inference model. These settings are specific to the `openai` service.
+- **`service_settings` ({ api_key, endpoint_type, target, provider, rate_limit })**: Settings used to install the inference model. These settings are specific to the `azureaistudio` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank` or `completion` task types.
 - **`task_settings` (Optional, { do_sample, max_new_tokens, temperature, top_p, user, return_documents, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7821,6 +7861,8 @@ NOTE: The `chat_completion` task type only supports streaming and only through t
 - **`service` (Enum("azureopenai"))**: The type of service supported for the specified task type. In this case, `azureopenai`.
 - **`service_settings` ({ api_key, api_version, deployment_id, entra_id, rate_limit, resource_name })**: Settings used to install the inference model. These settings are specific to the `azureopenai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` task type.
 - **`task_settings` (Optional, { user })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7845,6 +7887,8 @@ client.inference.putCohere({ task_type, cohere_inference_id, service, service_se
 - **`service_settings` ({ api_key, embedding_type, model_id, rate_limit, similarity })**: Settings used to install the inference model.
 These settings are specific to the `cohere` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank` or `completion` task type.
 - **`task_settings` (Optional, { input_type, return_documents, top_n, truncate })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7869,7 +7913,6 @@ client.inference.putContextualai({ task_type, contextualai_inference_id, service
 - **`contextualai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("contextualai"))**: The type of service supported for the specified task type. In this case, `contextualai`.
 - **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `contextualai` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`task_settings` (Optional, { instruction, return_documents, top_k })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -7930,9 +7973,11 @@ client.inference.putCustom({ task_type, custom_inference_id, service, service_se
 - **`task_type` (Enum("text_embedding" \| "sparse_embedding" \| "rerank" \| "completion"))**: The type of the inference task that the model will perform.
 - **`custom_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("custom"))**: The type of service supported for the specified task type. In this case, `custom`.
-- **`service_settings` ({ headers, input_type, query_parameters, request, response, secret_parameters, url })**: Settings used to install the inference model.
+- **`service_settings` ({ batch_size, headers, input_type, query_parameters, request, response, secret_parameters, url })**: Settings used to install the inference model.
 These settings are specific to the `custom` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `sparse_embedding` or `text_embedding` task types.
+Not applicable to the `rerank` or `completion` task types.
 - **`task_settings` (Optional, { parameters })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 
@@ -7955,7 +8000,6 @@ client.inference.putDeepseek({ task_type, deepseek_inference_id, service, servic
 - **`service` (Enum("deepseek"))**: The type of service supported for the specified task type. In this case, `deepseek`.
 - **`service_settings` ({ api_key, model_id, url })**: Settings used to install the inference model.
 These settings are specific to the `deepseek` service.
-- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putElasticsearch [_inference.put_elasticsearch]
@@ -7989,8 +8033,10 @@ client.inference.putElasticsearch({ task_type, elasticsearch_inference_id, servi
 - **`elasticsearch_inference_id` (string)**: The unique identifier of the inference endpoint.
 The must not match the `model_id`.
 - **`service` (Enum("elasticsearch"))**: The type of service supported for the specified task type. In this case, `elasticsearch`.
-- **`service_settings` ({ adaptive_allocations, deployment_id, model_id, num_allocations, num_threads })**: Settings used to install the inference model. These settings are specific to the `elasticsearch` service.
+- **`service_settings` ({ adaptive_allocations, deployment_id, model_id, num_allocations, num_threads, long_document_strategy, max_chunks_per_doc })**: Settings used to install the inference model. These settings are specific to the `elasticsearch` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `sparse_embedding` and `text_embedding` task types.
+Not applicable to the `rerank` task type.
 - **`task_settings` (Optional, { return_documents })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8050,6 +8096,8 @@ client.inference.putGoogleaistudio({ task_type, googleaistudio_inference_id, ser
 - **`service` (Enum("googleaistudio"))**: The type of service supported for the specified task type. In this case, `googleaistudio`.
 - **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `googleaistudio` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` task type.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putGooglevertexai [_inference.put_googlevertexai]
@@ -8069,9 +8117,11 @@ client.inference.putGooglevertexai({ task_type, googlevertexai_inference_id, ser
 - **`task_type` (Enum("rerank" \| "text_embedding" \| "completion" \| "chat_completion"))**: The type of the inference task that the model will perform.
 - **`googlevertexai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("googlevertexai"))**: The type of service supported for the specified task type. In this case, `googlevertexai`.
-- **`service_settings` ({ location, model_id, project_id, rate_limit, service_account_json, dimensions })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
+- **`service_settings` ({ provider, url, streaming_url, location, model_id, project_id, rate_limit, service_account_json, dimensions })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
-- **`task_settings` (Optional, { auto_truncate, top_n, thinking_config })**: Settings to configure the inference task.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank`, `completion`, or `chat_completion` task types.
+- **`task_settings` (Optional, { auto_truncate, top_n, thinking_config, max_tokens })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
@@ -8129,6 +8179,8 @@ client.inference.putHuggingFace({ task_type, huggingface_inference_id, service, 
 - **`service` (Enum("hugging_face"))**: The type of service supported for the specified task type. In this case, `hugging_face`.
 - **`service_settings` ({ api_key, rate_limit, url, model_id })**: Settings used to install the inference model. These settings are specific to the `hugging_face` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank`, `completion`, or `chat_completion` task types.
 - **`task_settings` (Optional, { return_documents, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8155,6 +8207,8 @@ client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_se
 - **`service` (Enum("jinaai"))**: The type of service supported for the specified task type. In this case, `jinaai`.
 - **`service_settings` ({ api_key, model_id, rate_limit, similarity })**: Settings used to install the inference model. These settings are specific to the `jinaai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank` task type.
 - **`task_settings` (Optional, { return_documents, task, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8178,6 +8232,8 @@ client.inference.putLlama({ task_type, llama_inference_id, service, service_sett
 - **`service` (Enum("llama"))**: The type of service supported for the specified task type. In this case, `llama`.
 - **`service_settings` ({ url, model_id, max_input_tokens, similarity, rate_limit })**: Settings used to install the inference model. These settings are specific to the `llama` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` or `chat_completion` task types.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putMistral [_inference.put_mistral]
@@ -8199,6 +8255,8 @@ client.inference.putMistral({ task_type, mistral_inference_id, service, service_
 - **`service` (Enum("mistral"))**: The type of service supported for the specified task type. In this case, `mistral`.
 - **`service_settings` ({ api_key, max_input_tokens, model, rate_limit })**: Settings used to install the inference model. These settings are specific to the `mistral` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` or `chat_completion` task types.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putOpenai [_inference.put_openai]
@@ -8221,7 +8279,9 @@ NOTE: The `chat_completion` task type only supports streaming and only through t
 - **`service` (Enum("openai"))**: The type of service supported for the specified task type. In this case, `openai`.
 - **`service_settings` ({ api_key, dimensions, model_id, organization_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `openai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
-- **`task_settings` (Optional, { user })**: Settings to configure the inference task.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` or `chat_completion` task types.
+- **`task_settings` (Optional, { user, headers })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
@@ -8246,6 +8306,8 @@ client.inference.putVoyageai({ task_type, voyageai_inference_id, service, servic
 - **`service` (Enum("voyageai"))**: The type of service supported for the specified task type. In this case, `voyageai`.
 - **`service_settings` ({ dimensions, model_id, rate_limit, embedding_type })**: Settings used to install the inference model. These settings are specific to the `voyageai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank` task type.
 - **`task_settings` (Optional, { input_type, return_documents, top_k, truncation })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8270,6 +8332,9 @@ client.inference.putWatsonx({ task_type, watsonx_inference_id, service, service_
 - **`watsonx_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("watsonxai"))**: The type of service supported for the specified task type. In this case, `watsonxai`.
 - **`service_settings` ({ api_key, api_version, model_id, project_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `watsonxai` service.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` or `chat_completion` task types.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.rerank [_inference.rerank]
@@ -8286,11 +8351,9 @@ client.inference.rerank({ inference_id, query, input })
 #### Request (object) [_request_inference.rerank]
 - **`inference_id` (string)**: The unique identifier for the inference endpoint.
 - **`query` (string)**: Query input.
-- **`input` (string \| string[])**: The text on which you want to perform the inference task.
-It can be a single string or an array.
-
-> info
-> Inference endpoints for the `completion` task type currently only support a single string as input.
+- **`input` (string[])**: The documents to rank.
+- **`return_documents` (Optional, boolean)**: Include the document text in the response.
+- **`top_n` (Optional, number)**: Limit the response to the top N documents.
 - **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request.
 These settings are specific to the task type you specified and override the task settings specified when initializing the service.
 - **`timeout` (Optional, string \| -1 \| 0)**: The amount of time to wait for the inference request to complete.
@@ -8310,11 +8373,11 @@ client.inference.sparseEmbedding({ inference_id, input })
 - **`inference_id` (string)**: The inference Id
 - **`input` (string \| string[])**: Inference input.
 Either a string or an array of strings.
-- **`task_settings` (Optional, User-defined value)**: Optional task settings
+- **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request. These settings are specific to the <task_type> you specified and override the task settings specified when initializing the service.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.streamCompletion [_inference.stream_completion]
-Perform streaming inference.
+Perform streaming completion inference on the service
 Get real-time responses for completion tasks by delivering answers incrementally, reducing response times during computation.
 This API works only with the completion task type.
 
@@ -8336,7 +8399,7 @@ client.inference.streamCompletion({ inference_id, input })
 It can be a single string or an array.
 
 NOTE: Inference endpoints for the completion task type currently only support a single string as input.
-- **`task_settings` (Optional, User-defined value)**: Optional task settings
+- **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request. These settings are specific to the <task_type> you specified and override the task settings specified when initializing the service.
 - **`timeout` (Optional, string \| -1 \| 0)**: The amount of time to wait for the inference request to complete.
 
 ## client.inference.textEmbedding [_inference.text_embedding]
@@ -8364,7 +8427,7 @@ Accepted values depend on the configured inference service, refer to the relevan
 
 > info
 > The `input_type` parameter specified on the root level of the request body will take precedence over the `input_type` parameter specified in `task_settings`.
-- **`task_settings` (Optional, User-defined value)**: Optional task settings
+- **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request. These settings are specific to the <task_type> you specified and override the task settings specified when initializing the service.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.update [_inference.update]
@@ -10103,7 +10166,7 @@ client.ml.putDatafeed({ datafeed_id })
 - **`datafeed_id` (string)**: A numerical character string that uniquely identifies the datafeed.
 This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores.
 It must start and end with alphanumeric characters.
-- **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**: If set, the datafeed performs aggregation searches.
+- **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, cartesian_bounds, cartesian_centroid, categorize_text, change_point, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**: If set, the datafeed performs aggregation searches.
 Support for aggregations is limited and should be used only with low cardinality data.
 - **`chunking_config` (Optional, { mode, time_span })**: Datafeeds might be required to search over long time periods, for several months or years.
 This search is split into time chunks in order to ensure the load on Elasticsearch is managed.
@@ -10617,7 +10680,7 @@ client.ml.updateDatafeed({ datafeed_id })
 - **`datafeed_id` (string)**: A numerical character string that uniquely identifies the datafeed.
 This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores.
 It must start and end with alphanumeric characters.
-- **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**: If set, the datafeed performs aggregation searches. Support for aggregations is limited and should be used only
+- **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, cartesian_bounds, cartesian_centroid, categorize_text, change_point, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**: If set, the datafeed performs aggregation searches. Support for aggregations is limited and should be used only
 with low cardinality data.
 - **`chunking_config` (Optional, { mode, time_span })**: Datafeeds might search over long time periods, for several months or years. This search is split into time
 chunks in order to ensure the load on Elasticsearch is managed. Chunking configuration controls how the size of
@@ -10889,7 +10952,7 @@ client.nodes.info({ ... })
 
 #### Request (object) [_request_nodes.info]
 - **`node_id` (Optional, string \| string[])**: List of node IDs or names used to limit returned information.
-- **`metric` (Optional, string \| string[])**: Limits the information returned to the specific metrics. Supports a list, such as http,ingest.
+- **`metric` (Optional, Enum("_all" \| "_none" \| "settings" \| "os" \| "process" \| "jvm" \| "thread_pool" \| "transport" \| "http" \| "remote_cluster_server" \| "plugins" \| "ingest" \| "aggregations" \| "indices") \| Enum("_all" \| "_none" \| "settings" \| "os" \| "process" \| "jvm" \| "thread_pool" \| "transport" \| "http" \| "remote_cluster_server" \| "plugins" \| "ingest" \| "aggregations" \| "indices")[])**: Limits the information returned to the specific metrics. Supports a list, such as http,ingest.
 - **`flat_settings` (Optional, boolean)**: If true, returns settings in flat format.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -10933,14 +10996,14 @@ client.nodes.stats({ ... })
 
 #### Request (object) [_request_nodes.stats]
 - **`node_id` (Optional, string \| string[])**: List of node IDs or names used to limit returned information.
-- **`metric` (Optional, string \| string[])**: Limit the information returned to the specified metrics
-- **`index_metric` (Optional, string \| string[])**: Limit the information returned for indices metric to the specific index metrics. It can be used only if indices (or all) metric is specified.
+- **`metric` (Optional, Enum("_all" \| "_none" \| "indices" \| "os" \| "process" \| "jvm" \| "thread_pool" \| "fs" \| "transport" \| "http" \| "breaker" \| "script" \| "discovery" \| "ingest" \| "adaptive_selection" \| "script_cache" \| "indexing_pressure" \| "repositories" \| "allocations") \| Enum("_all" \| "_none" \| "indices" \| "os" \| "process" \| "jvm" \| "thread_pool" \| "fs" \| "transport" \| "http" \| "breaker" \| "script" \| "discovery" \| "ingest" \| "adaptive_selection" \| "script_cache" \| "indexing_pressure" \| "repositories" \| "allocations")[])**: Limit the information returned to the specified metrics
+- **`index_metric` (Optional, Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector") \| Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector")[])**: Limit the information returned for indices metric to the specific index metrics. It can be used only if indices (or all) metric is specified.
 - **`completion_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata and suggest statistics.
 - **`fielddata_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata statistics.
 - **`fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in the statistics.
 - **`groups` (Optional, boolean)**: List of search groups to include in the search statistics.
 - **`include_segment_file_sizes` (Optional, boolean)**: If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested).
-- **`level` (Optional, Enum("node" \| "indices" \| "shards"))**: Indicates whether statistics are aggregated at the cluster, index, or shard level.
+- **`level` (Optional, Enum("node" \| "indices" \| "shards"))**: Indicates whether statistics are aggregated at the node, indices, or shards level.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 - **`types` (Optional, string[])**: A list of document types for the indexing index metric.
 - **`include_unloaded_segments` (Optional, boolean)**: If `true`, the response includes information from segments that are not loaded into memory.
@@ -10958,17 +11021,10 @@ client.nodes.usage({ ... })
 
 #### Request (object) [_request_nodes.usage]
 - **`node_id` (Optional, string \| string[])**: A list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-- **`metric` (Optional, string \| string[])**: Limits the information returned to the specific metrics.
-A list of the following options: `_all`, `rest_actions`.
+- **`metric` (Optional, Enum("_all" \| "rest_actions" \| "aggregations") \| Enum("_all" \| "rest_actions" \| "aggregations")[])**: Limits the information returned to the specific metrics.
+A list of the following options: `_all`, `rest_actions`, `aggregations`.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
-
-## client.project.tags [_project.tags]
-Return tags defined for the project
-```ts
-client.project.tags()
-```
-
 
 ## client.queryRules.deleteRule [_query_rules.delete_rule]
 Delete a query rule.
@@ -11292,7 +11348,7 @@ This parameter has the following rules:
 * Multiple non-rollup indices may be specified.
 * Only one rollup index may be specified. If more than one are supplied, an exception occurs.
 * Wildcard expressions (`*`) may be used. If they match more than one rollup index, an exception occurs. However, you can use an expression to match multiple non-rollup indices or data streams.
-- **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**: Specifies aggregations.
+- **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, cartesian_bounds, cartesian_centroid, categorize_text, change_point, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**: Specifies aggregations.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specifies a DSL query that is subject to some limitations.
 - **`size` (Optional, number)**: Must be zero if set, as rollups work on pre-aggregated data.
 - **`rest_total_hits_as_int` (Optional, boolean)**: Indicates whether hits.total should be rendered as an integer or an object in the rest search response
@@ -11771,7 +11827,7 @@ client.security.clearCachedPrivileges({ application })
 ### Arguments [_arguments_security.clear_cached_privileges]
 
 #### Request (object) [_request_security.clear_cached_privileges]
-- **`application` (string)**: A list of applications.
+- **`application` (string \| string[])**: A list of applications.
 To clear all applications, use an asterism (`*`).
 It does not support other wildcard patterns.
 
@@ -11923,6 +11979,9 @@ By default, API keys never expire.
 - **`metadata` (Optional, Record<string, User-defined value>)**: Arbitrary metadata that you want to associate with the API key.
 It supports nested data structure.
 Within the metadata object, keys beginning with `_` are reserved for system usage.
+- **`certificate_identity` (Optional, string)**: The certificate identity to associate with this API key.
+This field is used to restrict the API key to connections authenticated by a specific TLS certificate.
+The value should match the certificate's distinguished name (DN) pattern.
 
 ## client.security.createServiceToken [_security.create_service_token]
 Create a service account token.
@@ -12964,7 +13023,8 @@ It must not be negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter.
 - **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: The sort definition.
-You can sort on `username`, `roles`, or `enabled`.
+You can sort on `name`, `description`, `metadata`, `applications.application`, `applications.privileges`,
+and `applications.resources`.
 In addition, sort can also be applied to the `_doc` field to sort by index order.
 - **`size` (Optional, number)**: The number of hits to return.
 It must not be negative.
@@ -13292,6 +13352,12 @@ By default, API keys never expire. This property can be omitted to leave the val
 It supports nested data structure.
 Within the metadata object, keys beginning with `_` are reserved for system usage.
 When specified, this information fully replaces metadata previously associated with the API key.
+- **`certificate_identity` (Optional, string)**: The certificate identity to associate with this API key.
+This field is used to restrict the API key to connections authenticated by a specific TLS certificate.
+The value should match the certificate's distinguished name (DN) pattern.
+When specified, this fully replaces any previously assigned certificate identity.
+To clear an existing certificate identity, explicitly set this field to `null`.
+When omitted, the existing certificate identity remains unchanged.
 
 ## client.security.updateSettings [_security.update_settings]
 Update security index settings.
@@ -13735,7 +13801,7 @@ client.snapshot.delete({ repository, snapshot })
 
 #### Request (object) [_request_snapshot.delete]
 - **`repository` (string)**: The name of the repository to delete a snapshot from.
-- **`snapshot` (string)**: A list of snapshot names to delete.
+- **`snapshot` (string \| string[])**: A list of snapshot names to delete.
 It also accepts wildcards (`*`).
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
@@ -14694,7 +14760,7 @@ client.textStructure.findFieldStructure({ field, index })
 #### Request (object) [_request_text_structure.find_field_structure]
 - **`field` (string)**: The field that should be analyzed.
 - **`index` (string)**: The name of the index that contains the analyzed field.
-- **`column_names` (Optional, string)**: If `format` is set to `delimited`, you can specify the column names in a list.
+- **`column_names` (Optional, string \| string[])**: If `format` is set to `delimited`, you can specify the column names in a list.
 If this parameter is not specified, the structure finder uses the column names from the header row of the text.
 If the text does not have a header row, columns are named "column1", "column2", "column3", for example.
 - **`delimiter` (Optional, string)**: If you have set `format` to `delimited`, you can specify the character used to delimit the values in each row.
@@ -14803,7 +14869,7 @@ client.textStructure.findMessageStructure({ messages })
 
 #### Request (object) [_request_text_structure.find_message_structure]
 - **`messages` (string[])**: The list of messages you want to analyze.
-- **`column_names` (Optional, string)**: If the format is `delimited`, you can specify the column names in a list.
+- **`column_names` (Optional, string \| string[])**: If the format is `delimited`, you can specify the column names in a list.
 If this parameter is not specified, the structure finder uses the column names from the header row of the text.
 If the text does not have a header role, columns are named "column1", "column2", "column3", for example.
 - **`delimiter` (Optional, string)**: If you the format is `delimited`, you can specify the character used to delimit the values in each row.
@@ -15140,7 +15206,7 @@ indexing. The minimum value is 1s and the maximum is 1h.
 These objects define the group by fields and the aggregation to reduce
 the data.
 - **`source` (Optional, { index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
-- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, unattended })**: Defines optional transform settings.
+- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })**: Defines optional transform settings.
 - **`sync` (Optional, { time })**: Defines the properties transforms require to run continuously.
 - **`retention_policy` (Optional, { time })**: Defines a retention policy for the transform. Data that meets the defined
 criteria is deleted from the destination index.
@@ -15196,7 +15262,7 @@ The minimum value is `1s` and the maximum is `1h`.
 and the aggregation to reduce the data.
 - **`retention_policy` (Optional, { time })**: Defines a retention policy for the transform. Data that meets the defined criteria is deleted from the
 destination index.
-- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, unattended })**: Defines optional transform settings.
+- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })**: Defines optional transform settings.
 - **`sync` (Optional, { time })**: Defines the properties transforms require to run continuously.
 - **`defer_validation` (Optional, boolean)**: When the transform is created, a series of validations occur to ensure its success. For example, there is a
 check for the existence of the source indices and a check that the destination index is not part of the source
@@ -15367,7 +15433,7 @@ the event of transient failures while the transform is searching or
 indexing. The minimum value is 1s and the maximum is 1h.
 - **`_meta` (Optional, Record<string, User-defined value>)**: Defines optional transform metadata.
 - **`source` (Optional, { index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
-- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, unattended })**: Defines optional transform settings.
+- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })**: Defines optional transform settings.
 - **`sync` (Optional, { time })**: Defines the properties transforms require to run continuously.
 - **`retention_policy` (Optional, { time } \| null)**: Defines a retention policy for the transform. Data that meets the defined
 criteria is deleted from the destination index.
