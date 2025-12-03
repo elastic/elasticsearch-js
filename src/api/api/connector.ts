@@ -137,14 +137,18 @@ export default class Connector {
       },
       'connector.secret_post': {
         path: [],
-        body: [],
+        body: [
+          'value'
+        ],
         query: []
       },
       'connector.secret_put': {
         path: [
           'id'
         ],
-        body: [],
+        body: [
+          'value'
+        ],
         query: []
       },
       'connector.sync_job_cancel': {
@@ -769,12 +773,12 @@ export default class Connector {
   }
 
   /**
-    * Deletes a connector secret
+    * Deletes a connector secret.
     */
-  async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async secretDelete (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async secretDelete (this: That, params: T.ConnectorSecretDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSecretDeleteResponse>
+  async secretDelete (this: That, params: T.ConnectorSecretDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSecretDeleteResponse, unknown>>
+  async secretDelete (this: That, params: T.ConnectorSecretDeleteRequest, options?: TransportRequestOptions): Promise<T.ConnectorSecretDeleteResponse>
+  async secretDelete (this: That, params: T.ConnectorSecretDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this[kAcceptedParams]['connector.secret_delete']
@@ -792,11 +796,11 @@ export default class Connector {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -816,12 +820,12 @@ export default class Connector {
   }
 
   /**
-    * Retrieves a secret stored by Connectors
+    * Retrieves a secret stored by Connectors.
     */
-  async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async secretGet (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async secretGet (this: That, params: T.ConnectorSecretGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSecretGetResponse>
+  async secretGet (this: That, params: T.ConnectorSecretGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSecretGetResponse, unknown>>
+  async secretGet (this: That, params: T.ConnectorSecretGetRequest, options?: TransportRequestOptions): Promise<T.ConnectorSecretGetResponse>
+  async secretGet (this: That, params: T.ConnectorSecretGetRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this[kAcceptedParams]['connector.secret_get']
@@ -839,11 +843,11 @@ export default class Connector {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -863,14 +867,16 @@ export default class Connector {
   }
 
   /**
-    * Creates a secret for a Connector
+    * Creates a secret for a Connector.
     */
-  async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async secretPost (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async secretPost (this: That, params?: T.ConnectorSecretPostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSecretPostResponse>
+  async secretPost (this: That, params?: T.ConnectorSecretPostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSecretPostResponse, unknown>>
+  async secretPost (this: That, params?: T.ConnectorSecretPostRequest, options?: TransportRequestOptions): Promise<T.ConnectorSecretPostResponse>
+  async secretPost (this: That, params?: T.ConnectorSecretPostRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this[kAcceptedParams]['connector.secret_post']
 
     const userQuery = params?.querystring
@@ -888,10 +894,21 @@ export default class Connector {
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -900,20 +917,23 @@ export default class Connector {
     const meta: TransportRequestMetadata = {
       name: 'connector.secret_post',
       acceptedParams: [
+        'value'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates or updates a secret for a Connector
+    * Creates or updates a secret for a Connector.
     */
-  async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async secretPut (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async secretPut (this: That, params: T.ConnectorSecretPutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSecretPutResponse>
+  async secretPut (this: That, params: T.ConnectorSecretPutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSecretPutResponse, unknown>>
+  async secretPut (this: That, params: T.ConnectorSecretPutRequest, options?: TransportRequestOptions): Promise<T.ConnectorSecretPutResponse>
+  async secretPut (this: That, params: T.ConnectorSecretPutRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this[kAcceptedParams]['connector.secret_put']
 
     const userQuery = params?.querystring
@@ -929,12 +949,22 @@ export default class Connector {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -946,7 +976,8 @@ export default class Connector {
         id: params.id
       },
       acceptedParams: [
-        'id'
+        'id',
+        'value'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

@@ -87,7 +87,9 @@ export default class Fleet {
       },
       'fleet.post_secret': {
         path: [],
-        body: [],
+        body: [
+          'value'
+        ],
         query: []
       },
       'fleet.search': {
@@ -178,12 +180,12 @@ export default class Fleet {
   }
 
   /**
-    * Deletes a secret stored by Fleet
+    * Deletes a secret stored by Fleet.
     */
-  async deleteSecret (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async deleteSecret (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async deleteSecret (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async deleteSecret (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async deleteSecret (this: That, params: T.FleetDeleteSecretRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetDeleteSecretResponse>
+  async deleteSecret (this: That, params: T.FleetDeleteSecretRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FleetDeleteSecretResponse, unknown>>
+  async deleteSecret (this: That, params: T.FleetDeleteSecretRequest, options?: TransportRequestOptions): Promise<T.FleetDeleteSecretResponse>
+  async deleteSecret (this: That, params: T.FleetDeleteSecretRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this[kAcceptedParams]['fleet.delete_secret']
@@ -201,11 +203,11 @@ export default class Fleet {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -225,12 +227,12 @@ export default class Fleet {
   }
 
   /**
-    * Retrieves a secret stored by Fleet
+    * Retrieves a secret stored by Fleet.
     */
-  async getSecret (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getSecret (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getSecret (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getSecret (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getSecret (this: That, params: T.FleetGetSecretRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetGetSecretResponse>
+  async getSecret (this: That, params: T.FleetGetSecretRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FleetGetSecretResponse, unknown>>
+  async getSecret (this: That, params: T.FleetGetSecretRequest, options?: TransportRequestOptions): Promise<T.FleetGetSecretResponse>
+  async getSecret (this: That, params: T.FleetGetSecretRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this[kAcceptedParams]['fleet.get_secret']
@@ -248,11 +250,11 @@ export default class Fleet {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -395,14 +397,16 @@ export default class Fleet {
   }
 
   /**
-    * Creates a secret stored by Fleet
+    * Creates a secret stored by Fleet.
     */
-  async postSecret (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async postSecret (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async postSecret (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async postSecret (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async postSecret (this: That, params: T.FleetPostSecretRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetPostSecretResponse>
+  async postSecret (this: That, params: T.FleetPostSecretRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FleetPostSecretResponse, unknown>>
+  async postSecret (this: That, params: T.FleetPostSecretRequest, options?: TransportRequestOptions): Promise<T.FleetPostSecretResponse>
+  async postSecret (this: That, params: T.FleetPostSecretRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this[kAcceptedParams]['fleet.post_secret']
 
     const userQuery = params?.querystring
@@ -418,12 +422,22 @@ export default class Fleet {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -432,6 +446,7 @@ export default class Fleet {
     const meta: TransportRequestMetadata = {
       name: 'fleet.post_secret',
       acceptedParams: [
+        'value'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
