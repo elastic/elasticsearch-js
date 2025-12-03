@@ -184,6 +184,39 @@ export interface BulkWriteOperation extends BulkOperationBase {
   require_alias?: boolean
 }
 
+export interface CapabilitiesFailedNodeException {
+  node_id: Id
+}
+
+export interface CapabilitiesRequest extends RequestBase {
+  /** REST method to check */
+  method?: CapabilitiesRestMethod
+  /** API path to check */
+  path?: string
+  /** Comma-separated list of API parameters to check */
+  parameters?: string | string[]
+  /** Comma-separated list of arbitrary API capabilities to check */
+  capabilities?: string | string[]
+  /** True if only the node being called should be considered */
+  local_only?: boolean
+  /** Period to wait for a response.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { method?: never, path?: never, parameters?: never, capabilities?: never, local_only?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { method?: never, path?: never, parameters?: never, capabilities?: never, local_only?: never, timeout?: never }
+}
+
+export interface CapabilitiesResponse {
+  _nodes: NodeStatistics
+  cluster_name: Name
+  supported: boolean | null
+  failures?: CapabilitiesFailedNodeException[]
+}
+
+export type CapabilitiesRestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE'
+
 export interface ClearScrollRequest extends RequestBase {
   /** A comma-separated list of scroll IDs to clear.
     * To clear all scroll IDs, use `_all`.
@@ -513,7 +546,7 @@ export interface DeleteByQueryRethrottleRequest extends RequestBase {
   task_id: TaskId
   /** The throttle for this request in sub-requests per second.
     * To disable throttling, set it to `-1`. */
-  requests_per_second?: float
+  requests_per_second: float
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { task_id?: never, requests_per_second?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -1222,6 +1255,69 @@ export interface InfoResponse {
   version: ElasticsearchVersionInfo
 }
 
+export interface KnnSearchRequest extends RequestBase {
+  /** A comma-separated list of index names to search;
+    * use `_all` or to perform the operation on all indices. */
+  index: Indices
+  /** A comma-separated list of specific routing values. */
+  routing?: Routing
+  /** Indicates which source fields are returned for matching documents. These
+    * fields are returned in the `hits._source` property of the search response. */
+  _source?: SearchSourceConfig
+  /** The request returns doc values for field names matching these patterns
+    * in the `hits.fields` property of the response.
+    * It accepts wildcard (`*`) patterns. */
+  docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
+  /** A list of stored fields to return as part of a hit. If no fields are specified,
+    * no stored fields are included in the response. If this field is specified, the `_source`
+    * parameter defaults to `false`. You can pass `_source: true` to return both source fields
+    * and stored fields in the search response. */
+  stored_fields?: Fields
+  /** The request returns values for field names matching these patterns
+    * in the `hits.fields` property of the response.
+    * It accepts wildcard (`*`) patterns. */
+  fields?: Fields
+  /** A query to filter the documents that can match. The kNN search will return the top
+    * `k` documents that also match this filter. The value can be a single query or a
+    * list of queries. If `filter` isn't provided, all documents are allowed to match. */
+  filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+  /** The kNN query to run. */
+  knn: KnnSearchKnnSearchQuery
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never, routing?: never, _source?: never, docvalue_fields?: never, stored_fields?: never, fields?: never, filter?: never, knn?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never, routing?: never, _source?: never, docvalue_fields?: never, stored_fields?: never, fields?: never, filter?: never, knn?: never }
+}
+
+export interface KnnSearchResponse<TDocument = unknown> {
+  /** The milliseconds it took Elasticsearch to run the request. */
+  took: long
+  /** If true, the request timed out before completion;
+    * returned results may be partial or empty. */
+  timed_out: boolean
+  /** A count of shards used for the request. */
+  _shards: ShardStatistics
+  /** The returned documents and metadata. */
+  hits: SearchHitsMetadata<TDocument>
+  /** The field values for the documents. These fields
+    * must be specified in the request using the `fields` parameter. */
+  fields?: Record<string, any>
+  /** The highest returned document score. This value is null for requests
+    * that do not sort by score. */
+  max_score?: double
+}
+
+export interface KnnSearchKnnSearchQuery {
+  /** The name of the vector field to search against */
+  field: Field
+  /** The query vector */
+  query_vector: QueryVector
+  /** The final number of nearest neighbors to return as top hits */
+  k: integer
+  /** The number of nearest neighbor candidates to consider per shard */
+  num_candidates: integer
+}
+
 export interface MgetMultiGetError {
   error: ErrorCause
   _id: Id
@@ -1880,7 +1976,7 @@ export interface ReindexRethrottleRequest extends RequestBase {
   task_id: Id
   /** The throttle for this request in sub-requests per second.
     * It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
-  requests_per_second?: float
+  requests_per_second: float
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { task_id?: never, requests_per_second?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -3680,7 +3776,7 @@ export interface UpdateByQueryRethrottleRequest extends RequestBase {
   task_id: Id
   /** The throttle for this request in sub-requests per second.
     * To turn off throttling, set it to `-1`. */
-  requests_per_second?: float
+  requests_per_second: float
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { task_id?: never, requests_per_second?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -3693,6 +3789,90 @@ export interface UpdateByQueryRethrottleResponse {
 
 export interface UpdateByQueryRethrottleUpdateByQueryRethrottleNode extends SpecUtilsBaseNode {
   tasks: Record<TaskId, TasksTaskInfo>
+}
+
+export interface InternalDeleteDesiredBalanceRequest extends RequestBase {
+  /** Period to wait for a connection to the master node. */
+  master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
+}
+
+export type InternalDeleteDesiredBalanceResponse = boolean
+
+export interface InternalDeleteDesiredNodesRequest extends RequestBase {
+  /** Period to wait for a connection to the master node. */
+  master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
+}
+
+export type InternalDeleteDesiredNodesResponse = boolean
+
+export interface InternalGetDesiredBalanceRequest extends RequestBase {
+  /** Period to wait for a connection to the master node. */
+  master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
+}
+
+export type InternalGetDesiredBalanceResponse = any
+
+export interface InternalGetDesiredNodesRequest extends RequestBase {
+  /** Period to wait for a connection to the master node. */
+  master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never }
+}
+
+export type InternalGetDesiredNodesResponse = any
+
+export interface InternalPrevalidateNodeRemovalRequest extends RequestBase {
+  /** A comma-separated list of node names to prevalidate */
+  names?: string[]
+  /** A comma-separated list of node IDs to prevalidate */
+  ids?: string[]
+  /** A comma-separated list of node external IDs to prevalidate */
+  external_ids?: string[]
+  /** Period to wait for a connection to the master node. */
+  master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { names?: never, ids?: never, external_ids?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { names?: never, ids?: never, external_ids?: never, master_timeout?: never, timeout?: never }
+}
+
+export type InternalPrevalidateNodeRemovalResponse = any
+
+export interface InternalUpdateDesiredNodesRequest extends RequestBase {
+  /** The history ID */
+  history_id: string
+  /** The version number */
+  version: long
+  /** Simulate the update */
+  dry_run?: boolean
+  /** Period to wait for a connection to the master node. */
+  master_timeout?: Duration
+  /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  body?: any
+}
+
+export interface InternalUpdateDesiredNodesResponse {
+  replaced_existing_history_id: boolean
+  dry_run: boolean
 }
 
 export interface SpecUtilsBaseNode {
@@ -10116,6 +10296,20 @@ export interface AsyncSearchAsyncSearchResponseBase {
     * It is present only when the search has completed. */
   completion_time?: DateTime
   completion_time_in_millis?: EpochTime<UnitMillis>
+  error?: ErrorCause
+}
+
+export interface AsyncSearchAsyncSearchResponseException<TDocument = unknown> {
+  is_partial: boolean
+  is_running: boolean
+  expiration_time?: DateTime
+  expiration_time_in_millis: EpochTime<UnitMillis>
+  start_time?: DateTime
+  start_time_in_millis: EpochTime<UnitMillis>
+  completion_time?: DateTime
+  completion_time_in_millis?: EpochTime<UnitMillis>
+  error?: ErrorCause
+  response?: AsyncSearchAsyncSearch<TDocument, Record<AggregateName, AggregationsAggregate>>
 }
 
 export interface AsyncSearchDeleteRequest extends RequestBase {
@@ -17415,6 +17609,59 @@ export interface ConnectorPutResponse {
   id: Id
 }
 
+export interface ConnectorSecretDeleteRequest extends RequestBase {
+  /** The ID of the secret */
+  id: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
+}
+
+export interface ConnectorSecretDeleteResponse {
+  deleted: boolean
+}
+
+export interface ConnectorSecretGetRequest extends RequestBase {
+  /** The ID of the secret */
+  id: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
+}
+
+export interface ConnectorSecretGetResponse {
+  id: string
+  value: string
+}
+
+export interface ConnectorSecretPostRequest extends RequestBase {
+  value?: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { value?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { value?: never }
+}
+
+export interface ConnectorSecretPostResponse {
+  id: string
+}
+
+export interface ConnectorSecretPutRequest extends RequestBase {
+  /** The ID of the secret */
+  id: string
+  value: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never, value?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never, value?: never }
+}
+
+export interface ConnectorSecretPutResponse {
+  result: Result
+}
+
 export interface ConnectorSyncJobCancelRequest extends RequestBase {
   /** The unique identifier of the connector sync job */
   connector_sync_job_id: Id
@@ -17758,7 +18005,7 @@ export interface DanglingIndicesDeleteDanglingIndexRequest extends RequestBase {
   /** The UUID of the index to delete. Use the get dangling indices API to find the UUID. */
   index_uuid: Uuid
   /** This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index. */
-  accept_data_loss: boolean
+  accept_data_loss?: boolean
   /** Specify timeout for connection to master */
   master_timeout?: Duration
   /** Explicit operation timeout */
@@ -17776,7 +18023,7 @@ export interface DanglingIndicesImportDanglingIndexRequest extends RequestBase {
   index_uuid: Uuid
   /** This parameter must be set to true to import a dangling index.
     * Because Elasticsearch cannot know where the dangling index data came from or determine which shard copies are fresh and which are stale, it cannot guarantee that the imported data represents the latest state of the index when it was last in the cluster. */
-  accept_data_loss: boolean
+  accept_data_loss?: boolean
   /** Specify timeout for connection to master */
   master_timeout?: Duration
   /** Explicit operation timeout */
@@ -18054,7 +18301,7 @@ export interface EqlSearchRequest extends RequestBase {
   event_category_field?: Field
   /** Field used to sort hits with the same timestamp in ascending order */
   tiebreaker_field?: Field
-  /** Field containing event timestamp. Default "@timestamp" */
+  /** Field containing event timestamp. */
   timestamp_field?: Field
   /** Maximum number of events to search at a time for sequence queries. */
   fetch_size?: uint
@@ -18403,6 +18650,33 @@ export interface FeaturesResetFeaturesResponse {
 
 export type FleetCheckpoint = long
 
+export interface FleetDeleteSecretRequest extends RequestBase {
+  /** The ID of the secret */
+  id: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
+}
+
+export interface FleetDeleteSecretResponse {
+  deleted: boolean
+}
+
+export interface FleetGetSecretRequest extends RequestBase {
+  /** The ID of the secret */
+  id: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { id?: never }
+}
+
+export interface FleetGetSecretResponse {
+  id: string
+  value: string
+}
+
 export interface FleetGlobalCheckpointsRequest extends RequestBase {
   /** A single index or index alias that resolves to a single index. */
   index: IndexName | IndexAlias
@@ -18471,6 +18745,18 @@ export interface FleetMsearchRequest extends RequestBase {
 
 export interface FleetMsearchResponse<TDocument = unknown> {
   docs: MsearchResponseItem<TDocument>[]
+}
+
+export interface FleetPostSecretRequest extends RequestBase {
+  value: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { value?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { value?: never }
+}
+
+export interface FleetPostSecretResponse {
+  id: string
 }
 
 export interface FleetSearchRequest extends RequestBase {
@@ -30606,8 +30892,6 @@ export interface MlValidateDetectorRequest extends RequestBase {
 export type MlValidateDetectorResponse = AcknowledgedResponseBase
 
 export interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = unknown> extends RequestBase {
-  /** Default document type for items which don't provide one */
-  type?: string
   /** Identifier of the monitored system */
   system_id: string
   /**  */
@@ -30616,9 +30900,9 @@ export interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = u
   interval: Duration
   operations?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { type?: never, system_id?: never, system_api_version?: never, interval?: never, operations?: never }
+  body?: string | { [key: string]: any } & { system_id?: never, system_api_version?: never, interval?: never, operations?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { type?: never, system_id?: never, system_api_version?: never, interval?: never, operations?: never }
+  querystring?: { [key: string]: any } & { system_id?: never, system_api_version?: never, interval?: never, operations?: never }
 }
 
 export interface MonitoringBulkResponse {
@@ -31948,6 +32232,57 @@ export interface NodesUsageResponseBase extends NodesNodesResponseBase {
   cluster_name: Name
   nodes: Record<string, NodesUsageNodeUsage>
 }
+
+export interface ProfilingFlamegraphRequest extends RequestBase {
+  conditions?: any
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { conditions?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { conditions?: never }
+}
+
+export type ProfilingFlamegraphResponse = any
+
+export interface ProfilingStacktracesRequest extends RequestBase {
+  conditions?: any
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { conditions?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { conditions?: never }
+}
+
+export type ProfilingStacktracesResponse = any
+
+export type ProfilingStatusProfilingOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
+
+export interface ProfilingStatusRequest extends RequestBase {
+  /** Period to wait for a connection to the master node.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  master_timeout?: Duration
+  /** Period to wait for a response.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  /** Whether to return immediately or wait until resources have been created */
+  wait_for_resources_created?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never, wait_for_resources_created?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never, wait_for_resources_created?: never }
+}
+
+export interface ProfilingStatusResponse {
+  operation_mode: ProfilingStatusProfilingOperationMode
+}
+
+export interface ProfilingTopnFunctionsRequest extends RequestBase {
+  conditions?: any
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { conditions?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { conditions?: never }
+}
+
+export type ProfilingTopnFunctionsResponse = any
 
 export interface QueryRulesQueryRule {
   /** A unique identifier for the rule. */
@@ -37283,6 +37618,8 @@ export interface TextStructureFindMessageStructureResponse {
   timestamp_field?: Field
 }
 
+export type TextStructureFindStructureFindStructureFormat = 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text'
+
 export interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
   /** The text's character set.
     * It must be a character set that is supported by the JVM that Elasticsearch uses.
@@ -37313,7 +37650,7 @@ export interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
     * By default, the API chooses the format.
     * In this default scenario, all rows must have the same number of fields for a delimited format to be detected.
     * If the format is set to `delimited` and the delimiter is not set, however, the API tolerates up to 5% of rows that have a different number of columns than the first row. */
-  format?: string
+  format?: TextStructureFindStructureFindStructureFormat
   /** If you have set `format` to `semi_structured_text`, you can specify a Grok pattern that is used to extract fields from every message in the text.
     * The name of the timestamp field in the Grok pattern must match what is specified in the `timestamp_field` parameter.
     * If that parameter is not specified, the name of the timestamp field in the Grok pattern must match "timestamp".

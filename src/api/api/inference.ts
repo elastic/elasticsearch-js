@@ -446,7 +446,7 @@ export default class Inference {
   }
 
   /**
-    * Perform chat completion inference The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. It only works with the `chat_completion` task type for `openai` and `elastic` inference services. NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming. The Chat completion inference API and the Stream inference API differ in their response structure and capabilities. The Chat completion inference API provides more comprehensive customization options through more fields and function calling support. If you use the `openai`, `hugging_face` or the `elastic` service, use the Chat completion inference API.
+    * Perform chat completion inference. The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. It only works with the `chat_completion` task type for `openai` and `elastic` inference services. NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming. The Chat completion inference API and the Stream inference API differ in their response structure and capabilities. The Chat completion inference API provides more comprehensive customization options through more fields and function calling support. If you use the `openai`, `hugging_face` or the `elastic` service, use the Chat completion inference API.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-unified-inference | Elasticsearch API documentation}
     */
   async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceChatCompletionUnifiedResponse>
@@ -498,7 +498,7 @@ export default class Inference {
   }
 
   /**
-    * Perform completion inference on the service
+    * Perform completion inference on the service.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
     */
   async completion (this: That, params: T.InferenceCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceCompletionResponse>
@@ -561,7 +561,7 @@ export default class Inference {
   }
 
   /**
-    * Delete an inference endpoint
+    * Delete an inference endpoint.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteResponse>
@@ -620,7 +620,7 @@ export default class Inference {
   }
 
   /**
-    * Get an inference endpoint
+    * Get an inference endpoint.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-get | Elasticsearch API documentation}
     */
   async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetResponse>
@@ -2082,7 +2082,7 @@ export default class Inference {
   }
 
   /**
-    * Perform reranking inference on the service
+    * Perform reranking inference on the service.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
     */
   async rerank (this: That, params: T.InferenceRerankRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceRerankResponse>
@@ -2146,7 +2146,7 @@ export default class Inference {
   }
 
   /**
-    * Perform sparse embedding inference on the service
+    * Perform sparse embedding inference on the service.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
     */
   async sparseEmbedding (this: That, params: T.InferenceSparseEmbeddingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceSparseEmbeddingResponse>
@@ -2272,7 +2272,7 @@ export default class Inference {
   }
 
   /**
-    * Perform text embedding inference on the service
+    * Perform text embedding inference on the service.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
     */
   async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceTextEmbeddingResponse>

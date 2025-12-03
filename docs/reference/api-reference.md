@@ -11,6 +11,7 @@ comment: |
 
 ## client.bulk [_bulk]
 Bulk index or delete documents.
+
 Perform multiple `index`, `create`, `delete`, and `update` actions in a single request.
 This reduces overhead and can greatly increase indexing speed.
 
@@ -151,6 +152,7 @@ client.bulk({ ... })
 
 ## client.clearScroll [_clear_scroll]
 Clear a scrolling search.
+
 Clear the search context and results for a scrolling search.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-clear-scroll)
@@ -166,6 +168,7 @@ client.clearScroll({ ... })
 
 ## client.closePointInTime [_close_point_in_time]
 Close a point in time.
+
 A point in time must be opened explicitly before being used in search requests.
 The `keep_alive` parameter tells Elasticsearch how long it should persist.
 A point in time is automatically closed when the `keep_alive` period has elapsed.
@@ -184,6 +187,7 @@ client.closePointInTime({ id })
 
 ## client.count [_count]
 Count search results.
+
 Get the number of documents matching a query.
 
 The query can be provided either by using a simple query string as a parameter, or by defining Query DSL within the request body.
@@ -512,17 +516,18 @@ Rethrottling that speeds up the query takes effect immediately but rethrotting t
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-delete-by-query-rethrottle)
 
 ```ts
-client.deleteByQueryRethrottle({ task_id })
+client.deleteByQueryRethrottle({ task_id, requests_per_second })
 ```
 ### Arguments [_arguments_delete_by_query_rethrottle]
 
 #### Request (object) [_request_delete_by_query_rethrottle]
 
 - **`task_id` (string)**: The ID for the task.
-- **`requests_per_second` (Optional, float)**: The throttle for this request in sub-requests per second. To disable throttling, set it to `-1`.
+- **`requests_per_second` (float)**: The throttle for this request in sub-requests per second. To disable throttling, set it to `-1`.
 
 ## client.deleteScript [_delete_script]
 Delete a script or search template.
+
 Deletes a stored script or search template.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-delete-script)
@@ -616,6 +621,7 @@ client.existsSource({ id, index })
 
 ## client.explain [_explain]
 Explain a document match result.
+
 Get information about why a specific document matches, or doesn't match, a query.
 It computes a score explanation for a query and a specific document.
 
@@ -759,6 +765,7 @@ client.get({ id, index })
 
 ## client.getScript [_get_script]
 Get a script or search template.
+
 Retrieves a stored script or search template.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get-script)
@@ -834,6 +841,7 @@ client.getSource({ id, index })
 
 ## client.healthReport [_health_report]
 Get the cluster health.
+
 Get a report with the health status of an Elasticsearch cluster.
 The report contains a list of indicators that compose Elasticsearch functionality.
 
@@ -1015,6 +1023,7 @@ client.index({ index })
 
 ## client.info [_info]
 Get cluster info.
+
 Get basic build, version, and cluster information.
 ::: In Serverless, this API is retained for backward compatibility only. Some response fields, such as the version number, should be ignored.
 
@@ -1022,12 +1031,6 @@ Get basic build, version, and cluster information.
 
 ```ts
 client.info()
-```
-
-## client.knnSearch [_knn_search]
-Performs a kNN search
-```ts
-client.knnSearch()
 ```
 
 ## client.mget [_mget]
@@ -1247,6 +1250,7 @@ client.openPointInTime({ index, keep_alive })
 
 ## client.ping [_ping]
 Ping the cluster.
+
 Get information about whether the cluster is running.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-cluster)
@@ -1257,6 +1261,7 @@ client.ping()
 
 ## client.putScript [_put_script]
 Create or update a script or search template.
+
 Creates or updates a stored script or search template.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-put-script)
@@ -1387,14 +1392,14 @@ This behavior prevents scroll timeouts.
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-reindex)
 
 ```ts
-client.reindexRethrottle({ task_id })
+client.reindexRethrottle({ task_id, requests_per_second })
 ```
 ### Arguments [_arguments_reindex_rethrottle]
 
 #### Request (object) [_request_reindex_rethrottle]
 
 - **`task_id` (string)**: The task identifier, which can be found by using the tasks API.
-- **`requests_per_second` (Optional, float)**: The throttle for this request in sub-requests per second. It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
+- **`requests_per_second` (float)**: The throttle for this request in sub-requests per second. It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
 
 ## client.renderSearchTemplate [_render_search_template]
 Render a search template.
@@ -1894,6 +1899,7 @@ client.update({ id, index })
 
 ## client.updateByQuery [_update_by_query]
 Update documents.
+
 Updates documents that match the specified query.
 If no query is specified, performs an update on every document in the data stream or index without modifying the source, which is useful for picking up mapping changes.
 
@@ -2041,14 +2047,14 @@ Rethrottling that speeds up the query takes effect immediately but rethrotting t
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-update-by-query-rethrottle)
 
 ```ts
-client.updateByQueryRethrottle({ task_id })
+client.updateByQueryRethrottle({ task_id, requests_per_second })
 ```
 ### Arguments [_arguments_update_by_query_rethrottle]
 
 #### Request (object) [_request_update_by_query_rethrottle]
 
 - **`task_id` (string)**: The ID for the task.
-- **`requests_per_second` (Optional, float)**: The throttle for this request in sub-requests per second. To turn off throttling, set it to `-1`.
+- **`requests_per_second` (float)**: The throttle for this request in sub-requests per second. To turn off throttling, set it to `-1`.
 
 ## client.asyncSearch.delete [_async_search.delete]
 Delete an async search.
@@ -3048,6 +3054,7 @@ It can also be set to `-1` to indicate that the request should never timeout.
 
 ## client.ccr.follow [_ccr.follow]
 Create a follower.
+
 Create a cross-cluster replication follower index that follows a specific leader index.
 When the API returns, the follower index exists and cross-cluster replication starts replicating operations from the leader index to the follower index.
 
@@ -3127,6 +3134,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.ccr.forgetFollower [_ccr.forget_follower]
 Forget a follower.
+
 Remove the cross-cluster replication follower retention leases from the leader.
 
 A following index takes out retention leases on its leader index.
@@ -3224,6 +3232,7 @@ It can also be set to `-1` to indicate that the request should never timeout.
 
 ## client.ccr.putAutoFollowPattern [_ccr.put_auto_follow_pattern]
 Create or update auto-follow patterns.
+
 Create a collection of cross-cluster replication auto-follow patterns for a remote cluster.
 Newly created indices on the remote cluster that match any of the patterns are automatically configured as follower indices.
 Indices on the remote cluster that were created before the auto-follow pattern was created will not be auto-followed even if they match the pattern.
@@ -3281,6 +3290,7 @@ It can also be set to `-1` to indicate that the request should never timeout.
 
 ## client.ccr.resumeFollow [_ccr.resume_follow]
 Resume a follower.
+
 Resume a cross-cluster replication follower index that was paused.
 The follower index could have been paused with the pause follower API.
 Alternatively it could be paused due to replication that cannot be retried due to failures during following tasks.
@@ -3353,6 +3363,7 @@ It can also be set to `-1` to indicate that the request should never timeout.
 
 ## client.cluster.allocationExplain [_cluster.allocation_explain]
 Explain the shard allocations.
+
 Get explanations for shard allocations in the cluster.
 For unassigned shards, it provides an explanation for why the shard is unassigned.
 For assigned shards, it provides an explanation for why the shard is remaining on its current node and has not moved or rebalanced to another node.
@@ -3378,6 +3389,7 @@ client.cluster.allocationExplain({ ... })
 
 ## client.cluster.deleteComponentTemplate [_cluster.delete_component_template]
 Delete component templates.
+
 Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-component-template)
@@ -3397,6 +3409,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.cluster.deleteVotingConfigExclusions [_cluster.delete_voting_config_exclusions]
 Clear cluster voting config exclusions.
+
 Remove master-eligible nodes from the voting configuration exclusion list.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-post-voting-config-exclusions)
@@ -3418,6 +3431,7 @@ nodes are still in the cluster.
 
 ## client.cluster.existsComponentTemplate [_cluster.exists_component_template]
 Check component templates.
+
 Returns information about whether a particular component template exists.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-component-template)
@@ -3439,6 +3453,7 @@ Defaults to false, which means information is retrieved from the master node.
 
 ## client.cluster.getComponentTemplate [_cluster.get_component_template]
 Get component templates.
+
 Get information about component templates.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-component-template)
@@ -3523,6 +3538,7 @@ client.cluster.health({ ... })
 
 ## client.cluster.info [_cluster.info]
 Get cluster info.
+
 Returns basic information about the cluster.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-info)
@@ -3538,6 +3554,7 @@ client.cluster.info({ target })
 
 ## client.cluster.pendingTasks [_cluster.pending_tasks]
 Get the pending cluster tasks.
+
 Get information about cluster-level changes (such as create index, update mapping, allocate or fail shard) that have not yet taken effect.
 
 NOTE: This API returns a list of any pending updates to the cluster state.
@@ -3560,6 +3577,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.cluster.postVotingConfigExclusions [_cluster.post_voting_config_exclusions]
 Update voting configuration exclusions.
+
 Update the cluster voting config exclusions by node IDs or node names.
 By default, if there are more than three master-eligible nodes in the cluster and you remove fewer than half of the master-eligible nodes in the cluster at once, the voting configuration automatically shrinks.
 If you want to shrink the voting configuration to contain fewer than three nodes or to remove half or more of the master-eligible nodes in the cluster at once, use this API to remove departing nodes from the voting configuration manually.
@@ -3599,6 +3617,7 @@ is satisfied, the request fails and returns an error.
 
 ## client.cluster.putComponentTemplate [_cluster.put_component_template]
 Create or update a component template.
+
 Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
 
 An index template can be composed of multiple component templates.
@@ -3705,6 +3724,7 @@ client.cluster.remoteInfo()
 
 ## client.cluster.reroute [_cluster.reroute]
 Reroute the cluster.
+
 Manually change the allocation of individual shards in the cluster.
 For example, a shard can be moved from one node to another explicitly, an allocation can be canceled, and an unassigned shard can be explicitly allocated to a specific node.
 
@@ -3739,6 +3759,7 @@ It will calculate the result of applying the commands to the current cluster sta
 
 ## client.cluster.state [_cluster.state]
 Get the cluster state.
+
 Get comprehensive information about the state of the cluster.
 
 The cluster state is an internal data structure which keeps track of a variety of information needed by every node, including the identity and attributes of the other nodes in the cluster; cluster-wide settings; index metadata, including the mapping and settings for each index; the location and status of every shard copy in the cluster.
@@ -3780,6 +3801,7 @@ client.cluster.state({ ... })
 
 ## client.cluster.stats [_cluster.stats]
 Get cluster statistics.
+
 Get basic index metrics (shard numbers, store size, memory usage) and information about the current nodes that form the cluster (number, roles, os, jvm versions, memory usage, cpu and installed plugins).
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-stats)
@@ -3935,6 +3957,7 @@ client.connector.syncJobCancel({ connector_sync_job_id })
 
 ## client.connector.syncJobCheckIn [_connector.sync_job_check_in]
 Check in a connector sync job.
+
 Check in a connector sync job and set the `last_seen` field to the current time before updating it in the internal index.
 
 To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
@@ -3953,6 +3976,7 @@ client.connector.syncJobCheckIn({ connector_sync_job_id })
 
 ## client.connector.syncJobClaim [_connector.sync_job_claim]
 Claim a connector sync job.
+
 This action updates the job status to `in_progress` and sets the `last_seen` and `started_at` timestamps to the current time.
 Additionally, it can set the `sync_cursor` property for the sync job.
 
@@ -3995,6 +4019,7 @@ client.connector.syncJobDelete({ connector_sync_job_id })
 
 ## client.connector.syncJobError [_connector.sync_job_error]
 Set a connector sync job error.
+
 Set the `error` field for a connector sync job and set its `status` to `error`.
 
 To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
@@ -4066,6 +4091,7 @@ client.connector.syncJobPost({ id })
 
 ## client.connector.syncJobUpdateStats [_connector.sync_job_update_stats]
 Set the connector sync job stats.
+
 Stats include: `deleted_document_count`, `indexed_document_count`, `indexed_document_volume`, and `total_document_count`.
 You can also update `last_seen`.
 This API is mainly used by the connector service for updating sync job information.
@@ -4166,6 +4192,7 @@ client.connector.updateError({ connector_id, error })
 
 ## client.connector.updateFeatures [_connector.update_features]
 Update the connector features.
+
 Update the connector features in the connector document.
 This API can be used to control the following aspects of a connector:
 
@@ -4342,20 +4369,21 @@ client.connector.updateStatus({ connector_id, status })
 
 ## client.danglingIndices.deleteDanglingIndex [_dangling_indices.delete_dangling_index]
 Delete a dangling index.
+
 If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
 For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-dangling-indices-delete-dangling-index)
 
 ```ts
-client.danglingIndices.deleteDanglingIndex({ index_uuid, accept_data_loss })
+client.danglingIndices.deleteDanglingIndex({ index_uuid })
 ```
 
 ### Arguments [_arguments_dangling_indices.delete_dangling_index]
 
 #### Request (object) [_request_dangling_indices.delete_dangling_index]
 - **`index_uuid` (string)**: The UUID of the index to delete. Use the get dangling indices API to find the UUID.
-- **`accept_data_loss` (boolean)**: This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index.
+- **`accept_data_loss` (Optional, boolean)**: This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
 - **`timeout` (Optional, string \| -1 \| 0)**: Explicit operation timeout
 
@@ -4368,14 +4396,14 @@ For example, this can happen if you delete more than `cluster.indices.tombstones
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-dangling-indices-import-dangling-index)
 
 ```ts
-client.danglingIndices.importDanglingIndex({ index_uuid, accept_data_loss })
+client.danglingIndices.importDanglingIndex({ index_uuid })
 ```
 
 ### Arguments [_arguments_dangling_indices.import_dangling_index]
 
 #### Request (object) [_request_dangling_indices.import_dangling_index]
 - **`index_uuid` (string)**: The UUID of the index to import. Use the get dangling indices API to locate the UUID.
-- **`accept_data_loss` (boolean)**: This parameter must be set to true to import a dangling index.
+- **`accept_data_loss` (Optional, boolean)**: This parameter must be set to true to import a dangling index.
 Because Elasticsearch cannot know where the dangling index data came from or determine which shard copies are fresh and which are stale, it cannot guarantee that the imported data represents the latest state of the index when it was last in the cluster.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
 - **`timeout` (Optional, string \| -1 \| 0)**: Explicit operation timeout
@@ -4397,6 +4425,7 @@ client.danglingIndices.listDanglingIndices()
 
 ## client.enrich.deletePolicy [_enrich.delete_policy]
 Delete an enrich policy.
+
 Deletes an existing enrich policy and its enrich index.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-delete-policy)
@@ -4413,6 +4442,7 @@ client.enrich.deletePolicy({ name })
 
 ## client.enrich.executePolicy [_enrich.execute_policy]
 Run an enrich policy.
+
 Create the enrich index for an existing enrich policy.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-execute-policy)
@@ -4430,6 +4460,7 @@ client.enrich.executePolicy({ name })
 
 ## client.enrich.getPolicy [_enrich.get_policy]
 Get an enrich policy.
+
 Returns information about an enrich policy.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-get-policy)
@@ -4447,6 +4478,7 @@ To return information for all enrich policies, omit this parameter.
 
 ## client.enrich.putPolicy [_enrich.put_policy]
 Create an enrich policy.
+
 Creates an enrich policy.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-put-policy)
@@ -4466,6 +4498,7 @@ client.enrich.putPolicy({ name })
 
 ## client.enrich.stats [_enrich.stats]
 Get enrich stats.
+
 Returns enrich coordinator statistics and information about enrich policies that are currently executing.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-stats)
@@ -4481,6 +4514,7 @@ client.enrich.stats({ ... })
 
 ## client.eql.delete [_eql.delete]
 Delete an async EQL search.
+
 Delete an async EQL search or a stored synchronous EQL search.
 The API also deletes results for the search.
 
@@ -4499,6 +4533,7 @@ A search ID is also provided if the request’s `keep_on_completion` parameter i
 
 ## client.eql.get [_eql.get]
 Get async EQL search results.
+
 Get the current status and available results for an async EQL search or a stored synchronous EQL search.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-get)
@@ -4518,6 +4553,7 @@ Defaults to no timeout, meaning the request waits for complete search results.
 
 ## client.eql.getStatus [_eql.get_status]
 Get the async EQL status.
+
 Get the current status for an async EQL search or a stored synchronous EQL search without returning results.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-get-status)
@@ -4533,6 +4569,7 @@ client.eql.getStatus({ id })
 
 ## client.eql.search [_eql.search]
 Get EQL search results.
+
 Returns search results for an Event Query Language (EQL) query.
 EQL assumes each document in a data stream or index corresponds to an event.
 
@@ -4550,7 +4587,7 @@ client.eql.search({ index, query })
 - **`case_sensitive` (Optional, boolean)**
 - **`event_category_field` (Optional, string)**: Field containing the event classification, such as process, file, or network.
 - **`tiebreaker_field` (Optional, string)**: Field used to sort hits with the same timestamp in ascending order
-- **`timestamp_field` (Optional, string)**: Field containing event timestamp. Default "@timestamp"
+- **`timestamp_field` (Optional, string)**: Field containing event timestamp.
 - **`fetch_size` (Optional, number)**: Maximum number of events to search at a time for sequence queries.
 - **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type } \| { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type }[])**: Query, written in Query DSL, used to filter the events on which the EQL query runs.
 - **`keep_alive` (Optional, string \| -1 \| 0)**
@@ -4576,6 +4613,7 @@ parameter to get a smaller or larger set of samples. To retrieve more than one s
 
 ## client.esql.asyncQuery [_esql.async_query]
 Run an async ES|QL query.
+
 Asynchronously run an ES|QL (Elasticsearch query language) query, monitor its progress, and retrieve results when they become available.
 
 The API accepts the same parameters and request body as the synchronous query API, along with additional async related properties.
@@ -4630,6 +4668,7 @@ The query ID and running status are available in the `X-Elasticsearch-Async-Id` 
 
 ## client.esql.asyncQueryDelete [_esql.async_query_delete]
 Delete an async ES|QL query.
+
 If the query is still running, it is cancelled.
 Otherwise, the stored results are deleted.
 
@@ -4653,6 +4692,7 @@ A query ID is also provided when the request was submitted with the `keep_on_com
 
 ## client.esql.asyncQueryGet [_esql.async_query_get]
 Get async ES|QL query results.
+
 Get the current status and available results or stored results for an ES|QL asynchronous query.
 If the Elasticsearch security features are enabled, only the user who first submitted the ES|QL query can retrieve the results using this API.
 
@@ -4701,6 +4741,7 @@ If `true`, the response will include an extra section under the name `all_column
 
 ## client.esql.getQuery [_esql.get_query]
 Get a specific running ES|QL query information.
+
 Returns an object extended information about a running ES|QL query.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-query)
@@ -4716,6 +4757,7 @@ client.esql.getQuery({ id })
 
 ## client.esql.listQueries [_esql.list_queries]
 Get running ES|QL queries information.
+
 Returns an object containing IDs and other information about the running ES|QL queries.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-list-queries)
@@ -4727,6 +4769,7 @@ client.esql.listQueries()
 
 ## client.esql.query [_esql.query]
 Run an ES|QL query.
+
 Get search results for an ES|QL (Elasticsearch query language) query.
 
 [Endpoint documentation](https://www.elastic.co/docs/explore-analyze/query-filter/languages/esql-rest)
@@ -4765,6 +4808,7 @@ To override the default behavior, you can set the `esql.query.allow_partial_resu
 
 ## client.features.getFeatures [_features.get_features]
 Get the features.
+
 Get a list of features that can be included in snapshots using the `feature_states` field when creating a snapshot.
 You can use this API to determine which feature states to include when taking a snapshot.
 By default, all feature states are included in a snapshot if that snapshot includes the global state, or none if it does not.
@@ -4788,6 +4832,7 @@ client.features.getFeatures({ ... })
 
 ## client.features.resetFeatures [_features.reset_features]
 Reset the features.
+
 Clear all of the state information stored in system indices by Elasticsearch features, including the security and machine learning indices.
 
 WARNING: Intended for development and testing use only. Do not reset features on a production cluster.
@@ -4843,6 +4888,7 @@ will cause Elasticsearch to immediately return the current global checkpoints.
 
 ## client.fleet.msearch [_fleet.msearch]
 Run multiple Fleet searches.
+
 Run several Fleet searches with a single API request.
 The API follows the same structure as the multi search API.
 However, similar to the Fleet search API, it supports the `wait_for_checkpoints` parameter.
@@ -4878,6 +4924,7 @@ Defaults to the configured cluster setting `search.default_allow_partial_results
 
 ## client.fleet.search [_fleet.search]
 Run a Fleet search.
+
 The purpose of the Fleet search API is to provide an API where the search will be run only
 after the provided checkpoint has been processed and is visible for searches inside of Elasticsearch.
 
@@ -4981,6 +5028,7 @@ Defaults to the configured cluster setting `search.default_allow_partial_results
 
 ## client.graph.explore [_graph.explore]
 Explore graph analytics.
+
 Extract and summarize information about the documents and terms in an Elasticsearch data stream or index.
 The easiest way to understand the behavior of this API is to use the Graph UI to explore connections.
 An initial request to the `_explore` API contains a seed query that identifies the documents of interest and specifies the fields that define the vertices and connections you want to include in the graph.
@@ -5008,6 +5056,7 @@ Defaults to no timeout.
 
 ## client.ilm.deleteLifecycle [_ilm.delete_lifecycle]
 Delete a lifecycle policy.
+
 You cannot delete policies that are currently in use. If the policy is being used to manage any indices, the request fails and returns an error.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-delete-lifecycle)
@@ -5025,6 +5074,7 @@ client.ilm.deleteLifecycle({ policy })
 
 ## client.ilm.explainLifecycle [_ilm.explain_lifecycle]
 Explain the lifecycle state.
+
 Get the current lifecycle status for one or more indices.
 For data streams, the API retrieves the current lifecycle status for the stream's backing indices.
 
@@ -5075,6 +5125,7 @@ client.ilm.getStatus()
 
 ## client.ilm.migrateToDataTiers [_ilm.migrate_to_data_tiers]
 Migrate to data tiers routing.
+
 Switch the indices, ILM policies, and legacy, composable, and component templates from using custom node attributes and attribute-based allocation filters to using data tiers.
 Optionally, delete one legacy index template.
 Using node roles enables ILM to automatically move the indices between data tiers.
@@ -5108,6 +5159,7 @@ It can also be set to `-1` to indicate that the request should never timeout.
 
 ## client.ilm.moveToStep [_ilm.move_to_step]
 Move to a lifecycle step.
+
 Manually move an index into a specific step in the lifecycle policy and run that step.
 
 WARNING: This operation can result in the loss of data. Manually moving an index into a specific step runs that step even if it has already been performed. This is a potentially destructive action and this should be considered an expert level API.
@@ -5137,6 +5189,7 @@ client.ilm.moveToStep({ index, current_step, next_step })
 
 ## client.ilm.putLifecycle [_ilm.put_lifecycle]
 Create or update a lifecycle policy.
+
 If the specified policy exists, it is replaced and the policy version is incremented.
 
 NOTE: Only the latest version of the policy is stored, you cannot revert to previous versions.
@@ -5156,6 +5209,7 @@ client.ilm.putLifecycle({ policy })
 
 ## client.ilm.removePolicy [_ilm.remove_policy]
 Remove policies from an index.
+
 Remove the assigned lifecycle policies from an index or a data stream's backing indices.
 It also stops managing the indices.
 
@@ -5172,6 +5226,7 @@ client.ilm.removePolicy({ index })
 
 ## client.ilm.retry [_ilm.retry]
 Retry a policy.
+
 Retry running the lifecycle policy for an index that is in the ERROR step.
 The API sets the policy back to the step where the error occurred and runs the step.
 Use the explain lifecycle state API to determine whether an index is in the ERROR step.
@@ -5189,6 +5244,7 @@ client.ilm.retry({ index })
 
 ## client.ilm.start [_ilm.start]
 Start the ILM plugin.
+
 Start the index lifecycle management plugin if it is currently stopped.
 ILM is started automatically when the cluster is formed.
 Restarting ILM is necessary only when it has been stopped using the stop ILM API.
@@ -5207,6 +5263,7 @@ client.ilm.start({ ... })
 
 ## client.ilm.stop [_ilm.stop]
 Stop the ILM plugin.
+
 Halt all lifecycle management operations and stop the index lifecycle management plugin.
 This is useful when you are performing maintenance on the cluster and need to prevent ILM from performing any actions on your indices.
 
@@ -5261,6 +5318,7 @@ It can also be set to `-1` to indicate that the request should never timeout.
 
 ## client.indices.analyze [_indices.analyze]
 Get tokens from text analysis.
+
 The analyze API performs analysis on a text string and returns the resulting tokens.
 
 Generating excessive amount of tokens may cause a node to run out of memory.
@@ -5312,6 +5370,7 @@ client.indices.cancelMigrateReindex({ index })
 
 ## client.indices.clearCache [_indices.clear_cache]
 Clear the cache.
+
 Clear the cache of one or more indices.
 For data streams, the API clears the caches of the stream's backing indices.
 
@@ -5345,6 +5404,7 @@ Use the `fields` parameter to clear the cache of specific fields only.
 
 ## client.indices.clone [_indices.clone]
 Clone an index.
+
 Clone an existing index into a new index.
 Each original primary shard is cloned into a new primary shard in the new index.
 
@@ -5412,6 +5472,7 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 ## client.indices.close [_indices.close]
 Close an index.
+
 A closed index is blocked for read or write operations and does not allow all operations that opened indices allow.
 It is not possible to index documents or to search for documents in a closed index.
 Closed indices do not have to maintain internal data structures for indexing or searching documents, which results in a smaller overhead on the cluster.
@@ -5455,6 +5516,7 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 ## client.indices.create [_indices.create]
 Create an index.
+
 You can use the create index API to add a new index to an Elasticsearch cluster.
 When creating an index, you can specify the following:
 
@@ -5570,6 +5632,7 @@ Supports a list of values, such as `open,hidden`.
 
 ## client.indices.delete [_indices.delete]
 Delete indices.
+
 Deleting an index deletes its documents, shards, and metadata.
 It does not delete related Kibana components, such as data views, visualizations, or dashboards.
 
@@ -5603,6 +5666,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.indices.deleteAlias [_indices.delete_alias]
 Delete an alias.
+
 Removes a data stream or index from an alias.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-alias)
@@ -5625,6 +5689,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.indices.deleteDataLifecycle [_indices.delete_data_lifecycle]
 Delete data stream lifecycles.
+
 Removes the data stream lifecycle from a data stream, rendering it not managed by the data stream lifecycle.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-data-lifecycle)
@@ -5643,6 +5708,7 @@ client.indices.deleteDataLifecycle({ name })
 
 ## client.indices.deleteDataStream [_indices.delete_data_stream]
 Delete data streams.
+
 Deletes one or more data streams and their backing indices.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-data-stream)
@@ -5660,6 +5726,7 @@ client.indices.deleteDataStream({ name })
 
 ## client.indices.deleteDataStreamOptions [_indices.delete_data_stream_options]
 Delete data stream options.
+
 Removes the data stream options from a data stream.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-data-stream-options)
@@ -5678,6 +5745,7 @@ client.indices.deleteDataStreamOptions({ name })
 
 ## client.indices.deleteIndexTemplate [_indices.delete_index_template]
 Delete an index template.
+
 The provided <index-template> may contain multiple template names separated by a comma. If multiple template
 names are specified then there is no wildcard support and the provided names should match completely with
 existing templates.
@@ -5697,6 +5765,7 @@ client.indices.deleteIndexTemplate({ name })
 
 ## client.indices.deleteTemplate [_indices.delete_template]
 Delete a legacy index template.
+
 IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-template)
@@ -5717,6 +5786,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.indices.diskUsage [_indices.disk_usage]
 Analyze the index disk usage.
+
 Analyze the disk usage of each field of an index or data stream.
 This API might not support indices created in previous Elasticsearch versions.
 The result of a small index can be inaccurate as some parts of an index might not be analyzed by the API.
@@ -5750,6 +5820,7 @@ To use the API, this parameter must be set to `true`.
 
 ## client.indices.downsample [_indices.downsample]
 Downsample an index.
+
 Aggregate a time series (TSDS) index and store pre-computed statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`) for each metric field grouped by a configured time interval.
 For example, a TSDS index that contains metrics sampled every 10 seconds can be downsampled to an hourly index.
 All documents within an hour interval are summarized and stored as a single document in the downsample index.
@@ -5773,6 +5844,7 @@ client.indices.downsample({ index, target_index })
 
 ## client.indices.exists [_indices.exists]
 Check indices.
+
 Check if one or more indices, index aliases, or data streams exist.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-exists)
@@ -5842,6 +5914,7 @@ client.indices.existsIndexTemplate({ name })
 
 ## client.indices.existsTemplate [_indices.exists_template]
 Check existence of index templates.
+
 Get information about whether index templates exist.
 Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
 
@@ -5866,6 +5939,7 @@ To indicate that the request should never timeout, set it to `-1`.
 
 ## client.indices.explainDataLifecycle [_indices.explain_data_lifecycle]
 Get the status for a data stream lifecycle.
+
 Get information about an index or data stream's current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-explain-data-lifecycle)
@@ -5883,6 +5957,7 @@ client.indices.explainDataLifecycle({ index })
 
 ## client.indices.fieldUsageStats [_indices.field_usage_stats]
 Get field usage stats.
+
 Get field usage information for each shard and field of an index.
 Field usage statistics are automatically captured when queries are running on a cluster.
 A shard-level search request that accesses a given field, even if multiple times during that request, is counted as a single use.
@@ -5911,6 +5986,7 @@ Supports a list of values, such as `open,hidden`.
 
 ## client.indices.flush [_indices.flush]
 Flush data streams or indices.
+
 Flushing a data stream or index is the process of making sure that any data that is currently only stored in the transaction log is also permanently stored in the Lucene index.
 When restarting, Elasticsearch replays any unflushed operations from the transaction log into the Lucene index to bring it back into the state that it was in before the restart.
 Elasticsearch automatically triggers flushes as needed, using heuristics that trade off the size of the unflushed transaction log against the cost of performing each flush.
@@ -5946,6 +6022,7 @@ If `false`, Elasticsearch returns an error if you request a flush when another f
 
 ## client.indices.forcemerge [_indices.forcemerge]
 Force a merge.
+
 Perform the force merge operation on the shards of one or more indices.
 For data streams, the API forces a merge on the shards of the stream's backing indices.
 
@@ -6019,6 +6096,7 @@ client.indices.forcemerge({ ... })
 
 ## client.indices.get [_indices.get]
 Get index information.
+
 Get information about one or more indices. For data streams, the API returns information about the
 stream’s backing indices.
 
@@ -6048,6 +6126,7 @@ such as open,hidden.
 
 ## client.indices.getAlias [_indices.get_alias]
 Get aliases.
+
 Retrieves information for one or more data stream or index aliases.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-alias)
@@ -6098,6 +6177,7 @@ Supports a list of values, such as `open,hidden`.
 
 ## client.indices.getDataLifecycleStats [_indices.get_data_lifecycle_stats]
 Get data stream lifecycle stats.
+
 Get statistics about the data streams that are managed by a data stream lifecycle.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-lifecycle-stats)
@@ -6171,6 +6251,7 @@ error.
 
 ## client.indices.getFieldMapping [_indices.get_field_mapping]
 Get mapping definitions.
+
 Retrieves mapping definitions for one or more fields.
 For data streams, the API retrieves field mappings for the stream’s backing indices.
 
@@ -6200,6 +6281,7 @@ Supports a list of values, such as `open,hidden`.
 
 ## client.indices.getIndexTemplate [_indices.get_index_template]
 Get index templates.
+
 Get information about one or more index templates.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-index-template)
@@ -6219,6 +6301,7 @@ client.indices.getIndexTemplate({ ... })
 
 ## client.indices.getMapping [_indices.get_mapping]
 Get mapping definitions.
+
 For data streams, the API retrieves mappings for the stream’s backing indices.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-mapping)
@@ -6261,6 +6344,7 @@ client.indices.getMigrateReindexStatus({ index })
 
 ## client.indices.getSettings [_indices.get_settings]
 Get index settings.
+
 Get setting information for one or more indices.
 For data streams, it returns setting information for the stream's backing indices.
 
@@ -6296,6 +6380,7 @@ error.
 
 ## client.indices.getTemplate [_indices.get_template]
 Get legacy index templates.
+
 Get information about one or more index templates.
 
 IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
@@ -6337,6 +6422,7 @@ client.indices.migrateReindex({ ... })
 
 ## client.indices.migrateToDataStream [_indices.migrate_to_data_stream]
 Convert an index alias to a data stream.
+
 Converts an index alias to a data stream.
 You must have a matching index template that is data stream enabled.
 The alias must meet the following criteria:
@@ -6363,6 +6449,7 @@ client.indices.migrateToDataStream({ name })
 
 ## client.indices.modifyDataStream [_indices.modify_data_stream]
 Update data streams.
+
 Performs one or more data stream modification actions in a single atomic operation.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-modify-data-stream)
@@ -6378,6 +6465,7 @@ client.indices.modifyDataStream({ actions })
 
 ## client.indices.open [_indices.open]
 Open a closed index.
+
 For data streams, the API opens any closed backing indices.
 
 A closed index is blocked for read/write operations and does not allow all operations that opened indices allow.
@@ -6430,6 +6518,7 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 ## client.indices.promoteDataStream [_indices.promote_data_stream]
 Promote a data stream.
+
 Promote a data stream from a replicated data stream managed by cross-cluster replication (CCR) to a regular data stream.
 
 With CCR auto following, a data stream from a remote cluster can be replicated to the local cluster.
@@ -6455,6 +6544,7 @@ client.indices.promoteDataStream({ name })
 
 ## client.indices.putAlias [_indices.put_alias]
 Create or update an alias.
+
 Adds a data stream or index to an alias.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-alias)
@@ -6492,6 +6582,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.indices.putDataLifecycle [_indices.put_data_lifecycle]
 Update data stream lifecycles.
+
 Update the data stream lifecycle of the specified data streams.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-lifecycle)
@@ -6522,6 +6613,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.indices.putDataStreamOptions [_indices.put_data_stream_options]
 Update data stream options.
+
 Update the data stream options of the specified data streams.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-options)
@@ -6575,6 +6667,7 @@ error.
 
 ## client.indices.putIndexTemplate [_indices.put_index_template]
 Create or update an index template.
+
 Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
 
 Elasticsearch applies templates to new indices based on an wildcard pattern that matches the index name.
@@ -6648,6 +6741,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.indices.putMapping [_indices.put_mapping]
 Update field mappings.
+
 Add new fields to an existing data stream or index.
 You can use the update mapping API to:
 
@@ -6704,6 +6798,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.indices.putSettings [_indices.put_settings]
 Update index settings.
+
 Changes dynamic index settings in real time.
 For data streams, index setting changes are applied to all backing indices by default.
 
@@ -6795,6 +6890,7 @@ will be closed temporarily and then reopened in order to apply the changes.
 
 ## client.indices.putTemplate [_indices.put_template]
 Create or update a legacy index template.
+
 Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
 Elasticsearch applies templates to new indices based on an index pattern that matches the index name.
 
@@ -6846,6 +6942,7 @@ received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.recovery [_indices.recovery]
 Get index recovery information.
+
 Get information about ongoing and completed shard recoveries for one or more indices.
 For data streams, the API returns information for the stream's backing indices.
 
@@ -6892,6 +6989,7 @@ Supports a list of values, such as `open,hidden`.
 
 ## client.indices.refresh [_indices.refresh]
 Refresh an index.
+
 A refresh makes recent operations performed on one or more indices available for search.
 For data streams, the API runs the refresh operation on the stream’s backing indices.
 
@@ -6929,6 +7027,7 @@ Supports a list of values, such as `open,hidden`.
 
 ## client.indices.reloadSearchAnalyzers [_indices.reload_search_analyzers]
 Reload search analyzers.
+
 Reload an index's search analyzers and their resources.
 For data streams, the API reloads search analyzers and resources for the stream's backing indices.
 
@@ -7081,6 +7180,7 @@ not responding (typically 30 seconds).
 
 ## client.indices.resolveIndex [_indices.resolve_index]
 Resolve indices.
+
 Resolve the names and/or index patterns for indices, aliases, and data streams.
 Multiple patterns and remote clusters are supported.
 
@@ -7105,6 +7205,7 @@ For example, a request targeting `foo*,bar*` returns an error if an index starts
 
 ## client.indices.rollover [_indices.rollover]
 Roll over to a new index.
+
 TIP: It is recommended to use the index lifecycle rollover action to automate rollovers.
 
 The rollover API creates a new index for a data stream or index alias.
@@ -7179,6 +7280,7 @@ Only allowed on data streams.
 
 ## client.indices.segments [_indices.segments]
 Get index segments.
+
 Get low-level information about the Lucene segments in index shards.
 For data streams, the API returns information about the stream's backing indices.
 
@@ -7203,6 +7305,7 @@ Supports a list of values, such as `open,hidden`.
 
 ## client.indices.shardStores [_indices.shard_stores]
 Get index shard stores.
+
 Get store information about replica shards in one or more indices.
 For data streams, the API retrieves store information for the stream's backing indices.
 
@@ -7235,6 +7338,7 @@ this argument determines whether wildcard expressions match hidden data streams.
 
 ## client.indices.shrink [_indices.shrink]
 Shrink an index.
+
 Shrink an index into a new index with fewer primary shards.
 
 Before you can shrink an index:
@@ -7290,6 +7394,7 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 ## client.indices.simulateIndexTemplate [_indices.simulate_index_template]
 Simulate an index.
+
 Get the index configuration that would be applied to the specified index from an existing index template.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-simulate-index-template)
@@ -7310,6 +7415,7 @@ client.indices.simulateIndexTemplate({ name })
 
 ## client.indices.simulateTemplate [_indices.simulate_template]
 Simulate an index template.
+
 Get the index configuration that would be applied by a particular index template.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-simulate-template)
@@ -7354,6 +7460,7 @@ that uses deprecated components, Elasticsearch will emit a deprecation warning.
 
 ## client.indices.split [_indices.split]
 Split an index.
+
 Split an index into a new index with more primary shards.
 * Before you can split an index:
 
@@ -7409,6 +7516,7 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 ## client.indices.stats [_indices.stats]
 Get index statistics.
+
 For data streams, the API retrieves statistics for the stream's backing indices.
 
 By default, the returned statistics are index-level with `primaries` and `total` aggregations.
@@ -7445,6 +7553,7 @@ such as `open,hidden`.
 
 ## client.indices.updateAliases [_indices.update_aliases]
 Create or update an alias.
+
 Adds a data stream or index to an alias.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-update-aliases)
@@ -7464,6 +7573,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.indices.validateQuery [_indices.validate_query]
 Validate a query.
+
 Validates a query without running it.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-validate-query)
@@ -7498,7 +7608,7 @@ Supports a list of values, such as `open,hidden`.
 - **`q` (Optional, string)**: Query in the Lucene query string syntax.
 
 ## client.inference.chatCompletionUnified [_inference.chat_completion_unified]
-Perform chat completion inference
+Perform chat completion inference.
 
 The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation.
 It only works with the `chat_completion` task type for `openai` and `elastic` inference services.
@@ -7522,7 +7632,7 @@ client.inference.chatCompletionUnified({ inference_id })
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.completion [_inference.completion]
-Perform completion inference on the service
+Perform completion inference on the service.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
 
@@ -7540,7 +7650,7 @@ Either a string or an array of strings.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.delete [_inference.delete]
-Delete an inference endpoint
+Delete an inference endpoint.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete)
 
@@ -7557,7 +7667,7 @@ client.inference.delete({ inference_id })
 - **`force` (Optional, boolean)**: When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields.
 
 ## client.inference.get [_inference.get]
-Get an inference endpoint
+Get an inference endpoint.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-get)
 
@@ -8209,7 +8319,7 @@ client.inference.putWatsonx({ task_type, watsonx_inference_id, service, service_
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.rerank [_inference.rerank]
-Perform reranking inference on the service
+Perform reranking inference on the service.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
 
@@ -8232,7 +8342,7 @@ These settings are specific to the task type you specified and override the task
 - **`timeout` (Optional, string \| -1 \| 0)**: The amount of time to wait for the inference request to complete.
 
 ## client.inference.sparseEmbedding [_inference.sparse_embedding]
-Perform sparse embedding inference on the service
+Perform sparse embedding inference on the service.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
 
@@ -8251,6 +8361,7 @@ Either a string or an array of strings.
 
 ## client.inference.streamCompletion [_inference.stream_completion]
 Perform streaming inference.
+
 Get real-time responses for completion tasks by delivering answers incrementally, reducing response times during computation.
 This API works only with the completion task type.
 
@@ -8276,7 +8387,7 @@ NOTE: Inference endpoints for the completion task type currently only support a 
 - **`timeout` (Optional, string \| -1 \| 0)**: The amount of time to wait for the inference request to complete.
 
 ## client.inference.textEmbedding [_inference.text_embedding]
-Perform text embedding inference on the service
+Perform text embedding inference on the service.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
 
@@ -8366,6 +8477,7 @@ A value of `-1` indicates that the request should never time out.
 
 ## client.ingest.deletePipeline [_ingest.delete_pipeline]
 Delete pipelines.
+
 Delete one or more ingest pipelines.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-delete-pipeline)
@@ -8386,6 +8498,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.ingest.geoIpStats [_ingest.geo_ip_stats]
 Get GeoIP statistics.
+
 Get download statistics for GeoIP2 databases that are used with the GeoIP processor.
 
 [Endpoint documentation](https://www.elastic.co/docs/reference/enrich-processor/geoip-processor)
@@ -8453,6 +8566,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.ingest.processorGrok [_ingest.processor_grok]
 Run a grok processor.
+
 Extract structured fields out of a single text field within a document.
 You must choose which field to extract matched fields from, as well as the grok pattern you expect will match.
 A grok pattern is like a regular expression that supports aliased expressions that can be reused.
@@ -8509,6 +8623,7 @@ A value of `-1` indicates that the request should never time out.
 
 ## client.ingest.putPipeline [_ingest.put_pipeline]
 Create or update a pipeline.
+
 Changes made using this API take effect immediately.
 
 [Endpoint documentation](https://www.elastic.co/docs/manage-data/ingest/transform-enrich/ingest-pipelines)
@@ -8669,6 +8784,7 @@ client.license.postStartBasic({ ... })
 
 ## client.license.postStartTrial [_license.post_start_trial]
 Start a trial.
+
 Start a 30-day trial, which gives access to all subscription features.
 
 NOTE: You are allowed to start a trial only if your cluster has not already activated a trial for the current major product version.
@@ -8691,6 +8807,7 @@ client.license.postStartTrial({ ... })
 
 ## client.logstash.deletePipeline [_logstash.delete_pipeline]
 Delete a Logstash pipeline.
+
 Delete a pipeline that is used for Logstash Central Management.
 If the request succeeds, you receive an empty response with an appropriate status code.
 
@@ -8707,6 +8824,7 @@ client.logstash.deletePipeline({ id })
 
 ## client.logstash.getPipeline [_logstash.get_pipeline]
 Get Logstash pipelines.
+
 Get pipelines that are used for Logstash Central Management.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-logstash-get-pipeline)
@@ -8741,6 +8859,7 @@ Pipeline IDs must begin with a letter or underscore and contain only letters, un
 
 ## client.migration.deprecations [_migration.deprecations]
 Get deprecation information.
+
 Get information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
 
 TIP: This APIs is designed for indirect use by the Upgrade Assistant.
@@ -8759,6 +8878,7 @@ client.migration.deprecations({ ... })
 
 ## client.migration.getFeatureUpgradeStatus [_migration.get_feature_upgrade_status]
 Get feature migration information.
+
 Version upgrades sometimes require changes to how features store configuration information and data in system indices.
 Check which features need to be migrated and the status of any migrations that are in progress.
 
@@ -8774,6 +8894,7 @@ client.migration.getFeatureUpgradeStatus()
 
 ## client.migration.postFeatureUpgrade [_migration.post_feature_upgrade]
 Start the feature migration.
+
 Version upgrades sometimes require changes to how features store configuration information and data in system indices.
 This API starts the automatic migration process.
 
@@ -9170,6 +9291,7 @@ learning node capacity for it to be immediately assigned to a node.
 
 ## client.ml.flushJob [_ml.flush_job]
 Force buffered data to be processed.
+
 The flush jobs API is only applicable when sending data for analysis using
 the post data API. Depending on the content of the buffer, then it might
 additionally calculate new results. Both flush and close operations are
@@ -9220,6 +9342,7 @@ create a forecast; otherwise, an error occurs.
 
 ## client.ml.getBuckets [_ml.get_buckets]
 Get anomaly detection job results for buckets.
+
 The API presents a chronological view of the records, grouped by bucket.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-buckets)
@@ -9307,6 +9430,7 @@ This parameter has the `from` and `size` properties.
 
 ## client.ml.getDataFrameAnalytics [_ml.get_data_frame_analytics]
 Get data frame analytics job configuration info.
+
 You can get information for multiple data frame analytics jobs in a single
 API request by using a list of data frame analytics jobs or a
 wildcard expression.
@@ -9372,6 +9496,7 @@ there are no matches or only partial matches.
 
 ## client.ml.getDatafeedStats [_ml.get_datafeed_stats]
 Get datafeed stats.
+
 You can get statistics for multiple datafeeds in a single API request by
 using a list of datafeeds or a wildcard expression. You can
 get statistics for all datafeeds by using `_all`, by specifying `*` as the
@@ -9404,6 +9529,7 @@ partial matches. If this parameter is `false`, the request returns a
 
 ## client.ml.getDatafeeds [_ml.get_datafeeds]
 Get datafeeds configuration info.
+
 You can get information for multiple datafeeds in a single API request by
 using a list of datafeeds or a wildcard expression. You can
 get information for all datafeeds by using `_all`, by specifying `*` as the
@@ -9438,6 +9564,7 @@ be retrieved and then added to another cluster.
 
 ## client.ml.getFilters [_ml.get_filters]
 Get filters.
+
 You can get a single filter or all filters.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-filters)
@@ -9455,6 +9582,7 @@ client.ml.getFilters({ ... })
 
 ## client.ml.getInfluencers [_ml.get_influencers]
 Get anomaly detection job results for influencers.
+
 Influencers are the entities that have contributed to, or are to blame for,
 the anomalies. Influencer results are available only if an
 `influencer_field_name` is specified in the job configuration.
@@ -9515,6 +9643,7 @@ code when there are no matches or only partial matches.
 
 ## client.ml.getJobs [_ml.get_jobs]
 Get anomaly detection jobs configuration info.
+
 You can get information for multiple anomaly detection jobs in a single API
 request by using a group name, a list of jobs, or a wildcard
 expression. You can get information for all anomaly detection jobs by using
@@ -9548,6 +9677,7 @@ be retrieved and then added to another cluster.
 
 ## client.ml.getMemoryStats [_ml.get_memory_stats]
 Get machine learning memory usage info.
+
 Get information about how machine learning jobs and trained models are using memory,
 on each node, both within the JVM heap, and natively, outside of the JVM.
 
@@ -9663,6 +9793,7 @@ using `_all` or by specifying `*` as the `<job_id>`.
 
 ## client.ml.getRecords [_ml.get_records]
 Get anomaly records for an anomaly detection job.
+
 Records contain the detailed analytical results. They describe the anomalous
 activity that has been identified in the input data based on the detector
 configuration.
@@ -9734,6 +9865,7 @@ tags are returned.
 
 ## client.ml.getTrainedModelsStats [_ml.get_trained_models_stats]
 Get trained models usage info.
+
 You can get usage information for multiple trained
 models in a single API request by using a list of model IDs or a wildcard expression.
 
@@ -9780,6 +9912,7 @@ Currently, for NLP models, only a single value is allowed.
 
 ## client.ml.info [_ml.info]
 Get machine learning information.
+
 Get defaults and limits used by machine learning.
 This endpoint is designed to be used by a user interface that needs to fully
 understand machine learning configurations where some options are not
@@ -9854,6 +9987,7 @@ client.ml.postData({ job_id })
 
 ## client.ml.previewDataFrameAnalytics [_ml.preview_data_frame_analytics]
 Preview features used by data frame analytics.
+
 Preview the extracted features used by a data frame analytics config.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-preview-data-frame-analytics)
@@ -9872,6 +10006,7 @@ this API.
 
 ## client.ml.previewDatafeed [_ml.preview_datafeed]
 Preview a datafeed.
+
 This API returns the first "page" of search results from a datafeed.
 You can preview an existing datafeed or provide configuration details for a datafeed
 and anomaly detection job in the API. The preview shows the structure of the data
@@ -9935,6 +10070,7 @@ client.ml.putCalendarJob({ calendar_id, job_id })
 
 ## client.ml.putDataFrameAnalytics [_ml.put_data_frame_analytics]
 Create a data frame analytics job.
+
 This API creates a data frame analytics job that performs an analysis on the
 source indices and stores the outcome in a destination index.
 By default, the query used in the source configuration is `{"match_all": {}}`.
@@ -10012,6 +10148,7 @@ greater than that setting.
 
 ## client.ml.putDatafeed [_ml.put_datafeed]
 Create a datafeed.
+
 Datafeeds retrieve data from Elasticsearch for analysis by an anomaly detection job.
 You can associate only one datafeed with each anomaly detection job.
 The datafeed contains a query that runs at a defined interval (`frequency`).
@@ -10082,6 +10219,7 @@ whether wildcard expressions match hidden data streams. Supports a list of value
 
 ## client.ml.putFilter [_ml.put_filter]
 Create a filter.
+
 A filter contains a list of strings. It can be used by one or more anomaly detection jobs.
 Specifically, filters are referenced in the `custom_rules` property of detector configuration objects.
 
@@ -10139,6 +10277,7 @@ whether wildcard expressions match hidden data streams. Supports a list of value
 
 ## client.ml.putTrainedModel [_ml.put_trained_model]
 Create a trained model.
+
 Enable you to supply a trained model that is not created by data frame analytics.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-trained-model)
@@ -10184,6 +10323,7 @@ to complete.
 
 ## client.ml.putTrainedModelAlias [_ml.put_trained_model_alias]
 Create or update a trained model alias.
+
 A trained model alias is a logical name used to reference a single trained
 model.
 You can use aliases instead of trained model identifiers to make it easier to
@@ -10237,6 +10377,7 @@ order of their part number. The first part must be `0` and the final part must b
 
 ## client.ml.putTrainedModelVocabulary [_ml.put_trained_model_vocabulary]
 Create a trained model vocabulary.
+
 This API is supported only for natural language processing (NLP) models.
 The vocabulary is stored in the index as described in `inference_config.*.vocabulary` of the trained model definition.
 
@@ -10256,6 +10397,7 @@ client.ml.putTrainedModelVocabulary({ model_id, vocabulary })
 
 ## client.ml.resetJob [_ml.reset_job]
 Reset an anomaly detection job.
+
 All model state and results are deleted. The job is ready to start over as if
 it had just been created.
 It is not currently possible to reset multiple jobs using wildcards or a
@@ -10279,6 +10421,7 @@ reset.
 
 ## client.ml.revertModelSnapshot [_ml.revert_model_snapshot]
 Revert to a snapshot.
+
 The machine learning features react quickly to anomalous input, learning new
 behaviors in data. Highly anomalous input increases the variance in the
 models whilst the system learns whether this is a new step-change in behavior
@@ -10304,6 +10447,7 @@ scratch when it is started.
 
 ## client.ml.setUpgradeMode [_ml.set_upgrade_mode]
 Set upgrade_mode for ML indices.
+
 Sets a cluster wide upgrade_mode setting that prepares machine learning
 indices for an upgrade.
 When upgrading your cluster, in some circumstances you must restart your
@@ -10333,6 +10477,7 @@ starting.
 
 ## client.ml.startDataFrameAnalytics [_ml.start_data_frame_analytics]
 Start a data frame analytics job.
+
 A data frame analytics job can be started and stopped multiple times
 throughout its lifecycle.
 If the destination index does not exist, it is created automatically the
@@ -10393,6 +10538,7 @@ characters.
 
 ## client.ml.startTrainedModelDeployment [_ml.start_trained_model_deployment]
 Start a trained model deployment.
+
 It allocates the model to every machine learning node.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-start-trained-model-deployment)
@@ -10432,6 +10578,7 @@ it will automatically be changed to a value less than the number of hardware thr
 
 ## client.ml.stopDataFrameAnalytics [_ml.stop_data_frame_analytics]
 Stop data frame analytics jobs.
+
 A data frame analytics job can be started and stopped multiple times
 throughout its lifecycle.
 
@@ -10464,6 +10611,7 @@ stops. Defaults to 20 seconds.
 
 ## client.ml.stopDatafeed [_ml.stop_datafeed]
 Stop datafeeds.
+
 A datafeed that is stopped ceases to retrieve data from Elasticsearch. A datafeed can be started and stopped
 multiple times throughout its lifecycle.
 
@@ -10533,6 +10681,7 @@ learning node capacity for it to be immediately assigned to a node.
 
 ## client.ml.updateDatafeed [_ml.update_datafeed]
 Update a datafeed.
+
 You must stop and start the datafeed for the changes to be applied.
 When Elasticsearch security features are enabled, your datafeed remembers which roles the user who updated it had at
 the time of the update and runs the query using those same roles. If you provide secondary authorization headers,
@@ -10598,6 +10747,7 @@ whether wildcard expressions match hidden data streams. Supports a list of value
 
 ## client.ml.updateFilter [_ml.update_filter]
 Update a filter.
+
 Updates the description of a filter, adds items, or removes items from the list.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-filter)
@@ -10616,6 +10766,7 @@ client.ml.updateFilter({ filter_id })
 
 ## client.ml.updateJob [_ml.update_job]
 Update an anomaly detection job.
+
 Updates certain properties of an anomaly detection job.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-job)
@@ -10680,6 +10831,7 @@ value is null, which means all results are retained.
 
 ## client.ml.updateModelSnapshot [_ml.update_model_snapshot]
 Update a snapshot.
+
 Updates certain properties of a snapshot.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-model-snapshot)
@@ -10724,6 +10876,7 @@ If adaptive_allocations is enabled, do not set the number of allocations manuall
 
 ## client.ml.upgradeJobSnapshot [_ml.upgrade_job_snapshot]
 Upgrade a snapshot.
+
 Upgrade an anomaly detection model snapshot to the latest major version.
 Over time, older snapshot formats are deprecated and removed. Anomaly
 detection jobs support only snapshots that are from the current or previous
@@ -10751,6 +10904,7 @@ Otherwise, it responds as soon as the upgrade task is assigned to a node.
 
 ## client.nodes.clearRepositoriesMeteringArchive [_nodes.clear_repositories_metering_archive]
 Clear the archived repositories metering.
+
 Clear the archived repositories metering information in the cluster.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-clear-repositories-metering-archive)
@@ -10767,6 +10921,7 @@ client.nodes.clearRepositoriesMeteringArchive({ node_id, max_archive_version })
 
 ## client.nodes.getRepositoriesMeteringInfo [_nodes.get_repositories_metering_info]
 Get cluster repositories metering.
+
 Get repositories metering information for a cluster.
 This API exposes monotonically non-decreasing counters and it is expected that clients would durably store the information needed to compute aggregations over a period of time.
 Additionally, the information exposed by this API is volatile, meaning that it will not be present after node restarts.
@@ -10784,6 +10939,7 @@ client.nodes.getRepositoriesMeteringInfo({ node_id })
 
 ## client.nodes.hotThreads [_nodes.hot_threads]
 Get the hot threads for nodes.
+
 Get a breakdown of the hot threads on each selected node in the cluster.
 The output is plain text with a breakdown of the top hot threads for each node.
 
@@ -10853,6 +11009,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.nodes.stats [_nodes.stats]
 Get node statistics.
+
 Get statistics for nodes in a cluster.
 By default, all stats are returned. You can limit the returned information by using metrics.
 
@@ -10898,6 +11055,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.queryRules.deleteRule [_query_rules.delete_rule]
 Delete a query rule.
+
 Delete a query rule within a query ruleset.
 This is a destructive action that is only recoverable by re-adding the same rule with the create or update query rule API.
 
@@ -10915,6 +11073,7 @@ client.queryRules.deleteRule({ ruleset_id, rule_id })
 
 ## client.queryRules.deleteRuleset [_query_rules.delete_ruleset]
 Delete a query ruleset.
+
 Remove a query ruleset and its associated data.
 This is a destructive action that is not recoverable.
 
@@ -10931,6 +11090,7 @@ client.queryRules.deleteRuleset({ ruleset_id })
 
 ## client.queryRules.getRule [_query_rules.get_rule]
 Get a query rule.
+
 Get details about a query rule within a query ruleset.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-get-rule)
@@ -10947,6 +11107,7 @@ client.queryRules.getRule({ ruleset_id, rule_id })
 
 ## client.queryRules.getRuleset [_query_rules.get_ruleset]
 Get a query ruleset.
+
 Get details about a query ruleset.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-get-ruleset)
@@ -10962,6 +11123,7 @@ client.queryRules.getRuleset({ ruleset_id })
 
 ## client.queryRules.listRulesets [_query_rules.list_rulesets]
 Get all query rulesets.
+
 Get summarized information about the query rulesets.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-list-rulesets)
@@ -10978,6 +11140,7 @@ client.queryRules.listRulesets({ ... })
 
 ## client.queryRules.putRule [_query_rules.put_rule]
 Create or update a query rule.
+
 Create or update a query rule within a query ruleset.
 
 IMPORTANT: Due to limitations within pinned queries, you can only pin documents using ids or docs, but cannot use both in single rule.
@@ -11005,6 +11168,7 @@ The format of this action depends on the rule type.
 
 ## client.queryRules.putRuleset [_query_rules.put_ruleset]
 Create or update a query ruleset.
+
 There is a limit of 100 rules per ruleset.
 This limit can be increased by using the `xpack.applications.rules.max_rules_per_ruleset` cluster setting.
 
@@ -11027,6 +11191,7 @@ client.queryRules.putRuleset({ ruleset_id, rules })
 
 ## client.queryRules.test [_query_rules.test]
 Test a query ruleset.
+
 Evaluate match criteria against a query ruleset to identify the rules that would match that criteria.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-test)
@@ -11081,6 +11246,7 @@ client.rollup.deleteJob({ id })
 
 ## client.rollup.getJobs [_rollup.get_jobs]
 Get rollup job information.
+
 Get the configuration, stats, and status of rollup jobs.
 
 NOTE: This API returns only active (both `STARTED` and `STOPPED`) jobs.
@@ -11101,6 +11267,7 @@ If it is `_all` or omitted, the API returns all rollup jobs.
 
 ## client.rollup.getRollupCaps [_rollup.get_rollup_caps]
 Get the rollup job capabilities.
+
 Get the capabilities of any rollup jobs that have been configured for a specific index or index pattern.
 
 This API is useful because a rollup job is often configured to rollup only a subset of fields from the source index.
@@ -11124,6 +11291,7 @@ client.rollup.getRollupCaps({ ... })
 
 ## client.rollup.getRollupIndexCaps [_rollup.get_rollup_index_caps]
 Get the rollup index capabilities.
+
 Get the rollup capabilities of all jobs inside of a rollup index.
 A single rollup index may store the data for multiple rollup jobs and may have a variety of capabilities depending on those jobs. This API enables you to determine:
 
@@ -11191,6 +11359,7 @@ on a per-field basis and for each field you configure which metric should be col
 
 ## client.rollup.rollupSearch [_rollup.rollup_search]
 Search rolled-up data.
+
 The rollup search endpoint is needed because, internally, rolled-up documents utilize a different document structure than the original data.
 It rewrites standard Query DSL into a format that matches the rollup documents then takes the response and rewrites it back to what a client would expect given the original query.
 
@@ -11226,6 +11395,7 @@ This parameter has the following rules:
 
 ## client.rollup.startJob [_rollup.start_job]
 Start rollup jobs.
+
 If you try to start a job that does not exist, an exception occurs.
 If you try to start a job that is already started, nothing happens.
 
@@ -11242,6 +11412,7 @@ client.rollup.startJob({ id })
 
 ## client.rollup.stopJob [_rollup.stop_job]
 Stop rollup jobs.
+
 If you try to stop a job that does not exist, an exception occurs.
 If you try to stop a job that is already stopped, nothing happens.
 
@@ -11289,6 +11460,7 @@ client.searchApplication.delete({ name })
 
 ## client.searchApplication.deleteBehavioralAnalytics [_search_application.delete_behavioral_analytics]
 Delete a behavioral analytics collection.
+
 The associated data stream is also deleted.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-delete-behavioral-analytics)
@@ -11332,6 +11504,7 @@ client.searchApplication.getBehavioralAnalytics({ ... })
 
 ## client.searchApplication.list [_search_application.list]
 Get search applications.
+
 Get information about search applications.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get-behavioral-analytics)
@@ -11396,6 +11569,7 @@ client.searchApplication.putBehavioralAnalytics({ name })
 
 ## client.searchApplication.renderQuery [_search_application.render_query]
 Render a search application query.
+
 Generate an Elasticsearch query using the specified query parameters and the search template associated with the search application or a default template if none is specified.
 If a parameter used in the search template is not specified in `params`, the parameter's default value will be used.
 The API returns the specific Elasticsearch query that would be generated and run by calling the search application search API.
@@ -11416,6 +11590,7 @@ client.searchApplication.renderQuery({ name })
 
 ## client.searchApplication.search [_search_application.search]
 Run a search application search.
+
 Generate and run an Elasticsearch query that uses the specified query parameteter and the search template associated with the search application or default template.
 Unspecified template parameters are assigned their default values if applicable.
 
@@ -11434,6 +11609,7 @@ client.searchApplication.search({ name })
 
 ## client.searchableSnapshots.cacheStats [_searchable_snapshots.cache_stats]
 Get cache statistics.
+
 Get statistics about the shared cache for partially mounted indices.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-cache-stats)
@@ -11450,6 +11626,7 @@ client.searchableSnapshots.cacheStats({ ... })
 
 ## client.searchableSnapshots.clearCache [_searchable_snapshots.clear_cache]
 Clear the cache.
+
 Clear indices and data streams from the shared cache for partially mounted indices.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-clear-cache)
@@ -11469,6 +11646,7 @@ It supports wildcards (`*`).
 
 ## client.searchableSnapshots.mount [_searchable_snapshots.mount]
 Mount a snapshot.
+
 Mount a snapshot as a searchable snapshot index.
 Do not use this API for snapshots managed by index lifecycle management (ILM).
 Manually mounting ILM-managed snapshots can interfere with ILM processes.
@@ -11600,6 +11778,7 @@ client.security.bulkPutRole({ roles })
 
 ## client.security.bulkUpdateApiKeys [_security.bulk_update_api_keys]
 Bulk update API keys.
+
 Update the attributes for multiple API keys.
 
 IMPORTANT: It is not possible to use an API key as the authentication credential for this API. To update API keys, the owner user's credentials are required.
@@ -13281,6 +13460,7 @@ If 'false', nothing is done with refreshes.
 
 ## client.shutdown.deleteNode [_shutdown.delete_node]
 Cancel node shutdown preparations.
+
 Remove a node from the shutdown list so it can resume normal operations.
 You must explicitly clear the shutdown request when a node rejoins the cluster or when a node has permanently left the cluster.
 Shutdown requests are never removed automatically by Elasticsearch.
@@ -13380,6 +13560,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.simulate.ingest [_simulate.ingest]
 Simulate data ingestion.
+
 Run ingest pipelines against a set of provided documents, optionally with substitute pipeline definitions, to simulate ingesting data into an index.
 
 This API is meant to be used for troubleshooting or pipeline development, as it does not actually index any data into Elasticsearch.
@@ -13421,6 +13602,7 @@ This value can be used to override the default pipeline of the index.
 
 ## client.slm.deleteLifecycle [_slm.delete_lifecycle]
 Delete a policy.
+
 Delete a snapshot lifecycle policy definition.
 This operation prevents any future snapshots from being taken but does not cancel in-progress snapshots or remove previously-taken snapshots.
 
@@ -13441,6 +13623,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.slm.executeLifecycle [_slm.execute_lifecycle]
 Run a policy.
+
 Immediately create a snapshot according to the snapshot lifecycle policy without waiting for the scheduled time.
 The snapshot policy is normally applied according to its schedule, but you might want to manually run a policy before performing an upgrade or other maintenance.
 
@@ -13461,6 +13644,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.slm.executeRetention [_slm.execute_retention]
 Run a retention policy.
+
 Manually apply the retention policy to force immediate removal of snapshots that are expired according to the snapshot lifecycle policy retention rules.
 The retention policy is normally applied according to its schedule.
 
@@ -13480,6 +13664,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.slm.getLifecycle [_slm.get_lifecycle]
 Get policy information.
+
 Get snapshot lifecycle policy definitions and information about the latest snapshot attempts.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-get-lifecycle)
@@ -13499,6 +13684,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.slm.getStats [_slm.get_stats]
 Get snapshot lifecycle management statistics.
+
 Get global and policy-level statistics about actions taken by snapshot lifecycle management.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-get-stats)
@@ -13534,6 +13720,7 @@ To indicate that the request should never timeout, set it to `-1`.
 
 ## client.slm.putLifecycle [_slm.put_lifecycle]
 Create or update a policy.
+
 Create or update a snapshot lifecycle policy.
 If the policy already exists, this request increments the policy version.
 Only the latest version of a policy is stored.
@@ -13562,6 +13749,7 @@ To indicate that the request should never timeout, set it to `-1`.
 
 ## client.slm.start [_slm.start]
 Start snapshot lifecycle management.
+
 Snapshot lifecycle management (SLM) starts automatically when a cluster is formed.
 Manually starting SLM is necessary only if it has been stopped using the stop SLM API.
 
@@ -13583,6 +13771,7 @@ To indicate that the request should never timeout, set it to `-1`.
 
 ## client.slm.stop [_slm.stop]
 Stop snapshot lifecycle management.
+
 Stop all snapshot lifecycle management (SLM) operations and the SLM plugin.
 This API is useful when you are performing maintenance on a cluster and need to prevent SLM from performing any actions on your data streams or indices.
 Stopping SLM does not stop any snapshots that are in progress.
@@ -13609,6 +13798,7 @@ To indicate that the request should never timeout, set it to `-1`.
 
 ## client.snapshot.cleanupRepository [_snapshot.cleanup_repository]
 Clean up the snapshot repository.
+
 Trigger the review of the contents of a snapshot repository and delete any stale data not referenced by existing snapshots.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-cleanup-repository)
@@ -13630,6 +13820,7 @@ To indicate that the request should never timeout, set it to `-1`.
 
 ## client.snapshot.clone [_snapshot.clone]
 Clone a snapshot.
+
 Clone part of all of a snapshot into another snapshot in the same repository.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-clone)
@@ -13652,6 +13843,7 @@ To indicate that the request should never timeout, set it to `-1`.
 
 ## client.snapshot.create [_snapshot.create]
 Create a snapshot.
+
 Take a snapshot of a cluster or of data streams and indices.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-create)
@@ -13705,6 +13897,7 @@ If `false`, the request returns a response when the snapshot initializes.
 
 ## client.snapshot.createRepository [_snapshot.create_repository]
 Create or update a snapshot repository.
+
 IMPORTANT: If you are migrating searchable snapshots, the repository name must be identical in the source and destination clusters.
 To register a snapshot repository, the cluster's global metadata must be writeable.
 Ensure there are no cluster blocks (for example, `cluster.blocks.read_only` and `clsuter.blocks.read_only_allow_delete` settings) that prevent write access.
@@ -13755,6 +13948,7 @@ If `false`, the request returns a response as soon as the deletes are scheduled.
 
 ## client.snapshot.deleteRepository [_snapshot.delete_repository]
 Delete snapshot repositories.
+
 When a repository is unregistered, Elasticsearch removes only the reference to the location where the repository is storing the snapshots.
 The snapshots themselves are left untouched and in place.
 
@@ -13992,6 +14186,7 @@ If no response is received before the timeout expires, the test is cancelled and
 
 ## client.snapshot.repositoryVerifyIntegrity [_snapshot.repository_verify_integrity]
 Verify the repository integrity.
+
 Verify the integrity of the contents of a snapshot repository.
 
 This API enables you to perform a comprehensive check of the contents of a repository, looking for any anomalies in its data or metadata which might prevent you from restoring snapshots from the repository or which might cause future snapshot create or delete operations to fail.
@@ -14054,6 +14249,7 @@ If this feature is enabled, Elasticsearch will read the entire repository conten
 
 ## client.snapshot.restore [_snapshot.restore]
 Restore a snapshot.
+
 Restore a snapshot of a cluster or data streams and indices.
 
 You can restore a snapshot only to a running cluster with an elected master node.
@@ -14145,6 +14341,7 @@ If `false`, the request returns a response when the restore operation initialize
 
 ## client.snapshot.status [_snapshot.status]
 Get the snapshot status.
+
 Get a detailed description of the current state for each shard participating in the snapshot.
 
 Note that this API should be used only to obtain detailed shard-level information for ongoing snapshots.
@@ -14183,6 +14380,7 @@ To indicate that the request should never timeout, set it to `-1`.
 
 ## client.snapshot.verifyRepository [_snapshot.verify_repository]
 Verify a snapshot repository.
+
 Check for common misconfigurations in a snapshot repository.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-verify-repository)
@@ -14218,6 +14416,7 @@ client.sql.clearCursor({ cursor })
 
 ## client.sql.deleteAsync [_sql.delete_async]
 Delete an async SQL search.
+
 Delete an async SQL search or a stored synchronous SQL search.
 If the search is still running, the API cancels it.
 
@@ -14239,6 +14438,7 @@ client.sql.deleteAsync({ id })
 
 ## client.sql.getAsync [_sql.get_async]
 Get async SQL search results.
+
 Get the current status and available results for an async SQL search or stored synchronous SQL search.
 
 If the Elasticsearch security features are enabled, only the user who first submitted the SQL search can retrieve the search using this API.
@@ -14265,6 +14465,7 @@ It defaults to no timeout, meaning the request waits for complete search results
 
 ## client.sql.getAsyncStatus [_sql.get_async_status]
 Get the async SQL search status.
+
 Get the current status of an async SQL search or a stored synchronous SQL search.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-get-async-status)
@@ -14280,6 +14481,7 @@ client.sql.getAsyncStatus({ id })
 
 ## client.sql.query [_sql.query]
 Get SQL search results.
+
 Run an SQL request.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-query)
@@ -14328,6 +14530,7 @@ If you specify both this parameter and the `Accept` HTTP header, this parameter 
 
 ## client.sql.translate [_sql.translate]
 Translate SQL into Elasticsearch queries.
+
 Translate an SQL search into a search API request containing Query DSL.
 It accepts the same request body parameters as the SQL search API, excluding `cursor`.
 
@@ -14404,6 +14607,7 @@ client.synonyms.deleteSynonym({ id })
 
 ## client.synonyms.deleteSynonymRule [_synonyms.delete_synonym_rule]
 Delete a synonym rule.
+
 Delete a synonym rule from a synonym set.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-delete-synonym-rule)
@@ -14438,6 +14642,7 @@ client.synonyms.getSynonym({ id })
 
 ## client.synonyms.getSynonymRule [_synonyms.get_synonym_rule]
 Get a synonym rule.
+
 Get a synonym rule from a synonym set.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-get-synonym-rule)
@@ -14454,6 +14659,7 @@ client.synonyms.getSynonymRule({ set_id, rule_id })
 
 ## client.synonyms.getSynonymsSets [_synonyms.get_synonyms_sets]
 Get all synonym sets.
+
 Get a summary of all defined synonym sets.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-get-synonym)
@@ -14470,6 +14676,7 @@ client.synonyms.getSynonymsSets({ ... })
 
 ## client.synonyms.putSynonym [_synonyms.put_synonym]
 Create or update a synonym set.
+
 Synonyms sets are limited to a maximum of 10,000 synonym rules per set.
 If you need to manage more synonym rules, you can create multiple synonym sets.
 
@@ -14494,6 +14701,7 @@ If `false`, analyzers will not be reloaded with the new synonym set
 
 ## client.synonyms.putSynonymRule [_synonyms.put_synonym_rule]
 Create or update a synonym rule.
+
 Create or update a synonym rule in a synonym set.
 
 If any of the synonym rules included is invalid, the API returns an error.
@@ -14546,6 +14754,7 @@ client.tasks.cancel({ ... })
 
 ## client.tasks.get [_tasks.get]
 Get task information.
+
 Get information about a task currently running in the cluster.
 
 WARNING: The task management API is new and should still be considered a beta feature.
@@ -14569,6 +14778,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.tasks.list [_tasks.list]
 Get all tasks.
+
 Get information about the tasks currently running on one or more nodes in the cluster.
 
 WARNING: The task management API is new and should still be considered a beta feature.
@@ -14654,6 +14864,7 @@ However, timed out nodes are included in the `node_failures` property.
 
 ## client.textStructure.findFieldStructure [_text_structure.find_field_structure]
 Find the structure of a text field.
+
 Find the structure of a text field in an Elasticsearch index.
 
 This API provides a starting point for extracting further information from log messages already ingested into Elasticsearch.
@@ -14763,6 +14974,7 @@ When the format is semi-structured text, this will result in the structure finde
 
 ## client.textStructure.findMessageStructure [_text_structure.find_message_structure]
 Find the structure of text messages.
+
 Find the structure of a list of text messages.
 The messages must contain data that is suitable to be ingested into Elasticsearch.
 
@@ -14869,6 +15081,7 @@ When the format is semi-structured text, this will result in the structure finde
 
 ## client.textStructure.findStructure [_text_structure.find_structure]
 Find the structure of a text file.
+
 The text file must contain data that is suitable to be ingested into Elasticsearch.
 
 This API provides a starting point for ingesting data into Elasticsearch in a format that is suitable for subsequent use with other Elastic Stack functionality.
@@ -14915,7 +15128,7 @@ This setting primarily has an impact when a whole message Grok pattern such as `
 If the structure finder identifies a common structure but has no idea of meaning then generic field names such as `path`, `ipaddress`, `field1`, and `field2` are used in the `grok_pattern` output, with the intention that a user who knows the meanings rename these fields before using it.
 - **`explain` (Optional, boolean)**: If this parameter is set to `true`, the response includes a field named explanation, which is an array of strings that indicate how the structure finder produced its result.
 If the structure finder produces unexpected results for some text, use this query parameter to help you determine why the returned structure was chosen.
-- **`format` (Optional, string)**: The high level structure of the text.
+- **`format` (Optional, Enum("ndjson" \| "xml" \| "delimited" \| "semi_structured_text"))**: The high level structure of the text.
 Valid values are `ndjson`, `xml`, `delimited`, and `semi_structured_text`.
 By default, the API chooses the format.
 In this default scenario, all rows must have the same number of fields for a delimited format to be detected.
@@ -14992,6 +15205,7 @@ When the format is semi-structured text this will result in the structure finder
 
 ## client.textStructure.testGrokPattern [_text_structure.test_grok_pattern]
 Test a Grok pattern.
+
 Test a Grok pattern on one or more lines of text.
 The API indicates whether the lines match the pattern together with the offsets and lengths of the matched substrings.
 
@@ -15041,6 +15255,7 @@ client.transform.getNodeStats()
 
 ## client.transform.getTransform [_transform.get_transform]
 Get transforms.
+
 Get configuration information for transforms.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-get-transform)
@@ -15102,6 +15317,7 @@ there are no matches or only partial matches.
 
 ## client.transform.previewTransform [_transform.preview_transform]
 Preview a transform.
+
 Generates a preview of the results that you will get when you create a transform with the same configuration.
 
 It returns a maximum of 100 results. The calculations are based on all the current data in the source index. It also
@@ -15140,6 +15356,7 @@ timeout expires, the request fails and returns an error.
 
 ## client.transform.putTransform [_transform.put_transform]
 Create a transform.
+
 Creates a transform.
 
 A transform copies data from source indices, transforms it, and persists it into an entity-centric destination index. You can also think of the destination index as a two-dimensional tabular data structure (known as
@@ -15238,6 +15455,7 @@ client.transform.scheduleNowTransform({ transform_id })
 
 ## client.transform.setUpgradeMode [_transform.set_upgrade_mode]
 Set upgrade_mode for transform indices.
+
 Sets a cluster wide upgrade_mode setting that prepares transform
 indices for an upgrade.
 When upgrading your cluster, in some circumstances you must restart your
@@ -15298,6 +15516,7 @@ client.transform.startTransform({ transform_id })
 
 ## client.transform.stopTransform [_transform.stop_transform]
 Stop transforms.
+
 Stops one or more transforms.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-stop-transform)
@@ -15330,6 +15549,7 @@ immediately and the indexer is stopped asynchronously in the background.
 
 ## client.transform.updateTransform [_transform.update_transform]
 Update a transform.
+
 Updates certain properties of a transform.
 
 All updated properties except `description` do not take effect until after the transform starts the next checkpoint,
@@ -15398,6 +15618,7 @@ returns an error.
 
 ## client.watcher.ackWatch [_watcher.ack_watch]
 Acknowledge a watch.
+
 Acknowledging a watch enables you to manually throttle the execution of the watch's actions.
 
 The acknowledgement state of an action is stored in the `status.actions.<id>.ack.state` structure.
@@ -15424,6 +15645,7 @@ If you omit this parameter, all of the actions of the watch are acknowledged.
 
 ## client.watcher.activateWatch [_watcher.activate_watch]
 Activate a watch.
+
 A watch can be either active or inactive.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-activate-watch)
@@ -15439,6 +15661,7 @@ client.watcher.activateWatch({ watch_id })
 
 ## client.watcher.deactivateWatch [_watcher.deactivate_watch]
 Deactivate a watch.
+
 A watch can be either active or inactive.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-deactivate-watch)
@@ -15454,6 +15677,7 @@ client.watcher.deactivateWatch({ watch_id })
 
 ## client.watcher.deleteWatch [_watcher.delete_watch]
 Delete a watch.
+
 When the watch is removed, the document representing the watch in the `.watches` index is gone and it will never be run again.
 
 Deleting a watch does not delete any watch execution records related to this watch from the watch history.
@@ -15475,6 +15699,7 @@ client.watcher.deleteWatch({ id })
 
 ## client.watcher.executeWatch [_watcher.execute_watch]
 Run a watch.
+
 This API can be used to force execution of the watch outside of its triggering logic or to simulate the watch execution for debugging purposes.
 
 For testing and debugging purposes, you also have fine-grained control on how the watch runs.
@@ -15514,6 +15739,7 @@ This watch is not persisted to the index and `record_execution` cannot be set.
 
 ## client.watcher.getSettings [_watcher.get_settings]
 Get Watcher index settings.
+
 Get settings for the Watcher internal index (`.watches`).
 Only a subset of settings are shown, for example `index.auto_expand_replicas` and `index.number_of_replicas`.
 
@@ -15545,6 +15771,7 @@ client.watcher.getWatch({ id })
 
 ## client.watcher.putWatch [_watcher.put_watch]
 Create or update a watch.
+
 When a watch is registered, a new document that represents the watch is added to the `.watches` index and its trigger is immediately registered with the relevant trigger engine.
 Typically for the `schedule` trigger, the scheduler is the trigger engine.
 
@@ -15586,6 +15813,7 @@ The default value is `true`, which means the watch is active by default.
 
 ## client.watcher.queryWatches [_watcher.query_watches]
 Query watches.
+
 Get all registered watches in a paginated manner and optionally filter watches by a query.
 
 Note that only the `_id` and `metadata.*` fields are queryable or sortable.
@@ -15609,6 +15837,7 @@ It must be non-negative.
 
 ## client.watcher.start [_watcher.start]
 Start the watch service.
+
 Start the Watcher service if it is not already running.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-start)
@@ -15624,6 +15853,7 @@ client.watcher.start({ ... })
 
 ## client.watcher.stats [_watcher.stats]
 Get Watcher statistics.
+
 This API always returns basic metrics.
 You retrieve more metrics by using the metric parameter.
 
@@ -15641,6 +15871,7 @@ client.watcher.stats({ ... })
 
 ## client.watcher.stop [_watcher.stop]
 Stop the watch service.
+
 Stop the Watcher service if it is running.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-stop)
@@ -15658,6 +15889,7 @@ To indicate that the request should never timeout, set it to `-1`.
 
 ## client.watcher.updateSettings [_watcher.update_settings]
 Update Watcher index settings.
+
 Update settings for the Watcher internal index (`.watches`).
 Only a subset of settings can be modified.
 This includes `index.auto_expand_replicas`, `index.number_of_replicas`, `index.routing.allocation.exclude.*`,
@@ -15683,6 +15915,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 ## client.xpack.info [_xpack.info]
 Get information.
+
 The information provided by the API includes:
 
 * Build information including the build number and timestamp.
@@ -15706,6 +15939,7 @@ In particular, it adds descriptions and a tag line.
 
 ## client.xpack.usage [_xpack.usage]
 Get usage information.
+
 Get information about the features that are currently enabled and available under the current license.
 The API also provides some usage statistics.
 
