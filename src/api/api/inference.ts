@@ -169,7 +169,6 @@ export default class Inference {
           'anthropic_inference_id'
         ],
         body: [
-          'chunking_settings',
           'service',
           'service_settings',
           'task_settings'
@@ -223,6 +222,20 @@ export default class Inference {
           'timeout'
         ]
       },
+      'inference.put_contextualai': {
+        path: [
+          'task_type',
+          'contextualai_inference_id'
+        ],
+        body: [
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
       'inference.put_custom': {
         path: [
           'task_type',
@@ -242,7 +255,6 @@ export default class Inference {
           'deepseek_inference_id'
         ],
         body: [
-          'chunking_settings',
           'service',
           'service_settings'
         ],
@@ -402,6 +414,7 @@ export default class Inference {
           'watsonx_inference_id'
         ],
         body: [
+          'chunking_settings',
           'service',
           'service_settings'
         ],
@@ -473,7 +486,7 @@ export default class Inference {
   }
 
   /**
-    * Perform chat completion inference The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. It only works with the `chat_completion` task type for `openai` and `elastic` inference services. NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming. The Chat completion inference API and the Stream inference API differ in their response structure and capabilities. The Chat completion inference API provides more comprehensive customization options through more fields and function calling support. If you use the `openai`, `hugging_face` or the `elastic` service, use the Chat completion inference API.
+    * Perform chat completion inference. The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. It only works with the `chat_completion` task type for `openai` and `elastic` inference services. NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming. The Chat completion inference API and the Stream inference API differ in their response structure and capabilities. The Chat completion inference API provides more comprehensive customization options through more fields and function calling support. If you use the `openai`, `hugging_face` or the `elastic` service, use the Chat completion inference API.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-unified-inference | Elasticsearch API documentation}
     */
   async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceChatCompletionUnifiedResponse>
@@ -525,7 +538,7 @@ export default class Inference {
   }
 
   /**
-    * Perform completion inference on the service
+    * Perform completion inference on the service.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
     */
   async completion (this: That, params: T.InferenceCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceCompletionResponse>
@@ -588,7 +601,7 @@ export default class Inference {
   }
 
   /**
-    * Delete an inference endpoint
+    * Delete an inference endpoint. This API requires the manage_inference cluster privilege (the built-in `inference_admin` role grants this privilege).
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteResponse>
@@ -647,7 +660,7 @@ export default class Inference {
   }
 
   /**
-    * Get an inference endpoint
+    * Get an inference endpoint. This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-get | Elasticsearch API documentation}
     */
   async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetResponse>
@@ -1165,7 +1178,6 @@ export default class Inference {
       acceptedParams: [
         'task_type',
         'anthropic_inference_id',
-        'chunking_settings',
         'service',
         'service_settings',
         'task_settings',
@@ -1377,6 +1389,72 @@ export default class Inference {
   }
 
   /**
+    * Create an Contextual AI inference endpoint. Create an inference endpoint to perform an inference task with the `contexualai` service. To review the available `rerank` models, refer to <https://docs.contextual.ai/api-reference/rerank/rerank#body-model>.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-contextualai | Elasticsearch API documentation}
+    */
+  async putContextualai (this: That, params: T.InferencePutContextualaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutContextualaiResponse>
+  async putContextualai (this: That, params: T.InferencePutContextualaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutContextualaiResponse, unknown>>
+  async putContextualai (this: That, params: T.InferencePutContextualaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutContextualaiResponse>
+  async putContextualai (this: That, params: T.InferencePutContextualaiRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['inference.put_contextualai']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.contextualai_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_contextualai',
+      pathParts: {
+        task_type: params.task_type,
+        contextualai_inference_id: params.contextualai_inference_id
+      },
+      acceptedParams: [
+        'task_type',
+        'contextualai_inference_id',
+        'service',
+        'service_settings',
+        'task_settings',
+        'timeout'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Create a custom inference endpoint. The custom service gives more control over how to interact with external inference services that aren't explicitly supported through dedicated integrations. The custom service gives you the ability to define the headers, url, query parameters, request body, and secrets. The custom service supports the template replacement functionality, which enables you to define a template that can be replaced with the value associated with that key. Templates are portions of a string that start with `${` and end with `}`. The parameters `secret_parameters` and `task_settings` are checked for keys for template replacement. Template replacement is supported in the `request`, `headers`, `url`, and `query_parameters`. If the definition (key) is not found for a template, an error message is returned. In case of an endpoint definition like the following: ``` PUT _inference/text_embedding/test-text-embedding { "service": "custom", "service_settings": { "secret_parameters": { "api_key": "<some api key>" }, "url": "...endpoints.huggingface.cloud/v1/embeddings", "headers": { "Authorization": "Bearer ${api_key}", "Content-Type": "application/json" }, "request": "{\"input\": ${input}}", "response": { "json_parser": { "text_embeddings":"$.data[*].embedding[*]" } } } } ``` To replace `${api_key}` the `secret_parameters` and `task_settings` are checked for a key named `api_key`. > info > Templates should not be surrounded by quotes. Pre-defined templates: * `${input}` refers to the array of input strings that comes from the `input` field of the subsequent inference requests. * `${input_type}` refers to the input type translation values. * `${query}` refers to the query field used specifically for reranking tasks. * `${top_n}` refers to the `top_n` field available when performing rerank requests. * `${return_documents}` refers to the `return_documents` field available when performing rerank requests.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-custom | Elasticsearch API documentation}
     */
@@ -1499,7 +1577,6 @@ export default class Inference {
       acceptedParams: [
         'task_type',
         'deepseek_inference_id',
-        'chunking_settings',
         'service',
         'service_settings',
         'timeout'
@@ -2231,6 +2308,7 @@ export default class Inference {
       acceptedParams: [
         'task_type',
         'watsonx_inference_id',
+        'chunking_settings',
         'service',
         'service_settings',
         'timeout'
@@ -2240,7 +2318,7 @@ export default class Inference {
   }
 
   /**
-    * Perform reranking inference on the service
+    * Perform reranking inference on the service.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
     */
   async rerank (this: That, params: T.InferenceRerankRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceRerankResponse>
@@ -2304,7 +2382,7 @@ export default class Inference {
   }
 
   /**
-    * Perform sparse embedding inference on the service
+    * Perform sparse embedding inference on the service.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
     */
   async sparseEmbedding (this: That, params: T.InferenceSparseEmbeddingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceSparseEmbeddingResponse>
@@ -2430,7 +2508,7 @@ export default class Inference {
   }
 
   /**
-    * Perform text embedding inference on the service
+    * Perform text embedding inference on the service.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
     */
   async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceTextEmbeddingResponse>

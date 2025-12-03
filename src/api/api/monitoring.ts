@@ -37,9 +37,7 @@ export default class Monitoring {
     this.transport = transport
     this[kAcceptedParams] = {
       'monitoring.bulk': {
-        path: [
-          'type'
-        ],
+        path: [],
         body: [
           'operations'
         ],
@@ -92,11 +90,7 @@ export default class Monitoring {
     const path = '/_monitoring/bulk'
     const meta: TransportRequestMetadata = {
       name: 'monitoring.bulk',
-      pathParts: {
-        type: params.type
-      },
       acceptedParams: [
-        'type',
         'operations',
         'system_id',
         'system_api_version',
