@@ -30,18 +30,25 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
   capabilities: {
     path: [],
     body: [],
-    query: []
+    query: [
+      'method',
+      'path',
+      'parameters',
+      'capabilities',
+      'local_only',
+      'timeout'
+    ]
   }
 }
 
 /**
-  * Checks if the specified combination of method, API, parameters, and arbitrary capabilities are supported
+  * Checks if the specified combination of method, API, parameters, and arbitrary capabilities are supported.
   * @see {@link https://github.com/elastic/elasticsearch/blob/main/rest-api-spec/src/yamlRestTest/resources/rest-api-spec/test/README.asciidoc#require-or-skip-api-capabilities | Elasticsearch API documentation}
   */
-export default async function CapabilitiesApi (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-export default async function CapabilitiesApi (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-export default async function CapabilitiesApi (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-export default async function CapabilitiesApi (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+export default async function CapabilitiesApi (this: That, params?: T.CapabilitiesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CapabilitiesResponse>
+export default async function CapabilitiesApi (this: That, params?: T.CapabilitiesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CapabilitiesResponse, unknown>>
+export default async function CapabilitiesApi (this: That, params?: T.CapabilitiesRequest, options?: TransportRequestOptions): Promise<T.CapabilitiesResponse>
+export default async function CapabilitiesApi (this: That, params?: T.CapabilitiesRequest, options?: TransportRequestOptions): Promise<any> {
   const {
     path: acceptedPath
   } = acceptedParams.capabilities
@@ -64,6 +71,7 @@ export default async function CapabilitiesApi (this: That, params?: T.TODO, opti
     if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
+      // @ts-expect-error
       querystring[key] = params[key]
     }
   }
@@ -73,6 +81,12 @@ export default async function CapabilitiesApi (this: That, params?: T.TODO, opti
   const meta: TransportRequestMetadata = {
     name: 'capabilities',
     acceptedParams: [
+      'method',
+      'path',
+      'parameters',
+      'capabilities',
+      'local_only',
+      'timeout'
     ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

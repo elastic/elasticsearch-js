@@ -251,7 +251,12 @@ export default class Cat {
           'h',
           's',
           'local',
-          'master_timeout'
+          'master_timeout',
+          'expand_wildcards',
+          'allow_no_indices',
+          'ignore_throttled',
+          'ignore_unavailable',
+          'allow_closed'
         ]
       },
       'cat.shards': {
@@ -1434,7 +1439,12 @@ export default class Cat {
         'h',
         's',
         'local',
-        'master_timeout'
+        'master_timeout',
+        'expand_wildcards',
+        'allow_no_indices',
+        'ignore_throttled',
+        'ignore_unavailable',
+        'allow_closed'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

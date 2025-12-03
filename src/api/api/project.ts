@@ -43,7 +43,7 @@ export default class Project {
   }
 
   /**
-    * Return tags defined for the project
+    * Get tags. Get the tags that are defined for the project.
     */
   async tags (this: That, params?: T.ProjectTagsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectTagsResponse>
   async tags (this: That, params?: T.ProjectTagsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProjectTagsResponse, unknown>>
