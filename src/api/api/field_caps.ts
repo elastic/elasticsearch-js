@@ -36,7 +36,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
     body: [
       'fields',
       'index_filter',
-      'runtime_mappings'
+      'runtime_mappings',
+      'project_routing'
     ],
     query: [
       'allow_no_indices',
@@ -118,6 +119,7 @@ export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequ
       'fields',
       'index_filter',
       'runtime_mappings',
+      'project_routing',
       'allow_no_indices',
       'expand_wildcards',
       'fields',

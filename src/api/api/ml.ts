@@ -766,10 +766,11 @@ export default class Ml {
         ]
       },
       'ml.start_data_frame_analytics': {
-        path: [
-          'id'
+        path: [],
+        body: [
+          'id',
+          'timeout'
         ],
-        body: [],
         query: [
           'timeout'
         ]
@@ -808,10 +809,13 @@ export default class Ml {
         ]
       },
       'ml.stop_data_frame_analytics': {
-        path: [
-          'id'
+        path: [],
+        body: [
+          'id',
+          'allow_no_match',
+          'force',
+          'timeout'
         ],
-        body: [],
         query: [
           'allow_no_match',
           'force',
@@ -837,7 +841,11 @@ export default class Ml {
         path: [
           'model_id'
         ],
-        body: [],
+        body: [
+          'id',
+          'allow_no_match',
+          'force'
+        ],
         query: [
           'allow_no_match',
           'force'
@@ -4519,7 +4527,9 @@ export default class Ml {
   async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlStartDataFrameAnalyticsResponse>
   async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this[kAcceptedParams]['ml.start_data_frame_analytics']
 
     const userQuery = params?.querystring
@@ -4536,11 +4546,21 @@ export default class Ml {
     }
 
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -4553,6 +4573,8 @@ export default class Ml {
       },
       acceptedParams: [
         'id',
+        'id',
+        'timeout',
         'timeout'
       ]
     }
@@ -4703,7 +4725,9 @@ export default class Ml {
   async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlStopDataFrameAnalyticsResponse>
   async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this[kAcceptedParams]['ml.stop_data_frame_analytics']
 
     const userQuery = params?.querystring
@@ -4720,11 +4744,21 @@ export default class Ml {
     }
 
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -4737,6 +4771,10 @@ export default class Ml {
       },
       acceptedParams: [
         'id',
+        'id',
+        'allow_no_match',
+        'force',
+        'timeout',
         'allow_no_match',
         'force',
         'timeout'
@@ -4820,7 +4858,9 @@ export default class Ml {
   async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlStopTrainedModelDeploymentResponse>
   async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this[kAcceptedParams]['ml.stop_trained_model_deployment']
 
     const userQuery = params?.querystring
@@ -4837,11 +4877,21 @@ export default class Ml {
     }
 
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
@@ -4854,6 +4904,9 @@ export default class Ml {
       },
       acceptedParams: [
         'model_id',
+        'id',
+        'allow_no_match',
+        'force',
         'allow_no_match',
         'force'
       ]

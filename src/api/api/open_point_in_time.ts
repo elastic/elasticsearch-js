@@ -34,7 +34,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'index'
     ],
     body: [
-      'index_filter'
+      'index_filter',
+      'project_routing'
     ],
     query: [
       'keep_alive',
@@ -105,6 +106,7 @@ export default async function OpenPointInTimeApi (this: That, params: T.OpenPoin
     acceptedParams: [
       'index',
       'index_filter',
+      'project_routing',
       'keep_alive',
       'ignore_unavailable',
       'preference',

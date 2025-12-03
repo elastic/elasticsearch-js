@@ -26,25 +26,39 @@ interface That {
   transport: Transport
 }
 
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
 const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
   knn_search: {
     path: [
       'index'
     ],
-    body: [],
-    query: []
+    body: [
+      '_source',
+      'docvalue_fields',
+      'stored_fields',
+      'fields',
+      'filter',
+      'knn'
+    ],
+    query: [
+      'routing'
+    ]
   }
 }
 
 /**
-  * Performs a kNN search
+  * Run a knn search. NOTE: The kNN search API has been replaced by the `knn` option in the search API.
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-knn-search | Elasticsearch API documentation}
   */
-export default async function KnnSearchApi (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-export default async function KnnSearchApi (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-export default async function KnnSearchApi (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-export default async function KnnSearchApi (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.KnnSearchResponse<TDocument>>
+export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.KnnSearchResponse<TDocument>, unknown>>
+export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest, options?: TransportRequestOptions): Promise<T.KnnSearchResponse<TDocument>>
+export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest, options?: TransportRequestOptions): Promise<any> {
   const {
-    path: acceptedPath
+    path: acceptedPath,
+    body: acceptedBody,
+    query: acceptedQuery
   } = acceptedParams.knn_search
 
   const userQuery = params?.querystring
@@ -60,12 +74,22 @@ export default async function KnnSearchApi (this: That, params?: T.TODO, options
     }
   }
 
-  params = params ?? {}
   for (const key in params) {
-    if (acceptedPath.includes(key)) {
+    if (acceptedBody.includes(key)) {
+      body = body ?? {}
+      // @ts-expect-error
+      body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body' && key !== 'querystring') {
-      querystring[key] = params[key]
+      if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      } else {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     }
   }
 
@@ -77,7 +101,14 @@ export default async function KnnSearchApi (this: That, params?: T.TODO, options
       index: params.index
     },
     acceptedParams: [
-      'index'
+      'index',
+      '_source',
+      'docvalue_fields',
+      'stored_fields',
+      'fields',
+      'filter',
+      'knn',
+      'routing'
     ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

@@ -100,7 +100,8 @@ export default class AsyncSearch {
           'stored_fields',
           'pit',
           'runtime_mappings',
-          'stats'
+          'stats',
+          'project_routing'
         ],
         query: [
           'wait_for_completion_timeout',
@@ -400,6 +401,7 @@ export default class AsyncSearch {
         'pit',
         'runtime_mappings',
         'stats',
+        'project_routing',
         'wait_for_completion_timeout',
         'keep_alive',
         'keep_on_completion',
