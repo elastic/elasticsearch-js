@@ -1925,7 +1925,7 @@ export default class Indices {
 
   /**
     * Delete sampling configuration. Delete the sampling configuration for the specified index.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/ingest-random-sampling | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
   async deleteSampleConfiguration (this: That, params: T.IndicesDeleteSampleConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteSampleConfigurationResponse>
   async deleteSampleConfiguration (this: That, params: T.IndicesDeleteSampleConfigurationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteSampleConfigurationResponse, unknown>>
@@ -2698,7 +2698,7 @@ export default class Indices {
 
   /**
     * Get all sampling configurations. Get the sampling configurations for all indices.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/ingest-random-sampling | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
   async getAllSampleConfiguration (this: That, params?: T.IndicesGetAllSampleConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetAllSampleConfigurationResponse>
   async getAllSampleConfiguration (this: That, params?: T.IndicesGetAllSampleConfigurationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetAllSampleConfigurationResponse, unknown>>
@@ -3278,7 +3278,7 @@ export default class Indices {
 
   /**
     * Request for a random sample of raw documents ingested into the given index or data stream.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/ingest-random-sampling | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
   async getSample (this: That, params: T.IndicesGetSampleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSampleResponse>
   async getSample (this: That, params: T.IndicesGetSampleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetSampleResponse, unknown>>
@@ -3326,7 +3326,7 @@ export default class Indices {
 
   /**
     * Get sampling configuration. Get the sampling configuration for the specified index.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/ingest-random-sampling | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
   async getSampleConfiguration (this: That, params: T.IndicesGetSampleConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSampleConfigurationResponse>
   async getSampleConfiguration (this: That, params: T.IndicesGetSampleConfigurationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetSampleConfigurationResponse, unknown>>
@@ -3375,7 +3375,7 @@ export default class Indices {
 
   /**
     * Request stats for a random sample of raw documents ingested into the given index or data stream.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/ingest-random-sampling | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
   async getSampleStats (this: That, params: T.IndicesGetSampleStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSampleStatsResponse>
   async getSampleStats (this: That, params: T.IndicesGetSampleStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetSampleStatsResponse, unknown>>
@@ -4274,7 +4274,7 @@ export default class Indices {
 
   /**
     * Create or update sampling configuration. Create or update the sampling configuration for the specified index.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/ingest-random-sampling | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
   async putSampleConfiguration (this: That, params: T.IndicesPutSampleConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutSampleConfigurationResponse>
   async putSampleConfiguration (this: That, params: T.IndicesPutSampleConfigurationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutSampleConfigurationResponse, unknown>>

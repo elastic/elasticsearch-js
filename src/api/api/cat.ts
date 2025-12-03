@@ -63,7 +63,12 @@ export default class Cat {
           'circuit_breaker_patterns'
         ],
         body: [],
-        query: []
+        query: [
+          'h',
+          's',
+          'local',
+          'master_timeout'
+        ]
       },
       'cat.component_templates': {
         path: [
@@ -464,13 +469,13 @@ export default class Cat {
   }
 
   /**
-    * Get circuit breakers statistics
+    * Get circuit breakers statistics. IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
-  async circuitBreaker (this: That, params?: T.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async circuitBreaker (this: That, params?: T.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async circuitBreaker (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async circuitBreaker (this: That, params?: T.TODO, options?: TransportRequestOptions): Promise<any> {
+  async circuitBreaker (this: That, params?: T.CatCircuitBreakerRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatCircuitBreakerResponse>
+  async circuitBreaker (this: That, params?: T.CatCircuitBreakerRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatCircuitBreakerResponse, unknown>>
+  async circuitBreaker (this: That, params?: T.CatCircuitBreakerRequest, options?: TransportRequestOptions): Promise<T.CatCircuitBreakerResponse>
+  async circuitBreaker (this: That, params?: T.CatCircuitBreakerRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this[kAcceptedParams]['cat.circuit_breaker']
@@ -493,6 +498,7 @@ export default class Cat {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -512,7 +518,11 @@ export default class Cat {
         circuit_breaker_patterns: params.circuit_breaker_patterns
       },
       acceptedParams: [
-        'circuit_breaker_patterns'
+        'circuit_breaker_patterns',
+        'h',
+        's',
+        'local',
+        'master_timeout'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

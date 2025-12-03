@@ -68,7 +68,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'stored_fields',
       'pit',
       'runtime_mappings',
-      'stats'
+      'stats',
+      'project_routing'
     ],
     query: [
       'allow_no_indices',
@@ -223,6 +224,7 @@ export default async function SearchApi<TDocument = unknown, TAggregations = Rec
       'pit',
       'runtime_mappings',
       'stats',
+      'project_routing',
       'allow_no_indices',
       'allow_partial_search_results',
       'analyzer',
